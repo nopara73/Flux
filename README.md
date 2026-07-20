@@ -1,7 +1,24 @@
 # Flux
 
 A minimal native Android app written in C# with .NET for Android. It targets
-Android 7.0 (API 24) and newer and displays **Hello, Android!**.
+Android 7.0 (API 24) and newer.
+
+## Fake exercise data
+
+The app currently uses an in-memory `FakeExerciseDatabase`, so there is no
+database package, schema migration, or persistence yet. It creates 100 fake
+exercises at startup: exactly 10 for each `DominantRegion` enum value.
+
+Every exercise contains:
+
+- a unique name
+- the shared `exercise_placeholder.gif` asset
+- exactly one dominant region
+- an integer score initialized to `0`
+
+The fake database validates these invariants when it is created. The
+`IExerciseDatabase` interface is the replacement seam for a persistent database
+later.
 
 ## Build
 
