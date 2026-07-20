@@ -1,4 +1,4 @@
-# Hello Android
+# Flux
 
 A minimal native Android app written in C# with .NET for Android. It targets
 Android 7.0 (API 24) and newer and displays **Hello, Android!**.
@@ -8,7 +8,7 @@ Android 7.0 (API 24) and newer and displays **Hello, Android!**.
 From this directory:
 
 ```powershell
-dotnet build .\HelloAndroid.slnx
+dotnet build .\Flux.slnx
 ```
 
 ## Run on your phone
@@ -24,7 +24,7 @@ dotnet build .\HelloAndroid.slnx
 4. Build, install, and launch the debug app:
 
    ```powershell
-   dotnet build .\HelloAndroid\HelloAndroid.csproj -t:Run -f net10.0-android
+   dotnet build .\Flux\Flux.csproj -t:Run -f net10.0-android
    ```
 
 The debug build uses the automatically generated development signing key. That
@@ -33,10 +33,10 @@ is suitable for installing the app on your own phone during development.
 ## Create an APK
 
 ```powershell
-dotnet publish .\HelloAndroid\HelloAndroid.csproj -c Release -f net10.0-android
+dotnet publish .\Flux\Flux.csproj -c Release -f net10.0-android
 ```
 
 Release APKs are written under
-`HelloAndroid\bin\Release\net10.0-android\publish\`. Android requires release
+`Flux\bin\Release\net10.0-android\publish\`. Android requires release
 packages to be signed before normal installation; for personal development,
 the debug install command above is the simplest workflow.
