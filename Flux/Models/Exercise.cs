@@ -10,6 +10,10 @@ public sealed class Exercise
 
     public required DominantRegion DominantRegion { get; init; }
 
+    public required string Practice { get; init; }
+
+    public required string MotionProfile { get; init; }
+
     public int Score { get; set; } = 0;
 
     public required bool OnlyFeetTouchGround { get; init; }

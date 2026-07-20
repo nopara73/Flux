@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 1;
+    private const int DatabaseVersion = 2;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int ExpectedExerciseCount = 1000;
@@ -22,6 +22,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "name",
         "gif",
         "dominant_region",
+        "practice",
+        "motion_profile",
         "score",
         "only_feet_touch_ground",
         "shoe_agnostic",
@@ -55,6 +57,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 dominant_region TEXT NOT NULL CHECK (dominant_region IN (
                     'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
                     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')),
+                practice TEXT NOT NULL,
+                motion_profile TEXT NOT NULL,
                 score INTEGER NOT NULL DEFAULT 0,
                 only_feet_touch_ground INTEGER NOT NULL DEFAULT 1
                     CHECK (only_feet_touch_ground = 1),
@@ -77,6 +81,15 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
     public override void OnUpgrade(SQLiteDatabase? database, int oldVersion, int newVersion)
     {
+        ArgumentNullException.ThrowIfNull(database);
+
+        if (oldVersion < 2 && newVersion >= 2)
+        {
+            database.ExecSQL("DROP TABLE IF EXISTS exercises");
+            OnCreate(database);
+            return;
+        }
+
         throw new NotSupportedException(
             $"No exercise database migration exists from {oldVersion} to {newVersion}.");
     }
@@ -119,6 +132,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             values.Put("name", exercise.Name);
             values.Put("gif", exercise.Gif);
             values.Put("dominant_region", exercise.DominantRegion.ToString());
+            values.Put("practice", exercise.Practice);
+            values.Put("motion_profile", exercise.MotionProfile);
             values.Put("score", exercise.Score);
             values.Put("only_feet_touch_ground", exercise.OnlyFeetTouchGround ? 1 : 0);
             values.Put("shoe_agnostic", exercise.ShoeAgnostic ? 1 : 0);
@@ -161,13 +176,17 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 Gif = cursor.GetString(2)
                     ?? throw new InvalidOperationException("An exercise has no GIF."),
                 DominantRegion = Enum.Parse<DominantRegion>(regionName),
-                Score = cursor.GetInt(4),
-                OnlyFeetTouchGround = cursor.GetInt(5) == 1,
-                ShoeAgnostic = cursor.GetInt(6) == 1,
-                MaxSpaceMeters = cursor.GetInt(7),
-                Equipment = cursor.GetString(8)
+                Practice = cursor.GetString(4)
+                    ?? throw new InvalidOperationException("An exercise has no practice."),
+                MotionProfile = cursor.GetString(5)
+                    ?? throw new InvalidOperationException("An exercise has no motion profile."),
+                Score = cursor.GetInt(6),
+                OnlyFeetTouchGround = cursor.GetInt(7) == 1,
+                ShoeAgnostic = cursor.GetInt(8) == 1,
+                MaxSpaceMeters = cursor.GetInt(9),
+                Equipment = cursor.GetString(10)
                     ?? throw new InvalidOperationException("An exercise has no equipment value."),
-                Silent = cursor.GetInt(9) == 1,
+                Silent = cursor.GetInt(11) == 1,
             });
         }
 
@@ -193,7 +212,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !exercise.ShoeAgnostic ||
             exercise.MaxSpaceMeters is <= 0 or > 3 ||
             exercise.Equipment != "None" ||
-            !exercise.Silent);
+            !exercise.Silent ||
+            string.IsNullOrWhiteSpace(exercise.Practice) ||
+            string.IsNullOrWhiteSpace(exercise.MotionProfile));
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
 

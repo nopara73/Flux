@@ -9,12 +9,17 @@ Flux ships with a local SQLite database seeded from a bundled catalog of 1,000
 exercises: exactly 100 for each `DominantRegion` enum value. It works entirely
 offline and saves each exercise's score in SQLite.
 
+The entries are distinct established standing movements rather than generated
+tempo/range/side permutations. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)
+for the catalog rules and reference families.
+
 Every exercise contains:
 
 - a stable numeric ID
 - a unique name
 - its own bundled, looping animated GIF
 - exactly one dominant region
+- its practice family and movement-specific animation profile
 - an integer score initialized to `0`
 - explicit constraint metadata: only feet touch the ground, shoe agnostic,
   no more than 3 m × 3 m of space, no equipment, and silent
@@ -26,6 +31,10 @@ and GIFs can be regenerated with:
 ```powershell
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
+
+Database schema version 2 replaces the earlier synthetic modifier catalog.
+Because those obsolete names have no real-record equivalent, upgrading resets
+their scores and repairs the saved workout lineup from the new catalog.
 
 ## Workout flow
 
@@ -75,6 +84,9 @@ dotnet publish .\Flux\Flux.csproj -c Release -f net10.0-android
 ```
 
 Release APKs are written under
-`Flux\bin\Release\net10.0-android\publish\`. Android requires release
-packages to be signed before normal installation; for personal development,
-the debug install command above is the simplest workflow.
+`Flux\bin\Release\net10.0-android\publish\`. The generated
+`com.local.flux-Signed.apk` is ready to install on the connected phone with:
+
+```powershell
+adb install -r .\Flux\bin\Release\net10.0-android\publish\com.local.flux-Signed.apk
+```
