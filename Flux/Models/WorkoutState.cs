@@ -2,9 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 1;
-
-    public Dictionary<string, int> Scores { get; set; } = new(StringComparer.Ordinal);
+    public int Version { get; set; } = 2;
 
     public Dictionary<DominantRegion, string> SelectedExercises { get; set; } = [];
 

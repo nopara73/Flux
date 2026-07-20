@@ -3,22 +3,29 @@
 A minimal native Android app written in C# with .NET for Android. It targets
 Android 7.0 (API 24) and newer.
 
-## Fake exercise data
+## Exercise database
 
-The app currently uses an in-memory `FakeExerciseDatabase`, so there is no
-database package, schema migration, or persistence yet. It creates 100 fake
-exercises at startup: exactly 10 for each `DominantRegion` enum value.
+Flux ships with a local SQLite database seeded from a bundled catalog of 1,000
+exercises: exactly 100 for each `DominantRegion` enum value. It works entirely
+offline and saves each exercise's score in SQLite.
 
 Every exercise contains:
 
+- a stable numeric ID
 - a unique name
-- the shared, looping animated `exercise_placeholder.gif` asset
+- its own bundled, looping animated GIF
 - exactly one dominant region
 - an integer score initialized to `0`
+- explicit constraint metadata: only feet touch the ground, shoe agnostic,
+  no more than 3 m × 3 m of space, no equipment, and silent
 
-The fake database validates these invariants when it is created. The
-`IExerciseDatabase` interface is the replacement seam for a persistent database
-later.
+Both the generator and the app validate the catalog invariants. SQLite also
+enforces the movement constraints with `CHECK` constraints. The source catalog
+and GIFs can be regenerated with:
+
+```powershell
+.\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
+```
 
 ## Workout flow
 
@@ -27,11 +34,12 @@ in enum order from `FEET` through `CORE`. Press **Start** to begin a 60-second
 timer, or **Skip** to finish the timer immediately while testing. After each
 timer, record the result with **X**, **−**, or **✓**.
 
-Workout state is saved locally with Android shared preferences. An **X** reduces
-that exercise's score by one and replaces it next session. If there were no X
-results, one randomly chosen neutral exercise is replaced. An all-tick workout
-keeps the complete lineup. Every replacement is selected randomly from the
-highest-score bucket in the same dominant region.
+The current lineup and outcomes are saved locally with Android shared
+preferences. Scores are saved in SQLite. An **X** reduces that exercise's score
+by one and replaces it next session. If there were no X results, one randomly
+chosen neutral exercise is replaced. An all-tick workout keeps the complete
+lineup. Every replacement is selected randomly from the highest-score bucket in
+the same dominant region.
 
 ## Build
 

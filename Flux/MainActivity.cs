@@ -16,6 +16,7 @@ public class MainActivity : Activity
 {
     private const int CountdownSeconds = 60;
 
+    private SqliteExerciseDatabase _exerciseDatabase = null!;
     private ExerciseSessionService _sessionService = null!;
     private IWorkoutStateStore _stateStore = null!;
     private WorkoutState _state = null!;
@@ -50,10 +51,10 @@ public class MainActivity : Activity
 
         BindViews();
         BindEvents();
-        LoadAnimatedGif();
+        ConfigureGifView();
 
-        var exerciseDatabase = new FakeExerciseDatabase();
-        _sessionService = new ExerciseSessionService(exerciseDatabase.Exercises);
+        _exerciseDatabase = new SqliteExerciseDatabase(this);
+        _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
         _stateStore = new SharedPreferencesWorkoutStateStore(this);
         _state = _stateStore.Load();
         _sessionService.Initialize(_state);
@@ -89,6 +90,7 @@ public class MainActivity : Activity
         _toneGenerator?.Dispose();
         _toneGenerator = null;
         _exerciseGif?.Destroy();
+        _exerciseDatabase?.Dispose();
         base.OnDestroy();
     }
 
@@ -122,14 +124,8 @@ public class MainActivity : Activity
         _doneButton.Click += (_, _) => CloseCompletedWorkout();
     }
 
-    private void LoadAnimatedGif()
+    private void ConfigureGifView()
     {
-        using System.IO.Stream gifStream = Resources!.OpenRawResource(
-            Resource.Raw.exercise_placeholder);
-        using var buffer = new MemoryStream();
-        gifStream.CopyTo(buffer);
-        string base64Gif = Convert.ToBase64String(buffer.ToArray());
-
         _exerciseGif.SetBackgroundColor(Color.Transparent);
         _exerciseGif.VerticalScrollBarEnabled = false;
         _exerciseGif.HorizontalScrollBarEnabled = false;
@@ -138,6 +134,14 @@ public class MainActivity : Activity
         _exerciseGif.Settings.AllowFileAccess = false;
         _exerciseGif.Settings.BuiltInZoomControls = false;
         _exerciseGif.Settings.DisplayZoomControls = false;
+    }
+
+    private void LoadAnimatedGif(Exercise exercise)
+    {
+        using Stream gifStream = Assets!.Open(exercise.Gif);
+        using var buffer = new MemoryStream();
+        gifStream.CopyTo(buffer);
+        string base64Gif = Convert.ToBase64String(buffer.ToArray());
 
         string html = $$"""
             <!doctype html>
@@ -197,6 +201,7 @@ public class MainActivity : Activity
 
         _regionName.Text = $"{position} / {ExerciseSessionService.RegionOrder.Count}  ·  {_currentRegion}";
         _exerciseName.Text = $"{position}. {exercise.Name}";
+        LoadAnimatedGif(exercise);
         _workoutScreen.Visibility = ViewStates.Visible;
         _congratulationsScreen.Visibility = ViewStates.Gone;
         ShowStartButton();
@@ -291,7 +296,13 @@ public class MainActivity : Activity
         }
 
         SetRatingButtonsEnabled(enabled: false);
-        _sessionService.RecordOutcome(_state, _currentRegion, outcome);
+        Exercise exercise = _sessionService.RecordOutcome(_state, _currentRegion, outcome);
+
+        if (outcome == ExerciseOutcome.X)
+        {
+            _exerciseDatabase.UpdateScore(exercise);
+        }
+
         _stateStore.Save(_state);
 
         if (_state.WorkoutCompleted)

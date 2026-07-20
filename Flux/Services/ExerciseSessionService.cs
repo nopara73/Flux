@@ -21,7 +21,6 @@ public sealed class ExerciseSessionService
     public void Initialize(WorkoutState state)
     {
         NormalizeCollections(state);
-        ApplyPersistedScores(state);
 
         if (state.SelectedExercises.Count == 0)
         {
@@ -61,7 +60,7 @@ public sealed class ExerciseSessionService
         return null;
     }
 
-    public void RecordOutcome(
+    public Exercise RecordOutcome(
         WorkoutState state,
         DominantRegion region,
         ExerciseOutcome outcome)
@@ -78,12 +77,12 @@ public sealed class ExerciseSessionService
         if (outcome == ExerciseOutcome.X)
         {
             exercise.Score--;
-            state.Scores[exercise.Name] = exercise.Score;
         }
 
         state.Outcomes[region] = outcome;
         state.WorkoutCompleted = OrderedRegions.All(state.Outcomes.ContainsKey);
         state.CompletionAcknowledged = false;
+        return exercise;
     }
 
     public void AcknowledgeCompletion(WorkoutState state)
@@ -171,21 +170,6 @@ public sealed class ExerciseSessionService
         return highestScoreBucket[_random.Next(highestScoreBucket.Length)];
     }
 
-    private void ApplyPersistedScores(WorkoutState state)
-    {
-        foreach (Exercise exercise in _exercises)
-        {
-            if (state.Scores.TryGetValue(exercise.Name, out int score))
-            {
-                exercise.Score = score;
-            }
-            else
-            {
-                state.Scores[exercise.Name] = exercise.Score;
-            }
-        }
-    }
-
     private void RepairLineup(WorkoutState state)
     {
         foreach (DominantRegion region in OrderedRegions)
@@ -207,7 +191,6 @@ public sealed class ExerciseSessionService
 
     private static void NormalizeCollections(WorkoutState state)
     {
-        state.Scores ??= new Dictionary<string, int>(StringComparer.Ordinal);
         state.SelectedExercises ??= [];
         state.Outcomes ??= [];
     }
