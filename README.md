@@ -11,7 +11,9 @@ offline and saves each exercise's score in SQLite.
 
 The entries are distinct established standing movements rather than generated
 tempo/range/side permutations. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)
-for the catalog rules and reference families.
+for the catalog rules and reference families. Every movement is symmetric or
+completes both sides inside its single loop; the timer never needs a midpoint
+side switch.
 
 Every exercise contains:
 
@@ -32,9 +34,21 @@ and GIFs can be regenerated with:
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
 
+Animation accuracy is tracked separately from catalog validity. The current
+high-bar review verifies 112 demonstrations and lists all 888 remaining
+placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
+that report after catalog changes with:
+
+```powershell
+.\tools\Write-DemonstrationAudit.ps1
+```
+
 Database schema version 2 replaces the earlier synthetic modifier catalog.
 Because those obsolete names have no real-record equivalent, upgrading resets
 their scores and repairs the saved workout lineup from the new catalog.
+Schema version 3 applies the bilateral catalog names and reviewed media while
+preserving every score by stable exercise ID. Any saved lineup that references
+a replaced name is repaired automatically on launch.
 
 ## Workout flow
 

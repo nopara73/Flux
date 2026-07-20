@@ -4,6 +4,8 @@ param(
     [int]$StartExercise = 1,
     [ValidateRange(0, 1000)]
     [int]$MaxExercises = 0,
+    [ValidateRange(1, 1000)]
+    [int[]]$ExerciseIds = @(),
     [switch]$Force
 )
 
@@ -24,6 +26,29 @@ $regions = @(
 
 $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1')
+$bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1')
+$externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
+$posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
+
+if ($bilateralExerciseNames.Count -eq 0 -or @(
+        $bilateralExerciseNames.GetEnumerator() | Where-Object {
+            [int]$_.Key -lt 1 -or
+            [int]$_.Key -gt 1000 -or
+            [string]::IsNullOrWhiteSpace([string]$_.Value)
+        }).Count -gt 0) {
+    throw 'The bilateral catalog replacement map contains an invalid entry.'
+}
+
+if ($externalExerciseMedia.Count -ne 23) {
+    throw 'The reviewed external-media map must contain exactly 23 entries.'
+}
+
+if ($posecodeExerciseMedia.Count -ne 15) {
+    throw 'The reviewed Posecode-media map must contain exactly 15 entries.'
+}
 
 $regionColors = @(
     '#00A896',
@@ -41,7 +66,9 @@ $regionColors = @(
 function Get-Practice {
     param([string]$Name)
 
-    switch -Regex ($Name) {
+    $practiceName = $Name -replace '^(Alternating|Bilateral|Symmetric)\s+', ''
+
+    switch -Regex ($practiceName) {
         '^Tai Chi' { return 'Tai Chi' }
         '^Qigong|^Eight Brocades|^Five-Animals' { return 'Qigong' }
         '^Bagua' { return 'Baguazhang' }
@@ -120,9 +147,38 @@ function Get-MotionProfile {
             return 'ArmSweep'
         }
         'HEAD' {
-            if ($Name -match 'Flexion|Extension|Nod|Kampita') { return 'HeadNod' }
+            if ($Name -match 'Slow Blink|Eye Squeeze') { return 'EyeBlink' }
+            if ($Name -match 'Cross-Pattern Saccades') { return 'GazeCrossSaccade' }
+            if ($Name -match 'Cross-Pattern') { return 'GazeCross' }
+            if ($Name -match 'Figure-Eight Smooth|Infinity Gaze') { return 'GazeFigureEight' }
+            if ($Name -match 'Near-Far Focus') { return 'GazeNearFar' }
+            if ($Name -match 'Vertical Near-Far') { return 'GazeVerticalNearFar' }
+            if ($Name -match 'Vertical Gaze Ladder') { return 'GazeVerticalLadder' }
+            if ($Name -match 'Convergence|Nasagra|Bhrumadhya|Angusthamadhye') { return 'GazeConvergence' }
+            if ($Name -match 'Horizontal Gaze Shift Between Thumbs|Kathak Alternating Side Gaze') { return 'GazeHorizontalSaccade' }
+            if ($Name -match 'Peripheral-Awareness') { return 'GazePeripheral' }
+            if ($Name -match 'Four-Corner Saccades|Square-Path Saccades') { return 'GazeCornerSaccade' }
+            if ($Name -match 'Clock-Face Saccades') { return 'GazeClockSaccade' }
+            if ($Name -match 'Triangle-Path Saccades') { return 'GazeTriangleSaccade' }
+            if ($Name -match 'Horizontal Saccades') { return 'GazeHorizontalSaccade' }
+            if ($Name -match 'Vertical Saccades') { return 'GazeVerticalSaccade' }
+            if ($Name -match 'Horizontal Gaze Stabilization|Horizontal VOR x1') { return 'VorHorizontal' }
+            if ($Name -match 'Vertical Gaze Stabilization|Vertical VOR x1') { return 'VorVertical' }
+            if ($Name -match 'Four-Direction Gaze Stabilization|Four-Direction VOR') { return 'VorFourDirection' }
+            if ($Name -match 'Horizontal VOR Cancellation') { return 'VorCancellationHorizontal' }
+            if ($Name -match 'Vertical VOR Cancellation') { return 'VorCancellationVertical' }
+            if ($Name -match 'Horizontal VOR x2') { return 'VorX2Horizontal' }
+            if ($Name -match 'Vertical VOR x2') { return 'VorX2Vertical' }
+            if ($Name -match 'Nose Square') { return 'HeadSquare' }
+            if ($Name -match 'Four-Direction Head Tilt|Four-Corner Dance Head Accent|Jazz Head Isolation') { return 'HeadFourDirection' }
+            if ($Name -match 'Neck Elongation|Sama Shiro') { return 'HeadNeutral' }
+            if ($Name -match 'Chin-Tuck') { return 'HeadTranslate' }
+            if ($Name -match 'Dragon Surveys the Sea') { return 'HeadSurvey' }
+            if ($Name -match 'Dhuta-Kampita') { return 'HeadTurnNod' }
+            if ($Name -match 'Tiger Watches Prey|Dhuta Shiro') { return 'HeadTurn' }
+            if ($Name -match 'Lateral|Side-Bend|Side-to-Side Dance Head Accent|Tilt|Ear-to|Griva|Parivahita') { return 'HeadTilt' }
+            if ($Name -match 'Flexion|Extension|Nod|Kampita|Accent Front|Udvahita|Adhomukha') { return 'HeadNod' }
             if ($Name -match 'Rotation|Turn|Looks Back|Gazes Back|Paravritta|Spotting|Flick') { return 'HeadTurn' }
-            if ($Name -match 'Lateral|Tilt|Ear-to|Griva|Parivahita') { return 'HeadTilt' }
             if ($Name -match 'Circle|Figure Eight|Infinity|Alphabet|Alolita|Roll') { return 'HeadCircle' }
             if ($Name -match 'Translation|Slide|Protraction|Retraction|Turtle') { return 'HeadTranslate' }
             if ($Name -match 'Horizontal|Parsva') { return 'GazeHorizontal' }
@@ -131,7 +187,7 @@ function Get-MotionProfile {
             return 'GazeDiagonal'
         }
         'SHOULDERS' {
-            if ($Name -match 'Roll|Circle|Clock|Figure Eight|CAR') { return 'ShoulderCircle' }
+            if ($Name -match 'Roll|Circle|Clock|Figure Eight|\bCAR\b') { return 'ShoulderCircle' }
             if ($Name -match 'Scapular|Shoulder-Blade|Serratus') { return 'ScapularGlide' }
             if ($Name -match 'Rotation|Cuban|Goalpost|Cactus') { return 'ShoulderRotation' }
             if ($Name -match 'Stretch|Eagle|Cow-Face|Garudasana|Gomukhasana|Prayer|Hands-Behind') { return 'ShoulderStretch' }
@@ -189,7 +245,7 @@ function New-HandExerciseFrameSvg {
         [string]$Accent
     )
 
-    $phase = 2 * [Math]::PI * $FrameIndex / 8
+    $phase = 2 * [Math]::PI * $FrameIndex / 16
     $wave = [Math]::Sin($phase)
     $open = if ($MotionProfile -eq 'FingerMotion') { (1 + $wave) / 2 } else { 0.75 }
     $shape = $MovementIndex % 6
@@ -254,47 +310,407 @@ function New-HandExerciseFrameSvg {
 function New-HeadExerciseFrameSvg {
     param(
         [int]$ExerciseId,
+        [string]$ExerciseName,
         [string]$MotionProfile,
         [int]$FrameIndex,
         [string]$Accent
     )
 
-    $phase = 2 * [Math]::PI * $FrameIndex / 8
+    $phase = 2 * [Math]::PI * $FrameIndex / 16
     $wave = [Math]::Sin($phase)
     $counterWave = [Math]::Cos($phase)
     $headX = 128
-    $headY = 102
+    $headY = 104
     $rotation = 0
-    $pupilX = Get-RoundedInt ($wave * 8)
-    $pupilY = Get-RoundedInt ($counterWave * 5)
+    $leftPupilX = 0
+    $rightPupilX = 0
+    $leftPupilY = 0
+    $rightPupilY = 0
+    $turn = 0.0
+    $blink = 0.0
+    $sideProfile = $false
+    $showTarget = $false
+    $targetX = 128
+    $targetY = 38
+    $targetRadius = 5
+    $targetPath = ''
+    $stepHorizontal = if ($wave -ge 0) { 1 } else { -1 }
+    $stepVertical = if ($counterWave -ge 0) { 1 } else { -1 }
 
     switch ($MotionProfile) {
-        'HeadNod' { $rotation = Get-RoundedInt ($wave * 13); $headY += Get-RoundedInt ($wave * 5) }
-        'HeadTurn' { $headX += Get-RoundedInt ($wave * 16); $pupilX = Get-RoundedInt ($wave * 4) }
+        'HeadNod' {
+            $sideProfile = $true
+            if ($ExerciseName -match 'Extension|Udvahita' -and $ExerciseName -notmatch 'Flexion-Extension') {
+                $rotation = Get-RoundedInt (-[Math]::Max(0, $wave) * 18)
+            }
+            elseif ($ExerciseName -match 'Flexion-Extension') {
+                $rotation = Get-RoundedInt ($wave * 18)
+            }
+            else {
+                $rotation = Get-RoundedInt ([Math]::Max(0, $wave) * 16)
+            }
+        }
+        'HeadTurn' {
+            $headWave = $wave
+            $eyeWave = $wave
+            if ($ExerciseName -match 'Opposite-Direction') {
+                $eyeWave = -$wave
+            }
+            elseif ($ExerciseName -match 'Eyes-Lead') {
+                $eyeWave = [Math]::Sin($phase + ([Math]::PI / 4))
+            }
+            elseif ($ExerciseName -match 'Head-Lead') {
+                $headWave = [Math]::Sin($phase + ([Math]::PI / 4))
+            }
+
+            $turn = $headWave
+            $leftPupilX = Get-RoundedInt ($eyeWave * 5)
+            $rightPupilX = $leftPupilX
+        }
         'HeadTilt' { $rotation = Get-RoundedInt ($wave * 18) }
-        'HeadCircle' { $headX += Get-RoundedInt ($wave * 10); $headY += Get-RoundedInt ($counterWave * 7) }
-        'HeadTranslate' { $headX += Get-RoundedInt ($wave * 18); $pupilX = 0; $pupilY = 0 }
-        'GazeHorizontal' { $pupilY = 0 }
-        'GazeVertical' { $pupilX = 0; $pupilY = Get-RoundedInt ($wave * 7) }
-        'GazeCircle' { }
-        'GazeDiagonal' { $pupilY = Get-RoundedInt ($wave * 6) }
+        'HeadCircle' {
+            $circlePhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $circleDirection = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $headX += Get-RoundedInt ([Math]::Sin($circleDirection * $circlePhase) * 10)
+            $headY += Get-RoundedInt ([Math]::Cos($circleDirection * $circlePhase) * 7)
+        }
+        'HeadSquare' {
+            $squareSequence = @(0, 1, 2, 3, 0, 3, 2, 1)
+            $squareIndex = $squareSequence[[int][Math]::Floor($FrameIndex / 2)]
+            $headX += @(-11, 11, 11, -11)[$squareIndex]
+            $headY += @(-8, -8, 8, 8)[$squareIndex]
+        }
+        'HeadFourDirection' {
+            $directionIndex = [int][Math]::Floor($FrameIndex / 4)
+            if ($directionIndex -eq 0) { $rotation = -16 }
+            elseif ($directionIndex -eq 1) { $rotation = 16 }
+            elseif ($directionIndex -eq 2) { $headY -= 7 }
+            else { $headY += 7 }
+        }
+        'HeadSurvey' {
+            $surveyPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $surveyDirection = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $turn = [Math]::Sin($surveyDirection * $surveyPhase)
+            $rotation = Get-RoundedInt ([Math]::Cos($surveyDirection * $surveyPhase) * 8)
+        }
+        'HeadTurnNod' {
+            if ($FrameIndex -lt 8) {
+                $turn = [Math]::Sin(2 * [Math]::PI * $FrameIndex / 8)
+            }
+            else {
+                $sideProfile = $true
+                $rotation = Get-RoundedInt ([Math]::Sin(2 * [Math]::PI * ($FrameIndex - 8) / 8) * 16)
+            }
+        }
+        'HeadNeutral' {
+            $headY -= Get-RoundedInt ([Math]::Max(0, $wave) * 4)
+            $blink = [Math]::Max(0, -$counterWave)
+        }
+        'HeadTranslate' {
+            $sideProfile = $ExerciseName -notmatch 'Side-to-Side|Dance Head Slide'
+            $headX += Get-RoundedInt ($wave * 18)
+        }
+        'EyeBlink' {
+            $blink = (1 - $counterWave) / 2
+        }
+        'GazeHorizontal' {
+            $showTarget = $true
+            $targetX = Get-RoundedInt (128 + ($wave * 76))
+            $targetY = $headY - 7
+            $leftPupilX = Get-RoundedInt ($wave * 8)
+            $rightPupilX = $leftPupilX
+            $targetPath = '<line x1="52" y1="97" x2="204" y2="97" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeVertical' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = Get-RoundedInt ($headY - 7 + ($wave * 64))
+            $leftPupilY = Get-RoundedInt ($wave * 7)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<line x1="128" y1="33" x2="128" y2="161" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeCircle' {
+            $circlePhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $circleDirection = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $circleWave = [Math]::Sin($circleDirection * $circlePhase)
+            $circleCounterWave = [Math]::Cos($circleDirection * $circlePhase)
+            $showTarget = $true
+            $targetX = Get-RoundedInt (128 + ($circleWave * 68))
+            $targetY = Get-RoundedInt ($headY - 7 + ($circleCounterWave * 55))
+            $leftPupilX = Get-RoundedInt ($circleWave * 8)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt ($circleCounterWave * 6)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<ellipse cx="128" cy="97" rx="68" ry="55" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeDiagonal' {
+            $showTarget = $true
+            $targetX = Get-RoundedInt (128 + ($wave * 66))
+            $targetY = Get-RoundedInt ($headY - 7 + ($wave * 52))
+            $leftPupilX = Get-RoundedInt ($wave * 8)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt ($wave * 6)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<line x1="62" y1="45" x2="194" y2="149" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeCross' {
+            $localPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $localWave = [Math]::Sin($localPhase)
+            $diagonal = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $showTarget = $true
+            $targetX = Get-RoundedInt (128 + ($localWave * 66))
+            $targetY = Get-RoundedInt ($headY - 7 + ($diagonal * $localWave * 52))
+            $leftPupilX = Get-RoundedInt ($localWave * 8)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt ($diagonal * $localWave * 6)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<path d="M62 45 L194 149 M194 45 L62 149" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeCrossSaccade' {
+            $crossSequence = @(0, 2, 1, 3)
+            $crossIndex = $crossSequence[[int][Math]::Floor($FrameIndex / 4)]
+            $cornerX = @(-1, 1, 1, -1)[$crossIndex]
+            $cornerY = @(-1, -1, 1, 1)[$crossIndex]
+            $showTarget = $true
+            $targetX = 128 + ($cornerX * 66)
+            $targetY = $headY - 7 + ($cornerY * 52)
+            $leftPupilX = $cornerX * 8
+            $rightPupilX = $leftPupilX
+            $leftPupilY = $cornerY * 6
+            $rightPupilY = $leftPupilY
+            $targetPath = '<path d="M62 45 L194 149 M194 45 L62 149" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeFigureEight' {
+            $showTarget = $true
+            $figureY = [Math]::Sin(2 * $phase)
+            $targetX = Get-RoundedInt (128 + ($wave * 70))
+            $targetY = Get-RoundedInt ($headY - 7 + ($figureY * 43))
+            $leftPupilX = Get-RoundedInt ($wave * 8)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt ($figureY * 6)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<path d="M58 97 C58 44 112 44 128 97 C144 150 198 150 198 97 C198 44 144 44 128 97 C112 150 58 150 58 97" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeNearFar' {
+            $showTarget = $true
+            $near = (1 + $wave) / 2
+            $targetRadius = Get-RoundedInt (4 + ($near * 8))
+            $targetY = Get-RoundedInt (45 + ($near * 22))
+            $converge = Get-RoundedInt ($near * 5)
+            $leftPupilX = $converge
+            $rightPupilX = -$converge
+        }
+        'GazeVerticalNearFar' {
+            $showTarget = $true
+            $near = (1 + $wave) / 2
+            $targetRadius = Get-RoundedInt (4 + ($near * 8))
+            $targetY = Get-RoundedInt (38 + ($near * 105))
+            $converge = Get-RoundedInt ($near * 5)
+            $leftPupilX = $converge
+            $rightPupilX = -$converge
+            $leftPupilY = Get-RoundedInt (($targetY - ($headY - 7)) / 10)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<line x1="128" y1="38" x2="128" y2="143" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeVerticalLadder' {
+            $ladderSequence = @(0, 1, 2, 3, 4, 3, 2, 1)
+            $ladderIndex = $ladderSequence[[int][Math]::Floor($FrameIndex / 2)]
+            $targetX = 128
+            $targetY = 37 + ($ladderIndex * 29)
+            $showTarget = $true
+            $leftPupilY = Get-RoundedInt (($targetY - ($headY - 7)) / 9)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<path d="M116 37 H140 M116 66 H140 M116 95 H140 M116 124 H140 M116 153 H140" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="4 5" opacity="0.45" />'
+        }
+        'GazePeripheral' {
+            $peripheralIndex = [int][Math]::Floor($FrameIndex / 4)
+            $targetX = @(62, 194, 194, 62)[$peripheralIndex]
+            $targetY = @(45, 45, 149, 149)[$peripheralIndex]
+            $showTarget = $true
+            $targetPath = '<circle cx="62" cy="45" r="5" fill="none" stroke="#E63946" stroke-width="2" opacity="0.35" /><circle cx="194" cy="45" r="5" fill="none" stroke="#E63946" stroke-width="2" opacity="0.35" /><circle cx="194" cy="149" r="5" fill="none" stroke="#E63946" stroke-width="2" opacity="0.35" /><circle cx="62" cy="149" r="5" fill="none" stroke="#E63946" stroke-width="2" opacity="0.35" />'
+        }
+        'GazeConvergence' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = if ($ExerciseName -match 'Bhrumadhya') { 76 } elseif ($ExerciseName -match 'Nasagra') { 126 } else { 105 }
+            $converge = Get-RoundedInt ((1 + $wave) * 3)
+            $leftPupilX = $converge
+            $rightPupilX = -$converge
+            $leftPupilY = Get-RoundedInt (($targetY - ($headY - 7)) / 10)
+            $rightPupilY = $leftPupilY
+        }
+        'GazeHorizontalSaccade' {
+            $showTarget = $true
+            $targetX = 128 + ($stepHorizontal * 76)
+            $targetY = $headY - 7
+            $leftPupilX = $stepHorizontal * 8
+            $rightPupilX = $leftPupilX
+        }
+        'GazeVerticalSaccade' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = $headY - 7 + ($stepHorizontal * 64)
+            $leftPupilY = $stepHorizontal * 7
+            $rightPupilY = $leftPupilY
+        }
+        'GazeCornerSaccade' {
+            $cornerSequence = @(0, 1, 2, 3, 0, 3, 2, 1)
+            $corner = $cornerSequence[[int][Math]::Floor($FrameIndex / 2)]
+            $cornerX = @(-1, 1, 1, -1)[$corner]
+            $cornerY = @(-1, -1, 1, 1)[$corner]
+            $showTarget = $true
+            $targetX = 128 + ($cornerX * 66)
+            $targetY = $headY - 7 + ($cornerY * 52)
+            $leftPupilX = $cornerX * 8
+            $rightPupilX = $leftPupilX
+            $leftPupilY = $cornerY * 6
+            $rightPupilY = $leftPupilY
+            $targetPath = '<rect x="62" y="45" width="132" height="104" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'GazeClockSaccade' {
+            $clockIndex = if ($FrameIndex -lt 8) { $FrameIndex } else { 15 - $FrameIndex }
+            $clockPhase = 2 * [Math]::PI * $clockIndex / 8
+            $clockX = [Math]::Sin($clockPhase)
+            $clockY = -[Math]::Cos($clockPhase)
+            $showTarget = $true
+            $targetX = Get-RoundedInt (128 + ($clockX * 68))
+            $targetY = Get-RoundedInt ($headY - 7 + ($clockY * 55))
+            $leftPupilX = Get-RoundedInt ($clockX * 8)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt ($clockY * 6)
+            $rightPupilY = $leftPupilY
+        }
+        'GazeTriangleSaccade' {
+            $triangleSequence = @(0, 0, 1, 1, 1, 2, 2, 2, 0, 0, 2, 2, 2, 1, 1, 1)
+            $triangleIndex = $triangleSequence[$FrameIndex]
+            $targetX = @(128, 62, 194)[$triangleIndex]
+            $targetY = @(40, 149, 149)[$triangleIndex]
+            $showTarget = $true
+            $leftPupilX = Get-RoundedInt (($targetX - 128) / 8.25)
+            $rightPupilX = $leftPupilX
+            $leftPupilY = Get-RoundedInt (($targetY - ($headY - 7)) / 9)
+            $rightPupilY = $leftPupilY
+            $targetPath = '<path d="M128 40 L62 149 L194 149 Z" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="5 6" opacity="0.45" />'
+        }
+        'VorHorizontal' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = 37
+            $turn = $wave
+            $leftPupilX = Get-RoundedInt (-$wave * 6)
+            $rightPupilX = $leftPupilX
+        }
+        'VorVertical' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = 37
+            $sideProfile = $true
+            $rotation = Get-RoundedInt ($wave * 12)
+            $leftPupilY = Get-RoundedInt (-$wave * 5)
+            $rightPupilY = $leftPupilY
+        }
+        'VorFourDirection' {
+            $showTarget = $true
+            $targetX = 128
+            $targetY = 37
+            $localPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $localWave = [Math]::Sin($localPhase)
+            if ($FrameIndex -lt 8) {
+                $turn = $localWave
+                $leftPupilX = Get-RoundedInt (-$localWave * 6)
+                $rightPupilX = $leftPupilX
+            }
+            else {
+                $sideProfile = $true
+                $rotation = Get-RoundedInt ($localWave * 12)
+                $leftPupilY = Get-RoundedInt (-$localWave * 5)
+                $rightPupilY = $leftPupilY
+            }
+        }
+        'VorCancellationHorizontal' {
+            $showTarget = $true
+            $turn = $wave
+            $targetX = Get-RoundedInt (128 + ($wave * 62))
+            $targetY = 37
+        }
+        'VorCancellationVertical' {
+            $showTarget = $true
+            $sideProfile = $true
+            $rotation = Get-RoundedInt ($wave * 12)
+            $targetX = 128
+            $targetY = Get-RoundedInt (37 + ($wave * 48))
+        }
+        'VorX2Horizontal' {
+            $showTarget = $true
+            $turn = $wave
+            $targetX = Get-RoundedInt (128 - ($wave * 62))
+            $targetY = 37
+            $leftPupilX = Get-RoundedInt (-$wave * 8)
+            $rightPupilX = $leftPupilX
+        }
+        'VorX2Vertical' {
+            $showTarget = $true
+            $sideProfile = $true
+            $rotation = Get-RoundedInt ($wave * 12)
+            $targetX = 128
+            $targetY = Get-RoundedInt (37 - ($wave * 48))
+            $leftPupilY = Get-RoundedInt (-$wave * 6)
+            $rightPupilY = $leftPupilY
+        }
     }
+
+    $eyeRy = [Math]::Max(1, (Get-RoundedInt (9 * (1 - $blink))))
+    $pupilRadius = [Math]::Max(0, (Get-RoundedInt (4 * (1 - $blink))))
+    $eyeSpacing = Get-RoundedInt (18 - ([Math]::Abs($turn) * 7))
+    $faceShift = Get-RoundedInt ($turn * 8)
+    $leftEyeX = $headX - $eyeSpacing + $faceShift
+    $rightEyeX = $headX + $eyeSpacing + $faceShift
+    $eyeY = $headY - 7
+
+    if ($sideProfile) {
+        $eyesSvg = @"
+    <ellipse cx="$($headX + 13)" cy="$($headY - 8)" rx="11" ry="$eyeRy" fill="white" />
+    <circle cx="$($headX + 16 + $rightPupilX)" cy="$($headY - 8 + $rightPupilY)" r="$pupilRadius" fill="#17324D" />
+    <path d="M$($headX + 42) $($headY - 4) L$($headX + 55) $($headY + 2) L$($headX + 42) $($headY + 7)" fill="$Accent" stroke="#17324D" stroke-width="3" stroke-linejoin="round" />
+"@
+    }
+    else {
+        $eyesSvg = @"
+    <ellipse cx="$leftEyeX" cy="$eyeY" rx="12" ry="$eyeRy" fill="white" />
+    <ellipse cx="$rightEyeX" cy="$eyeY" rx="12" ry="$eyeRy" fill="white" />
+    <circle cx="$($leftEyeX + $leftPupilX)" cy="$($eyeY + $leftPupilY)" r="$pupilRadius" fill="#17324D" />
+    <circle cx="$($rightEyeX + $rightPupilX)" cy="$($eyeY + $rightPupilY)" r="$pupilRadius" fill="#17324D" />
+"@
+    }
+
+    $turnNose = if ([Math]::Abs($turn) -gt 0.1) {
+        $noseEndX = Get-RoundedInt ($headX + ($turn * 35))
+        $noseEndY = $headY + 4
+        '<line x1="{0}" y1="{1}" x2="{2}" y2="{3}" stroke="#17324D" stroke-width="3" stroke-linecap="round" />' -f ($headX + $faceShift), $headY, $noseEndX, $noseEndY
+    }
+    else { '' }
+
+    $targetPathSvg = if ($showTarget) { $targetPath } else { '' }
+    $targetDotSvg = if ($showTarget) {
+        '<circle cx="{0}" cy="{1}" r="{2}" fill="#E63946" stroke="white" stroke-width="2" />' -f $targetX, $targetY, $targetRadius
+    }
+    else { '' }
 
     return @"
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
   <metadata>Flux real head exercise $ExerciseId frame $FrameIndex</metadata>
   <rect width="256" height="256" rx="28" fill="#F7FAFC" />
   <circle cx="128" cy="126" r="102" fill="$Accent" opacity="0.08" />
+  $targetPathSvg
   <path d="M62 220 Q72 166 108 158 L148 158 Q184 166 194 220" fill="#17324D" />
   <line x1="128" y1="160" x2="$headX" y2="$($headY + 40)" stroke="#17324D" stroke-width="18" stroke-linecap="round" />
   <g transform="rotate($rotation $headX $headY)">
     <circle cx="$headX" cy="$headY" r="49" fill="$Accent" />
-    <ellipse cx="$($headX - 18)" cy="$($headY - 7)" rx="12" ry="9" fill="white" />
-    <ellipse cx="$($headX + 18)" cy="$($headY - 7)" rx="12" ry="9" fill="white" />
-    <circle cx="$($headX - 18 + $pupilX)" cy="$($headY - 7 + $pupilY)" r="4" fill="#17324D" />
-    <circle cx="$($headX + 18 + $pupilX)" cy="$($headY - 7 + $pupilY)" r="4" fill="#17324D" />
+    $eyesSvg
+    $turnNose
     <line x1="$($headX - 9)" y1="$($headY + 22)" x2="$($headX + 9)" y2="$($headY + 22)" stroke="#17324D" stroke-width="4" stroke-linecap="round" />
   </g>
+  $targetDotSvg
   <line x1="40" y1="224" x2="216" y2="224" stroke="#C9D7E3" stroke-width="4" stroke-linecap="round" />
 </svg>
 "@
@@ -303,6 +719,75 @@ function New-HeadExerciseFrameSvg {
 function Get-RoundedInt {
     param([double]$Value)
     return [int][Math]::Round($Value, [MidpointRounding]::AwayFromZero)
+}
+
+function New-ExternalExerciseGif {
+    param(
+        [int]$ExerciseId,
+        [string]$ExerciseName,
+        [hashtable]$Media,
+        [string]$GifPath,
+        [string]$WorkingRoot
+    )
+
+    $sourceRoot = Join-Path $WorkingRoot 'external-sources'
+    $frameRoot = Join-Path $WorkingRoot ('external-frames-{0:D4}' -f $ExerciseId)
+    New-Item -ItemType Directory -Force -Path $sourceRoot, $frameRoot | Out-Null
+
+    $sourcePath = Join-Path $sourceRoot $Media.File
+    if (-not (Test-Path -LiteralPath $sourcePath)) {
+        $sourceUrl = 'https://raw.githubusercontent.com/hasaneyldrm/' +
+            'exercises-dataset/main/videos/' + $Media.File
+        Invoke-WebRequest -Uri $sourceUrl -OutFile $sourcePath
+    }
+
+    $framePattern = Join-Path $frameRoot 'frame_%04d.png'
+    & magick $sourcePath `
+        -coalesce `
+        -resize '256x256' `
+        -background '#F7FAFC' `
+        -gravity center `
+        -extent '256x256' `
+        $framePattern
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Could not normalize external media for $ExerciseName."
+    }
+
+    $framePaths = @(
+        Get-ChildItem -LiteralPath $frameRoot -Filter 'frame_*.png' |
+            Sort-Object Name |
+            Select-Object -ExpandProperty FullName)
+
+    if ($framePaths.Count -lt 2) {
+        throw "External media for $ExerciseName is not animated."
+    }
+
+    if ($Media.MirrorForAlternation) {
+        $mirroredPaths = [System.Collections.Generic.List[string]]::new()
+        for ($index = 0; $index -lt $framePaths.Count; $index++) {
+            $mirroredPath = Join-Path $frameRoot ('mirror_{0:D4}.png' -f $index)
+            & magick $framePaths[$index] -flop $mirroredPath
+            if ($LASTEXITCODE -ne 0) {
+                throw "Could not mirror external media for $ExerciseName."
+            }
+            $mirroredPaths.Add($mirroredPath)
+        }
+        $framePaths += @($mirroredPaths)
+    }
+
+    $gifArguments = @($framePaths) + @(
+        '-set', 'delay', '8',
+        '-set', 'dispose', 'background',
+        '-set', 'comment', "Flux reviewed exercise $ExerciseId - $ExerciseName",
+        '-loop', '0',
+        '-layers', 'Optimize',
+        $GifPath)
+    & magick @gifArguments
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Could not encode external media for $ExerciseName."
+    }
 }
 
 function New-ExerciseFrameSvg {
@@ -329,14 +814,24 @@ function New-ExerciseFrameSvg {
     if ($regions[$RegionIndex] -eq 'HEAD') {
         return New-HeadExerciseFrameSvg `
             -ExerciseId $ExerciseId `
+            -ExerciseName $ExerciseName `
             -MotionProfile $MotionProfile `
             -FrameIndex $FrameIndex `
             -Accent $accent
     }
 
-    $phase = 2 * [Math]::PI * $FrameIndex / 8
+    $phase = 2 * [Math]::PI * $FrameIndex / 16
     $wave = [Math]::Sin($phase)
     $counterWave = [Math]::Cos($phase)
+    if ($ExerciseName -match 'Bidirectional') {
+        $localPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+        $direction = if ($FrameIndex -lt 8) { 1 } else { -1 }
+        $wave = [Math]::Sin($direction * $localPhase)
+        $counterWave = [Math]::Cos($direction * $localPhase)
+    }
+    $leftAction = [Math]::Max(0, $wave)
+    $rightAction = [Math]::Max(0, -$wave)
+    $alternatingAction = [Math]::Abs($wave)
     $amplitude = 7.0 + (($MovementIndex % 4) * 1.4)
 
     $headX = 128
@@ -370,8 +865,18 @@ function New-ExerciseFrameSvg {
         'FEET' {
             switch ($MotionProfile) {
                 'AnkleCircle' {
-                    $leftFootX += Get-RoundedInt ($wave * $amplitude)
-                    $leftFootY -= Get-RoundedInt ((1 + $counterWave) * $amplitude * 0.35)
+                    $sideFrame = $FrameIndex % 8
+                    $sidePhase = 2 * [Math]::PI * $sideFrame / 8
+                    $sideWave = [Math]::Sin($sidePhase)
+                    $sideCounterWave = [Math]::Cos($sidePhase)
+                    if ($FrameIndex -lt 8) {
+                        $leftFootX += Get-RoundedInt ($sideWave * $amplitude)
+                        $leftFootY -= Get-RoundedInt ((1 - $sideCounterWave) * $amplitude * 0.35)
+                    }
+                    else {
+                        $rightFootX -= Get-RoundedInt ($sideWave * $amplitude)
+                        $rightFootY -= Get-RoundedInt ((1 - $sideCounterWave) * $amplitude * 0.35)
+                    }
                 }
                 'HeelRaise' {
                     $rise = [Math]::Max(0, $wave) * $amplitude
@@ -390,10 +895,14 @@ function New-ExerciseFrameSvg {
                     $rightFootX -= Get-RoundedInt ($wave * $amplitude * 1.2)
                 }
                 'FootBalance' {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 2.4
-                    $leftKneeY -= Get-RoundedInt $lift
-                    $leftFootY -= Get-RoundedInt ($lift * 0.85)
-                    $leftFootX += Get-RoundedInt ($counterWave * $amplitude)
+                    $leftLift = $leftAction * $amplitude * 2.4
+                    $rightLift = $rightAction * $amplitude * 2.4
+                    $leftKneeY -= Get-RoundedInt $leftLift
+                    $leftFootY -= Get-RoundedInt ($leftLift * 0.85)
+                    $leftFootX += Get-RoundedInt ($leftAction * $amplitude)
+                    $rightKneeY -= Get-RoundedInt $rightLift
+                    $rightFootY -= Get-RoundedInt ($rightLift * 0.85)
+                    $rightFootX -= Get-RoundedInt ($rightAction * $amplitude)
                 }
                 'WeightShift' {
                     $hipX += Get-RoundedInt ($wave * $amplitude * 1.5)
@@ -434,43 +943,65 @@ function New-ExerciseFrameSvg {
                     $rightKneeY += Get-RoundedInt ($bend * 0.28)
                 }
                 'Lunge' {
-                    $leftFootX -= Get-RoundedInt ($amplitude * 1.4)
-                    $rightFootX += Get-RoundedInt ($amplitude * 2.2)
-                    $bend = [Math]::Max(0, $wave) * $amplitude * 1.35
-                    $rightKneeY += Get-RoundedInt $bend
-                    $hipY += Get-RoundedInt ($bend * 0.55)
+                    $spread = $alternatingAction * $amplitude * 2.2
+                    $leftFootX -= Get-RoundedInt ($leftAction * $spread)
+                    $rightFootX += Get-RoundedInt ($leftAction * $spread)
+                    $leftFootX += Get-RoundedInt ($rightAction * $spread)
+                    $rightFootX -= Get-RoundedInt ($rightAction * $spread)
+                    $leftKneeY += Get-RoundedInt ($rightAction * $amplitude * 1.35)
+                    $rightKneeY += Get-RoundedInt ($leftAction * $amplitude * 1.35)
+                    $hipY += Get-RoundedInt ($alternatingAction * $amplitude * 0.75)
                 }
                 'KneeCurl' {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 2.5
-                    $leftFootY -= Get-RoundedInt $lift
-                    $leftFootX += Get-RoundedInt ($lift * 0.45)
+                    $leftLift = $leftAction * $amplitude * 2.5
+                    $rightLift = $rightAction * $amplitude * 2.5
+                    $leftFootY -= Get-RoundedInt $leftLift
+                    $leftFootX += Get-RoundedInt ($leftLift * 0.45)
+                    $rightFootY -= Get-RoundedInt $rightLift
+                    $rightFootX -= Get-RoundedInt ($rightLift * 0.45)
                 }
                 'KneeLift' {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 3.2
-                    $leftKneeY -= Get-RoundedInt $lift
-                    $leftFootY -= Get-RoundedInt ($lift * 0.72)
-                    $leftKneeX += Get-RoundedInt ($amplitude * 0.7)
+                    $leftLift = $leftAction * $amplitude * 3.2
+                    $rightLift = $rightAction * $amplitude * 3.2
+                    $leftKneeY -= Get-RoundedInt $leftLift
+                    $leftFootY -= Get-RoundedInt ($leftLift * 0.72)
+                    $leftKneeX += Get-RoundedInt ($leftAction * $amplitude * 0.7)
+                    $rightKneeY -= Get-RoundedInt $rightLift
+                    $rightFootY -= Get-RoundedInt ($rightLift * 0.72)
+                    $rightKneeX -= Get-RoundedInt ($rightAction * $amplitude * 0.7)
                 }
                 'LegSide' {
-                    $leftFootX -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 3.1)
-                    $leftFootY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.25)
-                    $leftKneeX -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.6)
+                    $leftFootX -= Get-RoundedInt ($leftAction * $amplitude * 3.1)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude * 1.25)
+                    $leftKneeX -= Get-RoundedInt ($leftAction * $amplitude * 1.6)
+                    $rightFootX += Get-RoundedInt ($rightAction * $amplitude * 3.1)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude * 1.25)
+                    $rightKneeX += Get-RoundedInt ($rightAction * $amplitude * 1.6)
                 }
                 'LegBack' {
-                    $leftFootX -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2.1)
-                    $leftFootY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.55)
-                    $hipX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 0.65)
+                    $leftFootX -= Get-RoundedInt ($leftAction * $amplitude * 2.1)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude * 1.55)
+                    $rightFootX += Get-RoundedInt ($rightAction * $amplitude * 2.1)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude * 1.55)
+                    $hipX += Get-RoundedInt (($leftAction - $rightAction) * $amplitude * 0.65)
                 }
                 'LegFront' {
-                    $leftFootX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2.8)
-                    $leftFootY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2.1)
-                    $leftKneeX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.4)
+                    $leftFootX += Get-RoundedInt ($leftAction * $amplitude * 2.8)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude * 2.1)
+                    $leftKneeX += Get-RoundedInt ($leftAction * $amplitude * 1.4)
+                    $rightFootX -= Get-RoundedInt ($rightAction * $amplitude * 2.8)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude * 2.1)
+                    $rightKneeX -= Get-RoundedInt ($rightAction * $amplitude * 1.4)
                 }
                 default {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 2.6
-                    $leftKneeY -= Get-RoundedInt $lift
-                    $leftFootY -= Get-RoundedInt ($lift * 0.8)
-                    $leftFootX += Get-RoundedInt ($counterWave * $amplitude)
+                    $leftLift = $leftAction * $amplitude * 2.6
+                    $rightLift = $rightAction * $amplitude * 2.6
+                    $leftKneeY -= Get-RoundedInt $leftLift
+                    $leftFootY -= Get-RoundedInt ($leftLift * 0.8)
+                    $leftFootX += Get-RoundedInt ($leftAction * $amplitude)
+                    $rightKneeY -= Get-RoundedInt $rightLift
+                    $rightFootY -= Get-RoundedInt ($rightLift * 0.8)
+                    $rightFootX -= Get-RoundedInt ($rightAction * $amplitude)
                 }
             }
         }
@@ -489,21 +1020,30 @@ function New-ExerciseFrameSvg {
                     $rightHandY -= Get-RoundedInt ($counterWave * $amplitude * 3)
                 }
                 'StraightPunch' {
-                    $leftHandX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 3.3)
-                    $leftHandY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 0.7)
-                    $leftElbowX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.6)
+                    $leftHandX += Get-RoundedInt ($leftAction * $amplitude * 3.3)
+                    $leftHandY -= Get-RoundedInt ($leftAction * $amplitude * 0.7)
+                    $leftElbowX += Get-RoundedInt ($leftAction * $amplitude * 1.6)
+                    $rightHandX -= Get-RoundedInt ($rightAction * $amplitude * 3.3)
+                    $rightHandY -= Get-RoundedInt ($rightAction * $amplitude * 0.7)
+                    $rightElbowX -= Get-RoundedInt ($rightAction * $amplitude * 1.6)
                 }
                 'BentArmStrike' {
-                    $leftElbowY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2.5)
-                    $leftHandX += Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.8)
-                    $leftHandY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.5)
+                    $leftElbowY -= Get-RoundedInt ($leftAction * $amplitude * 2.5)
+                    $leftHandX += Get-RoundedInt ($leftAction * $amplitude * 1.8)
+                    $leftHandY -= Get-RoundedInt ($leftAction * $amplitude * 1.5)
+                    $rightElbowY -= Get-RoundedInt ($rightAction * $amplitude * 2.5)
+                    $rightHandX -= Get-RoundedInt ($rightAction * $amplitude * 1.8)
+                    $rightHandY -= Get-RoundedInt ($rightAction * $amplitude * 1.5)
                 }
                 'ArmBlock' {
-                    $leftElbowX += Get-RoundedInt ($wave * $amplitude * 1.4)
-                    $leftElbowY -= Get-RoundedInt ($counterWave * $amplitude * 1.5)
-                    $leftHandX += Get-RoundedInt ($wave * $amplitude * 2.2)
-                    $leftHandY -= Get-RoundedInt ($counterWave * $amplitude * 2.7)
-                    $rightHandX -= Get-RoundedInt ($wave * $amplitude)
+                    $leftElbowX += Get-RoundedInt ($leftAction * $amplitude * 1.4)
+                    $leftElbowY -= Get-RoundedInt ($leftAction * $amplitude * 1.5)
+                    $leftHandX += Get-RoundedInt ($leftAction * $amplitude * 2.2)
+                    $leftHandY -= Get-RoundedInt ($leftAction * $amplitude * 2.7)
+                    $rightElbowX -= Get-RoundedInt ($rightAction * $amplitude * 1.4)
+                    $rightElbowY -= Get-RoundedInt ($rightAction * $amplitude * 1.5)
+                    $rightHandX -= Get-RoundedInt ($rightAction * $amplitude * 2.2)
+                    $rightHandY -= Get-RoundedInt ($rightAction * $amplitude * 2.7)
                 }
                 'FlowingArms' {
                     $leftHandX += Get-RoundedInt ($counterWave * $amplitude * 2.4)
@@ -622,20 +1162,27 @@ function New-ExerciseFrameSvg {
                     $hipX -= Get-RoundedInt ($lean * 0.35)
                 }
                 'HipLegArc' {
-                    $leftFootX += Get-RoundedInt ($wave * $amplitude * 2.5)
-                    $leftFootY -= Get-RoundedInt ((1 + $counterWave) * $amplitude * 1.15)
-                    $leftKneeX += Get-RoundedInt ($wave * $amplitude * 1.25)
+                    $leftFootX += Get-RoundedInt ($leftAction * $amplitude * 2.5)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude * 1.15)
+                    $leftKneeX += Get-RoundedInt ($leftAction * $amplitude * 1.25)
+                    $rightFootX -= Get-RoundedInt ($rightAction * $amplitude * 2.5)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude * 1.15)
+                    $rightKneeX -= Get-RoundedInt ($rightAction * $amplitude * 1.25)
                 }
                 'HipRotation' {
                     $hipX += Get-RoundedInt ($wave * $amplitude * 1.2)
                     $leftShoulderX -= Get-RoundedInt ($wave * $amplitude * 0.8)
                     $rightShoulderX -= Get-RoundedInt ($wave * $amplitude * 0.8)
                     $leftKneeX += Get-RoundedInt ($counterWave * $amplitude * 0.75)
+                    $rightKneeX -= Get-RoundedInt ($counterWave * $amplitude * 0.75)
                 }
                 default {
-                    $leftKneeX -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.6)
-                    $leftKneeY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.3)
-                    $leftFootY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude)
+                    $leftKneeX -= Get-RoundedInt ($leftAction * $amplitude * 1.6)
+                    $leftKneeY -= Get-RoundedInt ($leftAction * $amplitude * 1.3)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude)
+                    $rightKneeX += Get-RoundedInt ($rightAction * $amplitude * 1.6)
+                    $rightKneeY -= Get-RoundedInt ($rightAction * $amplitude * 1.3)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude)
                 }
             }
         }
@@ -748,21 +1295,28 @@ function New-ExerciseFrameSvg {
                     $hipY += Get-RoundedInt ([Math]::Abs($wave) * $amplitude)
                 }
                 default {
-                    $leftFootY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 1.7)
-                    $leftHandY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2)
-                    $rightHandY -= Get-RoundedInt ([Math]::Max(0, $wave) * $amplitude * 2)
+                    $leftFootY -= Get-RoundedInt ($leftAction * $amplitude * 1.7)
+                    $rightFootY -= Get-RoundedInt ($rightAction * $amplitude * 1.7)
+                    $leftHandY -= Get-RoundedInt ($alternatingAction * $amplitude * 2)
+                    $rightHandY -= Get-RoundedInt ($alternatingAction * $amplitude * 2)
                 }
             }
         }
         'CORE' {
             switch ($MotionProfile) {
                 'CoreCrunch' {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 2.5
-                    $rightKneeY -= Get-RoundedInt $lift
-                    $rightFootY -= Get-RoundedInt ($lift * 0.75)
-                    $rightKneeX += Get-RoundedInt ($lift * 0.38)
-                    $leftElbowY += Get-RoundedInt ($lift * 0.5)
-                    $leftElbowX += Get-RoundedInt ($lift * 0.35)
+                    $rightLift = $leftAction * $amplitude * 2.5
+                    $leftLift = $rightAction * $amplitude * 2.5
+                    $rightKneeY -= Get-RoundedInt $rightLift
+                    $rightFootY -= Get-RoundedInt ($rightLift * 0.75)
+                    $rightKneeX -= Get-RoundedInt ($rightLift * 0.38)
+                    $leftElbowY += Get-RoundedInt ($rightLift * 0.5)
+                    $leftElbowX += Get-RoundedInt ($rightLift * 0.35)
+                    $leftKneeY -= Get-RoundedInt $leftLift
+                    $leftFootY -= Get-RoundedInt ($leftLift * 0.75)
+                    $leftKneeX += Get-RoundedInt ($leftLift * 0.38)
+                    $rightElbowY += Get-RoundedInt ($leftLift * 0.5)
+                    $rightElbowX -= Get-RoundedInt ($leftLift * 0.35)
                 }
                 'CoreSideBend' {
                     $lean = Get-RoundedInt ($wave * $amplitude * 1.5)
@@ -780,11 +1334,14 @@ function New-ExerciseFrameSvg {
                     $hipX -= Get-RoundedInt ($twist * 0.6)
                 }
                 'CoreBalance' {
-                    $lift = [Math]::Max(0, $wave) * $amplitude * 2.5
-                    $rightKneeY -= Get-RoundedInt $lift
-                    $rightFootY -= Get-RoundedInt ($lift * 0.8)
-                    $leftHandY -= Get-RoundedInt ($lift * 0.7)
-                    $rightHandY -= Get-RoundedInt ($lift * 0.7)
+                    $rightLift = $leftAction * $amplitude * 2.5
+                    $leftLift = $rightAction * $amplitude * 2.5
+                    $rightKneeY -= Get-RoundedInt $rightLift
+                    $rightFootY -= Get-RoundedInt ($rightLift * 0.8)
+                    $leftKneeY -= Get-RoundedInt $leftLift
+                    $leftFootY -= Get-RoundedInt ($leftLift * 0.8)
+                    $leftHandY -= Get-RoundedInt ($alternatingAction * $amplitude * 0.7)
+                    $rightHandY -= Get-RoundedInt ($alternatingAction * $amplitude * 0.7)
                 }
                 'CoreCrossCrawl' {
                     $rightLift = [Math]::Max(0, $wave) * $amplitude * 2.3
@@ -797,9 +1354,12 @@ function New-ExerciseFrameSvg {
                     $rightHandY += Get-RoundedInt ($leftLift * 0.55)
                 }
                 'CoreIsometric' {
-                    $leftHandX += Get-RoundedInt ((1 + $wave) * $amplitude * 1.4)
-                    $rightKneeY -= Get-RoundedInt ((1 + $wave) * $amplitude * 1.2)
-                    $rightFootY -= Get-RoundedInt ((1 + $wave) * $amplitude * 0.75)
+                    $leftHandX += Get-RoundedInt ($leftAction * $amplitude * 2.8)
+                    $rightKneeY -= Get-RoundedInt ($leftAction * $amplitude * 2.4)
+                    $rightFootY -= Get-RoundedInt ($leftAction * $amplitude * 1.5)
+                    $rightHandX -= Get-RoundedInt ($rightAction * $amplitude * 2.8)
+                    $leftKneeY -= Get-RoundedInt ($rightAction * $amplitude * 2.4)
+                    $leftFootY -= Get-RoundedInt ($rightAction * $amplitude * 1.5)
                 }
                 default {
                     $leftShoulderX += Get-RoundedInt ($wave * $amplitude * 0.55)
@@ -877,7 +1437,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
 
     for ($movementIndex = 0; $movementIndex -lt 100; $movementIndex++) {
         $exerciseId = ($regionIndex * 100) + $movementIndex + 1
-        $exerciseName = $regionNames[$movementIndex]
+        $sourceExerciseName = $regionNames[$movementIndex]
+        $exerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
+            $bilateralExerciseNames[$exerciseId]
+        }
+        else {
+            $sourceExerciseName
+        }
         $practice = Get-Practice -Name $exerciseName
         $motionProfile = Get-MotionProfile -Region $region -Name $exerciseName
         $gifFileName = 'exercise_{0:D4}.gif' -f $exerciseId
@@ -898,8 +1464,15 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             silent = $true
         })
 
-        if ($exerciseId -lt $StartExercise -or
-            ($MaxExercises -gt 0 -and $exerciseId -gt $MaxExercises)) {
+        $isSelected = if ($ExerciseIds.Count -gt 0) {
+            $ExerciseIds -contains $exerciseId
+        }
+        else {
+            $exerciseId -ge $StartExercise -and
+                ($MaxExercises -eq 0 -or $exerciseId -le $MaxExercises)
+        }
+
+        if (-not $isSelected) {
             continue
         }
 
@@ -909,9 +1482,27 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
+        if ($posecodeExerciseMedia.ContainsKey($exerciseId)) {
+            if (-not (Test-Path -LiteralPath $gifPath)) {
+                throw "The reviewed Posecode asset is missing for $exerciseName."
+            }
+
+            continue
+        }
+
+        if ($externalExerciseMedia.ContainsKey($exerciseId)) {
+            New-ExternalExerciseGif `
+                -ExerciseId $exerciseId `
+                -ExerciseName $exerciseName `
+                -Media $externalExerciseMedia[$exerciseId] `
+                -GifPath $gifPath `
+                -WorkingRoot $tempRoot
+            continue
+        }
+
         $framePaths = @()
 
-        for ($frameIndex = 0; $frameIndex -lt 8; $frameIndex++) {
+        for ($frameIndex = 0; $frameIndex -lt 16; $frameIndex++) {
             $framePath = Join-Path $tempRoot ('frame_{0:D2}.svg' -f $frameIndex)
             $svg = New-ExerciseFrameSvg `
                 -ExerciseId $exerciseId `
@@ -977,7 +1568,7 @@ if ($duplicateNames -or $duplicateGifs -or $duplicateIds -or
     throw 'The generated catalog failed its IDs, uniqueness, region, or constraint checks.'
 }
 
-if ($MaxExercises -eq 0) {
+if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
     $missingGifs = $records | Where-Object {
         -not (Test-Path -LiteralPath (Join-Path $resolvedOutputRoot $_['gif']))
     }
@@ -989,8 +1580,14 @@ if ($MaxExercises -eq 0) {
 
 $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $catalogPath -Encoding utf8
 
-Get-ChildItem -LiteralPath $tempRoot -File | Remove-Item -Force
-Remove-Item -LiteralPath $tempRoot
+$resolvedTempRoot = [IO.Path]::GetFullPath($tempRoot)
+$systemTempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
+if (-not $resolvedTempRoot.StartsWith(
+        $systemTempRoot,
+        [StringComparison]::OrdinalIgnoreCase)) {
+    throw 'Refusing to remove a generator working directory outside the system temp folder.'
+}
+Remove-Item -LiteralPath $resolvedTempRoot -Recurse -Force
 
 Write-Output "Catalog: $catalogPath"
 Write-Output "Records: $($records.Count)"

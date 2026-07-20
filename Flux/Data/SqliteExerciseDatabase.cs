@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 2;
+    private const int DatabaseVersion = 3;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int ExpectedExerciseCount = 1000;
@@ -90,6 +90,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             return;
         }
 
+        if (oldVersion < 3 && newVersion >= 3)
+        {
+            RefreshCatalogPreservingScores(database);
+            return;
+        }
+
         throw new NotSupportedException(
             $"No exercise database migration exists from {oldVersion} to {newVersion}.");
     }
@@ -117,11 +123,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
     private void Seed(SQLiteDatabase database)
     {
-        using Stream stream = _context.Assets!.Open(CatalogAsset);
-        Exercise[] catalog = JsonSerializer.Deserialize(
-                stream,
-                ExerciseCatalogJsonContext.Default.ExerciseArray)
-            ?? throw new InvalidOperationException("The exercise catalog is empty.");
+        Exercise[] catalog = ReadBundledCatalog();
 
         ValidateCatalog(catalog, requireInitialScores: true);
 
@@ -142,6 +144,61 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             values.Put("silent", exercise.Silent ? 1 : 0);
             database.InsertOrThrow(TableName, null, values);
         }
+    }
+
+    private void RefreshCatalogPreservingScores(SQLiteDatabase database)
+    {
+        Exercise[] catalog = ReadBundledCatalog();
+        ValidateCatalog(catalog, requireInitialScores: true);
+
+        database.BeginTransaction();
+        try
+        {
+            // Release the UNIQUE name values before applying renamed records.
+            database.ExecSQL(
+                "UPDATE exercises SET name = '__flux_catalog_v3_' || id");
+
+            foreach (Exercise exercise in catalog)
+            {
+                using var values = new ContentValues();
+                values.Put("name", exercise.Name);
+                values.Put("gif", exercise.Gif);
+                values.Put("dominant_region", exercise.DominantRegion.ToString());
+                values.Put("practice", exercise.Practice);
+                values.Put("motion_profile", exercise.MotionProfile);
+                values.Put("only_feet_touch_ground", exercise.OnlyFeetTouchGround ? 1 : 0);
+                values.Put("shoe_agnostic", exercise.ShoeAgnostic ? 1 : 0);
+                values.Put("max_space_meters", exercise.MaxSpaceMeters);
+                values.Put("equipment", exercise.Equipment);
+                values.Put("silent", exercise.Silent ? 1 : 0);
+
+                int updatedRows = database.Update(
+                    TableName,
+                    values,
+                    "id = ?",
+                    [exercise.Id.ToString(CultureInfo.InvariantCulture)]);
+                if (updatedRows != 1)
+                {
+                    throw new InvalidOperationException(
+                        $"Could not refresh catalog exercise {exercise.Id}.");
+                }
+            }
+
+            database.SetTransactionSuccessful();
+        }
+        finally
+        {
+            database.EndTransaction();
+        }
+    }
+
+    private Exercise[] ReadBundledCatalog()
+    {
+        using Stream stream = _context.Assets!.Open(CatalogAsset);
+        return JsonSerializer.Deserialize(
+                stream,
+                ExerciseCatalogJsonContext.Default.ExerciseArray)
+            ?? throw new InvalidOperationException("The exercise catalog is empty.");
     }
 
     private IReadOnlyList<Exercise> LoadExercises()

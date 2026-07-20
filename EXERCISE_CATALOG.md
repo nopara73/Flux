@@ -18,11 +18,17 @@ Every catalog entry must:
 - require no wall, chair, floor exercise, prop, partner, or other equipment;
 - avoid jumping, stomping, clapping, vocalization, or another neighbor-disturbing
   action;
+- be bilateral/symmetric, or visibly complete both left and right repetitions
+  inside one uninterrupted loop; a fixed lead side, supporting side, diagonal,
+  hand role, or clockwise-only circle is not allowed;
 - have exactly one dominant region and its own bundled animated GIF.
 
-The canonical catalog is maintained in `tools/RealExerciseCatalog.psd1`. The generator
-rejects duplicate names, the former synthetic modifier suffixes, missing motion
-profiles, unbalanced region counts, and constraint-metadata violations.
+The canonical base catalog is maintained in `tools/RealExerciseCatalog.psd1`.
+`tools/BilateralExerciseNames.psd1` contains the reviewed replacements that
+enforce the no-one-sided rule without changing the 100-per-region structure.
+The generator rejects duplicate names, the former synthetic modifier suffixes,
+missing motion profiles, unbalanced region counts, and constraint-metadata
+violations.
 
 ## Reference families
 
@@ -37,11 +43,27 @@ library. These references anchor the terminology and movement families used:
 - [International Association for Dance Medicine & Science resources](https://iadms.org/research-publications/bulletin-for-dancers-teachers/)
 - [World Taekwondo poomsae rules](https://www.worldtaekwondo.org/att_file/documents/Poomsae_Competition_Rules_and_Interpretation_%28In_force_as_of_September_30_2024%29.pdf)
 
-## Animation scope
+## Animation sources and accuracy
 
-The GIFs are original simplified demonstrations. Each record is mapped to a
-movement-specific profile such as ankle motion, weight shift, step, balance,
-squat, lunge, kick, punch, block, mudra, gaze tracking, shoulder rotation, hip
-isolation, chest expansion, spinal articulation, or standing core work. They
-show the movement family and direction; they are not a substitute for detailed
-coaching or medical advice.
+Every entry has a moving, looping GIF. The best available demonstrations use
+one of three sources:
+
+- visually reviewed real-person exercise clips, normalized to 256 × 256 and
+  mirrored into a left/right cycle only where mirroring is mechanically valid;
+- visually reviewed Posecode 3D renders, including custom alternating and
+  bidirectional sequences;
+- purpose-built animated SVG diagrams for motions such as smooth pursuit,
+  saccades, blinking, convergence, VOR, head movement, and a conservative set
+  of simple whole-body movements.
+
+The remaining GIFs are explicit temporary family-level placeholders. They are
+animated and obey the app's simple one-loop interaction, but they are not
+claimed to be exact demonstrations. The current high-bar result is **112 exact
+demonstrations and 888 still requiring exact media**. The region-by-region
+counts and the complete list of all 888 remaining names are maintained in
+[`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
+
+Media mappings live in `tools/ExternalExerciseMedia.psd1`,
+`tools/PosecodeExerciseMedia.psd1`, and `tools/VerifiedExerciseDemos.psd1`.
+The external clips are used for this private personal build and are not a
+commercial media-clearance record.

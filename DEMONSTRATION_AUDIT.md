@@ -1,0 +1,965 @@
+# Flux demonstration accuracy audit
+
+This is a deliberately conservative visual audit. **Verified** means the
+animation directly demonstrates the named movement, not merely the same body
+region or a vaguely related motion. Every other bundled GIF remains usable as
+a temporary placeholder, but is not claimed to be a perfect demonstration.
+
+Verified: **112 / 1,000**. Still requiring exact media: **888 / 1,000**.
+
+| Region | Verified | Still imperfect |
+| --- | ---: | ---: |
+| FEET | 4 | 96 |
+| LEGS | 21 | 79 |
+| HANDS | 1 | 99 |
+| ARMS | 3 | 97 |
+| HEAD | 53 | 47 |
+| SHOULDERS | 3 | 97 |
+| HIPS | 6 | 94 |
+| CHEST | 3 | 97 |
+| BACK | 7 | 93 |
+| CORE | 11 | 89 |
+
+## Verified sources
+
+- Reviewed real-person clips: **23**
+- Reviewed Posecode 3D renders: **15**
+- Purpose-built SVG demonstrations: **74**
+
+The real-person source mapping is in `tools/ExternalExerciseMedia.psd1`.
+The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact
+ID inventory used to produce this report is in `tools/VerifiedExerciseDemos.psd1`.
+
+## Demonstrations still requiring exact media
+
+These are the exercises for which neither a perfect reviewed clip nor a
+sufficiently exact purpose-built animation was available in this pass.
+
+### FEET (96)
+
+- 0001 — Ankle Dorsiflexion Rock
+- 0002 — Ankle Plantarflexion Point
+- 0003 — Ankle Inversion Sweep
+- 0004 — Ankle Eversion Sweep
+- 0005 — Wide-Stance Calf Raise
+- 0006 — Toes-In Calf Raise
+- 0007 — Toes-Out Calf Raise
+- 0009 — Alternating Heel Raise
+- 0010 — Standing Bent-Knee Heel Raise
+- 0011 — Standing Forefoot Lift
+- 0012 — Heel-to-Toe Rock
+- 0013 — Lateral Foot Rock
+- 0014 — Tripod Foot Press
+- 0015 — Feet-Together Balance with Head Turns
+- 0016 — Feet-Together Balance with Head Nods
+- 0017 — Feet-Together Balance with Arm Raises
+- 0018 — Narrow-Stance Balance
+- 0019 — Feet-Together Balance with Arm Swings
+- 0020 — Parallel-Stance Anterior-Posterior Sway
+- 0021 — Parallel-Stance Circular Sway
+- 0022 — Alternating Four-Way Step Tap
+- 0023 — Alternating Three-Way Step Tap
+- 0024 — Alternating Clock Step Tap
+- 0025 — Alternating Compass Step Tap
+- 0026 — Alternating Pendulum Step
+- 0027 — Figure-Eight Walk
+- 0028 — Alternating Around-the-World Step Tap
+- 0029 — Heel Walk
+- 0030 — Forefoot Walk
+- 0031 — Tandem Walk
+- 0032 — Tightrope Walk
+- 0033 — Box Step
+- 0034 — V-Step
+- 0035 — A-Step
+- 0036 — Step Touch
+- 0037 — Side Step-and-Close
+- 0039 — Cross-Behind Step
+- 0040 — Forward Step-and-Close
+- 0041 — Backward Step-and-Close
+- 0042 — Diagonal Step-and-Close
+- 0043 — Three-Step Turn
+- 0044 — Pivot Turn
+- 0045 — Quarter-Turn Step
+- 0046 — Half-Turn Step
+- 0047 — Clock Step
+- 0048 — Square Step
+- 0049 — Diamond Step
+- 0050 — Triangle Step
+- 0051 — L-Step
+- 0052 — T-Step
+- 0053 — Charleston Step
+- 0054 — Jazz Square
+- 0055 — Pas de Bourree
+- 0056 — Grapevine Step
+- 0057 — Carioca Step
+- 0058 — Two-Step
+- 0059 — Foxtrot Box Step
+- 0060 — Waltz Box Step
+- 0061 — Rumba Box Step
+- 0062 — Cha-Cha Basic Step
+- 0063 — Salsa Basic Step
+- 0064 — Bachata Basic Step
+- 0065 — Merengue Basic Step
+- 0066 — Mambo Basic Step
+- 0067 — Samba Whisk
+- 0068 — Tai Chi Empty Step
+- 0069 — Tai Chi Bow Step
+- 0070 — Tai Chi Cat Step
+- 0071 — Tai Chi T-Step
+- 0072 — Tai Chi Heel Step
+- 0073 — Tai Chi Toe Step
+- 0074 — Tai Chi Brush Step
+- 0075 — Tai Chi Cloud Step
+- 0076 — Tai Chi Repulse Step
+- 0077 — Bagua Mud Step
+- 0078 — Serpentine Walk
+- 0079 — Bagua Kou Bu
+- 0080 — Bagua Bai Bu
+- 0081 — Xingyi Chicken Step
+- 0082 — Karate Suri-Ashi
+- 0083 — Karate Yori-Ashi
+- 0084 — Karate Ayumi-Ashi
+- 0085 — Karate Tsugi-Ashi
+- 0086 — Forward-and-Backward Walk
+- 0087 — Alternating Forward-and-Backward Toe Tap
+- 0088 — Lateral Step-and-Slide
+- 0089 — Alternating L-Step
+- 0090 — Alternating Step Pivot
+- 0091 — Zigzag Walk
+- 0092 — Capoeira Ginga
+- 0093 — Capoeira Esquiva Lateral
+- 0094 — Kalaripayattu Horse Step
+- 0097 — Forward-and-Back Weight Shift
+- 0098 — Diagonal Weight Shift
+- 0099 — Figure-Eight Weight Shift
+- 0100 — Four-Corner Weight Shift
+
+### LEGS (79)
+
+- 0102 — Narrow-Stance Squat
+- 0103 — Wide-Stance Squat
+- 0104 — Sumo Squat
+- 0105 — Plie Squat
+- 0106 — Quarter Squat
+- 0107 — Half Squat
+- 0108 — Deep Squat
+- 0109 — Tempo Bodyweight Squat
+- 0110 — Squat Pulse
+- 0113 — Bodyweight Overhead Squat
+- 0114 — Hindu Squat
+- 0115 — Sissy Squat
+- 0116 — Cossack Squat
+- 0117 — Lateral Squat
+- 0118 — Squat to Knee Drive
+- 0119 — Squat to Calf Raise
+- 0120 — Duck Walk
+- 0121 — Forward Lunge
+- 0122 — Reverse Lunge
+- 0123 — Lateral Lunge
+- 0129 — Squat to Alternating Front Kick
+- 0130 — Squat to Alternating Side Leg Lift
+- 0131 — Squat to Alternating Back Leg Lift
+- 0132 — Squat to Alternating Oblique Crunch
+- 0133 — Goddess Squat to Star Pose
+- 0134 — Chair Pose to Mountain Pose
+- 0135 — Mountain Pose to Upward Salute
+- 0136 — Goddess Pose
+- 0138 — Narrow-Squat Heel Raise
+- 0139 — Wide-Squat Heel Raise
+- 0140 — Sumo-Squat Calf Raise
+- 0141 — Squat with Alternating Heel Lift
+- 0142 — Lateral Squat Walk
+- 0145 — Standing Knee Extension
+- 0147 — Standing Hip Flexion
+- 0148 — Standing Hip Extension
+- 0150 — Standing Hip Adduction
+- 0151 — Straight-Leg Front Raise
+- 0153 — Straight-Leg Back Raise
+- 0154 — Diagonal Leg Raise
+- 0155 — Front-to-Back Leg Swing
+- 0156 — Side-to-Side Leg Swing
+- 0158 — Open-the-Gate Knee Lift
+- 0159 — Standing Fire Hydrant
+- 0160 — Standing Donkey Kick
+- 0161 — Standing Clamshell
+- 0163 — Bent-Knee Calf Raise
+- 0164 — First-Position Releve
+- 0165 — Standing Tibialis Raise
+- 0168 — Toy Soldier March
+- 0169 — Standing Knee Drive
+- 0170 — Cross-Body Knee Drive
+- 0171 — Hamstring Sweep
+- 0173 — Side Knee Lift
+- 0175 — Side Kick
+- 0176 — Back Kick
+- 0177 — Roundhouse Kick Chamber
+- 0178 — Crescent Kick
+- 0179 — Axe-Kick Leg Raise
+- 0180 — Karate Front Snap Kick
+- 0181 — Karate Side Thrust Kick
+- 0182 — Taekwondo Front-Kick Chamber
+- 0183 — Taekwondo Side-Kick Chamber
+- 0184 — Tai Chi Heel Kick
+- 0185 — Tai Chi Toe Kick
+- 0186 — Tai Chi Lotus Kick
+- 0187 — Second-Position Releve
+- 0188 — Parallel Demi-Plie
+- 0190 — Ballet Grand Plie
+- 0191 — Ballet Tendu Devant
+- 0192 — Ballet Tendu a la Seconde
+- 0193 — Ballet Tendu Derriere
+- 0194 — Ballet Degage Devant
+- 0195 — Ballet Degage a la Seconde
+- 0196 — Ballet Degage Derriere
+- 0197 — First-Position Plie-Releve
+- 0198 — Second-Position Plie-Releve
+- 0199 — Horse-Stance Knee Bend
+- 0200 — Standing Wide-Leg Hip Hinge
+
+### HANDS (99)
+
+- 0201 — Hand Open and Close
+- 0202 — Hook Fist
+- 0203 — Straight Fist
+- 0204 — Full Fist
+- 0205 — Tabletop Fist
+- 0206 — Tendon-Glide Sequence
+- 0207 — Finger Fan
+- 0208 — Finger Adduction
+- 0209 — Finger Abduction
+- 0210 — Thumb Opposition
+- 0211 — Thumb Palmar Abduction
+- 0212 — Thumb Radial Abduction
+- 0213 — Thumb Flexion
+- 0214 — Thumb Extension
+- 0215 — Thumb Circumduction
+- 0216 — Finger Wave
+- 0217 — Air Finger Walk
+- 0218 — Sequential Finger Lift
+- 0219 — Independent Finger Flexion
+- 0220 — Independent Finger Extension
+- 0221 — Finger-to-Thumb Taps
+- 0222 — Reverse Finger-to-Thumb Taps
+- 0223 — Air Piano
+- 0224 — Finger Scissors
+- 0225 — Finger Cross and Uncross
+- 0226 — Finger Hook and Release
+- 0227 — Finger Curl Cascade
+- 0228 — Finger Extension Cascade
+- 0229 — Finger Flick
+- 0230 — Quiet Hand Shakeout
+- 0231 — Wrist Flexion
+- 0232 — Wrist Extension
+- 0233 — Wrist Radial Deviation
+- 0234 — Wrist Ulnar Deviation
+- 0236 — Wrist Figure Eight
+- 0237 — Forearm Pronation and Supination
+- 0238 — Prayer-Hand Stretch
+- 0239 — Reverse-Prayer Stretch
+- 0240 — Palm Press
+- 0241 — Fingertip Press
+- 0242 — Finger Pull-Apart Isometric
+- 0243 — Hook-Fist Isometric
+- 0244 — Fist-Squeeze Isometric
+- 0245 — Palm Cup and Flatten
+- 0246 — Hand Wave
+- 0247 — Palm Turnover
+- 0248 — Jazz Hands
+- 0249 — Claw Hand to Open Palm
+- 0250 — Crane-Beak Hand
+- 0251 — Tiger-Claw Hand
+- 0252 — Leopard-Fist Formation
+- 0253 — Spear-Hand Formation
+- 0254 — Knife-Hand Formation
+- 0255 — Ridge-Hand Formation
+- 0256 — Back-Fist Rotation
+- 0257 — Phoenix-Eye Fist Formation
+- 0258 — Wing Chun Wu Sau
+- 0259 — Wing Chun Tan Sau
+- 0260 — Wing Chun Bong Sau
+- 0261 — Wing Chun Fook Sau
+- 0262 — Wing Chun Pak Sau
+- 0263 — Wing Chun Gum Sau
+- 0264 — Wing Chun Huen Sau
+- 0265 — Wing Chun Bil Sau
+- 0266 — Wing Chun Lap Sau
+- 0267 — Karate Shuto Formation
+- 0268 — Karate Nukite Formation
+- 0269 — Qigong Laogong Opening
+- 0270 — Adi Mudra
+- 0271 — Anjali Mudra
+- 0272 — Chin Mudra
+- 0273 — Prana Mudra
+- 0274 — Apana Mudra
+- 0275 — Vayu Mudra
+- 0276 — Varuna Mudra
+- 0277 — Surya Mudra
+- 0278 — Prithvi Mudra
+- 0279 — Shuni Mudra
+- 0280 — Brahma Mudra
+- 0281 — Hakini Mudra
+- 0282 — Merudanda Mudra
+- 0283 — Lotus Mudra
+- 0284 — Bilateral Finger Spread-and-Touch
+- 0285 — Tse Mudra
+- 0286 — Kali Mudra
+- 0287 — Ksepana Mudra
+- 0288 — Matangi Mudra
+- 0289 — Rudra Mudra
+- 0290 — Kubera Mudra
+- 0291 — Finger Steeple Open and Close
+- 0292 — Mushti Mudra
+- 0293 — Shunya Mudra
+- 0294 — Interlaced-Finger Palm Press
+- 0295 — Yoni Mudra
+- 0296 — Uttarabodhi Mudra
+- 0297 — Vajrapradama Mudra
+- 0298 — Hridaya Mudra
+- 0299 — Interlaced-Finger Palm Turn
+- 0300 — Double-Thumb Circle
+
+### ARMS (97)
+
+- 0302 — Large Bidirectional Arm Circles
+- 0303 — Alternating Arm Circles
+- 0304 — Windmill Arms
+- 0305 — Cross-Body Arm Swings
+- 0306 — Overhead Arm Swings
+- 0307 — Front Arm Raise
+- 0308 — Lateral Arm Raise
+- 0309 — Scaption Raise
+- 0310 — Standing Rear-Delt Sweep
+- 0311 — Standing Arm Crossover
+- 0312 — Standing Overhead Elbow-Extension Flow
+- 0313 — Shoulder-Rotation Press Flow
+- 0314 — Supinated Elbow Curl
+- 0315 — Neutral-Grip Elbow Curl
+- 0316 — Pronated Elbow Curl
+- 0317 — Standing Triceps Extension
+- 0318 — Standing Triceps Kickback
+- 0320 — Arm Figure Eight
+- 0321 — Alternating Overhead Reach
+- 0322 — Double Overhead Reach
+- 0323 — Cross-Body Reach
+- 0324 — Diagonal Arm Reach
+- 0325 — Lateral Arm Reach
+- 0326 — Forward Punch Reach
+- 0328 — Hug-a-Tree Arm Circle
+- 0329 — Qigong Gathering Qi
+- 0330 — Qigong Push-and-Pull
+- 0331 — Front Arm Pulses
+- 0332 — Backward Arm Pulses
+- 0333 — Lateral Arm Pulses
+- 0334 — Overhead Arm Pulses
+- 0335 — Bent-Elbow Arm Circles
+- 0336 — Goalpost Open and Close
+- 0337 — Shovel Hook
+- 0338 — Overhand Punch
+- 0339 — W-to-Y Arm Raise
+- 0340 — Double Straight Punch
+- 0341 — Alternating Straight Punches
+- 0342 — I-to-Y Arm Raise
+- 0343 — T-to-Y Arm Raise
+- 0344 — Boxing Parry
+- 0345 — Boxing Catch
+- 0346 — High-Guard Raise
+- 0347 — Peekaboo Guard Roll
+- 0348 — Karate Age-Uke
+- 0349 — Karate Gedan-Barai
+- 0350 — Karate Soto-Uke
+- 0351 — Karate Uchi-Uke
+- 0352 — Karate Shuto-Uke
+- 0353 — Karate Morote-Uke
+- 0354 — Karate Juji-Uke
+- 0355 — Karate Nagashi-Uke
+- 0356 — Karate Osae-Uke
+- 0357 — Karate Chudan-Zuki
+- 0358 — Karate Oi-Zuki
+- 0359 — Double-Arm Lateral-to-Overhead Sweep
+- 0360 — Karate Tate-Zuki
+- 0361 — Karate Uraken-Uchi
+- 0362 — Karate Empi-Uchi
+- 0363 — Wing Chun Chain Punches
+- 0364 — Wing Chun Lap-Sau Cycle
+- 0365 — Wing Chun Pak-Sau Cycle
+- 0366 — Wing Chun Tan-Bong-Fook Cycle
+- 0367 — Tai Chi Wave Hands Like Clouds
+- 0368 — Tai Chi Brush Knee Hand Sweep
+- 0369 — Tai Chi Repulse Monkey Arms
+- 0370 — Tai Chi Part Wild Horses Mane
+- 0371 — Standing Swimmer Pull
+- 0372 — Tai Chi Strike to Ears with Both Fists
+- 0373 — Alternating Front Arm Raise
+- 0374 — Alternating Lateral Arm Raise
+- 0375 — Alternating Scaption Raise
+- 0376 — Straight-Arm Scissors
+- 0377 — Qigong Lifting the Sky
+- 0378 — Qigong Separating Heaven and Earth
+- 0379 — Qigong Drawing the Bow
+- 0380 — Qigong Pushing Mountains
+- 0381 — Qigong Pushing the Waves
+- 0382 — Qigong Flying Crane Arms
+- 0383 — Qigong Swimming Dragon Arms
+- 0384 — Qigong Cloud Hands
+- 0385 — Qigong Circling the Arms
+- 0386 — Qigong Carrying the Moon
+- 0387 — Ballet First Port de Bras
+- 0388 — Ballet Second Port de Bras
+- 0389 — Double-Arm Overhead Pull-Down
+- 0390 — Double-Arm Triceps Kickback
+- 0391 — Ballet Fifth Port de Bras
+- 0392 — Ballet Allonge Arms
+- 0393 — Bilateral Goalpost Rotation
+- 0394 — Standing Backstroke Arm Cycle
+- 0395 — Standing Freestyle Arm Cycle
+- 0396 — Standing Breaststroke Arm Sweep
+- 0397 — Standing Butterfly Arm Sweep
+- 0398 — Standing Kayak Arm Pattern
+- 0399 — Nordic-Ski Arm Swing
+- 0400 — Speed-Skater Arm Swing
+
+### HEAD (47)
+
+- 0405 — Cervical Retraction
+- 0406 — Cervical Protraction
+- 0407 — Neck Half-Circle
+- 0408 — Neck Figure Eight
+- 0409 — Neck Controlled Articular Rotation
+- 0410 — Nose Alphabet
+- 0411 — Nose Circle
+- 0412 — Nose Square
+- 0413 — Nose Infinity Sign
+- 0415 — Chin-to-Collarbone Turn
+- 0416 — Four-Direction Head Tilt Flow
+- 0419 — Occipital Nod
+- 0420 — Atlas Nod
+- 0422 — Cervical Flexion Isometric
+- 0423 — Cervical Extension Isometric
+- 0425 — Chin-Tuck Isometric
+- 0426 — Neck Elongation Hold
+- 0467 — Eight-Brocades Wise Owl Gazes Backward
+- 0468 — Qigong Crane Looks Back
+- 0469 — Qigong Turtle Retracts Neck
+- 0470 — Qigong Turtle Extends Neck
+- 0471 — Qigong White Crane Nods
+- 0472 — Qigong Dragon Surveys the Sea
+- 0473 — Qigong Tiger Watches Prey
+- 0474 — Ballet Spotting Drill
+- 0475 — Jazz Head Isolation
+- 0477 — Dance Head Roll
+- 0478 — Dance Head Accent Front
+- 0480 — Four-Corner Dance Head Accent
+- 0481 — Salsa Spotting Drill
+- 0482 — Cha-Cha Spotting Drill
+- 0483 — Pirouette Spotting Drill
+- 0485 — Tango Head Flick
+- 0486 — Flamenco Head Turn
+- 0487 — Bharatanatyam Sama Shiro
+- 0488 — Bharatanatyam Udvahita Shiro
+- 0489 — Bharatanatyam Adhomukha Shiro
+- 0490 — Bharatanatyam Alolita Shiro
+- 0491 — Bharatanatyam Dhuta Shiro
+- 0492 — Bharatanatyam Kampita Shiro
+- 0493 — Alternating Bharatanatyam Paravritta Shiro
+- 0494 — Bharatanatyam Dhuta-Kampita Head Sequence
+- 0495 — Bharatanatyam Parivahita Shiro
+- 0497 — Odissi Sundari Griva
+- 0498 — Bharatanatyam Sundari Griva
+- 0499 — Bharatanatyam Tiraschina Griva
+- 0500 — Bharatanatyam Parivartita Griva
+
+### SHOULDERS (97)
+
+- 0501 — Shoulder Flexion
+- 0502 — Shoulder Extension
+- 0503 — Shoulder Abduction
+- 0504 — Shoulder Adduction
+- 0505 — Shoulder Horizontal Abduction
+- 0506 — Shoulder Horizontal Adduction
+- 0507 — Shoulder Internal Rotation
+- 0508 — Shoulder External Rotation
+- 0509 — Shoulder Controlled Articular Rotation
+- 0510 — Scapular Elevation
+- 0511 — Scapular Depression
+- 0512 — Scapular Protraction
+- 0513 — Scapular Retraction
+- 0514 — Scapular Upward Rotation
+- 0515 — Scapular Downward Rotation
+- 0516 — Shoulder Shrug
+- 0517 — Bent-Elbow Bidirectional Shoulder Rolls
+- 0518 — Straight-Arm Bidirectional Shoulder Rolls
+- 0520 — Scapular Clock
+- 0521 — Scapular Figure Eight
+- 0522 — Shoulder-Blade Squeeze
+- 0523 — Serratus Reach
+- 0524 — Standing W Raise
+- 0525 — Standing Y Raise
+- 0526 — Standing T Raise
+- 0527 — Standing I Raise
+- 0528 — Goalpost Rotation
+- 0529 — Cactus-Arm Rotation
+- 0530 — Standing W External Rotation
+- 0531 — Cuban Shoulder Rotation
+- 0532 — External Rotation at Side
+- 0533 — External Rotation at Ninety Degrees
+- 0534 — Internal Rotation at Ninety Degrees
+- 0535 — Bilateral Shoulder Flexion Pulse
+- 0536 — Bilateral Shoulder Extension Pulse
+- 0537 — Bilateral Shoulder Abduction Pulse
+- 0538 — Bilateral Overhead Arm-Adduction Pull
+- 0539 — Bilateral Bent-Elbow External Rotation
+- 0540 — Bilateral Bent-Elbow Internal Rotation
+- 0541 — Standing Snow Angel
+- 0542 — Standing Reverse Snow Angel
+- 0543 — Scaption Arm Arc
+- 0544 — Overhead Reach and Pull
+- 0545 — Shoulder Halo
+- 0546 — Elbow Circle
+- 0547 — Bent-Elbow Shoulder Circle
+- 0548 — Bilateral Shoulder Pendulum
+- 0549 — Alternating Cross-Body Arm Swing
+- 0550 — Alternating Overhead Elbow Reach
+- 0551 — Alternating Eagle-Arm Wrap
+- 0552 — Alternating Cow-Face Arm Reach
+- 0553 — Alternating Garudasana Arm Flow
+- 0554 — Alternating Gomukhasana Arm Flow
+- 0555 — Cactus-to-Goalpost Flow
+- 0556 — Prayer-to-Overhead Flow
+- 0557 — Reverse-Prayer Shoulder Stretch
+- 0558 — Hands-Behind-Back Shoulder Lift
+- 0559 — Standing Scapular Push
+- 0560 — Alternating Bear-Hug Shoulder Sweep
+- 0561 — Boxing Shoulder Roll
+- 0562 — Symmetric Boxing-Guard Shoulder Roll
+- 0563 — Peekaboo-Guard Shoulder Rhythm
+- 0564 — Alternating Straight-Punch Shoulder Protraction
+- 0565 — Jab-Cross Shoulder Rotation
+- 0566 — Alternating Hook Shoulder Rotation
+- 0567 — Alternating Uppercut Shoulder Drive
+- 0568 — Alternating Karate Age-Uke
+- 0569 — Alternating Karate Soto-Uke
+- 0570 — Alternating Wing Chun Bong Sau
+- 0571 — Alternating Wing Chun Tan Sau
+- 0572 — Alternating Tai Chi White Crane Opens Wings
+- 0573 — Alternating Tai Chi Single Whip
+- 0574 — Tai Chi Cloud-Hands Shoulder Flow
+- 0575 — Qigong Shoulder Shaking
+- 0576 — Qigong Crane-Wing Shoulder Lift
+- 0577 — Qigong Swimming-Dragon Shoulder Roll
+- 0578 — Eight Brocades Two Hands Hold the Heavens
+- 0579 — Eight Brocades Draw the Bow
+- 0580 — Eight Brocades Wise Owl Looks Back
+- 0581 — Alternating Ballet Epaulement Croise
+- 0582 — Alternating Ballet Epaulement Efface
+- 0583 — Alternating Ballet Epaulement Ecarte
+- 0585 — Flamenco Shoulder Rotation
+- 0586 — Flamenco Shoulder Shimmy
+- 0588 — Belly-Dance Alternating Shoulder Roll
+- 0589 — Alternating Egyptian-Dance Shoulder Accent
+- 0590 — Samba Shoulder Roll
+- 0591 — Bharatanatyam Natyarambhe Hold
+- 0592 — Odissi Chowka Shoulder Isolation
+- 0593 — Alternating Kathak Shoulder Turn
+- 0594 — Standing Freestyle Recovery Drill
+- 0595 — Standing Backstroke Shoulder Cycle
+- 0596 — Standing Breaststroke Shoulder Sweep
+- 0597 — Standing Butterfly Shoulder Recovery
+- 0598 — Nordic-Ski Shoulder Swing
+- 0599 — Standing Scapular-Plane Sweep
+- 0600 — Overhead Shoulder-CAR Flow
+
+### HIPS (94)
+
+- 0601 — Alternating Standing Hip Flexion
+- 0602 — Alternating Standing Hip Extension
+- 0604 — Alternating Standing Hip Adduction
+- 0605 — Hip Internal Rotation
+- 0606 — Hip External Rotation
+- 0607 — Alternating Standing Hip CAR
+- 0608 — Hip Circle
+- 0610 — Posterior Pelvic Tilt
+- 0611 — Lateral Pelvic Tilt
+- 0612 — Pelvic Circle
+- 0613 — Pelvic Clock
+- 0614 — Pelvic Figure Eight
+- 0616 — Forward-and-Back Hip Shift
+- 0617 — Alternating Knee-Led Hip Circle
+- 0618 — Alternating Open-the-Gate
+- 0619 — Alternating Close-the-Gate
+- 0620 — Alternating Hip-Hinge Rotation
+- 0621 — Alternating Figure-Four Hip Hinge
+- 0622 — Alternating Figure-Four Squat
+- 0623 — Alternating Knee-Out Hip Opener
+- 0624 — Alternating Cross-Step Hip Adduction
+- 0625 — Horse Stance
+- 0626 — Sumo Stance
+- 0627 — Malasana Hip Shift
+- 0628 — Goddess-Stance Hip Opening
+- 0629 — Alternating Wide-Stance Triangle Hinge
+- 0630 — Standing Hip Windshield Wipers
+- 0631 — Alternating Back-Leg Reach
+- 0632 — Alternating Reverse-Lunge Hip-Flexor Mobilization
+- 0633 — Alternating Butt-Kick March
+- 0636 — Alternating Single-Leg Romanian Deadlift
+- 0637 — Alternating Kickstand Hip Hinge
+- 0638 — Alternating Staggered-Stance Hip Hinge
+- 0639 — Lateral Hip Hinge
+- 0640 — Cossack Weight Shift
+- 0641 — Standing Adductor Rock
+- 0642 — Standing Groin Shift
+- 0643 — Lateral-Lunge Hip Shift
+- 0644 — Alternating Curtsy Hip Sweep
+- 0645 — Standing Glute Squeeze
+- 0646 — Alternating Glute Kickback
+- 0647 — Alternating Standing Glute Press
+- 0648 — Alternating Hip-Abduction Arc
+- 0649 — Alternating Hip-Abduction Leg Lift
+- 0650 — Alternating Hip-Adduction Leg Sweep
+- 0651 — Alternating Front Leg Swing
+- 0652 — Alternating Sagittal Leg Sweep
+- 0653 — Alternating Lateral Leg Swing
+- 0654 — Alternating Diagonal Leg Swing
+- 0655 — Hip Internal-Rotation Sweep
+- 0656 — Hip External-Rotation Sweep
+- 0657 — Alternating Ballet Rond de Jambe a Terre
+- 0658 — Alternating Ballet Rond de Jambe en l Air
+- 0659 — Alternating Ballet Passe
+- 0660 — Alternating Ballet Retire
+- 0661 — Alternating Ballet Developpe Devant
+- 0662 — Alternating Ballet Developpe a la Seconde
+- 0663 — Alternating Ballet Developpe Derriere
+- 0664 — Alternating Ballet Attitude Devant
+- 0665 — Alternating Ballet Attitude Derriere
+- 0666 — Alternating Ballet Arabesque
+- 0667 — Alternating Ballet Penche
+- 0668 — Alternating Ballet Fouette Preparation
+- 0669 — Salsa Hip Action
+- 0670 — Cuban Motion
+- 0671 — Rumba Hip Action
+- 0672 — Cha-Cha Hip Action
+- 0673 — Mambo Hip Action
+- 0674 — Bachata Hip Sway
+- 0675 — Merengue Hip Action
+- 0676 — Samba Pelvic Tilt
+- 0677 — Belly-Dance Hip Drop
+- 0678 — Belly-Dance Hip Lift
+- 0680 — Belly-Dance Hip Bump
+- 0681 — Belly-Dance Horizontal Figure Eight
+- 0682 — Belly-Dance Vertical Figure Eight
+- 0683 — Belly-Dance Umi
+- 0684 — Belly-Dance Maya
+- 0685 — Belly-Dance Taqsim
+- 0686 — Belly-Dance Hip Twist
+- 0687 — Belly-Dance Hip Shimmy
+- 0688 — Belly-Dance Pendulum Swing
+- 0689 — Belly-Dance Pelvic Tuck and Release
+- 0690 — Belly-Dance Pelvic Undulation
+- 0691 — Tai Chi Kua Opening
+- 0692 — Tai Chi Kua Closing
+- 0693 — Tai Chi Silk-Reeling Hip Circle
+- 0694 — Alternating Tai Chi Bow-Stance Hip Shift
+- 0695 — Alternating Tai Chi Empty-Stance Hip Sink
+- 0696 — Alternating Bagua Hip Coil
+- 0697 — Alternating Xingyi Hip Drive
+- 0698 — Capoeira Ginga Hip Sway
+- 0699 — Karate Hip Snap
+- 0700 — Boxing Hip Rotation
+
+### CHEST (97)
+
+- 0701 — Chest Lift
+- 0702 — Chest Drop
+- 0703 — Side-to-Side Chest Slide
+- 0704 — Chest Circle
+- 0705 — Chest Figure Eight
+- 0706 — Forward-and-Back Ribcage Isolation
+- 0707 — Side-to-Side Ribcage Isolation
+- 0708 — Ribcage Circle
+- 0709 — Ribcage Figure Eight
+- 0710 — Sternum Lift
+- 0711 — Sternum Drop
+- 0712 — Thoracic Expansion Hold
+- 0713 — Lateral Rib Expansion
+- 0714 — Posterior Rib Expansion
+- 0715 — Standing 360-Degree Rib Breathing
+- 0716 — Standing Box Breathing
+- 0717 — Standing Diaphragmatic Breathing
+- 0718 — Standing Costal Breathing
+- 0719 — Standing Three-Part Yogic Breath
+- 0720 — Standing Coherent Breathing
+- 0722 — Prayer Press
+- 0723 — Palm-Squeeze Svend Press
+- 0724 — Palm-to-Palm Chest Press
+- 0725 — Fist-to-Fist Chest Press
+- 0726 — Forearm Chest Press
+- 0727 — Standing Chest Fly
+- 0728 — Standing Reverse Chest Fly
+- 0729 — Alternating Self-Resisted Chest Press
+- 0730 — Standing Alternating Palm Press
+- 0731 — Alternating Chest Press
+- 0732 — Bilateral Standing Chest Press
+- 0733 — Parallel-Stance Chest Press
+- 0734 — Alternating Diagonal Chest Press
+- 0735 — Low-to-High Chest Fly
+- 0736 — High-to-Low Chest Fly
+- 0737 — Alternating Cross-Body Chest Fly
+- 0740 — Cactus Chest Opener
+- 0741 — Goalpost Chest Opener
+- 0742 — Hands-Behind-Head Chest Opener
+- 0743 — Alternating Eagle-Arm Chest Flow
+- 0744 — Bear-Hug Chest Stretch
+- 0745 — Dynamic Hug
+- 0746 — Alternating Serratus Punch
+- 0747 — Double Serratus Punch
+- 0748 — Push-Pull Chest Flow
+- 0749 — Boxing-Guard Chest Squeeze
+- 0750 — Jab-Cross Chest Rotation
+- 0751 — Alternating Hook Chest Rotation
+- 0752 — Double Palm Strike
+- 0753 — Alternating Karate Morote-Zuki
+- 0754 — Alternating Karate Yama-Zuki
+- 0755 — Wing Chun Double-Palm Press
+- 0756 — Wing Chun Chain-Punch Chest Rhythm
+- 0757 — Tai Chi Open and Close Hands
+- 0758 — Alternating Tai Chi Embrace Tiger and Return to Mountain
+- 0759 — Alternating Tai Chi Play the Lute
+- 0760 — Tai Chi Double-Palm Ward-Off Flow
+- 0761 — Alternating Tai Chi Ward Off
+- 0762 — Qigong Opening the Chest
+- 0763 — Qigong Separating the Clouds
+- 0764 — Qigong Rotating-the-Ball Flow
+- 0765 — Qigong Expanding the Sphere
+- 0766 — Qigong Pushing the Mountain
+- 0767 — Qigong Flying Wild Goose
+- 0768 — Qigong Crane Spreads Wings
+- 0769 — Eight Brocades Hold Up the Heavens
+- 0770 — Qigong Phoenix Opens Wings
+- 0771 — Eight Brocades Separate Heaven and Earth
+- 0772 — Five-Animals Crane Opens Wings
+- 0773 — Mountain-Pose Chest Lift
+- 0774 — Upward Salute
+- 0775 — Yoga Cactus Arms
+- 0776 — Yoga Reverse Prayer
+- 0777 — Alternating Yoga Eagle-Arm Flow
+- 0778 — Alternating Yoga Cow-Face Arm Flow
+- 0779 — Goddess-Stance Chest Lift
+- 0780 — Horse-Stance Chest Opening
+- 0781 — Alternating Standing Side-Reach Chest Opening
+- 0782 — Wide-Stance Clasped-Hand Chest Hinge
+- 0783 — Standing Yoga Backbend
+- 0784 — Extended Mountain Pose
+- 0785 — Standing Yoga Side Stretch
+- 0786 — Ballet First-Port Chest Carriage
+- 0787 — Ballet Second-Port Chest Opening
+- 0788 — Ballet First-Position Chest Lift
+- 0789 — Flamenco Chest Lift
+- 0790 — Flamenco Chest Circle
+- 0791 — Belly-Dance Chest Pop
+- 0792 — Belly-Dance Chest Drop
+- 0793 — Belly-Dance Chest Slide
+- 0794 — Belly-Dance Chest Circle
+- 0795 — Belly-Dance Chest Figure Eight
+- 0796 — Odissi Ribcage Isolation
+- 0797 — Bharatanatyam Chest Lift
+- 0798 — Kathak Chest Turn
+- 0799 — Ballet Bras-Bas Chest Carriage
+- 0800 — Ballroom Posture Rise-and-Lower
+
+### BACK (93)
+
+- 0801 — Standing Spinal Flexion
+- 0802 — Standing Spinal Extension
+- 0803 — Standing Spinal Lateral Flexion
+- 0804 — Standing Spinal Rotation
+- 0805 — Standing Spinal Wave
+- 0806 — Standing Spine Roll
+- 0807 — Segmental Spinal Articulation
+- 0808 — Standing Thoracic Flexion
+- 0809 — Standing Thoracic Extension
+- 0811 — Standing Lumbar Flexion
+- 0812 — Standing Lumbar Extension
+- 0813 — Standing Lumbar Rotation
+- 0814 — Pelvic-Spine Wave
+- 0815 — Standing Body Roll
+- 0816 — Torso Circle
+- 0817 — Torso Figure Eight
+- 0818 — Standing Cat-Cow
+- 0821 — Alternating Single-Leg Hip Hinge
+- 0822 — Alternating B-Stance Good Morning
+- 0823 — Wide-Stance Hip Hinge
+- 0824 — Standing Side-Hinge Reach
+- 0825 — Alternating Bow-and-Arrow Rotation
+- 0826 — Alternating Standing Bird Dog
+- 0827 — Alternating Standing Contralateral Reach
+- 0828 — Alternating Standing Diagonal Backline Reach
+- 0829 — Standing Swimmer
+- 0830 — Standing Backstroke
+- 0831 — Standing Reverse Fly
+- 0832 — Standing Scapular Squeeze
+- 0833 — Standing Lat Spread
+- 0834 — Standing Lat-Pulldown Arm Pattern
+- 0835 — Standing Straight-Arm Pulldown Pattern
+- 0836 — Standing Shadow Row
+- 0837 — Standing Shadow High Row
+- 0838 — Standing Shadow Low Row
+- 0839 — Bilateral Wide-Elbow Shadow Row
+- 0840 — Standing Alternating Shadow Row
+- 0841 — Alternating Standing Superman
+- 0842 — Standing Locust Pose
+- 0843 — Standing Cobra Pose
+- 0844 — Standing Backbend
+- 0845 — Extended-Mountain Backline Stretch
+- 0847 — Standing Half Forward Fold
+- 0848 — Narrow-Stance Backline Hinge
+- 0851 — Alternating Balancing-Stick Reach
+- 0852 — Alternating Standing Bow Flow
+- 0853 — Alternating Airplane Balance Reach
+- 0854 — Alternating Revolved-Triangle Flow
+- 0855 — Alternating Revolved Side-Angle Flow
+- 0856 — Alternating Chair-Pose Thoracic Rotation
+- 0857 — Standing Yoga Twist
+- 0859 — Standing Banana Pose
+- 0860 — Standing Crescent-Moon Pose
+- 0861 — Alternating Tai Chi Bow-Stance Spine Coil
+- 0862 — Alternating Tai Chi Repulse-Monkey Torso Turn
+- 0863 — Alternating Tai Chi Brush-Knee Torso Turn
+- 0864 — Alternating Tai Chi Fan-Through-Back
+- 0865 — Alternating Tai Chi Needle-at-Sea-Bottom
+- 0866 — Alternating Tai Chi White-Snake-Creeps-Down
+- 0867 — Tai Chi Cloud-Hands Torso Turn
+- 0868 — Alternating Tai Chi Fair-Lady-Works-Shuttles
+- 0869 — Tai Chi Rollback
+- 0870 — Qigong Spinal-Cord Breathing
+- 0871 — Qigong Swimming Dragon
+- 0872 — Qigong Back Shaking
+- 0873 — Qigong Waist Turning
+- 0874 — Qigong Rowing the Boat
+- 0875 — Qigong Scooping the Sea
+- 0876 — Eight Brocades Sway Head and Tail
+- 0877 — Eight Brocades Two Hands Hold the Feet
+- 0878 — Five-Animals Bear Sway
+- 0879 — Alternating Five-Animals Deer Turn
+- 0880 — Tai Chi Silk-Reeling Spine Coil
+- 0881 — Alternating Bagua Torso Coil
+- 0882 — Xingyi Dragon Body
+- 0883 — Karate Hip-Spine Rotation
+- 0884 — Boxing Slip
+- 0885 — Boxing Roll
+- 0886 — Boxing Weave
+- 0887 — Alternating Boxing Pull-Counter Lean
+- 0888 — Alternating Capoeira Esquiva de Frente
+- 0889 — Capoeira Cocorinha with Double Guard
+- 0890 — Belly-Dance Body Wave
+- 0891 — Belly-Dance Reverse Body Wave
+- 0892 — Belly-Dance Torso Undulation
+- 0893 — Belly-Dance Ribcage Circle
+- 0894 — Ballet Cambre Back
+- 0895 — Ballet Cambre Side
+- 0896 — Ballet Cambre Forward
+- 0897 — Graham Contraction Standing
+- 0898 — Graham Release Standing
+- 0899 — Horton Flat Back
+- 0900 — Horton Lateral Stretch
+
+### CORE (89)
+
+- 0901 — Standing Abdominal Brace
+- 0902 — Standing Abdominal Hollowing
+- 0903 — Standing Pelvic Brace
+- 0904 — Standing Crunch
+- 0905 — Alternating Standing Side Crunch
+- 0907 — Alternating Standing Knee-to-Elbow Crunch
+- 0909 — Alternating Same-Side Knee-to-Elbow Crunch
+- 0912 — Alternating Standing Reverse Crunch
+- 0913 — Alternating Standing Knee Tuck
+- 0914 — Alternating Double-Hand Knee Drive
+- 0915 — Alternating Diagonal Knee Drive
+- 0916 — Alternating High-Knee Core March
+- 0917 — Alternating Single-Leg Brace
+- 0918 — Alternating Single-Leg Core Balance
+- 0919 — Alternating Tandem-Stance Core Brace
+- 0920 — Braced March
+- 0921 — Standing Dead-Bug March
+- 0922 — Alternating Sprinter-March Brace
+- 0923 — Standing Cross-Crawl Reach
+- 0924 — Alternating Standing Ipsilateral Reach
+- 0925 — Alternating Self-Resisted Anti-Rotation Press
+- 0926 — Self-Resisted Torso Rotation
+- 0927 — Alternating Self-Resisted Side Bend
+- 0928 — Alternating Self-Resisted Knee Lift
+- 0930 — Alternating Same-Side Palm-to-Knee Press
+- 0931 — Overhead Brace Hold
+- 0932 — Front-Reach Brace
+- 0933 — Alternating Lateral-Reach Brace
+- 0934 — Alternating Diagonal-Reach Brace
+- 0935 — Around-the-World Arm Brace
+- 0936 — Standing Body-Line Lean
+- 0937 — Hip-Hinge Core Brace
+- 0938 — Squat Core Brace
+- 0939 — Alternating Lunge Core Brace
+- 0940 — Alternating Split-Stance Anti-Rotation Press
+- 0941 — Alternating Reach Anti-Tilt Drill
+- 0942 — Reciprocal-Arm Braced March
+- 0943 — Overhead March
+- 0944 — Cross-Crawl March
+- 0945 — Standing Bear-Crawl Pattern
+- 0946 — Standing Mountain-Climber Pattern
+- 0947 — Alternating Skater Crunch Without Hop
+- 0948 — Alternating Standing Wood Chop
+- 0949 — Alternating Standing Reverse Wood Chop
+- 0950 — Standing Axe Chop
+- 0951 — Standing Canoe Twist
+- 0952 — Standing Kayak Twist
+- 0953 — Standing Russian Twist
+- 0954 — Standing Torso Rotation
+- 0955 — Braced Standing Hip Circle
+- 0956 — Braced Pelvic Clock
+- 0957 — Braced Pelvic Figure Eight
+- 0962 — Alternating Diagonal Hand-to-Knee Reach
+- 0963 — Alternating Elbow-to-Knee Isometric Press
+- 0964 — Alternating Warrior-III Reach
+- 0965 — Alternating Knee-Out Balance Tap
+- 0966 — Alternating Cross-Body Knee Balance
+- 0967 — Alternating Side-Leg Balance Reach
+- 0968 — Alternating Rear-Leg Balance Reach
+- 0969 — Chair-Pose Core Hold
+- 0970 — Goddess-Pose Core Hold
+- 0971 — Horse-Stance Core Hold
+- 0972 — Alternating Chair-Pose Twist
+- 0973 — Alternating Reverse-Lunge Torso Rotation
+- 0974 — Alternating Mountain-Pose Knee Lift
+- 0975 — Alternating Straight-Leg Front Reach
+- 0976 — Standing Pilates Spine Twist
+- 0977 — Upward-Salute Backline Brace
+- 0978 — Tai Chi Dantian Rotation
+- 0979 — Tai Chi Silk-Reeling Waist Turn
+- 0980 — Tai Chi Cloud-Hands Waist Turn
+- 0981 — Alternating Tai Chi Golden-Rooster Lift
+- 0982 — Alternating Tai Chi Kick
+- 0983 — Alternating Bagua Step-and-Coil
+- 0984 — Xingyi Wuji-Stance Core Brace
+- 0985 — Karate Heiko-Dachi Core Brace
+- 0986 — Karate Kiba-Dachi Brace
+- 0987 — Karate Shiko-Dachi Core Brace
+- 0988 — Square-Stance Boxing-Guard Brace
+- 0990 — Boxing Hook Rotation
+- 0991 — Alternating Muay-Thai Knee Drive
+- 0992 — Capoeira Ginga Core Flow
+- 0993 — Belly-Dance Abdominal Undulation
+- 0994 — Belly-Dance Hip-Figure-Eight Core Flow
+- 0995 — Salsa Cuban-Motion Core Flow
+- 0996 — Flamenco Core Brace
+- 0997 — Alternating Ballet Passe March
+- 0998 — Alternating Ballet Arabesque Reach
+- 0999 — Standing Pilates Hundred Arms
+
+## Known fallback limitations
+
+- Hand poses are generic and are not yet semantic finger or mudra demonstrations.
+- Generic chest motion cannot reliably show depth, contact, or breathing mechanics.
+- Many school-specific dance, martial-arts, yoga, tai-chi, and qigong names
+  still use a broad family-level body schematic.
+- The fallback stick figure can telescope limb segments and cannot reliably
+  communicate sagittal depth or every compound movement component.
+- Static and isometric techniques need dedicated visual treatment before they
+  can be marked verified.
