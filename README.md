@@ -35,7 +35,8 @@ and GIFs can be regenerated with:
 ```
 
 Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 174 demonstrations and lists all 826 remaining
+high-bar review verifies 184 demonstrations, including 10 human-footage loops,
+and lists all 816 remaining
 placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
 that report after catalog changes with:
 

@@ -42,8 +42,8 @@ if ($bilateralExerciseNames.Count -eq 0 -or @(
     throw 'The bilateral catalog replacement map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 23) {
-    throw 'The reviewed external-media map must contain exactly 23 entries.'
+if ($externalExerciseMedia.Count -ne 33) {
+    throw 'The reviewed external-media map must contain exactly 33 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
@@ -721,6 +721,19 @@ function Get-RoundedInt {
     return [int][Math]::Round($Value, [MidpointRounding]::AwayFromZero)
 }
 
+function Get-YtDlpPath {
+    param([string]$WorkingRoot)
+
+    $ytDlpPath = Join-Path $WorkingRoot 'yt-dlp.exe'
+    if (-not (Test-Path -LiteralPath $ytDlpPath)) {
+        $ytDlpUrl = 'https://github.com/yt-dlp/yt-dlp/releases/' +
+            'download/2026.07.04/yt-dlp.exe'
+        Invoke-WebRequest -Uri $ytDlpUrl -OutFile $ytDlpPath
+    }
+
+    return $ytDlpPath
+}
+
 function New-ExternalExerciseGif {
     param(
         [int]$ExerciseId,
@@ -734,21 +747,79 @@ function New-ExternalExerciseGif {
     $frameRoot = Join-Path $WorkingRoot ('external-frames-{0:D4}' -f $ExerciseId)
     New-Item -ItemType Directory -Force -Path $sourceRoot, $frameRoot | Out-Null
 
-    $sourcePath = Join-Path $sourceRoot $Media.File
+    $sourcePath = Join-Path $sourceRoot ([string]$Media.File)
     if (-not (Test-Path -LiteralPath $sourcePath)) {
-        $sourceUrl = 'https://raw.githubusercontent.com/hasaneyldrm/' +
-            'exercises-dataset/main/videos/' + $Media.File
-        Invoke-WebRequest -Uri $sourceUrl -OutFile $sourcePath
+        $sourceUrl = if ($Media.ContainsKey('Url')) {
+            [string]$Media.Url
+        }
+        else {
+            'https://raw.githubusercontent.com/hasaneyldrm/' +
+                'exercises-dataset/main/videos/' + $Media.File
+        }
+
+        if ($Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
+            $ytDlpPath = Get-YtDlpPath -WorkingRoot $WorkingRoot
+            & $ytDlpPath `
+                --no-playlist `
+                --no-warnings `
+                --no-progress `
+                --format 'bv*[height<=480]/best[height<=480]/worst' `
+                --output $sourcePath `
+                $sourceUrl
+
+            if ($LASTEXITCODE -ne 0 -or
+                -not (Test-Path -LiteralPath $sourcePath)) {
+                throw "Could not download reviewed video for $ExerciseName."
+            }
+        }
+        else {
+            Invoke-WebRequest `
+                -Uri $sourceUrl `
+                -Headers @{ 'User-Agent' = 'Flux private exercise catalog/1.0' } `
+                -OutFile $sourcePath
+        }
     }
 
     $framePattern = Join-Path $frameRoot 'frame_%04d.png'
-    & magick $sourcePath `
-        -coalesce `
-        -resize '256x256' `
-        -background '#F7FAFC' `
-        -gravity center `
-        -extent '256x256' `
-        $framePattern
+    if ($Media.ContainsKey('Video') -and [bool]$Media.Video) {
+        $culture = [Globalization.CultureInfo]::InvariantCulture
+        $framesPerSecond = if ($Media.ContainsKey('FramesPerSecond')) {
+            [int]$Media.FramesPerSecond
+        }
+        else {
+            10
+        }
+        $ffmpegArguments = @('-hide_banner', '-loglevel', 'error', '-y')
+
+        if ($Media.ContainsKey('StartSeconds')) {
+            $ffmpegArguments += @(
+                '-ss',
+                ([double]$Media.StartSeconds).ToString('0.###', $culture))
+        }
+
+        $ffmpegArguments += @('-i', $sourcePath)
+
+        if ($Media.ContainsKey('DurationSeconds')) {
+            $ffmpegArguments += @(
+                '-t',
+                ([double]$Media.DurationSeconds).ToString('0.###', $culture))
+        }
+
+        $videoFilter = "fps=$framesPerSecond," +
+            'scale=256:256:force_original_aspect_ratio=decrease,' +
+            'pad=256:256:(ow-iw)/2:(oh-ih)/2:color=0xF7FAFC'
+        $ffmpegArguments += @('-vf', $videoFilter, '-an', $framePattern)
+        & ffmpeg @ffmpegArguments
+    }
+    else {
+        & magick $sourcePath `
+            -coalesce `
+            -resize '256x256' `
+            -background '#F7FAFC' `
+            -gravity center `
+            -extent '256x256' `
+            $framePattern
+    }
 
     if ($LASTEXITCODE -ne 0) {
         throw "Could not normalize external media for $ExerciseName."
@@ -776,8 +847,18 @@ function New-ExternalExerciseGif {
         $framePaths += @($mirroredPaths)
     }
 
+    $frameDelay = if ($Media.ContainsKey('DelayCentiseconds')) {
+        [int]$Media.DelayCentiseconds
+    }
+    elseif ($Media.ContainsKey('Video') -and [bool]$Media.Video) {
+        [Math]::Max(1, [int][Math]::Round(100 / [int]$Media.FramesPerSecond))
+    }
+    else {
+        8
+    }
+
     $gifArguments = @($framePaths) + @(
-        '-set', 'delay', '8',
+        '-set', 'delay', $frameDelay.ToString(),
         '-set', 'dispose', 'background',
         '-set', 'comment', "Flux reviewed exercise $ExerciseId - $ExerciseName",
         '-loop', '0',

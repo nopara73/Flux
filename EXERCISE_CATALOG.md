@@ -46,10 +46,11 @@ library. These references anchor the terminology and movement families used:
 ## Animation sources and accuracy
 
 Every entry has a moving, looping GIF. The best available demonstrations use
-one of three sources:
+one of four sources:
 
-- visually reviewed real-person exercise clips, normalized to 256 × 256 and
+- visually reviewed human exercise footage, normalized to 256 × 256 and
   mirrored into a left/right cycle only where mirroring is mechanically valid;
+- other visually reviewed external anatomical demonstrations;
 - visually reviewed Posecode 3D renders, including custom alternating and
   bidirectional sequences;
 - purpose-built animated SVG diagrams for motions such as smooth pursuit,
@@ -58,9 +59,9 @@ one of three sources:
 
 The remaining GIFs are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **174 exact
-demonstrations and 826 still requiring exact media**. The region-by-region
-counts and the complete list of all 826 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **184 exact
+demonstrations and 816 still requiring exact media**. The region-by-region
+counts and the complete list of all 816 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,

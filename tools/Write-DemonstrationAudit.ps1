@@ -17,6 +17,11 @@ $regions = @(
     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
 
 $externalIds = @($review.ReviewedExternal | ForEach-Object { [int]$_ })
+$humanExternalIds = @(
+    $externalMedia.GetEnumerator() |
+        Where-Object { $_.Value.ContainsKey('Human') -and [bool]$_.Value.Human } |
+        ForEach-Object { [int]$_.Key })
+$otherExternalCount = $externalIds.Count - $humanExternalIds.Count
 $posecodeIds = @($review.ReviewedPosecode | ForEach-Object { [int]$_ })
 $svgIds = @($review.PurposeBuiltSvg | ForEach-Object { [int]$_ })
 $verifiedIds = @($externalIds + $posecodeIds + $svgIds)
@@ -66,11 +71,12 @@ foreach ($region in $regions) {
 $lines.Add('')
 $lines.Add('## Verified sources')
 $lines.Add('')
-$lines.Add(('- Reviewed real-person clips: **{0}**' -f $externalIds.Count))
+$lines.Add(('- Reviewed human footage: **{0}**' -f $humanExternalIds.Count))
+$lines.Add(('- Other reviewed external demonstrations: **{0}**' -f $otherExternalCount))
 $lines.Add(('- Reviewed Posecode 3D renders: **{0}**' -f $posecodeIds.Count))
 $lines.Add(('- Purpose-built SVG demonstrations: **{0}**' -f $svgIds.Count))
 $lines.Add('')
-$lines.Add('The real-person source mapping is in `tools/ExternalExerciseMedia.psd1`.')
+$lines.Add('The external source mapping is in `tools/ExternalExerciseMedia.psd1`.')
 $lines.Add('The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact')
 $lines.Add('ID inventory used to produce this report is in `tools/VerifiedExerciseDemos.psd1`.')
 $lines.Add('')

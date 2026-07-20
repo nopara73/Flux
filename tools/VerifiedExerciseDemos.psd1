@@ -1,8 +1,9 @@
 @{
-    # Reviewed real-person source clips normalized by the catalog generator.
+    # Reviewed external source clips normalized by the catalog generator.
     ReviewedExternal = @(
-        8, 111, 112, 124, 125, 126, 127, 143, 157, 162, 235, 327,
-        609, 721, 738, 739, 846, 849, 850, 958, 959, 960, 961
+        8, 55, 61, 62, 63, 65, 66, 92, 93, 111, 112, 124, 125, 126,
+        127, 143, 157, 162, 187, 192, 235, 327, 609, 721, 738, 739,
+        846, 849, 850, 958, 959, 960, 961
     )
 
     # Reviewed 3D Posecode renders preserved by the catalog generator.

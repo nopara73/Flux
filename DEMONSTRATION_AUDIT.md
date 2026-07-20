@@ -5,12 +5,12 @@ animation directly demonstrates the named movement, not merely the same body
 region or a vaguely related motion. Every other bundled GIF remains usable as
 a temporary placeholder, but is not claimed to be a perfect demonstration.
 
-Verified: **174 / 1,000**. Still requiring exact media: **826 / 1,000**.
+Verified: **184 / 1,000**. Still requiring exact media: **816 / 1,000**.
 
 | Region | Verified | Still imperfect |
 | --- | ---: | ---: |
-| FEET | 10 | 90 |
-| LEGS | 27 | 73 |
+| FEET | 18 | 82 |
+| LEGS | 29 | 71 |
 | HANDS | 1 | 99 |
 | ARMS | 18 | 82 |
 | HEAD | 53 | 47 |
@@ -22,11 +22,12 @@ Verified: **174 / 1,000**. Still requiring exact media: **826 / 1,000**.
 
 ## Verified sources
 
-- Reviewed real-person clips: **23**
+- Reviewed human footage: **10**
+- Other reviewed external demonstrations: **23**
 - Reviewed Posecode 3D renders: **77**
 - Purpose-built SVG demonstrations: **74**
 
-The real-person source mapping is in `tools/ExternalExerciseMedia.psd1`.
+The external source mapping is in `tools/ExternalExerciseMedia.psd1`.
 The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact
 ID inventory used to produce this report is in `tools/VerifiedExerciseDemos.psd1`.
 
@@ -35,7 +36,7 @@ ID inventory used to produce this report is in `tools/VerifiedExerciseDemos.psd1
 These are the exercises for which neither a perfect reviewed clip nor a
 sufficiently exact purpose-built animation was available in this pass.
 
-### FEET (90)
+### FEET (82)
 
 - 0001 — Ankle Dorsiflexion Rock
 - 0002 — Ankle Plantarflexion Point
@@ -83,18 +84,12 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0052 — T-Step
 - 0053 — Charleston Step
 - 0054 — Jazz Square
-- 0055 — Pas de Bourree
 - 0056 — Grapevine Step
 - 0057 — Carioca Step
 - 0058 — Two-Step
 - 0059 — Foxtrot Box Step
 - 0060 — Waltz Box Step
-- 0061 — Rumba Box Step
-- 0062 — Cha-Cha Basic Step
-- 0063 — Salsa Basic Step
 - 0064 — Bachata Basic Step
-- 0065 — Merengue Basic Step
-- 0066 — Mambo Basic Step
 - 0067 — Samba Whisk
 - 0068 — Tai Chi Empty Step
 - 0069 — Tai Chi Bow Step
@@ -120,15 +115,13 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0089 — Alternating L-Step
 - 0090 — Alternating Step Pivot
 - 0091 — Zigzag Walk
-- 0092 — Capoeira Ginga
-- 0093 — Capoeira Esquiva Lateral
 - 0094 — Kalaripayattu Horse Step
 - 0097 — Forward-and-Back Weight Shift
 - 0098 — Diagonal Weight Shift
 - 0099 — Figure-Eight Weight Shift
 - 0100 — Four-Corner Weight Shift
 
-### LEGS (73)
+### LEGS (71)
 
 - 0104 — Sumo Squat
 - 0105 — Plie Squat
@@ -190,11 +183,9 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0184 — Tai Chi Heel Kick
 - 0185 — Tai Chi Toe Kick
 - 0186 — Tai Chi Lotus Kick
-- 0187 — Second-Position Releve
 - 0188 — Parallel Demi-Plie
 - 0190 — Ballet Grand Plie
 - 0191 — Ballet Tendu Devant
-- 0192 — Ballet Tendu a la Seconde
 - 0193 — Ballet Tendu Derriere
 - 0194 — Ballet Degage Devant
 - 0195 — Ballet Degage a la Seconde
