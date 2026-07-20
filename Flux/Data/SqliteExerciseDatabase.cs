@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 3;
+    private const int DatabaseVersion = 4;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int ExpectedExerciseCount = 1000;
@@ -30,6 +30,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "max_space_meters",
         "equipment",
         "silent",
+        "exercise_mode",
+        "hold_frame_percent",
     ];
 
     private readonly Context _context;
@@ -69,7 +71,14 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 equipment TEXT NOT NULL DEFAULT 'None'
                     CHECK (equipment = 'None'),
                 silent INTEGER NOT NULL DEFAULT 1
-                    CHECK (silent = 1)
+                    CHECK (silent = 1),
+                exercise_mode TEXT NOT NULL DEFAULT 'Repetition'
+                    CHECK (exercise_mode IN ('Repetition', 'Hold')),
+                hold_frame_percent INTEGER NOT NULL DEFAULT 0
+                    CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99),
+                CHECK (
+                    (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
+                    (exercise_mode = 'Hold' AND hold_frame_percent > 0))
             )
             """);
         database.ExecSQL(
@@ -87,6 +96,18 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         {
             database.ExecSQL("DROP TABLE IF EXISTS exercises");
             OnCreate(database);
+            return;
+        }
+
+        if (oldVersion < 4 && newVersion >= 4)
+        {
+            database.ExecSQL(
+                "ALTER TABLE exercises ADD COLUMN exercise_mode TEXT NOT NULL " +
+                "DEFAULT 'Repetition' CHECK (exercise_mode IN ('Repetition', 'Hold'))");
+            database.ExecSQL(
+                "ALTER TABLE exercises ADD COLUMN hold_frame_percent INTEGER NOT NULL " +
+                "DEFAULT 0 CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99)");
+            RefreshCatalogPreservingScores(database);
             return;
         }
 
@@ -142,6 +163,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             values.Put("max_space_meters", exercise.MaxSpaceMeters);
             values.Put("equipment", exercise.Equipment);
             values.Put("silent", exercise.Silent ? 1 : 0);
+            values.Put("exercise_mode", exercise.Mode.ToString());
+            values.Put("hold_frame_percent", exercise.HoldFramePercent);
             database.InsertOrThrow(TableName, null, values);
         }
     }
@@ -171,6 +194,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 values.Put("max_space_meters", exercise.MaxSpaceMeters);
                 values.Put("equipment", exercise.Equipment);
                 values.Put("silent", exercise.Silent ? 1 : 0);
+                values.Put("exercise_mode", exercise.Mode.ToString());
+                values.Put("hold_frame_percent", exercise.HoldFramePercent);
 
                 int updatedRows = database.Update(
                     TableName,
@@ -244,6 +269,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 Equipment = cursor.GetString(10)
                     ?? throw new InvalidOperationException("An exercise has no equipment value."),
                 Silent = cursor.GetInt(11) == 1,
+                Mode = Enum.Parse<ExerciseMode>(cursor.GetString(12)
+                    ?? throw new InvalidOperationException("An exercise has no mode.")),
+                HoldFramePercent = cursor.GetInt(13),
             });
         }
 
@@ -271,7 +299,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             exercise.Equipment != "None" ||
             !exercise.Silent ||
             string.IsNullOrWhiteSpace(exercise.Practice) ||
-            string.IsNullOrWhiteSpace(exercise.MotionProfile));
+            string.IsNullOrWhiteSpace(exercise.MotionProfile) ||
+            !Enum.IsDefined(exercise.Mode) ||
+            (exercise.Mode == ExerciseMode.Repetition && exercise.HoldFramePercent != 0) ||
+            (exercise.Mode == ExerciseMode.Hold &&
+                exercise.HoldFramePercent is <= 0 or > 99));
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
 

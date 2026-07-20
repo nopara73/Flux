@@ -23,6 +23,13 @@ Every catalog entry must:
   hand role, or clockwise-only circle is not allowed;
 - have exactly one dominant region and its own bundled animated GIF.
 
+Each entry is explicitly classified as a repetition or a hold. A hold is one
+bilateral or symmetric position sustained for the full timer; alternating
+sides, breath cycles, raise-and-lower actions, flows, and repeated contractions
+remain repetitions even when their traditional name contains “hold.” Hold GIFs
+loop only on the preview screen. During the countdown the app shows the curated
+final-position frame from `tools/HoldExerciseFrames.psd1`.
+
 The canonical base catalog is maintained in `tools/RealExerciseCatalog.psd1`.
 `tools/BilateralExerciseNames.psd1` contains the reviewed replacements that
 enforce the no-one-sided rule without changing the 100-per-region structure.
@@ -59,13 +66,14 @@ one of four sources:
 
 The remaining GIFs are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **184 exact
-demonstrations and 816 still requiring exact media**. The region-by-region
-counts and the complete list of all 816 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **232 exact
+demonstrations and 768 still requiring exact media**. The region-by-region
+counts and the complete list of all 768 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
-`tools/PosecodeExerciseMedia.psd1`, and `tools/VerifiedExerciseDemos.psd1`.
+`tools/PosecodeExerciseMedia.psd1`, `tools/VerifiedExerciseDemos.psd1`, and
+`tools/HoldExerciseFrames.psd1`.
 Editable sources for the reviewed custom 3D batch live in
 `tools/PosecodeSources`.
 The external clips are used for this private personal build and are not a

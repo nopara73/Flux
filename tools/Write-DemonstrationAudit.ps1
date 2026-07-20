@@ -106,8 +106,8 @@ $lines.Add('- Many school-specific dance, martial-arts, yoga, tai-chi, and qigon
 $lines.Add('  still use a broad family-level body schematic.')
 $lines.Add('- The fallback stick figure can telescope limb segments and cannot reliably')
 $lines.Add('  communicate sagittal depth or every compound movement component.')
-$lines.Add('- Static and isometric techniques need dedicated visual treatment before they')
-$lines.Add('  can be marked verified.')
+$lines.Add('- Unverified static and isometric placeholders still need exact source media,')
+$lines.Add('  even though hold timers now display a non-looping curated target frame.')
 
 $lines | Set-Content -LiteralPath $OutputPath -Encoding utf8
 Write-Output "Audit: $([IO.Path]::GetFullPath($OutputPath))"

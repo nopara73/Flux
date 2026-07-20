@@ -21,6 +21,7 @@ public class MainActivity : Activity
     private IWorkoutStateStore _stateStore = null!;
     private WorkoutState _state = null!;
     private DominantRegion _currentRegion;
+    private Exercise? _currentExercise;
 
     private View _workoutScreen = null!;
     private View _congratulationsScreen = null!;
@@ -136,12 +137,17 @@ public class MainActivity : Activity
         _exerciseGif.Settings.DisplayZoomControls = false;
     }
 
-    private void LoadAnimatedGif(Exercise exercise)
+    private void LoadExerciseMedia(Exercise exercise, bool showHoldPosition = false)
     {
-        using Stream gifStream = Assets!.Open(exercise.Gif);
+        bool renderStaticHold = showHoldPosition && exercise.Mode == ExerciseMode.Hold;
+        string mediaAsset = renderStaticHold
+            ? $"exercise_hold_frames/{System.IO.Path.GetFileNameWithoutExtension(exercise.Gif)}.png"
+            : exercise.Gif;
+        using Stream gifStream = Assets!.Open(mediaAsset);
         using var buffer = new MemoryStream();
         gifStream.CopyTo(buffer);
-        string base64Gif = Convert.ToBase64String(buffer.ToArray());
+        string mimeType = renderStaticHold ? "image/png" : "image/gif";
+        string base64Media = Convert.ToBase64String(buffer.ToArray());
 
         string html = $$"""
             <!doctype html>
@@ -170,7 +176,7 @@ public class MainActivity : Activity
                 </style>
               </head>
               <body>
-                <img src="data:image/gif;base64,{{base64Gif}}" alt="Exercise animation" />
+                <img src="data:{{mimeType}};base64,{{base64Media}}" alt="Exercise demonstration" />
               </body>
             </html>
             """;
@@ -195,13 +201,16 @@ public class MainActivity : Activity
 
         _currentRegion = nextRegion.Value;
         Exercise exercise = _sessionService.GetSelectedExercise(_state, _currentRegion);
+        _currentExercise = exercise;
         int position = ExerciseSessionService.RegionOrder
             .TakeWhile(region => region != _currentRegion)
             .Count() + 1;
 
         _regionName.Text = $"{position} / {ExerciseSessionService.RegionOrder.Count}  ·  {_currentRegion}";
-        _exerciseName.Text = exercise.Name;
-        LoadAnimatedGif(exercise);
+        _exerciseName.Text = exercise.Mode == ExerciseMode.Hold
+            ? $"{exercise.Name}  ·  HOLD"
+            : exercise.Name;
+        LoadExerciseMedia(exercise);
         _workoutScreen.Visibility = ViewStates.Visible;
         _congratulationsScreen.Visibility = ViewStates.Gone;
         ShowStartButton();
@@ -225,6 +234,10 @@ public class MainActivity : Activity
 
         PlayBeep(Android.Media.Tone.PropBeep);
         _countdownActive = true;
+        if (_currentExercise?.Mode == ExerciseMode.Hold)
+        {
+            LoadExerciseMedia(_currentExercise, showHoldPosition: true);
+        }
         _startButton.Visibility = ViewStates.Gone;
         _ratingPanel.Visibility = ViewStates.Gone;
         _countdownPanel.Visibility = ViewStates.Visible;
@@ -284,6 +297,10 @@ public class MainActivity : Activity
 
         if (resetToStart && !_state.WorkoutCompleted)
         {
+            if (_currentExercise?.Mode == ExerciseMode.Hold)
+            {
+                LoadExerciseMedia(_currentExercise);
+            }
             ShowStartButton();
         }
     }

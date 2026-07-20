@@ -28,6 +28,8 @@ $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1')
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1')
+$holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1')
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
@@ -42,8 +44,18 @@ if ($bilateralExerciseNames.Count -eq 0 -or @(
     throw 'The bilateral catalog replacement map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 33) {
-    throw 'The reviewed external-media map must contain exactly 33 entries.'
+if ($holdExerciseFrames.Count -eq 0 -or @(
+        $holdExerciseFrames.GetEnumerator() | Where-Object {
+            [int]$_.Key -lt 1 -or
+            [int]$_.Key -gt 1000 -or
+            [int]$_.Value -lt 1 -or
+            [int]$_.Value -gt 99
+        }).Count -gt 0) {
+    throw 'The reviewed hold-frame map contains an invalid entry.'
+}
+
+if ($externalExerciseMedia.Count -ne 81) {
+    throw 'The reviewed external-media map must contain exactly 81 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
@@ -119,6 +131,7 @@ function Get-MotionProfile {
         'LEGS' {
             if ($Name -match 'Squat|Plie|Chair Pose|Goddess|Horse|Duck Walk') { return 'Squat' }
             if ($Name -match 'Lunge|Warrior I|Warrior II|Side Angle') { return 'Lunge' }
+            if ($Name -match 'Bilateral Bent-Knee Calf Raise') { return 'HeelRaise' }
             if ($Name -match 'Hamstring Curl|Heel Flick') { return 'KneeCurl' }
             if ($Name -match 'Knee|March|Passe|Retire') { return 'KneeLift' }
             if ($Name -match 'Side|Abduction|Adduction|a la Seconde') { return 'LegSide' }
@@ -214,6 +227,7 @@ function Get-MotionProfile {
             return 'ChestIsolation'
         }
         'BACK' {
+            if ($Name -match 'Tai Chi Rollback') { return 'SpineRotation' }
             if ($Name -match 'Flexion|Roll|Fold|Contraction') { return 'SpineFlexion' }
             if ($Name -match 'Extension|Backbend|Cobra|Locust|Cambre Back|Release') { return 'SpineExtension' }
             if ($Name -match 'Side|Lateral|Banana|Crescent-Moon|Esquiva') { return 'SpineSideBend' }
@@ -763,7 +777,10 @@ function New-ExternalExerciseGif {
                 --no-playlist `
                 --no-warnings `
                 --no-progress `
-                --format 'bv*[height<=480]/best[height<=480]/worst' `
+                --retries 5 `
+                --fragment-retries 5 `
+                --retry-sleep 1 `
+                --format 'bv[height<=480][vcodec^=avc1]/bv[height<=480]/b[height<=480]/worst' `
                 --output $sourcePath `
                 $sourceUrl
 
@@ -847,6 +864,15 @@ function New-ExternalExerciseGif {
         $framePaths += @($mirroredPaths)
     }
 
+    $isPingPong = $Media.ContainsKey('PingPong') -and [bool]$Media.PingPong
+    if ($isPingPong) {
+        $returnPaths = [System.Collections.Generic.List[string]]::new()
+        for ($index = $framePaths.Count - 2; $index -ge 1; $index--) {
+            $returnPaths.Add($framePaths[$index])
+        }
+        $framePaths += @($returnPaths)
+    }
+
     $frameDelay = if ($Media.ContainsKey('DelayCentiseconds')) {
         [int]$Media.DelayCentiseconds
     }
@@ -857,7 +883,18 @@ function New-ExternalExerciseGif {
         8
     }
 
-    $gifArguments = @($framePaths) + @(
+    $gifInputPaths = if ($isPingPong) {
+        @($framePaths)
+    }
+    else {
+        $patterns = @((Join-Path $frameRoot 'frame_*.png'))
+        if ($Media.MirrorForAlternation) {
+            $patterns += (Join-Path $frameRoot 'mirror_*.png')
+        }
+        $patterns
+    }
+
+    $gifArguments = @($gifInputPaths) + @(
         '-set', 'delay', $frameDelay.ToString(),
         '-set', 'dispose', 'background',
         '-set', 'comment', "Flux reviewed exercise $ExerciseId - $ExerciseName",
@@ -1022,6 +1059,17 @@ function New-ExerciseFrameSvg {
                     $rightKneeX += Get-RoundedInt ($bend * 0.55)
                     $leftKneeY += Get-RoundedInt ($bend * 0.28)
                     $rightKneeY += Get-RoundedInt ($bend * 0.28)
+                }
+                'HeelRaise' {
+                    $baseBend = $amplitude * 0.8
+                    $rise = [Math]::Max(0, $wave) * $amplitude * 1.5
+                    $hipY += Get-RoundedInt ($baseBend - $rise)
+                    $leftKneeX -= Get-RoundedInt ($baseBend * 0.45)
+                    $rightKneeX += Get-RoundedInt ($baseBend * 0.45)
+                    $leftKneeY += Get-RoundedInt (($baseBend * 0.25) - $rise)
+                    $rightKneeY += Get-RoundedInt (($baseBend * 0.25) - $rise)
+                    $leftFootY -= Get-RoundedInt ($rise * 0.15)
+                    $rightFootY -= Get-RoundedInt ($rise * 0.15)
                 }
                 'Lunge' {
                     $spread = $alternatingAction * $amplitude * 2.2
@@ -1497,13 +1545,53 @@ function New-ExerciseFrameSvg {
 "@
 }
 
+function New-HoldFrameImage {
+    param(
+        [string]$GifPath,
+        [string]$OutputPath,
+        [ValidateRange(1, 99)]
+        [int]$FramePercent,
+        [switch]$Overwrite
+    )
+
+    if ((Test-Path -LiteralPath $OutputPath) -and -not $Overwrite) {
+        return
+    }
+
+    $frameCountLines = @(& magick identify -format "%n`n" $GifPath)
+    if ($LASTEXITCODE -ne 0 -or $frameCountLines.Count -eq 0) {
+        throw "ImageMagick could not inspect hold animation $GifPath."
+    }
+
+    $frameCount = [int]$frameCountLines[0]
+    if ($frameCount -lt 1) {
+        throw "Hold animation $GifPath has no frames."
+    }
+
+    $frameIndex = [Math]::Min(
+        $frameCount - 1,
+        [Math]::Floor(($frameCount - 1) * ($FramePercent / 100.0)))
+    $magickArguments = @($GifPath, '-coalesce')
+    if ($frameIndex -gt 0) {
+        $magickArguments += @('-delete', "0-$($frameIndex - 1)")
+    }
+    $magickArguments += @('-delete', '1--1', '-strip', $OutputPath)
+
+    & magick @magickArguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "ImageMagick failed while rendering hold frame $OutputPath."
+    }
+}
+
 $resolvedOutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 $gifOutputRoot = Join-Path $resolvedOutputRoot 'exercise_gifs'
+$holdFrameOutputRoot = Join-Path $resolvedOutputRoot 'exercise_hold_frames'
 $catalogPath = Join-Path $resolvedOutputRoot 'exercises.json'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("FluxExerciseFrames-" + [Guid]::NewGuid().ToString('N'))
 
 New-Item -ItemType Directory -Force -Path $resolvedOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $gifOutputRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $holdFrameOutputRoot | Out-Null
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
 $records = [System.Collections.Generic.List[object]]::new(1000)
@@ -1527,6 +1615,14 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         }
         $practice = Get-Practice -Name $exerciseName
         $motionProfile = Get-MotionProfile -Region $region -Name $exerciseName
+        $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
+        $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
+        $holdFramePercent = if ($isHold) {
+            [int]$holdExerciseFrames[$exerciseId]
+        }
+        else {
+            0
+        }
         $gifFileName = 'exercise_{0:D4}.gif' -f $exerciseId
         $gifRelativePath = "exercise_gifs/$gifFileName"
 
@@ -1537,6 +1633,8 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             dominantRegion = $region
             practice = $practice
             motionProfile = $motionProfile
+            mode = $exerciseMode
+            holdFramePercent = $holdFramePercent
             score = 0
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
@@ -1558,8 +1656,16 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         }
 
         $gifPath = Join-Path $gifOutputRoot $gifFileName
+        $holdFramePath = Join-Path $holdFrameOutputRoot (
+            'exercise_{0:D4}.png' -f $exerciseId)
 
         if ((Test-Path -LiteralPath $gifPath) -and -not $Force) {
+            if ($isHold) {
+                New-HoldFrameImage `
+                    -GifPath $gifPath `
+                    -OutputPath $holdFramePath `
+                    -FramePercent $holdFramePercent
+            }
             continue
         }
 
@@ -1568,6 +1674,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 throw "The reviewed Posecode asset is missing for $exerciseName."
             }
 
+            if ($isHold) {
+                New-HoldFrameImage `
+                    -GifPath $gifPath `
+                    -OutputPath $holdFramePath `
+                    -FramePercent $holdFramePercent `
+                    -Overwrite:$Force
+            }
             continue
         }
 
@@ -1578,6 +1691,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 -Media $externalExerciseMedia[$exerciseId] `
                 -GifPath $gifPath `
                 -WorkingRoot $tempRoot
+            if ($isHold) {
+                New-HoldFrameImage `
+                    -GifPath $gifPath `
+                    -OutputPath $holdFramePath `
+                    -FramePercent $holdFramePercent `
+                    -Overwrite:$Force
+            }
             continue
         }
 
@@ -1612,6 +1732,14 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             throw "ImageMagick failed while generating $gifFileName."
         }
 
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent `
+                -Overwrite:$Force
+        }
+
         if ($exerciseId % 50 -eq 0) {
             Write-Output "Generated $exerciseId / 1000 real-exercise GIFs"
         }
@@ -1637,6 +1765,10 @@ $constraintViolations = $records | Where-Object {
     -not $_['silent'] -or
     [string]::IsNullOrWhiteSpace($_['practice']) -or
     [string]::IsNullOrWhiteSpace($_['motionProfile']) -or
+    $_['mode'] -notin @('Repetition', 'Hold') -or
+    ($_['mode'] -eq 'Repetition' -and $_['holdFramePercent'] -ne 0) -or
+    ($_['mode'] -eq 'Hold' -and (
+        $_['holdFramePercent'] -lt 1 -or $_['holdFramePercent'] -gt 99)) -or
     $_['score'] -ne 0
 }
 $syntheticNames = $records | Where-Object {
@@ -1656,6 +1788,16 @@ if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
 
     if ($missingGifs) {
         throw 'At least one catalog record is missing its GIF asset.'
+    }
+
+    $missingHoldFrames = $records | Where-Object {
+        $_['mode'] -eq 'Hold' -and
+        -not (Test-Path -LiteralPath (Join-Path $holdFrameOutputRoot (
+                    'exercise_{0:D4}.png' -f $_['id'])))
+    }
+
+    if ($missingHoldFrames) {
+        throw 'At least one hold record is missing its static countdown frame.'
     }
 }
 

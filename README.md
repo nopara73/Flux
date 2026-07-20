@@ -22,6 +22,7 @@ Every exercise contains:
 - its own bundled, looping animated GIF
 - exactly one dominant region
 - its practice family and movement-specific animation profile
+- an explicit repetition-or-hold mode and, for holds, a reviewed target frame
 - an integer score initialized to `0`
 - explicit constraint metadata: only feet touch the ground, shoe agnostic,
   no more than 3 m × 3 m of space, no equipment, and silent
@@ -35,8 +36,8 @@ and GIFs can be regenerated with:
 ```
 
 Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 184 demonstrations, including 10 human-footage loops,
-and lists all 816 remaining
+high-bar review verifies 232 demonstrations, including 58 human-footage loops,
+and lists all 768 remaining
 placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
 that report after catalog changes with:
 
@@ -50,6 +51,9 @@ their scores and repairs the saved workout lineup from the new catalog.
 Schema version 3 applies the bilateral catalog names and reviewed media while
 preserving every score by stable exercise ID. Any saved lineup that references
 a replaced name is repaired automatically on launch.
+Schema version 4 adds explicit hold metadata while preserving scores and the
+current lineup. The current catalog contains 67 symmetric holds and 933
+repetition exercises.
 
 ## Workout flow
 
@@ -57,6 +61,10 @@ Each workout contains one randomly selected exercise from every dominant region,
 in enum order from `FEET` through `CORE`. Press **Start** to begin a 60-second
 timer, or **Skip** to finish the timer immediately while testing. After each
 timer, record the result with **X**, **−**, or **✓**.
+
+Repetitions keep their GIF moving throughout the timer. Holds are labeled
+**HOLD**: their GIF loops only as a preview, then the countdown displays the
+reviewed final-position frame without looping.
 
 The current lineup and outcomes are saved locally with Android shared
 preferences. Scores are saved in SQLite. An **X** reduces that exercise's score

@@ -14,6 +14,10 @@ public sealed class Exercise
 
     public required string MotionProfile { get; init; }
 
+    public required ExerciseMode Mode { get; init; }
+
+    public required int HoldFramePercent { get; init; }
+
     public int Score { get; set; } = 0;
 
     public required bool OnlyFeetTouchGround { get; init; }

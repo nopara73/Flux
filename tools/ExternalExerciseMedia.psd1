@@ -92,15 +92,87 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
+    105 = @{
+        File = 'plie-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=yNKVK2axeNI'
+        SourcePage = 'https://howcast.com/videos/509540-how-to-do-a-plie-squat-thighs-workout/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42.6
+        DurationSeconds = 3.1
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     111 = @{ File = '1685-QChZi3x.gif'; MirrorForAlternation = $false }
     112 = @{ File = '1686-5BZHW9s.gif'; MirrorForAlternation = $true }
+    121 = @{
+        File = 'forward-lunge.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z2n58m2i4jg'
+        SourcePage = 'https://howcast.com/videos/437100-how-to-do-lunges/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 43.3
+        DurationSeconds = 3.2
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    123 = @{
+        File = 'lateral-lunge.mp4'
+        Url = 'https://www.youtube.com/watch?v=Jky9kOx0L84'
+        SourcePage = 'https://howcast.com/videos/513679-how-to-do-a-side-lunge-warrior-fitness/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 63.2
+        DurationSeconds = 9.1
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
     124 = @{ File = '3769-gUjqdei.gif'; MirrorForAlternation = $true }
     125 = @{ File = '1688-K9VL0Jq.gif'; MirrorForAlternation = $true }
     126 = @{ File = '1687-ErqK3UL.gif'; MirrorForAlternation = $true }
     127 = @{ File = '1460-IZVHb27.gif'; MirrorForAlternation = $false }
+    136 = @{
+        File = 'yoga-pose-sequence.mp4'
+        Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        SourcePage = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 215.0
+        DurationSeconds = 9.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     143 = @{ File = '3655-J9zIWig.gif'; MirrorForAlternation = $true }
-    157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $false }
+    157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $true }
     162 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
+    176 = @{
+        File = 'karate-back-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=BjylVSI2OLc'
+        SourcePage = 'https://howcast.com/videos/500297-how-to-do-a-back-kick-karate-lessons/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 94.0
+        DurationSeconds = 3.9
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    181 = @{
+        File = 'karate-side-thrust-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=YWovIwq2YAg'
+        SourcePage = 'https://howcast.com/videos/500295-how-to-do-side-kicks-karate-lessons/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 129.7
+        DurationSeconds = 2.2
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
     187 = @{
         File = 'ballet-second-position-releve.webm'
         Url = 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Relev%C3%A9%2C_ballet_technique_tutorial.webm'
@@ -110,7 +182,19 @@
         StartSeconds = 3.2
         DurationSeconds = 3.6
         FramesPerSecond = 10
+        PingPong = $true
         MirrorForAlternation = $false
+    }
+    191 = @{
+        File = 'ballet-tendu-240p.webm'
+        Url = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2e/Tendu%2C_ballet_technique_tutorial.webm/Tendu%2C_ballet_technique_tutorial.webm.240p.vp9.webm'
+        SourcePage = 'https://commons.wikimedia.org/wiki/File:Tendu,_ballet_technique_tutorial.webm'
+        Human = $true
+        Video = $true
+        StartSeconds = 3.2
+        DurationSeconds = 3.6
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
     }
     192 = @{
         File = 'ballet-tendu-side-240p.webm'
@@ -123,15 +207,507 @@
         FramesPerSecond = 10
         MirrorForAlternation = $true
     }
+    193 = @{
+        File = 'ballet-tendu-240p.webm'
+        Url = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2e/Tendu%2C_ballet_technique_tutorial.webm/Tendu%2C_ballet_technique_tutorial.webm.240p.vp9.webm'
+        SourcePage = 'https://commons.wikimedia.org/wiki/File:Tendu,_ballet_technique_tutorial.webm'
+        Human = $true
+        Video = $true
+        StartSeconds = 9.7
+        DurationSeconds = 2.3
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    202 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42.0
+        DurationSeconds = 9.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    204 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 72.5
+        DurationSeconds = 6.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    205 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 22.75
+        DurationSeconds = 5.75
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    207 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 128.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    208 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 128.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    209 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 128.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    210 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 92.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    221 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 92.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    226 = @{
+        File = 'ability-hand-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        SourcePage = 'https://www.youtube.com/watch?v=favZefGkiHk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42.0
+        DurationSeconds = 9.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
     235 = @{ File = '1428-2zNKRUB.gif'; MirrorForAlternation = $false }
+    238 = @{
+        File = 'prayer-hand-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=vYU_washb7I'
+        SourcePage = 'https://www.youtube.com/watch?v=vYU_washb7I'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 11.75
+        DurationSeconds = 3.5
+        FramesPerSecond = 10
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
     327 = @{ File = '3669-JF8AkMX.gif'; MirrorForAlternation = $true }
+    409 = @{
+        File = 'cervical-car.mp4'
+        Url = 'https://www.youtube.com/watch?v=986FAogJRFw'
+        SourcePage = 'https://www.youtube.com/watch?v=986FAogJRFw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 14.5
+        DurationSeconds = 22.75
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    512 = @{
+        File = 'standing-scapular-protraction-retraction.mp4'
+        Url = 'https://www.youtube.com/watch?v=b2Rj1Beo_R4'
+        SourcePage = 'https://www.youtube.com/watch?v=b2Rj1Beo_R4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4.0
+        DurationSeconds = 4.25
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    513 = @{
+        File = 'standing-scapular-retraction.mp4'
+        Url = 'https://www.youtube.com/watch?v=UHlhyti-RBQ'
+        SourcePage = 'https://www.youtube.com/watch?v=UHlhyti-RBQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 29.5
+        DurationSeconds = 15.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    516 = @{
+        File = 'shoulder-shrug.mp4'
+        Url = 'https://www.youtube.com/watch?v=MgPVr316EoY'
+        SourcePage = 'https://www.youtube.com/watch?v=MgPVr316EoY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 7.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    591 = @{
+        File = 'bharatanatyam-natyarambhe.mp4'
+        Url = 'https://www.youtube.com/watch?v=N0VTB8dM0UY'
+        SourcePage = 'https://www.youtube.com/watch?v=N0VTB8dM0UY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 19.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     609 = @{ File = '1364-cuKYxhu.gif'; MirrorForAlternation = $false }
+    626 = @{
+        File = 'sumo-stance.mp4'
+        Url = 'https://www.youtube.com/watch?v=ED5-6FQvkdE'
+        SourcePage = 'https://www.youtube.com/watch?v=ED5-6FQvkdE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 18.0
+        DurationSeconds = 8.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    608 = @{
+        File = 'belly-dance-hip-circle.mp4'
+        Url = 'https://www.youtube.com/watch?v=_jP4VwF7zys'
+        SourcePage = 'https://howcast.com/videos/460670-how-to-do-small-hip-circles-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 50.7
+        DurationSeconds = 7.4
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    666 = @{
+        File = 'ballet-arabesque.mp4'
+        Url = 'https://www.youtube.com/watch?v=Kw2hLM2PY3Q'
+        SourcePage = 'https://howcast.com/videos/497194-how-to-do-an-arabesque-ballet-dance/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 55.0
+        DurationSeconds = 6.3
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    677 = @{
+        File = 'belly-dance-hip-drop.mp4'
+        Url = 'https://www.youtube.com/watch?v=M4bMFdLH3FU'
+        SourcePage = 'https://howcast.com/videos/460661-how-to-do-hip-drops-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 59.6
+        DurationSeconds = 11.9
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    678 = @{
+        File = 'belly-dance-hip-lift.mp4'
+        Url = 'https://www.youtube.com/watch?v=3K62qZ2hGyw'
+        SourcePage = 'https://howcast.com/videos/460659-how-to-do-hip-lifts-basic-shimmy-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 67.5
+        DurationSeconds = 6.8
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    681 = @{
+        File = 'belly-dance-horizontal-figure-eight.mp4'
+        Url = 'https://www.youtube.com/watch?v=db5QxGefJG0'
+        SourcePage = 'https://howcast.com/videos/460676-how-to-do-a-horizontal-figure-8-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 82.2
+        DurationSeconds = 10.6
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    683 = @{
+        File = 'belly-dance-umi.mp4'
+        Url = 'https://www.youtube.com/watch?v=SscFSgovFqU'
+        SourcePage = 'https://howcast.com/videos/460671-how-to-do-interior-hip-circles-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 50.4
+        DurationSeconds = 7.7
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    684 = @{
+        File = 'belly-dance-maya.mp4'
+        Url = 'https://www.youtube.com/watch?v=1EdBDPekcJQ'
+        SourcePage = 'https://howcast.com/videos/460673-how-to-do-a-vertical-figure-8-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 72.6
+        DurationSeconds = 14.9
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    685 = @{
+        File = 'belly-dance-taqsim.mp4'
+        Url = 'https://www.youtube.com/watch?v=I-5kAnlJdnA'
+        SourcePage = 'https://howcast.com/videos/460675-how-to-do-a-reverse-vertical-figure-8-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 70.8
+        DurationSeconds = 12.1
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    686 = @{
+        File = 'belly-dance-hip-twist.mp4'
+        Url = 'https://www.youtube.com/watch?v=127wMChdvFg'
+        SourcePage = 'https://howcast.com/videos/460658-how-to-do-hip-twists-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 48.4
+        DurationSeconds = 6.9
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    687 = @{
+        File = 'belly-dance-basic-shimmy.mp4'
+        Url = 'https://www.youtube.com/watch?v=3K62qZ2hGyw'
+        SourcePage = 'https://howcast.com/videos/460659-how-to-do-hip-lifts-basic-shimmy-belly-dancing/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 108.2
+        DurationSeconds = 3.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    712 = @{
+        File = 'thoracic-expansion-hold.mp4'
+        Url = 'https://www.youtube.com/watch?v=KdMNPH3XTuA'
+        SourcePage = 'https://www.youtube.com/watch?v=KdMNPH3XTuA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 9.0
+        DurationSeconds = 7.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     721 = @{ File = '1297-HbSG1Pw.gif'; MirrorForAlternation = $false }
     738 = @{ File = '1167-3uj0Ozg.gif'; MirrorForAlternation = $false }
     739 = @{ File = '1365-GSDioYu.gif'; MirrorForAlternation = $false }
+    745 = @{
+        File = 'dynamic-hug.mp4'
+        Url = 'https://www.youtube.com/watch?v=igq3Gd9ex3o'
+        SourcePage = 'https://www.youtube.com/watch?v=igq3Gd9ex3o'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 8.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    784 = @{
+        File = 'yoga-pose-sequence.mp4'
+        Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        SourcePage = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 602.0
+        DurationSeconds = 5.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    816 = @{
+        File = 'torso-circles.mp4'
+        Url = 'https://www.youtube.com/watch?v=6PhmU75xdhA'
+        SourcePage = 'https://www.youtube.com/watch?v=6PhmU75xdhA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 16.75
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    818 = @{
+        File = 'standing-cat-cow.mp4'
+        Url = 'https://www.youtube.com/watch?v=PUfWMHERcvA'
+        SourcePage = 'https://www.youtube.com/watch?v=PUfWMHERcvA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1.0
+        DurationSeconds = 4.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    843 = @{
+        File = 'standing-cobra-pose.mp4'
+        Url = 'https://www.youtube.com/watch?v=voQVxkTSjjY'
+        SourcePage = 'https://www.youtube.com/watch?v=voQVxkTSjjY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 18.0
+        DurationSeconds = 7.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     846 = @{ File = '3212-BbfB8Gb.gif'; MirrorForAlternation = $false }
     849 = @{ File = '3215-yq3GAJX.gif'; MirrorForAlternation = $false }
     850 = @{ File = '3218-B5xca8s.gif'; MirrorForAlternation = $false }
+    884 = @{
+        File = 'boxing-slip-roll.mp4'
+        Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 54.0
+        DurationSeconds = 10.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    885 = @{
+        File = 'boxing-slip-roll.mp4'
+        Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 111.5
+        DurationSeconds = 8.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    948 = @{
+        File = 'bodyweight-wood-chop.mp4'
+        Url = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
+        SourcePage = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4.0
+        DurationSeconds = 15.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    969 = @{
+        File = 'chair-pose-core-hold.mp4'
+        Url = 'https://www.youtube.com/watch?v=7ODQ2H35X10'
+        SourcePage = 'https://www.youtube.com/watch?v=7ODQ2H35X10'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 84.5
+        DurationSeconds = 6.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    971 = @{
+        File = 'horse-stance-core-hold.mp4'
+        Url = 'https://www.youtube.com/watch?v=_il-6dKLors'
+        SourcePage = 'https://www.youtube.com/watch?v=_il-6dKLors'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 17.5
+        DurationSeconds = 5.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    985 = @{
+        File = 'karate-heiko-dachi.mp4'
+        Url = 'https://www.youtube.com/watch?v=vV3L5iQ8CiU'
+        SourcePage = 'https://www.youtube.com/watch?v=vV3L5iQ8CiU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.5
+        DurationSeconds = 3.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    986 = @{
+        File = 'karate-kiba-dachi.mp4'
+        Url = 'https://www.youtube.com/watch?v=6Mt_MO5pf_A'
+        SourcePage = 'https://www.youtube.com/watch?v=6Mt_MO5pf_A'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 26.0
+        DurationSeconds = 12.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    987 = @{
+        File = 'karate-shiko-dachi.mp4'
+        Url = 'https://www.youtube.com/watch?v=GyqZeJdDTZg'
+        SourcePage = 'https://www.youtube.com/watch?v=GyqZeJdDTZg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 14.0
+        DurationSeconds = 8.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }
     959 = @{ File = '3231-p195zsJ.gif'; MirrorForAlternation = $false }
     960 = @{ File = '3214-RtyAsy1.gif'; MirrorForAlternation = $false }
