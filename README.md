@@ -20,6 +20,19 @@ The fake database validates these invariants when it is created. The
 `IExerciseDatabase` interface is the replacement seam for a persistent database
 later.
 
+## Workout flow
+
+Each workout contains one randomly selected exercise from every dominant region,
+in enum order from `FEET` through `CORE`. Press **Start** to begin a 60-second
+timer, or **Skip** to finish the timer immediately while testing. After each
+timer, record the result with **X**, **−**, or **✓**.
+
+Workout state is saved locally with Android shared preferences. An **X** reduces
+that exercise's score by one and replaces it next session. If there were no X
+results, one randomly chosen neutral exercise is replaced. An all-tick workout
+keeps the complete lineup. Every replacement is selected randomly from the
+highest-score bucket in the same dominant region.
+
 ## Build
 
 From this directory:

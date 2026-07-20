@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Flux</string>
-    <string name="database_loading">Loading fake exercises…</string>
+    <string name="exercise_animation_description">Animated exercise demonstration</string>
+    <string name="start">Start</string>
+    <string name="speed_up">Skip</string>
+    <string name="speed_up_description">Skip the countdown for testing</string>
+    <string name="failed">X</string>
+    <string name="failed_description">Could not complete this exercise</string>
+    <string name="neutral">−</string>
+    <string name="neutral_description">Leave this exercise unchanged</string>
+    <string name="completed">✓</string>
+    <string name="completed_description">Completed this exercise</string>
+    <string name="congratulations_title">Workout complete!</string>
+    <string name="congratulations_message">Ten regions. One full-body session. Nicely done.</string>
+    <string name="done">Done</string>
 </resources>
