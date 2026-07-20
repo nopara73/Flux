@@ -196,7 +196,7 @@ public class MainActivity : Activity
             .Count() + 1;
 
         _regionName.Text = $"{position} / {ExerciseSessionService.RegionOrder.Count}  ·  {_currentRegion}";
-        _exerciseName.Text = exercise.Name;
+        _exerciseName.Text = $"{position}. {exercise.Name}";
         _workoutScreen.Visibility = ViewStates.Visible;
         _congratulationsScreen.Visibility = ViewStates.Gone;
         ShowStartButton();
