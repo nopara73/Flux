@@ -12,7 +12,7 @@ exercises at startup: exactly 10 for each `DominantRegion` enum value.
 Every exercise contains:
 
 - a unique name
-- the shared `exercise_placeholder.gif` asset
+- the shared, looping animated `exercise_placeholder.gif` asset
 - exactly one dominant region
 - an integer score initialized to `0`
 
