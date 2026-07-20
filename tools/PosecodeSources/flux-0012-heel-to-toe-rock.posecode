@@ -1,0 +1,24 @@
+posecode exercise "Heel-to-Toe Rock"
+  rig humanoid
+  pose start = standing
+
+  step "Rock onto both heels" 0.9s settle:
+    ankles: dorsiflex 15
+    cue "Lift both forefeet together and rock onto both heels"
+
+  step "Return both feet flat" 0.7s flow:
+    ankles: dorsiflex 0
+    ground-lock: feet
+    cue "Return both feet to flat"
+
+  step "Rock onto both forefeet" 0.9s settle:
+    ankles: plantarflex 30
+    ground-lock: feet
+    cue "Lift both heels together and rock onto both forefeet"
+
+  step "Return both feet flat" 0.8s settle:
+    ankles: plantarflex 0
+    ground-lock: feet
+    cue "Return both feet to flat"
+
+  repeat 1

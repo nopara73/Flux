@@ -58,12 +58,14 @@ one of three sources:
 
 The remaining GIFs are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **112 exact
-demonstrations and 888 still requiring exact media**. The region-by-region
-counts and the complete list of all 888 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **174 exact
+demonstrations and 826 still requiring exact media**. The region-by-region
+counts and the complete list of all 826 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
 `tools/PosecodeExerciseMedia.psd1`, and `tools/VerifiedExerciseDemos.psd1`.
+Editable sources for the reviewed custom 3D batch live in
+`tools/PosecodeSources`.
 The external clips are used for this private personal build and are not a
 commercial media-clearance record.

@@ -1,0 +1,29 @@
+posecode exercise "Horse stance"
+  rig humanoid
+  pose start = standing:
+    hips: abduct 25
+    hips: rotate-out 20
+
+  step "Sink" 1.6s flow:
+    hips: flex 30
+    hips: abduct 25
+    hips: rotate-out 20
+    knees: flex 90
+    ankles: dorsiflex 15
+    spine: extend 5
+    elbows: flex 90
+    ground-lock: feet
+    cue "Sink vertically into a wide turned-out stance with knees opening over the feet"
+
+  step "Rise" 1.6s settle:
+    hips: flex 0
+    hips: abduct 25
+    hips: rotate-out 20
+    knees: flex 0
+    ankles: plantarflex 0
+    spine: flex 0
+    elbows: flex 0
+    ground-lock: feet
+    cue "Straighten both legs while keeping the same wide stance"
+
+  repeat 1

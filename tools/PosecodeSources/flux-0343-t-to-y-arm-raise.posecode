@@ -1,0 +1,31 @@
+posecode exercise "T-to-Y Arm Raise"
+  rig humanoid
+  pose start = standing
+
+  step "Form T" 0.8s settle:
+    shoulders: abduct 90
+    elbows: flex 6
+    ground-lock: feet
+    cue "Raise both nearly straight arms to a horizontal T"
+
+  step "Lift to Y" 0.9s settle:
+    shoulders: flex 18
+    shoulders: abduct 150
+    elbows: flex 6
+    ground-lock: feet
+    cue "Lift both arms diagonally overhead from T into a symmetric Y"
+
+  step "Return T" 0.9s settle:
+    shoulders: flex 0
+    shoulders: abduct 90
+    elbows: flex 6
+    ground-lock: feet
+    cue "Lower both arms along the same diagonal path to horizontal T"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

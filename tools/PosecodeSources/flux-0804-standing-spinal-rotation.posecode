@@ -1,0 +1,32 @@
+posecode exercise "Standing Spinal Rotation"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 70
+    shoulders: adduct 32
+    elbows: flex 110
+
+  step "Rotate right" 1.2s settle:
+    spine: twist-right 35
+    chest: twist-right 24
+    ground-lock: feet
+    cue "Rotate the torso to the right over forward-facing hips"
+
+  step "Center from right" 0.9s settle:
+    spine: twist-right 0
+    chest: twist-right 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  step "Rotate left" 1.2s settle:
+    spine: twist-left 35
+    chest: twist-left 24
+    ground-lock: feet
+    cue "Rotate the torso to the left over forward-facing hips"
+
+  step "Center from left" 0.9s settle:
+    spine: twist-left 0
+    chest: twist-left 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  repeat 1

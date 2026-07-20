@@ -1,0 +1,29 @@
+posecode exercise "Alternating Butt-Kick March"
+  rig humanoid
+  pose start = standing
+
+  step "Curl left" 0.7s settle:
+    knee_left: flex 110
+    shoulder_right: flex 25
+    pin: foot_right floor
+    cue "Draw the left heel toward the left glute"
+
+  step "Reset left" 0.6s settle:
+    knee_left: flex 0
+    shoulder_right: flex 0
+    ground-lock: feet
+    cue "Lower the left foot to neutral standing"
+
+  step "Curl right" 0.7s settle:
+    knee_right: flex 110
+    shoulder_left: flex 25
+    pin: foot_left floor
+    cue "Draw the right heel toward the right glute"
+
+  step "Reset right" 0.6s settle:
+    knee_right: flex 0
+    shoulder_left: flex 0
+    ground-lock: feet
+    cue "Lower the right foot to neutral standing"
+
+  repeat 1

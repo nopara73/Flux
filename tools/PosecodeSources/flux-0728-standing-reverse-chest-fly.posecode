@@ -1,0 +1,39 @@
+posecode exercise "Standing Reverse Chest Fly"
+  rig humanoid
+  pose start = standing
+
+  step "Set arms forward" 0.9s settle:
+    shoulders: flex 85
+    shoulders: adduct 12
+    elbows: flex 20
+    ground-lock: feet
+    cue "Bring both softly bent arms together forward at shoulder height"
+
+  step "Reverse fly open" 1s settle:
+    shoulders: flex 10
+    shoulders: abduct 82
+    elbows: flex 20
+    ground-lock: feet
+    cue "Sweep both softly bent arms apart into a wide horizontal reverse fly"
+
+  step "Hold open" 0.25s linear:
+    shoulders: flex 10
+    shoulders: abduct 82
+    elbows: flex 20
+    ground-lock: feet
+    cue "Briefly hold both arms wide at shoulder height"
+
+  step "Close forward" 1s settle:
+    shoulders: flex 85
+    shoulders: adduct 12
+    elbows: flex 20
+    ground-lock: feet
+    cue "Return both arms together forward along the same reverse-fly path"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

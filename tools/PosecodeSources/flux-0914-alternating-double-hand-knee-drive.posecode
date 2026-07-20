@@ -1,0 +1,42 @@
+posecode exercise "Alternating Double-Hand Knee Drive"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 170
+
+  step "Drive left knee" 0.8s settle:
+    hip_left: flex 92
+    knee_left: flex 100
+    shoulders: flex 60
+    elbows: flex 18
+    pin: foot_right floor
+    reach: hand_left knee_left
+    reach: hand_right knee_left
+    cue "Pull both hands down to the rising left knee"
+
+  step "Reset left" 0.7s settle:
+    hip_left: flex 0
+    knee_left: flex 0
+    shoulders: flex 170
+    elbows: flex 0
+    ground-lock: feet
+    cue "Return both arms overhead and lower the left foot"
+
+  step "Drive right knee" 0.8s settle:
+    hip_right: flex 92
+    knee_right: flex 100
+    shoulders: flex 60
+    elbows: flex 18
+    pin: foot_left floor
+    reach: hand_left knee_right
+    reach: hand_right knee_right
+    cue "Pull both hands down to the rising right knee"
+
+  step "Reset right" 0.7s settle:
+    hip_right: flex 0
+    knee_right: flex 0
+    shoulders: flex 170
+    elbows: flex 0
+    ground-lock: feet
+    cue "Return both arms overhead and lower the right foot"
+
+  repeat 1

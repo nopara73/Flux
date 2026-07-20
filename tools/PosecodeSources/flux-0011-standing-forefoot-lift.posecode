@@ -1,0 +1,14 @@
+posecode exercise "Standing Forefoot Lift"
+  rig humanoid
+  pose start = standing
+
+  step "Lift both forefeet" 1.1s settle:
+    ankles: dorsiflex 15
+    cue "Lift both forefeet toward the shins while both heels stay down"
+
+  step "Lower both forefeet" 1.2s settle:
+    ankles: dorsiflex 0
+    ground-lock: feet
+    cue "Lower both forefeet together until both feet are flat"
+
+  repeat 1

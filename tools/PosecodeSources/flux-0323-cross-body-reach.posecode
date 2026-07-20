@@ -1,0 +1,33 @@
+posecode exercise "Cross-body reach"
+  rig humanoid
+  pose start = standing
+
+  step "Reach right across" 1.2s flow:
+    shoulder_right: flex 80
+    shoulder_right: adduct 50
+    elbow_right: flex 10
+    ground-lock: feet
+    cue "Reach the nearly straight right arm across the chest toward the left side"
+
+  step "Center right" 0.8s settle:
+    shoulder_right: flex 0
+    shoulder_right: adduct 0
+    elbow_right: flex 0
+    ground-lock: feet
+    cue "Return the right arm to the side"
+
+  step "Reach left across" 1.2s flow:
+    shoulder_left: flex 80
+    shoulder_left: adduct 50
+    elbow_left: flex 10
+    ground-lock: feet
+    cue "Reach the nearly straight left arm across the chest toward the right side"
+
+  step "Center left" 0.8s settle:
+    shoulder_left: flex 0
+    shoulder_left: adduct 0
+    elbow_left: flex 0
+    ground-lock: feet
+    cue "Return the left arm to the side"
+
+  repeat 1

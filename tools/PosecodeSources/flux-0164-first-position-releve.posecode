@@ -1,0 +1,19 @@
+posecode exercise "First-position releve"
+  rig humanoid
+  pose start = first-position
+
+  step "Rise" 1.5s settle:
+    ankles: plantarflex 30
+    knees: extend 0
+    hips: rotate-out 25
+    ground-lock: feet
+    cue "Keep first-position turnout and raise both heels together"
+
+  step "Lower" 1.5s settle:
+    ankles: plantarflex 0
+    knees: extend 0
+    hips: rotate-out 25
+    ground-lock: feet
+    cue "Lower both heels together without changing turnout"
+
+  repeat 1

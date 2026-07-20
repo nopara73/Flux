@@ -1,0 +1,17 @@
+posecode exercise "Lateral Arm Raise"
+  rig humanoid
+  pose start = standing
+
+  step "Raise to T" 1s settle:
+    shoulders: abduct 90
+    elbows: flex 7
+    ground-lock: feet
+    cue "Raise both nearly straight arms out to shoulder height and stop in a horizontal T"
+
+  step "Reset" 1s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms through the same side path to neutral"
+
+  repeat 1

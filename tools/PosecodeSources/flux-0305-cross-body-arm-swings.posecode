@@ -1,0 +1,40 @@
+posecode exercise "Cross-Body Arm Swings"
+  rig humanoid
+  pose start = standing
+
+  step "Open wide" 0.7s flow:
+    shoulders: abduct 90
+    elbows: flex 8
+    ground-lock: feet
+    cue "Open both nearly straight arms to a horizontal T over two planted feet"
+
+  step "Cross right high" 0.65s flow:
+    shoulders: adduct 38
+    shoulder_right: flex 100
+    shoulder_left: flex 80
+    elbows: flex 12
+    ground-lock: feet
+    cue "Swing both arms across the chest with the right arm slightly above the left"
+
+  step "Reopen" 0.65s flow:
+    shoulders: flex 0
+    shoulders: abduct 90
+    elbows: flex 8
+    ground-lock: feet
+    cue "Open both arms back to the same horizontal T"
+
+  step "Cross left high" 0.65s flow:
+    shoulders: adduct 38
+    shoulder_left: flex 100
+    shoulder_right: flex 80
+    elbows: flex 12
+    ground-lock: feet
+    cue "Swing both arms across the chest with the left arm slightly above the right"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Return both arms to neutral at the sides"
+
+  repeat 1

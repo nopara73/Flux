@@ -1,0 +1,17 @@
+posecode exercise "Standing Snow Angel"
+  rig humanoid
+  pose start = standing
+
+  step "Sweep overhead" 1.4s flow:
+    shoulders: abduct 165
+    elbows: flex 8
+    ground-lock: feet
+    cue "Sweep both nearly straight arms outward and overhead through broad matching side arcs"
+
+  step "Reset" 1.4s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Sweep both arms down through the same broad side arcs to neutral"
+
+  repeat 1

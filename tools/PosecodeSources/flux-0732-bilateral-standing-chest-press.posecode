@@ -1,0 +1,38 @@
+posecode exercise "Bilateral Standing Chest Press"
+  rig humanoid
+  pose start = standing
+
+  step "Set press position" 0.8s settle:
+    shoulders: flex 52
+    elbows: flex 125
+    forearms: pronate 20
+    fingers: flex 75
+    ground-lock: feet
+    cue "Bring both closed hands to matching positions beside the chest"
+
+  step "Press forward" 0.75s drive:
+    shoulders: flex 90
+    shoulders: rotate-in 45
+    elbows: flex 8
+    forearms: pronate 70
+    fingers: flex 75
+    ground-lock: feet
+    cue "Press both arms straight forward together at chest height"
+
+  step "Retract" 0.8s settle:
+    shoulders: flex 52
+    shoulders: rotate-in 0
+    elbows: flex 125
+    forearms: pronate 20
+    fingers: flex 75
+    ground-lock: feet
+    cue "Retract both hands together to the same chest position"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    fingers: hold neutral
+    ground-lock: feet
+    cue "Open both hands and lower both arms to neutral"
+
+  repeat 1

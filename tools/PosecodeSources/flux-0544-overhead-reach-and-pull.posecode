@@ -1,0 +1,34 @@
+posecode exercise "Overhead Reach and Pull"
+  rig humanoid
+  pose start = standing
+
+  step "Reach overhead" 0.9s settle:
+    shoulders: flex 155
+    shoulders: abduct 18
+    elbows: flex 6
+    ground-lock: feet
+    cue "Reach both nearly straight arms overhead in a narrow symmetric Y"
+
+  step "Pull down" 0.9s drive:
+    shoulders: flex 18
+    shoulders: abduct 75
+    shoulders: rotate-out 55
+    elbows: flex 105
+    ground-lock: feet
+    cue "Pull both elbows down beside the ribs into a symmetric goalpost"
+
+  step "Reach again" 0.9s settle:
+    shoulders: flex 155
+    shoulders: abduct 18
+    shoulders: rotate-out 0
+    elbows: flex 6
+    ground-lock: feet
+    cue "Extend both arms back to the same overhead reach"
+
+  step "Reset" 0.8s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

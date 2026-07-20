@@ -1,0 +1,18 @@
+posecode exercise "Supinated elbow curl"
+  rig humanoid
+  pose start = standing:
+    forearms: pronate 0
+
+  step "Curl" 1.3s settle:
+    elbows: flex 135
+    forearms: pronate 0
+    ground-lock: feet
+    cue "Bend both elbows with palms facing up and upper arms still"
+
+  step "Lower" 1.3s settle:
+    elbows: flex 10
+    forearms: pronate 0
+    ground-lock: feet
+    cue "Straighten both elbows with palms still facing up"
+
+  repeat 1

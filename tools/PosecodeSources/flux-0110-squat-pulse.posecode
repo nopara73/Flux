@@ -1,0 +1,71 @@
+posecode exercise "Squat Pulse"
+  rig humanoid
+  pose start = standing
+
+  step "Descend to half squat" 1.1s settle:
+    hips: flex 65
+    knees: flex 78
+    ankles: dorsiflex 12
+    pelvis: hinge 20
+    shoulders: flex 55
+    ground-lock: feet
+    cue "Lower into a half squat on both legs"
+
+  step "Pulse one down" 0.28s flow:
+    hips: flex 75
+    knees: flex 90
+    ankles: dorsiflex 15
+    pelvis: hinge 23
+    ground-lock: feet
+    cue "Pulse both legs a little lower"
+
+  step "Pulse one up" 0.28s flow:
+    hips: flex 65
+    knees: flex 78
+    ankles: dorsiflex 12
+    pelvis: hinge 20
+    ground-lock: feet
+    cue "Rise only to the half-squat height"
+
+  step "Pulse two down" 0.28s flow:
+    hips: flex 75
+    knees: flex 90
+    ankles: dorsiflex 15
+    pelvis: hinge 23
+    ground-lock: feet
+    cue "Pulse both legs a little lower"
+
+  step "Pulse two up" 0.28s flow:
+    hips: flex 65
+    knees: flex 78
+    ankles: dorsiflex 12
+    pelvis: hinge 20
+    ground-lock: feet
+    cue "Rise only to the half-squat height"
+
+  step "Pulse three down" 0.28s flow:
+    hips: flex 75
+    knees: flex 90
+    ankles: dorsiflex 15
+    pelvis: hinge 23
+    ground-lock: feet
+    cue "Pulse both legs a little lower"
+
+  step "Pulse three up" 0.28s settle:
+    hips: flex 65
+    knees: flex 78
+    ankles: dorsiflex 12
+    pelvis: hinge 20
+    ground-lock: feet
+    cue "Rise only to the half-squat height"
+
+  step "Stand" 1s drive:
+    hips: flex 0
+    knees: flex 0
+    ankles: dorsiflex 0
+    pelvis: hinge 0
+    shoulders: flex 0
+    ground-lock: feet
+    cue "Straighten both legs and return upright"
+
+  repeat 1

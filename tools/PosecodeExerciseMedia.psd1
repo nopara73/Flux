@@ -1,20 +1,81 @@
 @{
-    # These files are reviewed Posecode renders checked into Flux/Assets.
-    # The catalog generator preserves them instead of replacing them with a
-    # lower-fidelity fallback stick figure when -Force is used.
+    # Reviewed Posecode renders checked into Flux/Assets. Flux-owned source
+    # descriptions for the new exact-motion batch live in tools/PosecodeSources.
+    5 = @{ File = '0005-wide-stance-calf-raise.gif'; Source = 'Posecode' }
+    6 = @{ File = '0006-toes-in-calf-raise.gif'; Source = 'Posecode' }
+    7 = @{ File = '0007-toes-out-calf-raise.gif'; Source = 'Posecode' }
+    10 = @{ File = '0010-standing-bent-knee-heel-raise.gif'; Source = 'Posecode' }
+    11 = @{ File = '0011-standing-forefoot-lift.gif'; Source = 'Posecode' }
+    12 = @{ File = '0012-heel-to-toe-rock.gif'; Source = 'Posecode' }
     101 = @{ File = 'squat.gif'; Source = 'Posecode' }
+    102 = @{ File = '0102-narrow-stance-squat.gif'; Source = 'Posecode' }
+    103 = @{ File = '0103-wide-stance-squat.gif'; Source = 'Posecode' }
+    106 = @{ File = '0106-quarter-squat.gif'; Source = 'Posecode' }
+    108 = @{ File = '0108-deep-squat.gif'; Source = 'Posecode' }
+    110 = @{ File = '0110-squat-pulse.gif'; Source = 'Posecode' }
     128 = @{ File = 'alternating-forward-lunge.gif'; Source = 'Posecode' }
     137 = @{ File = 'chair-pose.gif'; Source = 'Posecode' }
     146 = @{ File = 'alternating-hamstring-curl.gif'; Source = 'Posecode' }
+    164 = @{ File = '0164-first-position-releve.gif'; Source = 'Posecode' }
     167 = @{ File = 'high-knee-march.gif'; Source = 'Posecode' }
     174 = @{ File = 'alternating-front-kick.gif'; Source = 'Posecode' }
     189 = @{ File = 'demi-plie.gif'; Source = 'Posecode' }
     301 = @{ File = 'bidirectional-arm-circles.gif'; Source = 'Posecode' }
+    305 = @{ File = '0305-cross-body-arm-swings.gif'; Source = 'Posecode' }
+    306 = @{ File = '0306-overhead-arm-swings.gif'; Source = 'Posecode' }
+    307 = @{ File = '0307-front-arm-raise.gif'; Source = 'Posecode' }
+    308 = @{ File = '0308-lateral-arm-raise.gif'; Source = 'Posecode' }
+    309 = @{ File = '0309-scaption-raise.gif'; Source = 'Posecode' }
+    312 = @{ File = '0312-standing-overhead-elbow-extension-flow.gif'; Source = 'Posecode' }
+    314 = @{ File = '0314-supinated-elbow-curl.gif'; Source = 'Posecode' }
+    321 = @{ File = '0321-alternating-overhead-reach.gif'; Source = 'Posecode' }
+    322 = @{ File = '0322-double-overhead-reach.gif'; Source = 'Posecode' }
+    323 = @{ File = '0323-cross-body-reach.gif'; Source = 'Posecode' }
+    339 = @{ File = '0339-w-to-y-arm-raise.gif'; Source = 'Posecode' }
+    340 = @{ File = '0340-double-straight-punch.gif'; Source = 'Posecode' }
+    343 = @{ File = '0343-t-to-y-arm-raise.gif'; Source = 'Posecode' }
+    389 = @{ File = '0389-double-arm-overhead-pull-down.gif'; Source = 'Posecode' }
+    396 = @{ File = '0396-standing-breaststroke-arm-sweep.gif'; Source = 'Posecode' }
+    501 = @{ File = '0501-shoulder-flexion.gif'; Source = 'Posecode' }
+    503 = @{ File = '0503-shoulder-abduction.gif'; Source = 'Posecode' }
+    508 = @{ File = '0508-shoulder-external-rotation.gif'; Source = 'Posecode' }
+    541 = @{ File = '0541-standing-snow-angel.gif'; Source = 'Posecode' }
+    544 = @{ File = '0544-overhead-reach-and-pull.gif'; Source = 'Posecode' }
     584 = @{ File = 'port-de-bras.gif'; Source = 'Posecode' }
+    601 = @{ File = '0601-alternating-standing-hip-flexion.gif'; Source = 'Posecode' }
     603 = @{ File = 'alternating-hip-abduction.gif'; Source = 'Posecode' }
+    604 = @{ File = '0604-alternating-standing-hip-adduction.gif'; Source = 'Posecode' }
+    618 = @{ File = '0618-alternating-open-the-gate.gif'; Source = 'Posecode' }
+    619 = @{ File = '0619-alternating-close-the-gate.gif'; Source = 'Posecode' }
+    625 = @{ File = '0625-horse-stance.gif'; Source = 'Posecode' }
+    633 = @{ File = '0633-alternating-butt-kick-march.gif'; Source = 'Posecode' }
     635 = @{ File = 'good-morning.gif'; Source = 'Posecode' }
+    651 = @{ File = '0651-alternating-front-leg-swing.gif'; Source = 'Posecode' }
+    653 = @{ File = '0653-alternating-lateral-leg-swing.gif'; Source = 'Posecode' }
+    727 = @{ File = '0727-standing-chest-fly.gif'; Source = 'Posecode' }
+    728 = @{ File = '0728-standing-reverse-chest-fly.gif'; Source = 'Posecode' }
+    731 = @{ File = '0731-alternating-chest-press.gif'; Source = 'Posecode' }
+    732 = @{ File = '0732-bilateral-standing-chest-press.gif'; Source = 'Posecode' }
+    735 = @{ File = '0735-low-to-high-chest-fly.gif'; Source = 'Posecode' }
+    736 = @{ File = '0736-high-to-low-chest-fly.gif'; Source = 'Posecode' }
+    802 = @{ File = '0802-standing-spinal-extension.gif'; Source = 'Posecode' }
+    803 = @{ File = '0803-standing-spinal-lateral-flexion.gif'; Source = 'Posecode' }
+    804 = @{ File = '0804-standing-spinal-rotation.gif'; Source = 'Posecode' }
     810 = @{ File = 'spinal-twist.gif'; Source = 'Posecode' }
+    823 = @{ File = '0823-wide-stance-hip-hinge.gif'; Source = 'Posecode' }
+    830 = @{ File = '0830-standing-backstroke.gif'; Source = 'Posecode' }
+    831 = @{ File = '0831-standing-reverse-fly.gif'; Source = 'Posecode' }
+    834 = @{ File = '0834-standing-lat-pulldown-arm-pattern.gif'; Source = 'Posecode' }
+    835 = @{ File = '0835-standing-straight-arm-pulldown-pattern.gif'; Source = 'Posecode' }
+    839 = @{ File = '0839-bilateral-wide-elbow-shadow-row.gif'; Source = 'Posecode' }
     858 = @{ File = 'alternating-side-bend.gif'; Source = 'Posecode' }
+    905 = @{ File = '0905-alternating-standing-side-crunch.gif'; Source = 'Posecode' }
+    914 = @{ File = '0914-alternating-double-hand-knee-drive.gif'; Source = 'Posecode' }
+    915 = @{ File = '0915-alternating-diagonal-knee-drive.gif'; Source = 'Posecode' }
+    916 = @{ File = '0916-alternating-high-knee-core-march.gif'; Source = 'Posecode' }
+    943 = @{ File = '0943-overhead-march.gif'; Source = 'Posecode' }
+    950 = @{ File = '0950-standing-axe-chop.gif'; Source = 'Posecode' }
+    962 = @{ File = '0962-alternating-diagonal-hand-to-knee-reach.gif'; Source = 'Posecode' }
     989 = @{ File = 'jab-cross.gif'; Source = 'Posecode' }
     1000 = @{ File = 'forward-fold.gif'; Source = 'Posecode' }
 }

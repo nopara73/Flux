@@ -1,0 +1,23 @@
+posecode exercise "Quarter Squat"
+  rig humanoid
+  pose start = standing
+
+  step "Quarter squat" 1s settle:
+    hips: flex 28
+    knees: flex 35
+    ankles: dorsiflex 7
+    pelvis: hinge 12
+    shoulders: flex 25
+    ground-lock: feet
+    cue "Bend both hips and knees only into a shallow quarter squat"
+
+  step "Stand" 1s drive:
+    hips: flex 0
+    knees: flex 0
+    ankles: dorsiflex 0
+    pelvis: hinge 0
+    shoulders: flex 0
+    ground-lock: feet
+    cue "Straighten both legs and return upright"
+
+  repeat 1

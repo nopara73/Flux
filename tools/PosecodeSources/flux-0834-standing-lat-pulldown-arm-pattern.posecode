@@ -1,0 +1,20 @@
+posecode exercise "Standing Lat-Pulldown Arm Pattern"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 175
+
+  step "Pull down" 1s settle:
+    shoulders: flex 20
+    shoulders: abduct 80
+    elbows: flex 100
+    ground-lock: feet
+    cue "Pull both elbows down and outward beside the ribs"
+
+  step "Reach overhead" 1s settle:
+    shoulders: flex 175
+    shoulders: abduct 0
+    elbows: flex 0
+    ground-lock: feet
+    cue "Extend both arms fully overhead"
+
+  repeat 1

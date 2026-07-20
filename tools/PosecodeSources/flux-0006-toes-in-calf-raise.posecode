@@ -1,0 +1,17 @@
+posecode exercise "Toes-In Calf Raise"
+  rig humanoid
+  pose start = standing:
+    hips: abduct 10
+    hips: rotate-in 12
+
+  step "Raise both heels" 1.1s settle:
+    ankles: plantarflex 34
+    ground-lock: feet
+    cue "Raise both heels together with both toes kept turned inward"
+
+  step "Lower both heels" 1.2s settle:
+    ankles: plantarflex 0
+    ground-lock: feet
+    cue "Lower both heels together without changing the inward foot angle"
+
+  repeat 1

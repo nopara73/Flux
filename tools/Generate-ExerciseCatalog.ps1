@@ -46,8 +46,8 @@ if ($externalExerciseMedia.Count -ne 23) {
     throw 'The reviewed external-media map must contain exactly 23 entries.'
 }
 
-if ($posecodeExerciseMedia.Count -ne 15) {
-    throw 'The reviewed Posecode-media map must contain exactly 15 entries.'
+if ($posecodeExerciseMedia.Count -ne 77) {
+    throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
 $regionColors = @(

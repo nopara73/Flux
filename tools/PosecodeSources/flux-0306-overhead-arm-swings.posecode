@@ -1,0 +1,29 @@
+posecode exercise "Overhead Arm Swings"
+  rig humanoid
+  pose start = standing
+
+  step "Swing behind" 0.7s flow:
+    shoulders: extend 25
+    elbows: flex 6
+    ground-lock: feet
+    cue "Sweep both nearly straight arms slightly behind the hips without leaning the torso"
+
+  step "Swing overhead" 1s flow:
+    shoulders: flex 170
+    elbows: flex 6
+    ground-lock: feet
+    cue "Swing both arms forward and overhead together while both feet stay planted"
+
+  step "Swing back" 1s flow:
+    shoulders: extend 25
+    elbows: flex 6
+    ground-lock: feet
+    cue "Sweep both arms down and slightly behind the hips along the same path"
+
+  step "Reset" 0.6s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Settle with both arms at the sides"
+
+  repeat 1

@@ -1,0 +1,24 @@
+posecode exercise "Wide-Stance Squat"
+  rig humanoid
+  pose start = standing:
+    hips: abduct 18
+
+  step "Wide squat" 1.4s settle:
+    hips: flex 72
+    knees: flex 88
+    ankles: dorsiflex 12
+    pelvis: hinge 20
+    shoulders: flex 50
+    ground-lock: feet
+    cue "Bend both hips and knees into a squat while the wide stance stays fixed"
+
+  step "Stand" 1.2s drive:
+    hips: flex 0
+    knees: flex 0
+    ankles: dorsiflex 0
+    pelvis: hinge 0
+    shoulders: flex 0
+    ground-lock: feet
+    cue "Straighten both legs and return to the wide upright stance"
+
+  repeat 1

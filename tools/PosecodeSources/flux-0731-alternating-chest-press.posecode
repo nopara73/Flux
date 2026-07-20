@@ -1,0 +1,56 @@
+posecode exercise "Alternating Chest Press"
+  rig humanoid
+  pose start = standing
+
+  step "Set guard" 0.7s settle:
+    shoulders: flex 50
+    elbows: flex 125
+    forearms: pronate 20
+    fingers: flex 78
+    ground-lock: feet
+    cue "Set both closed hands at equal chest-height guard positions"
+
+  step "Press right" 0.55s settle:
+    shoulder_right: flex 90
+    shoulder_right: rotate-in 45
+    elbow_right: flex 8
+    elbow_right: pronate 70
+    fingers: flex 78
+    ground-lock: feet
+    cue "Press the right arm straight forward while the left hand remains at the chest"
+
+  step "Return right" 0.55s settle:
+    shoulder_right: flex 50
+    shoulder_right: rotate-in 0
+    elbow_right: flex 125
+    elbow_right: pronate 20
+    fingers: flex 78
+    ground-lock: feet
+    cue "Retract the right hand to the same chest-height guard"
+
+  step "Press left" 0.55s settle:
+    shoulder_left: flex 90
+    shoulder_left: rotate-in 45
+    elbow_left: flex 8
+    elbow_left: pronate 70
+    fingers: flex 78
+    ground-lock: feet
+    cue "Press the left arm straight forward while the right hand remains at the chest"
+
+  step "Return left" 0.55s settle:
+    shoulder_left: flex 50
+    shoulder_left: rotate-in 0
+    elbow_left: flex 125
+    elbow_left: pronate 20
+    fingers: flex 78
+    ground-lock: feet
+    cue "Retract the left hand to the same chest-height guard"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    fingers: hold neutral
+    ground-lock: feet
+    cue "Open both hands and lower both arms to neutral"
+
+  repeat 1

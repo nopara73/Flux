@@ -1,0 +1,69 @@
+posecode exercise "Standing Backstroke"
+  rig humanoid
+  pose start = standing
+
+  step "Left arm behind" 0.45s flow:
+    shoulder_left: extend 30
+    elbow_left: flex 6
+    ground-lock: feet
+    cue "Sweep the left arm backward behind the hip"
+
+  step "Left arm wide" 0.45s flow:
+    shoulder_left: extend 0
+    shoulder_left: abduct 95
+    elbow_left: flex 6
+    ground-lock: feet
+    cue "Continue the left arm circle outward through shoulder height"
+
+  step "Left arm overhead" 0.45s flow:
+    shoulder_left: abduct 0
+    shoulder_left: flex 165
+    elbow_left: flex 6
+    ground-lock: feet
+    cue "Continue the left arm circle overhead"
+
+  step "Left arm forward" 0.4s flow:
+    shoulder_left: flex 90
+    elbow_left: flex 6
+    ground-lock: feet
+    cue "Sweep the left arm forward and down"
+
+  step "Reset left" 0.35s flow:
+    shoulder_left: flex 0
+    elbow_left: flex 0
+    ground-lock: feet
+    cue "Return the left arm to the side"
+
+  step "Right arm behind" 0.45s flow:
+    shoulder_right: extend 30
+    elbow_right: flex 6
+    ground-lock: feet
+    cue "Sweep the right arm backward behind the hip"
+
+  step "Right arm wide" 0.45s flow:
+    shoulder_right: extend 0
+    shoulder_right: abduct 95
+    elbow_right: flex 6
+    ground-lock: feet
+    cue "Continue the right arm circle outward through shoulder height"
+
+  step "Right arm overhead" 0.45s flow:
+    shoulder_right: abduct 0
+    shoulder_right: flex 165
+    elbow_right: flex 6
+    ground-lock: feet
+    cue "Continue the right arm circle overhead"
+
+  step "Right arm forward" 0.4s flow:
+    shoulder_right: flex 90
+    elbow_right: flex 6
+    ground-lock: feet
+    cue "Sweep the right arm forward and down"
+
+  step "Reset right" 0.35s settle:
+    shoulder_right: flex 0
+    elbow_right: flex 0
+    ground-lock: feet
+    cue "Return the right arm to the side"
+
+  repeat 1

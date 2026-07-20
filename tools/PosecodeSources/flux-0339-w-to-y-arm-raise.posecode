@@ -1,0 +1,35 @@
+posecode exercise "W-to-Y Arm Raise"
+  rig humanoid
+  pose start = standing
+
+  step "Form W" 0.9s settle:
+    shoulders: flex 25
+    shoulders: abduct 62
+    shoulders: rotate-out 55
+    elbows: flex 100
+    ground-lock: feet
+    cue "Lift both bent arms into a symmetric W with elbows below the hands"
+
+  step "Reach Y" 1s settle:
+    shoulders: flex 145
+    shoulders: abduct 28
+    shoulders: rotate-out 10
+    elbows: flex 8
+    ground-lock: feet
+    cue "Straighten both arms diagonally overhead into a symmetric Y"
+
+  step "Return W" 1s settle:
+    shoulders: flex 25
+    shoulders: abduct 62
+    shoulders: rotate-out 55
+    elbows: flex 100
+    ground-lock: feet
+    cue "Bend and lower both arms back to the same W"
+
+  step "Reset" 0.8s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

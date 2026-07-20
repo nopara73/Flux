@@ -1,0 +1,32 @@
+posecode exercise "High-to-Low Chest Fly"
+  rig humanoid
+  pose start = standing
+
+  step "Set high and wide" 0.9s settle:
+    shoulders: flex 20
+    shoulders: abduct 112
+    elbows: flex 18
+    ground-lock: feet
+    cue "Set both softly bent arms high and wide above shoulder level"
+
+  step "Fly downward" 1.1s settle:
+    shoulders: flex 42
+    shoulders: adduct 10
+    elbows: flex 18
+    ground-lock: feet
+    cue "Arc both softly bent arms inward and downward until the hands meet below the sternum"
+
+  step "Return high and wide" 1.1s settle:
+    shoulders: flex 20
+    shoulders: abduct 112
+    elbows: flex 18
+    ground-lock: feet
+    cue "Open both arms upward and outward along the same diagonal fly path"
+
+  step "Reset" 0.8s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

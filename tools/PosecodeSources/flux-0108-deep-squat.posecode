@@ -1,0 +1,23 @@
+posecode exercise "Deep Squat"
+  rig humanoid
+  pose start = standing
+
+  step "Deep squat" 1.8s settle:
+    hips: flex 105
+    knees: flex 130
+    ankles: dorsiflex 15
+    pelvis: hinge 30
+    shoulders: flex 75
+    ground-lock: feet
+    cue "Bend both hips and knees until the hips descend below the knees"
+
+  step "Stand" 1.4s drive:
+    hips: flex 0
+    knees: flex 0
+    ankles: dorsiflex 0
+    pelvis: hinge 0
+    shoulders: flex 0
+    ground-lock: feet
+    cue "Straighten both legs and return upright"
+
+  repeat 1

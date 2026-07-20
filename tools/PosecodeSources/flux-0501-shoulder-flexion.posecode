@@ -1,0 +1,17 @@
+posecode exercise "Shoulder Flexion"
+  rig humanoid
+  pose start = standing
+
+  step "Flex overhead" 1.2s settle:
+    shoulders: flex 175
+    elbows: flex 5
+    ground-lock: feet
+    cue "Flex both shoulders to raise both nearly straight arms forward and fully overhead"
+
+  step "Reset" 1.2s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms forward through the same sagittal path to neutral"
+
+  repeat 1

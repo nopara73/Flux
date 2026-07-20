@@ -1,0 +1,45 @@
+posecode exercise "Alternating Diagonal Hand-to-Knee Reach"
+  rig humanoid
+  pose start = standing
+
+  step "Right hand to left knee" 0.9s settle:
+    hip_left: flex 85
+    knee_left: flex 95
+    spine: twist-left 15
+    spine: flex 10
+    shoulder_left: extend 18
+    pin: foot_right floor
+    reach: hand_right knee_left
+    cue "Reach the right hand diagonally to the rising left knee"
+
+  step "Reset left" 0.75s settle:
+    hip_left: hold neutral
+    knee_left: flex 0
+    spine: hold neutral
+    shoulder_left: hold neutral
+    shoulder_right: hold neutral
+    elbow_right: hold neutral
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  step "Left hand to right knee" 0.9s settle:
+    hip_right: flex 85
+    knee_right: flex 95
+    spine: twist-right 15
+    spine: flex 10
+    shoulder_right: extend 18
+    pin: foot_left floor
+    reach: hand_left knee_right
+    cue "Reach the left hand diagonally to the rising right knee"
+
+  step "Reset right" 0.75s settle:
+    hip_right: hold neutral
+    knee_right: flex 0
+    spine: hold neutral
+    shoulder_left: hold neutral
+    shoulder_right: hold neutral
+    elbow_left: hold neutral
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  repeat 1

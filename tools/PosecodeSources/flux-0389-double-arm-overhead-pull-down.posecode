@@ -1,0 +1,34 @@
+posecode exercise "Double-Arm Overhead Pull-Down"
+  rig humanoid
+  pose start = standing
+
+  step "Reach overhead" 0.9s settle:
+    shoulders: flex 145
+    shoulders: abduct 25
+    elbows: flex 6
+    ground-lock: feet
+    cue "Reach both nearly straight arms diagonally overhead into a wide Y"
+
+  step "Pull down" 0.9s drive:
+    shoulders: flex 20
+    shoulders: abduct 78
+    shoulders: rotate-out 55
+    elbows: flex 100
+    ground-lock: feet
+    cue "Pull both elbows down and out to a symmetric goalpost beside the ribs"
+
+  step "Extend overhead" 0.9s settle:
+    shoulders: flex 145
+    shoulders: abduct 25
+    shoulders: rotate-out 0
+    elbows: flex 6
+    ground-lock: feet
+    cue "Extend both arms back to the same wide overhead Y"
+
+  step "Reset" 0.8s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

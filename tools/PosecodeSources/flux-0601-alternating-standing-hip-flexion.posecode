@@ -1,0 +1,29 @@
+posecode exercise "Alternating Standing Hip Flexion"
+  rig humanoid
+  pose start = standing
+
+  step "Lift left" 0.9s settle:
+    hip_left: flex 90
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Lift the left thigh to hip height with the knee bent"
+
+  step "Reset left" 0.7s settle:
+    hip_left: flex 0
+    knee_left: flex 0
+    ground-lock: feet
+    cue "Lower the left foot to neutral standing"
+
+  step "Lift right" 0.9s settle:
+    hip_right: flex 90
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Lift the right thigh to hip height with the knee bent"
+
+  step "Reset right" 0.7s settle:
+    hip_right: flex 0
+    knee_right: flex 0
+    ground-lock: feet
+    cue "Lower the right foot to neutral standing"
+
+  repeat 1

@@ -1,0 +1,21 @@
+posecode exercise "Bilateral Wide-Elbow Shadow Row"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 90
+    elbows: flex 5
+
+  step "Pull" 1s settle:
+    shoulders: extend 10
+    shoulders: abduct 78
+    elbows: flex 105
+    ground-lock: feet
+    cue "Pull both elbows wide and backward at shoulder height"
+
+  step "Extend" 1s settle:
+    shoulders: flex 90
+    shoulders: abduct 0
+    elbows: flex 5
+    ground-lock: feet
+    cue "Extend both arms forward at shoulder height"
+
+  repeat 1

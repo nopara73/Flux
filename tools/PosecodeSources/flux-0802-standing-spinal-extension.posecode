@@ -1,0 +1,19 @@
+posecode exercise "Standing Spinal Extension"
+  rig humanoid
+  pose start = standing
+
+  step "Extend backward" 1.4s settle:
+    spine: extend 20
+    chest: extend 14
+    neck: extend 12
+    ground-lock: feet
+    cue "Extend the spine backward and lift the chest"
+
+  step "Return upright" 1.2s settle:
+    spine: extend 0
+    chest: extend 0
+    neck: extend 0
+    ground-lock: feet
+    cue "Return the spine to neutral standing"
+
+  repeat 1

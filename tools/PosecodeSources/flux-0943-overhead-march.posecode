@@ -1,0 +1,30 @@
+posecode exercise "Overhead March"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 170
+
+  step "March left" 0.8s settle:
+    hip_left: flex 90
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Keep both arms overhead while lifting the left knee to hip height"
+
+  step "Reset left" 0.65s settle:
+    hip_left: flex 0
+    knee_left: flex 0
+    ground-lock: feet
+    cue "Lower the left foot while keeping both arms overhead"
+
+  step "March right" 0.8s settle:
+    hip_right: flex 90
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Keep both arms overhead while lifting the right knee to hip height"
+
+  step "Reset right" 0.65s settle:
+    hip_right: flex 0
+    knee_right: flex 0
+    ground-lock: feet
+    cue "Lower the right foot while keeping both arms overhead"
+
+  repeat 1

@@ -1,0 +1,45 @@
+posecode exercise "Alternating Open-the-Gate"
+  rig humanoid
+  pose start = standing
+
+  step "Lift left" 0.7s flow:
+    hip_left: flex 90
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Lift the bent left knee in front to hip height"
+
+  step "Open left" 0.9s settle:
+    hip_left: flex 70
+    hip_left: abduct 40
+    hip_left: rotate-out 40
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Rotate the bent left thigh outward to the side"
+
+  step "Reset left" 0.8s settle:
+    hip_left: hold neutral
+    knee_left: flex 0
+    ground-lock: feet
+    cue "Lower the left foot to neutral standing"
+
+  step "Lift right" 0.7s flow:
+    hip_right: flex 90
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Lift the bent right knee in front to hip height"
+
+  step "Open right" 0.9s settle:
+    hip_right: flex 70
+    hip_right: abduct 40
+    hip_right: rotate-out 40
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Rotate the bent right thigh outward to the side"
+
+  step "Reset right" 0.8s settle:
+    hip_right: hold neutral
+    knee_right: flex 0
+    ground-lock: feet
+    cue "Lower the right foot to neutral standing"
+
+  repeat 1

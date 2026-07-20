@@ -1,0 +1,19 @@
+posecode exercise "Standing Bent-Knee Heel Raise"
+  rig humanoid
+  pose start = standing:
+    hips: flex 25
+    knees: flex 30
+    ankles: dorsiflex 8
+    pelvis: hinge 8
+
+  step "Raise both heels" 1.1s settle:
+    ankles: plantarflex 28
+    ground-lock: feet
+    cue "Raise both heels together while both knees remain bent"
+
+  step "Lower both heels" 1.2s settle:
+    ankles: dorsiflex 8
+    ground-lock: feet
+    cue "Lower both heels together while keeping the same knee bend"
+
+  repeat 1

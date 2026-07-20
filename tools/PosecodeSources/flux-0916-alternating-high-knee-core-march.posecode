@@ -1,0 +1,41 @@
+posecode exercise "Alternating High-Knee Core March"
+  rig humanoid
+  pose start = standing
+
+  step "March left" 0.7s settle:
+    hip_left: flex 90
+    knee_left: flex 90
+    shoulder_right: flex 42
+    shoulder_left: extend 18
+    elbow_right: flex 25
+    pin: foot_right floor
+    cue "March the left knee to hip height with the right arm forward"
+
+  step "Reset left" 0.6s flow:
+    hip_left: flex 0
+    knee_left: flex 0
+    shoulder_right: flex 0
+    shoulder_left: extend 0
+    elbow_right: flex 0
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  step "March right" 0.7s settle:
+    hip_right: flex 90
+    knee_right: flex 90
+    shoulder_left: flex 42
+    shoulder_right: extend 18
+    elbow_left: flex 25
+    pin: foot_left floor
+    cue "March the right knee to hip height with the left arm forward"
+
+  step "Reset right" 0.6s settle:
+    hip_right: flex 0
+    knee_right: flex 0
+    shoulder_left: flex 0
+    shoulder_right: extend 0
+    elbow_left: flex 0
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  repeat 1

@@ -1,0 +1,31 @@
+posecode exercise "Alternating Overhead Reach"
+  rig humanoid
+  pose start = standing
+
+  step "Reach right" 0.8s settle:
+    shoulder_right: flex 175
+    shoulder_left: flex 0
+    elbows: flex 4
+    ground-lock: feet
+    cue "Reach the right arm straight overhead while the left arm stays at the side"
+
+  step "Center" 0.6s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Return the right arm to neutral beside the left"
+
+  step "Reach left" 0.8s settle:
+    shoulder_left: flex 175
+    shoulder_right: flex 0
+    elbows: flex 4
+    ground-lock: feet
+    cue "Reach the left arm straight overhead while the right arm stays at the side"
+
+  step "Reset" 0.6s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Return both arms to neutral at the sides"
+
+  repeat 1

@@ -1,0 +1,17 @@
+posecode exercise "Front Arm Raise"
+  rig humanoid
+  pose start = standing
+
+  step "Raise to horizontal" 1s settle:
+    shoulders: flex 90
+    elbows: flex 5
+    ground-lock: feet
+    cue "Raise both nearly straight arms forward to shoulder height and stop at horizontal"
+
+  step "Reset" 1s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms together to neutral at the sides"
+
+  repeat 1

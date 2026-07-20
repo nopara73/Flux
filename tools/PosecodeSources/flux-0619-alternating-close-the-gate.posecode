@@ -1,0 +1,49 @@
+posecode exercise "Alternating Close-the-Gate"
+  rig humanoid
+  pose start = standing
+
+  step "Lift left outside" 0.8s flow:
+    hip_left: flex 70
+    hip_left: abduct 40
+    hip_left: rotate-out 40
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Lift the bent left knee out to the side"
+
+  step "Close left" 0.9s settle:
+    hip_left: flex 90
+    hip_left: abduct 0
+    hip_left: rotate-out 0
+    knee_left: flex 90
+    pin: foot_right floor
+    cue "Rotate the bent left thigh inward to the front"
+
+  step "Reset left" 0.8s settle:
+    hip_left: hold neutral
+    knee_left: flex 0
+    ground-lock: feet
+    cue "Lower the left foot to neutral standing"
+
+  step "Lift right outside" 0.8s flow:
+    hip_right: flex 70
+    hip_right: abduct 40
+    hip_right: rotate-out 40
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Lift the bent right knee out to the side"
+
+  step "Close right" 0.9s settle:
+    hip_right: flex 90
+    hip_right: abduct 0
+    hip_right: rotate-out 0
+    knee_right: flex 90
+    pin: foot_left floor
+    cue "Rotate the bent right thigh inward to the front"
+
+  step "Reset right" 0.8s settle:
+    hip_right: hold neutral
+    knee_right: flex 0
+    ground-lock: feet
+    cue "Lower the right foot to neutral standing"
+
+  repeat 1

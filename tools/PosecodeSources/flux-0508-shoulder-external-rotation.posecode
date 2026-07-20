@@ -1,0 +1,28 @@
+posecode exercise "Shoulder External Rotation"
+  rig humanoid
+  pose start = standing
+
+  step "Set elbows" 0.8s settle:
+    elbows: flex 90
+    ground-lock: feet
+    cue "Bend both elbows to ninety degrees and keep both upper arms against the sides"
+
+  step "Rotate outward" 0.9s settle:
+    shoulders: rotate-out 70
+    elbows: flex 90
+    ground-lock: feet
+    cue "Externally rotate both shoulders so both forearms open outward while the elbows stay tucked"
+
+  step "Rotate inward" 0.9s settle:
+    shoulders: rotate-out 0
+    elbows: flex 90
+    ground-lock: feet
+    cue "Return both forearms forward without moving either elbow from the ribs"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Straighten both elbows and return both arms to neutral"
+
+  repeat 1

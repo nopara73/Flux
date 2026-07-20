@@ -1,0 +1,25 @@
+posecode exercise "Standing Spinal Lateral Flexion"
+  rig humanoid
+  pose start = standing
+
+  step "Bend left" 1.2s settle:
+    spine: abduct 32
+    ground-lock: feet
+    cue "Bend the spine laterally to the left"
+
+  step "Center from left" 0.9s settle:
+    spine: abduct 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  step "Bend right" 1.2s settle:
+    spine: adduct 32
+    ground-lock: feet
+    cue "Bend the spine laterally to the right"
+
+  step "Center from right" 0.9s settle:
+    spine: adduct 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  repeat 1

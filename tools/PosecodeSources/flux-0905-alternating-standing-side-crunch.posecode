@@ -1,0 +1,28 @@
+posecode exercise "Alternating Standing Side Crunch"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 20
+    shoulders: abduct 72
+    elbows: flex 125
+
+  step "Crunch left" 1s settle:
+    spine: abduct 32
+    ground-lock: feet
+    cue "Shorten the left ribs toward the left hip"
+
+  step "Center left" 0.8s settle:
+    spine: abduct 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  step "Crunch right" 1s settle:
+    spine: adduct 32
+    ground-lock: feet
+    cue "Shorten the right ribs toward the right hip"
+
+  step "Center right" 0.8s settle:
+    spine: adduct 0
+    ground-lock: feet
+    cue "Return the torso to center"
+
+  repeat 1

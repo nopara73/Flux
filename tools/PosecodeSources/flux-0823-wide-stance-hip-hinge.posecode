@@ -1,0 +1,27 @@
+posecode exercise "Wide-stance hip hinge"
+  rig humanoid
+  pose start = standing:
+    hips: abduct 24
+    hips: rotate-out 10
+
+  step "Hinge" 1.6s flow:
+    pelvis: hinge 70
+    hips: abduct 24
+    hips: rotate-out 10
+    knees: flex 12
+    shoulders: flex 65
+    neck: extend 10
+    ground-lock: feet
+    cue "Keep a wide stance and send the hips back as the straight torso tips forward"
+
+  step "Stand" 1.4s settle:
+    pelvis: hinge 0
+    hips: abduct 24
+    hips: rotate-out 10
+    knees: flex 0
+    shoulders: flex 0
+    neck: extend 0
+    ground-lock: feet
+    cue "Drive the hips forward to stand without narrowing the feet"
+
+  repeat 1

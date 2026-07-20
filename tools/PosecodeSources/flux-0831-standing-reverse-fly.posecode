@@ -1,0 +1,21 @@
+posecode exercise "Standing Reverse Fly"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 90
+    elbows: flex 8
+
+  step "Open" 1s settle:
+    shoulders: flex 0
+    shoulders: abduct 90
+    elbows: flex 8
+    ground-lock: feet
+    cue "Open both arms horizontally from the front into a wide T"
+
+  step "Close" 1s settle:
+    shoulders: flex 90
+    shoulders: abduct 0
+    elbows: flex 8
+    ground-lock: feet
+    cue "Bring both arms forward to shoulder height"
+
+  repeat 1

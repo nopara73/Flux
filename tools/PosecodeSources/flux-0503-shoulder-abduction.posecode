@@ -1,0 +1,17 @@
+posecode exercise "Shoulder Abduction"
+  rig humanoid
+  pose start = standing
+
+  step "Abduct overhead" 1.3s settle:
+    shoulders: abduct 160
+    elbows: flex 6
+    ground-lock: feet
+    cue "Abduct both shoulders to sweep both nearly straight arms sideways from the body to overhead"
+
+  step "Reset" 1.3s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Adduct both arms through the same wide side arcs to neutral"
+
+  repeat 1

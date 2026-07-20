@@ -1,0 +1,67 @@
+posecode exercise "Alternating Diagonal Knee Drive"
+  rig humanoid
+  pose start = standing
+
+  step "Reach high left" 0.65s flow:
+    spine: twist-left 15
+    shoulder_left: flex 155
+    shoulder_left: abduct 12
+    shoulder_right: flex 155
+    shoulder_right: adduct 25
+    elbows: flex 12
+    ground-lock: feet
+    cue "Reach both hands diagonally above the left shoulder"
+
+  step "Drive right knee" 0.8s settle:
+    hip_right: flex 92
+    knee_right: flex 100
+    spine: twist-right 18
+    spine: flex 12
+    shoulders: flex 55
+    elbows: flex 18
+    pin: foot_left floor
+    reach: hand_left knee_right
+    reach: hand_right knee_right
+    cue "Sweep both hands diagonally to the rising right knee"
+
+  step "Reset right" 0.7s settle:
+    hip_right: hold neutral
+    knee_right: flex 0
+    spine: hold neutral
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  step "Reach high right" 0.65s flow:
+    spine: twist-right 15
+    shoulder_right: flex 155
+    shoulder_right: abduct 12
+    shoulder_left: flex 155
+    shoulder_left: adduct 25
+    elbows: flex 12
+    ground-lock: feet
+    cue "Reach both hands diagonally above the right shoulder"
+
+  step "Drive left knee" 0.8s settle:
+    hip_left: flex 92
+    knee_left: flex 100
+    spine: twist-left 18
+    spine: flex 12
+    shoulders: flex 55
+    elbows: flex 18
+    pin: foot_right floor
+    reach: hand_left knee_left
+    reach: hand_right knee_left
+    cue "Sweep both hands diagonally to the rising left knee"
+
+  step "Reset left" 0.7s settle:
+    hip_left: hold neutral
+    knee_left: flex 0
+    spine: hold neutral
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Return to neutral standing"
+
+  repeat 1

@@ -1,0 +1,37 @@
+posecode exercise "Standing Breaststroke Arm Sweep"
+  rig humanoid
+  pose start = standing
+
+  step "Set recovery" 0.7s settle:
+    shoulders: flex 55
+    elbows: flex 120
+    ground-lock: feet
+    cue "Bring both hands in front of the chest with elbows bent symmetrically"
+
+  step "Shoot forward" 0.65s flow:
+    shoulders: flex 90
+    elbows: flex 8
+    ground-lock: feet
+    cue "Extend both arms straight forward together at shoulder height"
+
+  step "Sweep wide" 0.9s flow:
+    shoulders: flex 5
+    shoulders: abduct 88
+    elbows: flex 12
+    ground-lock: feet
+    cue "Sweep both nearly straight arms outward together into a wide horizontal arc"
+
+  step "Recover" 0.75s settle:
+    shoulders: flex 55
+    shoulders: abduct 0
+    elbows: flex 120
+    ground-lock: feet
+    cue "Bend both elbows and draw both hands back to the chest"
+
+  step "Reset" 0.6s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

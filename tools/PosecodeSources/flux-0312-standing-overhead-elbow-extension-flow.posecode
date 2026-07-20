@@ -1,0 +1,29 @@
+posecode exercise "Standing Overhead Elbow-Extension Flow"
+  rig humanoid
+  pose start = standing
+
+  step "Set overhead bend" 0.9s settle:
+    shoulders: flex 168
+    elbows: flex 120
+    ground-lock: feet
+    cue "Lift both upper arms beside the ears and bend both elbows behind the crown"
+
+  step "Extend overhead" 0.8s settle:
+    shoulders: flex 168
+    elbows: flex 5
+    ground-lock: feet
+    cue "Straighten both elbows together while the upper arms remain overhead"
+
+  step "Bend again" 0.8s settle:
+    shoulders: flex 168
+    elbows: flex 120
+    ground-lock: feet
+    cue "Bend both elbows behind the crown without lowering the upper arms"
+
+  step "Reset" 0.9s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms to neutral at the sides"
+
+  repeat 1

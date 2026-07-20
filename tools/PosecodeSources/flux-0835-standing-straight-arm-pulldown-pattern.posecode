@@ -1,0 +1,19 @@
+posecode exercise "Standing Straight-Arm Pulldown Pattern"
+  rig humanoid
+  pose start = standing:
+    shoulders: flex 175
+    elbows: flex 5
+
+  step "Sweep down" 1.1s settle:
+    shoulders: extend 25
+    elbows: flex 5
+    ground-lock: feet
+    cue "Sweep both nearly straight arms from overhead down past the hips"
+
+  step "Return overhead" 1.1s settle:
+    shoulders: flex 175
+    elbows: flex 5
+    ground-lock: feet
+    cue "Sweep both nearly straight arms back overhead"
+
+  repeat 1

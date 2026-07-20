@@ -1,0 +1,38 @@
+posecode exercise "Double Straight Punch"
+  rig humanoid
+  pose start = standing
+
+  step "Set guard" 0.7s settle:
+    shoulders: flex 55
+    elbows: flex 125
+    forearms: pronate 20
+    fingers: flex 80
+    ground-lock: feet
+    cue "Bring both closed fists to a symmetric guard in front of the chest"
+
+  step "Double punch" 0.45s snap:
+    shoulders: flex 92
+    shoulders: rotate-in 55
+    elbows: flex 5
+    forearms: pronate 75
+    fingers: flex 80
+    ground-lock: feet
+    cue "Extend both closed fists straight forward together with palms turning down"
+
+  step "Retract" 0.6s settle:
+    shoulders: flex 55
+    shoulders: rotate-in 0
+    elbows: flex 125
+    forearms: pronate 20
+    fingers: flex 80
+    ground-lock: feet
+    cue "Retract both fists together to the same chest-height guard"
+
+  step "Reset" 0.7s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    fingers: hold neutral
+    ground-lock: feet
+    cue "Open the hands and lower both arms to neutral"
+
+  repeat 1

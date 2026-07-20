@@ -1,0 +1,17 @@
+posecode exercise "Double overhead reach"
+  rig humanoid
+  pose start = standing
+
+  step "Reach" 1.5s flow:
+    shoulders: flex 175
+    elbows: flex 0
+    ground-lock: feet
+    cue "Reach both straight arms vertically overhead"
+
+  step "Lower" 1.5s settle:
+    shoulders: flex 0
+    elbows: flex 0
+    ground-lock: feet
+    cue "Lower both straight arms to the sides"
+
+  repeat 1

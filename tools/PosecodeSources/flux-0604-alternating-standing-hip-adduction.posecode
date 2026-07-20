@@ -1,0 +1,29 @@
+posecode exercise "Alternating Standing Hip Adduction"
+  rig humanoid
+  pose start = standing
+
+  step "Cross left" 1s settle:
+    hip_left: adduct 28
+    knee_left: flex 5
+    pin: foot_right floor
+    cue "Sweep the nearly straight left leg across the midline"
+
+  step "Reset left" 0.8s settle:
+    hip_left: adduct 0
+    knee_left: flex 0
+    ground-lock: feet
+    cue "Return the left leg to neutral"
+
+  step "Cross right" 1s settle:
+    hip_right: adduct 28
+    knee_right: flex 5
+    pin: foot_left floor
+    cue "Sweep the nearly straight right leg across the midline"
+
+  step "Reset right" 0.8s settle:
+    hip_right: adduct 0
+    knee_right: flex 0
+    ground-lock: feet
+    cue "Return the right leg to neutral"
+
+  repeat 1

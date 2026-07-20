@@ -1,0 +1,19 @@
+posecode exercise "Scaption Raise"
+  rig humanoid
+  pose start = standing
+
+  step "Raise in scapular plane" 1s settle:
+    shoulders: flex 30
+    shoulders: abduct 78
+    elbows: flex 7
+    forearms: supinate 20
+    ground-lock: feet
+    cue "Raise both nearly straight arms to shoulder height in planes angled forward from the sides"
+
+  step "Reset" 1s settle:
+    shoulders: hold neutral
+    elbows: hold neutral
+    ground-lock: feet
+    cue "Lower both arms from the scapular planes to neutral"
+
+  repeat 1
