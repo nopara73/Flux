@@ -74,11 +74,34 @@ if ($externalExerciseMedia.Count -ne 178) {
     throw 'The reviewed external-media map must contain exactly 178 entries.'
 }
 
+$reviewedExternalIds = @(
+    $verifiedExerciseDemos.ReviewedExternal | ForEach-Object { [int]$_ })
+$reviewedPosecodeIds = @(
+    $verifiedExerciseDemos.ReviewedPosecode | ForEach-Object { [int]$_ })
+$reviewedSvgIds = @(
+    $verifiedExerciseDemos.PurposeBuiltSvg | ForEach-Object { [int]$_ })
+$reviewedCopyIds = @(
+    $verifiedExerciseDemos.ReviewedExactCopies | ForEach-Object { [int]$_ })
+$reviewedTransformIds = @(
+    $verifiedExerciseDemos.ReviewedExactTransforms | ForEach-Object { [int]$_ })
+$invalidHumanSources = @($reviewedExternalIds | Where-Object {
+        -not $externalExerciseMedia.ContainsKey($_) -or
+        -not $externalExerciseMedia[$_].ContainsKey('Human') -or
+        -not [bool]$externalExerciseMedia[$_].Human
+    })
+if ($invalidHumanSources.Count -gt 0) {
+    throw "Every retained external demonstration must show an actual person: $($invalidHumanSources -join ', ')."
+}
+
+if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
+    throw 'Synthetic, schematic, and 3D demonstrations cannot be retained.'
+}
+
 if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 62 -or @(
+if ($exactExerciseMediaCopies.Count -ne 26 -or @(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -86,10 +109,10 @@ if ($exactExerciseMediaCopies.Count -ne 62 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 62 valid entries.'
+    throw 'The exact-media copy map must contain exactly 26 valid entries.'
 }
 
-if ($exactExerciseMediaTransforms.Count -ne 10 -or @(
+if ($exactExerciseMediaTransforms.Count -ne 2 -or @(
         $exactExerciseMediaTransforms.GetEnumerator() | Where-Object {
             $targetId = [int]$_.Key
             $transform = $_.Value
@@ -109,7 +132,29 @@ if ($exactExerciseMediaTransforms.Count -ne 10 -or @(
                     [int]$transform.DelayCentiseconds -gt 0)
             )
         }).Count -gt 0) {
-    throw 'The exact-media transform map must contain exactly 10 valid entries.'
+    throw 'The exact-media transform map must contain exactly 2 valid entries.'
+}
+
+
+$reviewedMappingDifferences = @(
+    @(Compare-Object ($reviewedCopyIds | Sort-Object) `
+        (@($exactExerciseMediaCopies.Keys | ForEach-Object { [int]$_ }) | Sort-Object)),
+    @(Compare-Object ($reviewedTransformIds | Sort-Object) `
+        (@($exactExerciseMediaTransforms.Keys | ForEach-Object { [int]$_ }) | Sort-Object)))
+$nonHumanDerivativeSources = @(
+    @($exactExerciseMediaCopies.Values | ForEach-Object { [int]$_ }) +
+        @($exactExerciseMediaTransforms.Values |
+            ForEach-Object { [int]$_.Source }) |
+        Where-Object { $_ -notin $reviewedExternalIds } |
+        Sort-Object -Unique)
+$duplicateReviewedIds = @(
+    $reviewedExternalIds + $reviewedCopyIds + $reviewedTransformIds |
+        Group-Object |
+        Where-Object Count -ne 1)
+if (@($reviewedMappingDifferences | Where-Object Count -gt 0).Count -gt 0 -or
+    $nonHumanDerivativeSources.Count -gt 0 -or
+    $duplicateReviewedIds.Count -gt 0) {
+    throw 'The retained copy and transform inventory must derive only from reviewed human footage.'
 }
 
 $regionColors = @(

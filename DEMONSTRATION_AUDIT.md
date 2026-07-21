@@ -1,35 +1,32 @@
 # Flux demonstration quality audit
 
-Flux now ships a quality-first exercise catalog with no placeholder media.
-All **327** bundled exercises have a reviewed, directly matching demonstration.
-The 673 unverified placeholders and weaker custom schematic animations were
-removed from both the catalog and the application package.
+Flux now ships a strictly human-demonstrated exercise catalog.
+All **183** bundled exercises show an actual person performing the movement.
+Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
+both the runtime catalog and the application package.
 
 | Region | Retained exercises |
 | --- | ---: |
-| FEET | 15 |
-| LEGS | 94 |
-| HANDS | 15 |
-| ARMS | 32 |
+| FEET | 8 |
+| LEGS | 64 |
+| HANDS | 14 |
+| ARMS | 8 |
 | HEAD | 24 |
-| SHOULDERS | 48 |
-| HIPS | 34 |
-| CHEST | 17 |
-| BACK | 23 |
-| CORE | 25 |
+| SHOULDERS | 25 |
+| HIPS | 18 |
+| CHEST | 5 |
+| BACK | 7 |
+| CORE | 10 |
 
 ## Retained source quality
 
-- Reviewed human footage: **155**
-- Other reviewed external demonstrations: **23**
-- Reviewed Posecode 3D renders: **77**
-- Exact semantically identical copies: **62**
-- Exact deterministic transforms: **10**
+- Direct human-footage demonstrations: **155**
+- Exact copies of human footage: **26**
+- Exact deterministic transforms of human footage: **2**
 
-The discarded custom SVG tier contained clear but comparatively weak
-schematic stick-figure artwork. Keeping only footage, reviewed external
-animation, reviewed 3D motion, and exact derivatives gives the app a more
-consistent and legible demonstration set.
+Copy and transform targets are retained only when their reviewed source is
+human footage and the target movement has identical mechanics. This rule is
+validated by the catalog generator and this audit script.
 
 The retained ID inventory is in `tools/VerifiedExerciseDemos.psd1`; source,
 copy, and transform mappings live in the corresponding media manifests.
