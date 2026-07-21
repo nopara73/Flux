@@ -5,9 +5,10 @@ Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-Flux ships with a local SQLite database seeded from a bundled catalog of 1,000
-exercises: exactly 100 for each `DominantRegion` enum value. It works entirely
-offline and saves each exercise's score in SQLite.
+Flux ships with a local SQLite database seeded from a quality-reviewed catalog
+of 327 exercises. Every `DominantRegion` has at least three choices; the current
+region counts range from 15 to 94. It works entirely offline and saves each
+exercise's score in SQLite.
 
 The entries are distinct established standing movements rather than generated
 tempo/range/side permutations. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)
@@ -35,18 +36,17 @@ and MP4s can be regenerated from the reviewed source media with:
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
 
-Verify all 1,000 runtime videos—including codec, dimensions, silence, duration,
+Verify all 327 runtime videos—including codec, dimensions, silence, duration,
 and every hold's final frame—with:
 
 ```powershell
 .\tools\Test-ExerciseVideos.ps1
 ```
 
-Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 462 demonstrations, including 155 human-footage clips,
-and lists all 538 remaining
-placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
-that report after catalog changes with:
+The bundled catalog contains no placeholder media. All 327 demonstrations pass
+the high-bar review, including 155 human-footage clips. The source-quality and
+region counts are recorded in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md).
+Regenerate that report after catalog changes with:
 
 ```powershell
 .\tools\Write-DemonstrationAudit.ps1
@@ -61,11 +61,13 @@ a replaced name is repaired automatically on launch.
 Schema version 6 refreshes the latest reviewed names, media, and hold metadata
 while continuing to preserve scores by stable exercise ID.
 Schema version 4 adds explicit hold metadata while preserving scores and the
-current lineup. The current catalog contains 67 symmetric holds and 933
-repetition exercises.
+current lineup.
 Schema version 5 migrates the runtime media field from GIF to MP4 while
 preserving scores by stable exercise ID. The reproducible GIF intermediates and
 hold PNGs remain generator inputs but are excluded from the APK.
+Schema version 8 removes the unverified placeholder and weaker schematic rows,
+preserving scores for all retained IDs and repairing any retired saved lineup.
+The current catalog contains 22 symmetric holds and 305 repetition exercises.
 
 ## Workout flow
 

@@ -38,6 +38,18 @@ $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
 $exactExerciseMediaTransforms = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1')
+$verifiedExerciseDemos = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1')
+$retainedExerciseIds = @(
+    $verifiedExerciseDemos.ReviewedExternal +
+        $verifiedExerciseDemos.ReviewedPosecode +
+        $verifiedExerciseDemos.PurposeBuiltSvg +
+        $verifiedExerciseDemos.ReviewedExactCopies +
+        $verifiedExerciseDemos.ReviewedExactTransforms |
+        ForEach-Object { [int]$_ } |
+        Sort-Object -Unique)
+$expectedExerciseCount = $retainedExerciseIds.Count
+$minimumExercisesPerRegion = 3
 
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
@@ -66,7 +78,7 @@ if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 65 -or @(
+if ($exactExerciseMediaCopies.Count -ne 62 -or @(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -74,7 +86,7 @@ if ($exactExerciseMediaCopies.Count -ne 65 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 65 valid entries.'
+    throw 'The exact-media copy map must contain exactly 62 valid entries.'
 }
 
 if ($exactExerciseMediaTransforms.Count -ne 10 -or @(
@@ -2114,7 +2126,7 @@ New-Item -ItemType Directory -Force -Path $videoOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $holdFrameOutputRoot | Out-Null
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
-$records = [System.Collections.Generic.List[object]]::new(1000)
+$records = [System.Collections.Generic.List[object]]::new($expectedExerciseCount)
 
 for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
     $region = $regions[$regionIndex]
@@ -2126,6 +2138,10 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
 
     for ($movementIndex = 0; $movementIndex -lt 100; $movementIndex++) {
         $exerciseId = ($regionIndex * 100) + $movementIndex + 1
+        if ($exerciseId -notin $retainedExerciseIds) {
+            continue
+        }
+
         $sourceExerciseName = $regionNames[$movementIndex]
         $exerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
             $bilateralExerciseNames[$exerciseId]
@@ -2432,21 +2448,27 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             -Overwrite:$Force
 
         if ($exerciseId % 50 -eq 0) {
-            Write-Output "Generated $exerciseId / 1000 exercise MP4s"
+            Write-Output "Generated retained exercise $exerciseId"
         }
     }
 }
 
-if ($records.Count -ne 1000) {
-    throw "Expected 1000 exercise records but generated $($records.Count)."
+if ($records.Count -ne $expectedExerciseCount) {
+    throw "Expected $expectedExerciseCount exercise records but generated $($records.Count)."
 }
 
 $duplicateNames = $records | Group-Object { $_['name'] } | Where-Object Count -ne 1
 $duplicateVideos = $records | Group-Object { $_['video'] } | Where-Object Count -ne 1
 $duplicateIds = $records | Group-Object { $_['id'] } | Where-Object Count -ne 1
-$invalidRegionCounts = $records |
-    Group-Object { $_['dominantRegion'] } |
-    Where-Object Count -ne 100
+$invalidRegionCounts = @(
+    foreach ($region in $regions) {
+        $regionCount = @($records | Where-Object {
+                $_['dominantRegion'] -eq $region
+            }).Count
+        if ($regionCount -lt $minimumExercisesPerRegion) {
+            $region
+        }
+    })
 $constraintViolations = $records | Where-Object {
     -not $_['onlyFeetTouchGround'] -or
     -not $_['shoeAgnostic'] -or
@@ -2473,6 +2495,27 @@ if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
 }
 
 if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
+    $mediaDirectories = @(
+        @{ Path = $gifOutputRoot; Extension = 'gif' },
+        @{ Path = $videoOutputRoot; Extension = 'mp4' },
+        @{ Path = $holdFrameOutputRoot; Extension = 'png' })
+    foreach ($mediaDirectory in $mediaDirectories) {
+        $resolvedMediaDirectory = [IO.Path]::GetFullPath([string]$mediaDirectory.Path)
+        if (-not $resolvedMediaDirectory.StartsWith(
+                $resolvedOutputRoot + [IO.Path]::DirectorySeparatorChar,
+                [StringComparison]::OrdinalIgnoreCase)) {
+            throw 'Refusing to prune media outside the configured output root.'
+        }
+
+        Get-ChildItem -LiteralPath $resolvedMediaDirectory -File |
+            Where-Object {
+                $_.Name -match ('^exercise_(?<id>\d{4})\.' +
+                    [regex]::Escape([string]$mediaDirectory.Extension) + '$') -and
+                [int]$Matches.id -notin $retainedExerciseIds
+            } |
+            ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force }
+    }
+
     $missingVideos = $records | Where-Object {
         -not (Test-Path -LiteralPath (Join-Path $resolvedOutputRoot $_['video']))
     }

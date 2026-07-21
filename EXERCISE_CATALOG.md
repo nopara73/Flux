@@ -1,10 +1,11 @@
 # Flux exercise catalog
 
-Flux contains 1,000 distinct standing movements: 100 for each dominant region.
-The catalog deliberately mixes ordinary active-range-of-motion and balance
-drills with established movements from rehabilitation, yoga, tai chi, qigong,
-dance, and martial arts. Domain assignment is only an indexing aid; it is not a
-claim that a movement trains only that region.
+Flux contains 327 quality-reviewed standing movements. Every dominant region
+has at least three choices; the current counts range from 15 to 94. The catalog
+mixes ordinary active-range-of-motion and balance drills with established
+movements from rehabilitation, yoga, tai chi, qigong, dance, and martial arts.
+Domain assignment is only an indexing aid; it is not a claim that a movement
+trains only that region.
 
 ## Editorial rules
 
@@ -32,10 +33,10 @@ the curated target from `tools/HoldExerciseFrames.psd1` and freezes there.
 
 The canonical base catalog is maintained in `tools/RealExerciseCatalog.psd1`.
 `tools/BilateralExerciseNames.psd1` contains the reviewed replacements that
-enforce the no-one-sided rule without changing the 100-per-region structure.
-The generator rejects duplicate names, the former synthetic modifier suffixes,
-missing motion profiles, unbalanced region counts, and constraint-metadata
-violations.
+enforce the no-one-sided rule. `tools/VerifiedExerciseDemos.psd1` is the
+quality-first allowlist. The generator rejects duplicate names, the former
+synthetic modifier suffixes, missing motion profiles, regions with fewer than
+three exercises, and constraint-metadata violations.
 
 ## Reference families
 
@@ -63,17 +64,12 @@ one of these reviewed sources:
 - other visually reviewed external anatomical demonstrations;
 - visually reviewed Posecode 3D renders, including custom alternating and
   bidirectional sequences;
-- purpose-built animated SVG diagrams for motions such as smooth pursuit,
-  saccades, blinking, convergence, VOR, head movement, and a conservative set
-  of simple whole-body movements;
 - semantically identical reviewed media copies and deterministic directional
   transforms where reversing the frame order is the exact named movement.
 
-The remaining videos are explicit temporary family-level placeholders. They are
-animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **462 exact
-demonstrations and 538 still requiring exact media**. The region-by-region
-counts and the complete list of all 538 remaining names are maintained in
+No placeholder media is bundled. The former 673 unverified or comparatively
+weak schematic entries were removed. All **327 included demonstrations** meet
+the current high bar. Region and source-quality counts are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
@@ -84,7 +80,7 @@ Exact deterministic direction and tempo mappings are tracked in
 `tools/ExactExerciseMediaTransforms.psd1`.
 Editable sources for the reviewed custom 3D batch live in
 `tools/PosecodeSources`.
-`tools/Test-ExerciseVideos.ps1` verifies all 1,000 MP4 containers and compares
+`tools/Test-ExerciseVideos.ps1` verifies all 327 MP4 containers and compares
 the final decoded frame of every hold against its reviewed target image.
 The external clips are used for this private personal build and are not a
 commercial media-clearance record.

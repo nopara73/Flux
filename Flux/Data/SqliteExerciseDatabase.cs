@@ -10,11 +10,10 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 7;
+    private const int DatabaseVersion = 8;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
-    private const int ExpectedExerciseCount = 1000;
-    private const int ExpectedExercisesPerRegion = 100;
+    private const int MinimumExercisesPerRegion = 3;
 
     private static readonly string[] Columns =
     [
@@ -135,6 +134,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             catalogRefreshRequired = true;
         }
 
+        if (oldVersion < 8)
+        {
+            // Replace the placeholder-heavy catalog with the reviewed
+            // quality-first set while retaining scores for surviving IDs.
+            catalogRefreshRequired = true;
+        }
+
         if (oldVersion < 3)
         {
             catalogRefreshRequired = true;
@@ -208,7 +214,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         {
             // Release the UNIQUE name values before applying renamed records.
             database.ExecSQL(
-                "UPDATE exercises SET name = '__flux_catalog_v7_' || id");
+                "UPDATE exercises SET name = '__flux_catalog_v8_' || id");
 
             foreach (Exercise exercise in catalog)
             {
@@ -231,12 +237,24 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     values,
                     "id = ?",
                     [exercise.Id.ToString(CultureInfo.InvariantCulture)]);
-                if (updatedRows != 1)
+                if (updatedRows == 0)
+                {
+                    values.Put("id", exercise.Id);
+                    values.Put("score", exercise.Score);
+                    database.InsertOrThrow(TableName, null, values);
+                }
+                else if (updatedRows != 1)
                 {
                     throw new InvalidOperationException(
                         $"Could not refresh catalog exercise {exercise.Id}.");
                 }
             }
+
+            string placeholders = string.Join(",", catalog.Select(_ => "?"));
+            string[] retainedIds = catalog
+                .Select(exercise => exercise.Id.ToString(CultureInfo.InvariantCulture))
+                .ToArray();
+            database.Delete(TableName, $"id NOT IN ({placeholders})", retainedIds);
 
             database.SetTransactionSuccessful();
         }
@@ -257,7 +275,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
     private IReadOnlyList<Exercise> LoadExercises()
     {
-        var exercises = new List<Exercise>(ExpectedExerciseCount);
+        var exercises = new List<Exercise>();
         SQLiteDatabase database = ReadableDatabase
             ?? throw new InvalidOperationException("Unable to open the exercise database.");
         using ICursor? cursor = database.Query(
@@ -312,15 +330,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        if (exercises.Count != ExpectedExerciseCount)
-        {
-            throw new InvalidOperationException(
-                $"The catalog must contain exactly {ExpectedExerciseCount} exercises.");
-        }
-
-        bool hasInvalidRegionCount = exercises
-            .GroupBy(exercise => exercise.DominantRegion)
-            .Any(group => group.Count() != ExpectedExercisesPerRegion);
+        bool hasInvalidRegionCount = Enum
+            .GetValues<DominantRegion>()
+            .Any(region => exercises.Count(exercise =>
+                exercise.DominantRegion == region) < MinimumExercisesPerRegion);
         bool violatesRequirements = exercises.Any(exercise =>
             !exercise.OnlyFeetTouchGround ||
             !exercise.ShoeAgnostic ||
