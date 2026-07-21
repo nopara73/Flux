@@ -13,6 +13,7 @@ namespace Flux;
 public class MainActivity : Activity
 {
     private const int CountdownSeconds = 60;
+    private const int RestSeconds = 10;
 
     private SqliteExerciseDatabase _exerciseDatabase = null!;
     private ExerciseSessionService _sessionService = null!;
@@ -31,19 +32,20 @@ public class MainActivity : Activity
     private View _countdownPanel = null!;
     private TextView _countdownText = null!;
     private Button _speedUpButton = null!;
-    private View _ratingPanel = null!;
-    private Button _failedButton = null!;
-    private Button _neutralButton = null!;
-    private Button _completedButton = null!;
+    private View _restPanel = null!;
+    private TextView _restCountdownText = null!;
+    private Button _keepButton = null!;
     private TextView _congratulationsSummary = null!;
     private Button _doneButton = null!;
 
     private WorkoutCountDownTimer? _countdownTimer;
+    private WorkoutCountDownTimer? _restTimer;
     private Android.Media.ToneGenerator? _toneGenerator;
     private Android.Media.MediaPlayer? _activeMediaPlayer;
     private VideoPreparedListener? _videoPreparedListener;
     private Android.Graphics.Bitmap? _holdFrameBitmap;
     private bool _countdownActive;
+    private bool _restActive;
     private bool _loopExerciseVideo = true;
     private bool _freezeHoldAtEnd;
 
@@ -72,13 +74,18 @@ public class MainActivity : Activity
         else
         {
             ShowNextExercise();
+            RestorePendingRest();
         }
     }
 
     protected override void OnResume()
     {
         base.OnResume();
-        if (_currentExercise is not null && !_freezeHoldAtEnd)
+        if (_restActive)
+        {
+            ResumeRestCountdown();
+        }
+        else if (_currentExercise is not null && !_freezeHoldAtEnd)
         {
             _exerciseVideo?.Start();
         }
@@ -87,6 +94,7 @@ public class MainActivity : Activity
     protected override void OnPause()
     {
         CancelCountdown(resetToStart: true);
+        PauseRestCountdown();
         _exerciseVideo?.Pause();
         base.OnPause();
     }
@@ -94,6 +102,7 @@ public class MainActivity : Activity
     protected override void OnDestroy()
     {
         CancelCountdown(resetToStart: false);
+        PauseRestCountdown();
         _toneGenerator?.Release();
         _toneGenerator?.Dispose();
         _toneGenerator = null;
@@ -117,10 +126,9 @@ public class MainActivity : Activity
         _countdownPanel = FindRequiredView<View>(Resource.Id.countdown_panel);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
         _speedUpButton = FindRequiredView<Button>(Resource.Id.speed_up_button);
-        _ratingPanel = FindRequiredView<View>(Resource.Id.rating_panel);
-        _failedButton = FindRequiredView<Button>(Resource.Id.failed_button);
-        _neutralButton = FindRequiredView<Button>(Resource.Id.neutral_button);
-        _completedButton = FindRequiredView<Button>(Resource.Id.completed_button);
+        _restPanel = FindRequiredView<View>(Resource.Id.rest_panel);
+        _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
+        _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
         _congratulationsSummary = FindRequiredView<TextView>(
             Resource.Id.congratulations_summary);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
@@ -130,9 +138,7 @@ public class MainActivity : Activity
     {
         _startButton.Click += (_, _) => StartCountdown();
         _speedUpButton.Click += (_, _) => SkipCountdown();
-        _failedButton.Click += (_, _) => RecordOutcome(ExerciseOutcome.X);
-        _neutralButton.Click += (_, _) => RecordOutcome(ExerciseOutcome.Neutral);
-        _completedButton.Click += (_, _) => RecordOutcome(ExerciseOutcome.Tick);
+        _keepButton.Click += (_, _) => KeepCurrentExercise();
         _doneButton.Click += (_, _) => CloseCompletedWorkout();
     }
 
@@ -267,8 +273,7 @@ public class MainActivity : Activity
         _startButton.Enabled = true;
         _startButton.Visibility = ViewStates.Visible;
         _countdownPanel.Visibility = ViewStates.Gone;
-        _ratingPanel.Visibility = ViewStates.Gone;
-        SetRatingButtonsEnabled(enabled: true);
+        _restPanel.Visibility = ViewStates.Gone;
     }
 
     private void StartCountdown()
@@ -285,7 +290,7 @@ public class MainActivity : Activity
             PlayHoldOnce();
         }
         _startButton.Visibility = ViewStates.Gone;
-        _ratingPanel.Visibility = ViewStates.Gone;
+        _restPanel.Visibility = ViewStates.Gone;
         _countdownPanel.Visibility = ViewStates.Visible;
         _countdownText.Text = CountdownSeconds.ToString();
 
@@ -329,8 +334,7 @@ public class MainActivity : Activity
 
         _startButton.Visibility = ViewStates.Gone;
         _countdownPanel.Visibility = ViewStates.Gone;
-        _ratingPanel.Visibility = ViewStates.Visible;
-        SetRatingButtonsEnabled(enabled: true);
+        BeginRest();
     }
 
     private void CancelCountdown(bool resetToStart)
@@ -355,22 +359,129 @@ public class MainActivity : Activity
         }
     }
 
-    private void RecordOutcome(ExerciseOutcome outcome)
+    private void BeginRest()
     {
-        if (_ratingPanel.Visibility != ViewStates.Visible)
+        _state.PendingRestRegion = _currentRegion;
+        _state.PendingRestEndsAtUnixMilliseconds =
+            DateTimeOffset.UtcNow.AddSeconds(RestSeconds).ToUnixTimeMilliseconds();
+        _state.PendingRestKept = false;
+        _stateStore.Save(_state);
+
+        _restActive = true;
+        ShowRestPanel();
+        ResumeRestCountdown();
+    }
+
+    private void RestorePendingRest()
+    {
+        if (_state.PendingRestRegion != _currentRegion)
         {
             return;
         }
 
-        SetRatingButtonsEnabled(enabled: false);
-        Exercise exercise = _sessionService.RecordOutcome(_state, _currentRegion, outcome);
+        _restActive = true;
+        if (_currentExercise?.Mode == ExerciseMode.Hold)
+        {
+            _loopExerciseVideo = false;
+            _freezeHoldAtEnd = true;
+            ShowHoldFrame(_currentExercise.Id);
+        }
 
-        if (outcome == ExerciseOutcome.X)
+        ShowRestPanel();
+    }
+
+    private void ShowRestPanel()
+    {
+        _startButton.Visibility = ViewStates.Gone;
+        _countdownPanel.Visibility = ViewStates.Gone;
+        _restPanel.Visibility = ViewStates.Visible;
+        _keepButton.Enabled = !_state.PendingRestKept;
+        _keepButton.Text = _state.PendingRestKept
+            ? GetString(Resource.String.kept)
+            : GetString(Resource.String.tap_to_keep);
+
+        UpdateRestCountdownText();
+    }
+
+    private void ResumeRestCountdown()
+    {
+        if (!_restActive)
+        {
+            return;
+        }
+
+        _restTimer?.Cancel();
+        _restTimer?.Dispose();
+        _restTimer = null;
+
+        long millisecondsRemaining =
+            _state.PendingRestEndsAtUnixMilliseconds -
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (millisecondsRemaining <= 0)
+        {
+            CompleteRest();
+            return;
+        }
+
+        UpdateRestCountdownText();
+        _restTimer = new WorkoutCountDownTimer(
+            millisecondsRemaining,
+            250L,
+            _ => UpdateRestCountdownText(),
+            CompleteRest);
+        _restTimer.Start();
+    }
+
+    private void UpdateRestCountdownText()
+    {
+        long millisecondsRemaining = Math.Max(
+            0,
+            _state.PendingRestEndsAtUnixMilliseconds -
+                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        int secondsRemaining = (int)Math.Ceiling(millisecondsRemaining / 1000d);
+        _restCountdownText.Text = $"Rest · {secondsRemaining}";
+    }
+
+    private void PauseRestCountdown()
+    {
+        _restTimer?.Cancel();
+        _restTimer?.Dispose();
+        _restTimer = null;
+    }
+
+    private void KeepCurrentExercise()
+    {
+        if (!_restActive || _state.PendingRestKept)
+        {
+            return;
+        }
+
+        _state.PendingRestKept = true;
+        _stateStore.Save(_state);
+        _keepButton.Enabled = false;
+        _keepButton.Text = GetString(Resource.String.kept);
+    }
+
+    private void CompleteRest()
+    {
+        if (!_restActive || _state.PendingRestRegion != _currentRegion)
+        {
+            return;
+        }
+
+        _restActive = false;
+        PauseRestCountdown();
+        bool keep = _state.PendingRestKept;
+        Exercise exercise = _sessionService.RecordOutcome(_state, _currentRegion, keep);
+        _sessionService.ClearPendingRest(_state);
+
+        if (!keep)
         {
             _exerciseDatabase.UpdateScore(exercise);
         }
 
         _stateStore.Save(_state);
+        PlayBeep(Android.Media.Tone.PropBeep);
 
         if (_state.WorkoutCompleted)
         {
@@ -385,11 +496,13 @@ public class MainActivity : Activity
     private void ShowCongratulations()
     {
         CancelCountdown(resetToStart: false);
+        PauseRestCountdown();
+        _restActive = false;
         _exerciseVideo.StopPlayback();
-        (int failed, int neutral, int completed) = _sessionService.GetOutcomeCounts(_state);
+        (int replaced, int kept) = _sessionService.GetOutcomeCounts(_state);
 
         _congratulationsSummary.Text =
-            $"✓  {completed} complete    −  {neutral} neutral    ×  {failed} replace";
+            $"✓  {kept} kept    ×  {replaced} replaced";
         _workoutScreen.Visibility = ViewStates.Gone;
         _congratulationsScreen.Visibility = ViewStates.Visible;
     }
@@ -414,13 +527,6 @@ public class MainActivity : Activity
         {
             // A missing or unavailable audio output should not stop a workout.
         }
-    }
-
-    private void SetRatingButtonsEnabled(bool enabled)
-    {
-        _failedButton.Enabled = enabled;
-        _neutralButton.Enabled = enabled;
-        _completedButton.Enabled = enabled;
     }
 
     private T FindRequiredView<

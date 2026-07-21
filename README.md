@@ -77,20 +77,21 @@ contains 18 symmetric holds and 165 repetition exercises.
 
 Each workout contains one randomly selected exercise from every dominant region,
 in enum order from `FEET` through `CORE`. Press **Start** to begin a 60-second
-timer, or **Skip** to finish the timer immediately while testing. After each
-timer, record the result with **X**, **−**, or **✓**.
+timer, or **Skip** to finish the timer immediately while testing. Each exercise
+is followed by a 10-second rest. Tap the large **Tap to keep** button during the
+rest to retain that exercise; otherwise the rest expires automatically.
 
 Repetitions keep their MP4 looping throughout the timer. Holds are labeled
 **HOLD**: their MP4 loops only as a preview, then plays once into the reviewed
 target pose. Flux displays the reviewed target frame explicitly for the rest of
 the countdown, avoiding device-specific `VideoView` end-frame behavior.
 
-The current lineup and outcomes are saved locally with Android shared
-preferences. Scores are saved in SQLite. An **X** reduces that exercise's score
-by one and replaces it next session. If there were no X results, one randomly
-chosen neutral exercise is replaced. An all-tick workout keeps the complete
-lineup. Every replacement is selected randomly from the highest-score bucket in
-the same dominant region.
+The current lineup, rest deadline, and keep choice are saved locally with
+Android shared preferences. Scores are saved in SQLite. If the rest expires
+without a tap, that exercise's score is reduced by one and the exercise is
+replaced next session. Tapping keeps both its score and lineup slot unchanged.
+Every replacement is selected randomly from the highest-score bucket in the
+same dominant region.
 
 ## Build
 

@@ -21,6 +21,8 @@ public sealed class ExerciseSessionService
     public void Initialize(WorkoutState state)
     {
         NormalizeCollections(state);
+        NormalizeLegacyOutcomes(state);
+        state.Version = 3;
 
         if (state.SelectedExercises.Count == 0)
         {
@@ -29,6 +31,7 @@ public sealed class ExerciseSessionService
 
         RepairLineup(state);
         NormalizeCompletionState(state);
+        NormalizePendingRest(state);
 
         if (state.WorkoutCompleted && state.CompletionAcknowledged)
         {
@@ -63,7 +66,7 @@ public sealed class ExerciseSessionService
     public Exercise RecordOutcome(
         WorkoutState state,
         DominantRegion region,
-        ExerciseOutcome outcome)
+        bool keep)
     {
         DominantRegion? nextRegion = GetNextRegion(state);
 
@@ -74,7 +77,8 @@ public sealed class ExerciseSessionService
 
         Exercise exercise = GetSelectedExercise(state, region);
 
-        if (outcome == ExerciseOutcome.X)
+        ExerciseOutcome outcome = keep ? ExerciseOutcome.Tick : ExerciseOutcome.X;
+        if (!keep)
         {
             exercise.Score--;
         }
@@ -95,12 +99,18 @@ public sealed class ExerciseSessionService
         state.CompletionAcknowledged = true;
     }
 
-    public (int Failed, int Neutral, int Completed) GetOutcomeCounts(WorkoutState state)
+    public (int Replaced, int Kept) GetOutcomeCounts(WorkoutState state)
     {
-        int failed = state.Outcomes.Count(entry => entry.Value == ExerciseOutcome.X);
-        int neutral = state.Outcomes.Count(entry => entry.Value == ExerciseOutcome.Neutral);
-        int completed = state.Outcomes.Count(entry => entry.Value == ExerciseOutcome.Tick);
-        return (failed, neutral, completed);
+        int replaced = state.Outcomes.Count(entry => entry.Value == ExerciseOutcome.X);
+        int kept = state.Outcomes.Count - replaced;
+        return (replaced, kept);
+    }
+
+    public void ClearPendingRest(WorkoutState state)
+    {
+        state.PendingRestRegion = null;
+        state.PendingRestEndsAtUnixMilliseconds = 0;
+        state.PendingRestKept = false;
     }
 
     private void CreateInitialLineup(WorkoutState state)
@@ -114,6 +124,7 @@ public sealed class ExerciseSessionService
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
+        ClearPendingRest(state);
     }
 
     private void PrepareNextSession(WorkoutState state)
@@ -122,19 +133,6 @@ public sealed class ExerciseSessionService
             .Where(entry => entry.Value == ExerciseOutcome.X)
             .Select(entry => entry.Key)
             .ToHashSet();
-
-        if (regionsToReplace.Count == 0)
-        {
-            DominantRegion[] neutralRegions = state.Outcomes
-                .Where(entry => entry.Value == ExerciseOutcome.Neutral)
-                .Select(entry => entry.Key)
-                .ToArray();
-
-            if (neutralRegions.Length > 0)
-            {
-                regionsToReplace.Add(neutralRegions[_random.Next(neutralRegions.Length)]);
-            }
-        }
 
         foreach (DominantRegion region in regionsToReplace)
         {
@@ -146,6 +144,7 @@ public sealed class ExerciseSessionService
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
+        ClearPendingRest(state);
     }
 
     private Exercise ChooseFromHighestScoreBucket(
@@ -193,6 +192,34 @@ public sealed class ExerciseSessionService
     {
         state.SelectedExercises ??= [];
         state.Outcomes ??= [];
+    }
+
+    private static void NormalizeLegacyOutcomes(WorkoutState state)
+    {
+        foreach (DominantRegion region in state.Outcomes
+                     .Where(entry => entry.Value == ExerciseOutcome.Neutral)
+                     .Select(entry => entry.Key)
+                     .ToArray())
+        {
+            state.Outcomes[region] = ExerciseOutcome.Tick;
+        }
+    }
+
+    private void NormalizePendingRest(WorkoutState state)
+    {
+        if (state.PendingRestRegion is null)
+        {
+            ClearPendingRest(state);
+            return;
+        }
+
+        DominantRegion? nextRegion = GetNextRegion(state);
+        if (state.WorkoutCompleted ||
+            nextRegion != state.PendingRestRegion ||
+            state.PendingRestEndsAtUnixMilliseconds <= 0)
+        {
+            ClearPendingRest(state);
+        }
     }
 
     private static void NormalizeCompletionState(WorkoutState state)
