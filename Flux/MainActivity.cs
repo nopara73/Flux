@@ -535,8 +535,25 @@ public class MainActivity : Activity
             DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(int resourceId)
         where T : View
     {
-        return FindViewById<T>(resourceId)
-            ?? throw new InvalidOperationException($"Missing view resource {resourceId}.");
+        View? view = FindViewById(resourceId);
+        if (view is T typedView)
+        {
+            return typedView;
+        }
+
+        string resourceName;
+        try
+        {
+            resourceName = Resources?.GetResourceEntryName(resourceId) ?? resourceId.ToString();
+        }
+        catch (Android.Content.Res.Resources.NotFoundException)
+        {
+            resourceName = resourceId.ToString();
+        }
+
+        string actualType = view?.GetType().FullName ?? "missing";
+        throw new InvalidOperationException(
+            $"View resource {resourceName} is {actualType}; expected {typeof(T).FullName}.");
     }
 
     private sealed class WorkoutCountDownTimer : Android.OS.CountDownTimer
