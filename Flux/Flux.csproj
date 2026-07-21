@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationId>com.local.flux</ApplicationId>
-    <ApplicationVersion>5</ApplicationVersion>
-    <ApplicationDisplayVersion>1.4</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+    <ApplicationDisplayVersion>1.5</ApplicationDisplayVersion>
     <!--
       Enables trim analyzers and full trimming during Release mode.
       To learn more, see: https://learn.microsoft.com/dotnet/core/deploying/trimming/trimming-options#trimming-granularity
@@ -16,8 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- GIFs and extracted hold frames are reproducible generator inputs, not runtime assets. -->
+    <!-- GIFs are reproducible generator inputs, not runtime assets. -->
     <AndroidAsset Remove="Assets\exercise_gifs\**\*.gif" />
-    <AndroidAsset Remove="Assets\exercise_hold_frames\**\*.png" />
   </ItemGroup>
 </Project>

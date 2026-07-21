@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 8;
+    private const int DatabaseVersion = 9;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int MinimumExercisesPerRegion = 3;
@@ -141,6 +141,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             catalogRefreshRequired = true;
         }
 
+        if (oldVersion < 9)
+        {
+            // Refresh corrected hold targets while retaining every score.
+            catalogRefreshRequired = true;
+        }
+
         if (oldVersion < 3)
         {
             catalogRefreshRequired = true;
@@ -214,7 +220,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         {
             // Release the UNIQUE name values before applying renamed records.
             database.ExecSQL(
-                "UPDATE exercises SET name = '__flux_catalog_v8_' || id");
+                "UPDATE exercises SET name = '__flux_catalog_v9_' || id");
 
             foreach (Exercise exercise in catalog)
             {

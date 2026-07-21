@@ -78,7 +78,8 @@ timer, record the result with **X**, **−**, or **✓**.
 
 Repetitions keep their MP4 looping throughout the timer. Holds are labeled
 **HOLD**: their MP4 loops only as a preview, then plays once into the reviewed
-target pose and remains frozen there for the rest of the countdown.
+target pose. Flux displays the reviewed target frame explicitly for the rest of
+the countdown, avoiding device-specific `VideoView` end-frame behavior.
 
 The current lineup and outcomes are saved locally with Android shared
 preferences. Scores are saved in SQLite. An **X** reduces that exercise's score

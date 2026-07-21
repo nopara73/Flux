@@ -26,6 +26,7 @@ public class MainActivity : Activity
     private TextView _regionName = null!;
     private TextView _exerciseName = null!;
     private VideoView _exerciseVideo = null!;
+    private ImageView _holdFrameImage = null!;
     private Button _startButton = null!;
     private View _countdownPanel = null!;
     private TextView _countdownText = null!;
@@ -41,6 +42,7 @@ public class MainActivity : Activity
     private Android.Media.ToneGenerator? _toneGenerator;
     private Android.Media.MediaPlayer? _activeMediaPlayer;
     private VideoPreparedListener? _videoPreparedListener;
+    private Android.Graphics.Bitmap? _holdFrameBitmap;
     private bool _countdownActive;
     private bool _loopExerciseVideo = true;
     private bool _freezeHoldAtEnd;
@@ -96,6 +98,7 @@ public class MainActivity : Activity
         _toneGenerator?.Dispose();
         _toneGenerator = null;
         _exerciseVideo?.StopPlayback();
+        ClearHoldFrame();
         _activeMediaPlayer = null;
         _videoPreparedListener = null;
         _exerciseDatabase?.Dispose();
@@ -109,6 +112,7 @@ public class MainActivity : Activity
         _regionName = FindRequiredView<TextView>(Resource.Id.region_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
+        _holdFrameImage = FindRequiredView<ImageView>(Resource.Id.hold_frame_image);
         _startButton = FindRequiredView<Button>(Resource.Id.start_button);
         _countdownPanel = FindRequiredView<View>(Resource.Id.countdown_panel);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
@@ -156,6 +160,7 @@ public class MainActivity : Activity
         _loopExerciseVideo = true;
         _freezeHoldAtEnd = false;
         _activeMediaPlayer = null;
+        ClearHoldFrame();
         _exerciseVideo.StopPlayback();
         _exerciseVideo.SetVideoPath(CacheVideoAsset(exercise.Video));
     }
@@ -175,6 +180,7 @@ public class MainActivity : Activity
 
     private void PlayHoldOnce()
     {
+        ClearHoldFrame();
         _loopExerciseVideo = false;
         _freezeHoldAtEnd = true;
         if (_activeMediaPlayer is not null)
@@ -188,17 +194,45 @@ public class MainActivity : Activity
 
     private void FreezeHoldOnFinalFrame()
     {
-        if (_currentExercise?.Mode != ExerciseMode.Hold)
+        Exercise? exercise = _currentExercise;
+        if (exercise?.Mode != ExerciseMode.Hold)
         {
             return;
         }
 
-        int duration = _activeMediaPlayer?.Duration ?? _exerciseVideo.Duration;
-        if (duration > 0)
-        {
-            _exerciseVideo.SeekTo(Math.Max(0, duration - 80));
-        }
         _exerciseVideo.Pause();
+        ShowHoldFrame(exercise.Id);
+    }
+
+    private void ShowHoldFrame(int exerciseId)
+    {
+        if (_holdFrameImage.Visibility == ViewStates.Visible)
+        {
+            return;
+        }
+
+        string assetPath = $"exercise_hold_frames/exercise_{exerciseId:D4}.png";
+        using Stream stream = Assets!.Open(assetPath);
+        Android.Graphics.Bitmap bitmap = Android.Graphics.BitmapFactory.DecodeStream(stream)
+            ?? throw new InvalidOperationException(
+                $"Unable to decode the reviewed hold frame for exercise {exerciseId}.");
+
+        _holdFrameBitmap = bitmap;
+        _holdFrameImage.SetImageBitmap(bitmap);
+        _holdFrameImage.Visibility = ViewStates.Visible;
+    }
+
+    private void ClearHoldFrame()
+    {
+        if (_holdFrameImage is null)
+        {
+            return;
+        }
+
+        _holdFrameImage.Visibility = ViewStates.Gone;
+        _holdFrameImage.SetImageDrawable(null);
+        _holdFrameBitmap?.Dispose();
+        _holdFrameBitmap = null;
     }
 
     private void ShowNextExercise()

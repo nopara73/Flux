@@ -43,14 +43,29 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <VideoView
-            android:id="@+id/exercise_video"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5.75"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/exercise_animation_description"
-            android:importantForAccessibility="no" />
+            android:layout_weight="5.75">
+
+            <VideoView
+                android:id="@+id/exercise_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exercise_animation_description"
+                android:importantForAccessibility="no" />
+
+            <ImageView
+                android:id="@+id/hold_frame_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exercise_animation_description"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
