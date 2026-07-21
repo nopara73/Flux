@@ -58,8 +58,8 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 138) {
-    throw 'The reviewed external-media map must contain exactly 138 entries.'
+if ($externalExerciseMedia.Count -ne 161) {
+    throw 'The reviewed external-media map must contain exactly 161 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
@@ -222,9 +222,13 @@ function Get-MotionProfile {
             if ($Name -match 'Vertical VOR x2') { return 'VorX2Vertical' }
             if ($Name -match 'Nose Square') { return 'HeadSquare' }
             if ($Name -match 'Four-Direction Head Tilt|Four-Corner Dance Head Accent|Jazz Head Isolation') { return 'HeadFourDirection' }
+            if ($Name -match 'Half-Circle') { return 'HeadHalfCircle' }
+            if ($Name -match 'Figure Eight|Infinity Sign') { return 'HeadFigureEight' }
+            if ($Name -match 'Diamond Trace') { return 'HeadDiamond' }
+            if ($Name -match 'Turn-and-Nod Sequence') { return 'HeadTurnNod' }
             if ($Name -match 'Neck Elongation|Sama Shiro') { return 'HeadNeutral' }
             if ($Name -match 'Chin-Tuck') { return 'HeadTranslate' }
-            if ($Name -match 'Dragon Surveys the Sea') { return 'HeadSurvey' }
+            if ($Name -match 'Dragon Surveys the Sea|Head Survey Arc') { return 'HeadSurvey' }
             if ($Name -match 'Dhuta-Kampita') { return 'HeadTurnNod' }
             if ($Name -match 'Tiger Watches Prey|Dhuta Shiro') { return 'HeadTurn' }
             if ($Name -match 'Lateral|Side-Bend|Side-to-Side Dance Head Accent|Tilt|Ear-to|Griva|Parivahita') { return 'HeadTilt' }
@@ -426,6 +430,32 @@ function New-HeadExerciseFrameSvg {
             $headX += Get-RoundedInt ([Math]::Sin($circleDirection * $circlePhase) * 10)
             $headY += Get-RoundedInt ([Math]::Cos($circleDirection * $circlePhase) * 7)
         }
+        'HeadHalfCircle' {
+            # Trace the chin from one collarbone to the other across the chest,
+            # then return along the same safe forward semicircle.
+            $halfPhase = [Math]::PI * ($FrameIndex % 8) / 7
+            $halfDirection = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $travelPhase = if ($halfDirection -eq 1) { $halfPhase } else { [Math]::PI - $halfPhase }
+            $headX += Get-RoundedInt ([Math]::Cos($travelPhase) * 15)
+            $headY += Get-RoundedInt ([Math]::Sin($travelPhase) * 12)
+            $rotation = Get-RoundedInt (([Math]::Cos($travelPhase)) * 13)
+        }
+        'HeadFigureEight' {
+            # The face remains forward while the nose traces both lobes of a
+            # horizontal figure eight, reversing direction for symmetry.
+            $figurePhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $figureDirection = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $figureWave = [Math]::Sin($figureDirection * $figurePhase)
+            $figureDoubleWave = [Math]::Sin(2 * $figureDirection * $figurePhase)
+            $headX += Get-RoundedInt ($figureWave * 15)
+            $headY += Get-RoundedInt ($figureDoubleWave * 9)
+        }
+        'HeadDiamond' {
+            $diamondSequence = @(0, 1, 2, 3, 0, 3, 2, 1)
+            $diamondIndex = $diamondSequence[[int][Math]::Floor($FrameIndex / 2)]
+            $headX += @(0, 15, 0, -15)[$diamondIndex]
+            $headY += @(-12, 0, 12, 0)[$diamondIndex]
+        }
         'HeadSquare' {
             $squareSequence = @(0, 1, 2, 3, 0, 3, 2, 1)
             $squareIndex = $squareSequence[[int][Math]::Floor($FrameIndex / 2)]
@@ -436,8 +466,14 @@ function New-HeadExerciseFrameSvg {
             $directionIndex = [int][Math]::Floor($FrameIndex / 4)
             if ($directionIndex -eq 0) { $rotation = -16 }
             elseif ($directionIndex -eq 1) { $rotation = 16 }
-            elseif ($directionIndex -eq 2) { $headY -= 7 }
-            else { $headY += 7 }
+            elseif ($directionIndex -eq 2) {
+                $sideProfile = $true
+                $rotation = -16
+            }
+            else {
+                $sideProfile = $true
+                $rotation = 16
+            }
         }
         'HeadSurvey' {
             $surveyPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
@@ -460,7 +496,15 @@ function New-HeadExerciseFrameSvg {
         }
         'HeadTranslate' {
             $sideProfile = $ExerciseName -notmatch 'Side-to-Side|Dance Head Slide'
-            $headX += Get-RoundedInt ($wave * 18)
+            if ($ExerciseName -match 'Retraction|Chin-Tuck') {
+                $headX -= Get-RoundedInt ([Math]::Max(0, $wave) * 18)
+            }
+            elseif ($ExerciseName -match 'Protraction') {
+                $headX += Get-RoundedInt ([Math]::Max(0, $wave) * 18)
+            }
+            else {
+                $headX += Get-RoundedInt ($wave * 18)
+            }
         }
         'EyeBlink' {
             $blink = (1 - $counterWave) / 2
@@ -878,7 +922,13 @@ function New-ExternalExerciseGif {
                 ([double]$Media.DurationSeconds).ToString('0.###', $culture))
         }
 
-        $videoFilter = "fps=$framesPerSecond," +
+        $cropFilter = if ($Media.ContainsKey('Crop')) {
+            ([string]$Media.Crop).TrimEnd(',') + ','
+        }
+        else {
+            ''
+        }
+        $videoFilter = $cropFilter + "fps=$framesPerSecond," +
             'scale=256:256:force_original_aspect_ratio=decrease,' +
             'pad=256:256:(ow-iw)/2:(oh-ih)/2:color=0xF7FAFC'
         $ffmpegArguments += @('-vf', $videoFilter, '-an', $framePattern)

@@ -5,7 +5,7 @@ animation directly demonstrates the named movement, not merely the same body
 region or a vaguely related motion. Every other bundled MP4 remains usable as
 a temporary placeholder, but is not claimed to be a perfect demonstration.
 
-Verified: **364 / 1,000**. Still requiring exact media: **636 / 1,000**.
+Verified: **402 / 1,000**. Still requiring exact media: **598 / 1,000**.
 
 | Region | Verified | Still imperfect |
 | --- | ---: | ---: |
@@ -13,7 +13,7 @@ Verified: **364 / 1,000**. Still requiring exact media: **636 / 1,000**.
 | LEGS | 100 | 0 |
 | HANDS | 15 | 85 |
 | ARMS | 28 | 72 |
-| HEAD | 62 | 38 |
+| HEAD | 100 | 0 |
 | SHOULDERS | 30 | 70 |
 | HIPS | 37 | 63 |
 | CHEST | 17 | 83 |
@@ -22,10 +22,10 @@ Verified: **364 / 1,000**. Still requiring exact media: **636 / 1,000**.
 
 ## Verified sources
 
-- Reviewed human footage: **115**
+- Reviewed human footage: **138**
 - Other reviewed external demonstrations: **23**
 - Reviewed Posecode 3D renders: **77**
-- Purpose-built SVG demonstrations: **82**
+- Purpose-built SVG demonstrations: **97**
 - Reviewed semantically identical media copies: **58**
 - Reviewed exact deterministic media transforms: **9**
 
@@ -291,46 +291,8 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0399 — Nordic-Ski Arm Swing
 - 0400 — Speed-Skater Arm Swing
 
-### HEAD (38)
+### HEAD (0)
 
-- 0407 — Neck Half-Circle
-- 0408 — Neck Figure Eight
-- 0410 — Nose Alphabet
-- 0413 — Nose Infinity Sign
-- 0415 — Chin-to-Collarbone Turn
-- 0416 — Four-Direction Head Tilt Flow
-- 0422 — Cervical Flexion Isometric
-- 0423 — Cervical Extension Isometric
-- 0425 — Chin-Tuck Isometric
-- 0467 — Alternating Eight-Brocades Wise Owl Gazes Backward
-- 0468 — Alternating Qigong Crane Looks Back
-- 0469 — Qigong Turtle Retracts Neck
-- 0470 — Qigong Turtle Extends Neck
-- 0471 — Qigong White Crane Nods
-- 0472 — Qigong Dragon Surveys the Sea
-- 0473 — Alternating Qigong Tiger Watches Prey
-- 0474 — Ballet Spotting Drill
-- 0475 — Jazz Head Isolation
-- 0477 — Dance Head Roll
-- 0478 — Dance Head Accent Front
-- 0480 — Four-Corner Dance Head Accent
-- 0481 — Salsa Spotting Drill
-- 0482 — Cha-Cha Spotting Drill
-- 0483 — Pirouette Spotting Drill
-- 0485 — Tango Head Flick
-- 0486 — Flamenco Head Turn
-- 0488 — Bharatanatyam Udvahita Shiro
-- 0489 — Bharatanatyam Adhomukha Shiro
-- 0490 — Bharatanatyam Alolita Shiro
-- 0491 — Bharatanatyam Dhuta Shiro
-- 0492 — Bharatanatyam Kampita Shiro
-- 0493 — Alternating Bharatanatyam Paravritta Shiro
-- 0494 — Bharatanatyam Dhuta-Kampita Head Sequence
-- 0495 — Bharatanatyam Parivahita Shiro
-- 0497 — Odissi Sundari Griva
-- 0498 — Bharatanatyam Sundari Griva
-- 0499 — Bharatanatyam Tiraschina Griva
-- 0500 — Bharatanatyam Parivartita Griva
 
 ### SHOULDERS (70)
 

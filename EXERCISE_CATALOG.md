@@ -52,8 +52,10 @@ library. These references anchor the terminology and movement families used:
 
 ## Animation sources and accuracy
 
-Every entry has an offline 256 × 256 H.264 MP4. Repetition videos loop; hold
-videos loop only during preview. The best available demonstrations use
+Every entry has an offline 256 × 256 H.264 MP4. Repetition videos loop. A hold
+uses one MP4 in two playback modes: it loops during preview, then plays once
+from the start and remains on its reviewed final pose during the countdown.
+The best available demonstrations use
 one of these reviewed sources:
 
 - visually reviewed human exercise footage, normalized to 256 × 256 and
@@ -69,9 +71,9 @@ one of these reviewed sources:
 
 The remaining videos are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **364 exact
-demonstrations and 636 still requiring exact media**. The region-by-region
-counts and the complete list of all 636 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **402 exact
+demonstrations and 598 still requiring exact media**. The region-by-region
+counts and the complete list of all 598 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,

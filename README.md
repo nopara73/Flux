@@ -43,8 +43,8 @@ and every hold's final frame—with:
 ```
 
 Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 364 demonstrations, including 115 human-footage clips,
-and lists all 636 remaining
+high-bar review verifies 402 demonstrations, including 138 human-footage clips,
+and lists all 598 remaining
 placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
 that report after catalog changes with:
 
@@ -58,6 +58,8 @@ their scores and repairs the saved workout lineup from the new catalog.
 Schema version 3 applies the bilateral catalog names and reviewed media while
 preserving every score by stable exercise ID. Any saved lineup that references
 a replaced name is repaired automatically on launch.
+Schema version 6 refreshes the latest reviewed names, media, and hold metadata
+while continuing to preserve scores by stable exercise ID.
 Schema version 4 adds explicit hold metadata while preserving scores and the
 current lineup. The current catalog contains 67 symmetric holds and 933
 repetition exercises.
