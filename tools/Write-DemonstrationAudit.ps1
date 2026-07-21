@@ -105,7 +105,7 @@ $lines.Add(('- Other reviewed external demonstrations: **{0}**' -f $otherExterna
 $lines.Add(('- Reviewed Posecode 3D renders: **{0}**' -f $posecodeIds.Count))
 $lines.Add(('- Purpose-built SVG demonstrations: **{0}**' -f $svgIds.Count))
 $lines.Add(('- Reviewed semantically identical media copies: **{0}**' -f $copyIds.Count))
-$lines.Add(('- Reviewed exact directional media transforms: **{0}**' -f $transformIds.Count))
+$lines.Add(('- Reviewed exact deterministic media transforms: **{0}**' -f $transformIds.Count))
 $lines.Add('')
 $lines.Add('The external source mapping is in `tools/ExternalExerciseMedia.psd1`.')
 $lines.Add('The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact')

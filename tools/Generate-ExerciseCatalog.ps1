@@ -58,15 +58,15 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 106) {
-    throw 'The reviewed external-media map must contain exactly 106 entries.'
+if ($externalExerciseMedia.Count -ne 119) {
+    throw 'The reviewed external-media map must contain exactly 119 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 30 -or @(
+if ($exactExerciseMediaCopies.Count -ne 58 -or @(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -74,23 +74,30 @@ if ($exactExerciseMediaCopies.Count -ne 30 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 30 valid entries.'
+    throw 'The exact-media copy map must contain exactly 58 valid entries.'
 }
 
-if ($exactExerciseMediaTransforms.Count -ne 5 -or @(
+if ($exactExerciseMediaTransforms.Count -ne 9 -or @(
         $exactExerciseMediaTransforms.GetEnumerator() | Where-Object {
             $targetId = [int]$_.Key
             $transform = $_.Value
             $targetId -lt 1 -or
             $targetId -gt 1000 -or
             -not $transform.ContainsKey('Source') -or
-            -not $transform.ContainsKey('ReverseFrames') -or
             [int]$transform.Source -lt 1 -or
             [int]$transform.Source -gt 1000 -or
             $targetId -eq [int]$transform.Source -or
-            -not [bool]$transform.ReverseFrames
+            ($transform.ContainsKey('StartFramePercent') -and
+                ([int]$transform.StartFramePercent -lt 1 -or
+                    [int]$transform.StartFramePercent -gt 99)) -or
+            -not (
+                ($transform.ContainsKey('ReverseFrames') -and
+                    [bool]$transform.ReverseFrames) -or
+                ($transform.ContainsKey('DelayCentiseconds') -and
+                    [int]$transform.DelayCentiseconds -gt 0)
+            )
         }).Count -gt 0) {
-    throw 'The exact-media transform map must contain exactly 5 valid entries.'
+    throw 'The exact-media transform map must contain exactly 9 valid entries.'
 }
 
 $regionColors = @(
@@ -1778,18 +1785,83 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
 
             $transformedGifPath = Join-Path $tempRoot (
                 'transformed_{0:D4}.gif' -f $exerciseId)
-            & magick `
-                $sourceGifPath `
-                -coalesce `
-                -reverse `
-                -set dispose background `
-                -set comment "Flux reviewed reversed exercise $exerciseId - $exerciseName" `
-                -loop 0 `
-                -layers Optimize `
-                $transformedGifPath
+            $transformFrameRoot = Join-Path $tempRoot (
+                'transform_frames_{0:D4}' -f $exerciseId)
+            New-Item -ItemType Directory -Path $transformFrameRoot | Out-Null
+            $transformFramePattern = Join-Path $transformFrameRoot 'frame_%04d.png'
+            & magick $sourceGifPath -coalesce $transformFramePattern
+            if ($LASTEXITCODE -ne 0) {
+                throw "Could not extract transform source frames for $exerciseName."
+            }
+
+            [object[]]$transformFramePaths = @(
+                Get-ChildItem -LiteralPath $transformFrameRoot -Filter 'frame_*.png' |
+                    Sort-Object Name |
+                    Select-Object -ExpandProperty FullName)
+            if ($transformFramePaths.Count -lt 2) {
+                throw "Exact transform source media is not animated for $exerciseName."
+            }
+
+            if ($transform.ContainsKey('ReverseFrames') -and
+                [bool]$transform.ReverseFrames) {
+                [Array]::Reverse($transformFramePaths)
+            }
+
+            if ($transform.ContainsKey('StartFramePercent')) {
+                $startFrameIndex = [int][Math]::Round(
+                    ($transformFramePaths.Count - 1) *
+                        ([int]$transform.StartFramePercent / 100.0))
+                $orderedTransformFrames = [System.Collections.Generic.List[string]]::new()
+                for ($index = $startFrameIndex;
+                    $index -lt $transformFramePaths.Count;
+                    $index++) {
+                    $orderedTransformFrames.Add([string]$transformFramePaths[$index])
+                }
+                for ($index = 0; $index -lt $startFrameIndex; $index++) {
+                    $orderedTransformFrames.Add([string]$transformFramePaths[$index])
+                }
+                $transformFramePaths = @($orderedTransformFrames)
+            }
+
+            $orderedFrameRoot = Join-Path $transformFrameRoot 'ordered'
+            New-Item -ItemType Directory -Path $orderedFrameRoot | Out-Null
+            for ($index = 0; $index -lt $transformFramePaths.Count; $index++) {
+                Copy-Item `
+                    -LiteralPath $transformFramePaths[$index] `
+                    -Destination (Join-Path $orderedFrameRoot (
+                            'frame_{0:D4}.png' -f $index))
+            }
+
+            $transformDelay = if ($transform.ContainsKey('DelayCentiseconds')) {
+                [int]$transform.DelayCentiseconds
+            }
+            else {
+                $sourceFirstFrame = $sourceGifPath + '[0]'
+                $identifiedDelay = & magick identify -format '%T' $sourceFirstFrame
+                $parsedDelay = 0
+                if ($LASTEXITCODE -ne 0 -or
+                    -not [int]::TryParse(
+                        [string]$identifiedDelay,
+                        [ref]$parsedDelay) -or
+                    $parsedDelay -lt 1) {
+                    throw "Could not identify the source-frame delay for $exerciseName."
+                }
+                $parsedDelay
+            }
+
+            $orderedFramePattern = Join-Path $orderedFrameRoot 'frame_*.png'
+            $transformArguments = @($orderedFramePattern) + @(
+                '-set', 'delay', $transformDelay.ToString(),
+                '-set', 'dispose', 'background',
+                '-set', 'comment',
+                "Flux reviewed transformed exercise $exerciseId - $exerciseName",
+                '-loop', '0',
+                '-layers', 'Optimize',
+                $transformedGifPath)
+            & magick @transformArguments
             if ($LASTEXITCODE -ne 0 -or
                 -not (Test-Path -LiteralPath $transformedGifPath)) {
-                throw "Could not reverse exact source media for $exerciseName."
+                throw "Could not transform exact source media for $exerciseName."
             }
 
             $transformChanged = $Force -or -not (Test-Path -LiteralPath $gifPath)

@@ -961,6 +961,150 @@
         FramesPerSecond = 10
         MirrorForAlternation = $true
     }
+    142 = @{
+        File = 'lateral-squat-walk-no-band.mp4'
+        Url = 'https://www.youtube.com/watch?v=pvpKMYhWSX4'
+        SourcePage = 'https://www.youtube.com/watch?v=pvpKMYhWSX4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 6.2
+        FramesPerSecond = 12
+        MirrorForAlternation = $false
+    }
+    148 = @{
+        File = 'standing-straight-leg-hip-extension.mp4'
+        Url = 'https://www.youtube.com/watch?v=PPRp0EDr9_8'
+        SourcePage = 'https://www.youtube.com/watch?v=PPRp0EDr9_8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 30.5
+        DurationSeconds = 18.5
+        FramesPerSecond = 8
+        MirrorForAlternation = $true
+    }
+    154 = @{
+        File = 'standing-diagonal-leg-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=r12ipdGbU8U'
+        SourcePage = 'https://www.youtube.com/watch?v=r12ipdGbU8U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 30.5
+        DurationSeconds = 18.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $true
+    }
+    159 = @{
+        File = 'standing-fire-hydrant-no-equipment.mp4'
+        Url = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
+        SourcePage = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 11.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    170 = @{
+        File = 'alternating-cross-body-knee-drive.mp4'
+        Url = 'https://www.youtube.com/watch?v=0pc-YvTIXtU'
+        SourcePage = 'https://www.youtube.com/watch?v=0pc-YvTIXtU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 11.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    173 = @{
+        File = 'alternating-standing-side-knee-lift.mp4'
+        Url = 'https://www.youtube.com/watch?v=SrUS5xUIApQ'
+        SourcePage = 'https://www.youtube.com/watch?v=SrUS5xUIApQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 12.3
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    180 = @{
+        File = 'karate-front-snap-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=A63-Qe8LgCc'
+        SourcePage = 'https://www.youtube.com/watch?v=A63-Qe8LgCc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 18.5
+        DurationSeconds = 5.0
+        FramesPerSecond = 12
+        MirrorForAlternation = $true
+    }
+    184 = @{
+        File = 'tai-chi-heel-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=7BxfRDCNx4g'
+        SourcePage = 'https://www.youtube.com/watch?v=7BxfRDCNx4g'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 186.0
+        DurationSeconds = 12.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $true
+    }
+    186 = @{
+        File = 'tai-chi-lotus-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=GkP-dY18p_w'
+        SourcePage = 'https://www.youtube.com/watch?v=GkP-dY18p_w'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42.0
+        DurationSeconds = 18.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $true
+    }
+    190 = @{
+        File = 'ballet-grand-plie.mp4'
+        Url = 'https://www.youtube.com/watch?v=q7bddKp4KHU'
+        SourcePage = 'https://www.youtube.com/watch?v=q7bddKp4KHU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 27.0
+        DurationSeconds = 8.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    198 = @{
+        File = 'second-position-plie-releve.mp4'
+        Url = 'https://www.youtube.com/watch?v=_d3Hf983Nx4'
+        SourcePage = 'https://www.youtube.com/watch?v=_d3Hf983Nx4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 5.0
+        FramesPerSecond = 12
+        MirrorForAlternation = $false
+    }
+    199 = @{
+        File = 'horse-stance-knee-bend.mp4'
+        Url = 'https://www.youtube.com/watch?v=chzrS75C8a4'
+        SourcePage = 'https://www.youtube.com/watch?v=chzrS75C8a4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 12
+        MirrorForAlternation = $false
+    }
     206 = @{
         File = 'airborne-tendon-glide-sequence.mp4'
         Url = 'https://www.youtube.com/watch?v=vTYPR_AQHL4'
@@ -1007,6 +1151,19 @@
         StartSeconds = 25.0
         DurationSeconds = 40.0
         FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    845 = @{
+        File = 'yoga-pose-sequence.mp4'
+        Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        SourcePage = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 602.0
+        DurationSeconds = 5.0
+        FramesPerSecond = 10
+        PingPong = $true
         MirrorForAlternation = $false
     }
     958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }

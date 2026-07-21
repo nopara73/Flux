@@ -69,16 +69,16 @@ one of these reviewed sources:
 
 The remaining videos are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **300 exact
-demonstrations and 700 still requiring exact media**. The region-by-region
-counts and the complete list of all 700 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **345 exact
+demonstrations and 655 still requiring exact media**. The region-by-region
+counts and the complete list of all 655 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
 `tools/PosecodeExerciseMedia.psd1`, `tools/VerifiedExerciseDemos.psd1`, and
 `tools/HoldExerciseFrames.psd1`. Exact reviewed media reused by mechanically
 identical catalog entries is tracked in `tools/ExactExerciseMediaCopies.psd1`.
-Exact reversed-direction mappings are tracked in
+Exact deterministic direction and tempo mappings are tracked in
 `tools/ExactExerciseMediaTransforms.psd1`.
 Editable sources for the reviewed custom 3D batch live in
 `tools/PosecodeSources`.
