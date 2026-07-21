@@ -162,7 +162,7 @@
         'Open-the-Gate Knee Lift'
         'Standing Fire Hydrant'
         'Standing Donkey Kick'
-        'Standing Clamshell'
+        'Standing Gate Opener'
         'Double-Leg Calf Raise'
         'Bent-Knee Calf Raise'
         'Single-Leg Calf Raise'

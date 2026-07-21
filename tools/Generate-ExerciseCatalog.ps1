@@ -58,8 +58,8 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 119) {
-    throw 'The reviewed external-media map must contain exactly 119 entries.'
+if ($externalExerciseMedia.Count -ne 138) {
+    throw 'The reviewed external-media map must contain exactly 138 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
@@ -950,18 +950,23 @@ function New-ExternalExerciseGif {
         $patterns
     }
 
+    $temporaryGifPath = Join-Path $WorkingRoot (
+        'external-exercise-{0:D4}.gif' -f $ExerciseId)
     $gifArguments = @($gifInputPaths) + @(
         '-set', 'delay', $frameDelay.ToString(),
         '-set', 'dispose', 'background',
         '-set', 'comment', "Flux reviewed exercise $ExerciseId - $ExerciseName",
         '-loop', '0',
         '-layers', 'Optimize',
-        $GifPath)
+        $temporaryGifPath)
     & magick @gifArguments
 
-    if ($LASTEXITCODE -ne 0) {
+    if ($LASTEXITCODE -ne 0 -or
+        -not (Test-Path -LiteralPath $temporaryGifPath)) {
         throw "Could not encode external media for $ExerciseName."
     }
+
+    Copy-Item -LiteralPath $temporaryGifPath -Destination $GifPath -Force
 }
 
 function New-ExerciseFrameSvg {

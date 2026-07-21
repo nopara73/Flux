@@ -1166,6 +1166,234 @@
         PingPong = $true
         MirrorForAlternation = $false
     }
+    115 = @{
+        File = 'bodyweight-sissy-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=OfLQh20uKkI'
+        SourcePage = 'https://www.youtube.com/watch?v=OfLQh20uKkI'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.0
+        DurationSeconds = 22.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    138 = @{
+        File = 'narrow-squat-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=kTbeCCTGXVs'
+        SourcePage = 'https://www.youtube.com/watch?v=kTbeCCTGXVs'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 11.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    139 = @{
+        File = 'wide-squat-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=8_MhIi-pSb8'
+        SourcePage = 'https://www.youtube.com/watch?v=8_MhIi-pSb8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    141 = @{
+        File = 'squat-hold-alternating-heel-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=wu9-ezZTfCY'
+        SourcePage = 'https://www.youtube.com/watch?v=wu9-ezZTfCY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 15.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    150 = @{
+        File = 'cross-leg-swings.mp4'
+        Url = 'https://www.youtube.com/watch?v=0Qe44jkDBB4'
+        SourcePage = 'https://www.youtube.com/watch?v=0Qe44jkDBB4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.0
+        DurationSeconds = 15.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    161 = @{
+        File = 'standing-alternating-gate-openers.mp4'
+        Url = 'https://www.youtube.com/watch?v=ZxTwldGPeRc'
+        SourcePage = 'https://www.youtube.com/watch?v=ZxTwldGPeRc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 37.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    169 = @{
+        File = 'standing-knee-drive.mp4'
+        Url = 'https://www.youtube.com/watch?v=AMSt307LrFg'
+        SourcePage = 'https://www.youtube.com/watch?v=AMSt307LrFg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    171 = @{
+        File = 'hamstring-sweeps.mp4'
+        Url = 'https://www.youtube.com/watch?v=rABXCyRn_ng'
+        SourcePage = 'https://www.youtube.com/watch?v=rABXCyRn_ng'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 14.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    177 = @{
+        File = 'front-side-round-kick-chambers.mp4'
+        Url = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        SourcePage = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 55.0
+        DurationSeconds = 13.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    178 = @{
+        File = 'crescent-kicks.mp4'
+        Url = 'https://www.youtube.com/watch?v=RPIwSeu6QkY'
+        SourcePage = 'https://www.youtube.com/watch?v=RPIwSeu6QkY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 8.0
+        DurationSeconds = 30.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    179 = @{
+        File = 'axe-kicks.mp4'
+        Url = 'https://www.youtube.com/watch?v=7mOGylDcQH4'
+        SourcePage = 'https://www.youtube.com/watch?v=7mOGylDcQH4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    182 = @{
+        File = 'front-side-round-kick-chambers.mp4'
+        Url = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        SourcePage = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4.0
+        DurationSeconds = 4.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    183 = @{
+        File = 'front-side-round-kick-chambers.mp4'
+        Url = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        SourcePage = 'https://www.youtube.com/watch?v=tTrSwQ6qZYM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 20.0
+        DurationSeconds = 15.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    185 = @{
+        File = 'tai-chi-toe-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=HPsGLHx83g0'
+        SourcePage = 'https://www.youtube.com/watch?v=HPsGLHx83g0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 22.0
+        DurationSeconds = 16.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    188 = @{
+        File = 'parallel-plie.mp4'
+        Url = 'https://www.youtube.com/watch?v=S5Omw7Q0MpM'
+        SourcePage = 'https://www.youtube.com/watch?v=S5Omw7Q0MpM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 28.0
+        DurationSeconds = 20.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    194 = @{
+        File = 'degages-devant.mp4'
+        Url = 'https://www.youtube.com/watch?v=_cKp83639TY'
+        SourcePage = 'https://www.youtube.com/watch?v=_cKp83639TY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 12
+        MirrorForAlternation = $true
+    }
+    195 = @{
+        File = 'degages-seconde.mp4'
+        Url = 'https://www.youtube.com/watch?v=pN-JADnfkmU'
+        SourcePage = 'https://www.youtube.com/watch?v=pN-JADnfkmU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 6.5
+        FramesPerSecond = 12
+        MirrorForAlternation = $true
+    }
+    196 = @{
+        File = 'degages-derriere.mp4'
+        Url = 'https://www.youtube.com/watch?v=zywbjxKLr58'
+        SourcePage = 'https://www.youtube.com/watch?v=zywbjxKLr58'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 5.5
+        FramesPerSecond = 12
+        MirrorForAlternation = $true
+    }
+    197 = @{
+        File = 'first-second-plie-releve.mp4'
+        Url = 'https://www.youtube.com/watch?v=QsPvqA-ok8c'
+        SourcePage = 'https://www.youtube.com/watch?v=QsPvqA-ok8c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 20.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }
     959 = @{ File = '3231-p195zsJ.gif'; MirrorForAlternation = $false }
     960 = @{ File = '3214-RtyAsy1.gif'; MirrorForAlternation = $false }

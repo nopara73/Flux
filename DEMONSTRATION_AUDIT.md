@@ -5,12 +5,12 @@ animation directly demonstrates the named movement, not merely the same body
 region or a vaguely related motion. Every other bundled MP4 remains usable as
 a temporary placeholder, but is not claimed to be a perfect demonstration.
 
-Verified: **345 / 1,000**. Still requiring exact media: **655 / 1,000**.
+Verified: **364 / 1,000**. Still requiring exact media: **636 / 1,000**.
 
 | Region | Verified | Still imperfect |
 | --- | ---: | ---: |
 | FEET | 18 | 82 |
-| LEGS | 81 | 19 |
+| LEGS | 100 | 0 |
 | HANDS | 15 | 85 |
 | ARMS | 28 | 72 |
 | HEAD | 62 | 38 |
@@ -22,7 +22,7 @@ Verified: **345 / 1,000**. Still requiring exact media: **655 / 1,000**.
 
 ## Verified sources
 
-- Reviewed human footage: **96**
+- Reviewed human footage: **115**
 - Other reviewed external demonstrations: **23**
 - Reviewed Posecode 3D renders: **77**
 - Purpose-built SVG demonstrations: **82**
@@ -125,27 +125,8 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0099 — Figure-Eight Weight Shift
 - 0100 — Four-Corner Weight Shift
 
-### LEGS (19)
+### LEGS (0)
 
-- 0115 — Sissy Squat
-- 0138 — Narrow-Squat Heel Raise
-- 0139 — Wide-Squat Heel Raise
-- 0141 — Squat with Alternating Heel Lift
-- 0150 — Alternating Cross-Body Hip-Adduction Sweep
-- 0161 — Alternating Standing Clamshell
-- 0169 — Alternating Standing Knee Drive
-- 0171 — Alternating Hamstring Sweep
-- 0177 — Alternating Roundhouse Kick Chamber
-- 0178 — Alternating Crescent Kick
-- 0179 — Alternating Axe-Kick Leg Raise
-- 0182 — Alternating Taekwondo Front-Kick Chamber
-- 0183 — Alternating Taekwondo Side-Kick Chamber
-- 0185 — Alternating Tai Chi Toe Kick
-- 0188 — Parallel Demi-Plie
-- 0194 — Alternating Ballet Degage Devant
-- 0195 — Alternating Ballet Degage a la Seconde
-- 0196 — Alternating Ballet Degage Derriere
-- 0197 — First-Position Plie-Releve
 
 ### HANDS (85)
 

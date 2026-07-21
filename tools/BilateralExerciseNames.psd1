@@ -81,7 +81,7 @@
     158 = 'Alternating Open-the-Gate Knee Lift'
     159 = 'Alternating Standing Fire Hydrant'
     160 = 'Alternating Standing Donkey Kick'
-    161 = 'Alternating Standing Clamshell'
+    161 = 'Alternating Standing Gate Opener'
     163 = 'Bilateral Bent-Knee Calf Raise'
     164 = 'First-Position Releve'
     169 = 'Alternating Standing Knee Drive'
