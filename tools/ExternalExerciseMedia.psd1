@@ -816,6 +816,151 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
+    122 = @{
+        File = 'alternating-reverse-lunge.mp4'
+        Url = 'https://www.youtube.com/watch?v=Mfg4aM6y5Gs'
+        SourcePage = 'https://www.youtube.com/watch?v=Mfg4aM6y5Gs'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2.0
+        DurationSeconds = 5.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    129 = @{
+        File = 'squat-to-alternating-front-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=B7wTCQHAOC4'
+        SourcePage = 'https://www.youtube.com/watch?v=B7wTCQHAOC4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    130 = @{
+        File = 'squat-to-side-leg-lift.mp4'
+        Url = 'https://www.youtube.com/watch?v=34QHngh1OEw'
+        SourcePage = 'https://www.youtube.com/watch?v=34QHngh1OEw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.2
+        DurationSeconds = 13.3
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    131 = @{
+        File = 'squat-to-alternating-back-leg-lift.mp4'
+        Url = 'https://www.youtube.com/watch?v=X3jWpcsqq94'
+        SourcePage = 'https://www.youtube.com/watch?v=X3jWpcsqq94'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 18.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    132 = @{
+        File = 'squat-to-alternating-oblique-crunch.mp4'
+        Url = 'https://www.youtube.com/watch?v=VKpQ4FU1TLE'
+        SourcePage = 'https://www.youtube.com/watch?v=VKpQ4FU1TLE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    133 = @{
+        File = 'goddess-squat-to-star-pose.mp4'
+        Url = 'https://www.youtube.com/watch?v=jIdNOOlzI3U'
+        SourcePage = 'https://www.youtube.com/watch?v=jIdNOOlzI3U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 115.0
+        DurationSeconds = 24.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    135 = @{
+        File = 'mountain-pose-to-upward-salute.mp4'
+        Url = 'https://www.youtube.com/watch?v=6rZ2azUHN-Q'
+        SourcePage = 'https://www.youtube.com/watch?v=6rZ2azUHN-Q'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 34.0
+        DurationSeconds = 7.0
+        FramesPerSecond = 10
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    140 = @{
+        File = 'sumo-squat-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=wfTfeXNRBvM'
+        SourcePage = 'https://www.youtube.com/watch?v=wfTfeXNRBvM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 12
+        MirrorForAlternation = $false
+    }
+    145 = @{
+        File = 'alternating-standing-knee-extension.mp4'
+        Url = 'https://www.youtube.com/watch?v=EKyfDtlhKuE'
+        SourcePage = 'https://www.youtube.com/watch?v=EKyfDtlhKuE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.5
+        DurationSeconds = 3.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    151 = @{
+        File = 'alternating-straight-leg-front-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=HCMJ79uu0bE'
+        SourcePage = 'https://www.youtube.com/watch?v=HCMJ79uu0bE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.5
+        DurationSeconds = 4.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    160 = @{
+        File = 'alternating-standing-donkey-kick.mp4'
+        Url = 'https://www.youtube.com/watch?v=4Snbp4BIPPw'
+        SourcePage = 'https://www.youtube.com/watch?v=4Snbp4BIPPw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 3.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
+    168 = @{
+        File = 'toy-soldier-march.mp4'
+        Url = 'https://www.youtube.com/watch?v=6NVowqZQiYQ'
+        SourcePage = 'https://www.youtube.com/watch?v=6NVowqZQiYQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 15.5
+        DurationSeconds = 6.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $true
+    }
     206 = @{
         File = 'airborne-tendon-glide-sequence.mp4'
         Url = 'https://www.youtube.com/watch?v=vTYPR_AQHL4'
@@ -838,6 +983,30 @@
         StartSeconds = 9.0
         DurationSeconds = 18.0
         FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    318 = @{
+        File = 'standing-bodyweight-triceps-kickback.mp4'
+        Url = 'https://www.youtube.com/watch?v=K1FIbV3iMaw'
+        SourcePage = 'https://www.youtube.com/watch?v=K1FIbV3iMaw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4.0
+        DurationSeconds = 14.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    329 = @{
+        File = 'qigong-gathering-qi.mp4'
+        Url = 'https://www.youtube.com/watch?v=UlYP796SF2c'
+        SourcePage = 'https://www.youtube.com/watch?v=UlYP796SF2c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 25.0
+        DurationSeconds = 40.0
+        FramesPerSecond = 8
         MirrorForAlternation = $false
     }
     958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }

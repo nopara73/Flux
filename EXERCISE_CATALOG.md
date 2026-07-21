@@ -54,7 +54,7 @@ library. These references anchor the terminology and movement families used:
 
 Every entry has an offline 256 × 256 H.264 MP4. Repetition videos loop; hold
 videos loop only during preview. The best available demonstrations use
-one of four sources:
+one of these reviewed sources:
 
 - visually reviewed human exercise footage, normalized to 256 × 256 and
   mirrored into a left/right cycle only where mirroring is mechanically valid;
@@ -63,19 +63,23 @@ one of four sources:
   bidirectional sequences;
 - purpose-built animated SVG diagrams for motions such as smooth pursuit,
   saccades, blinking, convergence, VOR, head movement, and a conservative set
-  of simple whole-body movements.
+  of simple whole-body movements;
+- semantically identical reviewed media copies and deterministic directional
+  transforms where reversing the frame order is the exact named movement.
 
 The remaining videos are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **262 exact
-demonstrations and 738 still requiring exact media**. The region-by-region
-counts and the complete list of all 738 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **300 exact
+demonstrations and 700 still requiring exact media**. The region-by-region
+counts and the complete list of all 700 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
 `tools/PosecodeExerciseMedia.psd1`, `tools/VerifiedExerciseDemos.psd1`, and
 `tools/HoldExerciseFrames.psd1`. Exact reviewed media reused by mechanically
 identical catalog entries is tracked in `tools/ExactExerciseMediaCopies.psd1`.
+Exact reversed-direction mappings are tracked in
+`tools/ExactExerciseMediaTransforms.psd1`.
 Editable sources for the reviewed custom 3D batch live in
 `tools/PosecodeSources`.
 `tools/Test-ExerciseVideos.ps1` verifies all 1,000 MP4 containers and compares

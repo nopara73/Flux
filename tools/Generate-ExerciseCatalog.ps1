@@ -36,6 +36,8 @@ $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
+$exactExerciseMediaTransforms = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1')
 
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
@@ -56,15 +58,15 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 92) {
-    throw 'The reviewed external-media map must contain exactly 92 entries.'
+if ($externalExerciseMedia.Count -ne 106) {
+    throw 'The reviewed external-media map must contain exactly 106 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 19 -or @(
+if ($exactExerciseMediaCopies.Count -ne 30 -or @(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -72,7 +74,23 @@ if ($exactExerciseMediaCopies.Count -ne 19 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 19 valid entries.'
+    throw 'The exact-media copy map must contain exactly 30 valid entries.'
+}
+
+if ($exactExerciseMediaTransforms.Count -ne 5 -or @(
+        $exactExerciseMediaTransforms.GetEnumerator() | Where-Object {
+            $targetId = [int]$_.Key
+            $transform = $_.Value
+            $targetId -lt 1 -or
+            $targetId -gt 1000 -or
+            -not $transform.ContainsKey('Source') -or
+            -not $transform.ContainsKey('ReverseFrames') -or
+            [int]$transform.Source -lt 1 -or
+            [int]$transform.Source -gt 1000 -or
+            $targetId -eq [int]$transform.Source -or
+            -not [bool]$transform.ReverseFrames
+        }).Count -gt 0) {
+    throw 'The exact-media transform map must contain exactly 5 valid entries.'
 }
 
 $regionColors = @(
@@ -799,7 +817,25 @@ function New-ExternalExerciseGif {
 
             if ($LASTEXITCODE -ne 0 -or
                 -not (Test-Path -LiteralPath $sourcePath)) {
-                throw "Could not download reviewed video for $ExerciseName."
+                # YouTube occasionally authorizes format 18 metadata but rejects
+                # the media CDN request. Retry with the AVC video-only stream;
+                # audio is discarded during normalization in either case.
+                & $ytDlpPath `
+                    --no-playlist `
+                    --no-warnings `
+                    --no-progress `
+                    --retries 5 `
+                    --fragment-retries 5 `
+                    --retry-sleep 1 `
+                    --force-overwrites `
+                    --format '134/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worstvideo' `
+                    --output $sourcePath `
+                    $sourceUrl
+
+                if ($LASTEXITCODE -ne 0 -or
+                    -not (Test-Path -LiteralPath $sourcePath)) {
+                    throw "Could not download reviewed video for $ExerciseName."
+                }
             }
         }
         else {
@@ -1730,6 +1766,56 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $videoPath = Join-Path $videoOutputRoot $videoFileName
         $holdFramePath = Join-Path $holdFrameOutputRoot (
             'exercise_{0:D4}.png' -f $exerciseId)
+
+        if ($exactExerciseMediaTransforms.ContainsKey($exerciseId)) {
+            $transform = $exactExerciseMediaTransforms[$exerciseId]
+            $sourceExerciseId = [int]$transform.Source
+            $sourceGifPath = Join-Path $gifOutputRoot (
+                'exercise_{0:D4}.gif' -f $sourceExerciseId)
+            if (-not (Test-Path -LiteralPath $sourceGifPath)) {
+                throw "Exact transform source GIF $sourceExerciseId is missing for $exerciseName."
+            }
+
+            $transformedGifPath = Join-Path $tempRoot (
+                'transformed_{0:D4}.gif' -f $exerciseId)
+            & magick `
+                $sourceGifPath `
+                -coalesce `
+                -reverse `
+                -set dispose background `
+                -set comment "Flux reviewed reversed exercise $exerciseId - $exerciseName" `
+                -loop 0 `
+                -layers Optimize `
+                $transformedGifPath
+            if ($LASTEXITCODE -ne 0 -or
+                -not (Test-Path -LiteralPath $transformedGifPath)) {
+                throw "Could not reverse exact source media for $exerciseName."
+            }
+
+            $transformChanged = $Force -or -not (Test-Path -LiteralPath $gifPath)
+            if (-not $transformChanged) {
+                $newHash = (Get-FileHash -LiteralPath $transformedGifPath -Algorithm SHA256).Hash
+                $oldHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
+                $transformChanged = $newHash -ne $oldHash
+            }
+            if ($transformChanged) {
+                Copy-Item -LiteralPath $transformedGifPath -Destination $gifPath -Force
+            }
+
+            if ($isHold) {
+                New-HoldFrameImage `
+                    -GifPath $gifPath `
+                    -OutputPath $holdFramePath `
+                    -FramePercent $holdFramePercent `
+                    -Overwrite:($Force -or $transformChanged)
+            }
+            New-ExerciseMp4 `
+                -GifPath $gifPath `
+                -VideoPath $videoPath `
+                -HoldFramePercent $holdFramePercent `
+                -Overwrite:($Force -or $transformChanged)
+            continue
+        }
 
         if ($exactExerciseMediaCopies.ContainsKey($exerciseId)) {
             $sourceExerciseId = [int]$exactExerciseMediaCopies[$exerciseId]

@@ -14,6 +14,8 @@ $posecodeMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
 $exactMediaCopies = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
+$exactMediaTransforms = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1')
 $regions = @(
     'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
@@ -27,7 +29,8 @@ $otherExternalCount = $externalIds.Count - $humanExternalIds.Count
 $posecodeIds = @($review.ReviewedPosecode | ForEach-Object { [int]$_ })
 $svgIds = @($review.PurposeBuiltSvg | ForEach-Object { [int]$_ })
 $copyIds = @($review.ReviewedExactCopies | ForEach-Object { [int]$_ })
-$verifiedIds = @($externalIds + $posecodeIds + $svgIds + $copyIds)
+$transformIds = @($review.ReviewedExactTransforms | ForEach-Object { [int]$_ })
+$verifiedIds = @($externalIds + $posecodeIds + $svgIds + $copyIds + $transformIds)
 
 if ($catalog.Count -ne 1000) {
     throw "Expected 1000 catalog records, found $($catalog.Count)."
@@ -61,6 +64,18 @@ if ($copyMappingDifference.Count -gt 0 -or $unverifiedCopySources.Count -gt 0) {
     throw 'The reviewed copy inventory is invalid or points to an unverified source.'
 }
 
+$transformMappingDifference = @(Compare-Object `
+        ($transformIds | Sort-Object) `
+        (@($exactMediaTransforms.Keys | ForEach-Object { [int]$_ }) | Sort-Object))
+$unverifiedTransformSources = @(
+    $exactMediaTransforms.Values |
+        ForEach-Object { [int]$_.Source } |
+        Where-Object { $_ -notin @($externalIds + $posecodeIds + $svgIds) })
+if ($transformMappingDifference.Count -gt 0 -or
+    $unverifiedTransformSources.Count -gt 0) {
+    throw 'The reviewed transform inventory is invalid or points to an unverified source.'
+}
+
 $lines = [System.Collections.Generic.List[string]]::new()
 $lines.Add('# Flux demonstration accuracy audit')
 $lines.Add('')
@@ -90,10 +105,13 @@ $lines.Add(('- Other reviewed external demonstrations: **{0}**' -f $otherExterna
 $lines.Add(('- Reviewed Posecode 3D renders: **{0}**' -f $posecodeIds.Count))
 $lines.Add(('- Purpose-built SVG demonstrations: **{0}**' -f $svgIds.Count))
 $lines.Add(('- Reviewed semantically identical media copies: **{0}**' -f $copyIds.Count))
+$lines.Add(('- Reviewed exact directional media transforms: **{0}**' -f $transformIds.Count))
 $lines.Add('')
 $lines.Add('The external source mapping is in `tools/ExternalExerciseMedia.psd1`.')
 $lines.Add('The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact')
 $lines.Add('ID inventory used to produce this report is in `tools/VerifiedExerciseDemos.psd1`.')
+$lines.Add('Exact copies and directional transforms are declared in their respective')
+$lines.Add('`tools/ExactExerciseMedia*.psd1` manifests.')
 $lines.Add('')
 $lines.Add('## Demonstrations still requiring exact media')
 $lines.Add('')
