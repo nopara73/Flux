@@ -43,8 +43,8 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <android.webkit.WebView
-            android:id="@+id/exercise_gif"
+        <VideoView
+            android:id="@+id/exercise_video"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5.75"

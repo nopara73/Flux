@@ -19,7 +19,7 @@ Every exercise contains:
 
 - a stable numeric ID
 - a unique name
-- its own bundled, looping animated GIF
+- its own bundled H.264 MP4 demonstration
 - exactly one dominant region
 - its practice family and movement-specific animation profile
 - an explicit repetition-or-hold mode and, for holds, a reviewed target frame
@@ -29,15 +29,22 @@ Every exercise contains:
 
 Both the generator and the app validate the catalog invariants. SQLite also
 enforces the movement constraints with `CHECK` constraints. The source catalog
-and GIFs can be regenerated with:
+and MP4s can be regenerated from the reviewed source media with:
 
 ```powershell
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
 
+Verify all 1,000 runtime videos—including codec, dimensions, silence, duration,
+and every hold's final frame—with:
+
+```powershell
+.\tools\Test-ExerciseVideos.ps1
+```
+
 Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 232 demonstrations, including 58 human-footage loops,
-and lists all 768 remaining
+high-bar review verifies 262 demonstrations, including 69 human-footage loops,
+and lists all 738 remaining
 placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
 that report after catalog changes with:
 
@@ -54,6 +61,9 @@ a replaced name is repaired automatically on launch.
 Schema version 4 adds explicit hold metadata while preserving scores and the
 current lineup. The current catalog contains 67 symmetric holds and 933
 repetition exercises.
+Schema version 5 migrates the runtime media field from GIF to MP4 while
+preserving scores by stable exercise ID. The reproducible GIF intermediates and
+hold PNGs remain generator inputs but are excluded from the APK.
 
 ## Workout flow
 
@@ -62,9 +72,9 @@ in enum order from `FEET` through `CORE`. Press **Start** to begin a 60-second
 timer, or **Skip** to finish the timer immediately while testing. After each
 timer, record the result with **X**, **−**, or **✓**.
 
-Repetitions keep their GIF moving throughout the timer. Holds are labeled
-**HOLD**: their GIF loops only as a preview, then the countdown displays the
-reviewed final-position frame without looping.
+Repetitions keep their MP4 looping throughout the timer. Holds are labeled
+**HOLD**: their MP4 loops only as a preview, then plays once into the reviewed
+target pose and remains frozen there for the rest of the countdown.
 
 The current lineup and outcomes are saved locally with Android shared
 preferences. Scores are saved in SQLite. An **X** reduces that exercise's score

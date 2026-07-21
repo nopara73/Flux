@@ -6,7 +6,7 @@ public sealed class Exercise
 
     public required string Name { get; init; }
 
-    public required string Gif { get; init; }
+    public required string Video { get; init; }
 
     public required DominantRegion DominantRegion { get; init; }
 

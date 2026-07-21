@@ -708,6 +708,138 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
+    104 = @{
+        File = 'bodyweight-sumo-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=d8AkcODKBH0'
+        SourcePage = 'https://www.youtube.com/watch?v=d8AkcODKBH0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 23.0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    107 = @{
+        File = 'half-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=yAviq542IWU'
+        SourcePage = 'https://www.youtube.com/watch?v=yAviq542IWU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 12.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    113 = @{
+        File = 'bodyweight-overhead-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
+        SourcePage = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2.0
+        DurationSeconds = 21.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    114 = @{
+        File = 'hindu-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=DXvIzLtN-qY'
+        SourcePage = 'https://www.youtube.com/watch?v=DXvIzLtN-qY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 14.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    116 = @{
+        File = 'alternating-cossack-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=Defm7xEoc5U'
+        SourcePage = 'https://www.youtube.com/watch?v=Defm7xEoc5U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 10.0
+        DurationSeconds = 45.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    117 = @{
+        File = 'alternating-lateral-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=DFNIbE6mWE0'
+        SourcePage = 'https://www.youtube.com/watch?v=DFNIbE6mWE0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 14.0
+        DurationSeconds = 36.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    118 = @{
+        File = 'squat-to-alternating-knee-drive.mp4'
+        Url = 'https://www.youtube.com/watch?v=o2MA2ZehGZ8'
+        SourcePage = 'https://www.youtube.com/watch?v=o2MA2ZehGZ8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 12.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    119 = @{
+        File = 'squat-to-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=1W0DlNuJbsc'
+        SourcePage = 'https://www.youtube.com/watch?v=1W0DlNuJbsc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 6.5
+        DurationSeconds = 7.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    120 = @{
+        File = 'duck-walk.mp4'
+        Url = 'https://www.youtube.com/watch?v=qM3GNLKI9rg'
+        SourcePage = 'https://www.youtube.com/watch?v=qM3GNLKI9rg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.0
+        DurationSeconds = 12.5
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
+    206 = @{
+        File = 'airborne-tendon-glide-sequence.mp4'
+        Url = 'https://www.youtube.com/watch?v=vTYPR_AQHL4'
+        SourcePage = 'https://keepingmewell.com/i-need-help-with/supporting-my-rehab/physical-recovery/hand-problems/upper-limb-exercise/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 15.0
+        DurationSeconds = 41.0
+        FramesPerSecond = 8
+        MirrorForAlternation = $false
+    }
+    237 = @{
+        File = 'airborne-forearm-pronation-supination.mp4'
+        Url = 'https://www.youtube.com/watch?v=TaUlull7E5M'
+        SourcePage = 'https://keepingmewell.com/i-need-help-with/supporting-my-rehab/physical-recovery/hand-problems/upper-limb-exercise/'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 9.0
+        DurationSeconds = 18.0
+        FramesPerSecond = 10
+        MirrorForAlternation = $false
+    }
     958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }
     959 = @{ File = '3231-p195zsJ.gif'; MirrorForAlternation = $false }
     960 = @{ File = '3214-RtyAsy1.gif'; MirrorForAlternation = $false }

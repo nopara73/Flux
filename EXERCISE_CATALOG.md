@@ -21,14 +21,14 @@ Every catalog entry must:
 - be bilateral/symmetric, or visibly complete both left and right repetitions
   inside one uninterrupted loop; a fixed lead side, supporting side, diagonal,
   hand role, or clockwise-only circle is not allowed;
-- have exactly one dominant region and its own bundled animated GIF.
+- have exactly one dominant region and its own bundled H.264 MP4.
 
 Each entry is explicitly classified as a repetition or a hold. A hold is one
 bilateral or symmetric position sustained for the full timer; alternating
 sides, breath cycles, raise-and-lower actions, flows, and repeated contractions
-remain repetitions even when their traditional name contains “hold.” Hold GIFs
-loop only on the preview screen. During the countdown the app shows the curated
-final-position frame from `tools/HoldExerciseFrames.psd1`.
+remain repetitions even when their traditional name contains “hold.” Hold MP4s
+loop only on the preview screen. During the countdown the video plays once to
+the curated target from `tools/HoldExerciseFrames.psd1` and freezes there.
 
 The canonical base catalog is maintained in `tools/RealExerciseCatalog.psd1`.
 `tools/BilateralExerciseNames.psd1` contains the reviewed replacements that
@@ -52,7 +52,8 @@ library. These references anchor the terminology and movement families used:
 
 ## Animation sources and accuracy
 
-Every entry has a moving, looping GIF. The best available demonstrations use
+Every entry has an offline 256 × 256 H.264 MP4. Repetition videos loop; hold
+videos loop only during preview. The best available demonstrations use
 one of four sources:
 
 - visually reviewed human exercise footage, normalized to 256 × 256 and
@@ -64,17 +65,20 @@ one of four sources:
   saccades, blinking, convergence, VOR, head movement, and a conservative set
   of simple whole-body movements.
 
-The remaining GIFs are explicit temporary family-level placeholders. They are
+The remaining videos are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **232 exact
-demonstrations and 768 still requiring exact media**. The region-by-region
-counts and the complete list of all 768 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **262 exact
+demonstrations and 738 still requiring exact media**. The region-by-region
+counts and the complete list of all 738 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,
 `tools/PosecodeExerciseMedia.psd1`, `tools/VerifiedExerciseDemos.psd1`, and
-`tools/HoldExerciseFrames.psd1`.
+`tools/HoldExerciseFrames.psd1`. Exact reviewed media reused by mechanically
+identical catalog entries is tracked in `tools/ExactExerciseMediaCopies.psd1`.
 Editable sources for the reviewed custom 3D batch live in
 `tools/PosecodeSources`.
+`tools/Test-ExerciseVideos.ps1` verifies all 1,000 MP4 containers and compares
+the final decoded frame of every hold against its reviewed target image.
 The external clips are used for this private personal build and are not a
 commercial media-clearance record.

@@ -34,6 +34,8 @@ $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
+$exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
 
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
@@ -54,12 +56,23 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 81) {
-    throw 'The reviewed external-media map must contain exactly 81 entries.'
+if ($externalExerciseMedia.Count -ne 92) {
+    throw 'The reviewed external-media map must contain exactly 92 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
+}
+
+if ($exactExerciseMediaCopies.Count -ne 19 -or @(
+        $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
+            [int]$_.Key -lt 1 -or
+            [int]$_.Key -gt 1000 -or
+            [int]$_.Value -lt 1 -or
+            [int]$_.Value -gt 1000 -or
+            [int]$_.Key -eq [int]$_.Value
+        }).Count -gt 0) {
+    throw 'The exact-media copy map must contain exactly 19 valid entries.'
 }
 
 $regionColors = @(
@@ -780,7 +793,7 @@ function New-ExternalExerciseGif {
                 --retries 5 `
                 --fragment-retries 5 `
                 --retry-sleep 1 `
-                --format 'bv[height<=480][vcodec^=avc1]/bv[height<=480]/b[height<=480]/worst' `
+                --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
                 --output $sourcePath `
                 $sourceUrl
 
@@ -1583,14 +1596,71 @@ function New-HoldFrameImage {
     }
 }
 
+function New-ExerciseMp4 {
+    param(
+        [string]$GifPath,
+        [string]$VideoPath,
+        [ValidateRange(0, 99)]
+        [int]$HoldFramePercent = 0,
+        [switch]$Overwrite
+    )
+
+    if ((Test-Path -LiteralPath $VideoPath) -and -not $Overwrite) {
+        return
+    }
+
+    $filters = [System.Collections.Generic.List[string]]::new()
+    if ($HoldFramePercent -gt 0) {
+        $frameCountLines = @(& magick identify -format "%n`n" $GifPath)
+        if ($LASTEXITCODE -ne 0 -or $frameCountLines.Count -eq 0) {
+            throw "ImageMagick could not inspect hold animation $GifPath."
+        }
+
+        $frameCount = [int]$frameCountLines[0]
+        $targetFrame = [Math]::Min(
+            $frameCount - 1,
+            [Math]::Floor(($frameCount - 1) * ($HoldFramePercent / 100.0)))
+        $filters.Add("trim=end_frame=$($targetFrame + 1)")
+        $filters.Add('setpts=PTS-STARTPTS')
+        # A short cloned tail makes the reviewed target pose the unambiguous last frame.
+        $filters.Add('tpad=stop_mode=clone:stop_duration=0.35')
+    }
+
+    $filters.Add('fps=20')
+    $filters.Add('scale=256:256:force_original_aspect_ratio=decrease:flags=lanczos')
+    $filters.Add('pad=256:256:(ow-iw)/2:(oh-ih)/2:color=0xF7FAFC')
+    $filters.Add('format=yuv420p')
+
+    $ffmpegArguments = @(
+        '-hide_banner', '-loglevel', 'error', '-y',
+        '-i', $GifPath,
+        '-vf', ($filters -join ','),
+        '-an',
+        '-map_metadata', '-1',
+        '-c:v', 'libx264',
+        '-profile:v', 'baseline',
+        '-level', '3.0',
+        '-preset', 'medium',
+        '-crf', '24',
+        '-movflags', '+faststart',
+        $VideoPath)
+
+    & ffmpeg @ffmpegArguments
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $VideoPath)) {
+        throw "FFmpeg failed while encoding $VideoPath."
+    }
+}
+
 $resolvedOutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 $gifOutputRoot = Join-Path $resolvedOutputRoot 'exercise_gifs'
+$videoOutputRoot = Join-Path $resolvedOutputRoot 'exercise_videos'
 $holdFrameOutputRoot = Join-Path $resolvedOutputRoot 'exercise_hold_frames'
 $catalogPath = Join-Path $resolvedOutputRoot 'exercises.json'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("FluxExerciseFrames-" + [Guid]::NewGuid().ToString('N'))
 
 New-Item -ItemType Directory -Force -Path $resolvedOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $gifOutputRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $videoOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $holdFrameOutputRoot | Out-Null
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
@@ -1624,12 +1694,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             0
         }
         $gifFileName = 'exercise_{0:D4}.gif' -f $exerciseId
-        $gifRelativePath = "exercise_gifs/$gifFileName"
+        $videoFileName = 'exercise_{0:D4}.mp4' -f $exerciseId
+        $videoRelativePath = "exercise_videos/$videoFileName"
 
         $records.Add([ordered]@{
             id = $exerciseId
             name = $exerciseName
-            gif = $gifRelativePath
+            video = $videoRelativePath
             dominantRegion = $region
             practice = $practice
             motionProfile = $motionProfile
@@ -1656,8 +1727,43 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         }
 
         $gifPath = Join-Path $gifOutputRoot $gifFileName
+        $videoPath = Join-Path $videoOutputRoot $videoFileName
         $holdFramePath = Join-Path $holdFrameOutputRoot (
             'exercise_{0:D4}.png' -f $exerciseId)
+
+        if ($exactExerciseMediaCopies.ContainsKey($exerciseId)) {
+            $sourceExerciseId = [int]$exactExerciseMediaCopies[$exerciseId]
+            $sourceGifPath = Join-Path $gifOutputRoot (
+                'exercise_{0:D4}.gif' -f $sourceExerciseId)
+            if (-not (Test-Path -LiteralPath $sourceGifPath)) {
+                throw "Exact source GIF $sourceExerciseId is missing for $exerciseName."
+            }
+
+            $copyRequired = -not (Test-Path -LiteralPath $gifPath)
+            if (-not $copyRequired) {
+                $sourceHash = (Get-FileHash -LiteralPath $sourceGifPath -Algorithm SHA256).Hash
+                $targetHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
+                $copyRequired = $sourceHash -ne $targetHash
+            }
+
+            if ($copyRequired) {
+                Copy-Item -LiteralPath $sourceGifPath -Destination $gifPath -Force
+            }
+
+            if ($isHold) {
+                New-HoldFrameImage `
+                    -GifPath $gifPath `
+                    -OutputPath $holdFramePath `
+                    -FramePercent $holdFramePercent `
+                    -Overwrite:($Force -or $copyRequired)
+            }
+            New-ExerciseMp4 `
+                -GifPath $gifPath `
+                -VideoPath $videoPath `
+                -HoldFramePercent $holdFramePercent `
+                -Overwrite:($Force -or $copyRequired)
+            continue
+        }
 
         if ((Test-Path -LiteralPath $gifPath) -and -not $Force) {
             if ($isHold) {
@@ -1666,6 +1772,10 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                     -OutputPath $holdFramePath `
                     -FramePercent $holdFramePercent
             }
+            New-ExerciseMp4 `
+                -GifPath $gifPath `
+                -VideoPath $videoPath `
+                -HoldFramePercent $holdFramePercent
             continue
         }
 
@@ -1681,6 +1791,11 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                     -FramePercent $holdFramePercent `
                     -Overwrite:$Force
             }
+            New-ExerciseMp4 `
+                -GifPath $gifPath `
+                -VideoPath $videoPath `
+                -HoldFramePercent $holdFramePercent `
+                -Overwrite:$Force
             continue
         }
 
@@ -1698,6 +1813,11 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                     -FramePercent $holdFramePercent `
                     -Overwrite:$Force
             }
+            New-ExerciseMp4 `
+                -GifPath $gifPath `
+                -VideoPath $videoPath `
+                -HoldFramePercent $holdFramePercent `
+                -Overwrite:$Force
             continue
         }
 
@@ -1740,8 +1860,14 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 -Overwrite:$Force
         }
 
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent `
+            -Overwrite:$Force
+
         if ($exerciseId % 50 -eq 0) {
-            Write-Output "Generated $exerciseId / 1000 real-exercise GIFs"
+            Write-Output "Generated $exerciseId / 1000 exercise MP4s"
         }
     }
 }
@@ -1751,7 +1877,7 @@ if ($records.Count -ne 1000) {
 }
 
 $duplicateNames = $records | Group-Object { $_['name'] } | Where-Object Count -ne 1
-$duplicateGifs = $records | Group-Object { $_['gif'] } | Where-Object Count -ne 1
+$duplicateVideos = $records | Group-Object { $_['video'] } | Where-Object Count -ne 1
 $duplicateIds = $records | Group-Object { $_['id'] } | Where-Object Count -ne 1
 $invalidRegionCounts = $records |
     Group-Object { $_['dominantRegion'] } |
@@ -1776,18 +1902,18 @@ $syntheticNames = $records | Where-Object {
     $_['name'] -match 'Slow Tempo|Four-Count Tempo|End-Range Pause|Half Range|Full Range|Left Lead|Right Lead|Precision Repetitions|Continuous Flow'
 }
 
-if ($duplicateNames -or $duplicateGifs -or $duplicateIds -or
+if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
     $invalidRegionCounts -or $constraintViolations -or $syntheticNames) {
     throw 'The generated catalog failed its IDs, uniqueness, region, or constraint checks.'
 }
 
 if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
-    $missingGifs = $records | Where-Object {
-        -not (Test-Path -LiteralPath (Join-Path $resolvedOutputRoot $_['gif']))
+    $missingVideos = $records | Where-Object {
+        -not (Test-Path -LiteralPath (Join-Path $resolvedOutputRoot $_['video']))
     }
 
-    if ($missingGifs) {
-        throw 'At least one catalog record is missing its GIF asset.'
+    if ($missingVideos) {
+        throw 'At least one catalog record is missing its MP4 asset.'
     }
 
     $missingHoldFrames = $records | Where-Object {
@@ -1814,4 +1940,4 @@ Remove-Item -LiteralPath $resolvedTempRoot -Recurse -Force
 
 Write-Output "Catalog: $catalogPath"
 Write-Output "Records: $($records.Count)"
-Write-Output "GIF directory: $gifOutputRoot"
+Write-Output "MP4 directory: $videoOutputRoot"

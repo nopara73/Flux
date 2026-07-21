@@ -1,6 +1,4 @@
-using Android.Graphics;
 using Android.Views;
-using Android.Webkit;
 using System.Diagnostics.CodeAnalysis;
 using Flux.Data;
 using Flux.Models;
@@ -27,7 +25,7 @@ public class MainActivity : Activity
     private View _congratulationsScreen = null!;
     private TextView _regionName = null!;
     private TextView _exerciseName = null!;
-    private WebView _exerciseGif = null!;
+    private VideoView _exerciseVideo = null!;
     private Button _startButton = null!;
     private View _countdownPanel = null!;
     private TextView _countdownText = null!;
@@ -41,7 +39,11 @@ public class MainActivity : Activity
 
     private WorkoutCountDownTimer? _countdownTimer;
     private Android.Media.ToneGenerator? _toneGenerator;
+    private Android.Media.MediaPlayer? _activeMediaPlayer;
+    private VideoPreparedListener? _videoPreparedListener;
     private bool _countdownActive;
+    private bool _loopExerciseVideo = true;
+    private bool _freezeHoldAtEnd;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -52,7 +54,7 @@ public class MainActivity : Activity
 
         BindViews();
         BindEvents();
-        ConfigureGifView();
+        ConfigureVideoView();
 
         _exerciseDatabase = new SqliteExerciseDatabase(this);
         _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
@@ -74,13 +76,16 @@ public class MainActivity : Activity
     protected override void OnResume()
     {
         base.OnResume();
-        _exerciseGif?.OnResume();
+        if (_currentExercise is not null && !_freezeHoldAtEnd)
+        {
+            _exerciseVideo?.Start();
+        }
     }
 
     protected override void OnPause()
     {
         CancelCountdown(resetToStart: true);
-        _exerciseGif?.OnPause();
+        _exerciseVideo?.Pause();
         base.OnPause();
     }
 
@@ -90,7 +95,9 @@ public class MainActivity : Activity
         _toneGenerator?.Release();
         _toneGenerator?.Dispose();
         _toneGenerator = null;
-        _exerciseGif?.Destroy();
+        _exerciseVideo?.StopPlayback();
+        _activeMediaPlayer = null;
+        _videoPreparedListener = null;
         _exerciseDatabase?.Dispose();
         base.OnDestroy();
     }
@@ -101,7 +108,7 @@ public class MainActivity : Activity
         _congratulationsScreen = FindRequiredView<View>(Resource.Id.congratulations_screen);
         _regionName = FindRequiredView<TextView>(Resource.Id.region_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
-        _exerciseGif = FindRequiredView<WebView>(Resource.Id.exercise_gif);
+        _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
         _startButton = FindRequiredView<Button>(Resource.Id.start_button);
         _countdownPanel = FindRequiredView<View>(Resource.Id.countdown_panel);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
@@ -125,68 +132,73 @@ public class MainActivity : Activity
         _doneButton.Click += (_, _) => CloseCompletedWorkout();
     }
 
-    private void ConfigureGifView()
+    private void ConfigureVideoView()
     {
-        _exerciseGif.SetBackgroundColor(Color.Transparent);
-        _exerciseGif.VerticalScrollBarEnabled = false;
-        _exerciseGif.HorizontalScrollBarEnabled = false;
-        _exerciseGif.Settings.JavaScriptEnabled = false;
-        _exerciseGif.Settings.AllowContentAccess = false;
-        _exerciseGif.Settings.AllowFileAccess = false;
-        _exerciseGif.Settings.BuiltInZoomControls = false;
-        _exerciseGif.Settings.DisplayZoomControls = false;
+        _videoPreparedListener = new VideoPreparedListener(mediaPlayer =>
+        {
+            _activeMediaPlayer = mediaPlayer;
+            _activeMediaPlayer.Looping = _loopExerciseVideo;
+            _activeMediaPlayer.SetVolume(0f, 0f);
+            _exerciseVideo.Start();
+        });
+        _exerciseVideo.SetOnPreparedListener(_videoPreparedListener);
+        _exerciseVideo.Completion += (_, _) =>
+        {
+            if (_freezeHoldAtEnd)
+            {
+                FreezeHoldOnFinalFrame();
+            }
+        };
     }
 
-    private void LoadExerciseMedia(Exercise exercise, bool showHoldPosition = false)
+    private void LoadExerciseMedia(Exercise exercise)
     {
-        bool renderStaticHold = showHoldPosition && exercise.Mode == ExerciseMode.Hold;
-        string mediaAsset = renderStaticHold
-            ? $"exercise_hold_frames/{System.IO.Path.GetFileNameWithoutExtension(exercise.Gif)}.png"
-            : exercise.Gif;
-        using Stream gifStream = Assets!.Open(mediaAsset);
-        using var buffer = new MemoryStream();
-        gifStream.CopyTo(buffer);
-        string mimeType = renderStaticHold ? "image/png" : "image/gif";
-        string base64Media = Convert.ToBase64String(buffer.ToArray());
+        _loopExerciseVideo = true;
+        _freezeHoldAtEnd = false;
+        _activeMediaPlayer = null;
+        _exerciseVideo.StopPlayback();
+        _exerciseVideo.SetVideoPath(CacheVideoAsset(exercise.Video));
+    }
 
-        string html = $$"""
-            <!doctype html>
-            <html>
-              <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <style>
-                  html, body {
-                    width: 100%;
-                    height: 100%;
-                    margin: 0;
-                    overflow: hidden;
-                    background: transparent;
-                  }
-                  body {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  }
-                  img {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                  }
-                </style>
-              </head>
-              <body>
-                <img src="data:{{mimeType}};base64,{{base64Media}}" alt="Exercise demonstration" />
-              </body>
-            </html>
-            """;
+    private string CacheVideoAsset(string assetPath)
+    {
+        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v4");
+        Directory.CreateDirectory(cacheRoot);
+        string cachedPath = System.IO.Path.Combine(cacheRoot, System.IO.Path.GetFileName(assetPath));
 
-        _exerciseGif.LoadDataWithBaseURL(
-            "https://local.flux/",
-            html,
-            "text/html",
-            "UTF-8",
-            null);
+        using Stream source = Assets!.Open(assetPath);
+        using FileStream destination = File.Create(cachedPath);
+        source.CopyTo(destination);
+
+        return cachedPath;
+    }
+
+    private void PlayHoldOnce()
+    {
+        _loopExerciseVideo = false;
+        _freezeHoldAtEnd = true;
+        if (_activeMediaPlayer is not null)
+        {
+            _activeMediaPlayer.Looping = false;
+        }
+
+        _exerciseVideo.SeekTo(0);
+        _exerciseVideo.Start();
+    }
+
+    private void FreezeHoldOnFinalFrame()
+    {
+        if (_currentExercise?.Mode != ExerciseMode.Hold)
+        {
+            return;
+        }
+
+        int duration = _activeMediaPlayer?.Duration ?? _exerciseVideo.Duration;
+        if (duration > 0)
+        {
+            _exerciseVideo.SeekTo(Math.Max(0, duration - 80));
+        }
+        _exerciseVideo.Pause();
     }
 
     private void ShowNextExercise()
@@ -236,7 +248,7 @@ public class MainActivity : Activity
         _countdownActive = true;
         if (_currentExercise?.Mode == ExerciseMode.Hold)
         {
-            LoadExerciseMedia(_currentExercise, showHoldPosition: true);
+            PlayHoldOnce();
         }
         _startButton.Visibility = ViewStates.Gone;
         _ratingPanel.Visibility = ViewStates.Gone;
@@ -275,6 +287,10 @@ public class MainActivity : Activity
         _countdownTimer?.Dispose();
         _countdownTimer = null;
         _countdownText.Text = "0";
+        if (_currentExercise?.Mode == ExerciseMode.Hold)
+        {
+            FreezeHoldOnFinalFrame();
+        }
         PlayBeep(Android.Media.Tone.PropBeep2);
 
         _startButton.Visibility = ViewStates.Gone;
@@ -335,6 +351,7 @@ public class MainActivity : Activity
     private void ShowCongratulations()
     {
         CancelCountdown(resetToStart: false);
+        _exerciseVideo.StopPlayback();
         (int failed, int neutral, int completed) = _sessionService.GetOutcomeCounts(_state);
 
         _congratulationsSummary.Text =
@@ -407,6 +424,18 @@ public class MainActivity : Activity
         public override void OnFinish()
         {
             _onFinish();
+        }
+    }
+
+    private sealed class VideoPreparedListener(Action<Android.Media.MediaPlayer> onPrepared)
+        : Java.Lang.Object, Android.Media.MediaPlayer.IOnPreparedListener
+    {
+        public void OnPrepared(Android.Media.MediaPlayer? mediaPlayer)
+        {
+            if (mediaPlayer is not null)
+            {
+                onPrepared(mediaPlayer);
+            }
         }
     }
 }

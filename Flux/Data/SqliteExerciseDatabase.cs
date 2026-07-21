@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 4;
+    private const int DatabaseVersion = 5;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int ExpectedExerciseCount = 1000;
@@ -20,7 +20,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     [
         "id",
         "name",
-        "gif",
+        "video",
         "dominant_region",
         "practice",
         "motion_profile",
@@ -55,7 +55,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             CREATE TABLE exercises (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
-                gif TEXT NOT NULL UNIQUE,
+                video TEXT NOT NULL UNIQUE,
                 dominant_region TEXT NOT NULL CHECK (dominant_region IN (
                     'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
                     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')),
@@ -99,7 +99,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             return;
         }
 
-        if (oldVersion < 4 && newVersion >= 4)
+        bool catalogRefreshRequired = false;
+
+        if (oldVersion < 4)
         {
             database.ExecSQL(
                 "ALTER TABLE exercises ADD COLUMN exercise_mode TEXT NOT NULL " +
@@ -107,11 +109,24 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             database.ExecSQL(
                 "ALTER TABLE exercises ADD COLUMN hold_frame_percent INTEGER NOT NULL " +
                 "DEFAULT 0 CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99)");
-            RefreshCatalogPreservingScores(database);
-            return;
+            catalogRefreshRequired = true;
         }
 
-        if (oldVersion < 3 && newVersion >= 3)
+        if (oldVersion < 5)
+        {
+            // Older installations retain their legacy `gif` column. Keeping it is
+            // harmless and avoids rebuilding the table (and risking user scores).
+            database.ExecSQL(
+                "ALTER TABLE exercises ADD COLUMN video TEXT NOT NULL DEFAULT ''");
+            catalogRefreshRequired = true;
+        }
+
+        if (oldVersion < 3)
+        {
+            catalogRefreshRequired = true;
+        }
+
+        if (catalogRefreshRequired)
         {
             RefreshCatalogPreservingScores(database);
             return;
@@ -153,7 +168,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             using var values = new ContentValues();
             values.Put("id", exercise.Id);
             values.Put("name", exercise.Name);
-            values.Put("gif", exercise.Gif);
+            values.Put("video", exercise.Video);
             values.Put("dominant_region", exercise.DominantRegion.ToString());
             values.Put("practice", exercise.Practice);
             values.Put("motion_profile", exercise.MotionProfile);
@@ -179,13 +194,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         {
             // Release the UNIQUE name values before applying renamed records.
             database.ExecSQL(
-                "UPDATE exercises SET name = '__flux_catalog_v3_' || id");
+                "UPDATE exercises SET name = '__flux_catalog_v5_' || id");
 
             foreach (Exercise exercise in catalog)
             {
                 using var values = new ContentValues();
                 values.Put("name", exercise.Name);
-                values.Put("gif", exercise.Gif);
+                values.Put("video", exercise.Video);
                 values.Put("dominant_region", exercise.DominantRegion.ToString());
                 values.Put("practice", exercise.Practice);
                 values.Put("motion_profile", exercise.MotionProfile);
@@ -255,8 +270,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 Id = cursor.GetInt(0),
                 Name = cursor.GetString(1)
                     ?? throw new InvalidOperationException("An exercise has no name."),
-                Gif = cursor.GetString(2)
-                    ?? throw new InvalidOperationException("An exercise has no GIF."),
+                Video = cursor.GetString(2)
+                    ?? throw new InvalidOperationException("An exercise has no video."),
                 DominantRegion = Enum.Parse<DominantRegion>(regionName),
                 Practice = cursor.GetString(4)
                     ?? throw new InvalidOperationException("An exercise has no practice."),
@@ -310,7 +325,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         if (hasInvalidRegionCount ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
-            exercises.Select(exercise => exercise.Gif).Distinct().Count() != exercises.Count ||
+            exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||
             violatesRequirements ||
             hasInvalidInitialScore)
         {

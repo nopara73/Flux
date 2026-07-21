@@ -2,30 +2,31 @@
 
 This is a deliberately conservative visual audit. **Verified** means the
 animation directly demonstrates the named movement, not merely the same body
-region or a vaguely related motion. Every other bundled GIF remains usable as
+region or a vaguely related motion. Every other bundled MP4 remains usable as
 a temporary placeholder, but is not claimed to be a perfect demonstration.
 
-Verified: **232 / 1,000**. Still requiring exact media: **768 / 1,000**.
+Verified: **262 / 1,000**. Still requiring exact media: **738 / 1,000**.
 
 | Region | Verified | Still imperfect |
 | --- | ---: | ---: |
 | FEET | 18 | 82 |
-| LEGS | 37 | 63 |
-| HANDS | 11 | 89 |
-| ARMS | 18 | 82 |
+| LEGS | 51 | 49 |
+| HANDS | 13 | 87 |
+| ARMS | 19 | 81 |
 | HEAD | 54 | 46 |
-| SHOULDERS | 12 | 88 |
-| HIPS | 25 | 75 |
-| CHEST | 12 | 88 |
+| SHOULDERS | 16 | 84 |
+| HIPS | 29 | 71 |
+| CHEST | 14 | 86 |
 | BACK | 21 | 79 |
-| CORE | 24 | 76 |
+| CORE | 27 | 73 |
 
 ## Verified sources
 
-- Reviewed human footage: **58**
+- Reviewed human footage: **69**
 - Other reviewed external demonstrations: **23**
 - Reviewed Posecode 3D renders: **77**
 - Purpose-built SVG demonstrations: **74**
+- Reviewed semantically identical media copies: **19**
 
 The external source mapping is in `tools/ExternalExerciseMedia.psd1`.
 The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact
@@ -121,19 +122,10 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0099 — Figure-Eight Weight Shift
 - 0100 — Four-Corner Weight Shift
 
-### LEGS (63)
+### LEGS (49)
 
-- 0104 — Sumo Squat
-- 0107 — Half Squat
 - 0109 — Tempo Bodyweight Squat
-- 0113 — Bodyweight Overhead Squat
-- 0114 — Hindu Squat
 - 0115 — Sissy Squat
-- 0116 — Cossack Squat
-- 0117 — Alternating Lateral Squat
-- 0118 — Squat to Knee Drive
-- 0119 — Squat to Calf Raise
-- 0120 — Duck Walk
 - 0122 — Alternating Reverse Lunge
 - 0129 — Squat to Alternating Front Kick
 - 0130 — Squat to Alternating Side Leg Lift
@@ -154,14 +146,10 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0151 — Alternating Straight-Leg Front Raise
 - 0153 — Alternating Straight-Leg Back Raise
 - 0154 — Alternating Diagonal Leg Raise
-- 0155 — Alternating Front-to-Back Leg Swing
-- 0156 — Alternating Side-to-Side Leg Swing
 - 0158 — Alternating Open-the-Gate Knee Lift
 - 0159 — Alternating Standing Fire Hydrant
 - 0160 — Alternating Standing Donkey Kick
 - 0161 — Alternating Standing Clamshell
-- 0163 — Bilateral Bent-Knee Calf Raise
-- 0165 — Standing Tibialis Raise
 - 0168 — Toy Soldier March
 - 0169 — Alternating Standing Knee Drive
 - 0170 — Alternating Cross-Body Knee Drive
@@ -185,13 +173,11 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0197 — First-Position Plie-Releve
 - 0198 — Second-Position Plie-Releve
 - 0199 — Horse-Stance Knee Bend
-- 0200 — Standing Wide-Leg Hip Hinge
 
-### HANDS (89)
+### HANDS (87)
 
 - 0201 — Hand Open and Close
 - 0203 — Straight Fist
-- 0206 — Tendon-Glide Sequence
 - 0211 — Thumb Palmar Abduction
 - 0212 — Thumb Radial Abduction
 - 0213 — Thumb Flexion
@@ -215,7 +201,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0233 — Wrist Radial Deviation
 - 0234 — Wrist Ulnar Deviation
 - 0236 — Wrist Figure Eight
-- 0237 — Forearm Pronation and Supination
 - 0239 — Reverse-Prayer Stretch
 - 0240 — Palm Press
 - 0241 — Fingertip Press
@@ -279,7 +264,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0299 — Interlaced-Finger Palm Turn
 - 0300 — Double-Thumb Circle
 
-### ARMS (82)
+### ARMS (81)
 
 - 0302 — Large Bidirectional Arm Circles
 - 0303 — Alternating Arm Circles
@@ -357,7 +342,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0391 — Ballet Fifth Port de Bras
 - 0392 — Ballet Allonge Arms
 - 0393 — Bilateral Goalpost Rotation
-- 0394 — Standing Backstroke Arm Cycle
 - 0395 — Standing Freestyle Arm Cycle
 - 0397 — Standing Butterfly Arm Sweep
 - 0398 — Standing Kayak Arm Pattern
@@ -413,7 +397,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0499 — Bharatanatyam Tiraschina Griva
 - 0500 — Bharatanatyam Parivartita Griva
 
-### SHOULDERS (88)
+### SHOULDERS (84)
 
 - 0502 — Shoulder Extension
 - 0504 — Shoulder Adduction
@@ -448,13 +432,11 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0538 — Bilateral Overhead Arm-Adduction Pull
 - 0539 — Bilateral Bent-Elbow External Rotation
 - 0540 — Bilateral Bent-Elbow Internal Rotation
-- 0542 — Standing Reverse Snow Angel
 - 0543 — Scaption Arm Arc
 - 0545 — Shoulder Halo
 - 0546 — Elbow Circle
 - 0547 — Bent-Elbow Shoulder Circle
 - 0548 — Bilateral Shoulder Pendulum
-- 0549 — Alternating Cross-Body Arm Swing
 - 0550 — Alternating Overhead Elbow Reach
 - 0551 — Alternating Eagle-Arm Wrap
 - 0552 — Alternating Cow-Face Arm Reach
@@ -470,7 +452,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0562 — Symmetric Boxing-Guard Shoulder Roll
 - 0563 — Peekaboo-Guard Shoulder Rhythm
 - 0564 — Alternating Straight-Punch Shoulder Protraction
-- 0565 — Jab-Cross Shoulder Rotation
 - 0566 — Alternating Hook Shoulder Rotation
 - 0567 — Alternating Uppercut Shoulder Drive
 - 0568 — Alternating Karate Age-Uke
@@ -498,13 +479,12 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0593 — Alternating Kathak Shoulder Turn
 - 0594 — Standing Freestyle Recovery Drill
 - 0595 — Standing Backstroke Shoulder Cycle
-- 0596 — Standing Breaststroke Shoulder Sweep
 - 0597 — Standing Butterfly Shoulder Recovery
 - 0598 — Nordic-Ski Shoulder Swing
 - 0599 — Standing Scapular-Plane Sweep
 - 0600 — Overhead Shoulder-CAR Flow
 
-### HIPS (75)
+### HIPS (71)
 
 - 0602 — Alternating Standing Hip Extension
 - 0605 — Alternating Hip Internal Rotation
@@ -516,7 +496,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0613 — Pelvic Clock
 - 0614 — Pelvic Figure Eight
 - 0616 — Forward-and-Back Hip Shift
-- 0617 — Alternating Knee-Led Hip Circle
 - 0620 — Alternating Hip-Hinge Rotation
 - 0621 — Alternating Figure-Four Hip Hinge
 - 0622 — Alternating Figure-Four Squat
@@ -541,8 +520,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0646 — Alternating Glute Kickback
 - 0647 — Alternating Standing Glute Press
 - 0648 — Alternating Hip-Abduction Arc
-- 0649 — Alternating Hip-Abduction Leg Lift
-- 0650 — Alternating Hip-Adduction Leg Sweep
 - 0652 — Alternating Sagittal Leg Sweep
 - 0654 — Alternating Diagonal Leg Swing
 - 0655 — Alternating Hip Internal-Rotation Sweep
@@ -578,11 +555,10 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0695 — Alternating Tai Chi Empty-Stance Hip Sink
 - 0696 — Alternating Bagua Hip Coil
 - 0697 — Alternating Xingyi Hip Drive
-- 0698 — Capoeira Ginga Hip Sway
 - 0699 — Alternating Karate Hip Snap
 - 0700 — Boxing Hip Rotation
 
-### CHEST (88)
+### CHEST (86)
 
 - 0701 — Chest Lift
 - 0702 — Chest Drop
@@ -622,7 +598,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0747 — Double Serratus Punch
 - 0748 — Push-Pull Chest Flow
 - 0749 — Boxing-Guard Chest Squeeze
-- 0750 — Jab-Cross Chest Rotation
 - 0751 — Alternating Hook Chest Rotation
 - 0752 — Double Palm Strike
 - 0753 — Alternating Karate Morote-Zuki
@@ -656,7 +631,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0781 — Alternating Standing Side-Reach Chest Opening
 - 0782 — Wide-Stance Clasped-Hand Chest Hinge and Rise
 - 0783 — Standing Yoga Backbend and Return
-- 0785 — Alternating Standing Yoga Side Stretch
 - 0786 — Ballet First-Port Chest Carriage
 - 0787 — Ballet Second-Port Chest Opening
 - 0788 — Ballet First-Position Chest Lift
@@ -755,7 +729,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0899 — Horton Flat-Back Hinge and Rise
 - 0900 — Alternating Horton Lateral Stretch
 
-### CORE (76)
+### CORE (73)
 
 - 0901 — Standing Abdominal Brace
 - 0902 — Standing Abdominal Hollowing
@@ -768,7 +742,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0917 — Alternating Single-Leg Brace
 - 0918 — Alternating Single-Leg Core Balance
 - 0919 — Alternating Tandem-Stance Core Brace
-- 0920 — Braced March
 - 0921 — Standing Dead-Bug March
 - 0922 — Alternating Sprinter-March Brace
 - 0923 — Standing Cross-Crawl Reach
@@ -825,9 +798,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0988 — Square-Stance Boxing-Guard Brace
 - 0990 — Alternating Boxing Hook Rotation
 - 0991 — Alternating Muay-Thai Knee Drive
-- 0992 — Capoeira Ginga Core Flow
 - 0993 — Belly-Dance Abdominal Undulation
-- 0994 — Belly-Dance Hip-Figure-Eight Core Flow
 - 0995 — Salsa Cuban-Motion Core Flow
 - 0996 — Flamenco Core Brace and Release
 - 0997 — Alternating Ballet Passe March

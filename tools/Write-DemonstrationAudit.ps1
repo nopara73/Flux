@@ -12,6 +12,8 @@ $externalMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
 $posecodeMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
+$exactMediaCopies = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
 $regions = @(
     'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
@@ -24,7 +26,8 @@ $humanExternalIds = @(
 $otherExternalCount = $externalIds.Count - $humanExternalIds.Count
 $posecodeIds = @($review.ReviewedPosecode | ForEach-Object { [int]$_ })
 $svgIds = @($review.PurposeBuiltSvg | ForEach-Object { [int]$_ })
-$verifiedIds = @($externalIds + $posecodeIds + $svgIds)
+$copyIds = @($review.ReviewedExactCopies | ForEach-Object { [int]$_ })
+$verifiedIds = @($externalIds + $posecodeIds + $svgIds + $copyIds)
 
 if ($catalog.Count -ne 1000) {
     throw "Expected 1000 catalog records, found $($catalog.Count)."
@@ -47,12 +50,23 @@ if ($externalMappingDifference.Count -gt 0 -or
     throw 'The verified inventory does not match its reviewed media mappings.'
 }
 
+$copyMappingDifference = @(Compare-Object `
+        ($copyIds | Sort-Object) `
+        (@($exactMediaCopies.Keys | ForEach-Object { [int]$_ }) | Sort-Object))
+$unverifiedCopySources = @(
+    $exactMediaCopies.Values |
+        ForEach-Object { [int]$_ } |
+        Where-Object { $_ -notin @($externalIds + $posecodeIds + $svgIds) })
+if ($copyMappingDifference.Count -gt 0 -or $unverifiedCopySources.Count -gt 0) {
+    throw 'The reviewed copy inventory is invalid or points to an unverified source.'
+}
+
 $lines = [System.Collections.Generic.List[string]]::new()
 $lines.Add('# Flux demonstration accuracy audit')
 $lines.Add('')
 $lines.Add('This is a deliberately conservative visual audit. **Verified** means the')
 $lines.Add('animation directly demonstrates the named movement, not merely the same body')
-$lines.Add('region or a vaguely related motion. Every other bundled GIF remains usable as')
+$lines.Add('region or a vaguely related motion. Every other bundled MP4 remains usable as')
 $lines.Add('a temporary placeholder, but is not claimed to be a perfect demonstration.')
 $lines.Add('')
 $lines.Add(('Verified: **{0} / 1,000**. Still requiring exact media: **{1} / 1,000**.' -f `
@@ -75,6 +89,7 @@ $lines.Add(('- Reviewed human footage: **{0}**' -f $humanExternalIds.Count))
 $lines.Add(('- Other reviewed external demonstrations: **{0}**' -f $otherExternalCount))
 $lines.Add(('- Reviewed Posecode 3D renders: **{0}**' -f $posecodeIds.Count))
 $lines.Add(('- Purpose-built SVG demonstrations: **{0}**' -f $svgIds.Count))
+$lines.Add(('- Reviewed semantically identical media copies: **{0}**' -f $copyIds.Count))
 $lines.Add('')
 $lines.Add('The external source mapping is in `tools/ExternalExerciseMedia.psd1`.')
 $lines.Add('The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact')
