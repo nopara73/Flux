@@ -5,16 +5,16 @@ animation directly demonstrates the named movement, not merely the same body
 region or a vaguely related motion. Every other bundled MP4 remains usable as
 a temporary placeholder, but is not claimed to be a perfect demonstration.
 
-Verified: **402 / 1,000**. Still requiring exact media: **598 / 1,000**.
+Verified: **462 / 1,000**. Still requiring exact media: **538 / 1,000**.
 
 | Region | Verified | Still imperfect |
 | --- | ---: | ---: |
 | FEET | 18 | 82 |
 | LEGS | 100 | 0 |
 | HANDS | 15 | 85 |
-| ARMS | 28 | 72 |
+| ARMS | 33 | 67 |
 | HEAD | 100 | 0 |
-| SHOULDERS | 30 | 70 |
+| SHOULDERS | 85 | 15 |
 | HIPS | 37 | 63 |
 | CHEST | 17 | 83 |
 | BACK | 25 | 75 |
@@ -22,12 +22,12 @@ Verified: **402 / 1,000**. Still requiring exact media: **598 / 1,000**.
 
 ## Verified sources
 
-- Reviewed human footage: **138**
+- Reviewed human footage: **155**
 - Other reviewed external demonstrations: **23**
 - Reviewed Posecode 3D renders: **77**
-- Purpose-built SVG demonstrations: **97**
-- Reviewed semantically identical media copies: **58**
-- Reviewed exact deterministic media transforms: **9**
+- Purpose-built SVG demonstrations: **132**
+- Reviewed semantically identical media copies: **65**
+- Reviewed exact deterministic media transforms: **10**
 
 The external source mapping is in `tools/ExternalExerciseMedia.psd1`.
 The reviewed 3D mapping is in `tools/PosecodeExerciseMedia.psd1`. The exact
@@ -216,7 +216,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0299 — Interlaced-Finger Palm Turn
 - 0300 — Double-Thumb Circle
 
-### ARMS (72)
+### ARMS (67)
 
 - 0303 — Alternating Arm Circles
 - 0304 — Windmill Arms
@@ -243,9 +243,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0345 — Alternating Boxing Catch
 - 0346 — High-Guard Raise
 - 0347 — Peekaboo Guard Roll
-- 0348 — Alternating Karate Age-Uke Arm Path
 - 0349 — Alternating Karate Gedan-Barai
-- 0350 — Alternating Karate Soto-Uke Arm Path
 - 0351 — Alternating Karate Uchi-Uke
 - 0352 — Alternating Karate Shuto-Uke
 - 0353 — Alternating Karate Morote-Uke
@@ -261,7 +259,6 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0364 — Wing Chun Lap-Sau Cycle
 - 0365 — Wing Chun Pak-Sau Cycle
 - 0366 — Wing Chun Tan-Bong-Fook Cycle
-- 0367 — Tai Chi Wave Hands Like Clouds
 - 0368 — Alternating Tai Chi Brush Knee Hand Sweep
 - 0369 — Alternating Tai Chi Repulse Monkey Arms
 - 0370 — Alternating Tai Chi Part Wild Horses Mane
@@ -271,9 +268,7 @@ sufficiently exact purpose-built animation was available in this pass.
 - 0374 — Alternating Lateral Arm Raise
 - 0375 — Alternating Scaption Raise
 - 0376 — Straight-Arm Scissors
-- 0377 — Qigong Lifting the Sky
 - 0378 — Alternating Qigong Separating Heaven and Earth
-- 0379 — Alternating Qigong Drawing the Bow
 - 0380 — Qigong Pushing Mountains
 - 0381 — Qigong Pushing the Waves
 - 0382 — Qigong Flying Crane Arms
@@ -294,78 +289,23 @@ sufficiently exact purpose-built animation was available in this pass.
 ### HEAD (0)
 
 
-### SHOULDERS (70)
+### SHOULDERS (15)
 
-- 0502 — Shoulder Extension
-- 0509 — Shoulder Controlled Articular Rotation
-- 0511 — Scapular Depression
-- 0514 — Scapular Upward Rotation
-- 0515 — Scapular Downward Rotation
-- 0517 — Bent-Elbow Bidirectional Shoulder Rolls
-- 0518 — Straight-Arm Bidirectional Shoulder Rolls
-- 0520 — Scapular Clock
-- 0521 — Scapular Figure Eight
-- 0524 — Standing W Raise
-- 0525 — Standing Y Raise
-- 0526 — Standing T Raise
-- 0528 — Goalpost Rotation
-- 0529 — Cactus-Arm Rotation
-- 0530 — Standing W External Rotation
-- 0531 — Cuban Shoulder Rotation
-- 0533 — External Rotation at Ninety Degrees
-- 0534 — Internal Rotation at Ninety Degrees
-- 0535 — Bilateral Shoulder Flexion Pulse
-- 0536 — Bilateral Shoulder Extension Pulse
-- 0537 — Bilateral Shoulder Abduction Pulse
-- 0545 — Shoulder Halo
-- 0546 — Elbow Circle
-- 0547 — Bent-Elbow Shoulder Circle
-- 0548 — Bilateral Shoulder Pendulum
-- 0550 — Alternating Overhead Elbow Reach
 - 0551 — Alternating Eagle-Arm Wrap
 - 0552 — Alternating Cow-Face Arm Reach
 - 0553 — Alternating Garudasana Arm Flow
 - 0554 — Alternating Gomukhasana Arm Flow
-- 0555 — Cactus-to-Goalpost Flow
-- 0556 — Prayer-to-Overhead Flow
-- 0557 — Reverse-Prayer Shoulder Stretch
-- 0558 — Hands-Behind-Back Shoulder Lift
-- 0559 — Standing Scapular Push
-- 0560 — Alternating Bear-Hug Shoulder Sweep
 - 0561 — Alternating Boxing Shoulder Roll
 - 0562 — Symmetric Boxing-Guard Shoulder Roll
 - 0563 — Peekaboo-Guard Shoulder Rhythm
 - 0564 — Alternating Straight-Punch Shoulder Protraction
 - 0566 — Alternating Hook Shoulder Rotation
 - 0567 — Alternating Uppercut Shoulder Drive
-- 0568 — Alternating Karate Age-Uke
-- 0569 — Alternating Karate Soto-Uke
 - 0570 — Alternating Wing Chun Bong Sau
 - 0571 — Alternating Wing Chun Tan Sau
-- 0572 — Alternating Tai Chi White Crane Opens Wings
-- 0573 — Alternating Tai Chi Single Whip
-- 0574 — Tai Chi Cloud-Hands Shoulder Flow
-- 0575 — Qigong Shoulder Shaking
-- 0576 — Qigong Crane-Wing Shoulder Lift
-- 0577 — Qigong Swimming-Dragon Shoulder Roll
-- 0578 — Eight Brocades Two Hands Hold the Heavens
-- 0579 — Alternating Eight Brocades Draw the Bow
-- 0580 — Alternating Eight Brocades Wise Owl Looks Back
-- 0581 — Alternating Ballet Epaulement Croise
-- 0582 — Alternating Ballet Epaulement Efface
-- 0583 — Alternating Ballet Epaulement Ecarte
 - 0585 — Flamenco Shoulder Rotation
 - 0586 — Flamenco Shoulder Shimmy
-- 0588 — Belly-Dance Alternating Shoulder Roll
-- 0589 — Alternating Egyptian-Dance Shoulder Accent
-- 0590 — Samba Shoulder Roll
 - 0592 — Alternating Odissi Chowka Shoulder Isolation
-- 0593 — Alternating Kathak Shoulder Turn
-- 0594 — Standing Freestyle Recovery Drill
-- 0595 — Standing Backstroke Shoulder Cycle
-- 0597 — Standing Butterfly Shoulder Recovery
-- 0598 — Nordic-Ski Shoulder Swing
-- 0600 — Overhead Shoulder-CAR Flow
 
 ### HIPS (63)
 

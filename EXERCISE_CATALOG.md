@@ -71,9 +71,9 @@ one of these reviewed sources:
 
 The remaining videos are explicit temporary family-level placeholders. They are
 animated and obey the app's simple one-loop interaction, but they are not
-claimed to be exact demonstrations. The current high-bar result is **402 exact
-demonstrations and 598 still requiring exact media**. The region-by-region
-counts and the complete list of all 598 remaining names are maintained in
+claimed to be exact demonstrations. The current high-bar result is **462 exact
+demonstrations and 538 still requiring exact media**. The region-by-region
+counts and the complete list of all 538 remaining names are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
 Media mappings live in `tools/ExternalExerciseMedia.psd1`,

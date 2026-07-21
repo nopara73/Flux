@@ -58,15 +58,15 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 161) {
-    throw 'The reviewed external-media map must contain exactly 161 entries.'
+if ($externalExerciseMedia.Count -ne 178) {
+    throw 'The reviewed external-media map must contain exactly 178 entries.'
 }
 
 if ($posecodeExerciseMedia.Count -ne 77) {
     throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 58 -or @(
+if ($exactExerciseMediaCopies.Count -ne 65 -or @(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -74,10 +74,10 @@ if ($exactExerciseMediaCopies.Count -ne 58 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 58 valid entries.'
+    throw 'The exact-media copy map must contain exactly 65 valid entries.'
 }
 
-if ($exactExerciseMediaTransforms.Count -ne 9 -or @(
+if ($exactExerciseMediaTransforms.Count -ne 10 -or @(
         $exactExerciseMediaTransforms.GetEnumerator() | Where-Object {
             $targetId = [int]$_.Key
             $transform = $_.Value
@@ -97,7 +97,7 @@ if ($exactExerciseMediaTransforms.Count -ne 9 -or @(
                     [int]$transform.DelayCentiseconds -gt 0)
             )
         }).Count -gt 0) {
-    throw 'The exact-media transform map must contain exactly 9 valid entries.'
+    throw 'The exact-media transform map must contain exactly 10 valid entries.'
 }
 
 $regionColors = @(
@@ -928,7 +928,14 @@ function New-ExternalExerciseGif {
         else {
             ''
         }
-        $videoFilter = $cropFilter + "fps=$framesPerSecond," +
+        $maskFilter = if ($Media.ContainsKey('MaskTop') -and
+            [bool]$Media.MaskTop) {
+            'drawbox=x=0:y=0:w=iw:h=ih*0.28:color=0xF7FAFC:t=fill,'
+        }
+        else {
+            ''
+        }
+        $videoFilter = $cropFilter + $maskFilter + "fps=$framesPerSecond," +
             'scale=256:256:force_original_aspect_ratio=decrease,' +
             'pad=256:256:(ow-iw)/2:(oh-ih)/2:color=0xF7FAFC'
         $ffmpegArguments += @('-vf', $videoFilter, '-an', $framePattern)
@@ -1019,6 +1026,343 @@ function New-ExternalExerciseGif {
     Copy-Item -LiteralPath $temporaryGifPath -Destination $GifPath -Force
 }
 
+function Get-ShoulderArmPoints {
+    param(
+        [int]$ShoulderX,
+        [int]$ShoulderY,
+        [ValidateSet(-1, 1)]
+        [int]$Side,
+        [double]$AngleFromDown,
+        [double]$ElbowBend = 0
+    )
+
+    $upperLength = 34
+    $forearmLength = 34
+    $upperRadians = $AngleFromDown * [Math]::PI / 180
+    $forearmRadians = ($AngleFromDown - $ElbowBend) * [Math]::PI / 180
+    $elbowX = Get-RoundedInt (
+        $ShoulderX + ($Side * [Math]::Sin($upperRadians) * $upperLength))
+    $elbowY = Get-RoundedInt (
+        $ShoulderY + ([Math]::Cos($upperRadians) * $upperLength))
+
+    return @{
+        ElbowX = $elbowX
+        ElbowY = $elbowY
+        HandX = Get-RoundedInt (
+            $elbowX + ($Side * [Math]::Sin($forearmRadians) * $forearmLength))
+        HandY = Get-RoundedInt (
+            $elbowY + ([Math]::Cos($forearmRadians) * $forearmLength))
+    }
+}
+
+function New-ShoulderExerciseFrameSvg {
+    param(
+        [int]$ExerciseId,
+        [string]$ExerciseName,
+        [int]$FrameIndex,
+        [string]$Accent
+    )
+
+    $phase = 2 * [Math]::PI * $FrameIndex / 16
+    $wave = [Math]::Sin($phase)
+    $progress = (1 - [Math]::Cos($phase)) / 2
+    $pulse = (1 + [Math]::Sin(2 * $phase)) / 2
+    $leftShoulderX = 98
+    $rightShoulderX = 158
+    $shoulderY = 82
+    $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 0
+    $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 0
+    $pathSvg = ''
+    $scapulaSvg = ''
+    $rearView = $false
+    $handsJoined = $false
+    $joinedHandX = 128
+    $joinedHandY = 100
+    $sideView = $false
+    $secondSideArm = $false
+
+    switch -Regex ($ExerciseName) {
+        '^Shoulder Extension$|^Bilateral Shoulder Extension Pulse$' {
+            $sideView = $true
+            $angle = if ($ExerciseName -match 'Pulse') {
+                -(30 + ($pulse * 18))
+            }
+            else { -($progress * 52) }
+            $pathSvg = '<path d="M120 151 Q87 125 75 86" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.7" />'
+        }
+        '^Scapular Depression$' {
+            $drop = Get-RoundedInt ($progress * 13)
+            $shoulderY += $drop
+            $leftArm.ElbowY += $drop
+            $leftArm.HandY += $drop
+            $rightArm.ElbowY += $drop
+            $rightArm.HandY += $drop
+            $pathSvg = '<path d="M82 65 V102 M174 65 V102 M76 94 L82 102 L88 94 M168 94 L174 102 L180 94" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.7" />'
+        }
+        '^Scapular Upward Rotation$|^Scapular Downward Rotation$' {
+            $rearView = $true
+            $direction = if ($ExerciseName -match 'Upward') { 1 } else { -1 }
+            $rotation = Get-RoundedInt ($direction * $progress * 32)
+            $scapulaSvg = @"
+  <path d="M104 92 Q95 111 108 131 Q120 114 116 94 Z" fill="$Accent" opacity="0.75" transform="rotate($(-$rotation) 110 105)" />
+  <path d="M152 92 Q161 111 148 131 Q136 114 140 94 Z" fill="$Accent" opacity="0.75" transform="rotate($rotation 146 105)" />
+  <path d="M110 76 Q82 104 92 137 M146 76 Q174 104 164 137" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />
+"@
+        }
+        '^Bent-Elbow Bidirectional Shoulder Rolls$|^Elbow Circle$' {
+            $localPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $direction = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $circleX = Get-RoundedInt ([Math]::Sin($direction * $localPhase) * 12)
+            $circleY = Get-RoundedInt ([Math]::Cos($direction * $localPhase) * 12)
+            $leftArm = @{ ElbowX = 74 + $circleX; ElbowY = 82 + $circleY; HandX = 98; HandY = 110 }
+            $rightArm = @{ ElbowX = 182 - $circleX; ElbowY = 82 - $circleY; HandX = 158; HandY = 110 }
+            $pathSvg = '<ellipse cx="74" cy="82" rx="17" ry="17" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.65" /><ellipse cx="182" cy="82" rx="17" ry="17" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.65" />'
+        }
+        '^Straight-Arm Bidirectional Shoulder Rolls$' {
+            $localFrame = $FrameIndex % 8
+            $direction = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $angle = 90 + ($direction * $localFrame * 45)
+            $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 $angle
+            $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 $angle
+            $pathSvg = '<circle cx="98" cy="82" r="68" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 6" opacity="0.55" /><circle cx="158" cy="82" r="68" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 6" opacity="0.55" />'
+        }
+        '^Bent-Elbow Shoulder Figure Eight$' {
+            $localPhase = 2 * [Math]::PI * ($FrameIndex % 8) / 8
+            $direction = if ($FrameIndex -lt 8) { 1 } else { -1 }
+            $angle = 70 + ([Math]::Sin($direction * $localPhase) * 48)
+            $bend = [Math]::Sin(2 * $direction * $localPhase) * 42
+            $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 $angle $bend
+            $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 $angle $bend
+            $pathSvg = '<path d="M42 84 C42 50 82 50 82 84 C82 118 122 118 122 84 C122 50 82 50 82 84 M134 84 C134 50 174 50 174 84 C174 118 214 118 214 84 C214 50 174 50 174 84" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.5" />'
+        }
+        '^Scapular Clock$|^Scapular Figure Eight$' {
+            $rearView = $true
+            if ($ExerciseName -match 'Clock') {
+                $scapX = Get-RoundedInt ([Math]::Sin($phase) * 10)
+                $scapY = Get-RoundedInt ([Math]::Cos($phase) * 13)
+                $pathSvg = '<ellipse cx="109" cy="108" rx="10" ry="13" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.6" /><ellipse cx="147" cy="108" rx="10" ry="13" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.6" /><text x="106" y="87" font-size="10" fill="#E63946">12</text><text x="106" y="137" font-size="10" fill="#E63946">6</text>'
+            }
+            else {
+                $scapX = Get-RoundedInt ([Math]::Sin($phase) * 11)
+                $scapY = Get-RoundedInt ([Math]::Sin(2 * $phase) * 10)
+                $pathSvg = '<path d="M91 108 C91 90 109 90 109 108 C109 126 127 126 127 108 C127 90 109 90 109 108 M129 108 C129 90 147 90 147 108 C147 126 165 126 165 108 C165 90 147 90 147 108" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="4 5" opacity="0.55" />'
+            }
+            $scapulaSvg = @"
+  <path d="M$($scapX + 102) $($scapY + 92) Q$($scapX + 92) $($scapY + 110) $($scapX + 107) $($scapY + 128) Q$($scapX + 120) $($scapY + 108) $($scapX + 114) $($scapY + 94) Z" fill="$Accent" opacity="0.76" />
+  <path d="M$($scapX + 154) $($scapY + 92) Q$($scapX + 164) $($scapY + 110) $($scapX + 149) $($scapY + 128) Q$($scapX + 136) $($scapY + 108) $($scapX + 142) $($scapY + 94) Z" fill="$Accent" opacity="0.76" />
+"@
+        }
+        '^Standing [WYT] Raise$|^Bilateral Shoulder (Flexion|Abduction) Pulse$' {
+            if ($ExerciseName -match 'Flexion') {
+                $sideView = $true
+                $angle = 66 + ($pulse * 20)
+                $pathSvg = '<path d="M121 151 Q170 128 194 83" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.65" />'
+            }
+            else {
+                $targetAngle = if ($ExerciseName -match 'W Raise') { 58 } elseif ($ExerciseName -match 'Y Raise') { 145 } else { 90 }
+                $angle = if ($ExerciseName -match 'Pulse') { 78 + ($pulse * 18) } else { $progress * $targetAngle }
+                $bend = if ($ExerciseName -match 'W Raise') { -92 * $progress } else { 0 }
+                $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 $angle $bend
+                $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 $angle $bend
+                $pathSvg = if ($ExerciseName -match 'Y Raise') {
+                    '<path d="M98 150 L55 25 M158 150 L201 25" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+                }
+                elseif ($ExerciseName -match 'T Raise|Abduction') {
+                    '<path d="M98 150 Q65 112 30 82 M158 150 Q191 112 226 82" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+                }
+                else { '' }
+            }
+        }
+        '^Goalpost Open-and-Close$' {
+            $leftArm = @{ ElbowX = 62; ElbowY = 82; HandX = Get-RoundedInt (112 - (50 * $progress)); HandY = Get-RoundedInt (82 - (38 * $progress)) }
+            $rightArm = @{ ElbowX = 194; ElbowY = 82; HandX = Get-RoundedInt (144 + (50 * $progress)); HandY = Get-RoundedInt (82 - (38 * $progress)) }
+            $pathSvg = '<path d="M112 82 Q86 53 62 44 M144 82 Q170 53 194 44" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+        }
+        '^Cactus-Arm Overhead Press$' {
+            $leftArm = @{ ElbowX = Get-RoundedInt (62 + (31 * $progress)); ElbowY = Get-RoundedInt (82 - (28 * $progress)); HandX = Get-RoundedInt (62 + (50 * $progress)); HandY = Get-RoundedInt (44 - (30 * $progress)) }
+            $rightArm = @{ ElbowX = Get-RoundedInt (194 - (31 * $progress)); ElbowY = Get-RoundedInt (82 - (28 * $progress)); HandX = Get-RoundedInt (194 - (50 * $progress)); HandY = Get-RoundedInt (44 - (30 * $progress)) }
+        }
+        '^Cactus-to-Y Flow$' {
+            $leftArm = @{ ElbowX = Get-RoundedInt (62 + (11 * $progress)); ElbowY = Get-RoundedInt (82 - (28 * $progress)); HandX = Get-RoundedInt (62 - (7 * $progress)); HandY = Get-RoundedInt (44 - (19 * $progress)) }
+            $rightArm = @{ ElbowX = Get-RoundedInt (194 - (11 * $progress)); ElbowY = Get-RoundedInt (82 - (28 * $progress)); HandX = Get-RoundedInt (194 + (7 * $progress)); HandY = Get-RoundedInt (44 - (19 * $progress)) }
+            $pathSvg = '<path d="M62 44 L55 25 M194 44 L201 25" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+        }
+        '^Standing W External Rotation$' {
+            $leftArm = @{ ElbowX = 105; ElbowY = 118; HandX = Get-RoundedInt (116 - (43 * $progress)); HandY = Get-RoundedInt (84 + (18 * (1 - $progress))) }
+            $rightArm = @{ ElbowX = 151; ElbowY = 118; HandX = Get-RoundedInt (140 + (43 * $progress)); HandY = Get-RoundedInt (84 + (18 * (1 - $progress))) }
+        }
+        '^Cuban Shoulder Rotation$' {
+            $sequence = if ($FrameIndex -le 8) { $FrameIndex / 8.0 } else { (16 - $FrameIndex) / 8.0 }
+            if ($sequence -lt 0.5) {
+                $step = $sequence * 2
+                $leftArm = @{ ElbowX = Get-RoundedInt (98 - (36 * $step)); ElbowY = Get-RoundedInt (116 - (34 * $step)); HandX = Get-RoundedInt (98 - (12 * $step)); HandY = Get-RoundedInt (150 - (34 * $step)) }
+                $rightArm = @{ ElbowX = Get-RoundedInt (158 + (36 * $step)); ElbowY = Get-RoundedInt (116 - (34 * $step)); HandX = Get-RoundedInt (158 + (12 * $step)); HandY = Get-RoundedInt (150 - (34 * $step)) }
+            }
+            else {
+                $step = ($sequence - 0.5) * 2
+                $leftArm = @{ ElbowX = 62; ElbowY = 82; HandX = 86; HandY = Get-RoundedInt (116 - (72 * $step)) }
+                $rightArm = @{ ElbowX = 194; ElbowY = 82; HandX = 170; HandY = Get-RoundedInt (116 - (72 * $step)) }
+            }
+            $pathSvg = '<path d="M98 150 Q62 134 62 82 L86 44 M158 150 Q194 134 194 82 L170 44" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.5" />'
+        }
+        '^(External|Internal) Rotation at Ninety Degrees$' {
+            $rotationProgress = if ($ExerciseName -match '^External') { $progress } else { 1 - $progress }
+            $leftArm = @{ ElbowX = 62; ElbowY = 82; HandX = 62; HandY = Get-RoundedInt (116 - (72 * $rotationProgress)) }
+            $rightArm = @{ ElbowX = 194; ElbowY = 82; HandX = 194; HandY = Get-RoundedInt (116 - (72 * $rotationProgress)) }
+            $pathSvg = '<path d="M62 116 A36 36 0 0 1 62 44 M194 116 A36 36 0 0 0 194 44" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.6" />'
+        }
+        '^Shoulder Halo$' {
+            $joinedHandX = Get-RoundedInt (128 + ([Math]::Sin($phase) * 46))
+            $joinedHandY = Get-RoundedInt (62 + ([Math]::Cos($phase) * 28))
+            $leftArm = @{ ElbowX = 90; ElbowY = 77; HandX = $joinedHandX; HandY = $joinedHandY }
+            $rightArm = @{ ElbowX = 166; ElbowY = 77; HandX = $joinedHandX; HandY = $joinedHandY }
+            $handsJoined = $true
+            $pathSvg = '<ellipse cx="128" cy="62" rx="46" ry="28" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.65" />'
+        }
+        '^Bilateral Shoulder Pendulum$|^Nordic-Ski Shoulder Swing$' {
+            $sideView = $true
+            $angle = $wave * 46
+            $secondSideArm = $true
+            $secondAngle = if ($ExerciseName -match 'Nordic') { -$angle } else { $angle }
+            $pathSvg = '<path d="M76 137 Q122 72 188 137" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+        }
+        '^Alternating Overhead Elbow Reach$' {
+            $local = (1 - [Math]::Cos(2 * [Math]::PI * ($FrameIndex % 8) / 8)) / 2
+            $leftActive = if ($FrameIndex -lt 8) { $local } else { 0 }
+            $rightActive = if ($FrameIndex -ge 8) { $local } else { 0 }
+            $leftArm = @{ ElbowX = Get-RoundedInt (98 - (20 * $leftActive)); ElbowY = Get-RoundedInt (116 - (88 * $leftActive)); HandX = Get-RoundedInt (98 + (30 * $leftActive)); HandY = Get-RoundedInt (150 - (42 * $leftActive)) }
+            $rightArm = @{ ElbowX = Get-RoundedInt (158 + (20 * $rightActive)); ElbowY = Get-RoundedInt (116 - (88 * $rightActive)); HandX = Get-RoundedInt (158 - (30 * $rightActive)); HandY = Get-RoundedInt (150 - (42 * $rightActive)) }
+        }
+        '^Prayer-to-Overhead Flow$' {
+            $joinedHandY = Get-RoundedInt (110 - (86 * $progress))
+            $leftArm = @{ ElbowX = Get-RoundedInt (98 - (18 * $progress)); ElbowY = Get-RoundedInt (116 - (48 * $progress)); HandX = 128; HandY = $joinedHandY }
+            $rightArm = @{ ElbowX = Get-RoundedInt (158 + (18 * $progress)); ElbowY = Get-RoundedInt (116 - (48 * $progress)); HandX = 128; HandY = $joinedHandY }
+            $handsJoined = $true
+            $pathSvg = '<path d="M128 110 V24" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.6" />'
+        }
+        '^Reverse-Prayer Shoulder Hold$' {
+            $rearView = $true
+            $holdProgress = [Math]::Min(1, $FrameIndex / 7.0)
+            $joinedHandY = Get-RoundedInt (145 - (38 * $holdProgress))
+            $leftArm = @{ ElbowX = Get-RoundedInt (98 - (18 * $holdProgress)); ElbowY = 116; HandX = 128; HandY = $joinedHandY }
+            $rightArm = @{ ElbowX = Get-RoundedInt (158 + (18 * $holdProgress)); ElbowY = 116; HandX = 128; HandY = $joinedHandY }
+            $handsJoined = $true
+        }
+        '^Hands-Behind-Back Shoulder Lift$' {
+            $rearView = $true
+            $joinedHandY = Get-RoundedInt (150 - (48 * $progress))
+            $leftArm = @{ ElbowX = 90; ElbowY = 121; HandX = 128; HandY = $joinedHandY }
+            $rightArm = @{ ElbowX = 166; ElbowY = 121; HandX = 128; HandY = $joinedHandY }
+            $handsJoined = $true
+        }
+        '^Standing Scapular Push$' {
+            $sideView = $true
+            $angle = 90
+            $sideReach = $progress * 27
+            $pathSvg = '<path d="M122 82 H149 M190 92 H220" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.6" />'
+        }
+        '^Alternating Bear-Hug Shoulder Sweep$' {
+            $topOffset = if ($FrameIndex -lt 8) { -8 } else { 8 }
+            $leftArm = @{ ElbowX = Get-RoundedInt (64 + (52 * $progress)); ElbowY = Get-RoundedInt (82 + ($topOffset * $progress)); HandX = Get-RoundedInt (30 + (126 * $progress)); HandY = Get-RoundedInt (82 + ($topOffset * $progress)) }
+            $rightArm = @{ ElbowX = Get-RoundedInt (192 - (52 * $progress)); ElbowY = Get-RoundedInt (82 - ($topOffset * $progress)); HandX = Get-RoundedInt (226 - (126 * $progress)); HandY = Get-RoundedInt (82 - ($topOffset * $progress)) }
+        }
+        '^Standing Butterfly Shoulder Recovery$' {
+            $angle = 180 * $progress
+            $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 $angle
+            $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 $angle
+            $pathSvg = '<path d="M98 150 Q24 85 98 14 M158 150 Q232 85 158 14" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 5" opacity="0.55" />'
+        }
+        '^Bilateral Shoulder Controlled Articular Rotation$|^Alternating Overhead Shoulder-CAR Flow$' {
+            if ($ExerciseName -match 'Alternating') {
+                $leftAngle = if ($FrameIndex -lt 8) { ($FrameIndex / 7.0) * 360 } else { 0 }
+                $rightAngle = if ($FrameIndex -ge 8) { (($FrameIndex - 8) / 7.0) * 360 } else { 0 }
+            }
+            else {
+                $leftAngle = ($FrameIndex / 15.0) * 360
+                $rightAngle = $leftAngle
+            }
+            $leftArm = Get-ShoulderArmPoints $leftShoulderX $shoulderY -1 $leftAngle
+            $rightArm = Get-ShoulderArmPoints $rightShoulderX $shoulderY 1 $rightAngle
+            $pathSvg = '<circle cx="98" cy="82" r="68" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 6" opacity="0.55" /><circle cx="158" cy="82" r="68" fill="none" stroke="#E63946" stroke-width="3" stroke-dasharray="5 6" opacity="0.55" />'
+        }
+    }
+
+    $body = '#17324D'
+    $muted = '#C9D7E3'
+    if ($sideView) {
+        $sideShoulderX = if ($ExerciseName -eq 'Standing Scapular Push') {
+            Get-RoundedInt (122 + ($sideReach * 0.45))
+        }
+        else { 122 }
+        $sideShoulderY = 82
+        $elbowX = Get-RoundedInt ($sideShoulderX + ([Math]::Sin($angle * [Math]::PI / 180) * 36))
+        $elbowY = Get-RoundedInt ($sideShoulderY + ([Math]::Cos($angle * [Math]::PI / 180) * 36))
+        $handX = Get-RoundedInt ($sideShoulderX + ([Math]::Sin($angle * [Math]::PI / 180) * 72) + $sideReach)
+        $handY = Get-RoundedInt ($sideShoulderY + ([Math]::Cos($angle * [Math]::PI / 180) * 72))
+        $secondArmSvg = if ($secondSideArm) {
+            $secondElbowX = Get-RoundedInt (122 + ([Math]::Sin($secondAngle * [Math]::PI / 180) * 34))
+            $secondElbowY = Get-RoundedInt (82 + ([Math]::Cos($secondAngle * [Math]::PI / 180) * 34))
+            $secondHandX = Get-RoundedInt (122 + ([Math]::Sin($secondAngle * [Math]::PI / 180) * 68))
+            $secondHandY = Get-RoundedInt (82 + ([Math]::Cos($secondAngle * [Math]::PI / 180) * 68))
+            '<polyline points="122,82 {0},{1} {2},{3}" fill="none" stroke="{4}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.68" />' -f $secondElbowX, $secondElbowY, $secondHandX, $secondHandY, $Accent
+        }
+        else { '' }
+        return @"
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <metadata>Flux exact shoulder exercise $ExerciseId frame $FrameIndex</metadata>
+  <rect width="256" height="256" rx="28" fill="#F7FAFC" />
+  <circle cx="128" cy="126" r="102" fill="$Accent" opacity="0.08" />
+  $pathSvg
+  <line x1="38" y1="224" x2="218" y2="224" stroke="$muted" stroke-width="4" stroke-linecap="round" />
+  <polyline points="114,154 104,190 96,224" fill="none" stroke="$body" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="126,154 138,190 151,224" fill="none" stroke="$body" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <line x1="120" y1="82" x2="120" y2="156" stroke="$body" stroke-width="17" stroke-linecap="round" />
+  <circle cx="120" cy="48" r="20" fill="#F4A261" />
+  <path d="M124 48 L143 54 L124 59" fill="$Accent" stroke="$body" stroke-width="3" stroke-linejoin="round" />
+  <circle cx="$sideShoulderX" cy="82" r="9" fill="$Accent" />
+  $secondArmSvg
+  <polyline points="$sideShoulderX,82 $elbowX,$elbowY $handX,$handY" fill="none" stroke="$body" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="$handX" cy="$handY" r="7" fill="#F4A261" />
+</svg>
+"@
+    }
+
+    $faceDetails = if ($rearView) {
+        '<path d="M112 48 Q128 35 144 48" fill="none" stroke="#17324D" stroke-width="5" stroke-linecap="round" />'
+    }
+    else {
+        '<circle cx="121" cy="48" r="3" fill="#17324D" /><circle cx="135" cy="48" r="3" fill="#17324D" /><line x1="122" y1="62" x2="134" y2="62" stroke="#17324D" stroke-width="3" stroke-linecap="round" />'
+    }
+    $joinedHandsSvg = if ($handsJoined) {
+        '<circle cx="{0}" cy="{1}" r="9" fill="#F4A261" stroke="{2}" stroke-width="3" />' -f $joinedHandX, $joinedHandY, $Accent
+    }
+    else { '' }
+
+    return @"
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <metadata>Flux exact shoulder exercise $ExerciseId frame $FrameIndex</metadata>
+  <rect width="256" height="256" rx="28" fill="#F7FAFC" />
+  <circle cx="128" cy="126" r="102" fill="$Accent" opacity="0.08" />
+  $pathSvg
+  <line x1="38" y1="224" x2="218" y2="224" stroke="$muted" stroke-width="4" stroke-linecap="round" />
+  <polyline points="116,154 102,190 92,224" fill="none" stroke="$body" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="140,154 154,190 164,224" fill="none" stroke="$body" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M98 $shoulderY Q128 72 158 $shoulderY L142 157 L114 157 Z" fill="$body" />
+  $scapulaSvg
+  <line x1="$leftShoulderX" y1="$shoulderY" x2="$rightShoulderX" y2="$shoulderY" stroke="$Accent" stroke-width="13" stroke-linecap="round" />
+  <circle cx="$leftShoulderX" cy="$shoulderY" r="9" fill="$Accent" />
+  <circle cx="$rightShoulderX" cy="$shoulderY" r="9" fill="$Accent" />
+  <polyline points="$leftShoulderX,$shoulderY $($leftArm.ElbowX),$($leftArm.ElbowY) $($leftArm.HandX),$($leftArm.HandY)" fill="none" stroke="$body" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <polyline points="$rightShoulderX,$shoulderY $($rightArm.ElbowX),$($rightArm.ElbowY) $($rightArm.HandX),$($rightArm.HandY)" fill="none" stroke="$body" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="$($leftArm.HandX)" cy="$($leftArm.HandY)" r="7" fill="#F4A261" />
+  <circle cx="$($rightArm.HandX)" cy="$($rightArm.HandY)" r="7" fill="#F4A261" />
+  $joinedHandsSvg
+  <circle cx="128" cy="49" r="21" fill="#F4A261" />
+  $faceDetails
+</svg>
+"@
+}
+
 function New-ExerciseFrameSvg {
     param(
         [int]$ExerciseId,
@@ -1045,6 +1389,14 @@ function New-ExerciseFrameSvg {
             -ExerciseId $ExerciseId `
             -ExerciseName $ExerciseName `
             -MotionProfile $MotionProfile `
+            -FrameIndex $FrameIndex `
+            -Accent $accent
+    }
+
+    if ($regions[$RegionIndex] -eq 'SHOULDERS') {
+        return New-ShoulderExerciseFrameSvg `
+            -ExerciseId $ExerciseId `
+            -ExerciseName $ExerciseName `
             -FrameIndex $FrameIndex `
             -Accent $accent
     }

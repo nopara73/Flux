@@ -8,6 +8,7 @@
     506 = @{ Source = 728; ReverseFrames = $true; StartFramePercent = 50 }
     507 = @{ Source = 508; ReverseFrames = $true; StartFramePercent = 50 }
     540 = @{ Source = 508; ReverseFrames = $true; StartFramePercent = 50 }
+    594 = @{ Source = 830; ReverseFrames = $true }
     610 = @{ Source = 609; ReverseFrames = $true }
     949 = @{ Source = 948; ReverseFrames = $true }
 }

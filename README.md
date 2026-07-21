@@ -43,8 +43,8 @@ and every hold's final frame—with:
 ```
 
 Animation accuracy is tracked separately from catalog validity. The current
-high-bar review verifies 402 demonstrations, including 138 human-footage clips,
-and lists all 598 remaining
+high-bar review verifies 462 demonstrations, including 155 human-footage clips,
+and lists all 538 remaining
 placeholders in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). Regenerate
 that report after catalog changes with:
 
