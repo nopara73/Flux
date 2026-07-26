@@ -104,8 +104,32 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
-    111 = @{ File = '1685-QChZi3x.gif'; MirrorForAlternation = $false }
-    112 = @{ File = '1686-5BZHW9s.gif'; MirrorForAlternation = $true }
+    111 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 200
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    112 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 270
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     121 = @{
         File = 'forward-lunge.mp4'
         Url = 'https://www.youtube.com/watch?v=Z2n58m2i4jg'
@@ -130,10 +154,58 @@
         FramesPerSecond = 10
         MirrorForAlternation = $true
     }
-    124 = @{ File = '3769-gUjqdei.gif'; MirrorForAlternation = $true }
-    125 = @{ File = '1688-K9VL0Jq.gif'; MirrorForAlternation = $true }
-    126 = @{ File = '1687-ErqK3UL.gif'; MirrorForAlternation = $true }
-    127 = @{ File = '1460-IZVHb27.gif'; MirrorForAlternation = $false }
+    124 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 410
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    125 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1127
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    126 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 80
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    127 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 80
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
     136 = @{
         File = 'yoga-pose-sequence.mp4'
         Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
@@ -146,7 +218,19 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
-    143 = @{ File = '3655-J9zIWig.gif'; MirrorForAlternation = $true }
+    143 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 330
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
     157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $true }
     162 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
     176 = @{
@@ -340,7 +424,19 @@
         PingPong = $true
         MirrorForAlternation = $false
     }
-    327 = @{ File = '3669-JF8AkMX.gif'; MirrorForAlternation = $true }
+    327 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 832
+        DurationSeconds = 9
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     409 = @{
         File = 'cervical-car.mp4'
         Url = 'https://www.youtube.com/watch?v=986FAogJRFw'
@@ -1394,9 +1490,33 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
-    958 = @{ File = '0794-1jXLYEw.gif'; MirrorForAlternation = $true }
+    958 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1640
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     959 = @{ File = '3231-p195zsJ.gif'; MirrorForAlternation = $false }
-    960 = @{ File = '3214-RtyAsy1.gif'; MirrorForAlternation = $false }
+    960 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1470
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     961 = @{ File = '3213-WCAvOfC.gif'; MirrorForAlternation = $false }
     422 = @{
         File = 'cervical-flexion-isometric-standing.mp4'
@@ -1746,9 +1866,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 6.5
-        DurationSeconds = 27.5
+        DurationSeconds = 8
         FramesPerSecond = 10
-        MirrorForAlternation = $false
+        MirrorForAlternation = $true
     }
     573 = @{
         File = 'tai-chi-single-whip.mp4'
@@ -1889,6 +2009,1083 @@
         StartSeconds = 57.0
         DurationSeconds = 11.0
         FramesPerSecond = 12
+        MirrorForAlternation = $false
+    }
+
+    # Movement-first additions from a visually reviewed, all-standing,
+    # no-jumping MIZI routine.
+    103 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 510
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    110 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 170
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    146 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 110
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    152 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 610
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    174 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 960
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    303 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1010
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    314 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1060
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    321 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1160
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    632 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1210
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    636 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 910
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    647 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 360
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    654 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 710
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    733 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 760
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    804 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1110
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    825 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 260
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    831 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 50
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    834 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 810
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    836 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 860
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    906 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 210
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    943 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 460
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+    954 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 140
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $false
+    }
+    973 = @{
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 660
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        MirrorForAlternation = $true
+    }
+
+    # Movement-first additions from a visually reviewed standing-Pilates class.
+    101 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 254
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    108 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1246
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    128 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 397
+        DurationSeconds = 9
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    134 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 273
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    144 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 159
+        DurationSeconds = 6
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    389 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 890
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    617 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 323
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    648 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 495
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    649 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 300
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    806 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 118
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    905 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1275
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    910 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 184
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    915 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 466
+        DurationSeconds = 9
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    939 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1184
+        DurationSeconds = 10
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+
+    # Movement-first additions from a visually reviewed, no-jumping,
+    # all-standing low-impact workout.
+    102 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1950
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    109 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 990
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    147 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 930
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    156 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1830
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    200 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 230
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    301 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 170
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    311 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 450
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    315 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1770
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    326 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1710
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    338 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1350
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    340 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 510
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    341 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 690
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    544 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1650
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    914 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 810
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    962 = @{
+        File = 'growing-nojump.mp4'
+        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 50
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+
+    # Movement-first HANDS additions: full-body striking and blocking drills
+    # plus genuine bilateral self-resistance, all shown by real people.
+    201 = @{
+        File = 'boxing-five-punches.mp4'
+        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 7.5
+        FramesPerSecond = 8
+        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
+        MirrorForAlternation = $true
+    }
+    203 = @{
+        File = 'boxing-five-punches.mp4'
+        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 24
+        DurationSeconds = 17
+        FramesPerSecond = 6
+        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
+        MirrorForAlternation = $true
+    }
+    211 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 92
+        DurationSeconds = 9
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    212 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 105.5
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    213 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 170
+        DurationSeconds = 6
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    214 = @{
+        File = 'wing-chun-biu-sau.mp4'
+        Url = 'https://www.youtube.com/watch?v=CP4NR79RhNI'
+        SourcePage = 'https://www.youtube.com/watch?v=CP4NR79RhNI'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 88.5
+        DurationSeconds = 5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    215 = @{
+        File = 'self-resisted-wrist.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 66.5
+        DurationSeconds = 21.5
+        FramesPerSecond = 5
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    216 = @{
+        File = 'self-resisted-wrist.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 205.5
+        DurationSeconds = 22.5
+        FramesPerSecond = 5
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    217 = @{
+        File = 'self-resisted-wrist.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 315.5
+        DurationSeconds = 23.5
+        FramesPerSecond = 5
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    218 = @{
+        File = 'self-resisted-wrist.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 471.5
+        DurationSeconds = 24
+        FramesPerSecond = 5
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    219 = @{
+        File = 'self-resisted-wrist.mp4'
+        Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 601.5
+        DurationSeconds = 22
+        FramesPerSecond = 5
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    220 = @{
+        File = 'hook-fist-isometric.mp4'
+        Url = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
+        SourcePage = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 434
+        DurationSeconds = 38
+        FramesPerSecond = 6
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    223 = @{
+        File = 'karate-five-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 71
+        DurationSeconds = 33
+        FramesPerSecond = 6
+        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        MirrorForAlternation = $false
+    }
+    224 = @{
+        File = 'karate-five-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 106
+        DurationSeconds = 31
+        FramesPerSecond = 6
+        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        MirrorForAlternation = $false
+    }
+    225 = @{
+        File = 'karate-five-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 140
+        DurationSeconds = 31
+        FramesPerSecond = 6
+        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        MirrorForAlternation = $false
+    }
+    227 = @{
+        File = 'palm-press-pulses.mp4'
+        Url = 'https://www.youtube.com/watch?v=18Ia1M0Z_UM'
+        SourcePage = 'https://www.youtube.com/watch?v=18Ia1M0Z_UM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3.5
+        DurationSeconds = 9
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    228 = @{
+        File = 'boxing-five-punches.mp4'
+        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 11
+        DurationSeconds = 11.5
+        FramesPerSecond = 8
+        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
+        MirrorForAlternation = $true
+    }
+    229 = @{
+        File = 'boxing-five-punches.mp4'
+        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42.5
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
+        MirrorForAlternation = $true
+    }
+    230 = @{
+        File = 'boxing-five-punches.mp4'
+        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 51.5
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
+        MirrorForAlternation = $true
+    }
+    231 = @{
+        File = 'karate-reverse-punch.mp4'
+        Url = 'https://www.youtube.com/watch?v=SwmOotzhIyk'
+        SourcePage = 'https://www.youtube.com/watch?v=SwmOotzhIyk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 85.5
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    232 = @{
+        File = 'karate-reverse-punch.mp4'
+        Url = 'https://www.youtube.com/watch?v=SwmOotzhIyk'
+        SourcePage = 'https://www.youtube.com/watch?v=SwmOotzhIyk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 132
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    233 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 19.5
+        DurationSeconds = 4
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    234 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 52.7
+        DurationSeconds = 6.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    236 = @{
+        File = 'karate-hand-strikes.mp4'
+        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 79
+        DurationSeconds = 6
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    239 = @{
+        File = 'ninja-hand-seal-sequences.mp4'
+        Url = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        SourcePage = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 9.5
+        DurationSeconds = 25.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    240 = @{
+        File = 'ninja-hand-seal-sequences.mp4'
+        Url = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        SourcePage = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 38
+        DurationSeconds = 11.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    241 = @{
+        File = 'ninja-water-dragon-seal-sequence.mp4'
+        Url = 'https://www.youtube.com/watch?v=Utxci63ruWk'
+        SourcePage = 'https://www.youtube.com/watch?v=Utxci63ruWk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 23.5
+        DurationSeconds = 15.75
+        FramesPerSecond = 16
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    242 = @{
+        File = 'ninja-hand-seal-sequences.mp4'
+        Url = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        SourcePage = 'https://www.youtube.com/watch?v=W5Vj4j4OfIk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 79
+        DurationSeconds = 12.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    245 = @{
+        File = 'karate-five-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 11
+        DurationSeconds = 27
+        FramesPerSecond = 6
+        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        MirrorForAlternation = $false
+    }
+    246 = @{
+        File = 'karate-five-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 41
+        DurationSeconds = 27
+        FramesPerSecond = 6
+        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        MirrorForAlternation = $false
+    }
+    248 = @{
+        File = 'palm-press-hold.mp4'
+        Url = 'https://www.youtube.com/watch?v=JBY5z4tF6b8'
+        SourcePage = 'https://www.youtube.com/watch?v=JBY5z4tF6b8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 11
+        DurationSeconds = 21
+        FramesPerSecond = 6
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
 }

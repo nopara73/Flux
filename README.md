@@ -6,9 +6,11 @@ Android 7.0 (API 24) and newer.
 ## Exercise database
 
 Flux ships with a local SQLite database seeded from a human-demonstrated catalog
-of 183 exercises. Every `DominantRegion` has at least three choices; the current
-region counts range from 5 to 64. It works entirely offline and saves each
-exercise's score in SQLite.
+of 214 exercises. The movements are selected for their value first and assigned
+to the closest `DominantRegion` only afterward, so full-body exercises are not
+excluded merely because they involve several regions. Every region must retain
+at least three choices. Flux works entirely offline and saves each exercise's
+score in SQLite.
 
 The entries are distinct established standing movements rather than generated
 tempo/range/side permutations. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)
@@ -36,7 +38,7 @@ and MP4s can be regenerated from the reviewed source media with:
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
 
-Verify all 183 runtime videos—including codec, dimensions, silence, duration,
+Verify all 214 runtime videos—including codec, dimensions, silence, duration,
 and every hold's final frame—with:
 
 ```powershell
@@ -44,8 +46,8 @@ and every hold's final frame—with:
 ```
 
 The bundled catalog contains no placeholder, synthetic, schematic, anatomical,
-or 3D media. All 183 demonstrations show an actual person: 155 direct footage
-clips plus 28 exact human-footage derivatives. The source-quality and region
+or 3D media. All 214 demonstrations show an actual person: 213 direct footage
+clips plus one exact human-footage direction transform. The source-quality and region
 counts are recorded in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md).
 Regenerate that report after catalog changes with:
 
@@ -70,8 +72,12 @@ Schema version 8 removes the unverified placeholder and weaker schematic rows,
 preserving scores for all retained IDs and repairing any retired saved lineup.
 Schema version 9 corrects reviewed hold targets while preserving scores.
 Schema version 10 removes every non-human demonstration, preserving scores for
-all 183 retained IDs and repairing any retired saved lineup. The current catalog
-contains 18 symmetric holds and 165 repetition exercises.
+all 183 retained IDs and repairing any retired saved lineup.
+Schema version 11 applies the movement-first 214-exercise catalog and revised
+region assignments. It preserves scores for unchanged movement identities,
+initializes new or replaced exercises at zero, removes retired rows, and repairs
+any retired saved lineup.
+The current catalog contains 16 symmetric holds and 198 repetition exercises.
 
 ## Workout flow
 

@@ -25,21 +25,23 @@ $regions = @(
 )
 
 $catalogNames = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1')
+    Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1') -SkipLimitCheck
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1')
+    Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1') -SkipLimitCheck
+$exerciseRegionOverrides = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseRegionOverrides.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1')
+    Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
+    Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
+    Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
+    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1') -SkipLimitCheck
 $exactExerciseMediaTransforms = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1')
+    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1') -SkipLimitCheck
 $verifiedExerciseDemos = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1')
+    Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1') -SkipLimitCheck
 $retainedExerciseIds = @(
     $verifiedExerciseDemos.ReviewedExternal +
         $verifiedExerciseDemos.ReviewedPosecode +
@@ -60,6 +62,16 @@ if ($bilateralExerciseNames.Count -eq 0 -or @(
     throw 'The bilateral catalog replacement map contains an invalid entry.'
 }
 
+$invalidRegionOverrides = @(
+    $exerciseRegionOverrides.GetEnumerator() | Where-Object {
+        [int]$_.Key -lt 1 -or
+        [int]$_.Key -gt 1000 -or
+        [string]$_.Value -notin $regions
+    })
+if ($invalidRegionOverrides.Count -gt 0) {
+    throw 'The exercise-region override map contains an invalid entry.'
+}
+
 if ($holdExerciseFrames.Count -eq 0 -or @(
         $holdExerciseFrames.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
@@ -70,8 +82,28 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
     throw 'The reviewed hold-frame map contains an invalid entry.'
 }
 
-if ($externalExerciseMedia.Count -ne 178) {
-    throw 'The reviewed external-media map must contain exactly 178 entries.'
+$invalidExternalMedia = @(
+    $externalExerciseMedia.GetEnumerator() | Where-Object {
+        $exerciseId = [int]$_.Key
+        $media = $_.Value
+        $exerciseId -lt 1 -or
+        $exerciseId -gt 1000 -or
+        $media -isnot [System.Collections.IDictionary] -or
+        -not $media.ContainsKey('File') -or
+        [string]::IsNullOrWhiteSpace([string]$media.File) -or
+        ($media.ContainsKey('Url') -and
+            [string]::IsNullOrWhiteSpace([string]$media.Url)) -or
+        ($media.ContainsKey('StartSeconds') -and
+            [double]$media.StartSeconds -lt 0) -or
+        ($media.ContainsKey('DurationSeconds') -and
+            [double]$media.DurationSeconds -le 0) -or
+        ($media.ContainsKey('FramesPerSecond') -and
+            [int]$media.FramesPerSecond -le 0) -or
+        ($media.ContainsKey('DelayCentiseconds') -and
+            [int]$media.DelayCentiseconds -le 0)
+    })
+if ($invalidExternalMedia.Count -gt 0) {
+    throw 'The reviewed external-media map contains an invalid entry.'
 }
 
 $reviewedExternalIds = @(
@@ -97,11 +129,23 @@ if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
     throw 'Synthetic, schematic, and 3D demonstrations cannot be retained.'
 }
 
-if ($posecodeExerciseMedia.Count -ne 77) {
-    throw 'The reviewed Posecode-media map must contain exactly 77 entries.'
+$invalidPosecodeMedia = @(
+    $posecodeExerciseMedia.GetEnumerator() | Where-Object {
+        $exerciseId = [int]$_.Key
+        $media = $_.Value
+        $exerciseId -lt 1 -or
+        $exerciseId -gt 1000 -or
+        $media -isnot [System.Collections.IDictionary] -or
+        -not $media.ContainsKey('File') -or
+        [string]::IsNullOrWhiteSpace([string]$media.File) -or
+        -not $media.ContainsKey('Source') -or
+        [string]::IsNullOrWhiteSpace([string]$media.Source)
+    })
+if ($invalidPosecodeMedia.Count -gt 0) {
+    throw 'The reviewed Posecode-media map contains an invalid entry.'
 }
 
-if ($exactExerciseMediaCopies.Count -ne 26 -or @(
+if (@(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
             [int]$_.Key -gt 1000 -or
@@ -109,15 +153,16 @@ if ($exactExerciseMediaCopies.Count -ne 26 -or @(
             [int]$_.Value -gt 1000 -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
-    throw 'The exact-media copy map must contain exactly 26 valid entries.'
+    throw 'The exact-media copy map contains an invalid entry.'
 }
 
-if ($exactExerciseMediaTransforms.Count -ne 2 -or @(
+if (@(
         $exactExerciseMediaTransforms.GetEnumerator() | Where-Object {
             $targetId = [int]$_.Key
             $transform = $_.Value
             $targetId -lt 1 -or
             $targetId -gt 1000 -or
+            $transform -isnot [System.Collections.IDictionary] -or
             -not $transform.ContainsKey('Source') -or
             [int]$transform.Source -lt 1 -or
             [int]$transform.Source -gt 1000 -or
@@ -132,15 +177,20 @@ if ($exactExerciseMediaTransforms.Count -ne 2 -or @(
                     [int]$transform.DelayCentiseconds -gt 0)
             )
         }).Count -gt 0) {
-    throw 'The exact-media transform map must contain exactly 2 valid entries.'
+    throw 'The exact-media transform map contains an invalid entry.'
 }
 
 
-$reviewedMappingDifferences = @(
-    @(Compare-Object ($reviewedCopyIds | Sort-Object) `
-        (@($exactExerciseMediaCopies.Keys | ForEach-Object { [int]$_ }) | Sort-Object)),
-    @(Compare-Object ($reviewedTransformIds | Sort-Object) `
-        (@($exactExerciseMediaTransforms.Keys | ForEach-Object { [int]$_ }) | Sort-Object)))
+$copyMappingMatches =
+    (@($reviewedCopyIds | Sort-Object) -join ',') -eq
+    (@($exactExerciseMediaCopies.Keys |
+            ForEach-Object { [int]$_ } |
+            Sort-Object) -join ',')
+$transformMappingMatches =
+    (@($reviewedTransformIds | Sort-Object) -join ',') -eq
+    (@($exactExerciseMediaTransforms.Keys |
+            ForEach-Object { [int]$_ } |
+            Sort-Object) -join ',')
 $nonHumanDerivativeSources = @(
     @($exactExerciseMediaCopies.Values | ForEach-Object { [int]$_ }) +
         @($exactExerciseMediaTransforms.Values |
@@ -151,7 +201,8 @@ $duplicateReviewedIds = @(
     $reviewedExternalIds + $reviewedCopyIds + $reviewedTransformIds |
         Group-Object |
         Where-Object Count -ne 1)
-if (@($reviewedMappingDifferences | Where-Object Count -gt 0).Count -gt 0 -or
+if (-not $copyMappingMatches -or
+    -not $transformMappingMatches -or
     $nonHumanDerivativeSources.Count -gt 0 -or
     $duplicateReviewedIds.Count -gt 0) {
     throw 'The retained copy and transform inventory must derive only from reviewed human footage.'
@@ -182,6 +233,7 @@ function Get-Practice {
         '^Xingyi' { return 'Xingyiquan' }
         '^Karate' { return 'Karate' }
         '^Wing Chun' { return 'Wing Chun' }
+        '^Ninja .*Hand-Seal' { return 'Ninja hand-seal coordination' }
         '^Boxing|^Lead Hook|^Rear Hook|^Lead Uppercut|^Rear Uppercut|^Shovel Hook|^Overhand Punch|^Long-Guard|^High-Guard|^Peekaboo|^Body Jab|^Body Cross' { return 'Boxing' }
         '^Capoeira' { return 'Capoeira' }
         '^Taekwondo' { return 'Taekwondo' }
@@ -197,9 +249,12 @@ function Get-Practice {
         '^Kathak' { return 'Kathak' }
         '^Graham' { return 'Graham technique' }
         '^Horton' { return 'Horton technique' }
+        'Pilates' { return 'Pilates' }
         'Mudra$|Drishti$|Pose$|^Warrior|^Yoga|Garudasana|Gomukhasana|Upward Salute|Extended Mountain|Humble Warrior|Crescent Lunge|Half Moon|Dancer|Tree-Pose|Eagle-Pose|Goddess-Pose|One-Legged Mountain' { return 'Yoga' }
         'VOR|Saccade|Smooth Pursuit|Gaze Stabilization|Gaze Shift|Near-Far Focus|Convergence|Peripheral-Awareness' { return 'Oculomotor and vestibular rehabilitation' }
+        'Self-Resisted|Pull-Apart Isometric|Palm-Press' { return 'Self-resistance' }
         'Tendon|Finger|Thumb|Wrist|Hand|Fist|Palm|Prayer' { return 'Hand therapy and mobility' }
+        'Squat|Lunge|Kickback|Deadlift|Good Morning|Standing Jack|Crunch|Knee-Up|Knee Lift|Leg Raise|Side Bend|Torso Twist|Overhead Slam' { return 'Bodyweight conditioning' }
         default { return 'Standing mobility and movement practice' }
     }
 }
@@ -235,11 +290,12 @@ function Get-MotionProfile {
             return 'LegBalance'
         }
         'HANDS' {
+            if ($Name -match 'Hand-Seal') { return 'HandSeal' }
             if ($Name -match 'Wrist|Pronation|Supination|Turnover') { return 'WristMotion' }
             if ($Name -match 'Thumb') { return 'ThumbMotion' }
             if ($Name -match 'Isometric|Press|Stretch|Pull-Apart') { return 'HandIsometric' }
             if ($Name -match 'Mudra$') { return 'Mudra' }
-            if ($Name -match 'Wing Chun|Karate|Claw|Beak|Fist Formation|Spear|Knife|Ridge') { return 'MartialHand' }
+            if ($Name -match 'Boxing|Punch|Hook|Uppercut|Overhand|Wing Chun|Karate|Block|Claw|Beak|Fist Formation|Spear|Knife|Ridge') { return 'MartialHand' }
             return 'FingerMotion'
         }
         'ARMS' {
@@ -875,9 +931,10 @@ function Get-RoundedInt {
 }
 
 function Get-YtDlpPath {
-    param([string]$WorkingRoot)
-
-    $ytDlpPath = Join-Path $WorkingRoot 'yt-dlp.exe'
+    $sourceCacheRoot = Join-Path (
+        [IO.Path]::GetTempPath()) 'FluxExerciseSourceCache'
+    New-Item -ItemType Directory -Force -Path $sourceCacheRoot | Out-Null
+    $ytDlpPath = Join-Path $sourceCacheRoot 'yt-dlp.exe'
     if (-not (Test-Path -LiteralPath $ytDlpPath)) {
         $ytDlpUrl = 'https://github.com/yt-dlp/yt-dlp/releases/' +
             'download/2026.07.04/yt-dlp.exe'
@@ -896,7 +953,11 @@ function New-ExternalExerciseGif {
         [string]$WorkingRoot
     )
 
-    $sourceRoot = Join-Path $WorkingRoot 'external-sources'
+    # Source downloads are much larger than the generated assets. Keep them in
+    # a stable temporary cache so an interrupted review run can resume without
+    # downloading the same long human-demonstration videos again.
+    $sourceRoot = Join-Path (
+        [IO.Path]::GetTempPath()) 'FluxExerciseSourceCache'
     $frameRoot = Join-Path $WorkingRoot ('external-frames-{0:D4}' -f $ExerciseId)
     New-Item -ItemType Directory -Force -Path $sourceRoot, $frameRoot | Out-Null
 
@@ -911,7 +972,7 @@ function New-ExternalExerciseGif {
         }
 
         if ($Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
-            $ytDlpPath = Get-YtDlpPath -WorkingRoot $WorkingRoot
+            $ytDlpPath = Get-YtDlpPath
             & $ytDlpPath `
                 --no-playlist `
                 --no-warnings `
@@ -2194,8 +2255,16 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         else {
             $sourceExerciseName
         }
+        $effectiveRegion = if ($exerciseRegionOverrides.ContainsKey($exerciseId)) {
+            [string]$exerciseRegionOverrides[$exerciseId]
+        }
+        else {
+            $region
+        }
         $practice = Get-Practice -Name $exerciseName
-        $motionProfile = Get-MotionProfile -Region $region -Name $exerciseName
+        $motionProfile = Get-MotionProfile `
+            -Region $effectiveRegion `
+            -Name $exerciseName
         $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
         $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
         $holdFramePercent = if ($isHold) {
@@ -2212,7 +2281,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             id = $exerciseId
             name = $exerciseName
             video = $videoRelativePath
-            dominantRegion = $region
+            dominantRegion = $effectiveRegion
             practice = $practice
             motionProfile = $motionProfile
             mode = $exerciseMode
@@ -2405,7 +2474,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
-        if ($posecodeExerciseMedia.ContainsKey($exerciseId)) {
+        if ($exerciseId -in $reviewedPosecodeIds) {
             if (-not (Test-Path -LiteralPath $gifPath)) {
                 throw "The reviewed Posecode asset is missing for $exerciseName."
             }
@@ -2425,7 +2494,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
-        if ($externalExerciseMedia.ContainsKey($exerciseId)) {
+        if ($exerciseId -in $reviewedExternalIds) {
             New-ExternalExerciseGif `
                 -ExerciseId $exerciseId `
                 -ExerciseName $exerciseName `
@@ -2447,54 +2516,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
-        $framePaths = @()
-
-        for ($frameIndex = 0; $frameIndex -lt 16; $frameIndex++) {
-            $framePath = Join-Path $tempRoot ('frame_{0:D2}.svg' -f $frameIndex)
-            $svg = New-ExerciseFrameSvg `
-                -ExerciseId $exerciseId `
-                -RegionIndex $regionIndex `
-                -ExerciseName $exerciseName `
-                -MotionProfile $motionProfile `
-                -MovementIndex $movementIndex `
-                -FrameIndex $frameIndex
-            Set-Content -LiteralPath $framePath -Value $svg -Encoding utf8
-            $framePaths += $framePath
-        }
-
-        $delay = @(18, 14, 20, 16, 11, 15, 15, 13, 17, 10)[$movementIndex % 10]
-        $magickArguments = @($framePaths) + @(
-            '-set', 'delay', $delay.ToString(),
-            '-set', 'dispose', 'background',
-            '-set', 'comment', "Flux real exercise $exerciseId - $exerciseName",
-            '-loop', '0',
-            '-layers', 'Optimize',
-            $gifPath
-        )
-
-        & magick @magickArguments
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "ImageMagick failed while generating $gifFileName."
-        }
-
-        if ($isHold) {
-            New-HoldFrameImage `
-                -GifPath $gifPath `
-                -OutputPath $holdFramePath `
-                -FramePercent $holdFramePercent `
-                -Overwrite:$Force
-        }
-
-        New-ExerciseMp4 `
-            -GifPath $gifPath `
-            -VideoPath $videoPath `
-            -HoldFramePercent $holdFramePercent `
-            -Overwrite:$Force
-
-        if ($exerciseId % 50 -eq 0) {
-            Write-Output "Generated retained exercise $exerciseId"
-        }
+        throw "No reviewed human demonstration is assigned to $exerciseName."
     }
 }
 
@@ -2541,9 +2563,24 @@ if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
 
 if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
     $mediaDirectories = @(
-        @{ Path = $gifOutputRoot; Extension = 'gif' },
-        @{ Path = $videoOutputRoot; Extension = 'mp4' },
-        @{ Path = $holdFrameOutputRoot; Extension = 'png' })
+        @{
+            Path = $gifOutputRoot
+            Extension = 'gif'
+            ExpectedIds = $retainedExerciseIds
+        },
+        @{
+            Path = $videoOutputRoot
+            Extension = 'mp4'
+            ExpectedIds = $retainedExerciseIds
+        },
+        @{
+            Path = $holdFrameOutputRoot
+            Extension = 'png'
+            ExpectedIds = @(
+                $holdExerciseFrames.Keys |
+                    ForEach-Object { [int]$_ } |
+                    Where-Object { $_ -in $retainedExerciseIds })
+        })
     foreach ($mediaDirectory in $mediaDirectories) {
         $resolvedMediaDirectory = [IO.Path]::GetFullPath([string]$mediaDirectory.Path)
         if (-not $resolvedMediaDirectory.StartsWith(
@@ -2556,7 +2593,7 @@ if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
             Where-Object {
                 $_.Name -match ('^exercise_(?<id>\d{4})\.' +
                     [regex]::Escape([string]$mediaDirectory.Extension) + '$') -and
-                [int]$Matches.id -notin $retainedExerciseIds
+                [int]$Matches.id -notin @($mediaDirectory.ExpectedIds)
             } |
             ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force }
     }

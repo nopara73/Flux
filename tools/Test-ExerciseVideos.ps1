@@ -59,6 +59,8 @@ $tempRoot = Join-Path ([IO.Path]::GetTempPath()) (
     'FluxVideoVerification-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 $checkedCount = 0
+$renderedVideoHashes = [System.Collections.Generic.List[object]]::new(
+    $catalog.Count)
 
 try {
     foreach ($exercise in $catalog) {
@@ -68,6 +70,14 @@ try {
             $failures.Add("$($exercise.id): missing $videoPath")
             continue
         }
+
+        $renderedVideoHashes.Add([pscustomobject]@{
+                Hash = (Get-FileHash `
+                        -LiteralPath $videoPath `
+                        -Algorithm SHA256).Hash
+                Id = [int]$exercise.id
+                Name = [string]$exercise.name
+            })
 
         $probeJson = & ffprobe `
             -v error `
@@ -146,6 +156,31 @@ finally {
             $systemTempRoot,
             [StringComparison]::OrdinalIgnoreCase)) {
         Remove-Item -LiteralPath $resolvedTempRoot -Recurse -Force
+    }
+}
+
+$duplicateRenderedVideoGroups = @(
+    $renderedVideoHashes |
+        Group-Object Hash |
+        Where-Object Count -gt 1 |
+        Sort-Object Count -Descending)
+if ($duplicateRenderedVideoGroups.Count -eq 0) {
+    Write-Output 'Duplicate rendered-video SHA256 groups: none'
+}
+else {
+    Write-Output (
+        'Duplicate rendered-video SHA256 groups: {0}' -f
+        $duplicateRenderedVideoGroups.Count)
+    foreach ($duplicateGroup in $duplicateRenderedVideoGroups) {
+        $movementLabels = @(
+            $duplicateGroup.Group |
+                Sort-Object Id |
+                ForEach-Object { '{0}: {1}' -f $_.Id, $_.Name })
+        Write-Output (
+            '  {0} ({1} files): {2}' -f
+            $duplicateGroup.Name,
+            $duplicateGroup.Count,
+            ($movementLabels -join '; '))
     }
 }
 

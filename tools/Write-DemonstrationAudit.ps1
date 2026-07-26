@@ -7,15 +7,15 @@ $ErrorActionPreference = 'Stop'
 
 $catalog = @(Get-Content -LiteralPath $CatalogPath -Raw | ConvertFrom-Json)
 $review = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1')
+    Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1') -SkipLimitCheck
 $externalMedia = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1')
+    Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
 $posecodeMedia = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1')
+    Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactMediaCopies = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1')
+    Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1') -SkipLimitCheck
 $exactMediaTransforms = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1')
+    Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1') -SkipLimitCheck
 $regions = @(
     'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
     'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
@@ -50,13 +50,19 @@ if ($duplicateReviewedIds.Count -gt 0 -or $catalogDifference.Count -gt 0) {
 $missingDirectMappings = @(
     @($externalIds | Where-Object { -not $externalMedia.ContainsKey($_) }) +
         @($posecodeIds | Where-Object { -not $posecodeMedia.ContainsKey($_) }))
-$mappingChecks = @(
-    @(Compare-Object ($copyIds | Sort-Object) `
-        (@($exactMediaCopies.Keys | ForEach-Object { [int]$_ }) | Sort-Object)),
-    @(Compare-Object ($transformIds | Sort-Object) `
-        (@($exactMediaTransforms.Keys | ForEach-Object { [int]$_ }) | Sort-Object)))
+$copyMappingsMatch =
+    (@($copyIds | Sort-Object) -join ',') -eq
+    (@($exactMediaCopies.Keys |
+            ForEach-Object { [int]$_ } |
+            Sort-Object) -join ',')
+$transformMappingsMatch =
+    (@($transformIds | Sort-Object) -join ',') -eq
+    (@($exactMediaTransforms.Keys |
+            ForEach-Object { [int]$_ } |
+            Sort-Object) -join ',')
 if ($missingDirectMappings.Count -gt 0 -or
-    @($mappingChecks | Where-Object Count -gt 0).Count -gt 0) {
+    -not $copyMappingsMatch -or
+    -not $transformMappingsMatch) {
     throw 'The retained inventory does not match its reviewed media mappings.'
 }
 

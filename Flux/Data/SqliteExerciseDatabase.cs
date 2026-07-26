@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 10;
+    private const int DatabaseVersion = 11;
     private const string TableName = "exercises";
     private const string CatalogAsset = "exercises.json";
     private const int MinimumExercisesPerRegion = 3;
@@ -154,6 +154,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             catalogRefreshRequired = true;
         }
 
+        if (oldVersion < 11)
+        {
+            // Apply the movement-first expansion and revised region assignments
+            // while retaining scores for every stable exercise ID that remains.
+            catalogRefreshRequired = true;
+        }
+
         if (oldVersion < 3)
         {
             catalogRefreshRequired = true;
@@ -225,9 +232,33 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         database.BeginTransaction();
         try
         {
+            var existingNamesById = new Dictionary<int, string>();
+            using (ICursor? cursor = database.Query(
+                TableName,
+                ["id", "name"],
+                null,
+                null,
+                null,
+                null,
+                null))
+            {
+                if (cursor is null)
+                {
+                    throw new InvalidOperationException(
+                        "Unable to read the existing exercise identities.");
+                }
+
+                while (cursor.MoveToNext())
+                {
+                    existingNamesById[cursor.GetInt(0)] = cursor.GetString(1)
+                        ?? throw new InvalidOperationException(
+                            "An existing exercise has no name.");
+                }
+            }
+
             // Release the UNIQUE name values before applying renamed records.
             database.ExecSQL(
-                "UPDATE exercises SET name = '__flux_catalog_v10_' || id");
+                "UPDATE exercises SET name = '__flux_catalog_v11_' || id");
 
             foreach (Exercise exercise in catalog)
             {
@@ -244,6 +275,16 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 values.Put("silent", exercise.Silent ? 1 : 0);
                 values.Put("exercise_mode", exercise.Mode.ToString());
                 values.Put("hold_frame_percent", exercise.HoldFramePercent);
+                if (existingNamesById.TryGetValue(exercise.Id, out string? existingName) &&
+                    !string.Equals(
+                        existingName,
+                        exercise.Name,
+                        StringComparison.Ordinal))
+                {
+                    // IDs whose movement identity changed are new exercises from
+                    // the user's perspective and must start at the catalog score.
+                    values.Put("score", exercise.Score);
+                }
 
                 int updatedRows = database.Update(
                     TableName,
