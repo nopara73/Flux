@@ -3088,4 +3088,305 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
+
+    # Dynamic balance training: human demonstrations selected before assigning
+    # an approximate dominant region.
+    15 = @{
+        File = 'balance-workout-seth-kardos.mp4'
+        Url = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        SourcePage = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 139.5
+        DurationSeconds = 55.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    16 = @{
+        File = 'balance-workout-seth-kardos.mp4'
+        Url = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        SourcePage = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 199.5
+        DurationSeconds = 56
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    17 = @{
+        File = 'balance-workout-seth-kardos.mp4'
+        Url = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        SourcePage = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 299.5
+        DurationSeconds = 36
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    19 = @{
+        File = 'balance-workout-seth-kardos.mp4'
+        Url = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        SourcePage = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 338
+        DurationSeconds = 37
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    20 = @{
+        File = 'balance-workout-seth-kardos.mp4'
+        Url = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        SourcePage = 'https://www.youtube.com/watch?v=SIacgp-EfDw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 379.5
+        DurationSeconds = 37
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    21 = @{
+        File = 'julia-balance-stability.mp4'
+        Url = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        SourcePage = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 377.5
+        DurationSeconds = 34.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    31 = @{
+        File = 'golden-rooster-drill.mp4'
+        Url = 'https://www.youtube.com/watch?v=JqGI-LW0Oq4'
+        SourcePage = 'https://www.youtube.com/watch?v=JqGI-LW0Oq4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 14
+        DurationSeconds = 20
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    96 = @{
+        File = 'dynamic-standing-figure-four.mp4'
+        Url = 'https://www.youtube.com/watch?v=ZP7dk6zVn4s'
+        SourcePage = 'https://www.youtube.com/watch?v=ZP7dk6zVn4s'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 9.5
+        DurationSeconds = 33.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    97 = @{
+        File = 'julia-balance-stability.mp4'
+        Url = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        SourcePage = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 51
+        DurationSeconds = 38
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    98 = @{
+        File = 'julia-balance-stability.mp4'
+        Url = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        SourcePage = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 326
+        DurationSeconds = 39
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+
+    # Standing stretching: bilateral holds stay frozen; every asymmetric
+    # movement visibly alternates sides inside the repeating demonstration.
+    740 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 24.5
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    741 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 103
+        DurationSeconds = 12.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    742 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 187
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    743 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 234.5
+        DurationSeconds = 6
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    744 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 312
+        DurationSeconds = 13
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    746 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 396
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    747 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 479
+        DurationSeconds = 13
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    748 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 563
+        DurationSeconds = 15
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    750 = @{
+        File = 'fit-by-lys-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=H_VH2eilukE'
+        SourcePage = 'https://www.youtube.com/watch?v=H_VH2eilukE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 261
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $true
+    }
+    751 = @{
+        File = 'fit-by-lys-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=H_VH2eilukE'
+        SourcePage = 'https://www.youtube.com/watch?v=H_VH2eilukE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 130
+        DurationSeconds = 5.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $true
+    }
+    752 = @{
+        File = 'standing-wrist-extension-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=a5rXt7U-phg'
+        SourcePage = 'https://www.youtube.com/watch?v=a5rXt7U-phg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2.5
+        DurationSeconds = 6
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $true
+    }
+    1000 = @{
+        File = 'alex-standing-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 611.5
+        DurationSeconds = 6.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
 }

@@ -6,7 +6,7 @@ Android 7.0 (API 24) and newer.
 ## Exercise database
 
 Flux ships with a local SQLite database seeded from a human-demonstrated catalog
-of 214 exercises. The movements are selected for their value first and assigned
+of 236 exercises. The movements are selected for their value first and assigned
 to the closest `DominantRegion` only afterward, so full-body exercises are not
 excluded merely because they involve several regions. Every region must retain
 at least three choices. Flux works entirely offline and saves each exercise's
@@ -38,7 +38,7 @@ and MP4s can be regenerated from the reviewed source media with:
 .\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
 ```
 
-Verify all 214 runtime videos—including codec, dimensions, silence, duration,
+Verify all 236 runtime videos—including codec, dimensions, silence, duration,
 and every hold's final frame—with:
 
 ```powershell
@@ -46,7 +46,7 @@ and every hold's final frame—with:
 ```
 
 The bundled catalog contains no placeholder, synthetic, schematic, anatomical,
-or 3D media. All 214 demonstrations show an actual person: 213 direct footage
+or 3D media. All 236 demonstrations show an actual person: 235 direct footage
 clips plus one exact human-footage direction transform. The source-quality and region
 counts are recorded in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md).
 Regenerate that report after catalog changes with:
@@ -77,7 +77,9 @@ Schema version 11 applies the movement-first 214-exercise catalog and revised
 region assignments. It preserves scores for unchanged movement identities,
 initializes new or replaced exercises at zero, removes retired rows, and repairs
 any retired saved lineup.
-The current catalog contains 16 symmetric holds and 198 repetition exercises.
+Schema version 12 adds reviewed standing stretches and dynamic balance drills,
+preserving scores for every unchanged movement identity.
+The current catalog contains 19 symmetric holds and 217 repetition exercises.
 
 ## Workout flow
 

@@ -227,6 +227,8 @@ function Get-Practice {
     $practiceName = $Name -replace '^(Alternating|Bilateral|Symmetric)\s+', ''
 
     switch -Regex ($practiceName) {
+        'Balance' { return 'Balance training' }
+        'Stretch|Chest Opener|Forward Fold|Groin-Hamstring' { return 'Stretching' }
         '^Tai Chi' { return 'Tai Chi' }
         '^Qigong|^Eight Brocades|^Five-Animals' { return 'Qigong' }
         '^Bagua' { return 'Baguazhang' }

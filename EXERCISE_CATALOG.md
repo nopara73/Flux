@@ -1,15 +1,16 @@
 # Flux exercise catalog
 
-Flux contains 214 human-demonstrated standing movements. Exercises are selected
+Flux contains 236 human-demonstrated standing movements. Exercises are selected
 for their movement quality first and assigned to the closest dominant region
 only afterward. Full-body movements remain eligible even when several regions
 contribute; the region is an indexing aid, not a claim that the exercise trains
 only that body part. The generator and app require every region to retain at
 least three choices.
 
-The catalog mixes low-impact compound strength and conditioning with ordinary
-active-range-of-motion and balance drills, rehabilitation movements, Pilates,
-yoga, tai chi, qigong, boxing, dance, and martial arts.
+The catalog mixes low-impact compound strength and conditioning with standing
+stretching, dynamic balance drills, ordinary active-range-of-motion,
+rehabilitation movements, Pilates, yoga, tai chi, qigong, boxing, dance, and
+martial arts.
 
 ## Editorial rules
 
@@ -70,7 +71,7 @@ Every retained demonstration uses one of these reviewed sources:
   reversing the frame order is the exact named movement.
 
 No placeholder, synthetic, schematic, anatomical, or 3D media is bundled. All
-**214 included demonstrations** show an actual person. Region and source-quality
+**236 included demonstrations** show an actual person. Region and source-quality
 counts are maintained in
 [`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
 
@@ -80,7 +81,7 @@ Exact reviewed human media reused by mechanically
 identical catalog entries is tracked in `tools/ExactExerciseMediaCopies.psd1`.
 Exact deterministic direction and tempo mappings are tracked in
 `tools/ExactExerciseMediaTransforms.psd1`.
-`tools/Test-ExerciseVideos.ps1` verifies all 214 MP4 containers and compares
+`tools/Test-ExerciseVideos.ps1` verifies all 236 MP4 containers and compares
 the final decoded frame of every hold against its reviewed target image.
 The external clips are used for this private personal build and are not a
 commercial media-clearance record.
