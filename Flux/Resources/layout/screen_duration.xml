@@ -23,66 +23,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:paddingStart="24dp"
                 android:paddingTop="24dp"
                 android:paddingEnd="24dp"
-                android:paddingBottom="20dp">
+                android:paddingBottom="24dp">
 
-                <TextView
-                    android:id="@+id/duration_eyebrow"
-                    style="@style/FluxEyebrowText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/duration_eyebrow" />
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/flux_appicon" />
 
-                <TextView
-                    android:id="@+id/duration_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:accessibilityHeading="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="start"
-                    android:text="@string/duration_title"
-                    android:textColor="@color/primary_text"
-                    android:textSize="34sp" />
-
-                <TextView
-                    android:id="@+id/duration_subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="start"
-                    android:lineSpacingExtra="2dp"
-                    android:text="@string/duration_subtitle"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:id="@+id/duration_picker_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/duration_card_background"
-                    android:orientation="vertical"
-                    android:paddingStart="18dp"
-                    android:paddingTop="18dp"
-                    android:paddingEnd="18dp"
-                    android:paddingBottom="18dp">
-
-                    <TextView
-                        style="@style/FluxEyebrowText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/duration_picker_label" />
+                <FrameLayout
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/duration_dial_background">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:gravity="center_horizontal"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
@@ -95,111 +59,96 @@
                             android:includeFontPadding="false"
                             android:text="@string/duration_minutes_default"
                             android:textColor="@color/primary_text"
-                            android:textSize="72sp" />
+                            android:textSize="108sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-4dp"
+                            android:layout_marginTop="-6dp"
                             android:fontFamily="sans-serif-medium"
                             android:importantForAccessibility="no"
-                            android:letterSpacing="0.14"
+                            android:letterSpacing="0.18"
                             android:text="@string/duration_minutes_unit"
                             android:textColor="@color/accent_text"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
                     </LinearLayout>
+                </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/duration_summary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/duration_summary_default"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="15sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="28dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/duration_decrease_button"
+                        style="@style/DurationStepButton"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:contentDescription="@string/duration_decrease_description"
+                        android:text="@string/duration_decrease" />
 
-                        <Button
-                            android:id="@+id/duration_decrease_button"
-                            style="@style/DurationStepButton"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:contentDescription="@string/duration_decrease_description"
-                            android:text="@string/duration_decrease" />
+                    <SeekBar
+                        android:id="@+id/duration_seek_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/duration_seek_description_default"
+                        android:max="17"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:progress="7"
+                        android:progressBackgroundTint="@color/route_inactive"
+                        android:progressTint="@color/accent"
+                        android:splitTrack="false"
+                        android:thumbTint="@color/accent" />
 
-                        <SeekBar
-                            android:id="@+id/duration_seek_bar"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginEnd="6dp"
-                            android:layout_weight="1"
-                            android:contentDescription="@string/duration_seek_description_default"
-                            android:max="17"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
-                            android:progress="7"
-                            android:progressBackgroundTint="@color/route_inactive"
-                            android:progressTint="@color/accent"
-                            android:splitTrack="false"
-                            android:thumbTint="@color/accent" />
-
-                        <Button
-                            android:id="@+id/duration_increase_button"
-                            style="@style/DurationStepButton"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:contentDescription="@string/duration_increase_description"
-                            android:text="@string/duration_increase" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="@string/duration_minimum"
-                            android:textColor="@color/secondary_text"
-                            android:textSize="11sp" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="@string/duration_maximum"
-                            android:textColor="@color/secondary_text"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/duration_increase_button"
+                        style="@style/DurationStepButton"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:contentDescription="@string/duration_increase_description"
+                        android:text="@string/duration_increase" />
                 </LinearLayout>
 
-                <TextView
-                    style="@style/FluxEyebrowText"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:gravity="start"
-                    android:text="@string/duration_route_title" />
+                    android:paddingStart="74dp"
+                    android:paddingEnd="74dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/duration_minimum_value"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/duration_maximum_value"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/duration_route_segments"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="36dp"
                     android:baselineAligned="false"
                     android:contentDescription="@string/duration_route_default_description"
                     android:focusable="true"
@@ -227,23 +176,6 @@
                     <View android:id="@+id/duration_segment_19" style="@style/DurationRouteSegmentInactive" />
                     <View android:id="@+id/duration_segment_20" style="@style/DurationRouteSegmentInactive" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/duration_endpoint_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/duration_endpoint_background"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center_vertical"
-                    android:minHeight="52dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="10dp"
-                    android:text="@string/duration_endpoint_default"
-                    android:textColor="@color/primary_text"
-                    android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>
 
@@ -264,7 +196,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/duration_start_default"
                 android:minHeight="68dp"
-                android:text="@string/duration_start_default" />
+                android:text="@string/duration_start_default"
+                android:textSize="34sp" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

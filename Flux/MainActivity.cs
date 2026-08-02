@@ -46,12 +46,10 @@ public class MainActivity : Activity
     private View _durationScreen = null!;
     private View _durationInsetContent = null!;
     private TextView _durationMinutesValue = null!;
-    private TextView _durationSummary = null!;
     private Button _durationDecreaseButton = null!;
     private SeekBar _durationSeekBar = null!;
     private Button _durationIncreaseButton = null!;
     private LinearLayout _durationRouteSegments = null!;
-    private TextView _durationEndpointText = null!;
     private Button _beginWorkoutButton = null!;
     private View _workoutScreen = null!;
     private View _workoutInsetContent = null!;
@@ -230,7 +228,6 @@ public class MainActivity : Activity
         _durationInsetContent = FindRequiredView<View>(Resource.Id.duration_inset_content);
         _durationMinutesValue = FindRequiredView<TextView>(
             Resource.Id.duration_minutes_value);
-        _durationSummary = FindRequiredView<TextView>(Resource.Id.duration_summary);
         _durationDecreaseButton = FindRequiredView<Button>(
             Resource.Id.duration_decrease_button);
         _durationSeekBar = FindRequiredView<SeekBar>(Resource.Id.duration_seek_bar);
@@ -238,8 +235,6 @@ public class MainActivity : Activity
             Resource.Id.duration_increase_button);
         _durationRouteSegments = FindRequiredView<LinearLayout>(
             Resource.Id.duration_route_segments);
-        _durationEndpointText = FindRequiredView<TextView>(
-            Resource.Id.duration_endpoint_text);
         _beginWorkoutButton = FindRequiredView<Button>(Resource.Id.begin_workout_button);
         _workoutScreen = FindRequiredView<View>(Resource.Id.workout_screen);
         _workoutInsetContent = FindRequiredView<View>(Resource.Id.workout_inset_content);
@@ -570,9 +565,6 @@ public class MainActivity : Activity
         _durationMinutesValue.Text = clampedMinutes.ToString();
         _durationMinutesValue.ContentDescription =
             $"{clampedMinutes} minutes selected";
-        _durationSummary.Text = GetString(Resource.String.duration_summary_default);
-        _durationEndpointText.Text =
-            $"{clampedMinutes} groups  ·  ends at {endpointName}";
         _beginWorkoutButton.Text = GetString(Resource.String.duration_start_default);
         _beginWorkoutButton.ContentDescription =
             $"Continue with a {clampedMinutes} {minuteLabel} workout";
