@@ -243,8 +243,8 @@
                         style="@style/FluxQuietButton"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/speed_up_description"
-                        android:text="@string/speed_up" />
+                        android:contentDescription="@string/skip_move_description"
+                        android:text="@string/skip" />
                 </LinearLayout>
 
                 <TextView
@@ -299,6 +299,15 @@
                         android:textColor="@color/rest_text"
                         android:textSize="12sp" />
 
+                    <Button
+                        android:id="@+id/rest_skip_button"
+                        style="@style/FluxQuietButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="10dp"
+                        android:contentDescription="@string/skip_rest_description"
+                        android:text="@string/skip" />
+
                     <TextView
                         android:id="@+id/rest_countdown_text"
                         android:layout_width="wrap_content"
@@ -321,22 +330,12 @@
                     android:progress="15"
                     android:progressDrawable="@drawable/rest_progress_track" />
 
-                <TextView
-                    android:id="@+id/rest_helper_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="@string/rest_helper"
-                    android:textColor="@color/rest_text"
-                    android:textSize="14sp" />
-
                 <Button
                     android:id="@+id/keep_button"
                     style="@style/FluxKeepButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="14dp"
                     android:contentDescription="@string/tap_to_keep_description"
                     android:minHeight="64dp"
                     android:text="@string/tap_to_keep" />

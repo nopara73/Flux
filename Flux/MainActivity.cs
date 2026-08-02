@@ -78,10 +78,8 @@ public class MainActivity : Activity
     private View _restPanel = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
-    private TextView _restHelperText = null!;
+    private Button _restSkipButton = null!;
     private Button _keepButton = null!;
-    private TextView _congratulationsDuration = null!;
-    private TextView _congratulationsSummary = null!;
     private View _completionMark = null!;
     private Button _doneButton = null!;
     private SystemBarsController[] _systemBarsControllers = [];
@@ -264,12 +262,8 @@ public class MainActivity : Activity
         _restPanel = FindRequiredView<View>(Resource.Id.rest_panel);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
-        _restHelperText = FindRequiredView<TextView>(Resource.Id.rest_helper_text);
+        _restSkipButton = FindRequiredView<Button>(Resource.Id.rest_skip_button);
         _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
-        _congratulationsDuration = FindRequiredView<TextView>(
-            Resource.Id.congratulations_duration);
-        _congratulationsSummary = FindRequiredView<TextView>(
-            Resource.Id.congratulations_summary);
         _completionMark = FindRequiredView<View>(Resource.Id.completion_mark);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
 
@@ -294,6 +288,7 @@ public class MainActivity : Activity
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
         _speedUpButton.Click += (_, _) => SkipCountdown();
+        _restSkipButton.Click += (_, _) => SkipRest();
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _mediaRetryButton.Click += (_, _) =>
         {
@@ -1178,9 +1173,6 @@ public class MainActivity : Activity
         _keepButton.ContentDescription = _state.PendingRestKept
             ? "Exercise kept for the next session"
             : GetString(Resource.String.tap_to_keep_description);
-        _restHelperText.Text = _state.PendingRestKept
-            ? GetString(Resource.String.rest_kept_helper)
-            : GetString(Resource.String.rest_helper);
 
         UpdateRestCountdownText();
     }
@@ -1250,9 +1242,19 @@ public class MainActivity : Activity
         _keepButton.SetTextColor(new Android.Graphics.Color(
             GetColor(Resource.Color.accent_text)));
         _keepButton.ContentDescription = "Exercise kept for the next session";
-        _restHelperText.Text = GetString(Resource.String.rest_kept_helper);
         _keepButton.PerformHapticFeedback(FeedbackConstants.KeyboardTap);
         AnnouncePhaseForAccessibility(_keepButton, "Exercise kept.");
+    }
+
+    private void SkipRest()
+    {
+        if (!_restActive || _state.PendingRestMuscleGroup != _currentMuscleGroup)
+        {
+            return;
+        }
+
+        _restSkipButton.PerformHapticFeedback(FeedbackConstants.KeyboardTap);
+        CompleteRest();
     }
 
     private void CompleteRest()
@@ -1291,12 +1293,6 @@ public class MainActivity : Activity
         _restActive = false;
         _exerciseVideo.StopPlayback();
         _currentExercise = null;
-        (int replaced, int kept) = _sessionService.GetOutcomeCounts(_state);
-
-        _congratulationsDuration.Text =
-            $"{_state.ActiveWorkoutMinutes} minute session";
-        _congratulationsSummary.Text =
-            $"{kept} kept  ·  {replaced} rotating next time";
         ShowAppScreen(AppScreen.Completion);
         _completionMark.Animate()?.Cancel();
         _completionMark.Alpha = 0f;

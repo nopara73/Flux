@@ -16,13 +16,12 @@
     <string name="ready_label">READY  ·  45 SECONDS</string>
     <string name="start">Start</string>
     <string name="move_label">MOVE</string>
-    <string name="speed_up">Skip timer</string>
-    <string name="speed_up_description">Skip the countdown for testing</string>
+    <string name="skip">Skip</string>
+    <string name="skip_move_description">Skip the movement countdown for testing</string>
+    <string name="skip_rest_description">Skip the rest countdown for testing</string>
     <string name="countdown_initial">45</string>
     <string name="rest_label">REST</string>
     <string name="rest_initial">15</string>
-    <string name="rest_helper">Tap to keep this exercise next time</string>
-    <string name="rest_kept_helper">Kept for your next session</string>
     <string name="tap_to_keep">Tap to keep</string>
     <string name="tap_to_keep_description">Keep this exercise for the next session</string>
     <string name="kept">Kept  ✓</string>
@@ -30,9 +29,7 @@
     <string name="media_loading">Preparing demonstration…</string>
     <string name="media_error">Demonstration unavailable</string>
     <string name="media_retry">Try again</string>
-    <string name="congratulations_title">You found your flow.</string>
-    <string name="congratulations_message">Every movement is complete. Take that calm with you.</string>
-    <string name="congratulations_duration_default">10 minute session</string>
-    <string name="congratulations_summary_default">10 kept  ·  0 rotating next time</string>
+    <string name="completion_check_mark">✓</string>
+    <string name="workout_complete_description">Workout complete</string>
     <string name="done">Done</string>
 </resources>
