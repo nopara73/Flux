@@ -2,43 +2,73 @@
 <resources>
     <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
+        <item name="android:windowBackground">@drawable/screen_background</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/screen_background</item>
-        <item name="android:navigationBarColor">@color/screen_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/completion_bottom</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="android:colorAccent">@color/accent</item>
     </style>
 
-    <style name="DurationEyebrowText" parent="@android:style/Widget.TextView">
+    <style name="FluxEyebrowText" parent="@android:style/Widget.TextView">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:letterSpacing">0.18</item>
         <item name="android:textColor">@color/accent_text</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="DurationStepButton" parent="@android:style/Widget.Material.Button">
-        <item name="android:backgroundTint">@color/duration_stepper_background</item>
+        <item name="android:background">@drawable/quiet_button_background</item>
         <item name="android:elevation">0dp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:padding">0dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/duration_stepper_text</item>
+        <item name="android:textColor">@color/accent_text</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="DurationPrimaryButton" parent="@android:style/Widget.Material.Button">
-        <item name="android:backgroundTint">@color/accent</item>
-        <item name="android:elevation">4dp</item>
+    <style name="FluxPrimaryButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/primary_button_background</item>
+        <item name="android:elevation">0dp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FluxKeepButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/keep_button_background</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="FluxCompletionButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/completion_button_background</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/completion_bottom</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="FluxQuietButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/quiet_button_background</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/accent_text</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="DurationRouteSegmentActive">

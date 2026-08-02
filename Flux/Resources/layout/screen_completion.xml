@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/congratulations_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/congratulations_background"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:id="@+id/completion_inset_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="28dp"
+                android:paddingTop="32dp"
+                android:paddingEnd="28dp"
+                android:paddingBottom="28dp">
+
+                <TextView
+                    android:id="@+id/completion_mark"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:background="@drawable/completion_check_background"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:importantForAccessibility="no"
+                    android:text="✓"
+                    android:textColor="@color/completion_gold"
+                    android:textSize="48sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:accessibilityHeading="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:text="@string/congratulations_title"
+                    android:textColor="@color/white"
+                    android:textSize="36sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/congratulations_message"
+                    android:textColor="@color/completion_text"
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:id="@+id/completion_summary_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/completion_summary_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/congratulations_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="@string/congratulations_duration_default"
+                        android:textColor="@color/completion_gold"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/congratulations_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="@string/congratulations_summary_default"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="16dp">
+
+            <Button
+                android:id="@+id/done_button"
+                style="@style/FluxCompletionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="68dp"
+                android:text="@string/done" />
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>
