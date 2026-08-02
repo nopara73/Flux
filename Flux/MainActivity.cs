@@ -55,7 +55,11 @@ public class MainActivity : Activity
     private VideoPreparedListener? _videoPreparedListener;
     private Android.Graphics.Bitmap? _holdFrameBitmap;
     private bool _countdownActive;
+    private bool _countdownPaused;
+    private long _countdownEndsAtElapsedMilliseconds;
+    private long _countdownMillisecondsRemaining;
     private bool _restActive;
+    private bool _activityResumed;
     private bool _loopExerciseVideo = true;
     private bool _freezeHoldAtEnd;
 
@@ -74,20 +78,24 @@ public class MainActivity : Activity
         _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
         _stateStore = new SharedPreferencesWorkoutStateStore(this);
         _state = _stateStore.Load();
+        RecoverPendingScoreUpdate();
         _sessionService.Initialize(_state);
-        _stateStore.Save(_state);
+
+        if (!_state.WorkoutCompleted &&
+            _state.ActiveWorkoutMinutes >= ExerciseSessionService.MinimumWorkoutMinutes)
+        {
+            FinishInterruptedWorkout();
+        }
+        else
+        {
+            _stateStore.Save(_state);
+        }
 
         _selectedWorkoutMinutes = _state.LastWorkoutMinutes;
 
         if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
             ShowCongratulations();
-        }
-        else if (_state.ActiveWorkoutMinutes >=
-                 ExerciseSessionService.MinimumWorkoutMinutes)
-        {
-            ShowNextExercise();
-            RestorePendingRest();
         }
         else
         {
@@ -98,9 +106,14 @@ public class MainActivity : Activity
     protected override void OnResume()
     {
         base.OnResume();
+        _activityResumed = true;
         if (_restActive)
         {
             ResumeRestCountdown();
+        }
+        else if (_countdownPaused)
+        {
+            ResumeCountdown();
         }
         else if (_currentExercise is not null && !_freezeHoldAtEnd)
         {
@@ -110,7 +123,8 @@ public class MainActivity : Activity
 
     protected override void OnPause()
     {
-        CancelCountdown(resetToStart: true);
+        _activityResumed = false;
+        PauseCountdown();
         PauseRestCountdown();
         _exerciseVideo?.Pause();
         base.OnPause();
@@ -258,6 +272,53 @@ public class MainActivity : Activity
         ShowNextExercise();
     }
 
+    private void FinishInterruptedWorkout()
+    {
+        Exercise? scorePenalty = _sessionService.FinishInterruptedWorkout(_state);
+        SaveStateAndScore(scorePenalty);
+    }
+
+    private void RecoverPendingScoreUpdate()
+    {
+        if (_state.PendingScoreExerciseId <= 0)
+        {
+            return;
+        }
+
+        Exercise? exercise = _exerciseDatabase.Exercises.SingleOrDefault(
+            candidate => candidate.Id == _state.PendingScoreExerciseId);
+        if (exercise is not null)
+        {
+            exercise.Score = _state.PendingScoreValue;
+            _exerciseDatabase.UpdateScore(exercise);
+        }
+
+        _state.PendingScoreExerciseId = 0;
+        _state.PendingScoreValue = 0;
+        _stateStore.Save(_state);
+    }
+
+    private void SaveStateAndScore(Exercise? scorePenalty)
+    {
+        if (scorePenalty is not null)
+        {
+            _state.PendingScoreExerciseId = scorePenalty.Id;
+            _state.PendingScoreValue = scorePenalty.Score;
+        }
+
+        _stateStore.Save(_state);
+
+        if (scorePenalty is null)
+        {
+            return;
+        }
+
+        _exerciseDatabase.UpdateScore(scorePenalty);
+        _state.PendingScoreExerciseId = 0;
+        _state.PendingScoreValue = 0;
+        _stateStore.Save(_state);
+    }
+
     private void ConfigureVideoView()
     {
         _videoPreparedListener = new VideoPreparedListener(mediaPlayer =>
@@ -265,7 +326,10 @@ public class MainActivity : Activity
             _activeMediaPlayer = mediaPlayer;
             _activeMediaPlayer.Looping = _loopExerciseVideo;
             _activeMediaPlayer.SetVolume(0f, 0f);
-            _exerciseVideo.Start();
+            if (_activityResumed)
+            {
+                _exerciseVideo.Start();
+            }
         });
         _exerciseVideo.SetOnPreparedListener(_videoPreparedListener);
         _exerciseVideo.Completion += (_, _) =>
@@ -414,13 +478,7 @@ public class MainActivity : Activity
         _restPanel.Visibility = ViewStates.Gone;
         _countdownPanel.Visibility = ViewStates.Visible;
         _countdownText.Text = CountdownSeconds.ToString();
-
-        _countdownTimer = new WorkoutCountDownTimer(
-            CountdownSeconds * 1000L,
-            1000L,
-            secondsRemaining => _countdownText.Text = secondsRemaining.ToString(),
-            CompleteCountdown);
-        _countdownTimer.Start();
+        StartCountdownTimer(CountdownSeconds * 1000L);
     }
 
     private void SkipCountdown()
@@ -444,6 +502,9 @@ public class MainActivity : Activity
         }
 
         _countdownActive = false;
+        _countdownPaused = false;
+        _countdownEndsAtElapsedMilliseconds = 0;
+        _countdownMillisecondsRemaining = 0;
         _countdownTimer?.Dispose();
         _countdownTimer = null;
         _countdownText.Text = "0";
@@ -460,12 +521,15 @@ public class MainActivity : Activity
 
     private void CancelCountdown(bool resetToStart)
     {
-        if (!_countdownActive)
+        if (!_countdownActive && !_countdownPaused)
         {
             return;
         }
 
         _countdownActive = false;
+        _countdownPaused = false;
+        _countdownEndsAtElapsedMilliseconds = 0;
+        _countdownMillisecondsRemaining = 0;
         _countdownTimer?.Cancel();
         _countdownTimer?.Dispose();
         _countdownTimer = null;
@@ -478,6 +542,57 @@ public class MainActivity : Activity
             }
             ShowStartButton();
         }
+    }
+
+    private void PauseCountdown()
+    {
+        if (!_countdownActive)
+        {
+            return;
+        }
+
+        _countdownMillisecondsRemaining = Math.Max(
+            1,
+            _countdownEndsAtElapsedMilliseconds -
+                Android.OS.SystemClock.ElapsedRealtime());
+        _countdownActive = false;
+        _countdownPaused = true;
+        _countdownTimer?.Cancel();
+        _countdownTimer?.Dispose();
+        _countdownTimer = null;
+    }
+
+    private void ResumeCountdown()
+    {
+        if (!_countdownPaused || _countdownMillisecondsRemaining <= 0)
+        {
+            return;
+        }
+
+        if (_holdFrameImage.Visibility != ViewStates.Visible)
+        {
+            _exerciseVideo.Start();
+        }
+
+        StartCountdownTimer(_countdownMillisecondsRemaining);
+    }
+
+    private void StartCountdownTimer(long millisecondsRemaining)
+    {
+        _countdownActive = true;
+        _countdownPaused = false;
+        _countdownMillisecondsRemaining = millisecondsRemaining;
+        _countdownEndsAtElapsedMilliseconds =
+            Android.OS.SystemClock.ElapsedRealtime() + millisecondsRemaining;
+        _countdownText.Text = ((int)Math.Ceiling(millisecondsRemaining / 1000d))
+            .ToString();
+
+        _countdownTimer = new WorkoutCountDownTimer(
+            millisecondsRemaining,
+            1000L,
+            secondsRemaining => _countdownText.Text = secondsRemaining.ToString(),
+            CompleteCountdown);
+        _countdownTimer.Start();
     }
 
     private void BeginRest()
@@ -602,12 +717,7 @@ public class MainActivity : Activity
             keep);
         _sessionService.ClearPendingRest(_state);
 
-        if (!keep)
-        {
-            _exerciseDatabase.UpdateScore(exercise);
-        }
-
-        _stateStore.Save(_state);
+        SaveStateAndScore(keep ? null : exercise);
         PlayBeep(Android.Media.Tone.PropBeep);
 
         if (_state.WorkoutCompleted)

@@ -14,6 +14,10 @@ public sealed class WorkoutState
 
     public bool PendingRestKept { get; set; }
 
+    public int PendingScoreExerciseId { get; set; }
+
+    public int PendingScoreValue { get; set; }
+
     public int LastWorkoutMinutes { get; set; } = 10;
 
     public int ActiveWorkoutMinutes { get; set; }

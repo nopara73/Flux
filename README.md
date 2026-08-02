@@ -71,6 +71,12 @@ bucket in the same muscle group. New lineups avoid duplicate exercises whenever
 the group pools allow it, without replacing a kept slot merely to enforce
 uniqueness. Progress, rest state, last-used duration, and scores persist locally.
 
+If Flux is closed or killed during a workout, the next cold launch applies all
+completed keep/not-keep results (including a pending rest choice), performs the
+required replacements, and returns to the duration selector. An exercise that
+never reached its rest phase is left unchanged. Briefly backgrounding the same
+live activity continues its current workout normally.
+
 ## Catalog tools
 
 Regenerate the catalog and runtime MP4s from reviewed source media:

@@ -184,6 +184,32 @@ public sealed class ExerciseSessionService
         state.CompletionAcknowledged = true;
     }
 
+    public Exercise? FinishInterruptedWorkout(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+
+        if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
+        {
+            ResetToDurationSelection(state);
+            return null;
+        }
+
+        Exercise? scorePenalty = null;
+        if (state.PendingRestMuscleGroup is MuscleGroup pendingMuscleGroup)
+        {
+            bool keep = state.PendingRestKept;
+            Exercise exercise = RecordOutcome(state, pendingMuscleGroup, keep);
+            ClearPendingRest(state);
+            if (!keep)
+            {
+                scorePenalty = exercise;
+            }
+        }
+
+        PrepareNextSession(state);
+        return scorePenalty;
+    }
+
     public (int Replaced, int Kept) GetOutcomeCounts(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
