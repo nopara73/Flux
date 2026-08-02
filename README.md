@@ -5,7 +5,7 @@ Android. It targets Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-The app ships with a local SQLite database seeded from 236 reviewed exercises.
+The app ships with a local SQLite database seeded from 246 reviewed exercises.
 Movements are selected for their value first, then assigned on a best-effort
 basis to one or more of these ordered muscle groups:
 
@@ -45,11 +45,11 @@ Every retained movement:
 - needs no wall, chair, floor work, prop, partner, or equipment;
 - avoids jumping, stomping, clapping, and vocalization.
 
-All 236 MP4 demonstrations are bundled for offline use. Holds loop as previews,
+All 246 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 13 stores muscle assignments in a normalized
+Database schema version 14 stores muscle assignments in a normalized
 many-to-many table. Upgrading preserves the score of each stable exercise whose
 ID and name are unchanged. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and

@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 236 human-demonstrated standing movements. Exercises are chosen
+Flux contains 246 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to one or more muscle groups afterward.
 Full-body movements remain eligible for every group where they place meaningful
 demand; assignment is a practical workout index, not an anatomical claim. The
@@ -42,7 +42,7 @@ suffixes, missing motion profiles, non-human media, and constraint violations.
 
 ## Media quality
 
-Every entry has an offline 256 × 256 silent H.264 MP4. All 236 included
+Every entry has an offline 256 × 256 silent H.264 MP4. All 246 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the
@@ -61,3 +61,7 @@ The retained inventory and media mappings live in:
 compares every hold’s decoded final frame with its reviewed target. Counts are
 reported in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). External clips are
 used for this private personal build and are not a commercial clearance record.
+
+Practice provenance and the deliberately constrained gaps in the supplementary
+movement-practices DAG are reported in
+[docs/PRACTICE_COVERAGE_AUDIT.md](docs/PRACTICE_COVERAGE_AUDIT.md).

@@ -54,6 +54,9 @@ $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1') -SkipLimitCheck
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1') -SkipLimitCheck
+$exercisePracticeTaxonomy = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExercisePracticeTaxonomy.psd1') -SkipLimitCheck
+$exercisePracticeOverrides = $exercisePracticeTaxonomy.CatalogPracticeOverrides
 $exerciseRegionOverrides = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseRegionOverrides.psd1') -SkipLimitCheck
 $exerciseMuscleGroups = Import-PowerShellDataFile -LiteralPath (
@@ -80,6 +83,15 @@ $retainedExerciseIds = @(
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
 $minimumExercisesPerMuscleGroup = 10
+
+$invalidPracticeOverrides = @(
+    $exercisePracticeOverrides.GetEnumerator() | Where-Object {
+        [int]$_.Key -notin $retainedExerciseIds -or
+        [string]::IsNullOrWhiteSpace([string]$_.Value)
+    })
+if ($invalidPracticeOverrides.Count -gt 0) {
+    throw 'The exercise-practice override map contains an invalid entry.'
+}
 
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
@@ -2324,7 +2336,12 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         else {
             $region
         }
-        $practice = Get-Practice -Name $exerciseName
+        $practice = if ($exercisePracticeOverrides.ContainsKey($exerciseId)) {
+            [string]$exercisePracticeOverrides[$exerciseId]
+        }
+        else {
+            Get-Practice -Name $exerciseName
+        }
         $motionProfile = Get-MotionProfile `
             -Region $effectiveRegion `
             -Name $exerciseName

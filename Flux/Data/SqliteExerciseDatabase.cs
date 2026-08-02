@@ -10,7 +10,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 13;
+    private const int DatabaseVersion = 14;
     private const string ExerciseTable = "exercises";
     private const string MuscleGroupTable = "exercise_muscle_groups";
     private const string CatalogAsset = "exercises.json";

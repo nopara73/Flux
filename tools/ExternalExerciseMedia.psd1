@@ -2,6 +2,110 @@
     # Visually reviewed standing, silent, zero-equipment demonstrations.
     # Entries without Url use the hasaneyldrm/exercises-dataset source.
     8 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
+    32 = @{
+        File = 'tandem-walk-bsr.mp4'
+        Url = 'https://www.youtube.com/watch?v=MuueTXaBJ3k'
+        SourcePage = 'https://www.youtube.com/watch?v=MuueTXaBJ3k'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 8.0
+        DurationSeconds = 20.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    37 = @{
+        File = 'side-shuffle-get-healthy-u.mp4'
+        Url = 'https://www.youtube.com/watch?v=mziPKITnPeQ'
+        SourcePage = 'https://www.youtube.com/watch?v=mziPKITnPeQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 38.0
+        DurationSeconds = 16.0
+        FramesPerSecond = 10
+        Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+        MirrorForAlternation = $false
+    }
+    41 = @{
+        File = 'backward-walking-nhs.mp4'
+        Url = 'https://www.youtube.com/watch?v=vKqW6H6vFNg'
+        SourcePage = 'https://www.nbt.nhs.uk/our-services/a-z-services/physiotherapy/specialist-physiotherapy-service/therapy-erehab-video-resources/therapy-erehab-dynamic-balance'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 8.8
+        FramesPerSecond = 10
+        Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+        MirrorForAlternation = $false
+    }
+    47 = @{
+        File = 'walking-horizontal-head-turns.mp4'
+        Url = 'https://www.youtube.com/watch?v=7sWMnimbwOU'
+        SourcePage = 'https://www.youtube.com/watch?v=7sWMnimbwOU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 12.0
+        DurationSeconds = 12.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:iw-ih:0'
+        MirrorForAlternation = $false
+    }
+    56 = @{
+        File = 'hula-kaholo.mp4'
+        Url = 'https://www.youtube.com/watch?v=KoSNSTYuhKM'
+        SourcePage = 'https://www.youtube.com/watch?v=KoSNSTYuhKM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 14.0
+        DurationSeconds = 34.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    58 = @{
+        File = 'bhangra-chaal.mp4'
+        Url = 'https://www.youtube.com/watch?v=DnJ-VgJG_5I'
+        SourcePage = 'https://www.youtube.com/watch?v=DnJ-VgJG_5I'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 230.0
+        DurationSeconds = 42.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    59 = @{
+        File = 'samba-no-pe-basic.mp4'
+        Url = 'https://www.youtube.com/watch?v=bHPqea1FUzU'
+        SourcePage = 'https://www.youtube.com/watch?v=bHPqea1FUzU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 120.0
+        DurationSeconds = 7.4
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    60 = @{
+        File = 'low-impact-skaters-emily.mp4'
+        Url = 'https://www.youtube.com/watch?v=zVe2WPPCHAQ'
+        SourcePage = 'https://www.youtube.com/watch?v=zVe2WPPCHAQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 10.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     55 = @{
         File = 'pas-de-bourree-240p.webm'
         Url = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/9/90/Pas_de_bourree%2C_ballet_technique_tutorial.webm/Pas_de_bourree%2C_ballet_technique_tutorial.webm.240p.vp9.webm'
@@ -233,6 +337,19 @@
     }
     157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $true }
     162 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
+    167 = @{
+        File = 'high-knee-march.mp4'
+        Url = 'https://www.youtube.com/watch?v=0U_Gi19HiGo'
+        SourcePage = 'https://www.youtube.com/watch?v=0U_Gi19HiGo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 13.2
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     176 = @{
         File = 'karate-back-kick.mp4'
         Url = 'https://www.youtube.com/watch?v=BjylVSI2OLc'
@@ -498,6 +615,19 @@
         MirrorForAlternation = $false
     }
     609 = @{ File = '1364-cuKYxhu.gif'; MirrorForAlternation = $false }
+    625 = @{
+        File = 'wing-chun-juen-ma-rob-ley.mp4'
+        Url = 'https://www.youtube.com/watch?v=QC6vp0Wpumc'
+        SourcePage = 'https://www.youtube.com/watch?v=QC6vp0Wpumc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 15.0
+        DurationSeconds = 40.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih*0.75:ih*0.75:(iw-ih*0.75)/2:ih*0.125'
+        MirrorForAlternation = $false
+    }
     626 = @{
         File = 'sumo-stance.mp4'
         Url = 'https://www.youtube.com/watch?v=ED5-6FQvkdE'

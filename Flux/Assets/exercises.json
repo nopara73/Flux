@@ -138,8 +138,195 @@
       "Calves",
       "Shins"
     ],
-    "practice": "Balance training",
+    "practice": "Tai Chi",
     "motionProfile": "FootBalance",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 32,
+    "name": "Tandem Walk",
+    "video": "exercise_videos/exercise_0032.mp4",
+    "muscleGroups": [
+      "Core",
+      "Calves",
+      "Shins"
+    ],
+    "practice": "Gait retraining",
+    "motionProfile": "WalkingStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 37,
+    "name": "Side Shuffle",
+    "video": "exercise_videos/exercise_0037.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
+    "practice": "Low-impact aerobics",
+    "motionProfile": "SideStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 41,
+    "name": "Backward Walking",
+    "video": "exercise_videos/exercise_0041.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Hamstrings",
+      "Calves",
+      "Shins"
+    ],
+    "practice": "Backward walking",
+    "motionProfile": "WalkingStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 47,
+    "name": "Walking with Horizontal Head Turns",
+    "video": "exercise_videos/exercise_0047.mp4",
+    "muscleGroups": [
+      "Core",
+      "Neck",
+      "Shins"
+    ],
+    "practice": "Vestibular rehabilitation",
+    "motionProfile": "TurnStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 56,
+    "name": "Hula Kāholo",
+    "video": "exercise_videos/exercise_0056.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
+    "practice": "Hula",
+    "motionProfile": "WalkingStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 58,
+    "name": "Bhangra Chaal",
+    "video": "exercise_videos/exercise_0058.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Shoulders",
+      "Calves",
+      "HipFlexors",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
+    "practice": "Bhangra",
+    "motionProfile": "WalkingStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 59,
+    "name": "Samba no Pé Basic",
+    "video": "exercise_videos/exercise_0059.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Calves",
+      "HipFlexors",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
+    "practice": "Samba",
+    "motionProfile": "WalkingStep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 60,
+    "name": "Low-Impact Skater Step",
+    "video": "exercise_videos/exercise_0060.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Hamstrings",
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
+    "practice": "Low-impact aerobics",
+    "motionProfile": "WalkingStep",
     "mode": "Repetition",
     "holdFramePercent": 0,
     "score": 0,
@@ -379,7 +566,7 @@
       "Trapezius",
       "RotatorCuff"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -1313,6 +1500,30 @@
     "silent": true
   },
   {
+    "id": 167,
+    "name": "High-Knee March",
+    "video": "exercise_videos/exercise_0167.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Shoulders",
+      "Calves",
+      "HipFlexors",
+      "Shins"
+    ],
+    "practice": "Running drills",
+    "motionProfile": "KneeLift",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 168,
     "name": "Toy Soldier March",
     "video": "exercise_videos/exercise_0168.mp4",
@@ -1643,7 +1854,7 @@
       "Calves",
       "Adductors"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -1662,7 +1873,7 @@
       "Glutes",
       "Quadriceps"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "Squat",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -1823,7 +2034,7 @@
       "Calves",
       "Adductors"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "Squat",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -1844,7 +2055,7 @@
       "Calves",
       "Adductors"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "Squat",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -2875,7 +3086,7 @@
       "Trapezius",
       "Biceps"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Ballet",
     "motionProfile": "BackBalance",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -2893,7 +3104,7 @@
     "muscleGroups": [
       "Neck"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Functional Range Conditioning",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -2965,7 +3176,7 @@
     "muscleGroups": [
       "Neck"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Qigong",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -3001,7 +3212,7 @@
     "muscleGroups": [
       "Neck"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Jazz dance",
     "motionProfile": "HeadFourDirection",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -3467,13 +3678,36 @@
     "silent": true
   },
   {
+    "id": 625,
+    "name": "Wing Chun Juen Ma Turning Stance",
+    "video": "exercise_videos/exercise_0625.mp4",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Hamstrings",
+      "Adductors",
+      "Abductors"
+    ],
+    "practice": "Wing Chun",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 626,
     "name": "Sumo Stance",
     "video": "exercise_videos/exercise_0626.mp4",
     "muscleGroups": [
       "Adductors"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Sumo",
     "motionProfile": "HipOpenClose",
     "mode": "Hold",
     "holdFramePercent": 63,
@@ -4512,7 +4746,7 @@
       "Core",
       "HipFlexors"
     ],
-    "practice": "Hand therapy and mobility",
+    "practice": "Fundamental movement skills",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
     "holdFramePercent": 0,
@@ -4550,7 +4784,7 @@
       "Core",
       "Quadriceps"
     ],
-    "practice": "Standing mobility and movement practice",
+    "practice": "Yoga",
     "motionProfile": "CoreBalance",
     "mode": "Hold",
     "holdFramePercent": 92,
