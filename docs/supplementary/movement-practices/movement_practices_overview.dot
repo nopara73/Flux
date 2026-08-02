@@ -1,0 +1,21 @@
+digraph Overview { graph [rankdir=LR, splines=ortho, bgcolor="white"]; node [shape=box, style=filled, fontname="Arial"];
+movement [label="Human movement practices & cultures", fillcolor="#111827", fontcolor="white"];
+"dance" [label="Dance & rhythmic movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "dance";
+"combat" [label="Combat, martial & weapon cultures", fillcolor="#1f4e79", fontcolor="white"]; movement -> "combat";
+"sport" [label="Games, sport & contest", fillcolor="#1f4e79", fontcolor="white"]; movement -> "sport";
+"fitness" [label="Physical culture, conditioning & exercise", fillcolor="#1f4e79", fontcolor="white"]; movement -> "fitness";
+"somatics" [label="Somatics, mind–body & internal arts", fillcolor="#1f4e79", fontcolor="white"]; movement -> "somatics";
+"ritual" [label="Ritual, devotional & ceremonial movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "ritual";
+"performance" [label="Theatre, mime & movement performance", fillcolor="#1f4e79", fontcolor="white"]; movement -> "performance";
+"acrobatics" [label="Acrobatics, circus & object manipulation", fillcolor="#1f4e79", fontcolor="white"]; movement -> "acrobatics";
+"locomotion" [label="Locomotion, travel & terrain skills", fillcolor="#1f4e79", fontcolor="white"]; movement -> "locomotion";
+"outdoor" [label="Outdoor, adventure & survival movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "outdoor";
+"aquatic" [label="Aquatic & underwater movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "aquatic";
+"occupational" [label="Work, craft & subsistence movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "occupational";
+"healing" [label="Therapeutic, rehabilitative & adaptive movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "healing";
+"play" [label="Play, improvisation & movement exploration", fillcolor="#1f4e79", fontcolor="white"]; movement -> "play";
+"animal" [label="Animal-partnered movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "animal";
+"military" [label="Military drill, tactical & service movement", fillcolor="#1f4e79", fontcolor="white"]; movement -> "military";
+"digital" [label="Digital, mediated & emerging movement cultures", fillcolor="#1f4e79", fontcolor="white"]; movement -> "digital";
+"education" [label="Movement education & pedagogy", fillcolor="#1f4e79", fontcolor="white"]; movement -> "education";
+}

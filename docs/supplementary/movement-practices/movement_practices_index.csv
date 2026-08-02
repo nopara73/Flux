@@ -1,0 +1,1056 @@
+id,label,kind,region,notes,parents
+3x3_basketball,3x3 basketball,practice,Global,,sport_ball_team:contains
+acro_circus,Circus movement disciplines,family,Global,,acrobatics:contains
+acro_dance,Acro dance,practice,Global,,acro_gymnastics:contains
+acro_gymnastics,Gymnastics disciplines,family,Global,,acrobatics:contains
+acro_object,Juggling & object manipulation,family,Global,,acrobatics:contains
+acrobatic_gymnastics,Acrobatic gymnastics,practice,Global,,acro_gymnastics:contains
+acrobatics,"Acrobatics, circus & object manipulation",domain,,,movement:contains
+acroyoga,Acroyoga,practice,South Asia / global,,somatics_yoga:contains | acro_circus:cross-link | play_improv:cross-link
+adaptive_climbing,Adaptive climbing,practice,Global,,healing_adaptive:contains
+adaptive_yoga,Adaptive yoga,practice,Global,,healing_adaptive:contains
+adumu,Adumu,practice,Africa,,dance_african:contains
+adventure_racing,Adventure racing,practice,Global,,sport_multisport:contains
+aerial_hoop,Aerial hoop,practice,Global,,acro_circus:contains
+aerial_silks,Aerial silks,practice,Global,,acro_circus:contains
+aerial_yoga,Aerial yoga,practice,South Asia / global,,somatics_yoga:contains
+aerobic_gymnastics,Aerobic gymnastics,practice,Global,,acro_gymnastics:contains
+aerobics,Aerobics,practice,Global,,fitness_endurance:contains
+afro_cuban_rumba,Afro-Cuban rumba,practice,African diaspora,,dance_afrodiasporic:contains
+agbadza,Agbadza,practice,Africa,,dance_african:contains
+aid_climbing,Aid climbing,practice,Global,,locomotion_climbing:contains
+aikido,Aikido,practice,Eurasia,,combat_internal:contains | somatics_western:cross-link
+alexander_technique,Alexander Technique,practice,Western / global,,somatics_western:contains
+alpine_skiing,Alpine skiing,practice,Cold climates,,sport_winter:contains
+american_football,American football,practice,Global,,sport_ball_team:contains
+amputee_running,Amputee running,practice,Global,,healing_adaptive:contains
+andean_tinku_dance,Andean tinku dance,practice,Americas,,dance_indigenous_americas:contains
+animal,Animal-partnered movement,domain,,,movement:contains
+animal_equestrian,Equestrian movement cultures,family,Global,,animal:contains
+animal_flow,Animal Flow,practice,Global,,fitness_natural:contains
+animal_imitation_movement,Animal imitation movement,practice,Global,,play_improv:contains
+animal_other,Other animal-partnered movement,family,Global,,animal:contains
+apsara_dance,Apsara dance,practice,Southeast Asia,,dance_se_asia:contains
+aquafitness,Aquafitness,practice,Global,,fitness_endurance:contains
+aquathlon,Aquathlon,practice,Global,,sport_multisport:contains
+aquatic,Aquatic & underwater movement,domain,,,movement:contains
+aquatic_boards,Board & wave riding,family,Global,,aquatic:contains
+aquatic_boats,Paddling & rowing movement,family,Global,,aquatic:contains
+aquatic_dive,Diving & underwater movement,family,Global,,aquatic:contains
+aquatic_swim,Swimming cultures & strokes,family,Global,,aquatic:contains
+aquatic_therapy,Aquatic therapy,practice,Global,,healing_rehab:contains
+archery,Archery,practice,Global,,sport_precision:contains
+argentine_tango,Argentine tango,practice,Global,,dance_ballroom:contains
+arm_wrestling,Arm wrestling,practice,Global,,sport_strength:contains
+arnis_eskrima_kali,Arnis / Eskrima / Kali,practice,Global,,combat_weapon:contains
+artistic_gymnastics,Artistic gymnastics,practice,Global,,acro_gymnastics:contains
+ashtanga_vinyasa_yoga,Ashtanga vinyasa yoga,practice,South Asia / global,,somatics_yoga:contains
+assisted_stretching,Assisted stretching,practice,Global,,healing_bodywork:contains
+association_football,Association football,practice,Global,,sport_ball_team:contains
+atilogwu,Atilogwu,practice,Africa,,dance_african:contains
+atlatl_throwing,Atlatl throwing,practice,Global,,occupational_hunt:contains
+augmented_reality_walking_games,Augmented-reality walking games,practice,Global,,digital_exergaming:contains
+australian_rules_football,Australian rules football,practice,Global,,sport_ball_team:contains
+authentic_movement,Authentic Movement,practice,Western / global,,somatics_western:contains
+authentic_movement_2,Authentic Movement,practice,Global,,play_improv:contains
+babywearing,Babywearing,practice,Global,,occupational_domestic:contains
+bachata,Bachata,practice,Global,,dance_ballroom:contains
+backpacking,Backpacking,practice,Global,,outdoor_wilderness:contains
+backstroke,Backstroke,practice,Global,,aquatic_swim:contains
+backward_walking,Backward walking,practice,Global,,locomotion_bipedal:contains
+badminton,Badminton,practice,Global,,sport_net_wall:contains
+baduanjin,Baduanjin,practice,China / global,,somatics_chinese:contains
+baguazhang,Baguazhang,practice,Eurasia,,combat_internal:contains
+bajiquan,Bajiquan,practice,Global,,combat_regional:contains
+balinese_dance,Balinese dance,practice,Southeast Asia,,dance_se_asia:contains
+balkan_circle_dance,Balkan circle dance,practice,Europe,,dance_europe_folk:contains
+ballet,Ballet,practice,Global,,dance_stage:contains
+bando,Bando,practice,Global,,combat_regional:contains
+banshay,Banshay,practice,Global,,combat_regional:contains
+barbell_training,Barbell training,practice,Global,,fitness_resistance:contains
+bare_knuckle_boxing,Bare-knuckle boxing,practice,Global,,combat_striking:contains
+barefoot_running,Barefoot running,practice,Global,,locomotion_bipedal:contains
+baris,Baris,practice,Southeast Asia,,dance_se_asia:contains
+barn_dance,Barn dance,practice,Europe,,dance_europe_folk:contains
+bartitsu,Bartitsu,practice,Global,,combat_regional:contains
+base_jumping,BASE jumping,practice,Global,,outdoor_air:contains
+baseball,Baseball,practice,Global,,sport_bat_ball:contains
+basketball,Basketball,practice,Global,,sport_ball_team:contains
+basque_pelota,Basque pelota,practice,Global,,sport_net_wall:contains
+bata_dance,Bata dance,practice,Africa,,dance_african:contains
+beach_soccer,Beach soccer,practice,Global,,sport_ball_team:contains
+beach_volleyball,Beach volleyball,practice,Global,,sport_net_wall:contains
+belly_dance_raqs_sharqi,Belly dance / raqs sharqi,practice,Middle East / North Africa,,dance_middle_east:contains
+bhangra,Bhangra,practice,South Asia,,dance_south_asia:contains
+bharata_derived_thai_classical_dance,Bharata-derived Thai classical dance,practice,Southeast Asia,,dance_se_asia:contains
+bharatanatyam,Bharatanatyam,practice,South Asia,,dance_south_asia:contains | ritual_devotional:cross-link | performance_theatre:cross-link
+biathlon,Biathlon,practice,Cold climates,,sport_winter:contains
+bike_trials,Bike trials,practice,Global,,sport_wheeled:contains
+bikram_hot_yoga,Bikram / hot yoga,practice,South Asia / global,,somatics_yoga:contains
+billiards,Billiards,practice,Global,,sport_precision:contains
+biofeedback_movement_training,Biofeedback movement training,practice,Global,,digital_robotics:contains
+biomechanics_of_meyerhold,Biomechanics of Meyerhold,practice,Global,,performance_theatre:contains
+blacksmithing_movement,Blacksmithing movement,practice,Global,,occupational_craft:contains
+blind_football,Blind football,practice,Global,,healing_adaptive:contains
+blood_flow_restriction_training,Blood-flow restriction training,practice,Global,,fitness_resistance:contains
+bmx_freestyle,BMX freestyle,practice,Global,,sport_wheeled:contains
+bmx_racing,BMX racing,practice,Global,,sport_wheeled:contains
+boatbuilding_movement,Boatbuilding movement,practice,Global,,occupational_craft:contains
+bobsleigh,Bobsleigh,practice,Cold climates,,sport_winter:contains
+bocce,Bocce,practice,Global,,sport_precision:contains
+boccia,Boccia,practice,Global,,healing_adaptive:contains
+body_mind_centering,Body-Mind Centering,practice,Western / global,,somatics_western:contains
+bodyboarding,Bodyboarding,practice,Global,,aquatic_boards:contains
+bodybuilding,Bodybuilding,practice,Global,,fitness_resistance:contains
+bodysurfing,Bodysurfing,practice,Global,,aquatic_boards:contains
+bojutsu,Bojutsu,practice,Global,,combat_weapon:contains
+bokator,Bokator,practice,Global,,combat_regional:contains
+bokator_striking,Bokator striking,practice,Global,,combat_striking:contains
+bolero,Bolero,practice,Global,,dance_ballroom:contains
+bolojo,Bolojo,practice,Africa,,dance_african:contains
+bomba,Bomba,practice,African diaspora,,dance_afrodiasporic:contains
+bon_odori,Bon odori,practice,East Asia,,dance_east_asia:contains
+boot_camp_fitness,Boot camp fitness,practice,Global,,fitness_group:contains
+borborbor,Borborbor,practice,Africa,,dance_african:contains
+bossaball,Bossaball,practice,Global,,sport_net_wall:contains
+bossaball_2,Bossaball,practice,Global,,sport_traditional:contains
+bouldering,Bouldering,practice,Global,,locomotion_climbing:contains
+boules,Boules,practice,Global,,sport_precision:contains
+bourree,Bourrée,practice,Europe,,dance_europe_folk:contains
+bow_hunting_movement,Bow hunting movement,practice,Global,,occupational_hunt:contains
+bowling,Bowling,practice,Global,,sport_precision:contains
+boxing,Boxing,practice,Global,,combat_striking:contains
+branle,Branle,practice,Europe,,dance_europe_folk:contains
+brannboll,Brännboll,practice,Global,,sport_bat_ball:contains
+brazilian_jiu_jitsu,Brazilian jiu-jitsu,practice,Global,,combat_grappling:contains
+breaking,Breaking,practice,Global urban,,dance_urban:contains | acro_gymnastics:cross-link | sport_wheeled:cross-link
+breaststroke,Breaststroke,practice,Global,,aquatic_swim:contains
+breathwork_mobility_flows,Breathwork mobility flows,practice,Global,,somatics_breath:contains
+bricklaying_movement,Bricklaying movement,practice,Global,,occupational_craft:contains
+brooklyn_uprock,Brooklyn uprock,practice,Global urban,,dance_urban:contains
+buddhist_walking_meditation,Buddhist walking meditation,practice,Global,,ritual_devotional:contains
+bugaku,Bugaku,practice,East Asia,,dance_east_asia:contains
+buildering,Buildering,practice,Global,,locomotion_climbing:contains
+buildering_2,Buildering,practice,Global,,locomotion_parkour:contains
+bungee_jumping,Bungee jumping,practice,Global,,outdoor_air:contains
+bunraku_puppetry_movement,Bunraku puppetry movement,practice,Global,,performance_puppetry:contains
+bushcraft_movement,Bushcraft movement,practice,Global,,outdoor_wilderness:contains
+bushwalking,Bushwalking,practice,Global,,outdoor_wilderness:contains
+buteyko_movement_integration,Buteyko movement integration,practice,Global,,somatics_breath:contains
+butterfly,Butterfly,practice,Global,,aquatic_swim:contains
+buzkashi,Buzkashi,practice,Global,,sport_traditional:contains | animal_equestrian:cross-link
+buzkashi_riding,Buzkashi riding,practice,Global,,animal_equestrian:contains
+bwa_mask_dance,Bwa mask dance,practice,Africa,,dance_african:contains
+caber_toss,Caber toss,practice,Global,,sport_traditional:contains
+calcio_storico,Calcio storico,practice,Global,,sport_traditional:contains
+calisthenics,Calisthenics,practice,Global,,fitness_resistance:contains
+calypso_dance,Calypso dance,practice,African diaspora,,dance_afrodiasporic:contains
+camel_racing,Camel racing,practice,Global,,animal_other:contains
+camel_wrestling_handling,Camel wrestling handling,practice,Global,,animal_other:contains
+canadian_football,Canadian football,practice,Global,,sport_ball_team:contains
+candomble_dance,Candomblé dance,practice,Global,,ritual_trance:contains
+canicross,Canicross,practice,Global,,animal_other:contains
+canne_de_combat,Canne de combat,practice,Global,,combat_weapon:contains
+canoe_slalom,Canoe slalom,practice,Global,,aquatic_boats:contains
+canoe_sprint,Canoe sprint,practice,Global,,aquatic_boats:contains
+canyoneering,Canyoneering,practice,Global,,outdoor_wilderness:contains
+canyoning_movement,Canyoning movement,practice,Global,,locomotion_climbing:contains
+capoeira,Capoeira,practice,Global,,combat_regional:contains | dance_afrodiasporic:cross-link | ritual_procession:cross-link | play_improv:cross-link | acro_gymnastics:cross-link
+capoeira_roda_ritual,Capoeira roda ritual,practice,Global,,ritual_procession:contains
+capoeira_striking,Capoeira striking,practice,Global,,combat_striking:contains
+capture_the_flag,Capture the flag,practice,Global,,play_child:contains
+cardiac_rehabilitation_exercise,Cardiac rehabilitation exercise,practice,Global,,healing_rehab:contains
+carnival_parade_movement,Carnival parade movement,practice,Global,,ritual_procession:contains
+carpentry_movement,Carpentry movement,practice,Global,,occupational_craft:contains
+carrom,Carrom,practice,Global,,sport_precision:contains
+casualty_carries,Casualty carries,practice,Global,,military_tactical:contains
+catch_wrestling,Catch wrestling,practice,Global,,combat_grappling:contains
+cattle_driving,Cattle driving,practice,Global,,occupational_agri:contains
+cave_diving_propulsion,Cave diving propulsion,practice,Global,,aquatic_dive:contains
+caving,Caving,practice,Global,,outdoor_wilderness:contains
+ceilidh_dancing,Ceilidh dancing,practice,Europe,,dance_europe_folk:contains
+ceremonial_drill,Ceremonial drill,practice,Global,,military_drill:contains
+cha_cha_cha,Cha-cha-cha,practice,Global,,dance_ballroom:contains
+chair_yoga,Chair yoga,practice,South Asia / global,,somatics_yoga:contains
+charreria,Charrería,practice,Global,,animal_equestrian:contains
+chase_tag,Chase tag,practice,Global,,locomotion_parkour:contains
+cheerleading,Cheerleading,practice,Global,,acro_gymnastics:contains | dance_stage:cross-link | sport_ball_team:cross-link
+cheese_rolling,Cheese rolling,practice,Global,,sport_traditional:contains
+chhau,Chhau,practice,South Asia,,dance_south_asia:contains | combat_regional:cross-link | performance_theatre:cross-link
+chicago_footwork,Chicago footwork,practice,Global urban,,dance_urban:contains
+chinese_classical_dance,Chinese classical dance,practice,East Asia,,dance_east_asia:contains
+chinese_fan_dance,Chinese fan dance,practice,East Asia,,dance_east_asia:contains
+chinese_opera_movement,Chinese opera movement,practice,Global,,performance_theatre:contains
+chinese_pole,Chinese pole,practice,Global,,acro_circus:contains
+chinese_ribbon_dance,Chinese ribbon dance,practice,East Asia,,dance_east_asia:contains
+chinese_sword_arts,Chinese sword arts,practice,Global,,combat_weapon:contains
+chinlone,Chinlone,practice,Global,,sport_traditional:contains
+chiropractic_rehabilitation_exercise,Chiropractic rehabilitation exercise,practice,Global,,healing_bodywork:contains
+choi_kwang_do,Choi Kwang-Do,practice,Global,,combat_regional:contains
+chovqan,Chovqan,practice,Global,,sport_traditional:contains
+choy_li_fut,Choy Li Fut,practice,Global,,combat_regional:contains
+christian_pilgrimage_walking,Christian pilgrimage walking,practice,Global,,ritual_devotional:contains
+circuit_training,Circuit training,practice,Global,,fitness_endurance:contains
+clapping_games,Clapping games,practice,Global,,play_child:contains
+classical_pilates,Classical Pilates,practice,Global,,somatics_pilates:contains
+cliff_diving,Cliff diving,practice,Global,,aquatic_dive:contains
+cliff_jumping,Cliff jumping,practice,Global,,outdoor_air:contains
+clinical_pilates,Clinical Pilates,practice,Global,,somatics_pilates:contains
+close_order_drill,Close-order drill,practice,Global,,military_drill:contains
+cloud_swing,Cloud swing,practice,Global,,acro_circus:contains
+clowning,Clowning,practice,Global urban,,dance_urban:contains
+clowning_2,Clowning,practice,Global,,performance_theatre:contains
+club_juggling,Club juggling,practice,Global,,acro_object:contains
+club_swinging,Club swinging,practice,Global,,fitness_resistance:contains
+coastal_rowing,Coastal rowing,practice,Global,,aquatic_boats:contains
+collegiate_wrestling,Collegiate wrestling,practice,Global,,combat_grappling:contains
+color_guard,Color guard,practice,Global,,military_drill:contains
+combat,"Combat, martial & weapon cultures",domain,,,movement:contains
+combat_grappling,Grappling & wrestling systems,family,Global,,combat:contains
+combat_hybrid,"Hybrid, tactical & modern self-defence",family,Global,,combat:contains
+combat_internal,Internal & soft martial arts,family,Eurasia,,combat:contains
+combat_regional,Regional traditional martial systems,family,Global,,combat:contains
+combat_sambo,Combat sambo,practice,Global,,combat_hybrid:contains
+combat_sidestroke,Combat sidestroke,practice,Global,,aquatic_swim:contains
+combat_striking,Striking systems,family,Global,,combat:contains
+combat_weapon,Weapon martial arts,family,Global,,combat:contains
+combatives,Combatives,practice,Global,,combat_hybrid:contains
+commedia_dellarte_movement,Commedia dell’arte movement,practice,Global,,performance_theatre:contains
+commercial_choreography,Commercial choreography,practice,Global urban,,dance_urban:contains
+concheros,Concheros,practice,Americas,,dance_indigenous_americas:contains
+constraint_led_movement_games,Constraint-led movement games,practice,Global,,play_improv:contains
+contact_improvisation,Contact improvisation,practice,Global,,dance_stage:contains | somatics_western:cross-link | play_improv:cross-link
+contact_improvisation_2,Contact improvisation,practice,Global,,play_improv:contains | somatics_western:cross-link | play_improv:cross-link
+contact_juggling,Contact juggling,practice,Global,,acro_object:contains
+contemporary_dance,Contemporary dance,practice,Global,,dance_stage:contains
+contemporary_pilates,Contemporary Pilates,practice,Global,,somatics_pilates:contains
+continuum_movement,Continuum Movement,practice,Western / global,,somatics_western:contains
+contortion,Contortion,practice,Global,,acro_circus:contains
+coracle_paddling,Coracle paddling,practice,Global,,aquatic_boats:contains
+cornish_wrestling,Cornish wrestling,practice,Global,,combat_grappling:contains
+creative_movement_for_children,Creative movement for children,practice,Global,,education_methods:contains
+cricket,Cricket,practice,Global,,sport_bat_ball:contains
+croquet,Croquet,practice,Global,,sport_precision:contains
+cross_country_running,Cross-country running,practice,Global,,sport_athletics:contains
+cross_country_skiing,Cross-country skiing,practice,Cold climates,,sport_winter:contains
+crossfit,CrossFit,practice,Global,,fitness_group:contains
+csardas,Csárdás,practice,Europe,,dance_europe_folk:contains
+curling,Curling,practice,Global,,sport_precision:contains
+cutting,Cutting,practice,Global,,animal_equestrian:contains
+cyclocross,Cyclocross,practice,Global,,sport_wheeled:contains
+cyr_wheel,Cyr wheel,practice,Global,,acro_circus:contains
+dabke,Dabke,practice,Middle East / North Africa,,dance_middle_east:contains
+dabke_influenced_north_african_social_dance,Dabke-influenced North African social dance,practice,Africa,,dance_african:contains
+daito_ryu_aiki_jujutsu,Daito-ryu aiki-jujutsu,practice,Eurasia,,combat_internal:contains
+dalcroze_eurhythmics,Dalcroze eurhythmics,practice,Global,,education_methods:contains
+dambe,Dambe,practice,Global,,combat_striking:contains
+dance,Dance & rhythmic movement,domain,,,movement:contains
+dance_african,African dance families,family,Africa,,dance:contains
+dance_afrodiasporic,African-diasporic dance cultures,family,African diaspora,,dance:contains
+dance_ballroom,Ballroom & partner social dance,family,Global,,dance:contains
+dance_dance_revolution,Dance Dance Revolution,practice,Global,,digital_exergaming:contains
+dance_east_asia,East Asian dance traditions,family,East Asia,,dance:contains
+dance_education,Dance education,practice,Global,,education_methods:contains
+dance_europe_folk,European folk & social dances,family,Europe,,dance:contains
+dance_fitness,Dance fitness,practice,Global,,fitness_endurance:contains
+dance_improvisation,Dance improvisation,practice,Global,,play_improv:contains
+dance_indigenous_americas,Indigenous dances of the Americas,family,Americas,,dance:contains
+dance_middle_east,Middle Eastern & North African dance,family,Middle East / North Africa,,dance:contains
+dance_movement_therapy,Dance/movement therapy,practice,Global,,healing_adaptive:contains | dance_stage:cross-link | somatics_western:cross-link
+dance_pacific,Pacific dance traditions,family,Pacific,,dance:contains
+dance_se_asia,Southeast Asian dance traditions,family,Southeast Asia,,dance:contains
+dance_south_asia,South Asian dance traditions,family,South Asia,,dance:contains
+dance_stage,"Stage, concert & contemporary dance",family,Global,,dance:contains
+dance_urban,"Street, club & urban dance",family,Global urban,,dance:contains
+dancehall,Dancehall,practice,African diaspora,,dance_afrodiasporic:contains
+danza_de_los_voladores_movement,Danza de los Voladores movement,practice,Americas,,dance_indigenous_americas:contains
+daoyin,Daoyin,practice,China / global,,somatics_chinese:contains
+darts,Darts,practice,Global,,sport_precision:contains
+debka,Debka,practice,Middle East / North Africa,,dance_middle_east:contains
+decathlon,Decathlon,practice,Global,,sport_athletics:contains
+defendo,Defendo,practice,Global,,combat_hybrid:contains
+dembow_dance,Dembow dance,practice,African diaspora,,dance_afrodiasporic:contains
+dervish_sema,Dervish sema,practice,Middle East / North Africa,,dance_middle_east:contains
+devil_sticks,Devil sticks,practice,Global,,acro_object:contains
+diabolo,Diabolo,practice,Global,,acro_object:contains
+digital,"Digital, mediated & emerging movement cultures",domain,,,movement:contains
+digital_exergaming,Exergaming & mediated movement,family,Global,,digital:contains
+digital_robotics,Human–technology movement cultures,family,Global,,digital:contains
+dimensions,Cross-cutting dimensions,dimension_group,,,movement:classifies
+disc_golf,Disc golf,practice,Global,,sport_precision:contains
+discus_throw,Discus throw,practice,Global,,sport_athletics:contains
+dns_dynamic_neuromuscular_stabilization,DNS / Dynamic Neuromuscular Stabilization,practice,Global,,healing_rehab:contains
+dog_agility_handling,Dog agility handling,practice,Global,,animal_other:contains
+dragon_boat,Dragon boat,practice,Global,,aquatic_boats:contains
+dragon_dance,Dragon dance,practice,Global,,ritual_procession:contains | acro_gymnastics:cross-link | performance_theatre:cross-link
+dressage,Dressage,practice,Global,,animal_equestrian:contains
+drone_racing_piloting_gestures,Drone racing piloting gestures,practice,Global,,digital_robotics:contains
+duathlon,Duathlon,practice,Global,,sport_multisport:contains
+duck_duck_goose,Duck duck goose,practice,Global,,play_child:contains
+dumbbell_training,Dumbbell training,practice,Global,,fitness_resistance:contains
+dutch_kickboxing,Dutch kickboxing,practice,Global,,combat_striking:contains
+east_coast_swing,East Coast Swing,practice,Global,,dance_ballroom:contains
+ecstatic_dance,Ecstatic dance,practice,Global,,play_improv:contains
+education,Movement education & pedagogy,domain,,,movement:contains
+education_methods,Movement education systems,family,Global,,education:contains
+electro_dance,Electro dance,practice,Global urban,,dance_urban:contains
+elementary_backstroke,Elementary backstroke,practice,Global,,aquatic_swim:contains
+elephant_mahout_movement,Elephant mahout movement,practice,Global,,animal_other:contains
+endurance_riding,Endurance riding,practice,Global,,animal_equestrian:contains
+english_country_dance,English country dance,practice,Europe,,dance_europe_folk:contains
+env_air,Air,dimension,,,dimensions:contains
+env_land,Land,dimension,,,dimensions:contains | locomotion:characterized-by
+env_snowice,Snow/ice,dimension,,,dimensions:contains
+env_urban,Urban/built environment,dimension,,,dimensions:contains
+env_water,Water,dimension,,,dimensions:contains | aquatic:characterized-by
+env_wilderness,Wilderness,dimension,,,dimensions:contains | outdoor:characterized-by
+eskista,Eskista,practice,Africa,,dance_african:contains
+esports_embodied_ergonomics,Esports embodied ergonomics,practice,Global,,digital_robotics:contains
+eutony,Eutony,practice,Western / global,,somatics_western:contains
+eventing,Eventing,practice,Global,,animal_equestrian:contains
+exoskeleton_assisted_gait,Exoskeleton-assisted gait,practice,Global,,digital_robotics:contains
+expressionist_dance,Expressionist dance,practice,Global,,dance_stage:contains
+f45_style_functional_training,F45-style functional training,practice,Global,,fitness_group:contains
+falconry_field_movement,Falconry field movement,practice,Global,,animal_other:contains
+fancy_dance,Fancy dance,practice,Americas,,dance_indigenous_americas:contains
+farandole,Farandole,practice,Europe,,dance_europe_folk:contains
+fast_roping,Fast-roping,practice,Global,,military_tactical:contains
+fastpacking,Fastpacking,practice,Global,,outdoor_wilderness:contains
+feldenkrais_method,Feldenkrais Method,practice,Western / global,,somatics_western:contains
+fell_running,Fell running,practice,Global,,locomotion_bipedal:contains
+fencing,Fencing,practice,Global,,combat_weapon:contains
+field_hockey,Field hockey,practice,Global,,sport_ball_team:contains
+fierljeppen,Fierljeppen,practice,Global,,sport_traditional:contains
+figure_skating,Figure skating,practice,Cold climates,,sport_winter:contains | dance_stage:cross-link
+fin_swimming,Fin swimming,practice,Global,,aquatic_swim:contains
+fire_and_movement,Fire-and-movement,practice,Global,,military_tactical:contains
+firefighter_movement_training,Firefighter movement training,practice,Global,,military_service:contains
+fitness,"Physical culture, conditioning & exercise",domain,,,movement:contains
+fitness_endurance,Endurance & conditioning methods,family,Global,,fitness:contains
+fitness_group,Group fitness systems,family,Global,,fitness:contains
+fitness_natural,Natural movement & generalist systems,family,Global,,fitness:contains
+fitness_resistance,Resistance training cultures,family,Global,,fitness:contains
+five_rhythms,Five Rhythms,practice,Global,,play_improv:contains
+flamenco,Flamenco,practice,Europe,,dance_europe_folk:contains
+flexing,Flexing,practice,Global urban,,dance_urban:contains
+floor_sitting_cultures,Floor sitting cultures,practice,Global,,occupational_domestic:contains
+fly_casting,Fly casting,practice,Global,,occupational_hunt:contains
+flying_trapeze,Flying trapeze,practice,Global,,acro_circus:contains
+folk_polka,Folk polka,practice,Europe,,dance_europe_folk:contains
+footbag_freestyle,Footbag freestyle,practice,Global,,acro_object:contains
+footvolley,Footvolley,practice,Global,,sport_net_wall:contains
+foraging_movement,Foraging movement,practice,Global,,outdoor_wilderness:contains
+foraging_squat_and_carry,Foraging squat-and-carry,practice,Global,,occupational_hunt:contains
+four_square,Four square,practice,Global,,play_child:contains
+foxtrot,Foxtrot,practice,Global,,dance_ballroom:contains
+franklin_method,Franklin Method,practice,Western / global,,somatics_western:contains
+free_diving_breath_preparation,Free-diving breath preparation,practice,Global,,somatics_breath:contains
+free_solo_climbing,Free solo climbing,practice,Global,,locomotion_climbing:contains
+freediving,Freediving,practice,Global,,aquatic_dive:contains
+freerunning,Freerunning,practice,Global,,locomotion_parkour:contains | acro_gymnastics:cross-link | fitness_natural:cross-link
+freestyle_skiing,Freestyle skiing,practice,Cold climates,,sport_winter:contains
+freestyle_wrestling,Freestyle wrestling,practice,Global,,combat_grappling:contains
+front_crawl,Front crawl,practice,Global,,aquatic_swim:contains
+frontenis,Frontenis,practice,Global,,sport_net_wall:contains
+fruit_picking,Fruit picking,practice,Global,,occupational_agri:contains
+functional_range_conditioning,Functional Range Conditioning,practice,Global,,fitness_natural:contains
+fundamental_movement_skills,Fundamental movement skills,practice,Global,,education_methods:contains
+futsal,Futsal,practice,Global,,sport_ball_team:contains
+ga_ga_ball,Ga-ga ball,practice,Global,,sport_traditional:contains
+gaelic_football,Gaelic football,practice,Global,,sport_ball_team:contains
+gait_retraining,Gait retraining,practice,Global,,healing_rehab:contains
+garba,Garba,practice,South Asia,,dance_south_asia:contains
+gardening,Gardening,practice,Global,,occupational_domestic:contains
+gatka,Gatka,practice,Global,,combat_weapon:contains
+gavotte,Gavotte,practice,Europe,,dance_europe_folk:contains
+georges_hebert_natural_method,Georges Hébert natural method,practice,Global,,fitness_natural:contains
+german_wheel,German wheel,practice,Global,,acro_circus:contains
+ghawazi,Ghawazi,practice,Middle East / North Africa,,dance_middle_east:contains
+ghoomar,Ghoomar,practice,South Asia,,dance_south_asia:contains
+ghost_dance_historical_tradition,Ghost Dance historical tradition,practice,Global,,ritual_trance:contains
+glima,Glíma,practice,Global,,combat_grappling:contains
+gmb_fitness,GMB Fitness,practice,Global,,fitness_natural:contains
+gnawa_lila_movement,Gnawa lila movement,practice,Global,,ritual_trance:contains
+goal_art,Art/performance,dimension,,,dimensions:contains | dance:characterized-by | performance:characterized-by | acrobatics:characterized-by
+goal_health,Health/therapy,dimension,,,dimensions:contains | fitness:characterized-by | somatics:characterized-by | healing:characterized-by | education:characterized-by
+goal_play,Play/recreation,dimension,,,dimensions:contains | sport:characterized-by | play:characterized-by
+goal_spiritual,Spiritual/devotional,dimension,,,dimensions:contains | ritual:characterized-by
+goal_survival,Subsistence/survival,dimension,,,dimensions:contains | outdoor:characterized-by | occupational:characterized-by | military:characterized-by
+goal_transport,Transport/locomotion,dimension,,,dimensions:contains | locomotion:characterized-by | animal:characterized-by
+goalball,Goalball,practice,Global,,healing_adaptive:contains
+golf,Golf,practice,Global,,sport_precision:contains
+gondolier_rowing,Gondolier rowing,practice,Global,,aquatic_boats:contains
+grass_dance,Grass dance,practice,Americas,,dance_indigenous_americas:contains
+greco_roman_wrestling,Greco-Roman wrestling,practice,Global,,combat_grappling:contains
+greek_hasapiko,Greek hasapiko,practice,Europe,,dance_europe_folk:contains
+greek_kalamatianos,Greek kalamatianos,practice,Europe,,dance_europe_folk:contains
+grinding_grain,Grinding grain,practice,Global,,occupational_domestic:contains
+grip_sport,Grip sport,practice,Global,,sport_strength:contains
+grotowski_physical_training,Grotowski physical training,practice,Global,,performance_theatre:contains
+ground_based_movement_practice,Ground-based movement practice,practice,Global,,fitness_natural:contains
+gumboot_dance,Gumboot dance,practice,Africa,,dance_african:contains
+gwoka,Gwoka,practice,African diaspora,,dance_afrodiasporic:contains
+gymnastics_strength_training,Gymnastics strength training,practice,Global,,fitness_resistance:contains
+haitian_folkloric_dance,Haitian folkloric dance,practice,African diaspora,,dance_afrodiasporic:contains
+haka,Haka,practice,Pacific,,dance_pacific:contains
+hammer_throw,Hammer throw,practice,Global,,sport_athletics:contains
+hammering_movement,Hammering movement,practice,Global,,occupational_craft:contains
+hand_balancing,Hand balancing,practice,Global,,acro_circus:contains
+hand_puppetry,Hand puppetry,practice,Global,,performance_puppetry:contains
+hand_washing_clothes,Hand washing clothes,practice,Global,,occupational_domestic:contains
+hand_weaving_movement,Hand weaving movement,practice,Global,,occupational_craft:contains
+handball,Handball,practice,Global,,sport_ball_team:contains
+handball_playground_games,Handball playground games,practice,Global,,play_child:contains
+hang_gliding,Hang gliding,practice,Global,,outdoor_air:contains
+hanna_somatics,Hanna Somatics,practice,Western / global,,somatics_western:contains
+hapkido,Hapkido,practice,Eurasia,,combat_internal:contains
+harpoon_throwing,Harpoon throwing,practice,Global,,occupational_hunt:contains
+harvest_carrying,Harvest carrying,practice,Global,,occupational_agri:contains
+hatha_yoga,Hatha yoga,practice,South Asia / global,,somatics_yoga:contains
+head_loading,Head-loading,practice,Global,,occupational_domestic:contains
+healing,"Therapeutic, rehabilitative & adaptive movement",domain,,,movement:contains
+healing_adaptive,Adaptive & disability movement cultures,family,Global,,healing:contains
+healing_bodywork,Movement-integrated bodywork,family,Global,,healing:contains
+healing_rehab,Rehabilitation movement disciplines,family,Global,,healing:contains
+health_taijiquan,Health taijiquan,practice,China / global,,somatics_chinese:contains
+hema,HEMA,practice,Global,,combat_weapon:contains
+heptathlon,Heptathlon,practice,Global,,sport_athletics:contains
+herding_on_foot,Herding on foot,practice,Global,,occupational_agri:contains
+hide_and_seek,Hide-and-seek,practice,Global,,play_child:contains
+high_crawl,High crawl,practice,Global,,military_tactical:contains
+high_diving,High diving,practice,Global,,outdoor_air:contains
+high_jump,High jump,practice,Global,,sport_athletics:contains
+highland_games,Highland games,practice,Global,,sport_strength:contains
+hiit,HIIT,practice,Global,,fitness_endurance:contains
+hiking,Hiking,practice,Global,,locomotion_bipedal:contains
+hindu_pradakshina,Hindu pradakshina,practice,Global,,ritual_devotional:contains
+hindu_prostrations,Hindu prostrations,practice,Global,,ritual_devotional:contains
+hip_hop_freestyle,Hip-hop freestyle,practice,Global urban,,dance_urban:contains
+hippotherapy,Hippotherapy,practice,Global,,healing_rehab:contains
+hoeing,Hoeing,practice,Global,,occupational_agri:contains
+holotropic_breathwork_movement,Holotropic breathwork movement,practice,Global,,somatics_breath:contains
+hoop_dance,Hoop dance,practice,Americas,,dance_indigenous_americas:contains
+hoop_manipulation,Hoop manipulation,practice,Global,,acro_object:contains
+hopscotch,Hopscotch,practice,Global,,play_child:contains
+hora,Hora,practice,Europe,,dance_europe_folk:contains
+hornussen,Hornussen,practice,Global,,sport_traditional:contains
+horse_archery,Horse archery,practice,Global,,animal_equestrian:contains | combat_weapon:cross-link | sport_precision:cross-link
+horseshoes,Horseshoes,practice,Global,,sport_precision:contains
+house_dance,House dance,practice,Global urban,,dance_urban:contains
+housecleaning_movement,Housecleaning movement,practice,Global,,occupational_domestic:contains
+hula,Hula,practice,Pacific,,dance_pacific:contains
+hula_pacific_cross_linked,"Hula? Pacific, cross-linked",practice,Southeast Asia,,dance_se_asia:contains
+human_pyramids,Human pyramids,practice,Global,,acro_circus:contains
+hung_gar,Hung gar,practice,Global,,combat_regional:contains
+hurdling,Hurdling,practice,Global,,sport_athletics:contains
+hurling,Hurling,practice,Global,,sport_ball_team:contains
+hustle,Hustle,practice,Global,,dance_ballroom:contains
+hwa_rang_do,Hwa Rang Do,practice,Global,,combat_regional:contains
+iaido,Iaido,practice,Global,,combat_weapon:contains
+iaijutsu,Iaijutsu,practice,Global,,combat_weapon:contains
+ice_climbing,Ice climbing,practice,Cold climates,,sport_winter:contains
+ice_hockey,Ice hockey,practice,Global,,sport_ball_team:contains
+ice_swimming,Ice swimming,practice,Global,,aquatic_swim:contains
+ideokinesis,Ideokinesis,practice,Western / global,,somatics_western:contains
+ido_portal_style_movement_culture,Ido Portal-style movement culture,practice,Global,,fitness_natural:contains
+indlamu,Indlamu,practice,Africa,,dance_african:contains
+infant_carrying,Infant carrying,practice,Global,,occupational_domestic:contains
+inline_skating,Inline skating,practice,Global,,sport_wheeled:contains
+interactive_cycling,Interactive cycling,practice,Global,,digital_exergaming:contains
+interval_training,Interval training,practice,Global,,fitness_endurance:contains
+inuit_drum_dance,Inuit drum dance,practice,Americas,,dance_indigenous_americas:contains
+irish_ceili,Irish céilí,practice,Europe,,dance_europe_folk:contains
+irish_set_dance,Irish set dance,practice,Europe,,dance_europe_folk:contains
+islamic_tawaf,Islamic tawaf,practice,Global,,ritual_devotional:contains
+isometrics,Isometrics,practice,Global,,fitness_resistance:contains
+iyengar_yoga,Iyengar yoga,practice,South Asia / global,,somatics_yoga:contains
+jai_alai,Jai alai,practice,Global,,sport_net_wall:contains
+javanese_court_dance,Javanese court dance,practice,Southeast Asia,,dance_se_asia:contains
+javelin_throw,Javelin throw,practice,Global,,sport_athletics:contains
+jazz_dance,Jazz dance,practice,Global,,dance_stage:contains
+jazzercise,Jazzercise,practice,Global,,fitness_group:contains
+jeet_kune_do,Jeet Kune Do,practice,Global,,combat_hybrid:contains
+jingle_dress_dance,Jingle dress dance,practice,Americas,,dance_indigenous_americas:contains
+jivamukti_yoga,Jivamukti yoga,practice,South Asia / global,,somatics_yoga:contains
+jive,Jive,practice,Global,,dance_ballroom:contains
+jodo,Jodo,practice,Global,,combat_weapon:contains
+joget,Joget,practice,Southeast Asia,,dance_se_asia:contains
+jogging,Jogging,practice,Global,,locomotion_bipedal:contains
+jojutsu,Jojutsu,practice,Global,,combat_weapon:contains
+juba_dance,Juba dance,practice,African diaspora,,dance_afrodiasporic:contains
+judo,Judo,practice,Global,,combat_grappling:contains
+kabaddi,Kabaddi,practice,Global,,sport_ball_team:contains
+kabuki_mie_and_kata,Kabuki mie and kata,practice,Global,,performance_theatre:contains
+kabuki_movement,Kabuki movement,practice,East Asia,,dance_east_asia:contains
+kagura,Kagura,practice,East Asia,,dance_east_asia:contains
+kajukenbo,Kajukenbo,practice,Global,,combat_hybrid:contains
+kalaripayattu,Kalaripayattu,practice,Global,,combat_regional:contains | dance_south_asia:cross-link | somatics_yoga:cross-link | performance_theatre:cross-link
+kalaripayattu_derived_dance_movement,Kalaripayattu-derived dance movement,practice,South Asia,,dance_south_asia:contains
+kalaripayattu_weapons,Kalaripayattu weapons,practice,Global,,combat_weapon:contains
+karate,Karate,practice,Global,,combat_striking:contains
+kathak,Kathak,practice,South Asia,,dance_south_asia:contains
+kathakali,Kathakali,practice,South Asia,,dance_south_asia:contains | performance_theatre:cross-link | ritual_devotional:cross-link
+kathakali_acting_movement,Kathakali acting movement,practice,Global,,performance_theatre:contains
+kayaking,Kayaking,practice,Global,,aquatic_boats:contains
+kendama,Kendama,practice,Global,,acro_object:contains
+kendo,Kendo,practice,Global,,combat_weapon:contains
+kenjutsu,Kenjutsu,practice,Global,,combat_weapon:contains
+kettlebell_sport,Kettlebell sport,practice,Global,,sport_strength:contains
+kettlebell_training,Kettlebell training,practice,Global,,fitness_resistance:contains
+khaleegy,Khaleegy,practice,Middle East / North Africa,,dance_middle_east:contains
+kho_kho,Kho kho,practice,Global,,sport_ball_team:contains
+khon,Khon,practice,Southeast Asia,,dance_se_asia:contains
+kickboxing,Kickboxing,practice,Global,,combat_striking:contains
+kitesurfing,Kitesurfing,practice,Global,,aquatic_boards:contains
+kizomba,Kizomba,practice,African diaspora,,dance_afrodiasporic:contains
+kneading_dough,Kneading dough,practice,Global,,occupational_domestic:contains
+kok_boru,Kok boru,practice,Global,,sport_traditional:contains
+kolo,Kolo,practice,Europe,,dance_europe_folk:contains
+kompa_dance,Kompa dance,practice,African diaspora,,dance_afrodiasporic:contains
+korean_court_dance,Korean court dance,practice,East Asia,,dance_east_asia:contains
+korean_fan_dance,Korean fan dance,practice,East Asia,,dance_east_asia:contains
+kpanlogo,Kpanlogo,practice,Africa,,dance_african:contains
+krabi_krabong,Krabi-krabong,practice,Global,,combat_weapon:contains
+krav_maga,Krav Maga,practice,Global,,combat_hybrid:contains
+kripalu_yoga,Kripalu yoga,practice,South Asia / global,,somatics_yoga:contains
+krumping,Krumping,practice,Global urban,,dance_urban:contains
+kuchipudi,Kuchipudi,practice,South Asia,,dance_south_asia:contains
+kuduro,Kuduro,practice,Africa,,dance_african:contains
+kun_khmer,Kun Khmer,practice,Global,,combat_striking:contains
+kundalini_yoga,Kundalini yoga,practice,South Asia / global,,somatics_yoga:contains
+kuntao,Kuntao,practice,Global,,combat_regional:contains
+kurash,Kurash,practice,Global,,combat_grappling:contains
+kyokushin_karate,Kyokushin karate,practice,Global,,combat_striking:contains
+kyudo,Kyudo,practice,Global,,combat_weapon:contains
+laban_bartenieff_movement_studies,Laban/Bartenieff Movement Studies,practice,Western / global,,somatics_western:contains
+laban_movement_education,Laban movement education,practice,Global,,education_methods:contains
+lacrosse,Lacrosse,practice,Global,,sport_ball_team:contains
+lakalaka,Lakālaka,practice,Pacific,,dance_pacific:contains
+lancashire_wrestling,Lancashire wrestling,practice,Global,,combat_grappling:contains
+lavani,Lavani,practice,South Asia,,dance_south_asia:contains
+lawn_bowls,Lawn bowls,practice,Global,,sport_precision:contains
+leapfrog,Leapfrog,practice,Global,,play_child:contains
+lecoq_technique,Lecoq technique,practice,Global,,performance_theatre:contains
+legong,Legong,practice,Southeast Asia,,dance_se_asia:contains
+les_mills_bodycombat,Les Mills BodyCombat,practice,Global,,fitness_group:contains
+les_mills_bodypump,Les Mills BodyPump,practice,Global,,fitness_group:contains
+lethwei,Lethwei,practice,Global,,combat_striking:contains
+levantine_folk_dance,Levantine folk dance,practice,Middle East / North Africa,,dance_middle_east:contains
+lifeguard_rescue_movement,Lifeguard rescue movement,practice,Global,,military_service:contains
+likay_movement,Likay movement,practice,Southeast Asia,,dance_se_asia:contains
+limalama,Limalama,practice,Global,,combat_regional:contains
+lindy_hop,Lindy Hop,practice,Global,,dance_ballroom:contains
+lion_dance,Lion dance,practice,Global,,ritual_procession:contains | acro_gymnastics:cross-link | performance_theatre:cross-link
+litefeet,Litefeet,practice,Global urban,,dance_urban:contains
+liuzijue,Liuzijue,practice,China / global,,somatics_chinese:contains
+livestream_dance_classes,Livestream dance classes,practice,Global,,digital_exergaming:contains
+loaded_carrying,Loaded carrying,practice,Global,,locomotion_bipedal:contains
+loaded_marching,Loaded marching,practice,Global,,military_tactical:contains
+locking,Locking,practice,Global urban,,dance_urban:contains
+locomotion,"Locomotion, travel & terrain skills",domain,,,movement:contains
+locomotion_bipedal,Bipedal locomotion cultures,family,Global,,locomotion:contains
+locomotion_climbing,Climbing & vertical movement,family,Global,,locomotion:contains
+locomotion_parkour,Obstacle negotiation & urban movement,family,Global,,locomotion:contains
+log_rolling,Log rolling,practice,Global,,sport_traditional:contains
+long_distance_running,Long-distance running,practice,Global,,sport_athletics:contains
+long_jump,Long jump,practice,Global,,sport_athletics:contains
+long_term_athlete_development,Long-term athlete development,practice,Global,,education_methods:contains
+longboarding,Longboarding,practice,Global,,sport_wheeled:contains
+low_crawl,Low crawl,practice,Global,,military_tactical:contains
+luge,Luge,practice,Cold climates,,sport_winter:contains
+luta_livre,Luta livre,practice,Global,,combat_grappling:contains
+lyrical_dance,Lyrical dance,practice,Global,,dance_stage:contains
+macebell_training,Macebell training,practice,Global,,fitness_resistance:contains
+machine_resistance_training,Machine resistance training,practice,Global,,fitness_resistance:contains
+makruk_movement_culture,Makruk movement culture,practice,Global,,sport_traditional:contains
+malla_yuddha,Malla-yuddha,practice,Global,,combat_regional:contains
+mambo,Mambo,practice,Global,,dance_ballroom:contains
+mancala_related_embodied_play,Mancala-related embodied play,practice,Global,,sport_traditional:contains
+manipuri,Manipuri,practice,South Asia,,dance_south_asia:contains
+mapouka,Mapouka,practice,Africa,,dance_african:contains
+mapuche_ceremonial_dance,Mapuche ceremonial dance,practice,Americas,,dance_indigenous_americas:contains
+marathon_swimming,Marathon swimming,practice,Global,,aquatic_swim:contains
+marbles_movement_play,Marbles movement play,practice,Global,,play_child:contains
+marching,Marching,practice,Global,,locomotion_bipedal:contains | military_drill:cross-link
+marching_drill,Marching drill,practice,Global,,military_drill:contains
+marionette_performance,Marionette performance,practice,Global,,performance_puppetry:contains
+martial_arts_pedagogy,Martial arts pedagogy,practice,Global,,education_methods:contains
+mas_wrestling,Mas-wrestling,practice,Global,,sport_strength:contains
+mat_pilates,Mat Pilates,practice,Global,,somatics_pilates:contains
+matachines,Matachines,practice,Americas,,dance_indigenous_americas:contains
+mazurka,Mazurka,practice,Europe,,dance_europe_folk:contains
+mbalax_dance,Mbalax dance,practice,Africa,,dance_african:contains
+mckenzie_method_exercises,McKenzie Method exercises,practice,Global,,healing_rehab:contains
+medical_qigong,Medical qigong,practice,China / global,,somatics_chinese:contains
+meke,Meke,practice,Pacific,,dance_pacific:contains
+memphis_jookin,Memphis jookin,practice,Global urban,,dance_urban:contains
+merengue,Merengue,practice,Global,,dance_ballroom:contains
+mermaiding,Mermaiding,practice,Global,,aquatic_swim:contains
+mesoamerican_ballgame_reconstruction,Mesoamerican ballgame reconstruction,practice,Global,,sport_traditional:contains
+metabolic_conditioning,Metabolic conditioning,practice,Global,,fitness_endurance:contains
+middle_distance_running,Middle-distance running,practice,Global,,sport_athletics:contains
+military,"Military drill, tactical & service movement",domain,,,movement:contains
+military_band_marching,Military band marching,practice,Global,,military_drill:contains
+military_drill,Military drill & formation movement,family,Global,,military:contains
+military_fitness_circuits,Military fitness circuits,practice,Global,,fitness_group:contains
+military_service,Service movement cultures,family,Global,,military:contains
+military_swimming,Military swimming,practice,Global,,military_tactical:contains
+military_tactical,Tactical movement & field skills,family,Global,,military:contains
+milking_postures,Milking postures,practice,Global,,occupational_agri:contains
+mime,Mime,practice,Global,,performance_theatre:contains
+mixed_martial_arts,Mixed martial arts,practice,Global,,combat_hybrid:contains
+mode_choreographed,Choreographed,dimension,,,dimensions:contains | dance:characterized-by | performance:characterized-by
+mode_competitive,Competitive,dimension,,,dimensions:contains | combat:characterized-by | sport:characterized-by
+mode_cooperative,Cooperative,dimension,,,dimensions:contains
+mode_group,Group/ensemble,dimension,,,dimensions:contains | dance:characterized-by | ritual:characterized-by | education:characterized-by
+mode_improvised,Improvised,dimension,,,dimensions:contains | play:characterized-by
+mode_partner,Partnered,dimension,,,dimensions:contains
+mode_ritual,Ritualized,dimension,,,dimensions:contains | ritual:characterized-by
+mode_solo,Solo,dimension,,,dimensions:contains | somatics:characterized-by
+modern_dance,Modern dance,practice,Global,,dance_stage:contains
+modern_pentathlon,Modern pentathlon,practice,Global,,sport_multisport:contains
+mohiniyattam,Mohiniyattam,practice,South Asia,,dance_south_asia:contains
+mongolian_bokh,Mongolian bökh,practice,Global,,combat_grappling:contains
+mongolian_horse_racing,Mongolian horse racing,practice,Global,,animal_equestrian:contains
+montessori_practical_life_movement,Montessori practical-life movement,practice,Global,,education_methods:contains
+morna_dance,Morna dance,practice,Africa,,dance_african:contains
+morris_dance,Morris dance,practice,Europe,,dance_europe_folk:contains
+morris_processions,Morris processions,practice,Global,,ritual_procession:contains
+motion_capture_performance,Motion capture performance,practice,Global,,digital_robotics:contains
+motion_controlled_gaming,Motion-controlled gaming,practice,Global,,digital_exergaming:contains
+mountain_biking,Mountain biking,practice,Global,,sport_wheeled:contains
+mountain_rescue_movement,Mountain rescue movement,practice,Global,,military_service:contains
+mountaineering,Mountaineering,practice,Global,,locomotion_climbing:contains
+movement,Human movement practices & cultures,root,,Broadest practical-cultural map of deliberately cultivated human movement.,
+movement_jams,Movement jams,practice,Global,,play_improv:contains
+movnat,MovNat,practice,Global,,fitness_natural:contains
+muay_lao,Muay Lao,practice,Global,,combat_striking:contains
+muay_thai,Muay Thai,practice,Global,,combat_striking:contains
+mushing,Mushing,practice,Global,,animal_other:contains
+musical_theatre_dance,Musical theatre dance,practice,Global,,dance_stage:contains
+musti_yuddha,Musti-yuddha,practice,Global,,combat_regional:contains
+myofascial_release_movement,Myofascial release movement,practice,Global,,healing_bodywork:contains
+naginatajutsu,Naginatajutsu,practice,Global,,combat_weapon:contains
+ndombolo,Ndombolo,practice,Africa,,dance_african:contains
+neigong,Neigong,practice,China / global,,somatics_chinese:contains
+net_casting,Net casting,practice,Global,,occupational_hunt:contains
+net_making,Net making,practice,Global,,occupational_craft:contains
+netball,Netball,practice,Global,,sport_ball_team:contains
+neuromotor_rehabilitation,Neuromotor rehabilitation,practice,Global,,healing_rehab:contains
+nguni_stick_fighting,Nguni stick fighting,practice,Global,,combat_regional:contains
+nihon_buyo,Nihon buyō,practice,East Asia,,dance_east_asia:contains
+ninja_warrior_training,Ninja warrior training,practice,Global,,locomotion_parkour:contains
+noh_actor_movement,Noh actor movement,practice,Global,,performance_theatre:contains
+noh_movement,Noh movement,practice,East Asia,,dance_east_asia:contains
+nordic_combined,Nordic combined,practice,Cold climates,,sport_winter:contains
+nordic_walking,Nordic walking,practice,Global,,locomotion_bipedal:contains
+northern_shaolin,Northern Shaolin,practice,Global,,combat_regional:contains
+nuba_wrestling,Nuba wrestling,practice,Global,,combat_regional:contains
+object_balancing,Object balancing,practice,Global,,acro_object:contains
+object_theatre,Object theatre,practice,Global,,performance_puppetry:contains
+obon_procession,Obon procession,practice,Global,,ritual_procession:contains
+obstacle_course_racing,Obstacle course racing,practice,Global,,sport_multisport:contains
+obstacle_course_racing_2,Obstacle course racing,practice,Global,,locomotion_parkour:contains
+obstacle_course_training,Obstacle course training,practice,Global,,military_tactical:contains
+occupational,"Work, craft & subsistence movement",domain,,,movement:contains
+occupational_agri,Agricultural & pastoral movement cultures,family,Global,,occupational:contains
+occupational_craft,Craft & manual-labour movement,family,Global,,occupational:contains
+occupational_domestic,Domestic & caregiving movement cultures,family,Global,,occupational:contains
+occupational_hunt,"Hunting, fishing & gathering movement",family,Global,,occupational:contains
+occupational_therapy_movement_retraining,Occupational therapy movement retraining,practice,Global,,healing_rehab:contains
+odissi,Odissi,practice,South Asia,,dance_south_asia:contains
+oina,Oină,practice,Global,,sport_bat_ball:contains
+olympic_weightlifting,Olympic weightlifting,practice,Global,,sport_strength:contains
+online_follow_along_workouts,Online follow-along workouts,practice,Global,,digital_exergaming:contains
+open_floor_movement,Open-floor movement,practice,Global,,play_improv:contains
+open_water_swimming,Open-water swimming,practice,Global,,aquatic_swim:contains
+orangetheory_style_interval_classes,OrangeTheory-style interval classes,practice,Global,,fitness_group:contains
+orff_movement_pedagogy,Orff movement pedagogy,practice,Global,,education_methods:contains
+orienteering,Orienteering,practice,Global,,sport_multisport:contains
+orienteering_2,Orienteering,practice,Global,,outdoor_wilderness:contains
+original_strength,Original Strength,practice,Global,,fitness_natural:contains
+orthodox_christian_prostrations,Orthodox Christian prostrations,practice,Global,,ritual_devotional:contains
+osteopathic_manipulative_exercise_integration,Osteopathic manipulative exercise integration,practice,Global,,healing_bodywork:contains
+outdoor,"Outdoor, adventure & survival movement",domain,,,movement:contains
+outdoor_air,Air & gravity sports,family,Global,,outdoor:contains
+outdoor_education,Outdoor education,practice,Global,,education_methods:contains
+outdoor_wilderness,Wilderness travel & fieldcraft,family,Global,,outdoor:contains
+outrigger_canoeing,Outrigger canoeing,practice,Global,,aquatic_boats:contains
+packrafting,Packrafting,practice,Global,,outdoor_wilderness:contains
+padel,Padel,practice,Global,,sport_net_wall:contains
+panantukan,Panantukan,practice,Global,,combat_striking:contains
+pangalay,Pangalay,practice,Southeast Asia,,dance_se_asia:contains
+pankration,Pankration,practice,Global,,combat_regional:contains
+pantomime,Pantomime,practice,Global,,performance_theatre:contains
+para_athletics,Para athletics,practice,Global,,healing_adaptive:contains
+parade_marching,Parade marching,practice,Global,,military_drill:contains
+paragliding,Paragliding,practice,Global,,outdoor_air:contains
+park_fitness_groups,Park fitness groups,practice,Global,,fitness_group:contains
+parkour,Parkour,practice,Global,,locomotion_parkour:contains | fitness_natural:cross-link | sport_athletics:cross-link | outdoor_wilderness:cross-link
+parkour_conditioning,Parkour conditioning,practice,Global,,fitness_natural:contains
+parkour_sport,Parkour sport,practice,Global,,acro_gymnastics:contains
+partner_acrobatics,Partner acrobatics,practice,Global,,acro_circus:contains
+paso_doble,Paso doble,practice,Global,,dance_ballroom:contains
+patrolling,Patrolling,practice,Global,,military_tactical:contains
+pearl_diving,Pearl diving,practice,Global,,aquatic_dive:contains
+pehlwani_kushti,Pehlwani / kushti,practice,Global,,combat_grappling:contains
+pelota_mixteca,Pelota mixteca,practice,Global,,sport_traditional:contains
+pencak_silat,Pencak silat,practice,Global,,combat_regional:contains | dance_se_asia:cross-link | ritual_procession:cross-link | performance_theatre:cross-link
+pencak_silat_weapons,Pencak silat weapons,practice,Global,,combat_weapon:contains
+pentecostal_ecstatic_movement,Pentecostal ecstatic movement,practice,Global,,ritual_trance:contains
+performance,"Theatre, mime & movement performance",domain,,,movement:contains
+performance_puppetry,Puppetry & embodied manipulation,family,Global,,performance:contains
+performance_theatre,Physical theatre & actor movement,family,Global,,performance:contains
+persian_classical_dance,Persian classical dance,practice,Middle East / North Africa,,dance_middle_east:contains
+persistence_hunting,Persistence hunting,practice,Global,,occupational_hunt:contains
+pesapallo,Pesäpallo,practice,Global,,sport_bat_ball:contains
+petanque,Pétanque,practice,Global,,sport_precision:contains
+physical_education,Physical education,practice,Global,,education_methods:contains
+physical_therapy_therapeutic_exercise,Physical therapy therapeutic exercise,practice,Global,,healing_rehab:contains
+pickleball,Pickleball,practice,Global,,sport_net_wall:contains
+pilgrimage_walking,Pilgrimage walking,practice,Global,,locomotion_bipedal:contains | ritual_devotional:cross-link
+plate_spinning,Plate spinning,practice,Global,,acro_object:contains
+platform_diving,Platform diving,practice,Global,,aquatic_dive:contains
+play,"Play, improvisation & movement exploration",domain,,,movement:contains
+play_child,Children’s movement play,family,Global,,play:contains
+play_fighting,Play fighting,practice,Global,,play_improv:contains
+play_improv,Improvisational movement exploration,family,Global,,play:contains
+ploughing_by_hand,Ploughing by hand,practice,Global,,occupational_agri:contains
+poi_dance,Poi dance,practice,Pacific,,dance_pacific:contains
+poi_spinning,Poi spinning,practice,Global,,acro_object:contains
+pole_vault,Pole vault,practice,Global,,sport_athletics:contains
+police_defensive_tactics,Police defensive tactics,practice,Global,,military_service:contains
+polo,Polo,practice,Global,,sport_ball_team:contains | animal_equestrian:cross-link
+polo_2,Polo,practice,Global,,animal_equestrian:contains | animal_equestrian:cross-link
+polonaise,Polonaise,practice,Europe,,dance_europe_folk:contains
+popping,Popping,practice,Global urban,,dance_urban:contains
+porter_carrying_traditions,Porter carrying traditions,practice,Global,,occupational_craft:contains
+postmodern_dance,Postmodern dance,practice,Global,,dance_stage:contains
+postural_restoration_approaches,Postural restoration approaches,practice,Global,,healing_rehab:contains
+pottery_wheel_work,Pottery wheel work,practice,Global,,occupational_craft:contains
+power_yoga,Power yoga,practice,South Asia / global,,somatics_yoga:contains
+powerlifting,Powerlifting,practice,Global,,sport_strength:contains
+powerlifting_bench_only,Powerlifting bench-only,practice,Global,,sport_strength:contains
+powwow_grand_entry,Powwow grand entry,practice,Global,,ritual_procession:contains
+powwow_traditional_dance,Powwow traditional dance,practice,Americas,,dance_indigenous_americas:contains
+pradal_serey,Pradal serey,practice,Global,,combat_striking:contains
+pranayama_with_movement,Pranayama with movement,practice,Global,,somatics_breath:contains
+prenatal_yoga,Prenatal yoga,practice,South Asia / global,,somatics_yoga:contains
+primal_movement_flows,Primal movement flows,practice,Global,,fitness_natural:contains
+proprioceptive_neuromuscular_facilitation,Proprioceptive neuromuscular facilitation,practice,Global,,healing_bodywork:contains
+prosthetic_sport_movement,Prosthetic sport movement,practice,Global,,digital_robotics:contains
+psychomotricity,Psychomotricity,practice,Global,,education_methods:contains
+pulmonary_rehabilitation_exercise,Pulmonary rehabilitation exercise,practice,Global,,healing_rehab:contains
+punting,Punting,practice,Global,,aquatic_boats:contains
+push_hands,Push hands,practice,Eurasia,,combat_internal:contains
+qigong,Qigong,practice,China / global,,somatics_chinese:contains | healing_rehab:cross-link | ritual_devotional:cross-link
+qigong_martial_sets,Qigong martial sets,practice,Eurasia,,combat_internal:contains
+quickstep,Quickstep,practice,Global,,dance_ballroom:contains
+quoits,Quoits,practice,Global,,sport_precision:contains
+qwan_ki_do,Qwan Ki Do,practice,Global,,combat_regional:contains
+race_walking,Race walking,practice,Global,,sport_athletics:contains
+race_walking_2,Race walking,practice,Global,,locomotion_bipedal:contains
+racquetball,Racquetball,practice,Global,,sport_net_wall:contains
+rafting,Rafting,practice,Global,,aquatic_boats:contains
+ramvong,Ramvong,practice,Southeast Asia,,dance_se_asia:contains
+rappelling,Rappelling,practice,Global,,military_tactical:contains
+rave_as_secular_ritual,Rave as secular ritual,practice,Global,,ritual_trance:contains
+real_tennis,Real tennis,practice,Global,,sport_net_wall:contains
+reality_based_self_defence,Reality-based self-defence,practice,Global,,combat_hybrid:contains
+red_rover,Red rover,practice,Global,,play_child:contains
+reformer_pilates,Reformer Pilates,practice,Global,,somatics_pilates:contains
+reindeer_herding_movement,Reindeer herding movement,practice,Global,,animal_other:contains
+reining,Reining,practice,Global,,animal_equestrian:contains
+release_technique,Release technique,practice,Global,,dance_stage:contains
+resistance_band_training,Resistance-band training,practice,Global,,fitness_resistance:contains
+restorative_yoga,Restorative yoga,practice,South Asia / global,,somatics_yoga:contains
+rhythm_game_movement,Rhythm-game movement,practice,Global,,digital_exergaming:contains
+rhythmic_gymnastics,Rhythmic gymnastics,practice,Global,,acro_gymnastics:contains | dance_stage:cross-link | sport_precision:cross-link
+rice_planting,Rice planting,practice,Global,,occupational_agri:contains
+rifle_drill,Rifle drill,practice,Global,,military_drill:contains
+ring_juggling,Ring juggling,practice,Global,,acro_object:contains
+riot_control_formation_movement,Riot-control formation movement,practice,Global,,military_service:contains
+ritual,"Ritual, devotional & ceremonial movement",domain,,,movement:contains
+ritual_devotional,Devotional embodied practices,family,Global,,ritual:contains
+ritual_procession,Processional & festival movement,family,Global,,ritual:contains
+ritual_trance,"Trance, possession & ecstatic movement",family,Global,,ritual:contains
+river_surfing,River surfing,practice,Global,,aquatic_boards:contains
+road_cycling,Road cycling,practice,Global,,sport_wheeled:contains
+road_running,Road running,practice,Global,,sport_athletics:contains
+robot,Robot,practice,Global urban,,dance_urban:contains
+rodeo_riding,Rodeo riding,practice,Global,,animal_equestrian:contains
+rogaining,Rogaining,practice,Global,,sport_multisport:contains
+rogaining_2,Rogaining,practice,Global,,outdoor_wilderness:contains
+rolf_movement_integration,Rolf Movement Integration,practice,Western / global,,somatics_western:contains
+roller_derby,Roller derby,practice,Global,,sport_wheeled:contains
+roller_skating,Roller skating,practice,Global,,sport_wheeled:contains
+room_clearing,Room clearing,practice,Global,,military_tactical:contains
+rope_acrobatics,Rope acrobatics,practice,Global,,acro_circus:contains
+rope_assault_course,Rope assault course,practice,Global,,military_tactical:contains
+rope_climbing,Rope climbing,practice,Global,,locomotion_climbing:contains
+rough_and_tumble_play,Rough-and-tumble play,practice,Global,,play_child:contains
+rounders,Rounders,practice,Global,,sport_bat_ball:contains
+rowing,Rowing,practice,Global,,aquatic_boats:contains
+rowing_ergometer_training,Rowing ergometer training,practice,Global,,fitness_endurance:contains
+rucking,Rucking,practice,Global,,fitness_endurance:contains | military_tactical:cross-link | locomotion_bipedal:cross-link
+rucking_2,Rucking,practice,Global,,locomotion_bipedal:contains | military_tactical:cross-link | locomotion_bipedal:cross-link
+rugby_league,Rugby league,practice,Global,,sport_ball_team:contains
+rugby_sevens,Rugby sevens,practice,Global,,sport_ball_team:contains
+rugby_union,Rugby union,practice,Global,,sport_ball_team:contains
+rumba_ballroom,Rumba ballroom,practice,Global,,dance_ballroom:contains
+running,Running,practice,Global,,locomotion_bipedal:contains
+russian_swing,Russian swing,practice,Global,,acro_circus:contains
+ryukyuan_dance,Ryukyuan dance,practice,East Asia,,dance_east_asia:contains
+sabar,Sabar,practice,Africa,,dance_african:contains
+saidi,Saidi,practice,Middle East / North Africa,,dance_middle_east:contains
+salsa,Salsa,practice,African diaspora,,dance_afrodiasporic:contains
+salsa_casino,Salsa casino,practice,Global,,dance_ballroom:contains
+samba,Samba,practice,African diaspora,,dance_afrodiasporic:contains
+samba_ballroom,Samba ballroom,practice,Global,,dance_ballroom:contains
+sambo,Sambo,practice,Global,,combat_grappling:contains
+sanda,Sanda,practice,Global,,combat_striking:contains
+sandbag_training,Sandbag training,practice,Global,,fitness_resistance:contains
+santeria_orisha_dance,Santería orisha dance,practice,Global,,ritual_trance:contains
+sasa,Sasa,practice,Pacific,,dance_pacific:contains
+sattriya,Sattriya,practice,South Asia,,dance_south_asia:contains
+savate,Savate,practice,Global,,combat_striking:contains
+sawing_movement,Sawing movement,practice,Global,,occupational_craft:contains
+schroth_method,Schroth method,practice,Global,,healing_rehab:contains
+schuhplattler,Schuhplattler,practice,Europe,,dance_europe_folk:contains
+schwingen,Schwingen,practice,Global,,combat_grappling:contains
+scootering,Scootering,practice,Global,,sport_wheeled:contains
+scottish_country_dance,Scottish country dance,practice,Europe,,dance_europe_folk:contains
+scrambling,Scrambling,practice,Global,,outdoor_wilderness:contains
+scuba_diving_movement,Scuba diving movement,practice,Global,,aquatic_dive:contains
+scything,Scything,practice,Global,,occupational_agri:contains
+sea_kayaking,Sea kayaking,practice,Global,,aquatic_boats:contains
+search_and_rescue_movement,Search-and-rescue movement,practice,Global,,military_service:contains
+second_line_parade,Second line parade,practice,Global,,ritual_procession:contains
+semana_santa_processions,Semana Santa processions,practice,Global,,ritual_procession:contains
+semba,Semba,practice,African diaspora,,dance_afrodiasporic:contains
+sepak_raga,Sepak raga,practice,Global,,sport_traditional:contains
+sepak_takraw,Sepak takraw,practice,Global,,sport_ball_team:contains
+shadow_puppetry_manipulation,Shadow puppetry manipulation,practice,Global,,performance_puppetry:contains
+shamanic_dance,Shamanic dance,practice,Global,,ritual_trance:contains
+shangaan_electro_dance,Shangaan electro dance,practice,Africa,,dance_african:contains
+shellfish_gathering,Shellfish gathering,practice,Global,,occupational_hunt:contains
+shepherding_with_staff,Shepherding with staff,practice,Global,,occupational_agri:contains
+shiatsu_stretches,Shiatsu stretches,practice,Global,,healing_bodywork:contains
+shinto_shrine_movement_etiquette,Shinto shrine movement etiquette,practice,Global,,ritual_devotional:contains
+shinty,Shinty,practice,Global,,sport_ball_team:contains
+shootfighting,Shootfighting,practice,Global,,combat_hybrid:contains
+short_track_speed_skating,Short-track speed skating,practice,Cold climates,,sport_winter:contains
+shot_put,Shot put,practice,Global,,sport_athletics:contains
+show_jumping,Show jumping,practice,Global,,animal_equestrian:contains
+shuai_jiao,Shuai jiao,practice,Global,,combat_grappling:contains
+shuffleboard,Shuffleboard,practice,Global,,sport_precision:contains
+sidestroke,Sidestroke,practice,Global,,aquatic_swim:contains
+sikh_gatka_devotional_practice,Sikh gatka devotional practice,practice,Global,,ritual_devotional:contains
+silambam,Silambam,practice,Global,,combat_weapon:contains
+silent_drill_platoon,Silent drill platoon,practice,Global,,military_drill:contains
+singkil,Singkil,practice,Southeast Asia,,dance_se_asia:contains
+sirtaki,Sirtaki,practice,Europe,,dance_europe_folk:contains
+sitting_volleyball,Sitting volleyball,practice,Global,,healing_adaptive:contains
+siva,Siva,practice,Pacific,,dance_pacific:contains
+sivananda_yoga,Sivananda yoga,practice,South Asia / global,,somatics_yoga:contains
+skateboarding,Skateboarding,practice,Global,,sport_wheeled:contains
+skeleton,Skeleton,practice,Cold climates,,sport_winter:contains
+ski_jumping,Ski jumping,practice,Cold climates,,sport_winter:contains
+ski_touring,Ski touring,practice,Global,,outdoor_wilderness:contains
+skierg_training,SkiErg training,practice,Global,,fitness_endurance:contains
+skijoring,Skijoring,practice,Global,,animal_other:contains
+skimboarding,Skimboarding,practice,Global,,aquatic_boards:contains
+skinner_releasing_technique,Skinner Releasing Technique,practice,Western / global,,somatics_western:contains
+skipping_rope,Skipping rope,practice,Global,,play_child:contains
+skydiving,Skydiving,practice,Global,,outdoor_air:contains
+slackwire,Slackwire,practice,Global,,acro_circus:contains
+slow_waltz,Slow waltz,practice,Global,,dance_ballroom:contains
+snooker,Snooker,practice,Global,,sport_precision:contains
+snorkelling,Snorkelling,practice,Global,,aquatic_dive:contains
+snowboarding,Snowboarding,practice,Cold climates,,sport_winter:contains
+snowshoe_racing,Snowshoe racing,practice,Cold climates,,sport_winter:contains
+snowshoeing,Snowshoeing,practice,Global,,outdoor_wilderness:contains
+soc,Socа,practice,African diaspora,,dance_afrodiasporic:contains
+softball,Softball,practice,Global,,sport_bat_ball:contains
+sojutsu,Sojutsu,practice,Global,,combat_weapon:contains
+somatics,"Somatics, mind–body & internal arts",domain,,,movement:contains
+somatics_breath,Breath-led movement practices,family,Global,,somatics:contains
+somatics_chinese,Chinese health & internal movement,family,China / global,,somatics:contains
+somatics_pilates,Pilates & contrology,family,Global,,somatics:contains
+somatics_western,Western somatic education,family,Western / global,,somatics:contains
+somatics_yoga,Yoga families,family,South Asia / global,,somatics:contains
+soukous_dance,Soukous dance,practice,Africa,,dance_african:contains
+soukous_derived_club_dance,Soukous-derived club dance,practice,African diaspora,,dance_afrodiasporic:contains
+southern_praying_mantis,Southern Praying Mantis,practice,Global,,combat_regional:contains
+spear_system,SPEAR system,practice,Global,,combat_hybrid:contains
+spear_throwing,Spear throwing,practice,Global,,occupational_hunt:contains
+spearfishing_movement,Spearfishing movement,practice,Global,,aquatic_dive:contains
+speed_climbing,Speed climbing,practice,Global,,locomotion_climbing:contains
+speed_skating,Speed skating,practice,Cold climates,,sport_winter:contains
+spin_classes,Spin classes,practice,Global,,fitness_endurance:contains
+sport,"Games, sport & contest",domain,,,movement:contains
+sport_athletics,Athletics & measurable human performance,family,Global,,sport:contains
+sport_ball_team,Team invasion & ball sports,family,Global,,sport:contains
+sport_bat_ball,"Bat, stick & striking-ball sports",family,Global,,sport:contains
+sport_climbing,Sport climbing,practice,Global,,locomotion_climbing:contains
+sport_multisport,Combined endurance & multisport,family,Global,,sport:contains
+sport_net_wall,"Net, wall & racket sports",family,Global,,sport:contains
+sport_precision,"Precision, target & object-placement sports",family,Global,,sport:contains
+sport_strength,Strength sports,family,Global,,sport:contains
+sport_traditional,Traditional games & contests,family,Global,,sport:contains
+sport_wheeled,Wheeled & rolling sports,family,Global,,sport:contains
+sport_winter,Snow & ice sports,family,Cold climates,,sport:contains
+springboard_diving,Springboard diving,practice,Global,,aquatic_dive:contains
+sprint_interval_training,Sprint interval training,practice,Global,,fitness_endurance:contains
+sprinting,Sprinting,practice,Global,,sport_athletics:contains
+squash,Squash,practice,Global,,sport_net_wall:contains
+squatting_rest_postures,Squatting rest postures,practice,Global,,occupational_domestic:contains
+ssireum,Ssireum,practice,Global,,combat_grappling:contains
+staff_spinning,Staff spinning,practice,Global,,acro_object:contains
+stage_combat,Stage combat,practice,Global,,performance_theatre:contains
+stair_climbing,Stair climbing,practice,Global,,fitness_endurance:contains
+stalking,Stalking,practice,Global,,occupational_hunt:contains
+stand_up_paddleboarding,Stand-up paddleboarding,practice,Global,,aquatic_boards:contains
+static_trapeze,Static trapeze,practice,Global,,acro_circus:contains
+steeplechase,Steeplechase,practice,Global,,sport_athletics:contains
+step_aerobics,Step aerobics,practice,Global,,fitness_endurance:contains
+stepping,Stepping,practice,African diaspora,,dance_afrodiasporic:contains
+stickball,Stickball,practice,Global,,sport_bat_ball:contains
+stone_lifting,Stone lifting,practice,Global,,sport_strength:contains
+stone_masonry_movement,Stone masonry movement,practice,Global,,occupational_craft:contains
+stoolball,Stoolball,practice,Global,,sport_bat_ball:contains
+street_workout,Street workout,practice,Global,,fitness_resistance:contains
+streetlifting,Streetlifting,practice,Global,,sport_strength:contains
+strongfirst_style_hardstyle_kettlebell,StrongFirst-style hardstyle kettlebell,practice,Global,,fitness_resistance:contains
+strongman,Strongman,practice,Global,,sport_strength:contains
+sufi_whirling_sema,Sufi whirling / sema,practice,Global,,ritual_devotional:contains | dance_middle_east:cross-link | somatics_breath:cross-link
+sumo,Sumo,practice,Global,,combat_grappling:contains
+sun_dance,Sun Dance,practice,Global,,ritual_trance:contains
+surfing,Surfing,practice,Global,,aquatic_boards:contains
+suzuki_method_of_actor_training,Suzuki Method of Actor Training,practice,Global,,performance_theatre:contains
+swimrun,Swimrun,practice,Global,,sport_multisport:contains
+sword_and_buckler,Sword and buckler,practice,Global,,combat_weapon:contains
+synchronised_artistic_swimming,Synchronised / artistic swimming,practice,Global,,aquatic_swim:contains
+synchronized_skating,Synchronized skating,practice,Cold climates,,sport_winter:contains
+systema,Systema,practice,Eurasia,,combat_internal:contains
+table_tennis,Table tennis,practice,Global,,sport_net_wall:contains
+taekkyeon,Taekkyeon,practice,Global,,combat_regional:contains | dance_east_asia:cross-link
+taekwondo,Taekwondo,practice,Global,,combat_striking:contains
+tag,Tag,practice,Global,,play_child:contains
+taijiquan,Taijiquan,practice,Eurasia,,combat_internal:contains | somatics_chinese:cross-link | healing_rehab:cross-link
+tamure,Tamure,practice,Pacific,,dance_pacific:contains
+tang_soo_do,Tang soo do,practice,Global,,combat_striking:contains
+tango_ballroom,Tango ballroom,practice,Global,,dance_ballroom:contains
+tanoura,Tanoura,practice,Middle East / North Africa,,dance_middle_east:contains
+tap_dance,Tap dance,practice,Global,,dance_stage:contains
+tarantella,Tarantella,practice,Europe,,dance_europe_folk:contains
+tautoga,Tautoga,practice,Pacific,,dance_pacific:contains
+tea_picking,Tea picking,practice,Global,,occupational_agri:contains
+teamgym,TeamGym,practice,Global,,acro_gymnastics:contains
+teeterboard,Teeterboard,practice,Global,,acro_circus:contains
+telepresence_embodiment,Telepresence embodiment,practice,Global,,digital_robotics:contains
+ten_pin_bowling,Ten-pin bowling,practice,Global,,sport_precision:contains
+tennis,Tennis,practice,Global,,sport_net_wall:contains
+tent_pegging,Tent pegging,practice,Global,,animal_equestrian:contains
+teqball,Teqball,practice,Global,,sport_net_wall:contains
+thai_massage_assisted_movement,Thai massage assisted movement,practice,Global,,healing_bodywork:contains
+thaipusam_procession,Thaipusam procession,practice,Global,,ritual_procession:contains
+therapeutic_riding,Therapeutic riding,practice,Global,,animal_equestrian:contains
+threshing_movement,Threshing movement,practice,Global,,occupational_agri:contains
+tibetan_cham,Tibetan cham,practice,East Asia,,dance_east_asia:contains | ritual_devotional:cross-link | performance_theatre:cross-link
+tibetan_prostrations,Tibetan prostrations,practice,Global,,ritual_devotional:contains
+tightwire,Tightwire,practice,Global,,acro_circus:contains
+tinikling,Tinikling,practice,Southeast Asia,,dance_se_asia:contains
+tool_object,Object manipulation,dimension,,,dimensions:contains | acrobatics:characterized-by | occupational:characterized-by | digital:characterized-by
+tool_unarmed,Unarmed,dimension,,,dimensions:contains | combat:characterized-by
+tool_weapon,Weapon/tool mediated,dimension,,,dimensions:contains | military:characterized-by
+toss_juggling,Toss juggling,practice,Global,,acro_object:contains
+track_cycling,Track cycling,practice,Global,,sport_wheeled:contains
+tracking,Tracking,practice,Global,,occupational_hunt:contains
+tracking_and_stalking,Tracking and stalking,practice,Global,,outdoor_wilderness:contains
+traditional_climbing,Traditional climbing,practice,Global,,locomotion_climbing:contains
+trager_approach_movement,Trager Approach movement,practice,Western / global,,somatics_western:contains
+trail_running,Trail running,practice,Global,,sport_athletics:contains
+trampoline_gymnastics,Trampoline gymnastics,practice,Global,,acro_gymnastics:contains
+tree_climbing,Tree climbing,practice,Global,,locomotion_climbing:contains
+tree_climbing_play,Tree climbing play,practice,Global,,play_child:contains
+tree_crop_climbing,Tree crop climbing,practice,Global,,occupational_hunt:contains
+triathlon,Triathlon,practice,Global,,sport_multisport:contains
+triple_jump,Triple jump,practice,Global,,sport_athletics:contains
+tug_of_war,Tug of war,practice,Global,,sport_strength:contains
+tui_na_movement,Tui na movement,practice,Global,,healing_bodywork:contains
+tumbling,Tumbling,practice,Global,,acro_gymnastics:contains
+turfing,Turfing,practice,Global urban,,dance_urban:contains
+turkish_oil_wrestling,Turkish oil wrestling,practice,Global,,combat_grappling:contains
+ulama,Ulama,practice,Global,,sport_traditional:contains
+ultimate,Ultimate,practice,Global,,sport_ball_team:contains
+ultrarunning,Ultrarunning,practice,Global,,sport_athletics:contains
+umteyo,Umteyo,practice,Africa,,dance_african:contains
+underwater_hockey,Underwater hockey,practice,Global,,aquatic_dive:contains
+underwater_rugby,Underwater rugby,practice,Global,,aquatic_dive:contains
+unicycling,Unicycling,practice,Global,,sport_wheeled:contains
+urban_exploration_movement,Urban exploration movement,practice,Global,,locomotion_parkour:contains
+urban_walking_flanerie,Urban walking / flânerie,practice,Global,,locomotion_bipedal:contains
+vale_tudo,Vale tudo,practice,Global,,combat_hybrid:contains
+vaulting,Vaulting,practice,Global,,animal_equestrian:contains
+vestibular_rehabilitation,Vestibular rehabilitation,practice,Global,,healing_rehab:contains
+via_ferrata,Via ferrata,practice,Global,,locomotion_climbing:contains
+viennese_waltz,Viennese waltz,practice,Global,,dance_ballroom:contains
+viewpoints,Viewpoints,practice,Global,,performance_theatre:contains
+vinyasa_flow,Vinyasa flow,practice,South Asia / global,,somatics_yoga:contains
+vocal_breath_movement_work,Vocal-breath movement work,practice,Global,,somatics_breath:contains
+vodou_ceremonial_dance,Vodou ceremonial dance,practice,Global,,ritual_trance:contains
+vogue,Vogue,practice,African diaspora,,dance_afrodiasporic:contains
+voguing,Voguing,practice,Global urban,,dance_urban:contains
+volleyball,Volleyball,practice,Global,,sport_net_wall:contains
+vovinam,Vovinam,practice,Global,,combat_regional:contains
+vr_fitness,VR fitness,practice,Global,,digital_exergaming:contains
+waacking,Waacking,practice,African diaspora,,dance_afrodiasporic:contains
+waacking_2,Waacking,practice,Global urban,,dance_urban:contains
+wakeboarding,Wakeboarding,practice,Global,,aquatic_boards:contains
+waldorf_eurythmy,Waldorf eurythmy,practice,Global,,education_methods:contains
+walking,Walking,practice,Global,,locomotion_bipedal:contains
+walking_qigong,Walking qigong,practice,China / global,,somatics_chinese:contains
+wall_trampoline,Wall trampoline,practice,Global,,acro_circus:contains
+waltz_folk_traditions,Waltz folk traditions,practice,Europe,,dance_europe_folk:contains
+water_carrying,Water carrying,practice,Global,,occupational_domestic:contains
+water_polo,Water polo,practice,Global,,sport_ball_team:contains
+water_skiing,Water skiing,practice,Global,,aquatic_boards:contains
+wayang_golek_manipulation,Wayang golek manipulation,practice,Global,,performance_puppetry:contains
+west_coast_swing,West Coast Swing,practice,Global,,dance_ballroom:contains
+western_riding,Western riding,practice,Global,,animal_equestrian:contains
+wheelchair_basketball,Wheelchair basketball,practice,Global,,healing_adaptive:contains
+wheelchair_dance,Wheelchair dance,practice,Global,,healing_adaptive:contains | dance_stage:cross-link
+wheelchair_racing,Wheelchair racing,practice,Global,,sport_wheeled:contains
+white_crane_boxing,White Crane boxing,practice,Global,,combat_regional:contains
+whitewater_kayaking,Whitewater kayaking,practice,Global,,aquatic_boats:contains
+wife_carrying,Wife carrying,practice,Global,,sport_traditional:contains
+wild_swimming,Wild swimming,practice,Global,,aquatic_swim:contains
+wim_hof_method_movement,Wim Hof Method movement,practice,Global,,somatics_breath:contains
+windsurfing,Windsurfing,practice,Global,,aquatic_boards:contains
+wing_chun,Wing chun,practice,Global,,combat_regional:contains
+wingsuit_flying,Wingsuit flying,practice,Global,,outdoor_air:contains
+wuqinxi,Wuqinxi,practice,China / global,,somatics_chinese:contains
+wushu,Wushu,practice,Global,,combat_regional:contains
+xingyiquan,Xingyiquan,practice,Eurasia,,combat_internal:contains
+yagli_gures,Yagli gures,practice,Global,,combat_grappling:contains
+yakshagana_movement,Yakshagana movement,practice,South Asia,,dance_south_asia:contains
+yangge,Yangge,practice,East Asia,,dance_east_asia:contains
+yijinjing,Yijinjing,practice,China / global,,somatics_chinese:contains
+yin_yoga,Yin yoga,practice,South Asia / global,,somatics_yoga:contains
+yiquan,Yiquan,practice,Eurasia,,combat_internal:contains
+yo_yo_performance,Yo-yo performance,practice,Global,,acro_object:contains
+yoga_nidra_movement_preparation,Yoga nidra movement preparation,practice,South Asia / global,,somatics_yoga:contains
+zaouli,Zaouli,practice,Africa,,dance_african:contains
+zapin,Zapin,practice,Southeast Asia,,dance_se_asia:contains
+zar_ceremony_movement,Zar ceremony movement,practice,Global,,ritual_trance:contains
+zen_kinhin,Zen kinhin,practice,Global,,ritual_devotional:contains
+zhan_zhuang,Zhan zhuang,practice,China / global,,somatics_chinese:contains
+ziplining,Ziplining,practice,Global,,outdoor_air:contains
+zone_2_training,Zone 2 training,practice,Global,,fitness_endurance:contains
+zouk,Zouk,practice,African diaspora,,dance_afrodiasporic:contains
+zouk_lambada,Zouk-lambada,practice,Global,,dance_ballroom:contains
+zulu_reed_dance,Zulu reed dance,practice,Africa,,dance_african:contains
+zulu_stick_fighting,Zulu stick fighting,practice,Global,,combat_weapon:contains
+zumba,Zumba,practice,Global,,fitness_group:contains
+zwiefacher,Zwiefacher,practice,Europe,,dance_europe_folk:contains
