@@ -1,7 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/screen_background">
+
+    <ScrollView
+        android:id="@+id/duration_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/screen_background"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingTop="28dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="28dp">
+
+            <TextView
+                android:id="@+id/duration_eyebrow"
+                style="@style/DurationEyebrowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/duration_eyebrow" />
+
+            <TextView
+                android:id="@+id/duration_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:accessibilityHeading="true"
+                android:gravity="center"
+                android:text="@string/duration_title"
+                android:textColor="@color/primary_text"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/duration_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/duration_subtitle"
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/duration_card_background"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="18dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/duration_minutes_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:accessibilityLiveRegion="polite"
+                        android:contentDescription="@string/duration_value_default_description"
+                        android:includeFontPadding="false"
+                        android:text="@string/duration_minutes_default"
+                        android:textColor="@color/primary_text"
+                        android:textSize="80sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-4dp"
+                        android:importantForAccessibility="no"
+                        android:letterSpacing="0.12"
+                        android:text="@string/duration_minutes_unit"
+                        android:textColor="@color/accent_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/duration_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/duration_summary_default"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/duration_decrease_button"
+                    style="@style/DurationStepButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/duration_decrease_description"
+                    android:text="@string/duration_decrease" />
+
+                <SeekBar
+                    android:id="@+id/duration_seek_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/duration_seek_description_default"
+                    android:importantForAccessibility="no"
+                    android:max="17"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:progress="7"
+                    android:progressBackgroundTint="@color/route_inactive"
+                    android:progressTint="@color/accent"
+                    android:splitTrack="false"
+                    android:thumbTint="@color/accent" />
+
+                <Button
+                    android:id="@+id/duration_increase_button"
+                    style="@style/DurationStepButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/duration_increase_description"
+                    android:text="@string/duration_increase" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration_minimum"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration_maximum"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/DurationEyebrowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="start"
+                android:text="@string/duration_route_title" />
+
+            <LinearLayout
+                android:id="@+id/duration_route_segments"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
+                android:contentDescription="@string/duration_route_default_description"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/duration_segment_01"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_02"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_03"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_04"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_05"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_06"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_07"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_08"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_09"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_10"
+                    style="@style/DurationRouteSegmentActive" />
+
+                <View
+                    android:id="@+id/duration_segment_11"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_12"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_13"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_14"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_15"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_16"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_17"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_18"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_19"
+                    style="@style/DurationRouteSegmentInactive" />
+
+                <View
+                    android:id="@+id/duration_segment_20"
+                    style="@style/DurationRouteSegmentInactive" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/duration_endpoint_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/duration_endpoint_background"
+                android:gravity="center"
+                android:minHeight="56dp"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                android:text="@string/duration_endpoint_default"
+                android:textColor="@color/primary_text"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/begin_workout_button"
+                style="@style/DurationPrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:contentDescription="@string/duration_start_default"
+                android:minHeight="72dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp"
+                android:text="@string/duration_start_default" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/workout_screen"
@@ -12,7 +317,8 @@
         android:paddingStart="20dp"
         android:paddingTop="16dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="20dp">
+        android:paddingBottom="20dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,11 +328,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/region_name"
+                android:id="@+id/muscle_group_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.12"
-                android:textColor="@color/accent"
+                android:textColor="@color/accent_text"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -94,7 +400,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="60"
+                    android:text="@string/countdown_initial"
                     android:textColor="@color/primary_text"
                     android:textSize="70sp"
                     android:textStyle="bold" />
@@ -161,6 +467,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
             android:text="✦"
             android:textColor="@color/celebration_gold"
             android:textSize="88sp" />
@@ -169,6 +476,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:accessibilityHeading="true"
             android:gravity="center"
             android:text="@string/congratulations_title"
             android:textColor="@color/white"

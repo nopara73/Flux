@@ -12,19 +12,29 @@ namespace Flux;
     ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 public class MainActivity : Activity
 {
-    private const int CountdownSeconds = 60;
-    private const int RestSeconds = 10;
+    private const int CountdownSeconds = 45;
+    private const int RestSeconds = 15;
 
     private SqliteExerciseDatabase _exerciseDatabase = null!;
     private ExerciseSessionService _sessionService = null!;
     private IWorkoutStateStore _stateStore = null!;
     private WorkoutState _state = null!;
-    private DominantRegion _currentRegion;
+    private MuscleGroup _currentMuscleGroup;
     private Exercise? _currentExercise;
+    private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
 
+    private View _durationScreen = null!;
+    private TextView _durationMinutesValue = null!;
+    private TextView _durationSummary = null!;
+    private Button _durationDecreaseButton = null!;
+    private SeekBar _durationSeekBar = null!;
+    private Button _durationIncreaseButton = null!;
+    private LinearLayout _durationRouteSegments = null!;
+    private TextView _durationEndpointText = null!;
+    private Button _beginWorkoutButton = null!;
     private View _workoutScreen = null!;
     private View _congratulationsScreen = null!;
-    private TextView _regionName = null!;
+    private TextView _muscleGroupName = null!;
     private TextView _exerciseName = null!;
     private VideoView _exerciseVideo = null!;
     private ImageView _holdFrameImage = null!;
@@ -67,14 +77,21 @@ public class MainActivity : Activity
         _sessionService.Initialize(_state);
         _stateStore.Save(_state);
 
+        _selectedWorkoutMinutes = _state.LastWorkoutMinutes;
+
         if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
             ShowCongratulations();
         }
-        else
+        else if (_state.ActiveWorkoutMinutes >=
+                 ExerciseSessionService.MinimumWorkoutMinutes)
         {
             ShowNextExercise();
             RestorePendingRest();
+        }
+        else
+        {
+            ShowDurationSelection();
         }
     }
 
@@ -116,9 +133,23 @@ public class MainActivity : Activity
 
     private void BindViews()
     {
+        _durationScreen = FindRequiredView<View>(Resource.Id.duration_screen);
+        _durationMinutesValue = FindRequiredView<TextView>(
+            Resource.Id.duration_minutes_value);
+        _durationSummary = FindRequiredView<TextView>(Resource.Id.duration_summary);
+        _durationDecreaseButton = FindRequiredView<Button>(
+            Resource.Id.duration_decrease_button);
+        _durationSeekBar = FindRequiredView<SeekBar>(Resource.Id.duration_seek_bar);
+        _durationIncreaseButton = FindRequiredView<Button>(
+            Resource.Id.duration_increase_button);
+        _durationRouteSegments = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_route_segments);
+        _durationEndpointText = FindRequiredView<TextView>(
+            Resource.Id.duration_endpoint_text);
+        _beginWorkoutButton = FindRequiredView<Button>(Resource.Id.begin_workout_button);
         _workoutScreen = FindRequiredView<View>(Resource.Id.workout_screen);
         _congratulationsScreen = FindRequiredView<View>(Resource.Id.congratulations_screen);
-        _regionName = FindRequiredView<TextView>(Resource.Id.region_name);
+        _muscleGroupName = FindRequiredView<TextView>(Resource.Id.muscle_group_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
         _holdFrameImage = FindRequiredView<ImageView>(Resource.Id.hold_frame_image);
@@ -136,10 +167,95 @@ public class MainActivity : Activity
 
     private void BindEvents()
     {
+        _durationDecreaseButton.Click += (_, _) =>
+            SetSelectedWorkoutMinutes(_selectedWorkoutMinutes - 1);
+        _durationIncreaseButton.Click += (_, _) =>
+            SetSelectedWorkoutMinutes(_selectedWorkoutMinutes + 1);
+        _durationSeekBar.ProgressChanged += (_, eventArgs) =>
+        {
+            if (eventArgs.FromUser)
+            {
+                SetSelectedWorkoutMinutes(
+                    eventArgs.Progress + ExerciseSessionService.MinimumWorkoutMinutes);
+            }
+        };
+        _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
         _speedUpButton.Click += (_, _) => SkipCountdown();
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _doneButton.Click += (_, _) => CloseCompletedWorkout();
+    }
+
+    private void ShowDurationSelection()
+    {
+        CancelCountdown(resetToStart: false);
+        PauseRestCountdown();
+        _restActive = false;
+        _exerciseVideo.StopPlayback();
+        ClearHoldFrame();
+        _currentExercise = null;
+
+        _durationScreen.Visibility = ViewStates.Visible;
+        _workoutScreen.Visibility = ViewStates.Gone;
+        _congratulationsScreen.Visibility = ViewStates.Gone;
+        SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
+    }
+
+    private void SetSelectedWorkoutMinutes(int minutes)
+    {
+        int clampedMinutes = Math.Clamp(
+            minutes,
+            ExerciseSessionService.MinimumWorkoutMinutes,
+            ExerciseSessionService.MaximumWorkoutMinutes);
+        _selectedWorkoutMinutes = clampedMinutes;
+
+        int expectedProgress =
+            clampedMinutes - ExerciseSessionService.MinimumWorkoutMinutes;
+        if (_durationSeekBar.Progress != expectedProgress)
+        {
+            _durationSeekBar.Progress = expectedProgress;
+        }
+
+        MuscleGroup endpoint = ExerciseSessionService.MuscleGroupOrder[clampedMinutes - 1];
+        string endpointName = GetMuscleGroupDisplayName(endpoint);
+        const string minuteLabel = "minutes";
+
+        _durationMinutesValue.Text = clampedMinutes.ToString();
+        _durationMinutesValue.ContentDescription =
+            $"{clampedMinutes} minutes selected";
+        _durationSummary.Text =
+            $"{clampedMinutes} rounds · 45 sec move · 15 sec rest";
+        _durationEndpointText.Text =
+            $"Finishes with {clampedMinutes} · {endpointName}";
+        _beginWorkoutButton.Text =
+            $"Start {clampedMinutes}-minute workout";
+        _beginWorkoutButton.ContentDescription =
+            $"Start {clampedMinutes} {minuteLabel} workout";
+        _durationSeekBar.ContentDescription =
+            $"Workout duration, {clampedMinutes} {minuteLabel}. Range 3 to 20 minutes";
+        _durationRouteSegments.ContentDescription =
+            $"{clampedMinutes} of 20 muscle groups selected, from Glutes through {endpointName}";
+
+        _durationDecreaseButton.Enabled =
+            clampedMinutes > ExerciseSessionService.MinimumWorkoutMinutes;
+        _durationIncreaseButton.Enabled =
+            clampedMinutes < ExerciseSessionService.MaximumWorkoutMinutes;
+
+        for (int index = 0; index < _durationRouteSegments.ChildCount; index++)
+        {
+            View segment = _durationRouteSegments.GetChildAt(index)
+                ?? throw new InvalidOperationException("A duration route segment is missing.");
+            segment.SetBackgroundResource(index < clampedMinutes
+                ? Resource.Drawable.duration_segment_active
+                : Resource.Drawable.duration_segment_inactive);
+        }
+    }
+
+    private void StartSelectedWorkout()
+    {
+        _sessionService.StartWorkout(_state, _selectedWorkoutMinutes);
+        _stateStore.Save(_state);
+        ShowNextExercise();
     }
 
     private void ConfigureVideoView()
@@ -243,26 +359,31 @@ public class MainActivity : Activity
 
     private void ShowNextExercise()
     {
-        DominantRegion? nextRegion = _sessionService.GetNextRegion(_state);
+        MuscleGroup? nextMuscleGroup = _sessionService.GetNextMuscleGroup(_state);
 
-        if (nextRegion is null)
+        if (nextMuscleGroup is null)
         {
             ShowCongratulations();
             return;
         }
 
-        _currentRegion = nextRegion.Value;
-        Exercise exercise = _sessionService.GetSelectedExercise(_state, _currentRegion);
+        _currentMuscleGroup = nextMuscleGroup.Value;
+        Exercise exercise = _sessionService.GetSelectedExercise(
+            _state,
+            _currentMuscleGroup);
         _currentExercise = exercise;
-        int position = ExerciseSessionService.RegionOrder
-            .TakeWhile(region => region != _currentRegion)
+        int position = ExerciseSessionService.MuscleGroupOrder
+            .TakeWhile(muscleGroup => muscleGroup != _currentMuscleGroup)
             .Count() + 1;
 
-        _regionName.Text = $"{position} / {ExerciseSessionService.RegionOrder.Count}  ·  {_currentRegion}";
+        _muscleGroupName.Text =
+            $"{position} / {_state.ActiveWorkoutMinutes}  ·  " +
+            GetMuscleGroupDisplayName(_currentMuscleGroup).ToUpperInvariant();
         _exerciseName.Text = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}  ·  HOLD"
             : exercise.Name;
         LoadExerciseMedia(exercise);
+        _durationScreen.Visibility = ViewStates.Gone;
         _workoutScreen.Visibility = ViewStates.Visible;
         _congratulationsScreen.Visibility = ViewStates.Gone;
         ShowStartButton();
@@ -361,7 +482,7 @@ public class MainActivity : Activity
 
     private void BeginRest()
     {
-        _state.PendingRestRegion = _currentRegion;
+        _state.PendingRestMuscleGroup = _currentMuscleGroup;
         _state.PendingRestEndsAtUnixMilliseconds =
             DateTimeOffset.UtcNow.AddSeconds(RestSeconds).ToUnixTimeMilliseconds();
         _state.PendingRestKept = false;
@@ -369,12 +490,15 @@ public class MainActivity : Activity
 
         _restActive = true;
         ShowRestPanel();
+        AnnouncePhaseForAccessibility(
+            _restPanel,
+            "Rest, 15 seconds. Tap to keep this exercise.");
         ResumeRestCountdown();
     }
 
     private void RestorePendingRest()
     {
-        if (_state.PendingRestRegion != _currentRegion)
+        if (_state.PendingRestMuscleGroup != _currentMuscleGroup)
         {
             return;
         }
@@ -464,7 +588,7 @@ public class MainActivity : Activity
 
     private void CompleteRest()
     {
-        if (!_restActive || _state.PendingRestRegion != _currentRegion)
+        if (!_restActive || _state.PendingRestMuscleGroup != _currentMuscleGroup)
         {
             return;
         }
@@ -472,7 +596,10 @@ public class MainActivity : Activity
         _restActive = false;
         PauseRestCountdown();
         bool keep = _state.PendingRestKept;
-        Exercise exercise = _sessionService.RecordOutcome(_state, _currentRegion, keep);
+        Exercise exercise = _sessionService.RecordOutcome(
+            _state,
+            _currentMuscleGroup,
+            keep);
         _sessionService.ClearPendingRest(_state);
 
         if (!keep)
@@ -499,12 +626,18 @@ public class MainActivity : Activity
         PauseRestCountdown();
         _restActive = false;
         _exerciseVideo.StopPlayback();
+        _currentExercise = null;
         (int replaced, int kept) = _sessionService.GetOutcomeCounts(_state);
 
         _congratulationsSummary.Text =
+            $"{_state.ActiveWorkoutMinutes} minutes complete\n" +
             $"✓  {kept} kept    ×  {replaced} replaced";
+        _durationScreen.Visibility = ViewStates.Gone;
         _workoutScreen.Visibility = ViewStates.Gone;
         _congratulationsScreen.Visibility = ViewStates.Visible;
+        AnnouncePhaseForAccessibility(
+            _congratulationsScreen,
+            $"Workout complete. {_state.ActiveWorkoutMinutes} minutes finished.");
     }
 
     private void CloseCompletedWorkout()
@@ -527,6 +660,29 @@ public class MainActivity : Activity
         {
             // A missing or unavailable audio output should not stop a workout.
         }
+    }
+
+    private static string GetMuscleGroupDisplayName(MuscleGroup muscleGroup)
+    {
+        return muscleGroup switch
+        {
+            MuscleGroup.UpperBack => "Upper back",
+            MuscleGroup.LowerBack => "Lower back",
+            MuscleGroup.HipFlexors => "Hip flexors",
+            MuscleGroup.MidBack => "Mid back",
+            MuscleGroup.RotatorCuff => "Rotator cuff",
+            _ => muscleGroup.ToString(),
+        };
+    }
+
+    [SuppressMessage(
+        "Interoperability",
+        "CA1422:Validate platform compatibility",
+        Justification = "This private API 24+ app uses the established one-shot " +
+            "announcement behavior; Android 36 deprecation does not remove it.")]
+    private static void AnnouncePhaseForAccessibility(View view, string announcement)
+    {
+        view.AnnounceForAccessibility(announcement);
     }
 
     private T FindRequiredView<

@@ -24,12 +24,40 @@ $regions = @(
     'CORE'
 )
 
+# The historical source catalog remains partitioned into ten 100-item files so
+# stable exercise IDs and media-generation profiles do not move. These source
+# families are not part of the runtime data model.
+$muscleGroups = @(
+    'Glutes',
+    'Core',
+    'Quadriceps',
+    'Hamstrings',
+    'UpperBack',
+    'Shoulders',
+    'Chest',
+    'LowerBack',
+    'Calves',
+    'HipFlexors',
+    'Adductors',
+    'Abductors',
+    'MidBack',
+    'Trapezius',
+    'Forearms',
+    'Triceps',
+    'Biceps',
+    'RotatorCuff',
+    'Neck',
+    'Shins'
+)
+
 $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1') -SkipLimitCheck
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1') -SkipLimitCheck
 $exerciseRegionOverrides = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseRegionOverrides.psd1') -SkipLimitCheck
+$exerciseMuscleGroups = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseMuscleGroups.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
@@ -51,7 +79,7 @@ $retainedExerciseIds = @(
         ForEach-Object { [int]$_ } |
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
-$minimumExercisesPerRegion = 3
+$minimumExercisesPerMuscleGroup = 10
 
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
@@ -70,6 +98,39 @@ $invalidRegionOverrides = @(
     })
 if ($invalidRegionOverrides.Count -gt 0) {
     throw 'The exercise-region override map contains an invalid entry.'
+}
+
+$invalidMuscleGroupKeys = @(
+    $exerciseMuscleGroups.Keys | Where-Object { [string]$_ -notin $muscleGroups })
+$missingMuscleGroupKeys = @(
+    $muscleGroups | Where-Object { -not $exerciseMuscleGroups.ContainsKey($_) })
+$assignedExerciseIds = @(
+    $exerciseMuscleGroups.Values |
+        ForEach-Object { $_ } |
+        ForEach-Object { [int]$_ } |
+        Sort-Object -Unique)
+$unassignedExerciseIds = @(
+    $retainedExerciseIds | Where-Object { $_ -notin $assignedExerciseIds })
+$unknownAssignedExerciseIds = @(
+    $assignedExerciseIds | Where-Object { $_ -notin $retainedExerciseIds })
+$duplicateMuscleGroupAssignments = @(
+    foreach ($muscleGroup in $muscleGroups) {
+        @($exerciseMuscleGroups[$muscleGroup]) |
+            Group-Object |
+            Where-Object Count -gt 1 |
+            ForEach-Object { "$muscleGroup/$($_.Name)" }
+    })
+$undersizedMuscleGroups = @(
+    $muscleGroups | Where-Object {
+        @($exerciseMuscleGroups[$_]).Count -lt $minimumExercisesPerMuscleGroup
+    })
+if ($invalidMuscleGroupKeys.Count -gt 0 -or
+    $missingMuscleGroupKeys.Count -gt 0 -or
+    $unassignedExerciseIds.Count -gt 0 -or
+    $unknownAssignedExerciseIds.Count -gt 0 -or
+    $duplicateMuscleGroupAssignments.Count -gt 0 -or
+    $undersizedMuscleGroups.Count -gt 0) {
+    throw 'The exercise muscle-group assignment map is incomplete or invalid.'
 }
 
 if ($holdExerciseFrames.Count -eq 0 -or @(
@@ -2267,6 +2328,10 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $motionProfile = Get-MotionProfile `
             -Region $effectiveRegion `
             -Name $exerciseName
+        $assignedMuscleGroups = @(
+            $muscleGroups | Where-Object {
+                $exerciseId -in @($exerciseMuscleGroups[$_])
+            })
         $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
         $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
         $holdFramePercent = if ($isHold) {
@@ -2283,7 +2348,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             id = $exerciseId
             name = $exerciseName
             video = $videoRelativePath
-            dominantRegion = $effectiveRegion
+            muscleGroups = $assignedMuscleGroups
             practice = $practice
             motionProfile = $motionProfile
             mode = $exerciseMode
@@ -2529,13 +2594,13 @@ if ($records.Count -ne $expectedExerciseCount) {
 $duplicateNames = $records | Group-Object { $_['name'] } | Where-Object Count -ne 1
 $duplicateVideos = $records | Group-Object { $_['video'] } | Where-Object Count -ne 1
 $duplicateIds = $records | Group-Object { $_['id'] } | Where-Object Count -ne 1
-$invalidRegionCounts = @(
-    foreach ($region in $regions) {
-        $regionCount = @($records | Where-Object {
-                $_['dominantRegion'] -eq $region
+$invalidMuscleGroupCounts = @(
+    foreach ($muscleGroup in $muscleGroups) {
+        $muscleGroupCount = @($records | Where-Object {
+                $muscleGroup -in @($_['muscleGroups'])
             }).Count
-        if ($regionCount -lt $minimumExercisesPerRegion) {
-            $region
+        if ($muscleGroupCount -lt $minimumExercisesPerMuscleGroup) {
+            $muscleGroup
         }
     })
 $constraintViolations = $records | Where-Object {
@@ -2545,6 +2610,10 @@ $constraintViolations = $records | Where-Object {
     $_['maxSpaceMeters'] -gt 3 -or
     $_['equipment'] -ne 'None' -or
     -not $_['silent'] -or
+    @($_['muscleGroups']).Count -lt 1 -or
+    @($_['muscleGroups'] | Sort-Object -Unique).Count -ne
+        @($_['muscleGroups']).Count -or
+    @($_['muscleGroups'] | Where-Object { $_ -notin $muscleGroups }).Count -gt 0 -or
     [string]::IsNullOrWhiteSpace($_['practice']) -or
     [string]::IsNullOrWhiteSpace($_['motionProfile']) -or
     $_['mode'] -notin @('Repetition', 'Hold') -or
@@ -2559,8 +2628,8 @@ $syntheticNames = $records | Where-Object {
 }
 
 if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
-    $invalidRegionCounts -or $constraintViolations -or $syntheticNames) {
-    throw 'The generated catalog failed its IDs, uniqueness, region, or constraint checks.'
+    $invalidMuscleGroupCounts -or $constraintViolations -or $syntheticNames) {
+    throw 'The generated catalog failed its IDs, uniqueness, muscle-group, or constraint checks.'
 }
 
 if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {

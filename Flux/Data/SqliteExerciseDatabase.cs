@@ -10,17 +10,17 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 12;
-    private const string TableName = "exercises";
+    private const int DatabaseVersion = 13;
+    private const string ExerciseTable = "exercises";
+    private const string MuscleGroupTable = "exercise_muscle_groups";
     private const string CatalogAsset = "exercises.json";
-    private const int MinimumExercisesPerRegion = 3;
+    private const int MinimumExercisesPerMuscleGroup = 10;
 
-    private static readonly string[] Columns =
+    private static readonly string[] ExerciseColumns =
     [
         "id",
         "name",
         "video",
-        "dominant_region",
         "practice",
         "motion_profile",
         "score",
@@ -45,19 +45,78 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     public IReadOnlyList<Exercise> Exercises =>
         _exercises ??= LoadExercises();
 
+    public override void OnConfigure(SQLiteDatabase? database)
+    {
+        base.OnConfigure(database);
+        database?.SetForeignKeyConstraintsEnabled(true);
+    }
+
     public override void OnCreate(SQLiteDatabase? database)
     {
         ArgumentNullException.ThrowIfNull(database);
 
+        CreateSchema(database);
+        InsertCatalog(database, ReadAndValidateBundledCatalog());
+    }
+
+    public override void OnUpgrade(SQLiteDatabase? database, int oldVersion, int newVersion)
+    {
+        ArgumentNullException.ThrowIfNull(database);
+
+        if (newVersion != DatabaseVersion || oldVersion >= DatabaseVersion)
+        {
+            throw new NotSupportedException(
+                $"No exercise database migration exists from {oldVersion} to {newVersion}.");
+        }
+
+        Exercise[] catalog = ReadAndValidateBundledCatalog();
+        Dictionary<int, ExistingExercise> existingExercises =
+            ReadExistingExerciseIdentities(database);
+
+        database.BeginTransaction();
+        try
+        {
+            database.ExecSQL($"DROP TABLE IF EXISTS {MuscleGroupTable}");
+            database.ExecSQL($"DROP TABLE IF EXISTS {ExerciseTable}");
+            CreateSchema(database);
+            InsertCatalog(database, catalog, existingExercises);
+            database.SetTransactionSuccessful();
+        }
+        finally
+        {
+            database.EndTransaction();
+        }
+    }
+
+    public void UpdateScore(Exercise exercise)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+
+        using var values = new ContentValues();
+        values.Put("score", exercise.Score);
+        SQLiteDatabase database = WritableDatabase
+            ?? throw new InvalidOperationException("Unable to open the exercise database.");
+        int updatedRows = database.Update(
+            ExerciseTable,
+            values,
+            "id = ?",
+            [exercise.Id.ToString(CultureInfo.InvariantCulture)]);
+
+        if (updatedRows != 1)
+        {
+            throw new InvalidOperationException(
+                $"Could not persist the score for exercise {exercise.Id}.");
+        }
+    }
+
+    private static void CreateSchema(SQLiteDatabase database)
+    {
         database.ExecSQL(
             """
             CREATE TABLE exercises (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
-                dominant_region TEXT NOT NULL CHECK (dominant_region IN (
-                    'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
-                    'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')),
                 practice TEXT NOT NULL,
                 motion_profile TEXT NOT NULL,
                 score INTEGER NOT NULL DEFAULT 0,
@@ -81,200 +140,58 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             )
             """);
         database.ExecSQL(
-            "CREATE INDEX index_exercises_region_score " +
-            "ON exercises (dominant_region, score DESC)");
-
-        Seed(database);
+            """
+            CREATE TABLE exercise_muscle_groups (
+                exercise_id INTEGER NOT NULL,
+                muscle_group TEXT NOT NULL CHECK (muscle_group IN (
+                    'Glutes', 'Core', 'Quadriceps', 'Hamstrings', 'UpperBack',
+                    'Shoulders', 'Chest', 'LowerBack', 'Calves', 'HipFlexors',
+                    'Adductors', 'Abductors', 'MidBack', 'Trapezius', 'Forearms',
+                    'Triceps', 'Biceps', 'RotatorCuff', 'Neck', 'Shins')),
+                PRIMARY KEY (exercise_id, muscle_group),
+                FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+            )
+            """);
+        database.ExecSQL(
+            "CREATE INDEX index_exercises_score ON exercises (score DESC)");
+        database.ExecSQL(
+            "CREATE INDEX index_exercise_muscle_groups_group " +
+            "ON exercise_muscle_groups (muscle_group, exercise_id)");
     }
 
-    public override void OnUpgrade(SQLiteDatabase? database, int oldVersion, int newVersion)
+    private Exercise[] ReadAndValidateBundledCatalog()
     {
-        ArgumentNullException.ThrowIfNull(database);
-
-        if (oldVersion < 2 && newVersion >= 2)
-        {
-            database.ExecSQL("DROP TABLE IF EXISTS exercises");
-            OnCreate(database);
-            return;
-        }
-
-        bool catalogRefreshRequired = false;
-
-        if (oldVersion < 4)
-        {
-            database.ExecSQL(
-                "ALTER TABLE exercises ADD COLUMN exercise_mode TEXT NOT NULL " +
-                "DEFAULT 'Repetition' CHECK (exercise_mode IN ('Repetition', 'Hold'))");
-            database.ExecSQL(
-                "ALTER TABLE exercises ADD COLUMN hold_frame_percent INTEGER NOT NULL " +
-                "DEFAULT 0 CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99)");
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 5)
-        {
-            // Older installations retain their legacy `gif` column. Keeping it is
-            // harmless and avoids rebuilding the table (and risking user scores).
-            database.ExecSQL(
-                "ALTER TABLE exercises ADD COLUMN video TEXT NOT NULL DEFAULT ''");
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 6)
-        {
-            // Refresh reviewed demonstrations, names, and hold metadata while
-            // retaining the score keyed by each stable exercise ID.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 7)
-        {
-            // Refresh the completed shoulder demonstrations and revised names
-            // while retaining the score keyed by each stable exercise ID.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 8)
-        {
-            // Replace the placeholder-heavy catalog with the reviewed
-            // quality-first set while retaining scores for surviving IDs.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 9)
-        {
-            // Refresh corrected hold targets while retaining every score.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 10)
-        {
-            // Remove non-human demonstrations while retaining scores for every
-            // exercise that remains in the human-only catalog.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 11)
-        {
-            // Apply the movement-first expansion and revised region assignments
-            // while retaining scores for every stable exercise ID that remains.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 12)
-        {
-            // Add the reviewed stretching and dynamic-balance exercises while
-            // retaining scores for every unchanged movement identity.
-            catalogRefreshRequired = true;
-        }
-
-        if (oldVersion < 3)
-        {
-            catalogRefreshRequired = true;
-        }
-
-        if (catalogRefreshRequired)
-        {
-            RefreshCatalogPreservingScores(database);
-            return;
-        }
-
-        throw new NotSupportedException(
-            $"No exercise database migration exists from {oldVersion} to {newVersion}.");
-    }
-
-    public void UpdateScore(Exercise exercise)
-    {
-        ArgumentNullException.ThrowIfNull(exercise);
-
-        using var values = new ContentValues();
-        values.Put("score", exercise.Score);
-        SQLiteDatabase database = WritableDatabase
-            ?? throw new InvalidOperationException("Unable to open the exercise database.");
-        int updatedRows = database.Update(
-            TableName,
-            values,
-            "id = ?",
-            [exercise.Id.ToString(CultureInfo.InvariantCulture)]);
-
-        if (updatedRows != 1)
-        {
-            throw new InvalidOperationException(
-                $"Could not persist the score for exercise {exercise.Id}.");
-        }
-    }
-
-    private void Seed(SQLiteDatabase database)
-    {
-        Exercise[] catalog = ReadBundledCatalog();
-
+        using Stream stream = _context.Assets!.Open(CatalogAsset);
+        Exercise[] catalog = JsonSerializer.Deserialize(
+                stream,
+                ExerciseCatalogJsonContext.Default.ExerciseArray)
+            ?? throw new InvalidOperationException("The exercise catalog is empty.");
         ValidateCatalog(catalog, requireInitialScores: true);
+        return catalog;
+    }
 
+    private static void InsertCatalog(
+        SQLiteDatabase database,
+        IReadOnlyCollection<Exercise> catalog,
+        IReadOnlyDictionary<int, ExistingExercise>? existingExercises = null)
+    {
         foreach (Exercise exercise in catalog)
         {
-            using var values = new ContentValues();
-            values.Put("id", exercise.Id);
-            values.Put("name", exercise.Name);
-            values.Put("video", exercise.Video);
-            values.Put("dominant_region", exercise.DominantRegion.ToString());
-            values.Put("practice", exercise.Practice);
-            values.Put("motion_profile", exercise.MotionProfile);
-            values.Put("score", exercise.Score);
-            values.Put("only_feet_touch_ground", exercise.OnlyFeetTouchGround ? 1 : 0);
-            values.Put("shoe_agnostic", exercise.ShoeAgnostic ? 1 : 0);
-            values.Put("max_space_meters", exercise.MaxSpaceMeters);
-            values.Put("equipment", exercise.Equipment);
-            values.Put("silent", exercise.Silent ? 1 : 0);
-            values.Put("exercise_mode", exercise.Mode.ToString());
-            values.Put("hold_frame_percent", exercise.HoldFramePercent);
-            database.InsertOrThrow(TableName, null, values);
-        }
-    }
+            int score = existingExercises is not null &&
+                existingExercises.TryGetValue(exercise.Id, out ExistingExercise? existing) &&
+                existing is not null &&
+                string.Equals(existing.Name, exercise.Name, StringComparison.Ordinal)
+                    ? existing.Score
+                    : exercise.Score;
 
-    private void RefreshCatalogPreservingScores(SQLiteDatabase database)
-    {
-        Exercise[] catalog = ReadBundledCatalog();
-        ValidateCatalog(catalog, requireInitialScores: true);
-
-        database.BeginTransaction();
-        try
-        {
-            var existingNamesById = new Dictionary<int, string>();
-            using (ICursor? cursor = database.Query(
-                TableName,
-                ["id", "name"],
-                null,
-                null,
-                null,
-                null,
-                null))
+            using (var values = new ContentValues())
             {
-                if (cursor is null)
-                {
-                    throw new InvalidOperationException(
-                        "Unable to read the existing exercise identities.");
-                }
-
-                while (cursor.MoveToNext())
-                {
-                    existingNamesById[cursor.GetInt(0)] = cursor.GetString(1)
-                        ?? throw new InvalidOperationException(
-                            "An existing exercise has no name.");
-                }
-            }
-
-            // Release the UNIQUE name values before applying renamed records.
-            database.ExecSQL(
-                "UPDATE exercises SET name = '__flux_catalog_v12_' || id");
-
-            foreach (Exercise exercise in catalog)
-            {
-                using var values = new ContentValues();
+                values.Put("id", exercise.Id);
                 values.Put("name", exercise.Name);
                 values.Put("video", exercise.Video);
-                values.Put("dominant_region", exercise.DominantRegion.ToString());
                 values.Put("practice", exercise.Practice);
                 values.Put("motion_profile", exercise.MotionProfile);
+                values.Put("score", score);
                 values.Put("only_feet_touch_ground", exercise.OnlyFeetTouchGround ? 1 : 0);
                 values.Put("shoe_agnostic", exercise.ShoeAgnostic ? 1 : 0);
                 values.Put("max_space_meters", exercise.MaxSpaceMeters);
@@ -282,66 +199,61 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 values.Put("silent", exercise.Silent ? 1 : 0);
                 values.Put("exercise_mode", exercise.Mode.ToString());
                 values.Put("hold_frame_percent", exercise.HoldFramePercent);
-                if (existingNamesById.TryGetValue(exercise.Id, out string? existingName) &&
-                    !string.Equals(
-                        existingName,
-                        exercise.Name,
-                        StringComparison.Ordinal))
-                {
-                    // IDs whose movement identity changed are new exercises from
-                    // the user's perspective and must start at the catalog score.
-                    values.Put("score", exercise.Score);
-                }
-
-                int updatedRows = database.Update(
-                    TableName,
-                    values,
-                    "id = ?",
-                    [exercise.Id.ToString(CultureInfo.InvariantCulture)]);
-                if (updatedRows == 0)
-                {
-                    values.Put("id", exercise.Id);
-                    values.Put("score", exercise.Score);
-                    database.InsertOrThrow(TableName, null, values);
-                }
-                else if (updatedRows != 1)
-                {
-                    throw new InvalidOperationException(
-                        $"Could not refresh catalog exercise {exercise.Id}.");
-                }
+                database.InsertOrThrow(ExerciseTable, null, values);
             }
 
-            string placeholders = string.Join(",", catalog.Select(_ => "?"));
-            string[] retainedIds = catalog
-                .Select(exercise => exercise.Id.ToString(CultureInfo.InvariantCulture))
-                .ToArray();
-            database.Delete(TableName, $"id NOT IN ({placeholders})", retainedIds);
-
-            database.SetTransactionSuccessful();
-        }
-        finally
-        {
-            database.EndTransaction();
+            foreach (MuscleGroup muscleGroup in exercise.MuscleGroups)
+            {
+                using var values = new ContentValues();
+                values.Put("exercise_id", exercise.Id);
+                values.Put("muscle_group", muscleGroup.ToString());
+                database.InsertOrThrow(MuscleGroupTable, null, values);
+            }
         }
     }
 
-    private Exercise[] ReadBundledCatalog()
+    private static Dictionary<int, ExistingExercise> ReadExistingExerciseIdentities(
+        SQLiteDatabase database)
     {
-        using Stream stream = _context.Assets!.Open(CatalogAsset);
-        return JsonSerializer.Deserialize(
-                stream,
-                ExerciseCatalogJsonContext.Default.ExerciseArray)
-            ?? throw new InvalidOperationException("The exercise catalog is empty.");
+        var existingExercises = new Dictionary<int, ExistingExercise>();
+        using ICursor? cursor = database.Query(
+            ExerciseTable,
+            ["id", "name", "score"],
+            null,
+            null,
+            null,
+            null,
+            null);
+
+        if (cursor is null)
+        {
+            throw new InvalidOperationException(
+                "Unable to read existing exercise identities and scores.");
+        }
+
+        while (cursor.MoveToNext())
+        {
+            existingExercises[cursor.GetInt(0)] = new ExistingExercise(
+                cursor.GetString(1)
+                    ?? throw new InvalidOperationException(
+                        "An existing exercise has no name."),
+                cursor.GetInt(2));
+        }
+
+        return existingExercises;
     }
 
     private IReadOnlyList<Exercise> LoadExercises()
     {
-        var exercises = new List<Exercise>();
         SQLiteDatabase database = ReadableDatabase
             ?? throw new InvalidOperationException("Unable to open the exercise database.");
+        Dictionary<int, List<MuscleGroup>> groupsByExerciseId =
+            LoadMuscleGroups(database);
+        var exercises = new List<Exercise>();
+
         using ICursor? cursor = database.Query(
-            TableName,
-            Columns,
+            ExerciseTable,
+            ExerciseColumns,
             null,
             null,
             null,
@@ -355,31 +267,35 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
         while (cursor.MoveToNext())
         {
-            string regionName = cursor.GetString(3)
-                ?? throw new InvalidOperationException("An exercise has no region.");
+            int id = cursor.GetInt(0);
+            if (!groupsByExerciseId.TryGetValue(id, out List<MuscleGroup>? muscleGroups))
+            {
+                throw new InvalidOperationException(
+                    $"Exercise {id} has no muscle-group assignment.");
+            }
 
             exercises.Add(new Exercise
             {
-                Id = cursor.GetInt(0),
+                Id = id,
                 Name = cursor.GetString(1)
                     ?? throw new InvalidOperationException("An exercise has no name."),
                 Video = cursor.GetString(2)
                     ?? throw new InvalidOperationException("An exercise has no video."),
-                DominantRegion = Enum.Parse<DominantRegion>(regionName),
-                Practice = cursor.GetString(4)
+                MuscleGroups = muscleGroups.ToArray(),
+                Practice = cursor.GetString(3)
                     ?? throw new InvalidOperationException("An exercise has no practice."),
-                MotionProfile = cursor.GetString(5)
+                MotionProfile = cursor.GetString(4)
                     ?? throw new InvalidOperationException("An exercise has no motion profile."),
-                Score = cursor.GetInt(6),
-                OnlyFeetTouchGround = cursor.GetInt(7) == 1,
-                ShoeAgnostic = cursor.GetInt(8) == 1,
-                MaxSpaceMeters = cursor.GetInt(9),
-                Equipment = cursor.GetString(10)
+                Score = cursor.GetInt(5),
+                OnlyFeetTouchGround = cursor.GetInt(6) == 1,
+                ShoeAgnostic = cursor.GetInt(7) == 1,
+                MaxSpaceMeters = cursor.GetInt(8),
+                Equipment = cursor.GetString(9)
                     ?? throw new InvalidOperationException("An exercise has no equipment value."),
-                Silent = cursor.GetInt(11) == 1,
-                Mode = Enum.Parse<ExerciseMode>(cursor.GetString(12)
+                Silent = cursor.GetInt(10) == 1,
+                Mode = Enum.Parse<ExerciseMode>(cursor.GetString(11)
                     ?? throw new InvalidOperationException("An exercise has no mode.")),
-                HoldFramePercent = cursor.GetInt(13),
+                HoldFramePercent = cursor.GetInt(12),
             });
         }
 
@@ -387,15 +303,59 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         return exercises.AsReadOnly();
     }
 
+    private static Dictionary<int, List<MuscleGroup>> LoadMuscleGroups(
+        SQLiteDatabase database)
+    {
+        var groupsByExerciseId = new Dictionary<int, List<MuscleGroup>>();
+        using ICursor? cursor = database.Query(
+            MuscleGroupTable,
+            ["exercise_id", "muscle_group"],
+            null,
+            null,
+            null,
+            null,
+            "exercise_id ASC, muscle_group ASC");
+
+        if (cursor is null)
+        {
+            throw new InvalidOperationException("Unable to read muscle-group assignments.");
+        }
+
+        while (cursor.MoveToNext())
+        {
+            int exerciseId = cursor.GetInt(0);
+            string groupName = cursor.GetString(1)
+                ?? throw new InvalidOperationException(
+                    "A muscle-group assignment has no group name.");
+            MuscleGroup muscleGroup = Enum.Parse<MuscleGroup>(groupName);
+
+            if (!groupsByExerciseId.TryGetValue(
+                    exerciseId,
+                    out List<MuscleGroup>? muscleGroups))
+            {
+                muscleGroups = [];
+                groupsByExerciseId.Add(exerciseId, muscleGroups);
+            }
+
+            muscleGroups.Add(muscleGroup);
+        }
+
+        return groupsByExerciseId;
+    }
+
     private static void ValidateCatalog(
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasInvalidRegionCount = Enum
-            .GetValues<DominantRegion>()
-            .Any(region => exercises.Count(exercise =>
-                exercise.DominantRegion == region) < MinimumExercisesPerRegion);
+        bool hasInvalidMuscleGroupCount = Enum
+            .GetValues<MuscleGroup>()
+            .Any(muscleGroup => exercises.Count(exercise =>
+                exercise.MuscleGroups.Contains(muscleGroup)) <
+                    MinimumExercisesPerMuscleGroup);
         bool violatesRequirements = exercises.Any(exercise =>
+            exercise.MuscleGroups.Length == 0 ||
+            exercise.MuscleGroups.Distinct().Count() != exercise.MuscleGroups.Length ||
+            exercise.MuscleGroups.Any(muscleGroup => !Enum.IsDefined(muscleGroup)) ||
             !exercise.OnlyFeetTouchGround ||
             !exercise.ShoeAgnostic ||
             exercise.MaxSpaceMeters is <= 0 or > 3 ||
@@ -410,7 +370,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
 
-        if (hasInvalidRegionCount ||
+        if (hasInvalidMuscleGroupCount ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||
@@ -421,4 +381,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 "The bundled exercise catalog does not satisfy its required invariants.");
         }
     }
+
+    private sealed record ExistingExercise(string Name, int Score);
 }

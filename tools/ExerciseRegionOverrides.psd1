@@ -1,7 +1,7 @@
 @{
-    # Stable exercise ID -> DominantRegion assignments for the movement-first
-    # catalog. Movements are selected for quality first; this approximate
-    # classification is applied only afterward.
+    # Generation-only legacy motion-family overrides. They preserve the media
+    # profile attached to stable exercise IDs and are never emitted into the
+    # runtime catalog; runtime classification lives in ExerciseMuscleGroups.psd1.
 
     # Low-impact strength, mobility, Pilates, and balance additions.
     15 = 'HIPS'

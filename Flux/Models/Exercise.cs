@@ -8,7 +8,7 @@ public sealed class Exercise
 
     public required string Video { get; init; }
 
-    public required DominantRegion DominantRegion { get; init; }
+    public required MuscleGroup[] MuscleGroups { get; init; }
 
     public required string Practice { get; init; }
 

@@ -1,14 +1,33 @@
 <resources>
     <string name="app_name">Flux</string>
     <string name="exercise_animation_description">Animated exercise demonstration</string>
+    <string name="duration_eyebrow">FLUX</string>
+    <string name="duration_title">How long today?</string>
+    <string name="duration_subtitle">One muscle group per minute</string>
+    <string name="duration_minutes_default">10</string>
+    <string name="duration_minutes_unit">MINUTES</string>
+    <string name="duration_value_default_description">10 minutes selected</string>
+    <string name="duration_summary_default">10 rounds · 45 sec move · 15 sec rest</string>
+    <string name="duration_decrease">−</string>
+    <string name="duration_increase">+</string>
+    <string name="duration_decrease_description">Decrease workout duration</string>
+    <string name="duration_increase_description">Increase workout duration</string>
+    <string name="duration_seek_description_default">Workout duration, 10 minutes. Range 3 to 20 minutes</string>
+    <string name="duration_minimum">3 MIN</string>
+    <string name="duration_maximum">20 MIN</string>
+    <string name="duration_route_title">YOUR ROUTE</string>
+    <string name="duration_route_default_description">10 of 20 muscle groups selected, from Glutes through Hip flexors</string>
+    <string name="duration_endpoint_default">Finishes with 10 · Hip flexors</string>
+    <string name="duration_start_default">Start 10-minute workout</string>
     <string name="start">Start</string>
     <string name="speed_up">Skip</string>
     <string name="speed_up_description">Skip the countdown for testing</string>
-    <string name="rest_initial">Rest · 10</string>
+    <string name="countdown_initial">45</string>
+    <string name="rest_initial">Rest · 15</string>
     <string name="tap_to_keep">Tap to keep</string>
     <string name="tap_to_keep_description">Keep this exercise for the next session</string>
     <string name="kept">Kept ✓</string>
     <string name="congratulations_title">Workout complete!</string>
-    <string name="congratulations_message">Ten regions. One full-body session. Nicely done.</string>
+    <string name="congratulations_message">Every selected round is complete. Nicely done.</string>
     <string name="done">Done</string>
 </resources>

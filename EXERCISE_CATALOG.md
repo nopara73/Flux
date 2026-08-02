@@ -1,87 +1,63 @@
 # Flux exercise catalog
 
-Flux contains 236 human-demonstrated standing movements. Exercises are selected
-for their movement quality first and assigned to the closest dominant region
-only afterward. Full-body movements remain eligible even when several regions
-contribute; the region is an indexing aid, not a claim that the exercise trains
-only that body part. The generator and app require every region to retain at
-least three choices.
+Flux contains 236 human-demonstrated standing movements. Exercises are chosen
+for movement quality first and assigned to one or more muscle groups afterward.
+Full-body movements remain eligible for every group where they place meaningful
+demand; assignment is a practical workout index, not an anatomical claim. The
+generator and app require at least 10 exercises in every muscle group.
 
 The catalog mixes low-impact compound strength and conditioning with standing
-stretching, dynamic balance drills, ordinary active-range-of-motion,
-rehabilitation movements, Pilates, yoga, tai chi, qigong, boxing, dance, and
-martial arts.
+stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
+yoga, tai chi, qigong, boxing, dance, and martial arts.
 
 ## Editorial rules
 
-Every catalog entry must:
+Every entry must:
 
-- be a complete named movement or posture, never a generated tempo/range/side
-  suffix used to inflate the count;
+- be a complete named movement or posture, never a tempo/range/side suffix used
+  to inflate the count;
 - keep all ground contact at the feet;
 - remain practical in ordinary shoes or barefoot;
 - fit inside a 3 m × 3 m space;
-- require no wall, chair, floor exercise, prop, partner, or other equipment;
-- avoid jumping, stomping, clapping, vocalization, or another neighbor-disturbing
-  action;
-- be bilateral/symmetric, or visibly complete both left and right repetitions
-  inside one uninterrupted loop; a fixed lead side, supporting side, diagonal,
-  hand role, or clockwise-only circle is not allowed;
-- have exactly one dominant region and its own bundled H.264 MP4.
+- require no wall, chair, floor exercise, prop, partner, or equipment;
+- avoid jumping, stomping, clapping, vocalization, and other
+  neighbor-disturbing actions;
+- be bilateral/symmetric, or visibly complete left and right repetitions inside
+  one uninterrupted loop;
+- have one or more muscle-group assignments and its own bundled H.264 MP4.
 
-Each entry is explicitly classified as a repetition or a hold. A hold is one
-bilateral or symmetric position sustained for the full timer; alternating
-sides, breath cycles, raise-and-lower actions, flows, and repeated contractions
-remain repetitions even when their traditional name contains “hold.” Hold MP4s
-loop only on the preview screen. During the countdown the video plays once to
-the curated target from `tools/HoldExerciseFrames.psd1` and freezes there.
+Each entry is explicitly a repetition or hold. A hold is one bilateral or
+symmetric position sustained for the full timer. Alternating sides, breath
+cycles, raise-and-lower actions, flows, and repeated contractions remain
+repetitions even when their traditional name contains “hold.” Hold MP4s loop
+only during preview; during the timer they play once and freeze on the curated
+target from `tools/HoldExerciseFrames.psd1`.
 
-The canonical base catalog is maintained in `tools/RealExerciseCatalog.psd1`.
-`tools/BilateralExerciseNames.psd1` contains the reviewed replacements that
-enforce the no-one-sided rule. `tools/VerifiedExerciseDemos.psd1` is the
-human-only allowlist. The generator rejects non-human direct demonstrations,
-derivatives that do not trace to reviewed human footage, duplicate names, the
-former synthetic modifier suffixes, missing motion profiles, regions with fewer
-than three exercises, and constraint-metadata violations.
+`tools/ExerciseMuscleGroups.psd1` is the stable many-to-many assignment source.
+The runtime catalog emits those assignments directly. The historical ten source
+families remain generator-only so stable exercise IDs and reviewed media paths
+do not change. The generator rejects missing/duplicate/unknown assignments,
+groups with fewer than 10 exercises, duplicate names, synthetic modifier
+suffixes, missing motion profiles, non-human media, and constraint violations.
 
-## Reference families
+## Media quality
 
-The catalog is original editorial work, not a copy of any single exercise
-library. These references anchor the terminology and movement families used:
+Every entry has an offline 256 × 256 silent H.264 MP4. All 236 included
+demonstrations show an actual person. Retained media consists of visually
+reviewed human footage, semantically identical copies of reviewed footage, or
+an exact deterministic transform when the transformed footage demonstrates the
+named movement accurately. Placeholder, synthetic, schematic, anatomical, and
+3D media is excluded.
 
-- [ACE no-equipment exercise library](https://www.acefitness.org/resources/everyone/exercise-library/equipment/no-equipment/)
-- [NHS balance exercises](https://www.nhs.uk/live-well/exercise/balance-exercises/)
-- [Hospital for Special Surgery back and neck stretches](https://www.hss.edu/health-library/move-better/back-neck-stretches)
-- [Vestibular Disorders Association rehabilitation overview](https://vestibular.org/article/diagnosis-treatment/treatments/vestibular-rehabilitation-therapy-vrt/)
-- [Yang Family Tai Chi traditional hand form](https://yangfamilytaichi.com/traditional-hand-form-103/)
-- [International Association for Dance Medicine & Science resources](https://iadms.org/research-publications/bulletin-for-dancers-teachers/)
-- [World Taekwondo poomsae rules](https://www.worldtaekwondo.org/att_file/documents/Poomsae_Competition_Rules_and_Interpretation_%28In_force_as_of_September_30_2024%29.pdf)
+The retained inventory and media mappings live in:
 
-## Animation sources and accuracy
+- `tools/VerifiedExerciseDemos.psd1`
+- `tools/ExternalExerciseMedia.psd1`
+- `tools/ExactExerciseMediaCopies.psd1`
+- `tools/ExactExerciseMediaTransforms.psd1`
+- `tools/HoldExerciseFrames.psd1`
 
-Every entry has an offline 256 × 256 H.264 MP4. Repetition videos loop. A hold
-uses one MP4 in two playback modes: it loops during preview, then plays once
-from the start and remains on its reviewed final pose during the countdown.
-Every retained demonstration uses one of these reviewed sources:
-
-- visually reviewed human exercise footage, normalized to 256 × 256 and
-  mirrored into a left/right cycle only where mirroring is mechanically valid;
-- semantically identical copies of reviewed human footage;
-- deterministic directional transforms of reviewed human footage where
-  reversing the frame order is the exact named movement.
-
-No placeholder, synthetic, schematic, anatomical, or 3D media is bundled. All
-**236 included demonstrations** show an actual person. Region and source-quality
-counts are maintained in
-[`DEMONSTRATION_AUDIT.md`](DEMONSTRATION_AUDIT.md).
-
-Media mappings live in `tools/ExternalExerciseMedia.psd1`,
-`tools/VerifiedExerciseDemos.psd1`, and `tools/HoldExerciseFrames.psd1`.
-Exact reviewed human media reused by mechanically
-identical catalog entries is tracked in `tools/ExactExerciseMediaCopies.psd1`.
-Exact deterministic direction and tempo mappings are tracked in
-`tools/ExactExerciseMediaTransforms.psd1`.
-`tools/Test-ExerciseVideos.ps1` verifies all 236 MP4 containers and compares
-the final decoded frame of every hold against its reviewed target image.
-The external clips are used for this private personal build and are not a
-commercial media-clearance record.
+`tools/Test-ExerciseVideos.ps1` verifies the complete media inventory and
+compares every hold’s decoded final frame with its reviewed target. Counts are
+reported in [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). External clips are
+used for this private personal build and are not a commercial clearance record.

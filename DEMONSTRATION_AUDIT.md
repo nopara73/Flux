@@ -5,18 +5,28 @@ All **236** bundled exercises show an actual person performing the movement.
 Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
 both the runtime catalog and the application package.
 
-| Region | Retained exercises |
+| Muscle group | Assigned exercises |
 | --- | ---: |
-| FEET | 7 |
-| LEGS | 93 |
-| HANDS | 40 |
-| ARMS | 4 |
-| HEAD | 20 |
-| SHOULDERS | 11 |
-| HIPS | 23 |
-| CHEST | 4 |
-| BACK | 12 |
-| CORE | 22 |
+| Glutes | 73 |
+| Core | 47 |
+| Quadriceps | 75 |
+| Hamstrings | 19 |
+| Upper back | 15 |
+| Shoulders | 60 |
+| Chest | 19 |
+| Lower back | 15 |
+| Calves | 28 |
+| Hip flexors | 36 |
+| Adductors | 34 |
+| Abductors | 34 |
+| Mid back | 20 |
+| Trapezius | 29 |
+| Forearms | 40 |
+| Triceps | 24 |
+| Biceps | 11 |
+| Rotator cuff | 28 |
+| Neck | 20 |
+| Shins | 27 |
 
 ## Retained source quality
 

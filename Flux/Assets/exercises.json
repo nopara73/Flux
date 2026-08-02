@@ -3,7 +3,15 @@
     "id": 15,
     "name": "Alternating Skater-RDL Balance",
     "video": "exercise_videos/exercise_0015.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Hamstrings",
+      "LowerBack",
+      "Calves",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "HipOpenClose",
     "mode": "Repetition",
@@ -19,7 +27,11 @@
     "id": 16,
     "name": "Alternating Star-Tap Balance",
     "video": "exercise_videos/exercise_0016.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Calves",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
     "mode": "Repetition",
@@ -35,7 +47,14 @@
     "id": 17,
     "name": "Alternating Single-Leg RDL-Rotation Balance",
     "video": "exercise_videos/exercise_0017.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Hamstrings",
+      "LowerBack",
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -51,7 +70,12 @@
     "id": 19,
     "name": "Alternating Side-to-Side Pendulum Balance",
     "video": "exercise_videos/exercise_0019.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "HipLegArc",
     "mode": "Repetition",
@@ -67,7 +91,11 @@
     "id": 20,
     "name": "Alternating Front-to-Back Pendulum Balance",
     "video": "exercise_videos/exercise_0020.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Hamstrings",
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -83,7 +111,14 @@
     "id": 21,
     "name": "Alternating Standing-Scale Balance",
     "video": "exercise_videos/exercise_0021.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Hamstrings",
+      "LowerBack",
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "BackBalance",
     "mode": "Repetition",
@@ -99,7 +134,10 @@
     "id": 31,
     "name": "Tai Chi Golden-Rooster Balance Drill",
     "video": "exercise_videos/exercise_0031.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
     "mode": "Repetition",
@@ -115,7 +153,10 @@
     "id": 92,
     "name": "Capoeira Ginga",
     "video": "exercise_videos/exercise_0092.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Capoeira",
     "motionProfile": "WalkingStep",
     "mode": "Repetition",
@@ -131,7 +172,11 @@
     "id": 93,
     "name": "Capoeira Esquiva Lateral",
     "video": "exercise_videos/exercise_0093.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Abductors"
+    ],
     "practice": "Capoeira",
     "motionProfile": "WalkingStep",
     "mode": "Repetition",
@@ -147,7 +192,13 @@
     "id": 96,
     "name": "Alternating Dynamic Figure-Four Squat Balance",
     "video": "exercise_videos/exercise_0096.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "HipOpenClose",
     "mode": "Repetition",
@@ -163,7 +214,10 @@
     "id": 97,
     "name": "Heel-to-Toe Balance Rocks",
     "video": "exercise_videos/exercise_0097.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
     "mode": "Repetition",
@@ -179,7 +233,10 @@
     "id": 98,
     "name": "Penguin Balance March",
     "video": "exercise_videos/exercise_0098.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
     "mode": "Repetition",
@@ -195,7 +252,10 @@
     "id": 101,
     "name": "Bodyweight Squat",
     "video": "exercise_videos/exercise_0101.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -211,7 +271,12 @@
     "id": 102,
     "name": "Low-Impact Squat Jack",
     "video": "exercise_videos/exercise_0102.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves",
+      "Shins"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -227,7 +292,11 @@
     "id": 103,
     "name": "Wide Squat Pulse",
     "video": "exercise_videos/exercise_0103.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -243,7 +312,11 @@
     "id": 104,
     "name": "Sumo Squat",
     "video": "exercise_videos/exercise_0104.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -259,7 +332,11 @@
     "id": 105,
     "name": "Plie Squat",
     "video": "exercise_videos/exercise_0105.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -275,7 +352,10 @@
     "id": 107,
     "name": "Half Squat",
     "video": "exercise_videos/exercise_0107.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -291,7 +371,14 @@
     "id": 108,
     "name": "Second-Position Plié with Arm Sweep",
     "video": "exercise_videos/exercise_0108.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Adductors",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -307,7 +394,11 @@
     "id": 109,
     "name": "One-and-a-Half Sumo Squat",
     "video": "exercise_videos/exercise_0109.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -323,7 +414,10 @@
     "id": 110,
     "name": "Squat Pulse",
     "video": "exercise_videos/exercise_0110.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -339,7 +433,10 @@
     "id": 111,
     "name": "Rainbow Squat Thruster",
     "video": "exercise_videos/exercise_0111.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -355,7 +452,12 @@
     "id": 112,
     "name": "Wide Squat with Overhead Reach",
     "video": "exercise_videos/exercise_0112.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors",
+      "Trapezius"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -371,7 +473,12 @@
     "id": 113,
     "name": "Bodyweight Overhead Squat",
     "video": "exercise_videos/exercise_0113.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Trapezius"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -387,7 +494,11 @@
     "id": 114,
     "name": "Hindu Squat",
     "video": "exercise_videos/exercise_0114.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -403,7 +514,10 @@
     "id": 115,
     "name": "Sissy Squat",
     "video": "exercise_videos/exercise_0115.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -419,7 +533,13 @@
     "id": 116,
     "name": "Cossack Squat",
     "video": "exercise_videos/exercise_0116.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -435,7 +555,12 @@
     "id": 117,
     "name": "Alternating Lateral Squat",
     "video": "exercise_videos/exercise_0117.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -451,7 +576,12 @@
     "id": 118,
     "name": "Squat to Knee Drive",
     "video": "exercise_videos/exercise_0118.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -467,7 +597,11 @@
     "id": 119,
     "name": "Squat to Calf Raise",
     "video": "exercise_videos/exercise_0119.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -483,7 +617,10 @@
     "id": 120,
     "name": "Duck Walk",
     "video": "exercise_videos/exercise_0120.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -499,7 +636,11 @@
     "id": 121,
     "name": "Alternating Forward Lunge",
     "video": "exercise_videos/exercise_0121.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -515,7 +656,11 @@
     "id": 122,
     "name": "Alternating Reverse Lunge",
     "video": "exercise_videos/exercise_0122.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -531,7 +676,13 @@
     "id": 123,
     "name": "Alternating Lateral Lunge",
     "video": "exercise_videos/exercise_0123.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -547,7 +698,14 @@
     "id": 124,
     "name": "Alternating Curtsy Lunge with Side Crunch",
     "video": "exercise_videos/exercise_0124.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "HipFlexors",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -563,7 +721,13 @@
     "id": 125,
     "name": "Alternating Reverse Lunge with Torso Twist",
     "video": "exercise_videos/exercise_0125.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "HipFlexors",
+      "MidBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -579,7 +743,10 @@
     "id": 126,
     "name": "Alternating Back-Step Side Stretch",
     "video": "exercise_videos/exercise_0126.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "MidBack"
+    ],
     "practice": "Stretching",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
@@ -595,7 +762,12 @@
     "id": 127,
     "name": "Alternating Lunge with Overhead Stretch",
     "video": "exercise_videos/exercise_0127.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors",
+      "Trapezius"
+    ],
     "practice": "Stretching",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -611,7 +783,15 @@
     "id": 128,
     "name": "Alternating Curtsy Squat with Arm Sweep",
     "video": "exercise_videos/exercise_0128.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Adductors",
+      "Abductors",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -627,7 +807,11 @@
     "id": 129,
     "name": "Squat to Alternating Front Kick",
     "video": "exercise_videos/exercise_0129.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -643,7 +827,11 @@
     "id": 130,
     "name": "Squat to Alternating Side Leg Lift",
     "video": "exercise_videos/exercise_0130.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -659,7 +847,10 @@
     "id": 131,
     "name": "Squat to Alternating Back Leg Lift",
     "video": "exercise_videos/exercise_0131.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -675,7 +866,11 @@
     "id": 132,
     "name": "Squat to Alternating Oblique Crunch",
     "video": "exercise_videos/exercise_0132.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -691,7 +886,11 @@
     "id": 133,
     "name": "Goddess Squat to Star Pose",
     "video": "exercise_videos/exercise_0133.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Yoga",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -707,7 +906,11 @@
     "id": 135,
     "name": "Mountain Pose to Upward Salute",
     "video": "exercise_videos/exercise_0135.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Trapezius"
+    ],
     "practice": "Yoga",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -723,7 +926,9 @@
     "id": 136,
     "name": "Goddess Pose",
     "video": "exercise_videos/exercise_0136.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Adductors"
+    ],
     "practice": "Yoga",
     "motionProfile": "Squat",
     "mode": "Hold",
@@ -739,7 +944,11 @@
     "id": 138,
     "name": "Narrow-Squat Heel Raise",
     "video": "exercise_videos/exercise_0138.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -755,7 +964,11 @@
     "id": 139,
     "name": "Wide-Squat Heel Raise",
     "video": "exercise_videos/exercise_0139.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -771,7 +984,12 @@
     "id": 140,
     "name": "Sumo-Squat Calf Raise",
     "video": "exercise_videos/exercise_0140.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -787,7 +1005,10 @@
     "id": 141,
     "name": "Squat with Alternating Heel Lift",
     "video": "exercise_videos/exercise_0141.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -803,7 +1024,12 @@
     "id": 142,
     "name": "Lateral Squat Walk",
     "video": "exercise_videos/exercise_0142.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -819,7 +1045,11 @@
     "id": 143,
     "name": "Alternating Reverse Lunge to Front Kick",
     "video": "exercise_videos/exercise_0143.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -835,7 +1065,9 @@
     "id": 144,
     "name": "Alternating Standing Knee Lift",
     "video": "exercise_videos/exercise_0144.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -851,7 +1083,10 @@
     "id": 145,
     "name": "Alternating Standing Knee Extension",
     "video": "exercise_videos/exercise_0145.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -867,7 +1102,12 @@
     "id": 146,
     "name": "Alternating Leg Curl with Back Squeeze",
     "video": "exercise_videos/exercise_0146.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Hamstrings",
+      "UpperBack",
+      "MidBack",
+      "Trapezius"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -883,7 +1123,12 @@
     "id": 147,
     "name": "Squat to Alternating Star Reach",
     "video": "exercise_videos/exercise_0147.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Trapezius"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -899,7 +1144,10 @@
     "id": 148,
     "name": "Alternating Straight-Leg Hip-Extension Lift",
     "video": "exercise_videos/exercise_0148.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -915,7 +1163,9 @@
     "id": 150,
     "name": "Alternating Cross-Body Hip-Adduction Sweep",
     "video": "exercise_videos/exercise_0150.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -931,7 +1181,9 @@
     "id": 151,
     "name": "Alternating Straight-Leg Front Raise",
     "video": "exercise_videos/exercise_0151.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "HipFlexors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -947,7 +1199,9 @@
     "id": 152,
     "name": "Alternating Side-Leg Raise Pulse",
     "video": "exercise_videos/exercise_0152.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -963,7 +1217,11 @@
     "id": 154,
     "name": "Alternating Diagonal Leg Raise",
     "video": "exercise_videos/exercise_0154.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -979,7 +1237,13 @@
     "id": 156,
     "name": "Alternating Curtsy-Lunge-to-Squat",
     "video": "exercise_videos/exercise_0156.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -995,7 +1259,10 @@
     "id": 159,
     "name": "Alternating Standing Fire Hydrant",
     "video": "exercise_videos/exercise_0159.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -1011,7 +1278,10 @@
     "id": 160,
     "name": "Alternating Standing Donkey Kick",
     "video": "exercise_videos/exercise_0160.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1027,7 +1297,10 @@
     "id": 161,
     "name": "Alternating Standing Gate Opener",
     "video": "exercise_videos/exercise_0161.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "HipFlexors",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -1043,7 +1316,10 @@
     "id": 168,
     "name": "Toy Soldier March",
     "video": "exercise_videos/exercise_0168.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "HipFlexors",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -1059,7 +1335,10 @@
     "id": 169,
     "name": "Alternating Standing Knee Drive",
     "video": "exercise_videos/exercise_0169.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -1075,7 +1354,10 @@
     "id": 170,
     "name": "Alternating Cross-Body Knee Drive",
     "video": "exercise_videos/exercise_0170.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -1091,7 +1373,10 @@
     "id": 171,
     "name": "Alternating Hamstring Sweep",
     "video": "exercise_videos/exercise_0171.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Hamstrings",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -1107,7 +1392,9 @@
     "id": 173,
     "name": "Alternating Side Knee Lift",
     "video": "exercise_videos/exercise_0173.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "KneeLift",
     "mode": "Repetition",
@@ -1123,7 +1410,11 @@
     "id": 174,
     "name": "Alternating Front Kick Toe Touch",
     "video": "exercise_videos/exercise_0174.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1139,7 +1430,9 @@
     "id": 176,
     "name": "Alternating Back Kick",
     "video": "exercise_videos/exercise_0176.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -1155,7 +1448,9 @@
     "id": 177,
     "name": "Alternating Roundhouse Kick Chamber",
     "video": "exercise_videos/exercise_0177.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1171,7 +1466,11 @@
     "id": 178,
     "name": "Alternating Crescent Kick",
     "video": "exercise_videos/exercise_0178.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1187,7 +1486,10 @@
     "id": 179,
     "name": "Alternating Axe-Kick Leg Raise",
     "video": "exercise_videos/exercise_0179.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1203,7 +1505,10 @@
     "id": 180,
     "name": "Alternating Karate Front Snap Kick",
     "video": "exercise_videos/exercise_0180.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Karate",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1219,7 +1524,10 @@
     "id": 181,
     "name": "Alternating Karate Side Thrust Kick",
     "video": "exercise_videos/exercise_0181.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Abductors"
+    ],
     "practice": "Karate",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -1235,7 +1543,10 @@
     "id": 182,
     "name": "Alternating Taekwondo Front-Kick Chamber",
     "video": "exercise_videos/exercise_0182.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors"
+    ],
     "practice": "Taekwondo",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1251,7 +1562,10 @@
     "id": 183,
     "name": "Alternating Taekwondo Side-Kick Chamber",
     "video": "exercise_videos/exercise_0183.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Abductors"
+    ],
     "practice": "Taekwondo",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -1267,7 +1581,10 @@
     "id": 184,
     "name": "Alternating Tai Chi Heel Kick",
     "video": "exercise_videos/exercise_0184.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Shins"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1283,7 +1600,10 @@
     "id": 185,
     "name": "Alternating Tai Chi Toe Kick",
     "video": "exercise_videos/exercise_0185.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Shins"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1299,7 +1619,11 @@
     "id": 186,
     "name": "Alternating Tai Chi Lotus Kick",
     "video": "exercise_videos/exercise_0186.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "HipFlexors",
+      "Abductors"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1315,7 +1639,10 @@
     "id": 187,
     "name": "Second-Position Relevé Rise and Lower",
     "video": "exercise_videos/exercise_0187.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -1331,7 +1658,10 @@
     "id": 188,
     "name": "Parallel Demi-Plie",
     "video": "exercise_videos/exercise_0188.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -1347,7 +1677,11 @@
     "id": 190,
     "name": "Ballet Grand Plie",
     "video": "exercise_videos/exercise_0190.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Ballet",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -1363,7 +1697,11 @@
     "id": 191,
     "name": "Alternating Ballet Tendu Devant",
     "video": "exercise_videos/exercise_0191.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "HipFlexors",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1379,7 +1717,12 @@
     "id": 192,
     "name": "Alternating Ballet Tendu a la Seconde",
     "video": "exercise_videos/exercise_0192.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -1395,7 +1738,10 @@
     "id": 193,
     "name": "Alternating Ballet Tendu Derriere",
     "video": "exercise_videos/exercise_0193.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -1411,7 +1757,11 @@
     "id": 194,
     "name": "Alternating Ballet Degage Devant",
     "video": "exercise_videos/exercise_0194.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "HipFlexors",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegFront",
     "mode": "Repetition",
@@ -1427,7 +1777,12 @@
     "id": 195,
     "name": "Alternating Ballet Degage a la Seconde",
     "video": "exercise_videos/exercise_0195.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Adductors",
+      "Abductors",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -1443,7 +1798,10 @@
     "id": 196,
     "name": "Alternating Ballet Degage Derriere",
     "video": "exercise_videos/exercise_0196.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Ballet",
     "motionProfile": "LegBack",
     "mode": "Repetition",
@@ -1459,7 +1817,12 @@
     "id": 197,
     "name": "First-Position Plie-Releve",
     "video": "exercise_videos/exercise_0197.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves",
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -1475,7 +1838,12 @@
     "id": 198,
     "name": "Second-Position Plie-Releve",
     "video": "exercise_videos/exercise_0198.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Calves",
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -1491,7 +1859,12 @@
     "id": 199,
     "name": "Horse-Stance Knee Bend",
     "video": "exercise_videos/exercise_0199.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -1507,7 +1880,13 @@
     "id": 200,
     "name": "Good Morning to Squat",
     "video": "exercise_videos/exercise_0200.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "BackHinge",
     "mode": "Repetition",
@@ -1523,7 +1902,12 @@
     "id": 201,
     "name": "Alternating Boxing Jab",
     "video": "exercise_videos/exercise_0201.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1539,7 +1923,12 @@
     "id": 203,
     "name": "Alternating Boxing Hook",
     "video": "exercise_videos/exercise_0203.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Biceps"
+    ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1555,7 +1944,11 @@
     "id": 211,
     "name": "Alternating Karate Backfist Strike (Uraken-Uchi)",
     "video": "exercise_videos/exercise_0211.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1571,7 +1964,12 @@
     "id": 212,
     "name": "Alternating Karate Palm-Heel Strike (Teisho)",
     "video": "exercise_videos/exercise_0212.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1587,7 +1985,11 @@
     "id": 213,
     "name": "Alternating Karate Hammer-Fist Strike (Tetsui-Uchi)",
     "video": "exercise_videos/exercise_0213.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1603,7 +2005,11 @@
     "id": 214,
     "name": "Alternating Wing Chun Biu-Sau Palm Strike",
     "video": "exercise_videos/exercise_0214.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Wing Chun",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1619,7 +2025,9 @@
     "id": 215,
     "name": "Self-Resisted Wrist Radial-Deviation Pulses",
     "video": "exercise_videos/exercise_0215.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1635,7 +2043,9 @@
     "id": 216,
     "name": "Self-Resisted Wrist Ulnar-Deviation Pulses",
     "video": "exercise_videos/exercise_0216.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1651,7 +2061,9 @@
     "id": 217,
     "name": "Self-Resisted Wrist-Extension Pulses",
     "video": "exercise_videos/exercise_0217.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1667,7 +2079,9 @@
     "id": 218,
     "name": "Self-Resisted Wrist-Flexion Pulses",
     "video": "exercise_videos/exercise_0218.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1683,7 +2097,9 @@
     "id": 219,
     "name": "Four-Way Self-Resisted Wrist Sequence",
     "video": "exercise_videos/exercise_0219.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1699,7 +2115,11 @@
     "id": 220,
     "name": "Interlocked Hook-Fist Pull-Apart Isometric",
     "video": "exercise_videos/exercise_0220.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Biceps"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
     "mode": "Hold",
@@ -1715,7 +2135,13 @@
     "id": 223,
     "name": "Alternating Karate Inside Block (Uchi-Uke)",
     "video": "exercise_videos/exercise_0223.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps",
+      "Biceps",
+      "RotatorCuff"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1731,7 +2157,12 @@
     "id": 224,
     "name": "Alternating Karate Downward Sweep Block (Gedan-Barai)",
     "video": "exercise_videos/exercise_0224.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps",
+      "RotatorCuff"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1747,7 +2178,12 @@
     "id": 225,
     "name": "Alternating Karate Knife-Hand Block (Shuto-Uke)",
     "video": "exercise_videos/exercise_0225.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps",
+      "RotatorCuff"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1763,7 +2199,12 @@
     "id": 227,
     "name": "Standing Palm-Press Pulses",
     "video": "exercise_videos/exercise_0227.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
     "mode": "Repetition",
@@ -1779,7 +2220,10 @@
     "id": 228,
     "name": "Alternating Boxing Cross",
     "video": "exercise_videos/exercise_0228.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1795,7 +2239,11 @@
     "id": 229,
     "name": "Alternating Boxing Uppercut",
     "video": "exercise_videos/exercise_0229.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Biceps"
+    ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1811,7 +2259,12 @@
     "id": 230,
     "name": "Alternating Boxing Overhand",
     "video": "exercise_videos/exercise_0230.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1827,7 +2280,12 @@
     "id": 231,
     "name": "Alternating Karate Reverse Punch",
     "video": "exercise_videos/exercise_0231.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1843,7 +2301,11 @@
     "id": 232,
     "name": "Alternating Karate Knife-Hand Chop",
     "video": "exercise_videos/exercise_0232.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1859,7 +2321,11 @@
     "id": 233,
     "name": "Alternating Karate Ridge-Hand Strike (Haito-Uchi)",
     "video": "exercise_videos/exercise_0233.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1875,7 +2341,11 @@
     "id": 234,
     "name": "Alternating Karate Flat-Fist Strike (Hiraken)",
     "video": "exercise_videos/exercise_0234.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1891,7 +2361,11 @@
     "id": 236,
     "name": "Alternating Karate Spear-Hand Strike (Nukite)",
     "video": "exercise_videos/exercise_0236.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -1907,7 +2381,9 @@
     "id": 237,
     "name": "Forearm Pronation and Supination",
     "video": "exercise_videos/exercise_0237.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -1923,7 +2399,9 @@
     "id": 238,
     "name": "Prayer-Hand Stretch",
     "video": "exercise_videos/exercise_0238.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Stretching",
     "motionProfile": "HandIsometric",
     "mode": "Hold",
@@ -1939,7 +2417,9 @@
     "id": 239,
     "name": "Ninja Fireball Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0239.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
     "mode": "Repetition",
@@ -1955,7 +2435,9 @@
     "id": 240,
     "name": "Ninja Shadow-Possession Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0240.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
     "mode": "Repetition",
@@ -1971,7 +2453,9 @@
     "id": 241,
     "name": "Ninja Water-Dragon 44 Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0241.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
     "mode": "Repetition",
@@ -1987,7 +2471,9 @@
     "id": 242,
     "name": "Ninja Shadow-Clone Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0242.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
     "mode": "Repetition",
@@ -2003,7 +2489,13 @@
     "id": 245,
     "name": "Alternating Karate Rising Block (Age-Uke)",
     "video": "exercise_videos/exercise_0245.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps",
+      "Biceps",
+      "RotatorCuff"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2019,7 +2511,13 @@
     "id": 246,
     "name": "Alternating Karate Outside Block (Soto-Uke)",
     "video": "exercise_videos/exercise_0246.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Forearms",
+      "Triceps",
+      "Biceps",
+      "RotatorCuff"
+    ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2035,7 +2533,12 @@
     "id": 248,
     "name": "Standing Palm-Press Hold",
     "video": "exercise_videos/exercise_0248.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
     "mode": "Hold",
@@ -2051,7 +2554,11 @@
     "id": 301,
     "name": "Large Arm Sweep Up and Down",
     "video": "exercise_videos/exercise_0301.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ShoulderRaise",
     "mode": "Repetition",
@@ -2067,7 +2574,12 @@
     "id": 303,
     "name": "Alternating Arm-Circle Squat with Cross Tap",
     "video": "exercise_videos/exercise_0303.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "RotatorCuff"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -2083,7 +2595,10 @@
     "id": 311,
     "name": "Low-Impact Standing Jack",
     "video": "exercise_videos/exercise_0311.mp4",
-    "dominantRegion": "FEET",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "WalkingStep",
     "mode": "Repetition",
@@ -2099,7 +2614,12 @@
     "id": 314,
     "name": "Alternating Forward Lunge with Biceps Curl",
     "video": "exercise_videos/exercise_0314.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "HipFlexors",
+      "Biceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -2115,7 +2635,11 @@
     "id": 315,
     "name": "Side-Step Squat with Overhead Reach",
     "video": "exercise_videos/exercise_0315.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Trapezius"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -2131,7 +2655,11 @@
     "id": 321,
     "name": "Alternating Cross-Step Arms Raise",
     "video": "exercise_videos/exercise_0321.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Shoulders",
+      "Adductors",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -2147,7 +2675,13 @@
     "id": 326,
     "name": "Wide-Stance Alternating Straight Punches",
     "video": "exercise_videos/exercise_0326.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Adductors",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2163,7 +2697,14 @@
     "id": 327,
     "name": "First-Position Standing Row",
     "video": "exercise_videos/exercise_0327.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "MidBack",
+      "Trapezius",
+      "Biceps",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "BackArmPull",
     "mode": "Repetition",
@@ -2179,7 +2720,10 @@
     "id": 329,
     "name": "Qigong Gathering Qi",
     "video": "exercise_videos/exercise_0329.mp4",
-    "dominantRegion": "ARMS",
+    "muscleGroups": [
+      "Shoulders",
+      "RotatorCuff"
+    ],
     "practice": "Qigong",
     "motionProfile": "FlowingArms",
     "mode": "Repetition",
@@ -2195,7 +2739,11 @@
     "id": 338,
     "name": "Alternating High-Low Punches",
     "video": "exercise_videos/exercise_0338.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Forearms"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2211,7 +2759,13 @@
     "id": 340,
     "name": "Low-Impact Jack with Alternating Punches",
     "video": "exercise_videos/exercise_0340.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest",
+      "Calves",
+      "Forearms",
+      "Shins"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2227,7 +2781,14 @@
     "id": 341,
     "name": "Squat with Alternating Straight Punches",
     "video": "exercise_videos/exercise_0341.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Chest",
+      "Forearms",
+      "Triceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "MartialHand",
     "mode": "Repetition",
@@ -2243,7 +2804,12 @@
     "id": 367,
     "name": "Tai Chi Wave Hands Like Clouds",
     "video": "exercise_videos/exercise_0367.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Shoulders",
+      "MidBack",
+      "Forearms",
+      "RotatorCuff"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "FingerMotion",
     "mode": "Repetition",
@@ -2259,7 +2825,11 @@
     "id": 377,
     "name": "Qigong Lifting the Sky",
     "video": "exercise_videos/exercise_0377.mp4",
-    "dominantRegion": "ARMS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Qigong",
     "motionProfile": "FlowingArms",
     "mode": "Repetition",
@@ -2275,7 +2845,14 @@
     "id": 379,
     "name": "Alternating Qigong Drawing the Bow",
     "video": "exercise_videos/exercise_0379.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "MidBack",
+      "Forearms",
+      "Biceps",
+      "RotatorCuff"
+    ],
     "practice": "Qigong",
     "motionProfile": "FingerMotion",
     "mode": "Repetition",
@@ -2291,7 +2868,13 @@
     "id": 389,
     "name": "First-Position Heel Raise with Elbow Pull-Down",
     "video": "exercise_videos/exercise_0389.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Calves",
+      "Trapezius",
+      "Biceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "BackBalance",
     "mode": "Repetition",
@@ -2307,7 +2890,9 @@
     "id": 409,
     "name": "Neck Controlled Articular Rotation",
     "video": "exercise_videos/exercise_0409.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2323,7 +2908,9 @@
     "id": 422,
     "name": "Cervical Flexion Isometric",
     "video": "exercise_videos/exercise_0422.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadNod",
     "mode": "Hold",
@@ -2339,7 +2926,9 @@
     "id": 423,
     "name": "Cervical Extension Isometric",
     "video": "exercise_videos/exercise_0423.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadNod",
     "mode": "Hold",
@@ -2355,7 +2944,9 @@
     "id": 425,
     "name": "Chin-Tuck Isometric",
     "video": "exercise_videos/exercise_0425.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTranslate",
     "mode": "Hold",
@@ -2371,7 +2962,9 @@
     "id": 467,
     "name": "Alternating Eight-Brocades Wise Owl Gazes Backward",
     "video": "exercise_videos/exercise_0467.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2387,7 +2980,9 @@
     "id": 474,
     "name": "Ballet Spotting Drill",
     "video": "exercise_videos/exercise_0474.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Ballet",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2403,7 +2998,9 @@
     "id": 475,
     "name": "Jazz Head Isolation",
     "video": "exercise_videos/exercise_0475.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadFourDirection",
     "mode": "Repetition",
@@ -2419,7 +3016,9 @@
     "id": 477,
     "name": "Dance Head Roll",
     "video": "exercise_videos/exercise_0477.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadCircle",
     "mode": "Repetition",
@@ -2435,7 +3034,9 @@
     "id": 481,
     "name": "Quarter-Turn Spotting Drill",
     "video": "exercise_videos/exercise_0481.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2451,7 +3052,9 @@
     "id": 482,
     "name": "Continuous Spot-Turn Drill",
     "video": "exercise_videos/exercise_0482.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2467,7 +3070,9 @@
     "id": 483,
     "name": "Pirouette Spotting Drill",
     "video": "exercise_videos/exercise_0483.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Ballet",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2483,7 +3088,9 @@
     "id": 490,
     "name": "Bharatanatyam Alolita Shiro",
     "video": "exercise_videos/exercise_0490.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadCircle",
     "mode": "Repetition",
@@ -2499,7 +3106,9 @@
     "id": 491,
     "name": "Bharatanatyam Dhuta Shiro",
     "video": "exercise_videos/exercise_0491.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2515,7 +3124,9 @@
     "id": 492,
     "name": "Bharatanatyam Kampita Shiro",
     "video": "exercise_videos/exercise_0492.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadNod",
     "mode": "Repetition",
@@ -2531,7 +3142,9 @@
     "id": 493,
     "name": "Alternating Bharatanatyam Paravritta Shiro",
     "video": "exercise_videos/exercise_0493.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTurn",
     "mode": "Repetition",
@@ -2547,7 +3160,9 @@
     "id": 495,
     "name": "Bharatanatyam Parivahita Shiro",
     "video": "exercise_videos/exercise_0495.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
     "mode": "Repetition",
@@ -2563,7 +3178,9 @@
     "id": 497,
     "name": "Odissi Sundari Griva",
     "video": "exercise_videos/exercise_0497.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Odissi",
     "motionProfile": "HeadTilt",
     "mode": "Repetition",
@@ -2579,7 +3196,9 @@
     "id": 499,
     "name": "Bharatanatyam Tiraschina Griva",
     "video": "exercise_videos/exercise_0499.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
     "mode": "Repetition",
@@ -2595,7 +3214,9 @@
     "id": 500,
     "name": "Bharatanatyam Parivartita Griva",
     "video": "exercise_videos/exercise_0500.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
     "mode": "Repetition",
@@ -2611,7 +3232,12 @@
     "id": 512,
     "name": "Scapular Protraction",
     "video": "exercise_videos/exercise_0512.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ScapularGlide",
     "mode": "Repetition",
@@ -2627,7 +3253,13 @@
     "id": 513,
     "name": "Scapular Retraction",
     "video": "exercise_videos/exercise_0513.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "MidBack",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ScapularGlide",
     "mode": "Repetition",
@@ -2643,7 +3275,10 @@
     "id": 516,
     "name": "Shoulder Shrug",
     "video": "exercise_videos/exercise_0516.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ShoulderRaise",
     "mode": "Repetition",
@@ -2659,7 +3294,11 @@
     "id": 544,
     "name": "Standing Overhead Slam",
     "video": "exercise_videos/exercise_0544.mp4",
-    "dominantRegion": "ARMS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "Triceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "ArmRaise",
     "mode": "Repetition",
@@ -2675,7 +3314,10 @@
     "id": 572,
     "name": "Alternating Tai Chi White Crane Opens Wings",
     "video": "exercise_videos/exercise_0572.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "RotatorCuff"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "ShoulderRaise",
     "mode": "Repetition",
@@ -2691,7 +3333,11 @@
     "id": 573,
     "name": "Alternating Tai Chi Single Whip",
     "video": "exercise_videos/exercise_0573.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "MidBack",
+      "RotatorCuff"
+    ],
     "practice": "Tai Chi",
     "motionProfile": "ShoulderRaise",
     "mode": "Repetition",
@@ -2707,7 +3353,11 @@
     "id": 576,
     "name": "Qigong Crane-Wing Shoulder Lift",
     "video": "exercise_videos/exercise_0576.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Qigong",
     "motionProfile": "ShoulderRaise",
     "mode": "Repetition",
@@ -2723,7 +3373,11 @@
     "id": 577,
     "name": "Qigong Swimming-Dragon Shoulder Roll",
     "video": "exercise_videos/exercise_0577.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Qigong",
     "motionProfile": "ShoulderCircle",
     "mode": "Repetition",
@@ -2739,7 +3393,11 @@
     "id": 588,
     "name": "Belly-Dance Alternating Shoulder Roll",
     "video": "exercise_videos/exercise_0588.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Belly dance",
     "motionProfile": "ShoulderCircle",
     "mode": "Repetition",
@@ -2755,7 +3413,11 @@
     "id": 591,
     "name": "Bharatanatyam Natyarambhe Hold",
     "video": "exercise_videos/exercise_0591.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Bharatanatyam",
     "motionProfile": "ShoulderDance",
     "mode": "Hold",
@@ -2771,7 +3433,10 @@
     "id": 608,
     "name": "Hip Circle",
     "video": "exercise_videos/exercise_0608.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -2787,7 +3452,9 @@
     "id": 617,
     "name": "Alternating Standing Side-Leg Circles",
     "video": "exercise_videos/exercise_0617.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -2803,7 +3470,9 @@
     "id": 626,
     "name": "Sumo Stance",
     "video": "exercise_videos/exercise_0626.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipOpenClose",
     "mode": "Hold",
@@ -2819,7 +3488,9 @@
     "id": 632,
     "name": "Alternating Hip-Flexor Side Stretch",
     "video": "exercise_videos/exercise_0632.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "HipFlexors"
+    ],
     "practice": "Stretching",
     "motionProfile": "HipHinge",
     "mode": "Repetition",
@@ -2835,7 +3506,12 @@
     "id": 636,
     "name": "Alternating Deadlift Kickback",
     "video": "exercise_videos/exercise_0636.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -2851,7 +3527,12 @@
     "id": 647,
     "name": "Alternating Kickback with Sky Punch",
     "video": "exercise_videos/exercise_0647.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Shoulders",
+      "Chest"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipOpenClose",
     "mode": "Repetition",
@@ -2867,7 +3548,11 @@
     "id": 648,
     "name": "Alternating Standing Back-Leg Lift",
     "video": "exercise_videos/exercise_0648.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -2883,7 +3568,9 @@
     "id": 649,
     "name": "Alternating Standing Side-Leg Raise",
     "video": "exercise_videos/exercise_0649.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Abductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipOpenClose",
     "mode": "Repetition",
@@ -2899,7 +3586,10 @@
     "id": 654,
     "name": "Alternating Sideward-and-Backward Kick",
     "video": "exercise_videos/exercise_0654.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps",
+      "Abductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegSide",
     "mode": "Repetition",
@@ -2915,7 +3605,11 @@
     "id": 666,
     "name": "Alternating Ballet Arabesque",
     "video": "exercise_videos/exercise_0666.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Ballet",
     "motionProfile": "HipLegArc",
     "mode": "Repetition",
@@ -2931,7 +3625,10 @@
     "id": 677,
     "name": "Alternating Belly-Dance Hip Drop",
     "video": "exercise_videos/exercise_0677.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Abductors"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -2947,7 +3644,10 @@
     "id": 678,
     "name": "Alternating Belly-Dance Hip Lift",
     "video": "exercise_videos/exercise_0678.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Abductors"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -2963,7 +3663,9 @@
     "id": 681,
     "name": "Belly-Dance Horizontal Figure Eight",
     "video": "exercise_videos/exercise_0681.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -2979,7 +3681,9 @@
     "id": 683,
     "name": "Belly-Dance Umi",
     "video": "exercise_videos/exercise_0683.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -2995,7 +3699,9 @@
     "id": 684,
     "name": "Belly-Dance Maya",
     "video": "exercise_videos/exercise_0684.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -3011,7 +3717,9 @@
     "id": 685,
     "name": "Belly-Dance Taqsim",
     "video": "exercise_videos/exercise_0685.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
     "mode": "Repetition",
@@ -3027,7 +3735,10 @@
     "id": 686,
     "name": "Belly-Dance Hip Twist",
     "video": "exercise_videos/exercise_0686.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Core",
+      "Abductors"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipOpenClose",
     "mode": "Repetition",
@@ -3043,7 +3754,10 @@
     "id": 687,
     "name": "Belly-Dance Hip Shimmy",
     "video": "exercise_videos/exercise_0687.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Abductors"
+    ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -3059,7 +3773,14 @@
     "id": 712,
     "name": "Thoracic Expansion Hold",
     "video": "exercise_videos/exercise_0712.mp4",
-    "dominantRegion": "CHEST",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Chest",
+      "MidBack",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ChestBreathing",
     "mode": "Hold",
@@ -3075,7 +3796,14 @@
     "id": 733,
     "name": "Alternating Side Lunge with Chest Push",
     "video": "exercise_videos/exercise_0733.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "Shoulders",
+      "Chest",
+      "HipFlexors",
+      "Triceps"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -3091,7 +3819,12 @@
     "id": 740,
     "name": "Clasped-Hand Upper-Back Stretch",
     "video": "exercise_videos/exercise_0740.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "UpperBack",
+      "MidBack",
+      "Trapezius",
+      "RotatorCuff"
+    ],
     "practice": "Stretching",
     "motionProfile": "BackBalance",
     "mode": "Hold",
@@ -3107,7 +3840,10 @@
     "id": 741,
     "name": "Alternating Cross-Body Shoulder Stretch",
     "video": "exercise_videos/exercise_0741.mp4",
-    "dominantRegion": "SHOULDERS",
+    "muscleGroups": [
+      "Shoulders",
+      "RotatorCuff"
+    ],
     "practice": "Stretching",
     "motionProfile": "ShoulderStretch",
     "mode": "Repetition",
@@ -3123,7 +3859,11 @@
     "id": 742,
     "name": "Alternating Overhead Triceps Stretch",
     "video": "exercise_videos/exercise_0742.mp4",
-    "dominantRegion": "ARMS",
+    "muscleGroups": [
+      "Shoulders",
+      "Trapezius",
+      "Triceps"
+    ],
     "practice": "Stretching",
     "motionProfile": "ArmRaise",
     "mode": "Repetition",
@@ -3139,7 +3879,12 @@
     "id": 743,
     "name": "Clasped-Hands-Behind-Back Chest Opener",
     "video": "exercise_videos/exercise_0743.mp4",
-    "dominantRegion": "CHEST",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Chest",
+      "RotatorCuff"
+    ],
     "practice": "Stretching",
     "motionProfile": "ChestOpen",
     "mode": "Hold",
@@ -3155,7 +3900,10 @@
     "id": 744,
     "name": "Alternating Standing Figure-Four Glute Stretch",
     "video": "exercise_videos/exercise_0744.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Abductors"
+    ],
     "practice": "Stretching",
     "motionProfile": "HipHinge",
     "mode": "Repetition",
@@ -3171,7 +3919,12 @@
     "id": 745,
     "name": "Dynamic Hug",
     "video": "exercise_videos/exercise_0745.mp4",
-    "dominantRegion": "CHEST",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Chest",
+      "RotatorCuff"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ChestFly",
     "mode": "Repetition",
@@ -3187,7 +3940,10 @@
     "id": 746,
     "name": "Alternating Staggered Calf-and-Ankle Stretch",
     "video": "exercise_videos/exercise_0746.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Calves",
+      "Shins"
+    ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -3203,7 +3959,9 @@
     "id": 747,
     "name": "Alternating Standing Quad Stretch",
     "video": "exercise_videos/exercise_0747.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Quadriceps"
+    ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -3219,7 +3977,10 @@
     "id": 748,
     "name": "Alternating Wide-Stance Groin-Hamstring Shift",
     "video": "exercise_videos/exercise_0748.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Hamstrings",
+      "Adductors"
+    ],
     "practice": "Stretching",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -3235,7 +3996,9 @@
     "id": 750,
     "name": "Alternating Heel-Forward Hamstring Stretch",
     "video": "exercise_videos/exercise_0750.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Hamstrings"
+    ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -3251,7 +4014,9 @@
     "id": 751,
     "name": "Alternating Neck Side Stretch",
     "video": "exercise_videos/exercise_0751.mp4",
-    "dominantRegion": "HEAD",
+    "muscleGroups": [
+      "Neck"
+    ],
     "practice": "Stretching",
     "motionProfile": "GazeDiagonal",
     "mode": "Repetition",
@@ -3267,7 +4032,9 @@
     "id": 752,
     "name": "Alternating Straight-Arm Wrist Stretch",
     "video": "exercise_videos/exercise_0752.mp4",
-    "dominantRegion": "HANDS",
+    "muscleGroups": [
+      "Forearms"
+    ],
     "practice": "Stretching",
     "motionProfile": "WristMotion",
     "mode": "Repetition",
@@ -3283,7 +4050,10 @@
     "id": 784,
     "name": "Extended Mountain Pose",
     "video": "exercise_videos/exercise_0784.mp4",
-    "dominantRegion": "CHEST",
+    "muscleGroups": [
+      "Chest",
+      "Trapezius"
+    ],
     "practice": "Yoga",
     "motionProfile": "ChestOpen",
     "mode": "Hold",
@@ -3299,7 +4069,11 @@
     "id": 804,
     "name": "Alternating Arms-Spread Torso Twist",
     "video": "exercise_videos/exercise_0804.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "Shoulders",
+      "MidBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -3315,7 +4089,10 @@
     "id": 816,
     "name": "Torso Circle",
     "video": "exercise_videos/exercise_0816.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Core",
+      "LowerBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "SpineWave",
     "mode": "Repetition",
@@ -3331,7 +4108,11 @@
     "id": 818,
     "name": "Standing Cat-Cow",
     "video": "exercise_videos/exercise_0818.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "UpperBack",
+      "LowerBack",
+      "MidBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "SpineWave",
     "mode": "Repetition",
@@ -3347,7 +4128,12 @@
     "id": 825,
     "name": "Alternating Deadlift with Body Twist",
     "video": "exercise_videos/exercise_0825.mp4",
-    "dominantRegion": "HIPS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipShift",
     "mode": "Repetition",
@@ -3363,7 +4149,14 @@
     "id": 831,
     "name": "Alternating Knee-Up Reverse Fly",
     "video": "exercise_videos/exercise_0831.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "UpperBack",
+      "Shoulders",
+      "HipFlexors",
+      "MidBack",
+      "RotatorCuff"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
@@ -3379,7 +4172,15 @@
     "id": 834,
     "name": "Alternating Cross-Step Lat Pulldown",
     "video": "exercise_videos/exercise_0834.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Adductors",
+      "Abductors",
+      "MidBack",
+      "Trapezius",
+      "Biceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
     "mode": "Repetition",
@@ -3395,7 +4196,13 @@
     "id": 836,
     "name": "Squat with Back Squeeze",
     "video": "exercise_videos/exercise_0836.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Quadriceps",
+      "UpperBack",
+      "MidBack",
+      "Trapezius"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
     "mode": "Repetition",
@@ -3411,7 +4218,14 @@
     "id": 843,
     "name": "Standing Cobra Pose",
     "video": "exercise_videos/exercise_0843.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "UpperBack",
+      "Shoulders",
+      "Chest",
+      "LowerBack",
+      "MidBack",
+      "Trapezius"
+    ],
     "practice": "Yoga",
     "motionProfile": "SpineExtension",
     "mode": "Hold",
@@ -3427,7 +4241,10 @@
     "id": 845,
     "name": "Extended-Mountain Backline Reach and Lower",
     "video": "exercise_videos/exercise_0845.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "BackBalance",
     "mode": "Repetition",
@@ -3443,7 +4260,9 @@
     "id": 884,
     "name": "Boxing Slip",
     "video": "exercise_videos/exercise_0884.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Boxing",
     "motionProfile": "BoxingEvasion",
     "mode": "Repetition",
@@ -3459,7 +4278,10 @@
     "id": 885,
     "name": "Boxing Roll",
     "video": "exercise_videos/exercise_0885.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Core",
+      "LowerBack"
+    ],
     "practice": "Boxing",
     "motionProfile": "SpineFlexion",
     "mode": "Repetition",
@@ -3475,7 +4297,12 @@
     "id": 905,
     "name": "Wide-Plié Alternating Side Bend",
     "video": "exercise_videos/exercise_0905.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreSideBend",
     "mode": "Repetition",
@@ -3491,7 +4318,9 @@
     "id": 906,
     "name": "Alternating Cross-and-Side Crunch",
     "video": "exercise_videos/exercise_0906.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreCrunch",
     "mode": "Repetition",
@@ -3507,7 +4336,9 @@
     "id": 910,
     "name": "Standing Pilates Knee-Lift Twist",
     "video": "exercise_videos/exercise_0910.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Pilates",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -3523,7 +4354,9 @@
     "id": 914,
     "name": "Alternating Diagonal Knee Pull-Down",
     "video": "exercise_videos/exercise_0914.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
@@ -3539,7 +4372,11 @@
     "id": 915,
     "name": "Alternating Split-Stance Knee Drive with Overhead Reach",
     "video": "exercise_videos/exercise_0915.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors",
+      "Trapezius"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreCrunch",
     "mode": "Repetition",
@@ -3555,7 +4392,12 @@
     "id": 939,
     "name": "Alternating Hinge-to-Knee Drive",
     "video": "exercise_videos/exercise_0939.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "Hamstrings",
+      "LowerBack",
+      "HipFlexors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreCrunch",
     "mode": "Repetition",
@@ -3571,7 +4413,11 @@
     "id": 943,
     "name": "Alternating Knee-Up Arms Raise",
     "video": "exercise_videos/exercise_0943.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "Shoulders",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
@@ -3587,7 +4433,10 @@
     "id": 948,
     "name": "Alternating Standing Wood Chop",
     "video": "exercise_videos/exercise_0948.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "MidBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -3603,7 +4452,10 @@
     "id": 949,
     "name": "Alternating Standing Reverse Wood Chop",
     "video": "exercise_videos/exercise_0949.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "MidBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -3619,7 +4471,10 @@
     "id": 954,
     "name": "Alternating Torso Rotation with Side Reach",
     "video": "exercise_videos/exercise_0954.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "MidBack"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
     "mode": "Repetition",
@@ -3635,7 +4490,9 @@
     "id": 958,
     "name": "Standing Alternating Side Bend",
     "video": "exercise_videos/exercise_0958.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreSideBend",
     "mode": "Repetition",
@@ -3651,7 +4508,10 @@
     "id": 960,
     "name": "Alternating Heel Tap with Opposite Hand",
     "video": "exercise_videos/exercise_0960.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors"
+    ],
     "practice": "Hand therapy and mobility",
     "motionProfile": "CoreBrace",
     "mode": "Repetition",
@@ -3667,7 +4527,10 @@
     "id": 962,
     "name": "Alternating Standing Knee-to-Elbow Crunch",
     "video": "exercise_videos/exercise_0962.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "HipFlexors"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreCrunch",
     "mode": "Repetition",
@@ -3683,7 +4546,10 @@
     "id": 969,
     "name": "Chair-Pose Core Hold",
     "video": "exercise_videos/exercise_0969.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Core",
+      "Quadriceps"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreBalance",
     "mode": "Hold",
@@ -3699,7 +4565,12 @@
     "id": 971,
     "name": "Horse-Stance Core Hold",
     "video": "exercise_videos/exercise_0971.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreBalance",
     "mode": "Hold",
@@ -3715,7 +4586,13 @@
     "id": 973,
     "name": "Alternating Reverse-Lunge Torso Twist",
     "video": "exercise_videos/exercise_0973.mp4",
-    "dominantRegion": "LEGS",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "HipFlexors",
+      "MidBack"
+    ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
     "mode": "Repetition",
@@ -3731,7 +4608,12 @@
     "id": 986,
     "name": "Karate Kiba-Dachi Brace",
     "video": "exercise_videos/exercise_0986.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Karate",
     "motionProfile": "CoreBrace",
     "mode": "Hold",
@@ -3747,7 +4629,12 @@
     "id": 987,
     "name": "Karate Shiko-Dachi Core Brace",
     "video": "exercise_videos/exercise_0987.mp4",
-    "dominantRegion": "CORE",
+    "muscleGroups": [
+      "Glutes",
+      "Core",
+      "Quadriceps",
+      "Adductors"
+    ],
     "practice": "Karate",
     "motionProfile": "CoreBrace",
     "mode": "Hold",
@@ -3763,7 +4650,10 @@
     "id": 1000,
     "name": "Standing Forward Fold",
     "video": "exercise_videos/exercise_1000.mp4",
-    "dominantRegion": "BACK",
+    "muscleGroups": [
+      "Hamstrings",
+      "LowerBack"
+    ],
     "practice": "Stretching",
     "motionProfile": "SpineFlexion",
     "mode": "Hold",

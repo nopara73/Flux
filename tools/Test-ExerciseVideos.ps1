@@ -13,14 +13,28 @@ if ($catalog.Count -lt 30) {
     throw "Expected at least 30 catalog records, found $($catalog.Count)."
 }
 
-$regions = @(
-    'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
-    'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
-$invalidRegionCounts = @($regions | Where-Object {
-        @($catalog | Where-Object dominantRegion -eq $_).Count -lt 3
+$muscleGroups = @(
+    'Glutes', 'Core', 'Quadriceps', 'Hamstrings', 'UpperBack',
+    'Shoulders', 'Chest', 'LowerBack', 'Calves', 'HipFlexors',
+    'Adductors', 'Abductors', 'MidBack', 'Trapezius', 'Forearms',
+    'Triceps', 'Biceps', 'RotatorCuff', 'Neck', 'Shins')
+$invalidMuscleGroupCounts = @($muscleGroups | Where-Object {
+        $muscleGroup = $_
+        @($catalog | Where-Object {
+                $muscleGroup -in @($_.muscleGroups)
+            }).Count -lt 10
     })
-if ($invalidRegionCounts.Count -gt 0) {
-    throw "Every region must contain at least three exercises: $($invalidRegionCounts -join ', ')."
+if ($invalidMuscleGroupCounts.Count -gt 0) {
+    throw "Every muscle group must contain at least ten exercises: $($invalidMuscleGroupCounts -join ', ')."
+}
+
+$invalidAssignments = @($catalog | Where-Object {
+        @($_.muscleGroups).Count -lt 1 -or
+        @($_.muscleGroups | Sort-Object -Unique).Count -ne @($_.muscleGroups).Count -or
+        @($_.muscleGroups | Where-Object { $_ -notin $muscleGroups }).Count -gt 0
+    })
+if ($invalidAssignments.Count -gt 0) {
+    throw 'Every exercise must have one or more unique, recognized muscle groups.'
 }
 
 $videoPaths = @($catalog.video)

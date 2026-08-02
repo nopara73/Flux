@@ -4,8 +4,36 @@ namespace Flux.Services;
 
 public sealed class ExerciseSessionService
 {
-    private static readonly IReadOnlyList<DominantRegion> OrderedRegions =
-        Array.AsReadOnly(Enum.GetValues<DominantRegion>());
+    public const int MinimumWorkoutMinutes = 3;
+    public const int MaximumWorkoutMinutes = 20;
+    public const int DefaultWorkoutMinutes = 10;
+
+    private const int CurrentStateVersion = 4;
+
+    private static readonly IReadOnlyList<MuscleGroup> OrderedMuscleGroups =
+        Array.AsReadOnly<MuscleGroup>(
+        [
+            MuscleGroup.Glutes,
+            MuscleGroup.Core,
+            MuscleGroup.Quadriceps,
+            MuscleGroup.Hamstrings,
+            MuscleGroup.UpperBack,
+            MuscleGroup.Shoulders,
+            MuscleGroup.Chest,
+            MuscleGroup.LowerBack,
+            MuscleGroup.Calves,
+            MuscleGroup.HipFlexors,
+            MuscleGroup.Adductors,
+            MuscleGroup.Abductors,
+            MuscleGroup.MidBack,
+            MuscleGroup.Trapezius,
+            MuscleGroup.Forearms,
+            MuscleGroup.Triceps,
+            MuscleGroup.Biceps,
+            MuscleGroup.RotatorCuff,
+            MuscleGroup.Neck,
+            MuscleGroup.Shins,
+        ]);
 
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly Random _random;
@@ -16,20 +44,29 @@ public sealed class ExerciseSessionService
         _random = random ?? Random.Shared;
     }
 
-    public static IReadOnlyList<DominantRegion> RegionOrder => OrderedRegions;
+    public static IReadOnlyList<MuscleGroup> MuscleGroupOrder => OrderedMuscleGroups;
 
     public void Initialize(WorkoutState state)
     {
-        NormalizeCollections(state);
-        NormalizeLegacyOutcomes(state);
-        state.Version = 3;
+        ArgumentNullException.ThrowIfNull(state);
 
-        if (state.SelectedExercises.Count == 0)
+        NormalizeCollections(state);
+        if (state.Version != CurrentStateVersion)
         {
-            CreateInitialLineup(state);
+            ResetIncompatibleSession(state);
         }
 
-        RepairLineup(state);
+        state.Version = CurrentStateVersion;
+        state.LastWorkoutMinutes = NormalizeLastWorkoutMinutes(state.LastWorkoutMinutes);
+
+        if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
+        {
+            ResetToDurationSelection(state);
+            return;
+        }
+
+        RepairFullLineup(state);
+        NormalizeOutcomes(state);
         NormalizeCompletionState(state);
         NormalizePendingRest(state);
 
@@ -39,24 +76,68 @@ public sealed class ExerciseSessionService
         }
     }
 
-    public Exercise GetSelectedExercise(WorkoutState state, DominantRegion region)
+    public void StartWorkout(WorkoutState state, int minutes)
     {
-        if (!state.SelectedExercises.TryGetValue(region, out string? exerciseName))
+        ArgumentNullException.ThrowIfNull(state);
+
+        if (!IsValidWorkoutMinutes(minutes))
         {
-            throw new InvalidOperationException($"No exercise is selected for {region}.");
+            throw new ArgumentOutOfRangeException(
+                nameof(minutes),
+                minutes,
+                $"Workout duration must be between {MinimumWorkoutMinutes} and " +
+                    $"{MaximumWorkoutMinutes} minutes.");
+        }
+
+        if (IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
+        {
+            throw new InvalidOperationException("A workout is already active.");
+        }
+
+        NormalizeCollections(state);
+        state.Version = CurrentStateVersion;
+        state.LastWorkoutMinutes = minutes;
+        state.ActiveWorkoutMinutes = minutes;
+        state.Outcomes.Clear();
+        state.WorkoutCompleted = false;
+        state.CompletionAcknowledged = false;
+        ClearPendingRest(state);
+        RepairFullLineup(state);
+    }
+
+    public IReadOnlyList<MuscleGroup> GetActiveMuscleGroups(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+
+        return IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)
+            ? OrderedMuscleGroups.Take(state.ActiveWorkoutMinutes).ToArray()
+            : [];
+    }
+
+    public Exercise GetSelectedExercise(WorkoutState state, MuscleGroup muscleGroup)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+
+        if (!state.SelectedExercises.TryGetValue(muscleGroup, out string? exerciseName))
+        {
+            throw new InvalidOperationException(
+                $"No exercise is selected for {muscleGroup}.");
         }
 
         return _exercises.Single(exercise =>
-            exercise.DominantRegion == region && exercise.Name == exerciseName);
+            exercise.MuscleGroups.Contains(muscleGroup) &&
+            exercise.Name == exerciseName);
     }
 
-    public DominantRegion? GetNextRegion(WorkoutState state)
+    public MuscleGroup? GetNextMuscleGroup(WorkoutState state)
     {
-        foreach (DominantRegion region in OrderedRegions)
+        ArgumentNullException.ThrowIfNull(state);
+
+        foreach (MuscleGroup muscleGroup in GetActiveMuscleGroups(state))
         {
-            if (!state.Outcomes.ContainsKey(region))
+            if (!state.Outcomes.ContainsKey(muscleGroup))
             {
-                return region;
+                return muscleGroup;
             }
         }
 
@@ -65,32 +146,36 @@ public sealed class ExerciseSessionService
 
     public Exercise RecordOutcome(
         WorkoutState state,
-        DominantRegion region,
+        MuscleGroup muscleGroup,
         bool keep)
     {
-        DominantRegion? nextRegion = GetNextRegion(state);
+        ArgumentNullException.ThrowIfNull(state);
 
-        if (nextRegion is null || nextRegion.Value != region)
+        MuscleGroup? nextMuscleGroup = GetNextMuscleGroup(state);
+        if (nextMuscleGroup is null || nextMuscleGroup.Value != muscleGroup)
         {
-            throw new InvalidOperationException($"{region} is not the next workout region.");
+            throw new InvalidOperationException(
+                $"{muscleGroup} is not the next workout muscle group.");
         }
 
-        Exercise exercise = GetSelectedExercise(state, region);
-
+        Exercise exercise = GetSelectedExercise(state, muscleGroup);
         ExerciseOutcome outcome = keep ? ExerciseOutcome.Tick : ExerciseOutcome.X;
         if (!keep)
         {
             exercise.Score--;
         }
 
-        state.Outcomes[region] = outcome;
-        state.WorkoutCompleted = OrderedRegions.All(state.Outcomes.ContainsKey);
+        state.Outcomes[muscleGroup] = outcome;
+        state.WorkoutCompleted = GetActiveMuscleGroups(state)
+            .All(state.Outcomes.ContainsKey);
         state.CompletionAcknowledged = false;
         return exercise;
     }
 
     public void AcknowledgeCompletion(WorkoutState state)
     {
+        ArgumentNullException.ThrowIfNull(state);
+
         if (!state.WorkoutCompleted)
         {
             throw new InvalidOperationException("The workout is not complete.");
@@ -101,64 +186,61 @@ public sealed class ExerciseSessionService
 
     public (int Replaced, int Kept) GetOutcomeCounts(WorkoutState state)
     {
-        int replaced = state.Outcomes.Count(entry => entry.Value == ExerciseOutcome.X);
-        int kept = state.Outcomes.Count - replaced;
+        ArgumentNullException.ThrowIfNull(state);
+
+        HashSet<MuscleGroup> activeGroups = GetActiveMuscleGroups(state).ToHashSet();
+        int replaced = state.Outcomes.Count(entry =>
+            activeGroups.Contains(entry.Key) && entry.Value == ExerciseOutcome.X);
+        int kept = state.Outcomes.Count(entry =>
+            activeGroups.Contains(entry.Key) && entry.Value != ExerciseOutcome.X);
         return (replaced, kept);
     }
 
     public void ClearPendingRest(WorkoutState state)
     {
-        state.PendingRestRegion = null;
+        ArgumentNullException.ThrowIfNull(state);
+
+        state.PendingRestMuscleGroup = null;
         state.PendingRestEndsAtUnixMilliseconds = 0;
         state.PendingRestKept = false;
     }
 
-    private void CreateInitialLineup(WorkoutState state)
-    {
-        foreach (DominantRegion region in OrderedRegions)
-        {
-            Exercise exercise = ChooseFromHighestScoreBucket(region, excludedName: null);
-            state.SelectedExercises[region] = exercise.Name;
-        }
-
-        state.Outcomes.Clear();
-        state.WorkoutCompleted = false;
-        state.CompletionAcknowledged = false;
-        ClearPendingRest(state);
-    }
-
     private void PrepareNextSession(WorkoutState state)
     {
-        var regionsToReplace = state.Outcomes
-            .Where(entry => entry.Value == ExerciseOutcome.X)
-            .Select(entry => entry.Key)
-            .ToHashSet();
+        MuscleGroup[] activeGroups = GetActiveMuscleGroups(state).ToArray();
 
-        foreach (DominantRegion region in regionsToReplace)
+        foreach (MuscleGroup muscleGroup in activeGroups.Where(muscleGroup =>
+                     state.Outcomes.TryGetValue(muscleGroup, out ExerciseOutcome outcome) &&
+                     outcome == ExerciseOutcome.X))
         {
-            string currentName = state.SelectedExercises[region];
-            Exercise replacement = ChooseFromHighestScoreBucket(region, currentName);
-            state.SelectedExercises[region] = replacement.Name;
+            string currentName = state.SelectedExercises[muscleGroup];
+            var excludedNames = new HashSet<string>(StringComparer.Ordinal)
+            {
+                currentName,
+            };
+            Exercise replacement = ChooseFromHighestScoreBucket(
+                muscleGroup,
+                excludedNames);
+            state.SelectedExercises[muscleGroup] = replacement.Name;
         }
 
-        state.Outcomes.Clear();
-        state.WorkoutCompleted = false;
-        state.CompletionAcknowledged = false;
-        ClearPendingRest(state);
+        ResetToDurationSelection(state);
     }
 
     private Exercise ChooseFromHighestScoreBucket(
-        DominantRegion region,
-        string? excludedName)
+        MuscleGroup muscleGroup,
+        IReadOnlySet<string> excludedNames)
     {
         Exercise[] candidates = _exercises
             .Where(exercise =>
-                exercise.DominantRegion == region && exercise.Name != excludedName)
+                exercise.MuscleGroups.Contains(muscleGroup) &&
+                !excludedNames.Contains(exercise.Name))
             .ToArray();
 
         if (candidates.Length == 0)
         {
-            throw new InvalidOperationException($"No replacement exercise exists for {region}.");
+            throw new InvalidOperationException(
+                $"No distinct replacement exercise exists for {muscleGroup}.");
         }
 
         int highestScore = candidates.Max(exercise => exercise.Score);
@@ -169,22 +251,57 @@ public sealed class ExerciseSessionService
         return highestScoreBucket[_random.Next(highestScoreBucket.Length)];
     }
 
-    private void RepairLineup(WorkoutState state)
+    private void RepairFullLineup(WorkoutState state)
     {
-        foreach (DominantRegion region in OrderedRegions)
+        var usedExerciseNames = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (MuscleGroup muscleGroup in OrderedMuscleGroups)
         {
             bool hasValidSelection = state.SelectedExercises.TryGetValue(
-                    region,
+                    muscleGroup,
                     out string? selectedName) &&
                 _exercises.Any(exercise =>
-                    exercise.DominantRegion == region && exercise.Name == selectedName);
+                    exercise.MuscleGroups.Contains(muscleGroup) &&
+                    exercise.Name == selectedName);
 
             if (!hasValidSelection)
             {
-                state.SelectedExercises[region] =
-                    ChooseFromHighestScoreBucket(region, excludedName: null).Name;
-                state.Outcomes.Remove(region);
+                var excludedNames = new HashSet<string>(
+                    usedExerciseNames,
+                    StringComparer.Ordinal);
+                if (selectedName is not null)
+                {
+                    excludedNames.Add(selectedName);
+                }
+
+                Exercise replacement;
+                try
+                {
+                    replacement = ChooseFromHighestScoreBucket(
+                        muscleGroup,
+                        excludedNames);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Existing kept slots take priority over strict uniqueness.
+                    // This fallback is only reachable if every candidate for a
+                    // small overlapping group is already used elsewhere.
+                    excludedNames.Clear();
+                    if (selectedName is not null)
+                    {
+                        excludedNames.Add(selectedName);
+                    }
+
+                    replacement = ChooseFromHighestScoreBucket(
+                        muscleGroup,
+                        excludedNames);
+                }
+                state.SelectedExercises[muscleGroup] = replacement.Name;
+                state.Outcomes.Remove(muscleGroup);
+                selectedName = replacement.Name;
             }
+
+            usedExerciseNames.Add(selectedName!);
         }
     }
 
@@ -194,28 +311,39 @@ public sealed class ExerciseSessionService
         state.Outcomes ??= [];
     }
 
-    private static void NormalizeLegacyOutcomes(WorkoutState state)
+    private static void NormalizeOutcomes(WorkoutState state)
     {
-        foreach (DominantRegion region in state.Outcomes
+        HashSet<MuscleGroup> activeGroups = OrderedMuscleGroups
+            .Take(state.ActiveWorkoutMinutes)
+            .ToHashSet();
+
+        foreach (MuscleGroup muscleGroup in state.Outcomes.Keys
+                     .Where(muscleGroup => !activeGroups.Contains(muscleGroup))
+                     .ToArray())
+        {
+            state.Outcomes.Remove(muscleGroup);
+        }
+
+        foreach (MuscleGroup muscleGroup in state.Outcomes
                      .Where(entry => entry.Value == ExerciseOutcome.Neutral)
                      .Select(entry => entry.Key)
                      .ToArray())
         {
-            state.Outcomes[region] = ExerciseOutcome.Tick;
+            state.Outcomes[muscleGroup] = ExerciseOutcome.Tick;
         }
     }
 
     private void NormalizePendingRest(WorkoutState state)
     {
-        if (state.PendingRestRegion is null)
+        if (state.PendingRestMuscleGroup is null)
         {
             ClearPendingRest(state);
             return;
         }
 
-        DominantRegion? nextRegion = GetNextRegion(state);
+        MuscleGroup? nextMuscleGroup = GetNextMuscleGroup(state);
         if (state.WorkoutCompleted ||
-            nextRegion != state.PendingRestRegion ||
+            nextMuscleGroup != state.PendingRestMuscleGroup ||
             state.PendingRestEndsAtUnixMilliseconds <= 0)
         {
             ClearPendingRest(state);
@@ -224,11 +352,42 @@ public sealed class ExerciseSessionService
 
     private static void NormalizeCompletionState(WorkoutState state)
     {
-        state.WorkoutCompleted = OrderedRegions.All(state.Outcomes.ContainsKey);
+        MuscleGroup[] activeGroups = OrderedMuscleGroups
+            .Take(state.ActiveWorkoutMinutes)
+            .ToArray();
+        state.WorkoutCompleted = activeGroups.Length > 0 &&
+            activeGroups.All(state.Outcomes.ContainsKey);
 
         if (!state.WorkoutCompleted)
         {
             state.CompletionAcknowledged = false;
         }
+    }
+
+    private static void ResetIncompatibleSession(WorkoutState state)
+    {
+        state.SelectedExercises.Clear();
+        ResetToDurationSelection(state);
+    }
+
+    private static void ResetToDurationSelection(WorkoutState state)
+    {
+        state.ActiveWorkoutMinutes = 0;
+        state.Outcomes.Clear();
+        state.WorkoutCompleted = false;
+        state.CompletionAcknowledged = false;
+        state.PendingRestMuscleGroup = null;
+        state.PendingRestEndsAtUnixMilliseconds = 0;
+        state.PendingRestKept = false;
+    }
+
+    private static int NormalizeLastWorkoutMinutes(int minutes)
+    {
+        return IsValidWorkoutMinutes(minutes) ? minutes : DefaultWorkoutMinutes;
+    }
+
+    private static bool IsValidWorkoutMinutes(int minutes)
+    {
+        return minutes is >= MinimumWorkoutMinutes and <= MaximumWorkoutMinutes;
     }
 }

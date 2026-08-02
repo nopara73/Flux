@@ -16,9 +16,18 @@ $exactMediaCopies = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1') -SkipLimitCheck
 $exactMediaTransforms = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1') -SkipLimitCheck
-$regions = @(
-    'FEET', 'LEGS', 'HANDS', 'ARMS', 'HEAD',
-    'SHOULDERS', 'HIPS', 'CHEST', 'BACK', 'CORE')
+$muscleGroups = @(
+    'Glutes', 'Core', 'Quadriceps', 'Hamstrings', 'UpperBack',
+    'Shoulders', 'Chest', 'LowerBack', 'Calves', 'HipFlexors',
+    'Adductors', 'Abductors', 'MidBack', 'Trapezius', 'Forearms',
+    'Triceps', 'Biceps', 'RotatorCuff', 'Neck', 'Shins')
+$muscleGroupDisplayNames = @{
+    UpperBack = 'Upper back'
+    LowerBack = 'Lower back'
+    HipFlexors = 'Hip flexors'
+    MidBack = 'Mid back'
+    RotatorCuff = 'Rotator cuff'
+}
 
 $externalIds = @($review.ReviewedExternal | ForEach-Object { [int]$_ })
 $humanExternalIds = @(
@@ -84,11 +93,14 @@ if ($unverifiedCopySources.Count -gt 0 -or
     throw 'A retained copy or transform points to a discarded source.'
 }
 
-$invalidRegions = @($regions | Where-Object {
-        @($catalog | Where-Object dominantRegion -eq $_).Count -lt 3
+$invalidMuscleGroups = @($muscleGroups | Where-Object {
+        $muscleGroup = $_
+        @($catalog | Where-Object {
+                $muscleGroup -in @($_.muscleGroups)
+            }).Count -lt 10
     })
-if ($invalidRegions.Count -gt 0) {
-    throw "Every region must retain at least three exercises: $($invalidRegions -join ', ')."
+if ($invalidMuscleGroups.Count -gt 0) {
+    throw "Every muscle group must retain at least ten exercises: $($invalidMuscleGroups -join ', ')."
 }
 
 $lines = [System.Collections.Generic.List[string]]::new()
@@ -100,11 +112,19 @@ $lines.Add(('All **{0}** bundled exercises show an actual person performing the 
 $lines.Add('Synthetic, schematic, anatomical, and 3D demonstrations are excluded from')
 $lines.Add('both the runtime catalog and the application package.')
 $lines.Add('')
-$lines.Add('| Region | Retained exercises |')
+$lines.Add('| Muscle group | Assigned exercises |')
 $lines.Add('| --- | ---: |')
-foreach ($region in $regions) {
-    $count = @($catalog | Where-Object dominantRegion -eq $region).Count
-    $lines.Add(('| {0} | {1} |' -f $region, $count))
+foreach ($muscleGroup in $muscleGroups) {
+    $count = @($catalog | Where-Object {
+            $muscleGroup -in @($_.muscleGroups)
+        }).Count
+    $displayName = if ($muscleGroupDisplayNames.ContainsKey($muscleGroup)) {
+        $muscleGroupDisplayNames[$muscleGroup]
+    }
+    else {
+        $muscleGroup
+    }
+    $lines.Add(('| {0} | {1} |' -f $displayName, $count))
 }
 
 $lines.Add('')
