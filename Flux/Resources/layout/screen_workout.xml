@@ -123,7 +123,7 @@
                     android:id="@+id/exercise_video"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/media_background"
+                    android:background="@android:color/transparent"
                     android:importantForAccessibility="no" />
 
                 <ImageView
