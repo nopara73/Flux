@@ -71,10 +71,11 @@ public sealed class ExerciseSessionService
             return;
         }
 
-        RepairActiveLineup(state);
         NormalizeOutcomes(state);
         NormalizeCompletionState(state);
         NormalizePendingRest(state);
+        RepairActiveLineup(state);
+        NormalizeCompletionState(state);
 
         if (state.WorkoutCompleted && state.CompletionAcknowledged)
         {

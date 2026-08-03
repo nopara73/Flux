@@ -469,6 +469,46 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void StalePendingRestDoesNotPreserveSelectionBelowCoverageThreshold()
+    {
+        Exercise staleSelection = ExerciseWithCoverage(
+            1,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            3,
+            5);
+        Exercise qualifyingReplacement = ExerciseWithCoverage(
+            2,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            3,
+            6);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        var service = new ExerciseSessionService(
+        [
+            staleSelection,
+            qualifyingReplacement,
+            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
+            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
+        ], new Random(1));
+        var state = new WorkoutState
+        {
+            ActiveWorkoutMinutes = 3,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = staleSelection.Id,
+            },
+            PendingRestGroupId = groups[0].Id,
+            PendingRestEndsAtUnixMilliseconds = 0,
+        };
+
+        service.Initialize(state);
+
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(
+            qualifyingReplacement.Id,
+            state.SelectedExerciseIds[groups[0].Id]);
+    }
+
+    [Fact]
     public void RejectedExerciseIsReplacedWithinGroupAndKeptSlotsRemainStable()
     {
         Exercise[] exercises = ThreeGroupCatalog();
