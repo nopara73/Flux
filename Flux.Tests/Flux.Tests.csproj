@@ -35,6 +35,7 @@
     <Compile Include="..\Flux\Services\LegacyWorkoutStateMigration.cs" Link="Production\Services\LegacyWorkoutStateMigration.cs" />
     <Compile Include="..\Flux\Services\CatalogMigrationRules.cs" Link="Production\Services\CatalogMigrationRules.cs" />
     <Compile Include="..\Flux\Services\MassGroupingTaxonomy.cs" Link="Production\Services\MassGroupingTaxonomy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutCoveragePolicy.cs" Link="Production\Services\WorkoutCoveragePolicy.cs" />
   </ItemGroup>
 
   <ItemGroup>

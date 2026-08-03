@@ -2863,7 +2863,8 @@
       "ShoulderAbductors",
       "RotatorCuff",
       "ElbowExtensors",
-      "ForearmExtensorsAndSupinators"
+      "ForearmExtensorsAndSupinators",
+      "ScapularGirdle"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -3730,7 +3731,8 @@
       "ForearmFlexorsAndPronators",
       "IntrinsicHand",
       "ElbowExtensors",
-      "ShoulderAbductors"
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "FingerMotion",
@@ -3775,7 +3777,8 @@
       "ForearmFlexorsAndPronators",
       "IntrinsicHand",
       "ElbowExtensors",
-      "ShoulderAbductors"
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Hand therapy and mobility",
     "motionProfile": "FingerMotion",
@@ -4183,6 +4186,7 @@
     "secondaryCanonicalGroups": [
       "ScapularGirdle",
       "ElbowFlexors",
+      "ElbowExtensors",
       "ForearmFlexorsAndPronators",
       "RotatorCuff"
     ],
@@ -4412,6 +4416,162 @@
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 400,
+    "name": "Shibashi Separating-the-Clouds Breathing",
+    "video": "exercise_videos/exercise_0400.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "BreathingMuscles",
+      "ShoulderAbductors"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 401,
+    "name": "Shibashi Alternating Swinging-Arms Breathing",
+    "video": "exercise_videos/exercise_0401.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "BreathingMuscles",
+      "ShoulderAdductorsAndExtensors",
+      "DeepAndIntersegmentalBack"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 402,
+    "name": "Shibashi Rowing-a-Boat Breathing",
+    "video": "exercise_videos/exercise_0402.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "BreathingMuscles",
+      "ShoulderAbductors"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 403,
+    "name": "Shibashi Alternating Pushing-Palms Breathing",
+    "video": "exercise_videos/exercise_0403.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "BreathingMuscles",
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 404,
+    "name": "Shibashi Alternating Punch Breathing",
+    "video": "exercise_videos/exercise_0404.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "BreathingMuscles",
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 405,
+    "name": "Shibashi Flying-Wild-Goose Breathing",
+    "video": "exercise_videos/exercise_0405.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "BreathingMuscles",
+      "ShoulderAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 406,
+    "name": "Shibashi Spinning-Wheels Breathing",
+    "video": "exercise_videos/exercise_0406.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "BreathingMuscles",
+      "ShoulderAbductors",
+      "SpinalExtensors",
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "ChestBreathing",
     "mode": "Repetition",
     "holdFramePercent": 0,
     "score": 0,

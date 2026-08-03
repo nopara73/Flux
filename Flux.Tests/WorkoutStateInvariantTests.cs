@@ -178,7 +178,9 @@ public sealed class WorkoutStateInvariantTests
             Name = $"Exercise {id}",
             Video = $"exercise_{id:D4}.mp4",
             PrimaryCanonicalGroup = primary,
-            SecondaryCanonicalGroups = [],
+            SecondaryCanonicalGroups = Enum.GetValues<CanonicalMuscleGroup>()
+                .Where(group => group != primary)
+                .ToArray(),
             Practice = "Test practice",
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,

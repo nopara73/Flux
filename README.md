@@ -5,12 +5,13 @@ Android. It targets Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-The app ships with a local SQLite database seeded from 321 reviewed exercises.
+The app ships with a local SQLite database seeded from 328 reviewed exercises.
 Movements are selected for their value first, then assigned on a best-effort
 basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
 scheduling group plus every secondary group it meaningfully trains. Full-body
-exercises remain eligible wherever their hardest work fits, and every canonical
-group has at least 10 primary choices.
+exercises remain eligible wherever their hardest work fits. Every workout
+bucket has at least 10 primary-owned choices that meaningfully cover at least
+half of its canonical leaves.
 
 The canonical leaves roll up explicitly into seven mass-ordered workout
 resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. The schedule order is the fixed
@@ -32,13 +33,13 @@ Every retained movement:
 - needs no wall, chair, floor work, prop, partner, or equipment;
 - avoids jumping, stomping, clapping, and vocalization.
 
-All 321 MP4 demonstrations are bundled for offline use. Holds loop as previews,
+All 328 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 15 stores canonical assignments, assignment roles, and
-every resolution roll-up in normalized tables. Its additive v14 migration keeps
-all existing exercise IDs, names, demonstrations, and scores while adding the
+Database schema version 16 stores canonical assignments, assignment roles, and
+every resolution roll-up in normalized tables. Its additive v14/v15 migrations
+keep all existing exercise IDs, names, demonstrations, and scores while adding
 new catalog records. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
@@ -54,12 +55,11 @@ Press **Start** to begin a round or **Skip** to finish its exercise timer
 immediately while testing. There is no separate rest skip. During rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the
-next workout by a random exercise from the highest-score bucket in the same
-active rolled-up group. Within that score bucket, Flux prefers the exercise that
-meaningfully covers the most canonical leaves inside the rolled-up group, then
-randomizes exact ties. Primary assignments own their scheduling group; secondary
-assignments measure coverage and remain fallback candidates when no unused
-primary exists. Every workout uses one distinct exercise per group.
+next workout by an exercise from the same active rolled-up group. A candidate
+must own the bucket through its primary assignment and train at least half of
+that bucket's canonical leaves. Flux then chooses the highest score, prefers the
+widest in-bucket coverage, and randomizes exact ties. Every workout uses one
+distinct exercise per group.
 Progress, rest state, last-used resolution, and scores persist locally.
 
 If Flux is closed or killed during a workout, the next cold launch applies all

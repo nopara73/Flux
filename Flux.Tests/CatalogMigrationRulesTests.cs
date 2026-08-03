@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Flux.Models;
 using Flux.Services;
 
@@ -5,6 +7,12 @@ namespace Flux.Tests;
 
 public sealed class CatalogMigrationRulesTests
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter() },
+    };
+
     [Fact]
     public void AdditiveCatalogPreservesExistingIdentityMediaAndScore()
     {
@@ -66,6 +74,40 @@ public sealed class CatalogMigrationRulesTests
             existing.Video);
         Assert.Throws<InvalidOperationException>(() =>
             CatalogMigrationRules.ValidatePreservedCatalog([changedName], stored));
+    }
+
+    [Fact]
+    public void VersionFifteenInventoryReconcilesAdditivelyIntoBundledCatalog()
+    {
+        int[] versionSixteenIds = [400, 401, 402, 403, 404, 405, 406];
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Assert.All(versionSixteenIds, id =>
+            Assert.Contains(bundled, exercise => exercise.Id == id));
+
+        Dictionary<int, StoredExerciseSnapshot> versionFifteen = bundled
+            .Where(exercise => !versionSixteenIds.Contains(exercise.Id))
+            .ToDictionary(
+                exercise => exercise.Id,
+                exercise => new StoredExerciseSnapshot(
+                    exercise.Name,
+                    exercise.Video,
+                    -exercise.Id));
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            bundled,
+            versionFifteen);
+
+        Assert.Equal(versionFifteen.Keys.Order(), preserved.Order());
+        Assert.All(versionFifteen, entry =>
+            Assert.Equal(-entry.Key, entry.Value.Score));
+        Assert.DoesNotContain(versionSixteenIds, preserved.Contains);
     }
 
     private static Exercise Exercise(

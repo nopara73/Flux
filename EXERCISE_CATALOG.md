@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 321 human-demonstrated standing movements. Exercises are chosen
+Flux contains 328 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -8,8 +8,11 @@ demand; assignment is a practical workout index, not an anatomical claim.
 
 The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
 and 30-group resolutions. Every resolution covers every leaf exactly once and
-keeps its declared descending mass order. The generator and app require at
-least 10 strong primary representatives in every canonical leaf.
+keeps its declared descending mass order. A selectable exercise must own its
+bucket through its primary assignment and train at least half of that bucket's
+canonical leaves. Every bucket at every supported resolution has at least 10
+such choices; the 30-group resolution therefore also maintains at least 10
+primary representatives in every canonical leaf.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
@@ -49,7 +52,7 @@ violations.
 
 ## Media quality
 
-Every entry has an offline 256 × 256 silent H.264 MP4. All 321 included
+Every entry has an offline 256 × 256 silent H.264 MP4. All 328 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

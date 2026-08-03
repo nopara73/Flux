@@ -1,4 +1,11 @@
 @{
+    400 = 'CHEST'
+    401 = 'CHEST'
+    402 = 'CHEST'
+    403 = 'CHEST'
+    404 = 'CHEST'
+    405 = 'CHEST'
+    406 = 'CHEST'
     # Generation-only legacy motion-family overrides. They preserve the media
     # profile attached to stable exercise IDs and are never emitted into the
     # runtime catalog; runtime classification lives in ExerciseCanonicalGroups.psd1.

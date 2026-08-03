@@ -2903,6 +2903,97 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
+    400 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 154
+        DurationSeconds = 32
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    401 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 194
+        DurationSeconds = 30
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    402 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 228
+        DurationSeconds = 36
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    403 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 353
+        DurationSeconds = 24
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    404 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 530
+        DurationSeconds = 30
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    405 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 564
+        DurationSeconds = 40
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    406 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 610
+        DurationSeconds = 44
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     617 = @{
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'

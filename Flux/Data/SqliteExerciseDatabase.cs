@@ -11,15 +11,13 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 15;
+    private const int DatabaseVersion = 16;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
     private const string WorkoutBucketTable = "workout_buckets";
     private const string RollupTable = "canonical_group_rollups";
     private const string CatalogAsset = "exercises.json";
-    private const int MinimumPrimaryExercisesPerCanonicalGroup = 10;
-
     private static readonly string[] ExerciseColumns =
     [
         "id",
@@ -69,7 +67,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion != 14 || newVersion != DatabaseVersion)
+        if (oldVersion is not (14 or 15) || newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
                 $"No non-destructive exercise database migration exists from " +
@@ -563,11 +561,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasInvalidPrimaryCount = Enum
-            .GetValues<CanonicalMuscleGroup>()
+        bool hasUndersizedWorkoutGroup = MassGroupingTaxonomy.SupportedMinutes
+            .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
             .Any(group => exercises.Count(exercise =>
-                exercise.PrimaryCanonicalGroup == group) <
-                    MinimumPrimaryExercisesPerCanonicalGroup);
+                    WorkoutCoveragePolicy.IsSelectable(exercise, group)) <
+                WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup);
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -588,7 +586,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
 
-        if (hasInvalidPrimaryCount ||
+        if (hasUndersizedWorkoutGroup ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||

@@ -13,6 +13,7 @@
 - Exclude one-sided exercises; use symmetric, bilateral, or naturally alternating movements.
 - Assign every canonical group the exercise meaningfully trains; mere involvement does not qualify.
 - Assign one primary scheduling group representing the clearest intended stimulus.
-- Maintain at least 10 strong, selectable primary representatives in every canonical group.
+- Let an exercise compete only in a roll-up containing its primary group and where it trains at least half of the roll-up's canonical leaves.
+- Maintain at least 10 such selectable primary-owned exercises in every roll-up at every supported resolution.
 - Require an accurate human demonstration for every exercise; exclude synthetic or approximate media.
 - Make hold demonstrations settle and remain on the final position during the timer.

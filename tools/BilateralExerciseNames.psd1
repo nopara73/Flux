@@ -267,6 +267,13 @@
     397 = 'Alternating Breath-Integrated Weight Shift'
     398 = 'Standing Arm-Expansion Breathing'
     399 = 'Shibashi Opening-the-Chest Breathing'
+    400 = 'Shibashi Separating-the-Clouds Breathing'
+    401 = 'Shibashi Alternating Swinging-Arms Breathing'
+    402 = 'Shibashi Rowing-a-Boat Breathing'
+    403 = 'Shibashi Alternating Pushing-Palms Breathing'
+    404 = 'Shibashi Alternating Punch Breathing'
+    405 = 'Shibashi Flying-Wild-Goose Breathing'
+    406 = 'Shibashi Spinning-Wheels Breathing'
     327 = 'First-Position Standing Row'
 
     # HEAD: remove single-axis diagonal and static one-direction drills.

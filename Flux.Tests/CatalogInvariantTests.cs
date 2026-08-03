@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Flux.Models;
+using Flux.Services;
 
 namespace Flux.Tests;
 
@@ -31,11 +32,19 @@ public sealed class CatalogInvariantTests
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Name).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Video).Distinct().Count());
 
-        foreach (CanonicalMuscleGroup group in Enum.GetValues<CanonicalMuscleGroup>())
+        foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
-            Assert.True(
-                exercises.Count(exercise => exercise.PrimaryCanonicalGroup == group) >= 10,
-                $"{group} has fewer than ten primary representatives.");
+            foreach (WorkoutGroup group in MassGroupingTaxonomy.GetResolution(minutes).Groups)
+            {
+                int selectableCount = exercises.Count(exercise =>
+                    WorkoutCoveragePolicy.IsSelectable(exercise, group));
+                Assert.True(
+                    selectableCount >=
+                        WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup,
+                    $"{group.Id} has only {selectableCount} primary-owned exercises " +
+                    $"meeting the {WorkoutCoveragePolicy.MinimumCoveragePercent}% " +
+                    "coverage requirement.");
+            }
         }
 
         Assert.All(exercises, exercise =>

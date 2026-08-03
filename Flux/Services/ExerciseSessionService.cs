@@ -10,11 +10,10 @@ public sealed class ExerciseSessionService
 
     private const int CurrentStateVersion = 5;
 
-    private static readonly IReadOnlySet<string> KnownWorkoutGroupIds =
+    private static readonly IReadOnlyDictionary<string, WorkoutGroup> KnownWorkoutGroups =
         MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
-            .Select(group => group.Id)
-            .ToHashSet(StringComparer.Ordinal);
+            .ToDictionary(group => group.Id, StringComparer.Ordinal);
 
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly IReadOnlyDictionary<int, Exercise> _exercisesById;
@@ -127,7 +126,7 @@ public sealed class ExerciseSessionService
 
         if (!state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
-            !IsEligible(exercise, group))
+            !IsSavedSelectionValid(state, exercise, group))
         {
             throw new InvalidOperationException(
                 $"No eligible exercise is selected for {group.DisplayName}.");
@@ -294,24 +293,16 @@ public sealed class ExerciseSessionService
     {
         Exercise[] candidates = _exercises
             .Where(exercise =>
-                group.CanonicalGroups.Contains(exercise.PrimaryCanonicalGroup) &&
+                WorkoutCoveragePolicy.IsSelectable(exercise, group) &&
                 !excludedExerciseIds.Contains(exercise.Id))
             .ToArray();
 
         if (candidates.Length == 0)
         {
-            candidates = _exercises
-                .Where(exercise =>
-                    exercise.SecondaryCanonicalGroups.Any(
-                        group.CanonicalGroups.Contains) &&
-                    !excludedExerciseIds.Contains(exercise.Id))
-                .ToArray();
-        }
-
-        if (candidates.Length == 0)
-        {
             throw new InvalidOperationException(
-                $"No distinct replacement exercise exists for {group.DisplayName}.");
+                $"No distinct primary-owned exercise with at least " +
+                $"{WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage exists for " +
+                $"{group.DisplayName}.");
         }
 
         int highestScore = candidates.Max(exercise => exercise.Score);
@@ -322,7 +313,7 @@ public sealed class ExerciseSessionService
         (Exercise Exercise, int Coverage)[] coveredCandidates = highestScoreBucket
             .Select(exercise => (
                 exercise,
-                GetCanonicalCoverage(exercise, group)))
+                WorkoutCoveragePolicy.GetCanonicalCoverage(exercise, group)))
             .ToArray();
         int highestCoverage = coveredCandidates.Max(candidate => candidate.Coverage);
         Exercise[] broadestCoverageBucket = coveredCandidates
@@ -331,15 +322,6 @@ public sealed class ExerciseSessionService
             .ToArray();
 
         return broadestCoverageBucket[_random.Next(broadestCoverageBucket.Length)];
-    }
-
-    private static int GetCanonicalCoverage(
-        Exercise exercise,
-        WorkoutGroup group)
-    {
-        return group.CanonicalGroups.Count(canonicalGroup =>
-            exercise.PrimaryCanonicalGroup == canonicalGroup ||
-            exercise.SecondaryCanonicalGroups.Contains(canonicalGroup));
     }
 
     private void RepairActiveLineup(WorkoutState state)
@@ -353,7 +335,7 @@ public sealed class ExerciseSessionService
                     out int selectedExerciseId) &&
                 !usedExerciseIds.Contains(selectedExerciseId) &&
                 _exercisesById.TryGetValue(selectedExerciseId, out Exercise? selected) &&
-                IsEligible(selected, group);
+                IsSavedSelectionValid(state, selected, group);
 
             if (!hasValidSelection)
             {
@@ -375,7 +357,17 @@ public sealed class ExerciseSessionService
         }
     }
 
-    private static bool IsEligible(Exercise exercise, WorkoutGroup group)
+    private static bool IsSavedSelectionValid(
+        WorkoutState state,
+        Exercise exercise,
+        WorkoutGroup group)
+    {
+        return WorkoutCoveragePolicy.IsSelectable(exercise, group) ||
+            (state.PendingRestGroupId == group.Id &&
+             IsAssignedToGroup(exercise, group));
+    }
+
+    private static bool IsAssignedToGroup(Exercise exercise, WorkoutGroup group)
     {
         return group.CanonicalGroups.Contains(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Any(group.CanonicalGroups.Contains);
@@ -453,8 +445,11 @@ public sealed class ExerciseSessionService
     {
         foreach (string groupId in state.SelectedExerciseIds.Keys.ToArray())
         {
-            if (!KnownWorkoutGroupIds.Contains(groupId) ||
-                !_exercisesById.ContainsKey(state.SelectedExerciseIds[groupId]))
+            if (!KnownWorkoutGroups.TryGetValue(groupId, out WorkoutGroup? group) ||
+                !_exercisesById.TryGetValue(
+                    state.SelectedExerciseIds[groupId],
+                    out Exercise? exercise) ||
+                !IsSavedSelectionValid(state, exercise, group))
             {
                 state.SelectedExerciseIds.Remove(groupId);
             }
