@@ -278,7 +278,7 @@ public sealed class ExerciseSessionService
             {
                 currentExerciseId,
             };
-            Exercise replacement = ChooseFromHighestScoreBucket(
+            Exercise replacement = ChooseBestCandidate(
                 group,
                 excludedExerciseIds);
             state.SelectedExerciseIds[group.Id] = replacement.Id;
@@ -288,7 +288,7 @@ public sealed class ExerciseSessionService
         ResetToDurationSelection(state);
     }
 
-    private Exercise ChooseFromHighestScoreBucket(
+    private Exercise ChooseBestCandidate(
         WorkoutGroup group,
         IReadOnlySet<int> excludedExerciseIds)
     {
@@ -319,7 +319,27 @@ public sealed class ExerciseSessionService
             .Where(exercise => exercise.Score == highestScore)
             .ToArray();
 
-        return highestScoreBucket[_random.Next(highestScoreBucket.Length)];
+        (Exercise Exercise, int Coverage)[] coveredCandidates = highestScoreBucket
+            .Select(exercise => (
+                exercise,
+                GetCanonicalCoverage(exercise, group)))
+            .ToArray();
+        int highestCoverage = coveredCandidates.Max(candidate => candidate.Coverage);
+        Exercise[] broadestCoverageBucket = coveredCandidates
+            .Where(candidate => candidate.Coverage == highestCoverage)
+            .Select(candidate => candidate.Exercise)
+            .ToArray();
+
+        return broadestCoverageBucket[_random.Next(broadestCoverageBucket.Length)];
+    }
+
+    private static int GetCanonicalCoverage(
+        Exercise exercise,
+        WorkoutGroup group)
+    {
+        return group.CanonicalGroups.Count(canonicalGroup =>
+            exercise.PrimaryCanonicalGroup == canonicalGroup ||
+            exercise.SecondaryCanonicalGroups.Contains(canonicalGroup));
     }
 
     private void RepairActiveLineup(WorkoutState state)
@@ -343,7 +363,7 @@ public sealed class ExerciseSessionService
                     excludedExerciseIds.Add(selectedExerciseId);
                 }
 
-                Exercise replacement = ChooseFromHighestScoreBucket(
+                Exercise replacement = ChooseBestCandidate(
                     group,
                     excludedExerciseIds);
                 state.SelectedExerciseIds[group.Id] = replacement.Id;

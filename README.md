@@ -55,8 +55,11 @@ immediately while testing. There is no separate rest skip. During rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the
 next workout by a random exercise from the highest-score bucket in the same
-active rolled-up group. Primary assignments are preferred; secondary assignments
-are fallback candidates. Every workout uses one distinct exercise per group.
+active rolled-up group. Within that score bucket, Flux prefers the exercise that
+meaningfully covers the most canonical leaves inside the rolled-up group, then
+randomizes exact ties. Primary assignments own their scheduling group; secondary
+assignments measure coverage and remain fallback candidates when no unused
+primary exists. Every workout uses one distinct exercise per group.
 Progress, rest state, last-used resolution, and scores persist locally.
 
 If Flux is closed or killed during a workout, the next cold launch applies all
