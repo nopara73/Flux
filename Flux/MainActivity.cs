@@ -1236,14 +1236,8 @@ public class MainActivity : Activity
         _state.PendingRestKept = true;
         _stateStore.Save(_state);
         _keepButton.Enabled = false;
-        _keepButton.Alpha = 1f;
-        _keepButton.Text = GetString(Resource.String.kept);
-        _keepButton.SetBackgroundResource(Resource.Drawable.kept_button_background);
-        _keepButton.SetTextColor(new Android.Graphics.Color(
-            GetColor(Resource.Color.accent_text)));
-        _keepButton.ContentDescription = "Exercise kept for the next session";
         _keepButton.PerformHapticFeedback(FeedbackConstants.KeyboardTap);
-        AnnouncePhaseForAccessibility(_keepButton, "Exercise kept.");
+        CompleteRest();
     }
 
     private void SkipRest()
