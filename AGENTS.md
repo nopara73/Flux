@@ -1,7 +1,7 @@
 # Exercise selection guidelines
 
-- Follow the capacity definitions and boundaries in [`docs/LONGEVITY_TAXONOMY_SPEC.md`](docs/LONGEVITY_TAXONOMY_SPEC.md).
-- Select worthwhile exercises first; assign capacities afterward.
+- Follow the canonical muscle-group taxonomy and roll-ups in [`Flux/Services/MassGroupingTaxonomy.cs`](Flux/Services/MassGroupingTaxonomy.cs).
+- Select worthwhile exercises first; assign muscle groups afterward.
 - Reject trivial gestures and ineffective dance steps.
 - Use real named movements or postures; do not invent count-inflating variants.
 - Draw broadly from any movement practices.
@@ -11,8 +11,8 @@
 - Keep every movement inside a 3 m × 3 m space.
 - Keep movements quiet; exclude jumping, stomping, clapping, and vocalization.
 - Exclude one-sided exercises; use symmetric, bilateral, or naturally alternating movements.
-- Assign every capacity the exercise meaningfully trains; mere involvement does not qualify.
-- Assign one primary scheduling capacity representing the clearest intended stimulus.
-- Maintain at least 10 strong, selectable primary representatives in every capacity.
+- Assign every canonical group the exercise meaningfully trains; mere involvement does not qualify.
+- Assign one primary scheduling group representing the clearest intended stimulus.
+- Maintain at least 10 strong, selectable primary representatives in every canonical group.
 - Require an accurate human demonstration for every exercise; exclude synthetic or approximate media.
 - Make hold demonstrations settle and remain on the final position during the timer.

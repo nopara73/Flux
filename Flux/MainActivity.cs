@@ -13,7 +13,11 @@ namespace Flux;
         Android.Content.PM.ConfigChanges.Orientation |
         Android.Content.PM.ConfigChanges.ScreenSize |
         Android.Content.PM.ConfigChanges.ScreenLayout |
-        Android.Content.PM.ConfigChanges.SmallestScreenSize,
+        Android.Content.PM.ConfigChanges.SmallestScreenSize |
+        Android.Content.PM.ConfigChanges.UiMode |
+        Android.Content.PM.ConfigChanges.Locale |
+        Android.Content.PM.ConfigChanges.LayoutDirection |
+        Android.Content.PM.ConfigChanges.FontScale,
     ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 public class MainActivity : Activity
 {
@@ -39,7 +43,7 @@ public class MainActivity : Activity
     private ExerciseSessionService _sessionService = null!;
     private IWorkoutStateStore _stateStore = null!;
     private WorkoutState _state = null!;
-    private MuscleGroup _currentMuscleGroup;
+    private WorkoutGroup _currentWorkoutGroup = null!;
     private Exercise? _currentExercise;
     private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
 
@@ -49,7 +53,7 @@ public class MainActivity : Activity
     private Button _durationDecreaseButton = null!;
     private SeekBar _durationSeekBar = null!;
     private Button _durationIncreaseButton = null!;
-    private LinearLayout _durationRouteSegments = null!;
+    private LinearLayout _durationOptionSegments = null!;
     private Button _beginWorkoutButton = null!;
     private View _workoutScreen = null!;
     private View _workoutInsetContent = null!;
@@ -58,7 +62,7 @@ public class MainActivity : Activity
     private ProgressBar _workoutProgressBar = null!;
     private View _congratulationsScreen = null!;
     private View _completionInsetContent = null!;
-    private TextView _muscleGroupName = null!;
+    private TextView _workoutGroupName = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
     private View _exerciseMediaArea = null!;
@@ -78,7 +82,6 @@ public class MainActivity : Activity
     private View _restPanel = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
-    private Button _restSkipButton = null!;
     private Button _keepButton = null!;
     private View _completionMark = null!;
     private Button _doneButton = null!;
@@ -129,8 +132,7 @@ public class MainActivity : Activity
         RecoverPendingScoreUpdate();
         _sessionService.Initialize(_state);
 
-        if (!_state.WorkoutCompleted &&
-            _state.ActiveWorkoutMinutes >= ExerciseSessionService.MinimumWorkoutMinutes)
+        if (!_state.WorkoutCompleted && _state.ActiveWorkoutMinutes != 0)
         {
             FinishInterruptedWorkout();
         }
@@ -188,6 +190,7 @@ public class MainActivity : Activity
         Android.Content.Res.Configuration newConfig)
     {
         base.OnConfigurationChanged(newConfig);
+        ConfigureResponsiveText();
         ApplyResponsiveDimensions();
         GetInsetContent(_appScreen).RequestApplyInsets();
         _exerciseMediaArea.Post(ResizeMediaCard);
@@ -231,8 +234,8 @@ public class MainActivity : Activity
         _durationSeekBar = FindRequiredView<SeekBar>(Resource.Id.duration_seek_bar);
         _durationIncreaseButton = FindRequiredView<Button>(
             Resource.Id.duration_increase_button);
-        _durationRouteSegments = FindRequiredView<LinearLayout>(
-            Resource.Id.duration_route_segments);
+        _durationOptionSegments = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_option_segments);
         _beginWorkoutButton = FindRequiredView<Button>(Resource.Id.begin_workout_button);
         _workoutScreen = FindRequiredView<View>(Resource.Id.workout_screen);
         _workoutInsetContent = FindRequiredView<View>(Resource.Id.workout_inset_content);
@@ -242,7 +245,7 @@ public class MainActivity : Activity
         _congratulationsScreen = FindRequiredView<View>(Resource.Id.congratulations_screen);
         _completionInsetContent = FindRequiredView<View>(
             Resource.Id.completion_inset_content);
-        _muscleGroupName = FindRequiredView<TextView>(Resource.Id.muscle_group_name);
+        _workoutGroupName = FindRequiredView<TextView>(Resource.Id.workout_group_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
         _exerciseMediaArea = FindRequiredView<View>(Resource.Id.exercise_media_area);
@@ -262,7 +265,6 @@ public class MainActivity : Activity
         _restPanel = FindRequiredView<View>(Resource.Id.rest_panel);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
-        _restSkipButton = FindRequiredView<Button>(Resource.Id.rest_skip_button);
         _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
         _completionMark = FindRequiredView<View>(Resource.Id.completion_mark);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
@@ -273,22 +275,21 @@ public class MainActivity : Activity
     private void BindEvents()
     {
         _durationDecreaseButton.Click += (_, _) =>
-            SetSelectedWorkoutMinutes(_selectedWorkoutMinutes - 1, userInitiated: true);
+            StepSelectedWorkoutMinutes(-1);
         _durationIncreaseButton.Click += (_, _) =>
-            SetSelectedWorkoutMinutes(_selectedWorkoutMinutes + 1, userInitiated: true);
+            StepSelectedWorkoutMinutes(1);
         _durationSeekBar.ProgressChanged += (_, eventArgs) =>
         {
             if (eventArgs.FromUser)
             {
                 SetSelectedWorkoutMinutes(
-                    eventArgs.Progress + ExerciseSessionService.MinimumWorkoutMinutes,
+                    ExerciseSessionService.SupportedWorkoutMinutes[eventArgs.Progress],
                     userInitiated: true);
             }
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
         _speedUpButton.Click += (_, _) => SkipCountdown();
-        _restSkipButton.Click += (_, _) => SkipRest();
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _mediaRetryButton.Click += (_, _) =>
         {
@@ -314,12 +315,32 @@ public class MainActivity : Activity
     {
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
+            _durationMinutesValue.SetAutoSizeTextTypeUniformWithConfiguration(
+                56,
+                108,
+                2,
+                (int)Android.Util.ComplexUnitType.Sp);
             _exerciseName.SetAutoSizeTextTypeUniformWithConfiguration(
-                18,
+                16,
                 23,
                 1,
                 (int)Android.Util.ComplexUnitType.Sp);
+
+            return;
         }
+
+        // Native TextView auto-sizing starts at API 26. Keep the same fitted
+        // hierarchy on API 24-25 by compensating for large system font scales;
+        // the values remain at least as large as the auto-size minimums above.
+        float fontScale = Math.Max(
+            1f,
+            Resources?.Configuration?.FontScale ?? 1f);
+        _durationMinutesValue.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            Math.Max(56f, 88f / fontScale));
+        _exerciseName.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            Math.Max(16f, 23f / fontScale));
     }
 
     private void ApplyResponsiveDimensions()
@@ -336,9 +357,14 @@ public class MainActivity : Activity
 
     private void ConfigureAccessibility()
     {
+        _durationSeekBar.Max =
+            ExerciseSessionService.SupportedWorkoutMinutes.Count - 1;
         _durationSeekAccessibilityDelegate = new DurationSeekAccessibilityDelegate(
             () => _selectedWorkoutMinutes,
-            minutes => SetSelectedWorkoutMinutes(minutes, userInitiated: true));
+            () => GetSupportedMinuteIndex(_selectedWorkoutMinutes),
+            optionIndex => SetSelectedWorkoutMinutes(
+                ExerciseSessionService.SupportedWorkoutMinutes[optionIndex],
+                userInitiated: true));
         _durationSeekBar.SetAccessibilityDelegate(_durationSeekAccessibilityDelegate);
     }
 
@@ -540,38 +566,32 @@ public class MainActivity : Activity
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
     {
-        int clampedMinutes = Math.Clamp(
-            minutes,
-            ExerciseSessionService.MinimumWorkoutMinutes,
-            ExerciseSessionService.MaximumWorkoutMinutes);
-        _selectedWorkoutMinutes = clampedMinutes;
+        int normalizedMinutes = ExerciseSessionService.NormalizeLastWorkoutMinutes(minutes);
+        _selectedWorkoutMinutes = normalizedMinutes;
+        int optionIndex = GetSupportedMinuteIndex(normalizedMinutes);
 
-        int expectedProgress =
-            clampedMinutes - ExerciseSessionService.MinimumWorkoutMinutes;
-        if (_durationSeekBar.Progress != expectedProgress)
+        if (_durationSeekBar.Progress != optionIndex)
         {
-            _durationSeekBar.Progress = expectedProgress;
+            _durationSeekBar.Progress = optionIndex;
         }
 
-        MuscleGroup endpoint = ExerciseSessionService.MuscleGroupOrder[clampedMinutes - 1];
-        string endpointName = GetMuscleGroupDisplayName(endpoint);
         const string minuteLabel = "minutes";
 
-        _durationMinutesValue.Text = clampedMinutes.ToString();
+        _durationMinutesValue.Text = normalizedMinutes.ToString();
         _durationMinutesValue.ContentDescription =
-            $"{clampedMinutes} minutes selected";
+            $"{normalizedMinutes} minutes selected";
         _beginWorkoutButton.Text = GetString(Resource.String.duration_start_default);
         _beginWorkoutButton.ContentDescription =
-            $"Continue with a {clampedMinutes} {minuteLabel} workout";
+            $"Continue with a {normalizedMinutes} {minuteLabel} workout";
         _durationSeekBar.ContentDescription =
-            $"Workout duration, {clampedMinutes} {minuteLabel}. Range 3 to 20 minutes";
-        _durationRouteSegments.ContentDescription =
-            $"{clampedMinutes} of 20 muscle groups selected, from Glutes through {endpointName}";
+            $"Workout duration, {normalizedMinutes} {minuteLabel}. " +
+            "Options: 3, 5, 7, 10, 15, 20, and 30 minutes";
+        _durationOptionSegments.ContentDescription =
+            $"{normalizedMinutes} minute workout selected";
 
-        _durationDecreaseButton.Enabled =
-            clampedMinutes > ExerciseSessionService.MinimumWorkoutMinutes;
+        _durationDecreaseButton.Enabled = optionIndex > 0;
         _durationIncreaseButton.Enabled =
-            clampedMinutes < ExerciseSessionService.MaximumWorkoutMinutes;
+            optionIndex < ExerciseSessionService.SupportedWorkoutMinutes.Count - 1;
         _durationDecreaseButton.Alpha = _durationDecreaseButton.Enabled ? 1f : 0.42f;
         _durationIncreaseButton.Alpha = _durationIncreaseButton.Enabled ? 1f : 0.42f;
 
@@ -580,14 +600,41 @@ public class MainActivity : Activity
             _durationMinutesValue.PerformHapticFeedback(FeedbackConstants.ClockTick);
         }
 
-        for (int index = 0; index < _durationRouteSegments.ChildCount; index++)
+        for (int index = 0; index < _durationOptionSegments.ChildCount; index++)
         {
-            View segment = _durationRouteSegments.GetChildAt(index)
+            View segment = _durationOptionSegments.GetChildAt(index)
                 ?? throw new InvalidOperationException("A duration route segment is missing.");
-            segment.SetBackgroundResource(index < clampedMinutes
+            segment.SetBackgroundResource(index <= optionIndex
                 ? Resource.Drawable.duration_segment_active
                 : Resource.Drawable.duration_segment_inactive);
         }
+    }
+
+    private void StepSelectedWorkoutMinutes(int direction)
+    {
+        int currentIndex = GetSupportedMinuteIndex(_selectedWorkoutMinutes);
+        int nextIndex = Math.Clamp(
+            currentIndex + direction,
+            0,
+            ExerciseSessionService.SupportedWorkoutMinutes.Count - 1);
+        SetSelectedWorkoutMinutes(
+            ExerciseSessionService.SupportedWorkoutMinutes[nextIndex],
+            userInitiated: true);
+    }
+
+    private static int GetSupportedMinuteIndex(int minutes)
+    {
+        for (int index = 0;
+             index < ExerciseSessionService.SupportedWorkoutMinutes.Count;
+             index++)
+        {
+            if (ExerciseSessionService.SupportedWorkoutMinutes[index] == minutes)
+            {
+                return index;
+            }
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(minutes), minutes, null);
     }
 
     private void StartSelectedWorkout()
@@ -620,7 +667,8 @@ public class MainActivity : Activity
 
         _state.PendingScoreExerciseId = 0;
         _state.PendingScoreValue = 0;
-        _stateStore.Save(_state);
+        // OnCreate saves after legacy conversion/interruption finalization. Saving
+        // here would serialize away the compatibility-only legacy fields.
     }
 
     private void SaveStateAndScore(Exercise? scorePenalty)
@@ -945,30 +993,29 @@ public class MainActivity : Activity
 
     private void ShowNextExercise()
     {
-        MuscleGroup? nextMuscleGroup = _sessionService.GetNextMuscleGroup(_state);
+        WorkoutGroup? nextGroup = _sessionService.GetNextGroup(_state);
 
-        if (nextMuscleGroup is null)
+        if (nextGroup is null)
         {
             ShowCongratulations();
             return;
         }
 
-        _currentMuscleGroup = nextMuscleGroup.Value;
+        _currentWorkoutGroup = nextGroup;
         Exercise exercise = _sessionService.GetSelectedExercise(
             _state,
-            _currentMuscleGroup);
+            _currentWorkoutGroup);
         _currentExercise = exercise;
-        int position = ExerciseSessionService.MuscleGroupOrder
-            .TakeWhile(muscleGroup => muscleGroup != _currentMuscleGroup)
-            .Count() + 1;
+        int position = _currentWorkoutGroup.Order;
 
-        string muscleGroupName = GetMuscleGroupDisplayName(_currentMuscleGroup);
+        string groupName = _currentWorkoutGroup.DisplayName;
         _workoutProgressText.Text = $"{position:D2}  /  {_state.ActiveWorkoutMinutes:D2}";
         _workoutProgressText.ContentDescription =
             $"Round {position} of {_state.ActiveWorkoutMinutes}";
         _workoutProgressBar.Max = _state.ActiveWorkoutMinutes;
         _workoutProgressBar.Progress = position;
-        _muscleGroupName.Text = muscleGroupName.ToUpperInvariant();
+        _workoutGroupName.Text = groupName;
+        _workoutGroupName.ContentDescription = groupName;
         _exerciseName.Text = exercise.Name;
         _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}. Hold."
@@ -983,7 +1030,7 @@ public class MainActivity : Activity
         AnnouncePhaseForAccessibility(
             _workoutHeader,
             $"Round {position} of {_state.ActiveWorkoutMinutes}. " +
-            $"{muscleGroupName}. {exercise.Name}. " +
+            $"{groupName}. {exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
     }
 
@@ -1136,7 +1183,7 @@ public class MainActivity : Activity
 
     private void BeginRest()
     {
-        _state.PendingRestMuscleGroup = _currentMuscleGroup;
+        _state.PendingRestGroupId = _currentWorkoutGroup.Id;
         _state.PendingRestEndsAtUnixMilliseconds =
             DateTimeOffset.UtcNow.AddSeconds(RestSeconds).ToUnixTimeMilliseconds();
         _state.PendingRestKept = false;
@@ -1158,6 +1205,12 @@ public class MainActivity : Activity
     private void ShowRestPanel()
     {
         ShowWorkoutPhase(WorkoutPhase.Rest);
+        UpdateKeepButtonState();
+        UpdateRestCountdownText();
+    }
+
+    private void UpdateKeepButtonState()
+    {
         _keepButton.Enabled = !_state.PendingRestKept;
         _keepButton.Alpha = 1f;
         _keepButton.Text = _state.PendingRestKept
@@ -1173,8 +1226,6 @@ public class MainActivity : Activity
         _keepButton.ContentDescription = _state.PendingRestKept
             ? "Exercise kept for the next session"
             : GetString(Resource.String.tap_to_keep_description);
-
-        UpdateRestCountdownText();
     }
 
     private void ResumeRestCountdown()
@@ -1240,20 +1291,9 @@ public class MainActivity : Activity
         CompleteRest();
     }
 
-    private void SkipRest()
-    {
-        if (!_restActive || _state.PendingRestMuscleGroup != _currentMuscleGroup)
-        {
-            return;
-        }
-
-        _restSkipButton.PerformHapticFeedback(FeedbackConstants.KeyboardTap);
-        CompleteRest();
-    }
-
     private void CompleteRest()
     {
-        if (!_restActive || _state.PendingRestMuscleGroup != _currentMuscleGroup)
+        if (!_restActive || _state.PendingRestGroupId != _currentWorkoutGroup.Id)
         {
             return;
         }
@@ -1263,7 +1303,7 @@ public class MainActivity : Activity
         bool keep = _state.PendingRestKept;
         Exercise exercise = _sessionService.RecordOutcome(
             _state,
-            _currentMuscleGroup,
+            _currentWorkoutGroup,
             keep);
         _sessionService.ClearPendingRest(_state);
 
@@ -1326,19 +1366,6 @@ public class MainActivity : Activity
         {
             // A missing or unavailable audio output should not stop a workout.
         }
-    }
-
-    private static string GetMuscleGroupDisplayName(MuscleGroup muscleGroup)
-    {
-        return muscleGroup switch
-        {
-            MuscleGroup.UpperBack => "Upper back",
-            MuscleGroup.LowerBack => "Lower back",
-            MuscleGroup.HipFlexors => "Hip flexors",
-            MuscleGroup.MidBack => "Mid back",
-            MuscleGroup.RotatorCuff => "Rotator cuff",
-            _ => muscleGroup.ToString(),
-        };
     }
 
     [SuppressMessage(
@@ -1444,7 +1471,8 @@ public class MainActivity : Activity
 
     private sealed class DurationSeekAccessibilityDelegate(
         Func<int> getMinutes,
-        Action<int> setMinutes) : View.AccessibilityDelegate
+        Func<int> getOptionIndex,
+        Action<int> setOptionIndex) : View.AccessibilityDelegate
     {
         public override void OnInitializeAccessibilityNodeInfo(
             View host,
@@ -1452,16 +1480,18 @@ public class MainActivity : Activity
         {
             base.OnInitializeAccessibilityNodeInfo(host, info);
             int minutes = getMinutes();
+            int optionIndex = getOptionIndex();
 #pragma warning disable CA1422 // Obtain is required for the supported API 24-29 range.
             info.SetRangeInfo(
                 Android.Views.Accessibility.AccessibilityNodeInfo.RangeInfo.Obtain(
                     Android.Views.Accessibility.RangeType.Int,
-                    ExerciseSessionService.MinimumWorkoutMinutes,
-                    ExerciseSessionService.MaximumWorkoutMinutes,
-                    minutes));
+                    0,
+                    ExerciseSessionService.SupportedWorkoutMinutes.Count - 1,
+                    optionIndex));
 #pragma warning restore CA1422
             info.ContentDescription =
-                $"Workout duration, {minutes} minutes. Range 3 to 20 minutes";
+                $"Workout duration, {minutes} minutes. " +
+                "Options: 3, 5, 7, 10, 15, 20, and 30 minutes";
         }
 
         public override bool PerformAccessibilityAction(
@@ -1472,10 +1502,14 @@ public class MainActivity : Activity
             if ((int)action == Android.Resource.Id.AccessibilityActionSetProgress &&
                 arguments is not null)
             {
-                float requestedMinutes = arguments.GetFloat(
+                float requestedOptionIndex = arguments.GetFloat(
                     Android.Views.Accessibility.AccessibilityNodeInfo
                         .ActionArgumentProgressValue);
-                setMinutes((int)MathF.Round(requestedMinutes));
+                int optionIndex = Math.Clamp(
+                    (int)MathF.Round(requestedOptionIndex),
+                    0,
+                    ExerciseSessionService.SupportedWorkoutMinutes.Count - 1);
+                setOptionIndex(optionIndex);
                 return true;
             }
 

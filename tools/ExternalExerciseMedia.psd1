@@ -614,7 +614,139 @@
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
-    609 = @{ File = '1364-cuKYxhu.gif'; MirrorForAlternation = $false }
+    # Exact standing pelvic-floor coordination drills from two human-led
+    # routines. Clips omit every wall-supported variation and retain only
+    # movements that can be performed barefoot or in ordinary shoes.
+    609 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 87.0
+        DurationSeconds = 16.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    610 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 169.0
+        DurationSeconds = 17.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    611 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 247.0
+        DurationSeconds = 14.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    612 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 329.0
+        DurationSeconds = 7.0
+        FramesPerSecond = 10
+        Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+        MirrorForAlternation = $true
+    }
+    613 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 412.0
+        DurationSeconds = 17.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    614 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 487.0
+        DurationSeconds = 25.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    615 = @{
+        File = 'pelvic-floor-10min.mp4'
+        Url = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        SourcePage = 'https://www.youtube.com/watch?v=9ygJazIDgHc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 557.0
+        DurationSeconds = 12.0
+        FramesPerSecond = 10
+        Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+        MirrorForAlternation = $true
+    }
+    616 = @{
+        File = 'standing-pelvic-floor-primer.mp4'
+        Url = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        SourcePage = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 95.0
+        DurationSeconds = 20.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    618 = @{
+        File = 'standing-pelvic-floor-primer.mp4'
+        Url = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        SourcePage = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 139.0
+        DurationSeconds = 20.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    619 = @{
+        File = 'standing-pelvic-floor-primer.mp4'
+        Url = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        SourcePage = 'https://www.youtube.com/watch?v=yJHBNrPMTIE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 406.0
+        DurationSeconds = 14.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     625 = @{
         File = 'wing-chun-juen-ma-rob-ley.mp4'
         Url = 'https://www.youtube.com/watch?v=QC6vp0Wpumc'
@@ -1927,6 +2059,142 @@
         FramesPerSecond = 12
         MirrorForAlternation = $false
     }
+    501 = @{
+        File = 'standing-saccades-gearup.mp4'
+        Url = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        SourcePage = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 25.14
+        DurationSeconds = 8.9
+        FramesPerSecond = 12
+        Crop = 'crop=iw*0.72:iw*0.72:iw*0.14:ih*0.125'
+        MirrorForAlternation = $false
+    }
+    502 = @{
+        File = 'standing-saccades-gearup.mp4'
+        Url = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        SourcePage = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 34.5
+        DurationSeconds = 5.4
+        FramesPerSecond = 12
+        Crop = 'crop=iw*0.72:iw*0.72:iw*0.14:ih*0.125'
+        MirrorForAlternation = $false
+    }
+    503 = @{
+        File = 'standing-saccades-gearup.mp4'
+        Url = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        SourcePage = 'https://www.youtube.com/watch?v=kc_bTSc9jXE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 40.68
+        DurationSeconds = 5.46
+        FramesPerSecond = 12
+        Crop = 'crop=iw*0.72:iw*0.72:iw*0.14:ih*0.125'
+        MirrorForAlternation = $false
+    }
+    504 = @{
+        File = 'vertical-eye-head-thumbs-physitrack.mp4'
+        Url = 'https://www.youtube.com/watch?v=O57_9QcTFjU'
+        SourcePage = 'https://www.youtube.com/watch?v=O57_9QcTFjU'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 17.1
+        DurationSeconds = 10.9
+        FramesPerSecond = 12
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    505 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 100.9
+        DurationSeconds = 1.7
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    506 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 155.7
+        DurationSeconds = 1.5
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    507 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 217.4
+        DurationSeconds = 1.2
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    508 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 286.4
+        DurationSeconds = 1.8
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    509 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 346.5
+        DurationSeconds = 4.5
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    510 = @{
+        File = 'parkinsons-standing-face-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        SourcePage = 'https://www.youtube.com/watch?v=o-qykoHzaew'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 464.4
+        DurationSeconds = 3.8
+        FramesPerSecond = 12
+        Crop = 'crop=ih*0.62:ih*0.62:(iw-ih*0.62)/2:0'
+        MirrorForAlternation = $false
+    }
     348 = @{
         File = 'karate-age-uke-solo.mp4'
         Url = 'https://www.youtube.com/watch?v=vRozoQsh5rE'
@@ -2507,6 +2775,131 @@
         StartSeconds = 890
         DurationSeconds = 10
         FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    390 = @{
+        File = 'stomach-breathing-standing.mp4'
+        Url = 'https://media.physitrack.com/exercises/af9199df-6bc8-4123-9848-e1526c831901/en/video_1280x720.mp4'
+        SourcePage = 'https://na.physitrack.com/home-exercise-video/stomach-breathing-in-standing'
+        Human = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 10.4
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    391 = @{
+        File = '360-lateral-rib.mp4'
+        Url = 'https://www.youtube.com/watch?v=0zfhriBrMMY'
+        SourcePage = 'https://www.youtube.com/watch?v=0zfhriBrMMY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 374
+        DurationSeconds = 20
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    392 = @{
+        File = 'daily-breathing-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        SourcePage = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 339
+        DurationSeconds = 24
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    393 = @{
+        File = 'daily-breathing-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        SourcePage = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 389
+        DurationSeconds = 24
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    394 = @{
+        File = 'breathing-control-open-close.mp4'
+        Url = 'https://media.physitrack.com/exercises/16830a7a-5650-4949-8623-528d7d2726c7/en/video_720p.mp4'
+        SourcePage = 'https://ca.physitrack.com/home-exercise-video/breathing-control-in-standing'
+        Human = $true
+        Video = $true
+        StartSeconds = 24
+        DurationSeconds = 18
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    395 = @{
+        File = 'overhead-rib-expansion-breathing.mp4'
+        Url = 'https://media.physitrack.com/exercises/3ced13f1-c5fe-48e3-89ff-39112c299444/en/video_1280x720.mp4'
+        SourcePage = 'https://uk.physitrack.com/home-exercise-video/arms-overhead-and-breathing-in-standing---control'
+        Human = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 14
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    396 = @{
+        File = 'standing-arm-lift-breathing.mp4'
+        Url = 'https://media.physitrack.com/exercises/3bba9081-a595-4157-83dc-01178ce1b8af/en/video_1280x720.mp4'
+        SourcePage = 'https://nz.physitrack.com/home-exercise-video/standing-arm-lifts-with-integrated-breathing---body-awareness'
+        Human = $true
+        Video = $true
+        StartSeconds = 22
+        DurationSeconds = 20
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    397 = @{
+        File = 'breath-integrated-weight-shift.mp4'
+        Url = 'https://media.physitrack.com/exercises/03f2f0da-0c68-42a9-a352-f6f9d7b717ec/en/video_1280x720.mp4'
+        SourcePage = 'https://ca.physitrack.com/home-exercise-video/standing-weight-shifts-with-breathing-integration---body-awareness'
+        Human = $true
+        Video = $true
+        StartSeconds = 19
+        DurationSeconds = 30
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    398 = @{
+        File = 'daily-breathing-exercises.mp4'
+        Url = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        SourcePage = 'https://www.youtube.com/watch?v=OtHPzU0-t2Y'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 550
+        DurationSeconds = 22
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    399 = @{
+        File = 'shibashi-set1.mp4'
+        Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 42
+        DurationSeconds = 40
+        FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -3215,6 +3608,591 @@
         StartSeconds = 11
         DurationSeconds = 21
         FramesPerSecond = 6
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    251 = @{
+        File = '3VPNuVlxWqA.mp4'
+        Url = 'https://www.youtube.com/watch?v=3VPNuVlxWqA'
+        SourcePage = 'https://www.youtube.com/watch?v=3VPNuVlxWqA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 30
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    252 = @{
+        File = 'F86ztTs14q8.mp4'
+        Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 82
+        DurationSeconds = 20
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    253 = @{
+        File = 'F86ztTs14q8.mp4'
+        Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 151
+        DurationSeconds = 20
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    254 = @{
+        File = 'F86ztTs14q8.mp4'
+        Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 214
+        DurationSeconds = 20
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    255 = @{
+        File = 'D3rOMexZbAc.mp4'
+        Url = 'https://www.youtube.com/watch?v=D3rOMexZbAc'
+        SourcePage = 'https://www.youtube.com/watch?v=D3rOMexZbAc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 7
+        DurationSeconds = 12
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    256 = @{
+        File = 'self-resistance-17.mp4'
+        Url = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        SourcePage = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 84
+        DurationSeconds = 20
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    257 = @{
+        File = 'self-resistance-17.mp4'
+        Url = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        SourcePage = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 107
+        DurationSeconds = 17
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    258 = @{
+        File = 'self-resistance-17.mp4'
+        Url = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        SourcePage = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 126
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    260 = @{
+        File = 'self-resistance-17.mp4'
+        Url = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        SourcePage = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 146
+        DurationSeconds = 17
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    261 = @{
+        File = 'PJO1hQSMPT4.mp4'
+        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 115
+        DurationSeconds = 15
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    262 = @{
+        File = 'ldUwIBccnuw.mp4'
+        Url = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        SourcePage = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 125
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    263 = @{
+        File = 'PJO1hQSMPT4.mp4'
+        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 178
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    264 = @{
+        File = 'PJO1hQSMPT4.mp4'
+        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 27
+        DurationSeconds = 17
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    265 = @{
+        File = 'PJO1hQSMPT4.mp4'
+        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 46
+        DurationSeconds = 24
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    266 = @{
+        File = 'ldUwIBccnuw.mp4'
+        Url = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        SourcePage = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 417
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    267 = @{
+        File = 'PJO1hQSMPT4.mp4'
+        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4
+        DurationSeconds = 21
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    268 = @{
+        File = 'ldUwIBccnuw.mp4'
+        Url = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        SourcePage = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 347
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    269 = @{
+        File = 'self-resistance-17.mp4'
+        Url = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        SourcePage = 'https://www.youtube.com/watch?v=n8lroyMqs7U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 167
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    270 = @{
+        File = 'oZ24uiJUxyE.mp4'
+        Url = 'https://www.youtube.com/watch?v=oZ24uiJUxyE'
+        SourcePage = 'https://www.youtube.com/watch?v=oZ24uiJUxyE'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 27
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    271 = @{
+        File = 'TpIL3IvBk8k.mp4'
+        Url = 'https://www.youtube.com/watch?v=TpIL3IvBk8k'
+        SourcePage = 'https://www.youtube.com/watch?v=TpIL3IvBk8k'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3
+        DurationSeconds = 28
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    272 = @{
+        File = 'wmOj8ZudWVw.mp4'
+        Url = 'https://www.youtube.com/watch?v=wmOj8ZudWVw'
+        SourcePage = 'https://www.youtube.com/watch?v=wmOj8ZudWVw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1
+        DurationSeconds = 7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    273 = @{
+        File = 'uRNFlZYlsZ4.mp4'
+        Url = 'https://www.youtube.com/watch?v=uRNFlZYlsZ4'
+        SourcePage = 'https://www.youtube.com/watch?v=uRNFlZYlsZ4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 5
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    274 = @{
+        File = 'XnbpAw2NAKg.mp4'
+        Url = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        SourcePage = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 664.24
+        DurationSeconds = 30.24
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    275 = @{
+        File = 'XnbpAw2NAKg.mp4'
+        Url = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        SourcePage = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 497.52
+        DurationSeconds = 26.07
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    276 = @{
+        File = 'XnbpAw2NAKg.mp4'
+        Url = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        SourcePage = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 539.92
+        DurationSeconds = 28.616
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    277 = @{
+        File = 'AbAcFaqvZwQ.mp4'
+        Url = 'https://www.youtube.com/watch?v=AbAcFaqvZwQ'
+        SourcePage = 'https://www.youtube.com/watch?v=AbAcFaqvZwQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3
+        DurationSeconds = 36
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    278 = @{
+        File = 'XnbpAw2NAKg.mp4'
+        Url = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        SourcePage = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 392.24
+        DurationSeconds = 14.64
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    279 = @{
+        File = 'XnbpAw2NAKg.mp4'
+        Url = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        SourcePage = 'https://www.youtube.com/watch?v=XnbpAw2NAKg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 434.72
+        DurationSeconds = 27.52
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    280 = @{
+        File = '52vwYZWTNE8.mp4'
+        Url = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        SourcePage = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 700
+        DurationSeconds = 35
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    281 = @{
+        File = 'iJ0FxD_brxo.mp4'
+        Url = 'https://www.youtube.com/watch?v=iJ0FxD_brxo'
+        SourcePage = 'https://www.youtube.com/watch?v=iJ0FxD_brxo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 7.8
+        FramesPerSecond = 8
+        Crop = 'crop=280:280:120:20'
+        MirrorForAlternation = $true
+    }
+    282 = @{
+        File = '52vwYZWTNE8.mp4'
+        Url = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        SourcePage = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1596
+        DurationSeconds = 38
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    283 = @{
+        File = 'GZHlMcIIlng.mp4'
+        Url = 'https://www.youtube.com/watch?v=GZHlMcIIlng'
+        SourcePage = 'https://www.youtube.com/watch?v=GZHlMcIIlng'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 8
+        DurationSeconds = 28
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    284 = @{
+        File = 'C6ZoifqdFEA.mp4'
+        Url = 'https://www.youtube.com/watch?v=C6ZoifqdFEA'
+        SourcePage = 'https://www.youtube.com/watch?v=C6ZoifqdFEA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 4
+        DurationSeconds = 36
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    285 = @{
+        File = 'W7J5S5KbSFY.mp4'
+        Url = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        SourcePage = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 54
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    286 = @{
+        File = 'W7J5S5KbSFY.mp4'
+        Url = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        SourcePage = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 63
+        DurationSeconds = 6.5
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    287 = @{
+        File = 'W7J5S5KbSFY.mp4'
+        Url = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        SourcePage = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 72
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
+    288 = @{
+        File = 'UNxxjNaO3hk.mp4'
+        Url = 'https://www.youtube.com/watch?v=UNxxjNaO3hk'
+        SourcePage = 'https://www.youtube.com/watch?v=UNxxjNaO3hk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    289 = @{
+        File = '52vwYZWTNE8.mp4'
+        Url = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        SourcePage = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1310
+        DurationSeconds = 34
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    290 = @{
+        File = '52vwYZWTNE8.mp4'
+        Url = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        SourcePage = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2195
+        DurationSeconds = 35
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    291 = @{
+        File = 'F9BUK4PBce8.mp4'
+        Url = 'https://www.youtube.com/watch?v=F9BUK4PBce8'
+        SourcePage = 'https://www.youtube.com/watch?v=F9BUK4PBce8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 39.5
+        DurationSeconds = 30
+        FramesPerSecond = 8
+        Crop = 'crop=iw:iw:0:(ih-iw)/2'
+        MirrorForAlternation = $false
+    }
+    292 = @{
+        File = '_rp9yXdoH8o.mp4'
+        Url = 'https://www.youtube.com/watch?v=_rp9yXdoH8o'
+        SourcePage = 'https://www.youtube.com/watch?v=_rp9yXdoH8o'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 30
+        DurationSeconds = 35
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    293 = @{
+        File = '52vwYZWTNE8.mp4'
+        Url = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        SourcePage = 'https://www.youtube.com/watch?v=52vwYZWTNE8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2358
+        DurationSeconds = 50
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    294 = @{
+        File = 'c--zHhmUZvw.mp4'
+        Url = 'https://www.youtube.com/watch?v=c--zHhmUZvw'
+        SourcePage = 'https://www.youtube.com/watch?v=c--zHhmUZvw'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 37
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    295 = @{
+        File = 'HIuuRaKd-xI.mp4'
+        Url = 'https://www.youtube.com/watch?v=HIuuRaKd-xI'
+        SourcePage = 'https://www.youtube.com/watch?v=HIuuRaKd-xI'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 12
+        DurationSeconds = 40
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    296 = @{
+        File = '4ozpW41tdec.mp4'
+        Url = 'https://www.youtube.com/watch?v=4ozpW41tdec'
+        SourcePage = 'https://www.youtube.com/watch?v=4ozpW41tdec'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 90
+        DurationSeconds = 40
+        FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }

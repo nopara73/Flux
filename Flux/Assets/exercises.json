@@ -3,14 +3,12 @@
     "id": 15,
     "name": "Alternating Skater-RDL Balance",
     "video": "exercise_videos/exercise_0015.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Hamstrings",
-      "LowerBack",
-      "Calves",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipAbductors",
+      "DeepAndIntersegmentalBack",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "HipOpenClose",
@@ -27,10 +25,11 @@
     "id": 16,
     "name": "Alternating Star-Tap Balance",
     "video": "exercise_videos/exercise_0016.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
@@ -47,13 +46,12 @@
     "id": 17,
     "name": "Alternating Single-Leg RDL-Rotation Balance",
     "video": "exercise_videos/exercise_0017.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Hamstrings",
-      "LowerBack",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "AbdominalWall",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "CoreRotation",
@@ -70,11 +68,12 @@
     "id": 19,
     "name": "Alternating Side-to-Side Pendulum Balance",
     "video": "exercise_videos/exercise_0019.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "DeepHipRotators",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "HipLegArc",
@@ -91,10 +90,12 @@
     "id": 20,
     "name": "Alternating Front-to-Back Pendulum Balance",
     "video": "exercise_videos/exercise_0020.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipFlexors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "LegBack",
@@ -111,13 +112,12 @@
     "id": 21,
     "name": "Alternating Standing-Scale Balance",
     "video": "exercise_videos/exercise_0021.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Hamstrings",
-      "LowerBack",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "PosteriorThighAndKneeFlexors",
+      "DeepAndIntersegmentalBack",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "BackBalance",
@@ -134,9 +134,11 @@
     "id": 31,
     "name": "Tai Chi Golden-Rooster Balance Drill",
     "video": "exercise_videos/exercise_0031.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "HipFlexors"
     ],
     "practice": "Tai Chi",
     "motionProfile": "FootBalance",
@@ -153,10 +155,11 @@
     "id": 32,
     "name": "Tandem Walk",
     "video": "exercise_videos/exercise_0032.mp4",
-    "muscleGroups": [
-      "Core",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Gait retraining",
     "motionProfile": "WalkingStep",
@@ -173,14 +176,13 @@
     "id": 37,
     "name": "Side Shuffle",
     "video": "exercise_videos/exercise_0037.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Low-impact aerobics",
     "motionProfile": "SideStep",
@@ -197,13 +199,13 @@
     "id": 41,
     "name": "Backward Walking",
     "video": "exercise_videos/exercise_0041.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Hamstrings",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Backward walking",
     "motionProfile": "WalkingStep",
@@ -220,10 +222,11 @@
     "id": 47,
     "name": "Walking with Horizontal Head Turns",
     "video": "exercise_videos/exercise_0047.mp4",
-    "muscleGroups": [
-      "Core",
-      "Neck",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles",
+      "DeepAndIntersegmentalBack",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Vestibular rehabilitation",
     "motionProfile": "TurnStep",
@@ -240,14 +243,13 @@
     "id": 56,
     "name": "Hula Kāholo",
     "video": "exercise_videos/exercise_0056.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AbdominalWall"
     ],
     "practice": "Hula",
     "motionProfile": "WalkingStep",
@@ -264,16 +266,13 @@
     "id": 58,
     "name": "Bhangra Chaal",
     "video": "exercise_videos/exercise_0058.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Shoulders",
-      "Calves",
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Adductors",
-      "Abductors",
-      "Shins"
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "ShoulderAbductors"
     ],
     "practice": "Bhangra",
     "motionProfile": "WalkingStep",
@@ -290,15 +289,14 @@
     "id": 59,
     "name": "Samba no Pé Basic",
     "video": "exercise_videos/exercise_0059.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Calves",
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
       "HipFlexors",
-      "Adductors",
-      "Abductors",
-      "Shins"
+      "LateralKneeExtensors",
+      "HipAbductors",
+      "AccessoryHipAdductors",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Samba",
     "motionProfile": "WalkingStep",
@@ -315,15 +313,13 @@
     "id": 60,
     "name": "Low-Impact Skater Step",
     "video": "exercise_videos/exercise_0060.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Hamstrings",
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "PosteriorThighAndKneeFlexors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Low-impact aerobics",
     "motionProfile": "WalkingStep",
@@ -340,9 +336,11 @@
     "id": 92,
     "name": "Capoeira Ginga",
     "video": "exercise_videos/exercise_0092.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "HipAbductors"
     ],
     "practice": "Capoeira",
     "motionProfile": "WalkingStep",
@@ -359,10 +357,11 @@
     "id": 93,
     "name": "Capoeira Esquiva Lateral",
     "video": "exercise_videos/exercise_0093.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Abductors"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipAbductors",
+      "MajorHipAdductors"
     ],
     "practice": "Capoeira",
     "motionProfile": "WalkingStep",
@@ -379,12 +378,13 @@
     "id": 96,
     "name": "Alternating Dynamic Figure-Four Squat Balance",
     "video": "exercise_videos/exercise_0096.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Balance training",
     "motionProfile": "HipOpenClose",
@@ -401,9 +401,10 @@
     "id": 97,
     "name": "Heel-to-Toe Balance Rocks",
     "video": "exercise_videos/exercise_0097.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus"
     ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
@@ -420,9 +421,11 @@
     "id": 98,
     "name": "Penguin Balance March",
     "video": "exercise_videos/exercise_0098.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "HipFlexors"
     ],
     "practice": "Balance training",
     "motionProfile": "FootBalance",
@@ -439,9 +442,10 @@
     "id": 101,
     "name": "Bodyweight Squat",
     "video": "exercise_videos/exercise_0101.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -458,11 +462,13 @@
     "id": 102,
     "name": "Low-Impact Squat Jack",
     "video": "exercise_videos/exercise_0102.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -479,10 +485,11 @@
     "id": 103,
     "name": "Wide Squat Pulse",
     "video": "exercise_videos/exercise_0103.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -499,10 +506,11 @@
     "id": 104,
     "name": "Sumo Squat",
     "video": "exercise_videos/exercise_0104.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -519,10 +527,13 @@
     "id": 105,
     "name": "Plie Squat",
     "video": "exercise_videos/exercise_0105.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -539,9 +550,10 @@
     "id": 107,
     "name": "Half Squat",
     "video": "exercise_videos/exercise_0107.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -558,12 +570,14 @@
     "id": 108,
     "name": "Second-Position Plié with Arm Sweep",
     "video": "exercise_videos/exercise_0108.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
-      "Adductors",
-      "Trapezius",
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Ballet",
@@ -581,10 +595,11 @@
     "id": 109,
     "name": "One-and-a-Half Sumo Squat",
     "video": "exercise_videos/exercise_0109.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -601,9 +616,10 @@
     "id": 110,
     "name": "Squat Pulse",
     "video": "exercise_videos/exercise_0110.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -620,9 +636,11 @@
     "id": 111,
     "name": "Rainbow Squat Thruster",
     "video": "exercise_videos/exercise_0111.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -639,11 +657,13 @@
     "id": 112,
     "name": "Wide Squat with Overhead Reach",
     "video": "exercise_videos/exercise_0112.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors",
-      "Trapezius"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -660,11 +680,13 @@
     "id": 113,
     "name": "Bodyweight Overhead Squat",
     "video": "exercise_videos/exercise_0113.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Trapezius"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack",
+      "ShoulderAbductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -681,10 +703,11 @@
     "id": 114,
     "name": "Hindu Squat",
     "video": "exercise_videos/exercise_0114.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -701,9 +724,10 @@
     "id": 115,
     "name": "Sissy Squat",
     "video": "exercise_videos/exercise_0115.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -720,12 +744,13 @@
     "id": 116,
     "name": "Cossack Squat",
     "video": "exercise_videos/exercise_0116.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipAbductors",
+      "DeepHipRotators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -742,11 +767,12 @@
     "id": 117,
     "name": "Alternating Lateral Squat",
     "video": "exercise_videos/exercise_0117.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors",
+      "HipAbductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -763,11 +789,12 @@
     "id": 118,
     "name": "Squat to Knee Drive",
     "video": "exercise_videos/exercise_0118.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "HipFlexors"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipFlexors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -784,10 +811,12 @@
     "id": 119,
     "name": "Squat to Calf Raise",
     "video": "exercise_videos/exercise_0119.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -804,9 +833,11 @@
     "id": 120,
     "name": "Duck Walk",
     "video": "exercise_videos/exercise_0120.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Shins"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "GlutealExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
@@ -823,9 +854,10 @@
     "id": 121,
     "name": "Alternating Forward Lunge",
     "video": "exercise_videos/exercise_0121.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
       "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
@@ -843,9 +875,10 @@
     "id": 122,
     "name": "Alternating Reverse Lunge",
     "video": "exercise_videos/exercise_0122.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
       "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
@@ -863,12 +896,12 @@
     "id": 123,
     "name": "Alternating Lateral Lunge",
     "video": "exercise_videos/exercise_0123.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipAbductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -885,13 +918,14 @@
     "id": 124,
     "name": "Alternating Curtsy Lunge with Side Crunch",
     "video": "exercise_videos/exercise_0124.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "AccessoryHipAdductors",
       "HipFlexors",
-      "Adductors",
-      "Abductors"
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -908,12 +942,13 @@
     "id": 125,
     "name": "Alternating Reverse Lunge with Torso Twist",
     "video": "exercise_videos/exercise_0125.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "HipFlexors",
-      "MidBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreRotation",
@@ -930,9 +965,10 @@
     "id": 126,
     "name": "Alternating Back-Step Side Stretch",
     "video": "exercise_videos/exercise_0126.mp4",
-    "muscleGroups": [
-      "Core",
-      "MidBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "HipFlexors"
     ],
     "practice": "Stretching",
     "motionProfile": "CoreBrace",
@@ -949,11 +985,13 @@
     "id": 127,
     "name": "Alternating Lunge with Overhead Stretch",
     "video": "exercise_videos/exercise_0127.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors",
-      "Trapezius"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Stretching",
     "motionProfile": "Lunge",
@@ -970,13 +1008,14 @@
     "id": 128,
     "name": "Alternating Curtsy Squat with Arm Sweep",
     "video": "exercise_videos/exercise_0128.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
-      "Adductors",
-      "Abductors",
-      "Trapezius",
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "AccessoryHipAdductors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Bodyweight conditioning",
@@ -994,10 +1033,12 @@
     "id": 129,
     "name": "Squat to Alternating Front Kick",
     "video": "exercise_videos/exercise_0129.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1014,10 +1055,11 @@
     "id": 130,
     "name": "Squat to Alternating Side Leg Lift",
     "video": "exercise_videos/exercise_0130.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1034,9 +1076,11 @@
     "id": 131,
     "name": "Squat to Alternating Back Leg Lift",
     "video": "exercise_videos/exercise_0131.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1053,10 +1097,12 @@
     "id": 132,
     "name": "Squat to Alternating Oblique Crunch",
     "video": "exercise_videos/exercise_0132.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1073,10 +1119,14 @@
     "id": 133,
     "name": "Goddess Squat to Star Pose",
     "video": "exercise_videos/exercise_0133.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipAbductors",
+      "ShoulderAbductors"
     ],
     "practice": "Yoga",
     "motionProfile": "Squat",
@@ -1093,10 +1143,11 @@
     "id": 135,
     "name": "Mountain Pose to Upward Salute",
     "video": "exercise_videos/exercise_0135.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Chest",
-      "Trapezius"
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff",
+      "Chest"
     ],
     "practice": "Yoga",
     "motionProfile": "LegBalance",
@@ -1113,8 +1164,12 @@
     "id": 136,
     "name": "Goddess Pose",
     "video": "exercise_videos/exercise_0136.mp4",
-    "muscleGroups": [
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Yoga",
     "motionProfile": "Squat",
@@ -1131,10 +1186,12 @@
     "id": 138,
     "name": "Narrow-Squat Heel Raise",
     "video": "exercise_videos/exercise_0138.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1151,10 +1208,13 @@
     "id": 139,
     "name": "Wide-Squat Heel Raise",
     "video": "exercise_videos/exercise_0139.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1171,11 +1231,13 @@
     "id": 140,
     "name": "Sumo-Squat Calf Raise",
     "video": "exercise_videos/exercise_0140.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves",
-      "Adductors"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1192,9 +1254,12 @@
     "id": 141,
     "name": "Squat with Alternating Heel Lift",
     "video": "exercise_videos/exercise_0141.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1211,11 +1276,12 @@
     "id": 142,
     "name": "Lateral Squat Walk",
     "video": "exercise_videos/exercise_0142.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1232,10 +1298,12 @@
     "id": 143,
     "name": "Alternating Reverse Lunge to Front Kick",
     "video": "exercise_videos/exercise_0143.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -1252,8 +1320,9 @@
     "id": 144,
     "name": "Alternating Standing Knee Lift",
     "video": "exercise_videos/exercise_0144.mp4",
-    "muscleGroups": [
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "KneeLift",
@@ -1270,9 +1339,10 @@
     "id": 145,
     "name": "Alternating Standing Knee Extension",
     "video": "exercise_videos/exercise_0145.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Shins"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
@@ -1289,11 +1359,11 @@
     "id": 146,
     "name": "Alternating Leg Curl with Back Squeeze",
     "video": "exercise_videos/exercise_0146.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "UpperBack",
-      "MidBack",
-      "Trapezius"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAdductorsAndExtensors",
+      "ElbowFlexors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
@@ -1310,11 +1380,12 @@
     "id": 147,
     "name": "Squat to Alternating Star Reach",
     "video": "exercise_videos/exercise_0147.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
-      "Trapezius"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1331,9 +1402,10 @@
     "id": 148,
     "name": "Alternating Straight-Leg Hip-Extension Lift",
     "video": "exercise_videos/exercise_0148.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Hamstrings"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "SpinalExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
@@ -1350,8 +1422,10 @@
     "id": 150,
     "name": "Alternating Cross-Body Hip-Adduction Sweep",
     "video": "exercise_videos/exercise_0150.mp4",
-    "muscleGroups": [
-      "Adductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "HipFlexors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegSide",
@@ -1368,8 +1442,9 @@
     "id": 151,
     "name": "Alternating Straight-Leg Front Raise",
     "video": "exercise_videos/exercise_0151.mp4",
-    "muscleGroups": [
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
@@ -1386,8 +1461,9 @@
     "id": 152,
     "name": "Alternating Side-Leg Raise Pulse",
     "video": "exercise_videos/exercise_0152.mp4",
-    "muscleGroups": [
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegSide",
@@ -1404,10 +1480,11 @@
     "id": 154,
     "name": "Alternating Diagonal Leg Raise",
     "video": "exercise_videos/exercise_0154.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors",
-      "Abductors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "AbdominalWall",
+      "DeepHipRotators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegBalance",
@@ -1424,12 +1501,13 @@
     "id": 156,
     "name": "Alternating Curtsy-Lunge-to-Squat",
     "video": "exercise_videos/exercise_0156.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "MajorHipAdductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -1446,9 +1524,10 @@
     "id": 159,
     "name": "Alternating Standing Fire Hydrant",
     "video": "exercise_videos/exercise_0159.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "DeepHipRotators",
+      "GlutealExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -1465,9 +1544,9 @@
     "id": 160,
     "name": "Alternating Standing Donkey Kick",
     "video": "exercise_videos/exercise_0160.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Hamstrings"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
@@ -1484,9 +1563,10 @@
     "id": 161,
     "name": "Alternating Standing Gate Opener",
     "video": "exercise_videos/exercise_0161.mp4",
-    "muscleGroups": [
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Abductors"
+      "HipAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -1503,14 +1583,14 @@
     "id": 167,
     "name": "High-Knee March",
     "video": "exercise_videos/exercise_0167.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Shoulders",
-      "Calves",
-      "HipFlexors",
-      "Shins"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "ShoulderAbductors"
     ],
     "practice": "Running drills",
     "motionProfile": "KneeLift",
@@ -1527,9 +1607,11 @@
     "id": 168,
     "name": "Toy Soldier March",
     "video": "exercise_videos/exercise_0168.mp4",
-    "muscleGroups": [
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Shins"
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
@@ -1546,9 +1628,9 @@
     "id": 169,
     "name": "Alternating Standing Knee Drive",
     "video": "exercise_videos/exercise_0169.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
@@ -1565,9 +1647,10 @@
     "id": 170,
     "name": "Alternating Cross-Body Knee Drive",
     "video": "exercise_videos/exercise_0170.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
@@ -1584,9 +1667,10 @@
     "id": 171,
     "name": "Alternating Hamstring Sweep",
     "video": "exercise_videos/exercise_0171.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "Shins"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "HipFlexors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -1603,8 +1687,10 @@
     "id": 173,
     "name": "Alternating Side Knee Lift",
     "video": "exercise_videos/exercise_0173.mp4",
-    "muscleGroups": [
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "KneeLift",
@@ -1621,10 +1707,12 @@
     "id": 174,
     "name": "Alternating Front Kick Toe Touch",
     "video": "exercise_videos/exercise_0174.mp4",
-    "muscleGroups": [
-      "Quadriceps",
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Shins"
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
@@ -1641,8 +1729,11 @@
     "id": 176,
     "name": "Alternating Back Kick",
     "video": "exercise_videos/exercise_0176.mp4",
-    "muscleGroups": [
-      "Quadriceps"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBack",
@@ -1659,8 +1750,12 @@
     "id": 177,
     "name": "Alternating Roundhouse Kick Chamber",
     "video": "exercise_videos/exercise_0177.mp4",
-    "muscleGroups": [
-      "Quadriceps"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
@@ -1677,10 +1772,12 @@
     "id": 178,
     "name": "Alternating Crescent Kick",
     "video": "exercise_videos/exercise_0178.mp4",
-    "muscleGroups": [
-      "Quadriceps",
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Abductors"
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegFront",
@@ -1697,9 +1794,11 @@
     "id": 179,
     "name": "Alternating Axe-Kick Leg Raise",
     "video": "exercise_videos/exercise_0179.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "HipFlexors"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "LegFront",
@@ -1716,8 +1815,9 @@
     "id": 180,
     "name": "Alternating Karate Front Snap Kick",
     "video": "exercise_videos/exercise_0180.mp4",
-    "muscleGroups": [
-      "Quadriceps",
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
       "HipFlexors"
     ],
     "practice": "Karate",
@@ -1735,9 +1835,12 @@
     "id": 181,
     "name": "Alternating Karate Side Thrust Kick",
     "video": "exercise_videos/exercise_0181.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Karate",
     "motionProfile": "LegSide",
@@ -1754,9 +1857,10 @@
     "id": 182,
     "name": "Alternating Taekwondo Front-Kick Chamber",
     "video": "exercise_videos/exercise_0182.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Taekwondo",
     "motionProfile": "LegFront",
@@ -1773,9 +1877,12 @@
     "id": 183,
     "name": "Alternating Taekwondo Side-Kick Chamber",
     "video": "exercise_videos/exercise_0183.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Taekwondo",
     "motionProfile": "LegSide",
@@ -1792,9 +1899,11 @@
     "id": 184,
     "name": "Alternating Tai Chi Heel Kick",
     "video": "exercise_videos/exercise_0184.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Shins"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "HipFlexors",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
@@ -1811,9 +1920,11 @@
     "id": 185,
     "name": "Alternating Tai Chi Toe Kick",
     "video": "exercise_videos/exercise_0185.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
@@ -1830,10 +1941,12 @@
     "id": 186,
     "name": "Alternating Tai Chi Lotus Kick",
     "video": "exercise_videos/exercise_0186.mp4",
-    "muscleGroups": [
-      "Quadriceps",
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Abductors"
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Tai Chi",
     "motionProfile": "LegFront",
@@ -1850,9 +1963,10 @@
     "id": 187,
     "name": "Second-Position Relevé Rise and Lower",
     "video": "exercise_videos/exercise_0187.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Adductors"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AccessoryHipAdductors"
     ],
     "practice": "Ballet",
     "motionProfile": "LegBalance",
@@ -1869,9 +1983,10 @@
     "id": 188,
     "name": "Parallel Demi-Plie",
     "video": "exercise_videos/exercise_0188.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Ballet",
     "motionProfile": "Squat",
@@ -1888,10 +2003,13 @@
     "id": 190,
     "name": "Ballet Grand Plie",
     "video": "exercise_videos/exercise_0190.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Ballet",
     "motionProfile": "Squat",
@@ -1908,10 +2026,10 @@
     "id": 191,
     "name": "Alternating Ballet Tendu Devant",
     "video": "exercise_videos/exercise_0191.mp4",
-    "muscleGroups": [
-      "Calves",
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Shins"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegFront",
@@ -1928,11 +2046,11 @@
     "id": 192,
     "name": "Alternating Ballet Tendu a la Seconde",
     "video": "exercise_videos/exercise_0192.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegSide",
@@ -1949,9 +2067,11 @@
     "id": 193,
     "name": "Alternating Ballet Tendu Derriere",
     "video": "exercise_videos/exercise_0193.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegBack",
@@ -1968,10 +2088,10 @@
     "id": 194,
     "name": "Alternating Ballet Degage Devant",
     "video": "exercise_videos/exercise_0194.mp4",
-    "muscleGroups": [
-      "Calves",
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "Shins"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegFront",
@@ -1988,11 +2108,11 @@
     "id": 195,
     "name": "Alternating Ballet Degage a la Seconde",
     "video": "exercise_videos/exercise_0195.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Adductors",
-      "Abductors",
-      "Shins"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegSide",
@@ -2009,9 +2129,11 @@
     "id": 196,
     "name": "Alternating Ballet Degage Derriere",
     "video": "exercise_videos/exercise_0196.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Ballet",
     "motionProfile": "LegBack",
@@ -2028,11 +2150,13 @@
     "id": 197,
     "name": "First-Position Plie-Releve",
     "video": "exercise_videos/exercise_0197.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves",
-      "Adductors"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Ballet",
     "motionProfile": "Squat",
@@ -2049,11 +2173,13 @@
     "id": 198,
     "name": "Second-Position Plie-Releve",
     "video": "exercise_videos/exercise_0198.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Calves",
-      "Adductors"
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Ballet",
     "motionProfile": "Squat",
@@ -2070,11 +2196,13 @@
     "id": 199,
     "name": "Horse-Stance Knee Bend",
     "video": "exercise_videos/exercise_0199.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "Squat",
@@ -2091,12 +2219,13 @@
     "id": 200,
     "name": "Good Morning to Squat",
     "video": "exercise_videos/exercise_0200.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "BackHinge",
@@ -2113,11 +2242,12 @@
     "id": 201,
     "name": "Alternating Boxing Jab",
     "video": "exercise_videos/exercise_0201.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms",
-      "Triceps"
+      "ShoulderAbductors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -2134,11 +2264,11 @@
     "id": 203,
     "name": "Alternating Boxing Hook",
     "video": "exercise_videos/exercise_0203.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms",
-      "Biceps"
+      "ShoulderAbductors",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -2155,10 +2285,10 @@
     "id": 211,
     "name": "Alternating Karate Backfist Strike (Uraken-Uchi)",
     "video": "exercise_videos/exercise_0211.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2175,11 +2305,12 @@
     "id": 212,
     "name": "Alternating Karate Palm-Heel Strike (Teisho)",
     "video": "exercise_videos/exercise_0212.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms",
-      "Triceps"
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2196,10 +2327,11 @@
     "id": 213,
     "name": "Alternating Karate Hammer-Fist Strike (Tetsui-Uchi)",
     "video": "exercise_videos/exercise_0213.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ShoulderAdductorsAndExtensors",
+      "IntrinsicHand"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2216,10 +2348,11 @@
     "id": 214,
     "name": "Alternating Wing Chun Biu-Sau Palm Strike",
     "video": "exercise_videos/exercise_0214.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "IntrinsicHand",
+      "ShoulderAbductors"
     ],
     "practice": "Wing Chun",
     "motionProfile": "MartialHand",
@@ -2236,8 +2369,9 @@
     "id": 215,
     "name": "Self-Resisted Wrist Radial-Deviation Pulses",
     "video": "exercise_videos/exercise_0215.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
@@ -2254,8 +2388,9 @@
     "id": 216,
     "name": "Self-Resisted Wrist Ulnar-Deviation Pulses",
     "video": "exercise_videos/exercise_0216.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
@@ -2272,8 +2407,9 @@
     "id": 217,
     "name": "Self-Resisted Wrist-Extension Pulses",
     "video": "exercise_videos/exercise_0217.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
@@ -2290,8 +2426,9 @@
     "id": 218,
     "name": "Self-Resisted Wrist-Flexion Pulses",
     "video": "exercise_videos/exercise_0218.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
@@ -2308,8 +2445,9 @@
     "id": 219,
     "name": "Four-Way Self-Resisted Wrist Sequence",
     "video": "exercise_videos/exercise_0219.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "WristMotion",
@@ -2326,10 +2464,12 @@
     "id": 220,
     "name": "Interlocked Hook-Fist Pull-Apart Isometric",
     "video": "exercise_videos/exercise_0220.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Biceps"
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ShoulderAdductorsAndExtensors",
+      "ScapularGirdle"
     ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
@@ -2346,12 +2486,13 @@
     "id": 223,
     "name": "Alternating Karate Inside Block (Uchi-Uke)",
     "video": "exercise_videos/exercise_0223.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps",
-      "Biceps",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "ForearmFlexorsAndPronators",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2368,10 +2509,10 @@
     "id": 224,
     "name": "Alternating Karate Downward Sweep Block (Gedan-Barai)",
     "video": "exercise_videos/exercise_0224.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmExtensorsAndSupinators",
       "RotatorCuff"
     ],
     "practice": "Karate",
@@ -2389,11 +2530,11 @@
     "id": 225,
     "name": "Alternating Karate Knife-Hand Block (Shuto-Uke)",
     "video": "exercise_videos/exercise_0225.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "ElbowExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2410,11 +2551,12 @@
     "id": 227,
     "name": "Standing Palm-Press Pulses",
     "video": "exercise_videos/exercise_0227.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Chest",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ShoulderAbductors"
     ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
@@ -2431,9 +2573,11 @@
     "id": 228,
     "name": "Alternating Boxing Cross",
     "video": "exercise_videos/exercise_0228.mp4",
-    "muscleGroups": [
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -2450,10 +2594,10 @@
     "id": 229,
     "name": "Alternating Boxing Uppercut",
     "video": "exercise_videos/exercise_0229.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Biceps"
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -2470,11 +2614,11 @@
     "id": 230,
     "name": "Alternating Boxing Overhand",
     "video": "exercise_videos/exercise_0230.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms",
-      "Triceps"
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -2491,11 +2635,11 @@
     "id": 231,
     "name": "Alternating Karate Reverse Punch",
     "video": "exercise_videos/exercise_0231.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms",
-      "Triceps"
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2512,10 +2656,11 @@
     "id": 232,
     "name": "Alternating Karate Knife-Hand Chop",
     "video": "exercise_videos/exercise_0232.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmExtensorsAndSupinators",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2532,10 +2677,11 @@
     "id": 233,
     "name": "Alternating Karate Ridge-Hand Strike (Haito-Uchi)",
     "video": "exercise_videos/exercise_0233.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2552,10 +2698,11 @@
     "id": 234,
     "name": "Alternating Karate Flat-Fist Strike (Hiraken)",
     "video": "exercise_videos/exercise_0234.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ElbowExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2572,10 +2719,11 @@
     "id": 236,
     "name": "Alternating Karate Spear-Hand Strike (Nukite)",
     "video": "exercise_videos/exercise_0236.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "ElbowExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2592,8 +2740,9 @@
     "id": 237,
     "name": "Forearm Pronation and Supination",
     "video": "exercise_videos/exercise_0237.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "WristMotion",
@@ -2610,8 +2759,9 @@
     "id": 238,
     "name": "Prayer-Hand Stretch",
     "video": "exercise_videos/exercise_0238.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Stretching",
     "motionProfile": "HandIsometric",
@@ -2628,8 +2778,10 @@
     "id": 239,
     "name": "Ninja Fireball Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0239.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
@@ -2646,8 +2798,10 @@
     "id": 240,
     "name": "Ninja Shadow-Possession Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0240.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
@@ -2664,8 +2818,10 @@
     "id": 241,
     "name": "Ninja Water-Dragon 44 Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0241.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
@@ -2682,8 +2838,10 @@
     "id": 242,
     "name": "Ninja Shadow-Clone Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0242.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Ninja hand-seal coordination",
     "motionProfile": "HandSeal",
@@ -2700,12 +2858,12 @@
     "id": 245,
     "name": "Alternating Karate Rising Block (Age-Uke)",
     "video": "exercise_videos/exercise_0245.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps",
-      "Biceps",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "RotatorCuff",
+      "ElbowExtensors",
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2722,12 +2880,13 @@
     "id": 246,
     "name": "Alternating Karate Outside Block (Soto-Uke)",
     "video": "exercise_videos/exercise_0246.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Forearms",
-      "Triceps",
-      "Biceps",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ForearmExtensorsAndSupinators",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Karate",
     "motionProfile": "MartialHand",
@@ -2744,11 +2903,12 @@
     "id": 248,
     "name": "Standing Palm-Press Hold",
     "video": "exercise_videos/exercise_0248.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Chest",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ShoulderAbductors"
     ],
     "practice": "Self-resistance",
     "motionProfile": "HandIsometric",
@@ -2762,12 +2922,965 @@
     "silent": true
   },
   {
+    "id": 251,
+    "name": "Waiter's Bow",
+    "video": "exercise_videos/exercise_0251.mp4",
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 252,
+    "name": "Internally Rotated Double Calf Raise",
+    "video": "exercise_videos/exercise_0252.mp4",
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 253,
+    "name": "Parallel Double Calf Raise",
+    "video": "exercise_videos/exercise_0253.mp4",
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 254,
+    "name": "Turned-Out Double Calf Raise",
+    "video": "exercise_videos/exercise_0254.mp4",
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "AccessoryHipAdductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 255,
+    "name": "Standing Bent-Knee Calf Raise",
+    "video": "exercise_videos/exercise_0255.mp4",
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 256,
+    "name": "Self-Resisted Overhead Pull",
+    "video": "exercise_videos/exercise_0256.mp4",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Hold",
+    "holdFramePercent": 70,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 257,
+    "name": "Self-Resisted Chest-Level Pull",
+    "video": "exercise_videos/exercise_0257.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ElbowFlexors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Hold",
+    "holdFramePercent": 70,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 258,
+    "name": "Self-Resisted Low Pull",
+    "video": "exercise_videos/exercise_0258.mp4",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Hold",
+    "holdFramePercent": 70,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 260,
+    "name": "Behind-the-Back Self-Resisted Press",
+    "video": "exercise_videos/exercise_0260.mp4",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ElbowFlexors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "HandIsometric",
+    "mode": "Hold",
+    "holdFramePercent": 70,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 261,
+    "name": "Standing Bent-Elbow Reverse Fly",
+    "video": "exercise_videos/exercise_0261.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "RotatorCuff"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 262,
+    "name": "Standing Scapular Depression",
+    "video": "exercise_videos/exercise_0262.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "RotatorCuff"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 263,
+    "name": "Standing Straight-Arm Pressback",
+    "video": "exercise_videos/exercise_0263.mp4",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 264,
+    "name": "Standing Arm Circles",
+    "video": "exercise_videos/exercise_0264.mp4",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 265,
+    "name": "Standing Bent-Elbow Arm Raise",
+    "video": "exercise_videos/exercise_0265.mp4",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff",
+      "ElbowExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 266,
+    "name": "Standing Palms-Up Arm Raise",
+    "video": "exercise_videos/exercise_0266.mp4",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff"
+    ],
+    "practice": "Hand therapy and mobility",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 267,
+    "name": "T-Position Shoulder Rotation",
+    "video": "exercise_videos/exercise_0267.mp4",
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "ForearmExtensorsAndSupinators"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 268,
+    "name": "Self-Resisted External-Rotation Push-Out",
+    "video": "exercise_videos/exercise_0268.mp4",
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAdductorsAndExtensors",
+      "ForearmExtensorsAndSupinators"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 269,
+    "name": "Self-Resisted Curl-and-Press",
+    "video": "exercise_videos/exercise_0269.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 270,
+    "name": "Bodyweight Svend Press",
+    "video": "exercise_videos/exercise_0270.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "IntrinsicHand"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 271,
+    "name": "Standing Lumbar Extension",
+    "video": "exercise_videos/exercise_0271.mp4",
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "GlutealExtensors",
+      "PosteriorThighAndKneeFlexors",
+      "AbdominalWall",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 272,
+    "name": "Soleus Walk",
+    "video": "exercise_videos/exercise_0272.mp4",
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AnteriorLateralLowerLegAndDorsalFoot"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 273,
+    "name": "Bent-Knee Calf-Raise Hold",
+    "video": "exercise_videos/exercise_0273.mp4",
+    "primaryCanonicalGroup": "Soleus",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Hold",
+    "holdFramePercent": 75,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 274,
+    "name": "Dynamic-Resistance Lat Pulldown",
+    "video": "exercise_videos/exercise_0274.mp4",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowFlexors",
+      "ForearmFlexorsAndPronators"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 275,
+    "name": "Dynamic-Resistance Low Chest Press",
+    "video": "exercise_videos/exercise_0275.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 276,
+    "name": "Dynamic-Resistance High Chest Press",
+    "video": "exercise_videos/exercise_0276.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 277,
+    "name": "Standing Elbow-to-Elbow Chest Squeeze",
+    "video": "exercise_videos/exercise_0277.mp4",
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "IntrinsicHand"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 278,
+    "name": "Dynamic-Resistance Lateral Triceps Extension",
+    "video": "exercise_videos/exercise_0278.mp4",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ScapularGirdle",
+      "ForearmFlexorsAndPronators"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 279,
+    "name": "Dynamic-Resistance Triceps Pushdown",
+    "video": "exercise_videos/exercise_0279.mp4",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ScapularGirdle",
+      "ForearmFlexorsAndPronators"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 280,
+    "name": "Ringing-the-Towel Wrist Inversion",
+    "video": "exercise_videos/exercise_0280.mp4",
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Hand therapy and mobility",
+    "motionProfile": "WristMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 281,
+    "name": "Alternating Self-Resisted Isometric Pronation",
+    "video": "exercise_videos/exercise_0281.mp4",
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "WristMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 282,
+    "name": "Qigong Drilling Fists",
+    "video": "exercise_videos/exercise_0282.mp4",
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 283,
+    "name": "Alternating Qigong Fist Rotation",
+    "video": "exercise_videos/exercise_0283.mp4",
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand",
+      "ElbowFlexors"
+    ],
+    "practice": "Qigong",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 284,
+    "name": "Five-Animal Qigong Tiger Piercing",
+    "video": "exercise_videos/exercise_0284.mp4",
+    "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ShoulderAbductors",
+      "RotatorCuff"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 285,
+    "name": "Supinated-Grip Self-Resisted Biceps Curl",
+    "video": "exercise_videos/exercise_0285.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 286,
+    "name": "Self-Resisted Hammer Curl",
+    "video": "exercise_videos/exercise_0286.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 287,
+    "name": "Self-Resisted Reverse Curl",
+    "video": "exercise_videos/exercise_0287.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Self-resistance",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 288,
+    "name": "Isometric Biceps Hold",
+    "video": "exercise_videos/exercise_0288.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HandIsometric",
+    "mode": "Hold",
+    "holdFramePercent": 75,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 289,
+    "name": "Heaven-to-Earth Finger Rotation",
+    "video": "exercise_videos/exercise_0289.mp4",
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Hand therapy and mobility",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 290,
+    "name": "Universe-in-Motion Qigong",
+    "video": "exercise_videos/exercise_0290.mp4",
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 291,
+    "name": "Black Dragon Enters the Cave",
+    "video": "exercise_videos/exercise_0291.mp4",
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 292,
+    "name": "Thrusting Fingers Qigong",
+    "video": "exercise_videos/exercise_0292.mp4",
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Hand therapy and mobility",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 293,
+    "name": "Sword-Fingers Qigong Sequence",
+    "video": "exercise_videos/exercise_0293.mp4",
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "ShoulderAbductors"
+    ],
+    "practice": "Hand therapy and mobility",
+    "motionProfile": "FingerMotion",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 294,
+    "name": "Tiger-Claw Grip Flow",
+    "video": "exercise_videos/exercise_0294.mp4",
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "MartialHand",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 295,
+    "name": "Yi Jin Jing Dragon Claw",
+    "video": "exercise_videos/exercise_0295.mp4",
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "ElbowExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "MartialHand",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 296,
+    "name": "Eagle-Claw and Tiger-Claw Coordination",
+    "video": "exercise_videos/exercise_0296.mp4",
+    "primaryCanonicalGroup": "IntrinsicHand",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "MartialHand",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 301,
     "name": "Large Arm Sweep Up and Down",
     "video": "exercise_videos/exercise_0301.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Standing mobility and movement practice",
@@ -2785,10 +3898,11 @@
     "id": 303,
     "name": "Alternating Arm-Circle Squat with Cross Tap",
     "video": "exercise_videos/exercise_0303.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "ShoulderAbductors",
       "RotatorCuff"
     ],
     "practice": "Bodyweight conditioning",
@@ -2806,9 +3920,10 @@
     "id": 311,
     "name": "Low-Impact Standing Jack",
     "video": "exercise_videos/exercise_0311.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "WalkingStep",
@@ -2825,11 +3940,11 @@
     "id": 314,
     "name": "Alternating Forward Lunge with Biceps Curl",
     "video": "exercise_videos/exercise_0314.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "HipFlexors",
-      "Biceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "HipFlexors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -2846,10 +3961,13 @@
     "id": 315,
     "name": "Side-Step Squat with Overhead Reach",
     "video": "exercise_videos/exercise_0315.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Trapezius"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "HipAbductors",
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -2866,10 +3984,12 @@
     "id": 321,
     "name": "Alternating Cross-Step Arms Raise",
     "video": "exercise_videos/exercise_0321.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff",
+      "AccessoryHipAdductors",
+      "HipAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -2886,12 +4006,12 @@
     "id": 326,
     "name": "Wide-Stance Alternating Straight Punches",
     "video": "exercise_videos/exercise_0326.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Chest",
-      "Adductors",
-      "Forearms",
-      "Triceps"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors",
+      "MajorHipAdductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
@@ -2908,12 +4028,10 @@
     "id": 327,
     "name": "First-Position Standing Row",
     "video": "exercise_videos/exercise_0327.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "MidBack",
-      "Trapezius",
-      "Biceps",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAdductorsAndExtensors",
       "RotatorCuff"
     ],
     "practice": "Standing mobility and movement practice",
@@ -2931,9 +4049,10 @@
     "id": 329,
     "name": "Qigong Gathering Qi",
     "video": "exercise_videos/exercise_0329.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Qigong",
     "motionProfile": "FlowingArms",
@@ -2950,10 +4069,11 @@
     "id": 338,
     "name": "Alternating High-Low Punches",
     "video": "exercise_videos/exercise_0338.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
       "Chest",
-      "Forearms"
+      "ForearmFlexorsAndPronators",
+      "ShoulderAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
@@ -2970,12 +4090,13 @@
     "id": 340,
     "name": "Low-Impact Jack with Alternating Punches",
     "video": "exercise_videos/exercise_0340.mp4",
-    "muscleGroups": [
-      "Shoulders",
+    "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "ElbowExtensors",
       "Chest",
-      "Calves",
-      "Forearms",
-      "Shins"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "MartialHand",
@@ -2992,13 +4113,13 @@
     "id": 341,
     "name": "Squat with Alternating Straight Punches",
     "video": "exercise_videos/exercise_0341.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "ElbowExtensors",
       "Chest",
-      "Forearms",
-      "Triceps"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "MartialHand",
@@ -3015,11 +4136,13 @@
     "id": 367,
     "name": "Tai Chi Wave Hands Like Clouds",
     "video": "exercise_videos/exercise_0367.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "MidBack",
-      "Forearms",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAbductors",
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Tai Chi",
     "motionProfile": "FingerMotion",
@@ -3036,9 +4159,9 @@
     "id": 377,
     "name": "Qigong Lifting the Sky",
     "video": "exercise_videos/exercise_0377.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Qigong",
@@ -3056,12 +4179,11 @@
     "id": 379,
     "name": "Alternating Qigong Drawing the Bow",
     "video": "exercise_videos/exercise_0379.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "MidBack",
-      "Forearms",
-      "Biceps",
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowFlexors",
+      "ForearmFlexorsAndPronators",
       "RotatorCuff"
     ],
     "practice": "Qigong",
@@ -3079,12 +4201,12 @@
     "id": 389,
     "name": "First-Position Heel Raise with Elbow Pull-Down",
     "video": "exercise_videos/exercise_0389.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Calves",
-      "Trapezius",
-      "Biceps"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "ScapularGirdle",
+      "ShoulderAdductorsAndExtensors",
+      "ElbowFlexors"
     ],
     "practice": "Ballet",
     "motionProfile": "BackBalance",
@@ -3098,11 +4220,214 @@
     "silent": true
   },
   {
+    "id": 390,
+    "name": "Standing Abdominal Breathing",
+    "video": "exercise_videos/exercise_0390.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 391,
+    "name": "Standing Lateral Rib Breathing",
+    "video": "exercise_videos/exercise_0391.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 392,
+    "name": "Standing Chest Breathing",
+    "video": "exercise_videos/exercise_0392.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 393,
+    "name": "Standing Clavicular Breathing",
+    "video": "exercise_videos/exercise_0393.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 394,
+    "name": "Standing Open-and-Close Breathing",
+    "video": "exercise_videos/exercise_0394.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "ScapularGirdle",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 395,
+    "name": "Standing Overhead Rib-Expansion Breathing",
+    "video": "exercise_videos/exercise_0395.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmRaise",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 396,
+    "name": "Standing Arm-Lift Breathing",
+    "video": "exercise_videos/exercise_0396.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 397,
+    "name": "Alternating Breath-Integrated Weight Shift",
+    "video": "exercise_videos/exercise_0397.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus",
+      "GlutealExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 398,
+    "name": "Standing Arm-Expansion Breathing",
+    "video": "exercise_videos/exercise_0398.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "ScapularGirdle",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 399,
+    "name": "Shibashi Opening-the-Chest Breathing",
+    "video": "exercise_videos/exercise_0399.mp4",
+    "primaryCanonicalGroup": "BreathingMuscles",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "ScapularGirdle",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "ArmSweep",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 409,
     "name": "Neck Controlled Articular Rotation",
     "video": "exercise_videos/exercise_0409.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Functional Range Conditioning",
     "motionProfile": "HeadTurn",
@@ -3119,9 +4444,8 @@
     "id": 422,
     "name": "Cervical Flexion Isometric",
     "video": "exercise_videos/exercise_0422.mp4",
-    "muscleGroups": [
-      "Neck"
-    ],
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadNod",
     "mode": "Hold",
@@ -3137,9 +4461,8 @@
     "id": 423,
     "name": "Cervical Extension Isometric",
     "video": "exercise_videos/exercise_0423.mp4",
-    "muscleGroups": [
-      "Neck"
-    ],
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadNod",
     "mode": "Hold",
@@ -3155,8 +4478,9 @@
     "id": 425,
     "name": "Chin-Tuck Isometric",
     "video": "exercise_videos/exercise_0425.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTranslate",
@@ -3173,8 +4497,9 @@
     "id": 467,
     "name": "Alternating Eight-Brocades Wise Owl Gazes Backward",
     "video": "exercise_videos/exercise_0467.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Qigong",
     "motionProfile": "HeadTurn",
@@ -3191,8 +4516,9 @@
     "id": 474,
     "name": "Ballet Spotting Drill",
     "video": "exercise_videos/exercise_0474.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Ballet",
     "motionProfile": "HeadTurn",
@@ -3209,8 +4535,9 @@
     "id": 475,
     "name": "Jazz Head Isolation",
     "video": "exercise_videos/exercise_0475.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Jazz dance",
     "motionProfile": "HeadFourDirection",
@@ -3227,8 +4554,9 @@
     "id": 477,
     "name": "Dance Head Roll",
     "video": "exercise_videos/exercise_0477.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadCircle",
@@ -3245,8 +4573,9 @@
     "id": 481,
     "name": "Quarter-Turn Spotting Drill",
     "video": "exercise_videos/exercise_0481.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
@@ -3263,8 +4592,10 @@
     "id": 482,
     "name": "Continuous Spot-Turn Drill",
     "video": "exercise_videos/exercise_0482.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HeadTurn",
@@ -3281,8 +4612,10 @@
     "id": 483,
     "name": "Pirouette Spotting Drill",
     "video": "exercise_videos/exercise_0483.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Ballet",
     "motionProfile": "HeadTurn",
@@ -3299,8 +4632,9 @@
     "id": 490,
     "name": "Bharatanatyam Alolita Shiro",
     "video": "exercise_videos/exercise_0490.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadCircle",
@@ -3317,8 +4651,9 @@
     "id": 491,
     "name": "Bharatanatyam Dhuta Shiro",
     "video": "exercise_videos/exercise_0491.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTurn",
@@ -3335,8 +4670,9 @@
     "id": 492,
     "name": "Bharatanatyam Kampita Shiro",
     "video": "exercise_videos/exercise_0492.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadNod",
@@ -3353,8 +4689,9 @@
     "id": 493,
     "name": "Alternating Bharatanatyam Paravritta Shiro",
     "video": "exercise_videos/exercise_0493.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTurn",
@@ -3371,8 +4708,9 @@
     "id": 495,
     "name": "Bharatanatyam Parivahita Shiro",
     "video": "exercise_videos/exercise_0495.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
@@ -3389,8 +4727,9 @@
     "id": 497,
     "name": "Odissi Sundari Griva",
     "video": "exercise_videos/exercise_0497.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Odissi",
     "motionProfile": "HeadTilt",
@@ -3407,8 +4746,9 @@
     "id": 499,
     "name": "Bharatanatyam Tiraschina Griva",
     "video": "exercise_videos/exercise_0499.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
@@ -3425,8 +4765,9 @@
     "id": 500,
     "name": "Bharatanatyam Parivartita Griva",
     "video": "exercise_videos/exercise_0500.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles"
     ],
     "practice": "Bharatanatyam",
     "motionProfile": "HeadTilt",
@@ -3440,13 +4781,182 @@
     "silent": true
   },
   {
+    "id": 501,
+    "name": "Standing Horizontal Saccades",
+    "video": "exercise_videos/exercise_0501.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Vestibular rehabilitation",
+    "motionProfile": "GazeHorizontalSaccade",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 502,
+    "name": "Standing Vertical Saccades",
+    "video": "exercise_videos/exercise_0502.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Vestibular rehabilitation",
+    "motionProfile": "GazeVerticalSaccade",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 503,
+    "name": "Standing Diagonal Saccades",
+    "video": "exercise_videos/exercise_0503.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Vestibular rehabilitation",
+    "motionProfile": "GazeDiagonal",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 504,
+    "name": "Vertical Eye-Head Shifts Between Thumbs",
+    "video": "exercise_videos/exercise_0504.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Vestibular rehabilitation",
+    "motionProfile": "GazeVertical",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 505,
+    "name": "Maximal Smile and Relax",
+    "video": "exercise_videos/exercise_0505.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "GazeDiagonal",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 506,
+    "name": "Eyebrow Raise and Relax",
+    "video": "exercise_videos/exercise_0506.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "GazeDiagonal",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 507,
+    "name": "Firm Eye Close and Full Open",
+    "video": "exercise_videos/exercise_0507.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "GazeDiagonal",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 508,
+    "name": "Tongue Protrusion and Retraction",
+    "video": "exercise_videos/exercise_0508.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HeadTranslate",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 509,
+    "name": "Bilateral Tongue Lateralization",
+    "video": "exercise_videos/exercise_0509.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HeadTilt",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 510,
+    "name": "Maximal Jaw Open and Close",
+    "video": "exercise_videos/exercise_0510.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "GazeDiagonal",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 512,
     "name": "Scapular Protraction",
     "video": "exercise_videos/exercise_0512.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Trapezius",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
       "RotatorCuff"
     ],
     "practice": "Standing mobility and movement practice",
@@ -3464,11 +4974,9 @@
     "id": 513,
     "name": "Scapular Retraction",
     "video": "exercise_videos/exercise_0513.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "MidBack",
-      "Trapezius",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
       "RotatorCuff"
     ],
     "practice": "Standing mobility and movement practice",
@@ -3486,9 +4994,9 @@
     "id": 516,
     "name": "Shoulder Shrug",
     "video": "exercise_videos/exercise_0516.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius"
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ShoulderRaise",
@@ -3505,10 +5013,13 @@
     "id": 544,
     "name": "Standing Overhead Slam",
     "video": "exercise_videos/exercise_0544.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
-      "Triceps"
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ElbowExtensors",
+      "ScapularGirdle",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "ArmRaise",
@@ -3525,9 +5036,11 @@
     "id": 572,
     "name": "Alternating Tai Chi White Crane Opens Wings",
     "video": "exercise_videos/exercise_0572.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAbductors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Tai Chi",
     "motionProfile": "ShoulderRaise",
@@ -3544,10 +5057,11 @@
     "id": 573,
     "name": "Alternating Tai Chi Single Whip",
     "video": "exercise_videos/exercise_0573.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "MidBack",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "RotatorCuff",
+      "ShoulderAbductors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Tai Chi",
     "motionProfile": "ShoulderRaise",
@@ -3564,9 +5078,9 @@
     "id": 576,
     "name": "Qigong Crane-Wing Shoulder Lift",
     "video": "exercise_videos/exercise_0576.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Qigong",
@@ -3584,10 +5098,11 @@
     "id": 577,
     "name": "Qigong Swimming-Dragon Shoulder Roll",
     "video": "exercise_videos/exercise_0577.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ShoulderAbductors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Qigong",
     "motionProfile": "ShoulderCircle",
@@ -3604,10 +5119,10 @@
     "id": 588,
     "name": "Belly-Dance Alternating Shoulder Roll",
     "video": "exercise_videos/exercise_0588.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "RotatorCuff",
+      "ShoulderAbductors"
     ],
     "practice": "Belly dance",
     "motionProfile": "ShoulderCircle",
@@ -3624,9 +5139,9 @@
     "id": 591,
     "name": "Bharatanatyam Natyarambhe Hold",
     "video": "exercise_videos/exercise_0591.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
       "RotatorCuff"
     ],
     "practice": "Bharatanatyam",
@@ -3644,9 +5159,11 @@
     "id": 608,
     "name": "Hip Circle",
     "video": "exercise_videos/exercise_0608.mp4",
-    "muscleGroups": [
-      "Core",
-      "Abductors"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack",
+      "HipAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipCircle",
@@ -3660,11 +5177,232 @@
     "silent": true
   },
   {
+    "id": 609,
+    "name": "Pelvic-Floor Plié Lift",
+    "video": "exercise_videos/exercise_0609.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipShift",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 610,
+    "name": "Pelvic-Floor Squat Lift",
+    "video": "exercise_videos/exercise_0610.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "HipShift",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 611,
+    "name": "Pelvic-Floor Heel-Raise Lift",
+    "video": "exercise_videos/exercise_0611.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus",
+      "GlutealExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipShift",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 612,
+    "name": "Alternating Pelvic-Floor Lateral Leg Lift",
+    "video": "exercise_videos/exercise_0612.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipShift",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 613,
+    "name": "Pelvic-Floor Balance March",
+    "video": "exercise_videos/exercise_0613.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "AbdominalWall",
+      "GlutealExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
+    ],
+    "practice": "Balance training",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 614,
+    "name": "Standing Pelvic-Floor Contraction and Release",
+    "video": "exercise_videos/exercise_0614.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "BreathingMuscles"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 615,
+    "name": "Alternating Pelvic-Floor Lunge Twist",
+    "video": "exercise_videos/exercise_0615.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 616,
+    "name": "Pelvic-Floor Overhead Chop",
+    "video": "exercise_videos/exercise_0616.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAbductors",
+      "ScapularGirdle"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 617,
     "name": "Alternating Standing Side-Leg Circles",
     "video": "exercise_videos/exercise_0617.mp4",
-    "muscleGroups": [
-      "Abductors"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipCircle",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 618,
+    "name": "Pelvic-Floor Windmill",
+    "video": "exercise_videos/exercise_0618.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack",
+      "PosteriorThighAndKneeFlexors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Standing mobility and movement practice",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "holdFramePercent": 0,
+    "score": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 3,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 619,
+    "name": "Pelvic-Floor Hip Circles",
+    "video": "exercise_videos/exercise_0619.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "HipAbductors",
+      "DeepHipRotators",
+      "GlutealExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipCircle",
@@ -3681,13 +5419,16 @@
     "id": 625,
     "name": "Wing Chun Juen Ma Turning Stance",
     "video": "exercise_videos/exercise_0625.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Hamstrings",
-      "Adductors",
-      "Abductors"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "PosteriorThighAndKneeFlexors",
+      "MajorHipAdductors",
+      "HipAbductors",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Wing Chun",
     "motionProfile": "HipOpenClose",
@@ -3704,8 +5445,12 @@
     "id": 626,
     "name": "Sumo Stance",
     "video": "exercise_videos/exercise_0626.mp4",
-    "muscleGroups": [
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Sumo",
     "motionProfile": "HipOpenClose",
@@ -3722,8 +5467,9 @@
     "id": 632,
     "name": "Alternating Hip-Flexor Side Stretch",
     "video": "exercise_videos/exercise_0632.mp4",
-    "muscleGroups": [
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
     ],
     "practice": "Stretching",
     "motionProfile": "HipHinge",
@@ -3740,11 +5486,11 @@
     "id": 636,
     "name": "Alternating Deadlift Kickback",
     "video": "exercise_videos/exercise_0636.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipShift",
@@ -3761,10 +5507,11 @@
     "id": 647,
     "name": "Alternating Kickback with Sky Punch",
     "video": "exercise_videos/exercise_0647.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Hamstrings",
-      "Shoulders",
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "ShoulderAbductors",
+      "ElbowExtensors",
       "Chest"
     ],
     "practice": "Bodyweight conditioning",
@@ -3782,10 +5529,10 @@
     "id": 648,
     "name": "Alternating Standing Back-Leg Lift",
     "video": "exercise_videos/exercise_0648.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "SpinalExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "HipShift",
@@ -3802,8 +5549,10 @@
     "id": 649,
     "name": "Alternating Standing Side-Leg Raise",
     "video": "exercise_videos/exercise_0649.mp4",
-    "muscleGroups": [
-      "Abductors"
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipOpenClose",
@@ -3820,9 +5569,12 @@
     "id": 654,
     "name": "Alternating Sideward-and-Backward Kick",
     "video": "exercise_videos/exercise_0654.mp4",
-    "muscleGroups": [
-      "Quadriceps",
-      "Abductors"
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "DeepHipRotators",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegSide",
@@ -3839,10 +5591,11 @@
     "id": 666,
     "name": "Alternating Ballet Arabesque",
     "video": "exercise_videos/exercise_0666.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "PosteriorThighAndKneeFlexors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Ballet",
     "motionProfile": "HipLegArc",
@@ -3859,9 +5612,11 @@
     "id": 677,
     "name": "Alternating Belly-Dance Hip Drop",
     "video": "exercise_videos/exercise_0677.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Abductors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "AccessoryHipAdductors"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
@@ -3878,9 +5633,11 @@
     "id": 678,
     "name": "Alternating Belly-Dance Hip Lift",
     "video": "exercise_videos/exercise_0678.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Abductors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "AccessoryHipAdductors"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
@@ -3897,8 +5654,10 @@
     "id": 681,
     "name": "Belly-Dance Horizontal Figure Eight",
     "video": "exercise_videos/exercise_0681.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "HipAbductors"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
@@ -3915,8 +5674,10 @@
     "id": 683,
     "name": "Belly-Dance Umi",
     "video": "exercise_videos/exercise_0683.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
@@ -3933,8 +5694,11 @@
     "id": 684,
     "name": "Belly-Dance Maya",
     "video": "exercise_videos/exercise_0684.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "AccessoryHipAdductors",
+      "DeepHipRotators"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
@@ -3951,8 +5715,10 @@
     "id": 685,
     "name": "Belly-Dance Taqsim",
     "video": "exercise_videos/exercise_0685.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipCircle",
@@ -3969,9 +5735,10 @@
     "id": 686,
     "name": "Belly-Dance Hip Twist",
     "video": "exercise_videos/exercise_0686.mp4",
-    "muscleGroups": [
-      "Core",
-      "Abductors"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "HipAbductors"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipOpenClose",
@@ -3988,9 +5755,11 @@
     "id": 687,
     "name": "Belly-Dance Hip Shimmy",
     "video": "exercise_videos/exercise_0687.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Abductors"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Belly dance",
     "motionProfile": "HipShift",
@@ -4007,13 +5776,10 @@
     "id": 712,
     "name": "Thoracic Expansion Hold",
     "video": "exercise_videos/exercise_0712.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Chest",
-      "MidBack",
-      "Trapezius",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ChestBreathing",
@@ -4030,13 +5796,14 @@
     "id": 733,
     "name": "Alternating Side Lunge with Chest Push",
     "video": "exercise_videos/exercise_0733.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "Shoulders",
-      "Chest",
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
       "HipFlexors",
-      "Triceps"
+      "Chest",
+      "ElbowExtensors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -4053,11 +5820,11 @@
     "id": 740,
     "name": "Clasped-Hand Upper-Back Stretch",
     "video": "exercise_videos/exercise_0740.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "MidBack",
-      "Trapezius",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "RotatorCuff",
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Stretching",
     "motionProfile": "BackBalance",
@@ -4074,9 +5841,10 @@
     "id": 741,
     "name": "Alternating Cross-Body Shoulder Stretch",
     "video": "exercise_videos/exercise_0741.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors"
     ],
     "practice": "Stretching",
     "motionProfile": "ShoulderStretch",
@@ -4093,10 +5861,10 @@
     "id": 742,
     "name": "Alternating Overhead Triceps Stretch",
     "video": "exercise_videos/exercise_0742.mp4",
-    "muscleGroups": [
-      "Shoulders",
-      "Trapezius",
-      "Triceps"
+    "primaryCanonicalGroup": "ElbowExtensors",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Stretching",
     "motionProfile": "ArmRaise",
@@ -4113,11 +5881,11 @@
     "id": 743,
     "name": "Clasped-Hands-Behind-Back Chest Opener",
     "video": "exercise_videos/exercise_0743.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Chest",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff",
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Stretching",
     "motionProfile": "ChestOpen",
@@ -4134,9 +5902,10 @@
     "id": 744,
     "name": "Alternating Standing Figure-Four Glute Stretch",
     "video": "exercise_videos/exercise_0744.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Abductors"
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipAbductors"
     ],
     "practice": "Stretching",
     "motionProfile": "HipHinge",
@@ -4153,11 +5922,11 @@
     "id": 745,
     "name": "Dynamic Hug",
     "video": "exercise_videos/exercise_0745.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Chest",
-      "RotatorCuff"
+    "primaryCanonicalGroup": "Chest",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "RotatorCuff",
+      "ShoulderAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "ChestFly",
@@ -4174,9 +5943,10 @@
     "id": 746,
     "name": "Alternating Staggered Calf-and-Ankle Stretch",
     "video": "exercise_videos/exercise_0746.mp4",
-    "muscleGroups": [
-      "Calves",
-      "Shins"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
@@ -4193,8 +5963,10 @@
     "id": 747,
     "name": "Alternating Standing Quad Stretch",
     "video": "exercise_videos/exercise_0747.mp4",
-    "muscleGroups": [
-      "Quadriceps"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "HipFlexors"
     ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
@@ -4211,9 +5983,11 @@
     "id": 748,
     "name": "Alternating Wide-Stance Groin-Hamstring Shift",
     "video": "exercise_videos/exercise_0748.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "Adductors"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "AccessoryHipAdductors",
+      "GlutealExtensors"
     ],
     "practice": "Stretching",
     "motionProfile": "HipShift",
@@ -4230,8 +6004,10 @@
     "id": 750,
     "name": "Alternating Heel-Forward Hamstring Stretch",
     "video": "exercise_videos/exercise_0750.mp4",
-    "muscleGroups": [
-      "Hamstrings"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "SpinalExtensors"
     ],
     "practice": "Stretching",
     "motionProfile": "LegBalance",
@@ -4248,8 +6024,9 @@
     "id": 751,
     "name": "Alternating Neck Side Stretch",
     "video": "exercise_videos/exercise_0751.mp4",
-    "muscleGroups": [
-      "Neck"
+    "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
+    "secondaryCanonicalGroups": [
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Stretching",
     "motionProfile": "GazeDiagonal",
@@ -4266,8 +6043,9 @@
     "id": 752,
     "name": "Alternating Straight-Arm Wrist Stretch",
     "video": "exercise_videos/exercise_0752.mp4",
-    "muscleGroups": [
-      "Forearms"
+    "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Stretching",
     "motionProfile": "WristMotion",
@@ -4284,9 +6062,12 @@
     "id": 784,
     "name": "Extended Mountain Pose",
     "video": "exercise_videos/exercise_0784.mp4",
-    "muscleGroups": [
-      "Chest",
-      "Trapezius"
+    "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
+    "secondaryCanonicalGroups": [
+      "Soleus",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "Chest"
     ],
     "practice": "Yoga",
     "motionProfile": "ChestOpen",
@@ -4303,10 +6084,10 @@
     "id": 804,
     "name": "Alternating Arms-Spread Torso Twist",
     "video": "exercise_videos/exercise_0804.mp4",
-    "muscleGroups": [
-      "Core",
-      "Shoulders",
-      "MidBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAbductors"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreRotation",
@@ -4323,9 +6104,11 @@
     "id": 816,
     "name": "Torso Circle",
     "video": "exercise_videos/exercise_0816.mp4",
-    "muscleGroups": [
-      "Core",
-      "LowerBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "SpinalExtensors",
+      "DeepHipRotators"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "SpineWave",
@@ -4342,10 +6125,11 @@
     "id": 818,
     "name": "Standing Cat-Cow",
     "video": "exercise_videos/exercise_0818.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "LowerBack",
-      "MidBack"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall",
+      "ScapularGirdle"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "SpineWave",
@@ -4362,11 +6146,12 @@
     "id": 825,
     "name": "Alternating Deadlift with Body Twist",
     "video": "exercise_videos/exercise_0825.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "HipShift",
@@ -4383,12 +6168,11 @@
     "id": 831,
     "name": "Alternating Knee-Up Reverse Fly",
     "video": "exercise_videos/exercise_0831.mp4",
-    "muscleGroups": [
-      "Core",
-      "UpperBack",
-      "Shoulders",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
       "HipFlexors",
-      "MidBack",
+      "AbdominalWall",
+      "ShoulderAbductors",
       "RotatorCuff"
     ],
     "practice": "Bodyweight conditioning",
@@ -4406,14 +6190,12 @@
     "id": 834,
     "name": "Alternating Cross-Step Lat Pulldown",
     "video": "exercise_videos/exercise_0834.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
-      "Adductors",
-      "Abductors",
-      "MidBack",
-      "Trapezius",
-      "Biceps"
+    "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
+    "secondaryCanonicalGroups": [
+      "ScapularGirdle",
+      "ElbowFlexors",
+      "AccessoryHipAdductors",
+      "HipAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -4430,12 +6212,11 @@
     "id": 836,
     "name": "Squat with Back Squeeze",
     "video": "exercise_videos/exercise_0836.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Quadriceps",
-      "UpperBack",
-      "MidBack",
-      "Trapezius"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "ScapularGirdle"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Squat",
@@ -4452,13 +6233,12 @@
     "id": 843,
     "name": "Standing Cobra Pose",
     "video": "exercise_videos/exercise_0843.mp4",
-    "muscleGroups": [
-      "UpperBack",
-      "Shoulders",
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "ScapularGirdle",
       "Chest",
-      "LowerBack",
-      "MidBack",
-      "Trapezius"
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Yoga",
     "motionProfile": "SpineExtension",
@@ -4475,9 +6255,10 @@
     "id": 845,
     "name": "Extended-Mountain Backline Reach and Lower",
     "video": "exercise_videos/exercise_0845.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "ShoulderAbductors",
+    "secondaryCanonicalGroups": [
+      "SpinalExtensors",
+      "PosteriorThighAndKneeFlexors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "BackBalance",
@@ -4494,8 +6275,11 @@
     "id": 884,
     "name": "Boxing Slip",
     "video": "exercise_videos/exercise_0884.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
     ],
     "practice": "Boxing",
     "motionProfile": "BoxingEvasion",
@@ -4512,9 +6296,12 @@
     "id": 885,
     "name": "Boxing Roll",
     "video": "exercise_videos/exercise_0885.mp4",
-    "muscleGroups": [
-      "Core",
-      "LowerBack"
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Boxing",
     "motionProfile": "SpineFlexion",
@@ -4531,11 +6318,14 @@
     "id": 905,
     "name": "Wide-Plié Alternating Side Bend",
     "video": "exercise_videos/exercise_0905.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreSideBend",
@@ -4552,8 +6342,10 @@
     "id": 906,
     "name": "Alternating Cross-and-Side Crunch",
     "video": "exercise_videos/exercise_0906.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreCrunch",
@@ -4570,8 +6362,10 @@
     "id": 910,
     "name": "Standing Pilates Knee-Lift Twist",
     "video": "exercise_videos/exercise_0910.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "HipFlexors"
     ],
     "practice": "Pilates",
     "motionProfile": "CoreRotation",
@@ -4588,8 +6382,10 @@
     "id": 914,
     "name": "Alternating Diagonal Knee Pull-Down",
     "video": "exercise_videos/exercise_0914.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreBrace",
@@ -4606,10 +6402,13 @@
     "id": 915,
     "name": "Alternating Split-Stance Knee Drive with Overhead Reach",
     "video": "exercise_videos/exercise_0915.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors",
-      "Trapezius"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreCrunch",
@@ -4626,11 +6425,13 @@
     "id": 939,
     "name": "Alternating Hinge-to-Knee Drive",
     "video": "exercise_videos/exercise_0939.mp4",
-    "muscleGroups": [
-      "Core",
-      "Hamstrings",
-      "LowerBack",
-      "HipFlexors"
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors",
+      "GlutealExtensors",
+      "HipFlexors",
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreCrunch",
@@ -4647,10 +6448,11 @@
     "id": 943,
     "name": "Alternating Knee-Up Arms Raise",
     "video": "exercise_videos/exercise_0943.mp4",
-    "muscleGroups": [
-      "Core",
-      "Shoulders",
-      "HipFlexors"
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAbductors",
+      "ScapularGirdle"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreBrace",
@@ -4667,9 +6469,11 @@
     "id": 948,
     "name": "Alternating Standing Wood Chop",
     "video": "exercise_videos/exercise_0948.mp4",
-    "muscleGroups": [
-      "Core",
-      "MidBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAdductorsAndExtensors",
+      "Chest"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
@@ -4686,9 +6490,11 @@
     "id": 949,
     "name": "Alternating Standing Reverse Wood Chop",
     "video": "exercise_videos/exercise_0949.mp4",
-    "muscleGroups": [
-      "Core",
-      "MidBack"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "ShoulderAbductors",
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
@@ -4705,9 +6511,10 @@
     "id": 954,
     "name": "Alternating Torso Rotation with Side Reach",
     "video": "exercise_videos/exercise_0954.mp4",
-    "muscleGroups": [
-      "Core",
-      "MidBack"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "ShoulderAbductors"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreRotation",
@@ -4724,8 +6531,9 @@
     "id": 958,
     "name": "Standing Alternating Side Bend",
     "video": "exercise_videos/exercise_0958.mp4",
-    "muscleGroups": [
-      "Core"
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreSideBend",
@@ -4742,9 +6550,10 @@
     "id": 960,
     "name": "Alternating Heel Tap with Opposite Hand",
     "video": "exercise_videos/exercise_0960.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Fundamental movement skills",
     "motionProfile": "CoreBrace",
@@ -4761,9 +6570,10 @@
     "id": 962,
     "name": "Alternating Standing Knee-to-Elbow Crunch",
     "video": "exercise_videos/exercise_0962.mp4",
-    "muscleGroups": [
-      "Core",
-      "HipFlexors"
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "CoreCrunch",
@@ -4780,9 +6590,11 @@
     "id": 969,
     "name": "Chair-Pose Core Hold",
     "video": "exercise_videos/exercise_0969.mp4",
-    "muscleGroups": [
-      "Core",
-      "Quadriceps"
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Yoga",
     "motionProfile": "CoreBalance",
@@ -4799,11 +6611,13 @@
     "id": 971,
     "name": "Horse-Stance Core Hold",
     "video": "exercise_videos/exercise_0971.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "CoreBalance",
@@ -4820,12 +6634,13 @@
     "id": 973,
     "name": "Alternating Reverse-Lunge Torso Twist",
     "video": "exercise_videos/exercise_0973.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
       "HipFlexors",
-      "MidBack"
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "Lunge",
@@ -4842,11 +6657,13 @@
     "id": 986,
     "name": "Karate Kiba-Dachi Brace",
     "video": "exercise_videos/exercise_0986.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "MajorHipAdductors",
+    "secondaryCanonicalGroups": [
+      "AccessoryHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Karate",
     "motionProfile": "CoreBrace",
@@ -4863,11 +6680,13 @@
     "id": 987,
     "name": "Karate Shiko-Dachi Core Brace",
     "video": "exercise_videos/exercise_0987.mp4",
-    "muscleGroups": [
-      "Glutes",
-      "Core",
-      "Quadriceps",
-      "Adductors"
+    "primaryCanonicalGroup": "AccessoryHipAdductors",
+    "secondaryCanonicalGroups": [
+      "MajorHipAdductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "AbdominalWall"
     ],
     "practice": "Karate",
     "motionProfile": "CoreBrace",
@@ -4884,9 +6703,10 @@
     "id": 1000,
     "name": "Standing Forward Fold",
     "video": "exercise_videos/exercise_1000.mp4",
-    "muscleGroups": [
-      "Hamstrings",
-      "LowerBack"
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "SpinalExtensors",
+      "DeepAndIntersegmentalBack"
     ],
     "practice": "Stretching",
     "motionProfile": "SpineFlexion",

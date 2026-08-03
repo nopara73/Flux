@@ -1,6 +1,13 @@
 # Flux movement-practice coverage audit
 
-Generated from the runtime catalog and the supplementary movement-practices DAG. The DAG is used for provenance, discovery, and diversity review; Flux capacities remain the scheduling taxonomy.
+> Historical snapshot: this report was generated for the earlier 246-exercise
+> capacity catalog. Flux now ships the 321-exercise canonical muscle-group
+> catalog described in the root README; the practice DAG remains supplementary
+> discovery/provenance material rather than the scheduling taxonomy.
+
+Generated from the then-current catalog and the supplementary movement-practices
+DAG. The DAG remains useful for provenance, discovery, and diversity review;
+capacities were the scheduling taxonomy when this snapshot was produced.
 
 ## Outcome
 

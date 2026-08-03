@@ -22,41 +22,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/workout_progress_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.08"
+                android:textColor="@color/secondary_text"
+                android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/workout_progress_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="13sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/muscle_group_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/muscle_chip_background"
-                    android:fontFamily="sans-serif-medium"
-                    android:letterSpacing="0.08"
-                    android:maxLines="2"
-                    android:paddingStart="12dp"
-                    android:paddingTop="7dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="7dp"
-                    android:textColor="@color/accent_text"
-                    android:textSize="12sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/workout_group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:accessibilityHeading="true"
+                android:background="@drawable/muscle_chip_background"
+                android:breakStrategy="balanced"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:hyphenationFrequency="none"
+                android:lineSpacingExtra="2dp"
+                android:minHeight="44dp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/accent_text"
+                android:textSize="13sp" />
 
             <ProgressBar
                 android:id="@+id/workout_progress_bar"
@@ -65,7 +58,7 @@
                 android:layout_height="5dp"
                 android:layout_marginTop="10dp"
                 android:importantForAccessibility="no"
-                android:max="20"
+                android:max="30"
                 android:progress="1"
                 android:progressDrawable="@drawable/progress_track" />
 
@@ -79,7 +72,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="start"
                 android:lineSpacingExtra="1dp"
-                android:maxLines="3"
+                android:maxLines="4"
                 android:textColor="@color/primary_text"
                 android:textSize="23sp" />
 
@@ -298,15 +291,6 @@
                         android:text="@string/rest_label"
                         android:textColor="@color/rest_text"
                         android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/rest_skip_button"
-                        style="@style/FluxQuietButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="10dp"
-                        android:contentDescription="@string/skip_rest_description"
-                        android:text="@string/skip" />
 
                     <TextView
                         android:id="@+id/rest_countdown_text"

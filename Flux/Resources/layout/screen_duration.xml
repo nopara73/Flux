@@ -51,15 +51,17 @@
 
                         <TextView
                             android:id="@+id/duration_minutes_value"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:accessibilityLiveRegion="polite"
                             android:contentDescription="@string/duration_value_default_description"
                             android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
                             android:includeFontPadding="false"
+                            android:maxLines="1"
                             android:text="@string/duration_minutes_default"
                             android:textColor="@color/primary_text"
-                            android:textSize="108sp" />
+                            android:textSize="88sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -97,10 +99,10 @@
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/duration_seek_description_default"
-                        android:max="17"
+                        android:max="6"
                         android:paddingStart="4dp"
                         android:paddingEnd="4dp"
-                        android:progress="7"
+                        android:progress="3"
                         android:progressBackgroundTint="@color/route_inactive"
                         android:progressTint="@color/accent"
                         android:splitTrack="false"
@@ -118,39 +120,67 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingStart="74dp"
-                    android:paddingEnd="74dp"
-                    android:orientation="horizontal">
+                    android:paddingEnd="74dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/duration_minimum_value"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp" />
-
-                    <Space
+                        style="@style/DurationOptionLabel"
                         android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_3" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/duration_maximum_value"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp" />
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_5" />
+
+                    <TextView
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_7" />
+
+                    <TextView
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_10" />
+
+                    <TextView
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_15" />
+
+                    <TextView
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_20" />
+
+                    <TextView
+                        style="@style/DurationOptionLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/duration_option_30" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/duration_route_segments"
+                    android:id="@+id/duration_option_segments"
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
                     android:layout_marginTop="36dp"
                     android:baselineAligned="false"
-                    android:contentDescription="@string/duration_route_default_description"
+                    android:contentDescription="@string/duration_options_default_description"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -159,22 +189,9 @@
                     <View android:id="@+id/duration_segment_02" style="@style/DurationRouteSegmentActive" />
                     <View android:id="@+id/duration_segment_03" style="@style/DurationRouteSegmentActive" />
                     <View android:id="@+id/duration_segment_04" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_05" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_06" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_07" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_08" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_09" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_10" style="@style/DurationRouteSegmentActive" />
-                    <View android:id="@+id/duration_segment_11" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_12" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_13" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_14" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_15" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_16" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_17" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_18" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_19" style="@style/DurationRouteSegmentInactive" />
-                    <View android:id="@+id/duration_segment_20" style="@style/DurationRouteSegmentInactive" />
+                    <View android:id="@+id/duration_segment_05" style="@style/DurationRouteSegmentInactive" />
+                    <View android:id="@+id/duration_segment_06" style="@style/DurationRouteSegmentInactive" />
+                    <View android:id="@+id/duration_segment_07" style="@style/DurationRouteSegmentInactive" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

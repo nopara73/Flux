@@ -1,10 +1,15 @@
 # Flux exercise catalog
 
-Flux contains 246 human-demonstrated standing movements. Exercises are chosen
-for movement quality first and assigned to one or more muscle groups afterward.
-Full-body movements remain eligible for every group where they place meaningful
-demand; assignment is a practical workout index, not an anatomical claim. The
-generator and app require at least 10 exercises in every muscle group.
+Flux contains 321 human-demonstrated standing movements. Exercises are chosen
+for movement quality first and assigned to canonical muscle groups afterward.
+Each exercise has one primary scheduling group and zero or more meaningful
+secondary groups. Full-body movements remain eligible wherever they place real
+demand; assignment is a practical workout index, not an anatomical claim.
+
+The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
+and 30-group resolutions. Every resolution covers every leaf exactly once and
+keeps its declared descending mass order. The generator and app require at
+least 10 strong primary representatives in every canonical leaf.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
@@ -33,16 +38,18 @@ repetitions even when their traditional name contains “hold.” Hold MP4s loop
 only during preview; during the timer they play once and freeze on the curated
 target from `tools/HoldExerciseFrames.psd1`.
 
-`tools/ExerciseMuscleGroups.psd1` is the stable many-to-many assignment source.
+`tools/ExerciseCanonicalGroups.psd1` is the stable primary/secondary assignment
+source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.
 The runtime catalog emits those assignments directly. The historical ten source
 families remain generator-only so stable exercise IDs and reviewed media paths
-do not change. The generator rejects missing/duplicate/unknown assignments,
-groups with fewer than 10 exercises, duplicate names, synthetic modifier
-suffixes, missing motion profiles, non-human media, and constraint violations.
+do not change. The generator rejects missing, duplicate, or unknown assignments;
+canonical leaves with fewer than 10 primaries; duplicate names; synthetic
+modifier suffixes; missing motion profiles; non-human media; and constraint
+violations.
 
 ## Media quality
 
-Every entry has an offline 256 × 256 silent H.264 MP4. All 246 included
+Every entry has an offline 256 × 256 silent H.264 MP4. All 321 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

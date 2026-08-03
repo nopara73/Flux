@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!--
+    The Android app has a single net10.0-android target. Link its platform-neutral
+    domain sources so these tests run as ordinary .NET tests without an emulator.
+  -->
+  <ItemGroup>
+    <Compile Include="..\Flux\Data\IExerciseDatabase.cs" Link="Production\Data\IExerciseDatabase.cs" />
+    <Compile Include="..\Flux\Data\IWorkoutStateStore.cs" Link="Production\Data\IWorkoutStateStore.cs" />
+    <Compile Include="..\Flux\Models\CanonicalMuscleGroup.cs" Link="Production\Models\CanonicalMuscleGroup.cs" />
+    <Compile Include="..\Flux\Models\Exercise.cs" Link="Production\Models\Exercise.cs" />
+    <Compile Include="..\Flux\Models\ExerciseMode.cs" Link="Production\Models\ExerciseMode.cs" />
+    <Compile Include="..\Flux\Models\ExerciseOutcome.cs" Link="Production\Models\ExerciseOutcome.cs" />
+    <Compile Include="..\Flux\Models\LegacyWorkoutState.cs" Link="Production\Models\LegacyWorkoutState.cs" />
+    <Compile Include="..\Flux\Models\WorkoutGroup.cs" Link="Production\Models\WorkoutGroup.cs" />
+    <Compile Include="..\Flux\Models\WorkoutState.cs" Link="Production\Models\WorkoutState.cs" />
+    <Compile Include="..\Flux\Services\ExerciseSessionService.cs" Link="Production\Services\ExerciseSessionService.cs" />
+    <Compile Include="..\Flux\Services\LegacyWorkoutStateMigration.cs" Link="Production\Services\LegacyWorkoutStateMigration.cs" />
+    <Compile Include="..\Flux\Services\CatalogMigrationRules.cs" Link="Production\Services\CatalogMigrationRules.cs" />
+    <Compile Include="..\Flux\Services\MassGroupingTaxonomy.cs" Link="Production\Services\MassGroupingTaxonomy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Flux\Assets\exercises.json"
+          Link="Assets\exercises.json"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

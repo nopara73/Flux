@@ -1,7 +1,7 @@
 @{
     # Generation-only legacy motion-family overrides. They preserve the media
     # profile attached to stable exercise IDs and are never emitted into the
-    # runtime catalog; runtime classification lives in ExerciseMuscleGroups.psd1.
+    # runtime catalog; runtime classification lives in ExerciseCanonicalGroups.psd1.
 
     # Low-impact strength, mobility, Pilates, and balance additions.
     15 = 'HIPS'
@@ -80,6 +80,16 @@
     367 = 'HANDS'
     379 = 'HANDS'
     389 = 'BACK'
+    501 = 'HEAD'
+    502 = 'HEAD'
+    503 = 'HEAD'
+    504 = 'HEAD'
+    505 = 'HEAD'
+    506 = 'HEAD'
+    507 = 'HEAD'
+    508 = 'HEAD'
+    509 = 'HEAD'
+    510 = 'HEAD'
     544 = 'ARMS'
     617 = 'HIPS'
     632 = 'HIPS'

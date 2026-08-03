@@ -16,18 +16,18 @@ $exactMediaCopies = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaCopies.psd1') -SkipLimitCheck
 $exactMediaTransforms = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExactExerciseMediaTransforms.psd1') -SkipLimitCheck
-$muscleGroups = @(
-    'Glutes', 'Core', 'Quadriceps', 'Hamstrings', 'UpperBack',
-    'Shoulders', 'Chest', 'LowerBack', 'Calves', 'HipFlexors',
-    'Adductors', 'Abductors', 'MidBack', 'Trapezius', 'Forearms',
-    'Triceps', 'Biceps', 'RotatorCuff', 'Neck', 'Shins')
-$muscleGroupDisplayNames = @{
-    UpperBack = 'Upper back'
-    LowerBack = 'Lower back'
-    HipFlexors = 'Hip flexors'
-    MidBack = 'Mid back'
-    RotatorCuff = 'Rotator cuff'
+$canonicalTaxonomy = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'CanonicalMuscleGroups.psd1') -SkipLimitCheck
+$canonicalGroups = @($canonicalTaxonomy.Groups | Sort-Object { [int]$_.Id })
+$canonicalGroupKeys = @(
+    $canonicalGroups | ForEach-Object { [string]$_.StableKey })
+if ($canonicalGroups.Count -ne 30 -or
+    @(Compare-Object @($canonicalGroups.Id) @(1..30)).Count -gt 0 -or
+    @($canonicalGroupKeys | Sort-Object -Unique).Count -ne 30) {
+    throw 'The canonical muscle-group taxonomy is incomplete or invalid.'
 }
+$canonicalAssignmentSource = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
 
 $externalIds = @($review.ReviewedExternal | ForEach-Object { [int]$_ })
 $humanExternalIds = @(
@@ -93,14 +93,54 @@ if ($unverifiedCopySources.Count -gt 0 -or
     throw 'A retained copy or transform points to a discarded source.'
 }
 
-$invalidMuscleGroups = @($muscleGroups | Where-Object {
-        $muscleGroup = $_
+$invalidAssignments = @($catalog | Where-Object {
+        'muscleGroups' -in @($_.PSObject.Properties.Name) -or
+        'primaryCanonicalGroup' -notin @($_.PSObject.Properties.Name) -or
+        'secondaryCanonicalGroups' -notin @($_.PSObject.Properties.Name) -or
+        [string]::IsNullOrWhiteSpace([string]$_.primaryCanonicalGroup) -or
+        [string]$_.primaryCanonicalGroup -notin $canonicalGroupKeys -or
+        @($_.secondaryCanonicalGroups | Sort-Object -Unique).Count -ne
+            @($_.secondaryCanonicalGroups).Count -or
+        [string]$_.primaryCanonicalGroup -in @($_.secondaryCanonicalGroups) -or
+        @($_.secondaryCanonicalGroups | Where-Object {
+                [string]$_ -notin $canonicalGroupKeys
+            }).Count -gt 0
+    })
+if ($invalidAssignments.Count -gt 0) {
+    throw 'The catalog contains an invalid canonical assignment or a legacy muscleGroups field.'
+}
+
+$catalogIds = @($catalog.id | ForEach-Object { [int]$_ })
+if (@($catalogIds | Where-Object { $_ -lt 1 -or $_ -gt 1000 }).Count -gt 0 -or
+    @($catalogIds | Sort-Object -Unique).Count -ne $catalog.Count) {
+    throw 'Catalog exercise IDs must be unique stable IDs from 1 through 1000.'
+}
+
+$sourceAssignmentIds = @(
+    $canonicalAssignmentSource.Keys | ForEach-Object { [int]$_ } | Sort-Object)
+$assignmentDrift = @(
+    Compare-Object ($catalogIds | Sort-Object) $sourceAssignmentIds)
+$assignmentDrift += @(
+    $catalog | Where-Object {
+        $assignment = $canonicalAssignmentSource[[int]$_.id]
+        $assignment -isnot [System.Collections.IDictionary] -or
+        [string]$_.primaryCanonicalGroup -ne [string]$assignment.Primary -or
+        (@($_.secondaryCanonicalGroups | Sort-Object) -join "`n") -ne
+            (@($assignment.Secondary | ForEach-Object { [string]$_ } |
+                    Sort-Object) -join "`n")
+    })
+if ($assignmentDrift.Count -gt 0) {
+    throw 'The generated canonical assignments have drifted from ExerciseCanonicalGroups.psd1.'
+}
+
+$undersizedPrimaryGroups = @($canonicalGroupKeys | Where-Object {
+        $canonicalGroup = $_
         @($catalog | Where-Object {
-                $muscleGroup -in @($_.muscleGroups)
+                [string]$_.primaryCanonicalGroup -eq $canonicalGroup
             }).Count -lt 10
     })
-if ($invalidMuscleGroups.Count -gt 0) {
-    throw "Every muscle group must retain at least ten exercises: $($invalidMuscleGroups -join ', ')."
+if ($undersizedPrimaryGroups.Count -gt 0) {
+    throw "Every canonical leaf must retain at least ten primary exercises: $($undersizedPrimaryGroups -join ', ')."
 }
 
 $lines = [System.Collections.Generic.List[string]]::new()
@@ -112,19 +152,21 @@ $lines.Add(('All **{0}** bundled exercises show an actual person performing the 
 $lines.Add('Synthetic, schematic, anatomical, and 3D demonstrations are excluded from')
 $lines.Add('both the runtime catalog and the application package.')
 $lines.Add('')
-$lines.Add('| Muscle group | Assigned exercises |')
-$lines.Add('| --- | ---: |')
-foreach ($muscleGroup in $muscleGroups) {
-    $count = @($catalog | Where-Object {
-            $muscleGroup -in @($_.muscleGroups)
+$lines.Add('| Canonical muscle group | Primary exercises | All meaningful assignments |')
+$lines.Add('| --- | ---: | ---: |')
+foreach ($canonicalGroup in $canonicalGroups) {
+    $stableKey = [string]$canonicalGroup.StableKey
+    $primaryCount = @($catalog | Where-Object {
+            [string]$_.primaryCanonicalGroup -eq $stableKey
         }).Count
-    $displayName = if ($muscleGroupDisplayNames.ContainsKey($muscleGroup)) {
-        $muscleGroupDisplayNames[$muscleGroup]
-    }
-    else {
-        $muscleGroup
-    }
-    $lines.Add(('| {0} | {1} |' -f $displayName, $count))
+    $allAssignmentCount = @($catalog | Where-Object {
+            [string]$_.primaryCanonicalGroup -eq $stableKey -or
+            $stableKey -in @($_.secondaryCanonicalGroups)
+        }).Count
+    $lines.Add(('| {0} | {1} | {2} |' -f
+            [string]$canonicalGroup.DisplayName,
+            $primaryCount,
+            $allAssignmentCount))
 }
 
 $lines.Add('')

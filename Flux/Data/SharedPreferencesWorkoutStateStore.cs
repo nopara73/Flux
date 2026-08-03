@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Android.Content;
 using Flux.Models;
+using Flux.Services;
 
 namespace Flux.Data;
 
@@ -28,8 +29,26 @@ public sealed class SharedPreferencesWorkoutStateStore : IWorkoutStateStore
 
         try
         {
-            return JsonSerializer.Deserialize(json, WorkoutJsonContext.Default.WorkoutState)
-                ?? new WorkoutState();
+            using JsonDocument document = JsonDocument.Parse(json);
+            int version = document.RootElement.TryGetProperty(
+                    "version",
+                    out JsonElement versionElement)
+                ? versionElement.GetInt32()
+                : 4;
+
+            if (version >= 5)
+            {
+                return JsonSerializer.Deserialize(
+                        json,
+                        WorkoutJsonContext.Default.WorkoutState)
+                    ?? new WorkoutState();
+            }
+
+            LegacyWorkoutState legacy = JsonSerializer.Deserialize(
+                    json,
+                    WorkoutJsonContext.Default.LegacyWorkoutState)
+                ?? new LegacyWorkoutState();
+            return LegacyWorkoutStateMigration.Migrate(legacy);
         }
         catch (JsonException)
         {

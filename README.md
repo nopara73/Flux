@@ -5,34 +5,21 @@ Android. It targets Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-The app ships with a local SQLite database seeded from 246 reviewed exercises.
+The app ships with a local SQLite database seeded from 321 reviewed exercises.
 Movements are selected for their value first, then assigned on a best-effort
-basis to one or more of these ordered muscle groups:
+basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
+scheduling group plus every secondary group it meaningfully trains. Full-body
+exercises remain eligible wherever their hardest work fits, and every canonical
+group has at least 10 primary choices.
 
-1. Glutes
-2. Core
-3. Quadriceps
-4. Hamstrings
-5. Upper back
-6. Shoulders
-7. Chest
-8. Lower back
-9. Calves
-10. Hip flexors
-11. Adductors
-12. Abductors
-13. Mid back
-14. Trapezius
-15. Forearms
-16. Triceps
-17. Biceps
-18. Rotator cuff
-19. Neck
-20. Shins
+The canonical leaves roll up explicitly into seven mass-ordered workout
+resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. The schedule order is the fixed
+estimated bilateral skeletal-muscle-mass order in
+`Flux/Services/MassGroupingTaxonomy.cs`; the buckets are practical nominal
+targets, not claims that every indivisible muscle has an exact percentage.
 
-Full-body exercises remain eligible wherever their hardest work fits. Every
-muscle group has at least 10 choices. An exercise contains a stable ID, unique
-name and MP4, one or more muscle groups, practice and movement metadata,
+An exercise contains a stable numeric ID, unique name and MP4, primary and
+secondary canonical groups, practice and movement metadata,
 repetition-or-hold mode, score, and explicit movement-constraint metadata.
 
 Every retained movement:
@@ -45,31 +32,32 @@ Every retained movement:
 - needs no wall, chair, floor work, prop, partner, or equipment;
 - avoids jumping, stomping, clapping, and vocalization.
 
-All 246 MP4 demonstrations are bundled for offline use. Holds loop as previews,
+All 321 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 14 stores muscle assignments in a normalized
-many-to-many table. Upgrading preserves the score of each stable exercise whose
-ID and name are unchanged. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
+Database schema version 15 stores canonical assignments, assignment roles, and
+every resolution roll-up in normalized tables. Its additive v14 migration keeps
+all existing exercise IDs, names, demonstrations, and scores while adding the
+new catalog records. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
 
 ## Workout flow
 
-The opening screen selects a 3–20 minute workout. It defaults to the last choice,
-or 10 minutes on first use. Each selected minute is one ordered muscle-group
-round: 45 seconds of exercise and 15 seconds of rest. Selection always uses the
-prefix above, so a five-minute workout ends with Upper back and a 20-minute
-workout ends with Shins.
+The opening screen selects 3, 5, 7, 10, 15, 20, or 30 minutes. It defaults to
+the last choice, or 10 minutes on first use; unsupported legacy values migrate
+to the nearest choice. Each minute is one mass-ordered rolled-up group: 45
+seconds of exercise and a 15-second rest/decision window.
 
 Press **Start** to begin a round or **Skip** to finish its exercise timer
-immediately while testing. During rest, tap **Tap to keep** to retain the current
-exercise. If rest expires without a tap, its integer score drops by one and it
-is replaced for the next workout by a random exercise from the highest-score
-bucket in the same muscle group. New lineups avoid duplicate exercises whenever
-the group pools allow it, without replacing a kept slot merely to enforce
-uniqueness. Progress, rest state, last-used duration, and scores persist locally.
+immediately while testing. There is no separate rest skip. During rest, tap
+**Tap to keep** to retain the current exercise and advance immediately. If rest
+expires without a tap, its integer score drops by one and it is replaced for the
+next workout by a random exercise from the highest-score bucket in the same
+active rolled-up group. Primary assignments are preferred; secondary assignments
+are fallback candidates. Every workout uses one distinct exercise per group.
+Progress, rest state, last-used resolution, and scores persist locally.
 
 If Flux is closed or killed during a workout, the next cold launch applies all
 completed keep/not-keep results (including a pending rest choice), performs the

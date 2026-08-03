@@ -13,33 +13,76 @@ if ($catalog.Count -lt 30) {
     throw "Expected at least 30 catalog records, found $($catalog.Count)."
 }
 
-$muscleGroups = @(
-    'Glutes', 'Core', 'Quadriceps', 'Hamstrings', 'UpperBack',
-    'Shoulders', 'Chest', 'LowerBack', 'Calves', 'HipFlexors',
-    'Adductors', 'Abductors', 'MidBack', 'Trapezius', 'Forearms',
-    'Triceps', 'Biceps', 'RotatorCuff', 'Neck', 'Shins')
-$invalidMuscleGroupCounts = @($muscleGroups | Where-Object {
-        $muscleGroup = $_
-        @($catalog | Where-Object {
-                $muscleGroup -in @($_.muscleGroups)
-            }).Count -lt 10
-    })
-if ($invalidMuscleGroupCounts.Count -gt 0) {
-    throw "Every muscle group must contain at least ten exercises: $($invalidMuscleGroupCounts -join ', ')."
+$canonicalTaxonomy = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'CanonicalMuscleGroups.psd1') -SkipLimitCheck
+$canonicalGroups = @($canonicalTaxonomy.Groups | Sort-Object { [int]$_.Id })
+$canonicalGroupKeys = @(
+    $canonicalGroups | ForEach-Object { [string]$_.StableKey })
+if ($canonicalGroups.Count -ne 30 -or
+    @(Compare-Object @($canonicalGroups.Id) @(1..30)).Count -gt 0 -or
+    @($canonicalGroupKeys | Sort-Object -Unique).Count -ne 30) {
+    throw 'The canonical muscle-group taxonomy is incomplete or invalid.'
 }
+$canonicalAssignmentSource = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
 
 $invalidAssignments = @($catalog | Where-Object {
-        @($_.muscleGroups).Count -lt 1 -or
-        @($_.muscleGroups | Sort-Object -Unique).Count -ne @($_.muscleGroups).Count -or
-        @($_.muscleGroups | Where-Object { $_ -notin $muscleGroups }).Count -gt 0
+        'muscleGroups' -in @($_.PSObject.Properties.Name) -or
+        'primaryCanonicalGroup' -notin @($_.PSObject.Properties.Name) -or
+        'secondaryCanonicalGroups' -notin @($_.PSObject.Properties.Name) -or
+        [string]::IsNullOrWhiteSpace([string]$_.primaryCanonicalGroup) -or
+        [string]$_.primaryCanonicalGroup -notin $canonicalGroupKeys -or
+        @($_.secondaryCanonicalGroups | Sort-Object -Unique).Count -ne
+            @($_.secondaryCanonicalGroups).Count -or
+        [string]$_.primaryCanonicalGroup -in @($_.secondaryCanonicalGroups) -or
+        @($_.secondaryCanonicalGroups | Where-Object {
+                [string]$_ -notin $canonicalGroupKeys
+            }).Count -gt 0
     })
 if ($invalidAssignments.Count -gt 0) {
-    throw 'Every exercise must have one or more unique, recognized muscle groups.'
+    throw 'Every exercise must have exactly one recognized primary canonical group, unique recognized secondaries, and no legacy muscleGroups field.'
+}
+
+$catalogIds = @($catalog.id | ForEach-Object { [int]$_ })
+if (@($catalogIds | Where-Object { $_ -lt 1 -or $_ -gt 1000 }).Count -gt 0 -or
+    @($catalogIds | Sort-Object -Unique).Count -ne $catalog.Count) {
+    throw 'Catalog exercise IDs must be unique stable IDs from 1 through 1000.'
+}
+
+$sourceAssignmentIds = @(
+    $canonicalAssignmentSource.Keys | ForEach-Object { [int]$_ } | Sort-Object)
+$assignmentDrift = @(
+    Compare-Object ($catalogIds | Sort-Object) $sourceAssignmentIds)
+$assignmentDrift += @(
+    $catalog | Where-Object {
+        $assignment = $canonicalAssignmentSource[[int]$_.id]
+        $assignment -isnot [System.Collections.IDictionary] -or
+        [string]$_.primaryCanonicalGroup -ne [string]$assignment.Primary -or
+        (@($_.secondaryCanonicalGroups | Sort-Object) -join "`n") -ne
+            (@($assignment.Secondary | ForEach-Object { [string]$_ } |
+                    Sort-Object) -join "`n")
+    })
+if ($assignmentDrift.Count -gt 0) {
+    throw 'The generated canonical assignments have drifted from ExerciseCanonicalGroups.psd1.'
+}
+
+$invalidPrimaryCounts = @($canonicalGroupKeys | Where-Object {
+        $canonicalGroup = $_
+        @($catalog | Where-Object {
+                [string]$_.primaryCanonicalGroup -eq $canonicalGroup
+            }).Count -lt 10
+    })
+if ($invalidPrimaryCounts.Count -gt 0) {
+    throw "Every canonical leaf must contain at least ten primary exercises: $($invalidPrimaryCounts -join ', ')."
 }
 
 $videoPaths = @($catalog.video)
 if (@($videoPaths | Where-Object { $_ -notmatch '^exercise_videos/exercise_\d{4}\.mp4$' }).Count -gt 0 -or
-    @($videoPaths | Sort-Object -Unique).Count -ne $catalog.Count) {
+    @($videoPaths | Sort-Object -Unique).Count -ne $catalog.Count -or
+    @($catalog | Where-Object {
+            [string]$_.video -ne
+                ('exercise_videos/exercise_{0:D4}.mp4' -f [int]$_.id)
+        }).Count -gt 0) {
     throw 'Catalog video paths are missing, malformed, or duplicated.'
 }
 

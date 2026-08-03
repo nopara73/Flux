@@ -11,6 +11,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+# The historical source catalog remains partitioned into ten 100-item families
+# so stable exercise IDs and media-generation profiles do not move. These source
+# families are generation details and are not emitted as runtime classifications.
 $regions = @(
     'FEET',
     'LEGS',
@@ -24,32 +27,6 @@ $regions = @(
     'CORE'
 )
 
-# The historical source catalog remains partitioned into ten 100-item files so
-# stable exercise IDs and media-generation profiles do not move. These source
-# families are not part of the runtime data model.
-$muscleGroups = @(
-    'Glutes',
-    'Core',
-    'Quadriceps',
-    'Hamstrings',
-    'UpperBack',
-    'Shoulders',
-    'Chest',
-    'LowerBack',
-    'Calves',
-    'HipFlexors',
-    'Adductors',
-    'Abductors',
-    'MidBack',
-    'Trapezius',
-    'Forearms',
-    'Triceps',
-    'Biceps',
-    'RotatorCuff',
-    'Neck',
-    'Shins'
-)
-
 $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1') -SkipLimitCheck
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
@@ -59,8 +36,13 @@ $exercisePracticeTaxonomy = Import-PowerShellDataFile -LiteralPath (
 $exercisePracticeOverrides = $exercisePracticeTaxonomy.CatalogPracticeOverrides
 $exerciseRegionOverrides = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseRegionOverrides.psd1') -SkipLimitCheck
-$exerciseMuscleGroups = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExerciseMuscleGroups.psd1') -SkipLimitCheck
+$canonicalTaxonomy = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'CanonicalMuscleGroups.psd1') -SkipLimitCheck
+$canonicalGroups = @($canonicalTaxonomy.Groups | Sort-Object { [int]$_.Id })
+$canonicalGroupKeys = @(
+    $canonicalGroups | ForEach-Object { [string]$_.StableKey })
+$rawExerciseCanonicalGroups = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
@@ -82,7 +64,23 @@ $retainedExerciseIds = @(
         ForEach-Object { [int]$_ } |
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
-$minimumExercisesPerMuscleGroup = 10
+$minimumPrimaryExercisesPerCanonicalGroup = 10
+
+$canonicalIds = @($canonicalGroups | ForEach-Object { [int]$_.Id })
+$canonicalDisplayNames = @(
+    $canonicalGroups | ForEach-Object { [string]$_.DisplayName })
+if ($canonicalGroups.Count -ne 30 -or
+    @(Compare-Object $canonicalIds @(1..30)).Count -gt 0 -or
+    @($canonicalGroupKeys | Where-Object {
+            [string]::IsNullOrWhiteSpace([string]$_)
+        }).Count -gt 0 -or
+    @($canonicalGroupKeys | Sort-Object -Unique).Count -ne 30 -or
+    @($canonicalDisplayNames | Where-Object {
+            [string]::IsNullOrWhiteSpace([string]$_)
+        }).Count -gt 0 -or
+    @($canonicalDisplayNames | Sort-Object -Unique).Count -ne 30) {
+    throw 'The canonical muscle-group taxonomy must define exactly 30 stable, ordered leaves.'
+}
 
 $invalidPracticeOverrides = @(
     $exercisePracticeOverrides.GetEnumerator() | Where-Object {
@@ -112,37 +110,63 @@ if ($invalidRegionOverrides.Count -gt 0) {
     throw 'The exercise-region override map contains an invalid entry.'
 }
 
-$invalidMuscleGroupKeys = @(
-    $exerciseMuscleGroups.Keys | Where-Object { [string]$_ -notin $muscleGroups })
-$missingMuscleGroupKeys = @(
-    $muscleGroups | Where-Object { -not $exerciseMuscleGroups.ContainsKey($_) })
-$assignedExerciseIds = @(
-    $exerciseMuscleGroups.Values |
-        ForEach-Object { $_ } |
-        ForEach-Object { [int]$_ } |
-        Sort-Object -Unique)
-$unassignedExerciseIds = @(
-    $retainedExerciseIds | Where-Object { $_ -notin $assignedExerciseIds })
-$unknownAssignedExerciseIds = @(
-    $assignedExerciseIds | Where-Object { $_ -notin $retainedExerciseIds })
-$duplicateMuscleGroupAssignments = @(
-    foreach ($muscleGroup in $muscleGroups) {
-        @($exerciseMuscleGroups[$muscleGroup]) |
-            Group-Object |
-            Where-Object Count -gt 1 |
-            ForEach-Object { "$muscleGroup/$($_.Name)" }
+$exerciseCanonicalGroups = @{}
+$invalidCanonicalAssignmentIds = [System.Collections.Generic.List[string]]::new()
+foreach ($entry in $rawExerciseCanonicalGroups.GetEnumerator()) {
+    $exerciseId = 0
+    if (-not [int]::TryParse([string]$entry.Key, [ref]$exerciseId) -or
+        $exerciseId -lt 1 -or
+        $exerciseId -gt 1000 -or
+        $exerciseCanonicalGroups.ContainsKey($exerciseId)) {
+        $invalidCanonicalAssignmentIds.Add([string]$entry.Key)
+        continue
+    }
+
+    $exerciseCanonicalGroups[$exerciseId] = $entry.Value
+}
+$canonicalAssignmentIds = @($exerciseCanonicalGroups.Keys | Sort-Object)
+$catalogAssignmentDifference = @(
+    Compare-Object ($retainedExerciseIds | Sort-Object) $canonicalAssignmentIds)
+$invalidCanonicalAssignments = @(
+    foreach ($entry in $exerciseCanonicalGroups.GetEnumerator()) {
+        $exerciseId = [int]$entry.Key
+        $assignment = $entry.Value
+        $primaryValues = @($assignment.Primary)
+        $secondaryValues = @(
+            $assignment.Secondary | ForEach-Object { [string]$_ })
+        if ($assignment -isnot [System.Collections.IDictionary] -or
+            -not $assignment.ContainsKey('Primary') -or
+            -not $assignment.ContainsKey('Secondary') -or
+            $primaryValues.Count -ne 1 -or
+            [string]::IsNullOrWhiteSpace([string]$primaryValues[0]) -or
+            [string]$primaryValues[0] -notin $canonicalGroupKeys -or
+            @($secondaryValues | Where-Object {
+                    [string]::IsNullOrWhiteSpace($_) -or
+                    $_ -notin $canonicalGroupKeys
+                }).Count -gt 0 -or
+            @($secondaryValues | Sort-Object -Unique).Count -ne
+                $secondaryValues.Count -or
+            [string]$primaryValues[0] -in $secondaryValues) {
+            $exerciseId
+        }
     })
-$undersizedMuscleGroups = @(
-    $muscleGroups | Where-Object {
-        @($exerciseMuscleGroups[$_]).Count -lt $minimumExercisesPerMuscleGroup
+$undersizedPrimaryCanonicalGroups = @(
+    foreach ($canonicalGroup in $canonicalGroupKeys) {
+        $primaryCount = @(
+            $exerciseCanonicalGroups.Values | Where-Object {
+                [string]$_.Primary -eq $canonicalGroup
+            }).Count
+        if ($primaryCount -lt $minimumPrimaryExercisesPerCanonicalGroup) {
+            '{0} ({1})' -f $canonicalGroup, $primaryCount
+        }
     })
-if ($invalidMuscleGroupKeys.Count -gt 0 -or
-    $missingMuscleGroupKeys.Count -gt 0 -or
-    $unassignedExerciseIds.Count -gt 0 -or
-    $unknownAssignedExerciseIds.Count -gt 0 -or
-    $duplicateMuscleGroupAssignments.Count -gt 0 -or
-    $undersizedMuscleGroups.Count -gt 0) {
-    throw 'The exercise muscle-group assignment map is incomplete or invalid.'
+if ($invalidCanonicalAssignmentIds.Count -gt 0 -or
+    $catalogAssignmentDifference.Count -gt 0 -or
+    $invalidCanonicalAssignments.Count -gt 0) {
+    throw 'The canonical exercise assignment map must cover every retained stable ID exactly once with one valid primary and unique valid secondaries.'
+}
+if ($undersizedPrimaryCanonicalGroups.Count -gt 0) {
+    throw "Every canonical leaf must have at least $minimumPrimaryExercisesPerCanonicalGroup primary representatives: $($undersizedPrimaryCanonicalGroups -join ', ')."
 }
 
 if ($holdExerciseFrames.Count -eq 0 -or @(
@@ -2345,10 +2369,10 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $motionProfile = Get-MotionProfile `
             -Region $effectiveRegion `
             -Name $exerciseName
-        $assignedMuscleGroups = @(
-            $muscleGroups | Where-Object {
-                $exerciseId -in @($exerciseMuscleGroups[$_])
-            })
+        $canonicalAssignment = $exerciseCanonicalGroups[$exerciseId]
+        $primaryCanonicalGroup = [string]$canonicalAssignment.Primary
+        $secondaryCanonicalGroups = @(
+            $canonicalAssignment.Secondary | ForEach-Object { [string]$_ })
         $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
         $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
         $holdFramePercent = if ($isHold) {
@@ -2365,7 +2389,8 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             id = $exerciseId
             name = $exerciseName
             video = $videoRelativePath
-            muscleGroups = $assignedMuscleGroups
+            primaryCanonicalGroup = $primaryCanonicalGroup
+            secondaryCanonicalGroups = $secondaryCanonicalGroups
             practice = $practice
             motionProfile = $motionProfile
             mode = $exerciseMode
@@ -2611,13 +2636,13 @@ if ($records.Count -ne $expectedExerciseCount) {
 $duplicateNames = $records | Group-Object { $_['name'] } | Where-Object Count -ne 1
 $duplicateVideos = $records | Group-Object { $_['video'] } | Where-Object Count -ne 1
 $duplicateIds = $records | Group-Object { $_['id'] } | Where-Object Count -ne 1
-$invalidMuscleGroupCounts = @(
-    foreach ($muscleGroup in $muscleGroups) {
-        $muscleGroupCount = @($records | Where-Object {
-                $muscleGroup -in @($_['muscleGroups'])
+$invalidPrimaryCanonicalGroupCounts = @(
+    foreach ($canonicalGroup in $canonicalGroupKeys) {
+        $primaryCount = @($records | Where-Object {
+                $_['primaryCanonicalGroup'] -eq $canonicalGroup
             }).Count
-        if ($muscleGroupCount -lt $minimumExercisesPerMuscleGroup) {
-            $muscleGroup
+        if ($primaryCount -lt $minimumPrimaryExercisesPerCanonicalGroup) {
+            '{0} ({1})' -f $canonicalGroup, $primaryCount
         }
     })
 $constraintViolations = $records | Where-Object {
@@ -2627,10 +2652,14 @@ $constraintViolations = $records | Where-Object {
     $_['maxSpaceMeters'] -gt 3 -or
     $_['equipment'] -ne 'None' -or
     -not $_['silent'] -or
-    @($_['muscleGroups']).Count -lt 1 -or
-    @($_['muscleGroups'] | Sort-Object -Unique).Count -ne
-        @($_['muscleGroups']).Count -or
-    @($_['muscleGroups'] | Where-Object { $_ -notin $muscleGroups }).Count -gt 0 -or
+    [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
+    $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
+    @($_['secondaryCanonicalGroups'] | Sort-Object -Unique).Count -ne
+        @($_['secondaryCanonicalGroups']).Count -or
+    $_['primaryCanonicalGroup'] -in @($_['secondaryCanonicalGroups']) -or
+    @($_['secondaryCanonicalGroups'] | Where-Object {
+            $_ -notin $canonicalGroupKeys
+        }).Count -gt 0 -or
     [string]::IsNullOrWhiteSpace($_['practice']) -or
     [string]::IsNullOrWhiteSpace($_['motionProfile']) -or
     $_['mode'] -notin @('Repetition', 'Hold') -or
@@ -2645,8 +2674,9 @@ $syntheticNames = $records | Where-Object {
 }
 
 if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
-    $invalidMuscleGroupCounts -or $constraintViolations -or $syntheticNames) {
-    throw 'The generated catalog failed its IDs, uniqueness, muscle-group, or constraint checks.'
+    $invalidPrimaryCanonicalGroupCounts -or $constraintViolations -or
+    $syntheticNames) {
+    throw 'The generated catalog failed its stable-ID, uniqueness, canonical-assignment, or constraint checks.'
 }
 
 if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {

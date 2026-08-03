@@ -8,7 +8,9 @@ public sealed class Exercise
 
     public required string Video { get; init; }
 
-    public required MuscleGroup[] MuscleGroups { get; init; }
+    public required CanonicalMuscleGroup PrimaryCanonicalGroup { get; init; }
+
+    public required CanonicalMuscleGroup[] SecondaryCanonicalGroups { get; init; }
 
     public required string Practice { get; init; }
 
@@ -29,4 +31,10 @@ public sealed class Exercise
     public required string Equipment { get; init; }
 
     public required bool Silent { get; init; }
+
+    public bool Trains(CanonicalMuscleGroup group)
+    {
+        return PrimaryCanonicalGroup == group ||
+            SecondaryCanonicalGroups.Contains(group);
+    }
 }

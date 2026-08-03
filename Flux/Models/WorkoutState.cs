@@ -2,13 +2,13 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 4;
+    public int Version { get; set; } = 5;
 
-    public Dictionary<MuscleGroup, string> SelectedExercises { get; set; } = [];
+    public Dictionary<string, int> SelectedExerciseIds { get; set; } = [];
 
-    public Dictionary<MuscleGroup, ExerciseOutcome> Outcomes { get; set; } = [];
+    public Dictionary<string, ExerciseOutcome> Outcomes { get; set; } = [];
 
-    public MuscleGroup? PendingRestMuscleGroup { get; set; }
+    public string? PendingRestGroupId { get; set; }
 
     public long PendingRestEndsAtUnixMilliseconds { get; set; }
 
@@ -25,4 +25,13 @@ public sealed class WorkoutState
     public bool WorkoutCompleted { get; set; }
 
     public bool CompletionAcknowledged { get; set; }
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public Dictionary<string, string> LegacySelectedExerciseNames { get; set; } = [];
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public Dictionary<string, ExerciseOutcome> LegacyOutcomes { get; set; } = [];
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public string? LegacyPendingRestGroup { get; set; }
 }
