@@ -35,9 +35,37 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(90, timedSideExercises.Length);
+        Assert.Equal(101, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
+
+        Dictionary<int, ExerciseSideSequence> auditedSideSequences = new()
+        {
+            [58] = ExerciseSideSequence.ScreenLeftThenRight,
+            [237] = ExerciseSideSequence.ScreenLeftThenRight,
+            [268] = ExerciseSideSequence.ScreenLeftThenRight,
+            [269] = ExerciseSideSequence.ScreenLeftThenRight,
+            [278] = ExerciseSideSequence.ScreenRightThenLeft,
+            [279] = ExerciseSideSequence.ScreenLeftThenRight,
+            [338] = ExerciseSideSequence.ScreenLeftThenRight,
+            [397] = ExerciseSideSequence.ScreenRightThenLeft,
+            [619] = ExerciseSideSequence.ScreenLeftThenRight,
+            [884] = ExerciseSideSequence.ScreenRightThenLeft,
+            [885] = ExerciseSideSequence.ScreenRightThenLeft,
+        };
+        Assert.All(auditedSideSequences, expected =>
+            Assert.Equal(
+                expected.Value,
+                exercises.Single(exercise => exercise.Id == expected.Key).SideSequence));
+        Assert.Equal(
+            ExerciseSideSequence.Continuous,
+            exercises.Single(exercise => exercise.Id == 118).SideSequence);
+        Exercise externalRotation = exercises.Single(exercise => exercise.Id == 268);
+        Assert.Equal(
+            "Self-Resisted External-Rotation Isometric",
+            externalRotation.Name);
+        Assert.Equal(ExerciseMode.Hold, externalRotation.Mode);
+        Assert.Equal(75, externalRotation.HoldFramePercent);
 
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {

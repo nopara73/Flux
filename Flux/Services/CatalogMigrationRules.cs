@@ -46,7 +46,19 @@ public static class CatalogMigrationRules
                     stored.Name[AlternatingPrefix.Length..],
                     bundled.Name,
                     StringComparison.Ordinal);
-            if ((!nameIsPreserved && !nameIsApprovedTimedSideNormalization) ||
+            bool nameIsApprovedExerciseCorrection =
+                exerciseId == 268 &&
+                string.Equals(
+                    stored.Name,
+                    "Self-Resisted External-Rotation Push-Out",
+                    StringComparison.Ordinal) &&
+                string.Equals(
+                    bundled.Name,
+                    "Self-Resisted External-Rotation Isometric",
+                    StringComparison.Ordinal);
+            if ((!nameIsPreserved &&
+                    !nameIsApprovedTimedSideNormalization &&
+                    !nameIsApprovedExerciseCorrection) ||
                 !string.Equals(stored.Video, bundled.Video, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(

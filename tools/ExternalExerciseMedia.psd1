@@ -75,9 +75,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 230.0
-        DurationSeconds = 42.0
+        DurationSeconds = 7.0
         FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        Crop = 'crop=ih:ih:(iw-ih)/2:0,delogo=x=297:y=1:w=59:h=31,delogo=x=312:y=312:w=47:h=42'
         MirrorForAlternation = $false
     }
     59 = @{
@@ -269,7 +269,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     125 = @{
         File = 'standing-pilates.mp4'
@@ -279,7 +279,7 @@
         Youtube = $true
         Video = $true
         StartSeconds = 1127
-        DurationSeconds = 10
+        DurationSeconds = 6
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -304,8 +304,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 80
-        DurationSeconds = 8
+        StartSeconds = 82.2
+        DurationSeconds = 5
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -1483,9 +1483,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 9.0
-        DurationSeconds = 18.0
+        DurationSeconds = 8.0
         FramesPerSecond = 10
-        MirrorForAlternation = $false
+        MirrorForAlternation = $true
     }
     318 = @{
         File = 'standing-bodyweight-triceps-kickback.mp4'
@@ -1753,14 +1753,14 @@
         MirrorForAlternation = $false
     }
     958 = @{
-        File = 'standing-pilates.mp4'
-        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
-        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        File = 'y4WOWce78TY.mp4'
+        Url = 'https://www.youtube.com/watch?v=y4WOWce78TY'
+        SourcePage = 'https://www.youtube.com/watch?v=y4WOWce78TY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1640
-        DurationSeconds = 12
+        StartSeconds = 2.8
+        DurationSeconds = 12.2
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
@@ -2484,8 +2484,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1010
-        DurationSeconds = 8
+        StartSeconds = 1010.6
+        DurationSeconds = 3.4
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
         MirrorForAlternation = $true
@@ -2497,8 +2497,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1060
-        DurationSeconds = 8
+        StartSeconds = 1061.6
+        DurationSeconds = 3
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
         MirrorForAlternation = $true
@@ -2514,7 +2514,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     632 = @{
         File = 'mizi-standing.mp4'
@@ -2579,7 +2579,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     804 = @{
         File = 'mizi-standing.mp4'
@@ -2605,7 +2605,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     831 = @{
         File = 'mizi-standing.mp4'
@@ -2631,7 +2631,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     836 = @{
         File = 'mizi-standing.mp4'
@@ -2657,7 +2657,7 @@
         DurationSeconds = 8
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     943 = @{
         File = 'mizi-standing.mp4'
@@ -2666,8 +2666,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 460
-        DurationSeconds = 8
+        StartSeconds = 461.2
+        DurationSeconds = 2.6
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
         MirrorForAlternation = $true
@@ -2692,8 +2692,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 660
-        DurationSeconds = 8
+        StartSeconds = 661.4
+        DurationSeconds = 3.4
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
         MirrorForAlternation = $true
@@ -2733,8 +2733,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 397
-        DurationSeconds = 9
+        StartSeconds = 397.8
+        DurationSeconds = 4
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -2872,7 +2872,7 @@
         Human = $true
         Video = $true
         StartSeconds = 19
-        DurationSeconds = 30
+        DurationSeconds = 9
         FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -3066,8 +3066,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 184
-        DurationSeconds = 8
+        StartSeconds = 188
+        DurationSeconds = 3.4
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -3229,7 +3229,7 @@
         DurationSeconds = 8
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     340 = @{
         File = 'growing-nojump.mp4'
@@ -3278,7 +3278,7 @@
         Youtube = $true
         Video = $true
         StartSeconds = 810
-        DurationSeconds = 8
+        DurationSeconds = 1.8
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
@@ -3755,14 +3755,14 @@
         MirrorForAlternation = $false
     }
     255 = @{
-        File = 'D3rOMexZbAc.mp4'
-        Url = 'https://www.youtube.com/watch?v=D3rOMexZbAc'
-        SourcePage = 'https://www.youtube.com/watch?v=D3rOMexZbAc'
+        File = 'YmBD3vnH3q8.mp4'
+        Url = 'https://www.youtube.com/watch?v=YmBD3vnH3q8'
+        SourcePage = 'https://www.youtube.com/watch?v=YmBD3vnH3q8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 7
-        DurationSeconds = 12
+        StartSeconds = 29
+        DurationSeconds = 6
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
@@ -3911,14 +3911,14 @@
         MirrorForAlternation = $false
     }
     268 = @{
-        File = 'ldUwIBccnuw.mp4'
-        Url = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
-        SourcePage = 'https://www.youtube.com/watch?v=ldUwIBccnuw'
+        File = 'Fl4OAJo1JsQ.mp4'
+        Url = 'https://www.youtube.com/watch?v=Fl4OAJo1JsQ'
+        SourcePage = 'https://www.youtube.com/watch?v=Fl4OAJo1JsQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 347
-        DurationSeconds = 30
+        StartSeconds = 11
+        DurationSeconds = 7.1
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
@@ -4047,10 +4047,11 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 392.24
-        DurationSeconds = 14.64
+        StartSeconds = 398.74
+        DurationSeconds = 2.4
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
         MirrorForAlternation = $false
     }
     279 = @{
@@ -4576,14 +4577,14 @@
         MirrorForAlternation = $true
     }
     1000 = @{
-        File = 'alex-standing-stretch.mp4'
-        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
-        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        File = 'oy2AfcI1CXA.mp4'
+        Url = 'https://www.youtube.com/watch?v=oy2AfcI1CXA'
+        SourcePage = 'https://www.youtube.com/watch?v=oy2AfcI1CXA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 611.5
-        DurationSeconds = 6.5
+        StartSeconds = 0.5
+        DurationSeconds = 15
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false

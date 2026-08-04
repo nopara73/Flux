@@ -119,6 +119,48 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void MigrationAllowsReviewedExternalRotationCorrectionOnlyForStableId()
+    {
+        const string video = "exercise_0268.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [268] = new(
+                "Self-Resisted External-Rotation Push-Out",
+                video,
+                -3),
+        };
+        Exercise corrected = Exercise(
+            268,
+            "Self-Resisted External-Rotation Isometric",
+            video,
+            sideSequence: ExerciseSideSequence.ScreenLeftThenRight);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [corrected],
+            stored);
+
+        Assert.Contains(268, preserved);
+        Assert.Equal(-3, stored[268].Score);
+
+        Exercise wrongId = Exercise(
+            267,
+            corrected.Name,
+            video,
+            sideSequence: ExerciseSideSequence.ScreenLeftThenRight);
+        var wrongStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [267] = new(
+                "Self-Resisted External-Rotation Push-Out",
+                video,
+                -3),
+        };
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [wrongId],
+                wrongStored));
+    }
+
+    [Fact]
     public void VersionFifteenInventoryReconcilesAdditivelyIntoBundledCatalog()
     {
         int[] versionSixteenIds = [400, 401, 402, 403, 404, 405, 406];

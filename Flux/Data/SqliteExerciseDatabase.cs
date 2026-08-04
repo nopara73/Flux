@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 18;
+    private const int DatabaseVersion = 19;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -68,7 +68,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -84,10 +84,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         database.BeginTransaction();
         try
         {
-            database.ExecSQL(
-                "ALTER TABLE exercises ADD COLUMN side_sequence TEXT NOT NULL " +
-                "DEFAULT 'Continuous' CHECK (side_sequence IN " +
-                "('Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
+            if (oldVersion < 18)
+            {
+                database.ExecSQL(
+                    "ALTER TABLE exercises ADD COLUMN side_sequence TEXT NOT NULL " +
+                    "DEFAULT 'Continuous' CHECK (side_sequence IN " +
+                    "('Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
+            }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
             InsertTaxonomy(database);

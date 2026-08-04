@@ -1,5 +1,6 @@
 @{
-    # A hold is one bilateral or symmetric position sustained for the full timer.
+    # A hold settles into one sustained position. Timed-side holds are mirrored
+    # after the change phase so both sides receive the same duration.
     # The value identifies the reviewed target frame as a percentage of the GIF.
 
     # FEET
@@ -19,6 +20,7 @@
     257 = 70
     258 = 70
     260 = 70
+    268 = 75
     273 = 75
     288 = 75
     297 = 27

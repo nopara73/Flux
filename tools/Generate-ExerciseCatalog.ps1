@@ -49,6 +49,10 @@ $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
 $exerciseSideSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseSideSequences.psd1') -SkipLimitCheck
+$reviewedContinuousExercises = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ReviewedContinuousExercises.psd1')
+$reviewedContinuousExerciseIds = @(
+    $reviewedContinuousExercises.Ids | ForEach-Object { [int]$_ })
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
@@ -232,8 +236,21 @@ $invalidSideSequences = @(
         [int]$_.Key -notin $retainedExerciseIds -or
         [string]$_.Value -notin $validSideSequences
     })
-if ($invalidSideSequences.Count -gt 0) {
-    throw 'Every timed-side sequence must identify a retained human demonstration and a reviewed screen-side order.'
+$invalidContinuousExerciseIds = @(
+    $reviewedContinuousExerciseIds | Where-Object {
+        $_ -notin $retainedExerciseIds -or
+        $exerciseSideSequences.ContainsKey($_)
+    })
+$reviewedSideSequenceIds = @(
+    @($exerciseSideSequences.Keys | ForEach-Object { [int]$_ }) +
+        $reviewedContinuousExerciseIds |
+        Sort-Object -Unique)
+if ($invalidSideSequences.Count -gt 0 -or
+    $invalidContinuousExerciseIds.Count -gt 0 -or
+    $reviewedContinuousExerciseIds.Count -ne
+        @($reviewedContinuousExerciseIds | Sort-Object -Unique).Count -or
+    @(Compare-Object $retainedExerciseIds $reviewedSideSequenceIds).Count -gt 0) {
+    throw 'Every retained exercise must have an explicit reviewed side-sequence decision.'
 }
 
 if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
@@ -2366,8 +2383,11 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
             [string]$exerciseSideSequences[$exerciseId]
         }
-        else {
+        elseif ($exerciseId -in $reviewedContinuousExerciseIds) {
             'Continuous'
+        }
+        else {
+            throw "Exercise $exerciseId is missing a reviewed side-sequence decision."
         }
         $exerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
             $bilateralExerciseNames[$exerciseId]

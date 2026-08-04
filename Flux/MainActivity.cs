@@ -807,7 +807,7 @@ public class MainActivity : Activity
 
     private string CacheVideoAsset(string assetPath, bool forceRefresh)
     {
-        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v5");
+        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v6");
         Directory.CreateDirectory(cacheRoot);
         string cachedPath = System.IO.Path.Combine(cacheRoot, System.IO.Path.GetFileName(assetPath));
         string temporaryPath = cachedPath + ".tmp";

@@ -40,12 +40,13 @@ All 328 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 18 stores canonical assignments, assignment roles,
+Database schema version 19 stores canonical assignments, assignment roles,
 side-sequence metadata, and every resolution roll-up in normalized tables. Its
-additive v14–v17 migrations keep every existing exercise ID, demonstration
+additive v14–v18 migrations keep every existing exercise ID, demonstration
 path, and score while adding new catalog records, applying the current schedule
-order, and narrowly removing an obsolete leading “Alternating” label from
-timed-side movements. See
+order, and applying two narrow reviewed label corrections: timed-side
+“Alternating” normalization and the stable-ID 268 external-rotation name
+correction. See
 [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.

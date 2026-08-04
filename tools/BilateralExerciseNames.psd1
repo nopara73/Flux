@@ -173,7 +173,7 @@
     265 = 'Standing Bent-Elbow Arm Raise'
     266 = 'Standing Palms-Up Arm Raise'
     267 = 'T-Position Shoulder Rotation'
-    268 = 'Self-Resisted External-Rotation Push-Out'
+    268 = 'Self-Resisted External-Rotation Isometric'
     269 = 'Self-Resisted Curl-and-Press'
     270 = 'Bodyweight Svend Press'
     271 = 'Standing Lumbar Extension'

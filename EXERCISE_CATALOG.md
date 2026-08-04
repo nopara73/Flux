@@ -49,7 +49,9 @@ families remain generator-only so stable exercise IDs and reviewed media paths
 do not change. The generator rejects missing, duplicate, or unknown assignments;
 canonical leaves with fewer than 10 primaries; duplicate names; synthetic
 modifier suffixes; missing motion profiles; non-human media; and constraint
-violations.
+violations. It also requires an explicit reviewed timed-side or continuous
+decision for every retained movement, so new entries cannot silently default
+to the wrong playback behavior.
 
 ## Media quality
 
@@ -68,6 +70,7 @@ The retained inventory and media mappings live in:
 - `tools/ExactExerciseMediaTransforms.psd1`
 - `tools/HoldExerciseFrames.psd1`
 - `tools/ExerciseSideSequences.psd1`
+- `tools/ReviewedContinuousExercises.psd1`
 
 `tools/Test-ExerciseVideos.ps1` verifies the complete media inventory and
 compares every hold’s decoded final frame with its reviewed target. Counts are
