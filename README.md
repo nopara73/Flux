@@ -14,8 +14,9 @@ bucket has at least 10 primary-owned choices that meaningfully cover at least
 half of its canonical leaves.
 
 The canonical leaves roll up explicitly into seven mass-ordered workout
-resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. The schedule order is the fixed
-estimated bilateral skeletal-muscle-mass order in
+resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. Every workout schedules those
+groups from the smallest to the largest estimated bilateral skeletal-muscle
+mass, using the fixed hierarchy in
 `Flux/Services/MassGroupingTaxonomy.cs`; the buckets are practical nominal
 targets, not claims that every indivisible muscle has an exact percentage.
 
@@ -37,10 +38,11 @@ All 328 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 16 stores canonical assignments, assignment roles, and
-every resolution roll-up in normalized tables. Its additive v14/v15 migrations
-keep all existing exercise IDs, names, demonstrations, and scores while adding
-new catalog records. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
+Database schema version 17 stores canonical assignments, assignment roles, and
+every resolution roll-up in normalized tables. Its additive v14/v15/v16
+migrations keep all existing exercise IDs, names, demonstrations, and scores
+while adding new catalog records and applying the current schedule order. See
+[EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
 
@@ -48,8 +50,8 @@ verified counts.
 
 The opening screen selects 3, 5, 7, 10, 15, 20, or 30 minutes. It defaults to
 the last choice, or 10 minutes on first use; unsupported legacy values migrate
-to the nearest choice. Each minute is one mass-ordered rolled-up group: 45
-seconds of exercise and a 15-second rest/decision window.
+to the nearest choice. Each minute is one smallest-to-largest mass-ordered
+rolled-up group: 45 seconds of exercise and a 15-second rest/decision window.
 
 Press **Start** to begin a round or **Skip** to finish its exercise timer
 immediately while testing. There is no separate rest skip. During rest, tap

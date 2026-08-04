@@ -8,11 +8,11 @@ demand; assignment is a practical workout index, not an anatomical claim.
 
 The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
 and 30-group resolutions. Every resolution covers every leaf exactly once and
-keeps its declared descending mass order. A selectable exercise must own its
-bucket through its primary assignment and train at least half of that bucket's
-canonical leaves. Every bucket at every supported resolution has at least 10
-such choices; the 30-group resolution therefore also maintains at least 10
-primary representatives in every canonical leaf.
+schedules its declared mass hierarchy from smallest to largest. A selectable
+exercise must own its bucket through its primary assignment and train at least
+half of that bucket's canonical leaves. Every bucket at every supported
+resolution has at least 10 such choices; the 30-group resolution therefore also
+maintains at least 10 primary representatives in every canonical leaf.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,

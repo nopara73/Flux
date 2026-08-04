@@ -256,8 +256,16 @@ public static class MassGroupingTaxonomy
         int minutes,
         params WorkoutGroup[] groups)
     {
+        // Buckets are declared from largest to smallest estimated muscle mass so
+        // their anatomical hierarchy remains easy to audit. Workouts deliberately
+        // traverse that hierarchy in reverse for a small-to-large progression.
         WorkoutGroup[] resolutionGroups = groups
-            .Select(group => group with { Id = $"r{minutes}.{group.Id}" })
+            .Reverse()
+            .Select((group, index) => group with
+            {
+                Id = $"r{minutes}.{group.Id}",
+                Order = index + 1,
+            })
             .ToArray();
         return new WorkoutResolution(minutes, Array.AsReadOnly(resolutionGroups));
     }

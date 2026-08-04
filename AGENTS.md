@@ -1,6 +1,7 @@
 # Exercise selection guidelines
 
 - Follow the canonical muscle-group taxonomy and roll-ups in [`Flux/Services/MassGroupingTaxonomy.cs`](Flux/Services/MassGroupingTaxonomy.cs).
+- Schedule every workout resolution from smallest to largest estimated muscle mass.
 - Select worthwhile exercises first; assign muscle groups afterward.
 - Reject trivial gestures and ineffective dance steps.
 - Use real named movements or postures; do not invent count-inflating variants.

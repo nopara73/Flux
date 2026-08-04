@@ -6,7 +6,7 @@ namespace Flux.Tests;
 public sealed class MassGroupingTaxonomyTests
 {
     private static readonly IReadOnlyDictionary<int, (string Id, string Name)[]>
-        ExpectedGroups = new Dictionary<int, (string, string)[]>
+        ExpectedGroupsDescendingByMass = new Dictionary<int, (string, string)[]>
         {
             [3] =
             [
@@ -121,7 +121,7 @@ public sealed class MassGroupingTaxonomyTests
             ],
         };
 
-    private static readonly int[][] ExpectedParentOrders =
+    private static readonly int[][] ExpectedParentOrdersDescendingByMass =
     [
         [1, 1, 2, 1, 1, 1, 1],
         [1, 1, 7, 2, 2, 2, 2],
@@ -164,11 +164,13 @@ public sealed class MassGroupingTaxonomyTests
     }
 
     [Fact]
-    public void ResolutionIdsDisplayNamesCountsAndOrderAreStable()
+    public void ResolutionSchedulesRunFromSmallestToLargestMass()
     {
-        foreach ((int minutes, (string Id, string Name)[] expected) in ExpectedGroups)
+        foreach ((int minutes, (string Id, string Name)[] descending) in
+            ExpectedGroupsDescendingByMass)
         {
             WorkoutResolution resolution = MassGroupingTaxonomy.GetResolution(minutes);
+            (string Id, string Name)[] expected = descending.Reverse().ToArray();
 
             Assert.Equal(minutes, resolution.Minutes);
             Assert.Equal(minutes, resolution.Groups.Count);
@@ -198,7 +200,7 @@ public sealed class MassGroupingTaxonomyTests
     }
 
     [Fact]
-    public void LeafToBucketMappingsAreStableAtEveryResolution()
+    public void LeafToBucketMappingsAndAscendingScheduleOrdersAreStable()
     {
         int[] resolutions = [3, 5, 7, 10, 15, 20, 30];
         CanonicalMuscleGroup[] leaves = Enum.GetValues<CanonicalMuscleGroup>();
@@ -208,7 +210,11 @@ public sealed class MassGroupingTaxonomyTests
             int[] actual = resolutions
                 .Select(minutes => MassGroupingTaxonomy.GetGroup(minutes, leaves[leafIndex]).Order)
                 .ToArray();
-            Assert.Equal(ExpectedParentOrders[leafIndex], actual);
+            int[] expected = ExpectedParentOrdersDescendingByMass[leafIndex]
+                .Select((descendingOrder, resolutionIndex) =>
+                    resolutions[resolutionIndex] + 1 - descendingOrder)
+                .ToArray();
+            Assert.Equal(expected, actual);
         }
     }
 

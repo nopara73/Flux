@@ -159,6 +159,14 @@ public sealed class ExerciseSessionService
                 $"{group.DisplayName} is not the next workout group.");
         }
 
+        return ApplyOutcome(state, group, keep);
+    }
+
+    private Exercise ApplyOutcome(
+        WorkoutState state,
+        WorkoutGroup group,
+        bool keep)
+    {
         Exercise exercise = GetSelectedExercise(state, group);
         ExerciseOutcome outcome = keep ? ExerciseOutcome.Tick : ExerciseOutcome.X;
         if (!keep)
@@ -204,14 +212,13 @@ public sealed class ExerciseSessionService
         }
 
         Exercise? scorePenalty = null;
-        if (state.PendingRestGroupId is string pendingGroupId)
+        if (state.PendingRestGroupId is not null)
         {
-            WorkoutGroup? pendingGroup = GetActiveGroups(state)
-                .SingleOrDefault(group => group.Id == pendingGroupId);
-            if (pendingGroup is not null && GetNextGroup(state)?.Id == pendingGroupId)
+            WorkoutGroup? pendingGroup = GetValidPendingRestGroup(state);
+            if (pendingGroup is not null)
             {
                 bool keep = state.PendingRestKept;
-                Exercise exercise = RecordOutcome(state, pendingGroup, keep);
+                Exercise exercise = ApplyOutcome(state, pendingGroup, keep);
                 if (!keep)
                 {
                     scorePenalty = exercise;
@@ -481,18 +488,32 @@ public sealed class ExerciseSessionService
 
     private void NormalizePendingRest(WorkoutState state)
     {
-        if (state.PendingRestGroupId is null)
+        if (GetValidPendingRestGroup(state) is null)
         {
             ClearPendingRest(state);
-            return;
+        }
+    }
+
+    private WorkoutGroup? GetValidPendingRestGroup(WorkoutState state)
+    {
+        if (state.PendingRestGroupId is not string pendingGroupId ||
+            state.PendingRestEndsAtUnixMilliseconds <= 0 ||
+            state.Outcomes.ContainsKey(pendingGroupId))
+        {
+            return null;
         }
 
-        if (state.WorkoutCompleted ||
-            GetNextGroup(state)?.Id != state.PendingRestGroupId ||
-            state.PendingRestEndsAtUnixMilliseconds <= 0)
+        WorkoutGroup? pendingGroup = GetActiveGroups(state)
+            .SingleOrDefault(group => group.Id == pendingGroupId);
+        if (pendingGroup is null ||
+            !state.SelectedExerciseIds.TryGetValue(pendingGroupId, out int exerciseId) ||
+            !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
+            !IsAssignedToGroup(exercise, pendingGroup))
         {
-            ClearPendingRest(state);
+            return null;
         }
+
+        return pendingGroup;
     }
 
     private void NormalizeCompletionState(WorkoutState state)

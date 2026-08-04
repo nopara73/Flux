@@ -90,30 +90,34 @@ public sealed class WorkoutStateInvariantTests
     {
         Exercise rejected = Exercise(
             1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            CanonicalMuscleGroup.ScapularGirdle,
             score: 11);
         Exercise replacement = Exercise(
             2,
-            CanonicalMuscleGroup.LateralKneeExtensors,
+            CanonicalMuscleGroup.ShoulderAdductorsAndExtensors,
             score: 10);
         Exercise torso = Exercise(3, CanonicalMuscleGroup.SpinalExtensors);
-        Exercise upper = Exercise(4, CanonicalMuscleGroup.ScapularGirdle);
+        Exercise lower = Exercise(4, CanonicalMuscleGroup.MedialAndDeepKneeExtensors);
         var service = new ExerciseSessionService(
-            [rejected, replacement, torso, upper],
+            [rejected, replacement, torso, lower],
             new Random(1));
         var state = new WorkoutState();
         service.StartWorkout(state, 3);
         WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
-        int untouchedCurrentExerciseId = state.SelectedExerciseIds[groups[1].Id];
+        WorkoutGroup target = MassGroupingTaxonomy.GetGroup(
+            3,
+            rejected.PrimaryCanonicalGroup);
+        WorkoutGroup untouched = groups.First(group => group.Id != target.Id);
+        int untouchedCurrentExerciseId = state.SelectedExerciseIds[untouched.Id];
 
-        Exercise recorded = service.RecordOutcome(state, groups[0], keep: false);
+        Exercise recorded = service.RecordOutcome(state, target, keep: false);
         Exercise? unexpectedPenalty = service.FinishInterruptedWorkout(state);
 
         Assert.Same(rejected, recorded);
         Assert.Null(unexpectedPenalty);
         Assert.Equal(10, rejected.Score);
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[groups[0].Id]);
-        Assert.Equal(untouchedCurrentExerciseId, state.SelectedExerciseIds[groups[1].Id]);
+        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.Equal(untouchedCurrentExerciseId, state.SelectedExerciseIds[untouched.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
         Assert.Empty(state.Outcomes);
         Assert.False(state.WorkoutCompleted);
@@ -124,17 +128,17 @@ public sealed class WorkoutStateInvariantTests
     {
         Exercise rejected = Exercise(
             1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            CanonicalMuscleGroup.ScapularGirdle,
             score: 11);
         Exercise replacement = Exercise(
             2,
-            CanonicalMuscleGroup.LateralKneeExtensors,
+            CanonicalMuscleGroup.ShoulderAdductorsAndExtensors,
             score: 10);
         Exercise torso = Exercise(3, CanonicalMuscleGroup.SpinalExtensors);
-        Exercise upper = Exercise(4, CanonicalMuscleGroup.ScapularGirdle);
+        Exercise lower = Exercise(4, CanonicalMuscleGroup.MedialAndDeepKneeExtensors);
         Exercise unrelated = Exercise(5, CanonicalMuscleGroup.CranialMuscles);
         var service = new ExerciseSessionService(
-            [rejected, replacement, torso, upper, unrelated],
+            [rejected, replacement, torso, lower, unrelated],
             new Random(1));
         var state = new WorkoutState();
         string[] rejectedGroupIds = MassGroupingTaxonomy.SupportedMinutes
@@ -154,16 +158,21 @@ public sealed class WorkoutStateInvariantTests
 
         service.StartWorkout(state, 3);
         WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
-        service.RecordOutcome(state, groups[0], keep: false);
-        service.RecordOutcome(state, groups[1], keep: true);
-        service.RecordOutcome(state, groups[2], keep: true);
+        WorkoutGroup target = MassGroupingTaxonomy.GetGroup(
+            3,
+            rejected.PrimaryCanonicalGroup);
+        service.RecordOutcome(state, target, keep: false);
+        foreach (WorkoutGroup group in groups.Where(group => group.Id != target.Id))
+        {
+            service.RecordOutcome(state, group, keep: true);
+        }
         service.FinishInterruptedWorkout(state);
 
         Assert.DoesNotContain(rejected.Id, state.SelectedExerciseIds.Values);
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
         Assert.Equal(unrelated.Id, state.SelectedExerciseIds[unrelatedGroupId]);
         Assert.All(
-            rejectedGroupIds.Where(groupId => groupId != groups[0].Id),
+            rejectedGroupIds.Where(groupId => groupId != target.Id),
             groupId => Assert.False(state.SelectedExerciseIds.ContainsKey(groupId)));
     }
 
