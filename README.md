@@ -57,12 +57,14 @@ the last choice, or 10 minutes on first use; unsupported legacy values migrate
 to the nearest choice. Each minute is one smallest-to-largest mass-ordered
 rolled-up group: 45 seconds of exercise and a 15-second rest/decision window.
 
-Press **Start** to begin a round or **Skip** to finish its exercise timer
-immediately while testing. Naturally alternating and bilateral movements use a
+Press **Start** to begin a round. The quiet **Skip** action records the current
+exercise as not kept and advances immediately, bypassing both its remaining
+movement time and rest. Naturally alternating and bilateral movements use a
 continuous 45-second timer. Side-specific movements use 20 seconds on the
 demonstrated side, a wordless 5-second blue change phase, then 20 seconds on the
-mirrored side. Red tint always means movement and blue tint means change/rest.
-There is no separate rest skip. During rest, tap
+mirrored side. Red tint always means movement and blue tint means change/rest;
+the tint fills the workout canvas while the human demonstration stays untinted.
+There is no separate rest skip. During a normally reached rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the
 next workout by an exercise from the same active rolled-up group. A candidate

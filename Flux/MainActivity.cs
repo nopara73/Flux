@@ -24,6 +24,8 @@ public class MainActivity : Activity
     private const int CountdownSeconds = 45;
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 140L;
+    private const float SkipActionEnabledAlpha = 1f;
+    private const float SkipActionDisabledAlpha = 0.35f;
 
     private enum AppScreen
     {
@@ -56,6 +58,9 @@ public class MainActivity : Activity
     private LinearLayout _durationOptionSegments = null!;
     private Button _beginWorkoutButton = null!;
     private View _workoutScreen = null!;
+    private View _workoutPhaseSurface = null!;
+    private View _workoutPhaseLeft = null!;
+    private View _workoutPhaseRight = null!;
     private View _workoutInsetContent = null!;
     private View _workoutHeader = null!;
     private TextView _workoutProgressText = null!;
@@ -69,12 +74,6 @@ public class MainActivity : Activity
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
     private ImageView _holdFrameImage = null!;
-    private View _mediaPhaseOverlay = null!;
-    private View _mediaPhaseLeft = null!;
-    private View _mediaPhaseRight = null!;
-    private ImageView _mediaPhaseLeftIcon = null!;
-    private ImageView _mediaPhaseRightIcon = null!;
-    private ImageView _mediaPhaseCenterIcon = null!;
     private View _mediaScrim = null!;
     private TextView _mediaLoadingText = null!;
     private View _mediaErrorPanel = null!;
@@ -85,7 +84,7 @@ public class MainActivity : Activity
     private ImageView _countdownPhaseIcon = null!;
     private TextView _countdownText = null!;
     private ProgressBar _countdownProgress = null!;
-    private Button _speedUpButton = null!;
+    private TextView _skipAction = null!;
     private View _restPanel = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
@@ -244,6 +243,10 @@ public class MainActivity : Activity
             Resource.Id.duration_option_segments);
         _beginWorkoutButton = FindRequiredView<Button>(Resource.Id.begin_workout_button);
         _workoutScreen = FindRequiredView<View>(Resource.Id.workout_screen);
+        _workoutPhaseSurface = FindRequiredView<View>(
+            Resource.Id.workout_phase_surface);
+        _workoutPhaseLeft = FindRequiredView<View>(Resource.Id.workout_phase_left);
+        _workoutPhaseRight = FindRequiredView<View>(Resource.Id.workout_phase_right);
         _workoutInsetContent = FindRequiredView<View>(Resource.Id.workout_inset_content);
         _workoutHeader = FindRequiredView<View>(Resource.Id.workout_header);
         _workoutProgressText = FindRequiredView<TextView>(Resource.Id.workout_progress_text);
@@ -258,15 +261,6 @@ public class MainActivity : Activity
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
         _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
         _holdFrameImage = FindRequiredView<ImageView>(Resource.Id.hold_frame_image);
-        _mediaPhaseOverlay = FindRequiredView<View>(Resource.Id.media_phase_overlay);
-        _mediaPhaseLeft = FindRequiredView<View>(Resource.Id.media_phase_left);
-        _mediaPhaseRight = FindRequiredView<View>(Resource.Id.media_phase_right);
-        _mediaPhaseLeftIcon = FindRequiredView<ImageView>(
-            Resource.Id.media_phase_left_icon);
-        _mediaPhaseRightIcon = FindRequiredView<ImageView>(
-            Resource.Id.media_phase_right_icon);
-        _mediaPhaseCenterIcon = FindRequiredView<ImageView>(
-            Resource.Id.media_phase_center_icon);
         _mediaScrim = FindRequiredView<View>(Resource.Id.media_scrim);
         _mediaLoadingText = FindRequiredView<TextView>(Resource.Id.media_loading_text);
         _mediaErrorPanel = FindRequiredView<View>(Resource.Id.media_error_panel);
@@ -278,7 +272,7 @@ public class MainActivity : Activity
             Resource.Id.countdown_phase_icon);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
         _countdownProgress = FindRequiredView<ProgressBar>(Resource.Id.countdown_progress);
-        _speedUpButton = FindRequiredView<Button>(Resource.Id.speed_up_button);
+        _skipAction = FindRequiredView<TextView>(Resource.Id.skip_action);
         _restPanel = FindRequiredView<View>(Resource.Id.rest_panel);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
@@ -306,7 +300,7 @@ public class MainActivity : Activity
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
-        _speedUpButton.Click += (_, _) => SkipCountdown();
+        _skipAction.Click += (_, _) => SkipExercise();
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _mediaRetryButton.Click += (_, _) =>
         {
@@ -718,8 +712,7 @@ public class MainActivity : Activity
             _activeMediaPlayer = mediaPlayer;
             _activeMediaPlayer.Looping = _loopExerciseVideo;
             _activeMediaPlayer.SetVolume(0f, 0f);
-            _speedUpButton.Enabled = true;
-            _speedUpButton.Alpha = 1f;
+            SetSkipAvailability(available: true);
             if (_countdownPausedForMediaError && _activityResumed)
             {
                 _countdownPausedForMediaError = false;
@@ -798,8 +791,7 @@ public class MainActivity : Activity
         SetStartAvailability(available: false);
         if (_workoutPhase == WorkoutPhase.Move)
         {
-            _speedUpButton.Enabled = false;
-            _speedUpButton.Alpha = 0.5f;
+            SetSkipAvailability(available: false);
         }
 
         try
@@ -875,6 +867,14 @@ public class MainActivity : Activity
             : GetString(Resource.String.media_loading);
     }
 
+    private void SetSkipAvailability(bool available)
+    {
+        _skipAction.Enabled = available;
+        _skipAction.Alpha = available
+            ? SkipActionEnabledAlpha
+            : SkipActionDisabledAlpha;
+    }
+
     private void RevealExerciseMedia()
     {
         if (_mediaErrorPanel.Visibility == ViewStates.Visible)
@@ -928,8 +928,7 @@ public class MainActivity : Activity
             _startButton.Text = GetString(Resource.String.media_error);
             _startButton.ContentDescription = GetString(Resource.String.media_error);
         }
-        _speedUpButton.Enabled = false;
-        _speedUpButton.Alpha = 0.5f;
+        SetSkipAvailability(available: false);
         _mediaScrim.Animate()?.Cancel();
         _mediaScrim.Alpha = 1f;
         _mediaScrim.Visibility = ViewStates.Visible;
@@ -1077,17 +1076,16 @@ public class MainActivity : Activity
         StartCountdownTimer(CountdownSeconds * 1000L);
     }
 
-    private void SkipCountdown()
+    private void SkipExercise()
     {
         if (!_countdownActive)
         {
             return;
         }
 
-        _countdownTimer?.Cancel();
-        _countdownTimer?.Dispose();
-        _countdownTimer = null;
-        CompleteCountdown();
+        StopCountdownTimer();
+        SetSkipAvailability(available: false);
+        FinalizeCurrentRound(keep: false);
     }
 
     private void CompleteCountdown()
@@ -1097,12 +1095,7 @@ public class MainActivity : Activity
             return;
         }
 
-        _countdownActive = false;
-        _countdownPaused = false;
-        _countdownEndsAtElapsedMilliseconds = 0;
-        _countdownMillisecondsRemaining = 0;
-        _countdownTimer?.Dispose();
-        _countdownTimer = null;
+        StopCountdownTimer();
         UpdateMoveCountdown(0L);
         if (_currentExercise?.Mode == ExerciseMode.Hold)
         {
@@ -1120,13 +1113,7 @@ public class MainActivity : Activity
             return;
         }
 
-        _countdownActive = false;
-        _countdownPaused = false;
-        _countdownEndsAtElapsedMilliseconds = 0;
-        _countdownMillisecondsRemaining = 0;
-        _countdownTimer?.Cancel();
-        _countdownTimer?.Dispose();
-        _countdownTimer = null;
+        StopCountdownTimer();
 
         if (resetToStart && !_state.WorkoutCompleted)
         {
@@ -1136,6 +1123,18 @@ public class MainActivity : Activity
             }
             ShowStartButton();
         }
+    }
+
+    private void StopCountdownTimer()
+    {
+        _countdownActive = false;
+        _countdownPaused = false;
+        _countdownPausedForMediaError = false;
+        _countdownEndsAtElapsedMilliseconds = 0;
+        _countdownMillisecondsRemaining = 0;
+        _countdownTimer?.Cancel();
+        _countdownTimer?.Dispose();
+        _countdownTimer = null;
     }
 
     private void PauseCountdown()
@@ -1242,29 +1241,25 @@ public class MainActivity : Activity
         {
             case MovementPhase.Continuous:
                 SetExerciseMediaMirrored(mirrored: false);
-                RenderFullMediaPhase(
-                    Resource.Color.media_phase_move,
-                    Resource.Drawable.ic_phase_active);
+                RenderFullWorkoutPhase(Resource.Color.move_surface);
                 RestartHoldOrResumeRepetition();
                 break;
 
             case MovementPhase.FirstSide:
                 SetExerciseMediaMirrored(mirrored: false);
-                RenderTimedSideMediaPhase(firstSide: true);
+                RenderTimedSideWorkoutPhase(firstSide: true);
                 RestartExerciseMediaForSide();
                 break;
 
             case MovementPhase.ChangeSides:
                 _exerciseVideo.Pause();
-                RenderFullMediaPhase(
-                    Resource.Color.media_phase_rest,
-                    Resource.Drawable.ic_phase_swap);
+                RenderFullWorkoutPhase(Resource.Color.rest_surface);
                 CueSideTransition();
                 break;
 
             case MovementPhase.SecondSide:
                 SetExerciseMediaMirrored(mirrored: true);
-                RenderTimedSideMediaPhase(firstSide: false);
+                RenderTimedSideWorkoutPhase(firstSide: false);
                 RestartExerciseMediaForSide();
                 CueSideTransition();
                 break;
@@ -1319,9 +1314,6 @@ public class MainActivity : Activity
         int textColorResource = changingSides
             ? Resource.Color.rest_text
             : Resource.Color.move_text;
-        int backgroundResource = changingSides
-            ? Resource.Drawable.phase_rest_background
-            : Resource.Drawable.phase_move_background;
         int iconResource = changingSides
             ? Resource.Drawable.ic_phase_swap
             : Resource.Drawable.ic_phase_active;
@@ -1331,12 +1323,12 @@ public class MainActivity : Activity
         string description = changingSides ? "Change sides" : "Move";
 
         var textColor = new Android.Graphics.Color(GetColor(textColorResource));
-        _countdownPanel.SetBackgroundResource(backgroundResource);
         _countdownPhaseIcon.SetImageResource(iconResource);
         _countdownPhaseIcon.ImageTintList =
             Android.Content.Res.ColorStateList.ValueOf(textColor);
         _countdownPhaseIcon.ContentDescription = description;
         _countdownText.SetTextColor(textColor);
+        _skipAction.SetTextColor(textColor);
         _countdownProgress.ProgressDrawable = GetDrawable(progressResource);
     }
 
@@ -1378,60 +1370,43 @@ public class MainActivity : Activity
         _holdFrameImage.ScaleX = scale;
     }
 
-    private void RenderTimedSideMediaPhase(bool firstSide)
+    private void RenderTimedSideWorkoutPhase(bool firstSide)
     {
         bool sourceStartsOnLeft = _currentExercise?.SideSequence ==
             ExerciseSideSequence.ScreenLeftThenRight;
         bool activeLeft = firstSide
             ? sourceStartsOnLeft
             : !sourceStartsOnLeft;
-        RenderSplitMediaPhase(activeLeft);
+        RenderSplitWorkoutPhase(activeLeft);
     }
 
-    private void RenderSplitMediaPhase(bool activeLeft)
+    private void RenderSplitWorkoutPhase(bool activeLeft)
     {
-        _mediaPhaseOverlay.Visibility = ViewStates.Visible;
-        _mediaPhaseCenterIcon.Visibility = ViewStates.Gone;
-        SetMediaPhaseHalf(
-            _mediaPhaseLeft,
-            _mediaPhaseLeftIcon,
-            active: activeLeft);
-        SetMediaPhaseHalf(
-            _mediaPhaseRight,
-            _mediaPhaseRightIcon,
-            active: !activeLeft);
+        _workoutPhaseSurface.Visibility = ViewStates.Visible;
+        SetWorkoutPhaseHalf(_workoutPhaseLeft, active: activeLeft);
+        SetWorkoutPhaseHalf(_workoutPhaseRight, active: !activeLeft);
     }
 
-    private void SetMediaPhaseHalf(View half, ImageView icon, bool active)
+    private void SetWorkoutPhaseHalf(View half, bool active)
     {
         half.SetBackgroundColor(new Android.Graphics.Color(GetColor(
             active
-                ? Resource.Color.media_phase_move
-                : Resource.Color.media_phase_rest)));
-        icon.SetImageResource(active
-            ? Resource.Drawable.ic_phase_active
-            : Resource.Drawable.ic_phase_pause);
-        icon.Visibility = ViewStates.Visible;
+                ? Resource.Color.move_surface
+                : Resource.Color.rest_surface)));
     }
 
-    private void RenderFullMediaPhase(int colorResource, int iconResource)
+    private void RenderFullWorkoutPhase(int colorResource)
     {
         var color = new Android.Graphics.Color(GetColor(colorResource));
-        _mediaPhaseOverlay.Visibility = ViewStates.Visible;
-        _mediaPhaseLeft.SetBackgroundColor(color);
-        _mediaPhaseRight.SetBackgroundColor(color);
-        _mediaPhaseLeftIcon.Visibility = ViewStates.Gone;
-        _mediaPhaseRightIcon.Visibility = ViewStates.Gone;
-        _mediaPhaseCenterIcon.SetImageResource(iconResource);
-        _mediaPhaseCenterIcon.Visibility = ViewStates.Visible;
+        _workoutPhaseSurface.Visibility = ViewStates.Visible;
+        _workoutPhaseLeft.SetBackgroundColor(color);
+        _workoutPhaseRight.SetBackgroundColor(color);
     }
 
     private void RenderRestVisuals()
     {
         SetExerciseMediaMirrored(mirrored: false);
-        RenderFullMediaPhase(
-            Resource.Color.media_phase_rest,
-            Resource.Drawable.ic_phase_pause);
+        RenderFullWorkoutPhase(Resource.Color.rest_surface);
     }
 
     private void ResetMovementVisuals()
@@ -1439,10 +1414,7 @@ public class MainActivity : Activity
         _lastMovementPhase = null;
         RenderCountdownPhase(changingSides: false);
         SetExerciseMediaMirrored(mirrored: false);
-        _mediaPhaseOverlay.Visibility = ViewStates.Gone;
-        _mediaPhaseLeftIcon.Visibility = ViewStates.Gone;
-        _mediaPhaseRightIcon.Visibility = ViewStates.Gone;
-        _mediaPhaseCenterIcon.Visibility = ViewStates.Gone;
+        _workoutPhaseSurface.Visibility = ViewStates.Gone;
     }
 
     private void BeginRest()
@@ -1566,6 +1538,11 @@ public class MainActivity : Activity
         _restActive = false;
         PauseRestCountdown();
         bool keep = _state.PendingRestKept;
+        FinalizeCurrentRound(keep);
+    }
+
+    private void FinalizeCurrentRound(bool keep)
+    {
         Exercise exercise = _sessionService.RecordOutcome(
             _state,
             _currentWorkoutGroup,
