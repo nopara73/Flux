@@ -77,6 +77,48 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void MigrationAllowsOnlyExactAlternatingPrefixRemovalForTimedSides()
+    {
+        const string video = "exercise_0007.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [7] = new("Alternating Side Stretch", video, -4),
+        };
+        Exercise normalized = Exercise(
+            7,
+            "Side Stretch",
+            video,
+            sideSequence: ExerciseSideSequence.ScreenRightThenLeft);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [normalized],
+            stored);
+
+        Assert.Contains(7, preserved);
+        Assert.Equal(-4, stored[7].Score);
+
+        Exercise continuous = Exercise(7, "Side Stretch", video);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([continuous], stored));
+
+        Exercise arbitrary = Exercise(
+            7,
+            "Different Stretch",
+            video,
+            sideSequence: ExerciseSideSequence.ScreenRightThenLeft);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([arbitrary], stored));
+
+        Exercise changedMedia = Exercise(
+            7,
+            "Side Stretch",
+            "replacement.mp4",
+            sideSequence: ExerciseSideSequence.ScreenRightThenLeft);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([changedMedia], stored));
+    }
+
+    [Fact]
     public void VersionFifteenInventoryReconcilesAdditivelyIntoBundledCatalog()
     {
         int[] versionSixteenIds = [400, 401, 402, 403, 404, 405, 406];
@@ -114,7 +156,8 @@ public sealed class CatalogMigrationRulesTests
         int id,
         string name,
         string video,
-        int score = 0)
+        int score = 0,
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
     {
         return new Exercise
         {
@@ -128,6 +171,7 @@ public sealed class CatalogMigrationRulesTests
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,
             HoldFramePercent = 0,
+            SideSequence = sideSequence,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

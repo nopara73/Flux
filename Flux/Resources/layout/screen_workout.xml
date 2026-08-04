@@ -110,6 +110,7 @@
                 android:layout_height="260dp"
                 android:layout_gravity="center"
                 android:background="@drawable/media_card_background"
+                android:clipToOutline="true"
                 android:padding="8dp">
 
                 <VideoView
@@ -126,6 +127,62 @@
                     android:background="@color/media_background"
                     android:importantForAccessibility="no"
                     android:scaleType="fitCenter"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/media_phase_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:importantForAccessibility="no"
+                    android:layoutDirection="ltr"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:id="@+id/media_phase_left"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/media_phase_left_icon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:alpha="0.72"
+                            android:importantForAccessibility="no"
+                            android:tint="@color/media_phase_icon"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/media_phase_right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/media_phase_right_icon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:alpha="0.72"
+                            android:importantForAccessibility="no"
+                            android:tint="@color/media_phase_icon"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/media_phase_center_icon"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.72"
+                    android:importantForAccessibility="no"
+                    android:tint="@color/media_phase_icon"
                     android:visibility="gone" />
 
                 <View
@@ -188,19 +245,11 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    style="@style/FluxEyebrowText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/ready_label" />
-
                 <Button
                     android:id="@+id/start_button"
                     style="@style/FluxPrimaryButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:minHeight="68dp"
                     android:text="@string/start" />
             </LinearLayout>
@@ -224,12 +273,15 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/FluxEyebrowText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/countdown_phase_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_weight="1"
-                        android:text="@string/move_label" />
+                        android:contentDescription="@string/move_label"
+                        android:scaleType="fitStart"
+                        android:src="@drawable/ic_phase_active"
+                        android:tint="@color/move_text" />
 
                     <Button
                         android:id="@+id/speed_up_button"
@@ -248,7 +300,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/countdown_initial"
-                    android:textColor="@color/primary_text"
+                    android:textColor="@color/move_text"
                     android:textSize="60sp" />
 
                 <ProgressBar
@@ -260,7 +312,7 @@
                     android:importantForAccessibility="no"
                     android:max="45"
                     android:progress="45"
-                    android:progressDrawable="@drawable/progress_track" />
+                    android:progressDrawable="@drawable/move_progress_track" />
             </LinearLayout>
 
             <LinearLayout
@@ -282,15 +334,14 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="32dp"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:letterSpacing="0.18"
-                        android:text="@string/rest_label"
-                        android:textColor="@color/rest_text"
-                        android:textSize="12sp" />
+                        android:contentDescription="@string/rest_label"
+                        android:scaleType="fitStart"
+                        android:src="@drawable/ic_phase_pause"
+                        android:tint="@color/rest_text" />
 
                     <TextView
                         android:id="@+id/rest_countdown_text"

@@ -22,12 +22,14 @@ targets, not claims that every indivisible muscle has an exact percentage.
 
 An exercise contains a stable numeric ID, unique name and MP4, primary and
 secondary canonical groups, practice and movement metadata,
-repetition-or-hold mode, score, and explicit movement-constraint metadata.
+repetition-or-hold mode, continuous-or-timed-side playback, score, and explicit
+movement-constraint metadata.
 
 Every retained movement:
 
 - is demonstrated by an actual person;
-- is bilateral/symmetric or completes both sides in one uninterrupted loop;
+- is bilateral/symmetric, naturally alternates, or completes both sides through
+  the reviewed 20-second / 5-second change / 20-second protocol;
 - keeps all ground contact at the feet;
 - works in ordinary shoes or barefoot;
 - fits inside 3 m × 3 m;
@@ -38,10 +40,12 @@ All 328 MP4 demonstrations are bundled for offline use. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 17 stores canonical assignments, assignment roles, and
-every resolution roll-up in normalized tables. Its additive v14/v15/v16
-migrations keep all existing exercise IDs, names, demonstrations, and scores
-while adding new catalog records and applying the current schedule order. See
+Database schema version 18 stores canonical assignments, assignment roles,
+side-sequence metadata, and every resolution roll-up in normalized tables. Its
+additive v14–v17 migrations keep every existing exercise ID, demonstration
+path, and score while adding new catalog records, applying the current schedule
+order, and narrowly removing an obsolete leading “Alternating” label from
+timed-side movements. See
 [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
@@ -54,7 +58,11 @@ to the nearest choice. Each minute is one smallest-to-largest mass-ordered
 rolled-up group: 45 seconds of exercise and a 15-second rest/decision window.
 
 Press **Start** to begin a round or **Skip** to finish its exercise timer
-immediately while testing. There is no separate rest skip. During rest, tap
+immediately while testing. Naturally alternating and bilateral movements use a
+continuous 45-second timer. Side-specific movements use 20 seconds on the
+demonstrated side, a wordless 5-second blue change phase, then 20 seconds on the
+mirrored side. Red tint always means movement and blue tint means change/rest.
+There is no separate rest skip. During rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the
 next workout by an exercise from the same active rolled-up group. A candidate

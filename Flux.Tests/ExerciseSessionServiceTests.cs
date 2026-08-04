@@ -971,6 +971,7 @@ public sealed class ExerciseSessionServiceTests
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,
             HoldFramePercent = 0,
+            SideSequence = ExerciseSideSequence.Continuous,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

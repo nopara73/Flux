@@ -30,16 +30,17 @@ Every entry must:
 - require no wall, chair, floor exercise, prop, partner, or equipment;
 - avoid jumping, stomping, clapping, vocalization, and other
   neighbor-disturbing actions;
-- be bilateral/symmetric, or visibly complete left and right repetitions inside
-  one uninterrupted loop;
+- be bilateral/symmetric, naturally alternate in one uninterrupted loop, or use
+  an explicit reviewed screen-side order for the 20 / 5 / 20 timed-side flow;
 - have one or more muscle-group assignments and its own bundled H.264 MP4.
 
-Each entry is explicitly a repetition or hold. A hold is one bilateral or
-symmetric position sustained for the full timer. Alternating sides, breath
-cycles, raise-and-lower actions, flows, and repeated contractions remain
-repetitions even when their traditional name contains “hold.” Hold MP4s loop
-only during preview; during the timer they play once and freeze on the curated
-target from `tools/HoldExerciseFrames.psd1`.
+Each entry is explicitly a repetition or hold and a continuous or timed-side
+sequence. Naturally alternating sides, breath cycles, raise-and-lower actions,
+flows, and repeated contractions remain repetitions. A side-specific movement
+runs for 20 seconds on its demonstrated side, pauses for a 5-second side
+change, then replays the same human demonstration mirrored for 20 seconds.
+Hold MP4s loop only during preview; during an active side they play once and
+freeze on the curated target from `tools/HoldExerciseFrames.psd1`.
 
 `tools/ExerciseCanonicalGroups.psd1` is the stable primary/secondary assignment
 source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.
@@ -66,6 +67,7 @@ The retained inventory and media mappings live in:
 - `tools/ExactExerciseMediaCopies.psd1`
 - `tools/ExactExerciseMediaTransforms.psd1`
 - `tools/HoldExerciseFrames.psd1`
+- `tools/ExerciseSideSequences.psd1`
 
 `tools/Test-ExerciseVideos.ps1` verifies the complete media inventory and
 compares every hold’s decoded final frame with its reviewed target. Counts are

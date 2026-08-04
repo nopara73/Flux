@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 17;
+    private const int DatabaseVersion = 18;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -33,6 +33,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "silent",
         "exercise_mode",
         "hold_frame_percent",
+        "side_sequence",
     ];
 
     private readonly Context _context;
@@ -67,7 +68,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16) || newVersion != DatabaseVersion)
+        if (oldVersion is not (14 or 15 or 16 or 17) ||
+            newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
                 $"No non-destructive exercise database migration exists from " +
@@ -82,11 +84,15 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         database.BeginTransaction();
         try
         {
+            database.ExecSQL(
+                "ALTER TABLE exercises ADD COLUMN side_sequence TEXT NOT NULL " +
+                "DEFAULT 'Continuous' CHECK (side_sequence IN " +
+                "('Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
             InsertTaxonomy(database);
             SynchronizeCatalog(database, catalog, existingExercises);
-            ValidatePreservedExercises(database, existingExercises);
+            ValidatePreservedExercises(database, existingExercises, catalog);
             database.SetTransactionSuccessful();
         }
         finally
@@ -141,6 +147,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     CHECK (exercise_mode IN ('Repetition', 'Hold')),
                 hold_frame_percent INTEGER NOT NULL DEFAULT 0
                     CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99),
+                side_sequence TEXT NOT NULL DEFAULT 'Continuous'
+                    CHECK (side_sequence IN (
+                        'Continuous',
+                        'ScreenLeftThenRight',
+                        'ScreenRightThenLeft')),
                 CHECK (
                     (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
@@ -317,6 +328,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             exercise,
             includeId: false,
             includeIdentity: false);
+        values.Put("name", exercise.Name);
         int updated = database.Update(
             ExerciseTable,
             values,
@@ -354,6 +366,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("silent", exercise.Silent ? 1 : 0);
         values.Put("exercise_mode", exercise.Mode.ToString());
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
+        values.Put("side_sequence", exercise.SideSequence.ToString());
         return values;
     }
 
@@ -425,13 +438,16 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
     private static void ValidatePreservedExercises(
         SQLiteDatabase database,
-        IReadOnlyDictionary<int, StoredExerciseSnapshot> before)
+        IReadOnlyDictionary<int, StoredExerciseSnapshot> before,
+        IReadOnlyCollection<Exercise> bundledCatalog)
     {
         Dictionary<int, StoredExerciseSnapshot> after = ReadExistingExercises(database);
+        IReadOnlyDictionary<int, Exercise> bundledById = bundledCatalog.ToDictionary(
+            exercise => exercise.Id);
         foreach ((int exerciseId, StoredExerciseSnapshot previous) in before)
         {
             if (!after.TryGetValue(exerciseId, out StoredExerciseSnapshot? current) ||
-                current.Name != previous.Name ||
+                current.Name != bundledById[exerciseId].Name ||
                 current.Video != previous.Video ||
                 current.Score != previous.Score ||
                 string.IsNullOrWhiteSpace(current.Video))
@@ -499,6 +515,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 Mode = Enum.Parse<ExerciseMode>(cursor.GetString(11)
                     ?? throw new InvalidOperationException("An exercise has no mode.")),
                 HoldFramePercent = cursor.GetInt(12),
+                SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(13)
+                    ?? throw new InvalidOperationException(
+                        "An exercise has no side sequence.")),
             });
         }
 
@@ -580,6 +599,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             string.IsNullOrWhiteSpace(exercise.Practice) ||
             string.IsNullOrWhiteSpace(exercise.MotionProfile) ||
             !Enum.IsDefined(exercise.Mode) ||
+            !Enum.IsDefined(exercise.SideSequence) ||
             (exercise.Mode == ExerciseMode.Repetition && exercise.HoldFramePercent != 0) ||
             (exercise.Mode == ExerciseMode.Hold &&
                 exercise.HoldFramePercent is <= 0 or > 99));

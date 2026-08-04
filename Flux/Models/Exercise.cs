@@ -20,6 +20,8 @@ public sealed class Exercise
 
     public required int HoldFramePercent { get; init; }
 
+    public required ExerciseSideSequence SideSequence { get; init; }
+
     public int Score { get; set; } = 0;
 
     public required bool OnlyFeetTouchGround { get; init; }

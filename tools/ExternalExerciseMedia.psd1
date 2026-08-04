@@ -3298,7 +3298,7 @@
     }
 
     # Movement-first HANDS additions: full-body striking and blocking drills
-    # plus genuine bilateral self-resistance, all shown by real people.
+    # plus self-resistance completed on both timed sides, all shown by people.
     201 = @{
         File = 'boxing-five-punches.mp4'
         Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
@@ -4421,8 +4421,8 @@
         MirrorForAlternation = $false
     }
 
-    # Standing stretching: bilateral holds stay frozen; every asymmetric
-    # movement visibly alternates sides inside the repeating demonstration.
+    # Standing stretching: bilateral holds stay frozen; side-specific sources
+    # use the reviewed 20 / 5 / 20 sequence from ExerciseSideSequences.psd1.
     740 = @{
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'

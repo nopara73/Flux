@@ -6,6 +6,8 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 
 public static class CatalogMigrationRules
 {
+    private const string AlternatingPrefix = "Alternating ";
+
     public static IReadOnlySet<int> ValidatePreservedCatalog(
         IReadOnlyCollection<Exercise> bundledCatalog,
         IReadOnlyDictionary<int, StoredExerciseSnapshot> storedExercises)
@@ -33,7 +35,18 @@ public static class CatalogMigrationRules
                     $"The bundled catalog would remove existing exercise {exerciseId}.");
             }
 
-            if (!string.Equals(stored.Name, bundled.Name, StringComparison.Ordinal) ||
+            bool nameIsPreserved = string.Equals(
+                stored.Name,
+                bundled.Name,
+                StringComparison.Ordinal);
+            bool nameIsApprovedTimedSideNormalization =
+                bundled.SideSequence != ExerciseSideSequence.Continuous &&
+                stored.Name.StartsWith(AlternatingPrefix, StringComparison.Ordinal) &&
+                string.Equals(
+                    stored.Name[AlternatingPrefix.Length..],
+                    bundled.Name,
+                    StringComparison.Ordinal);
+            if ((!nameIsPreserved && !nameIsApprovedTimedSideNormalization) ||
                 !string.Equals(stored.Video, bundled.Video, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(

@@ -47,6 +47,8 @@ $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
+$exerciseSideSequences = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSideSequences.psd1') -SkipLimitCheck
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
@@ -220,6 +222,18 @@ $invalidHumanSources = @($reviewedExternalIds | Where-Object {
     })
 if ($invalidHumanSources.Count -gt 0) {
     throw "Every retained external demonstration must show an actual person: $($invalidHumanSources -join ', ')."
+}
+
+$validSideSequences = @(
+    'ScreenLeftThenRight',
+    'ScreenRightThenLeft')
+$invalidSideSequences = @(
+    $exerciseSideSequences.GetEnumerator() | Where-Object {
+        [int]$_.Key -notin $retainedExerciseIds -or
+        [string]$_.Value -notin $validSideSequences
+    })
+if ($invalidSideSequences.Count -gt 0) {
+    throw 'Every timed-side sequence must identify a retained human demonstration and a reviewed screen-side order.'
 }
 
 if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
@@ -1047,6 +1061,7 @@ function New-ExternalExerciseGif {
     param(
         [int]$ExerciseId,
         [string]$ExerciseName,
+        [string]$SideSequence,
         [hashtable]$Media,
         [string]$GifPath,
         [string]$WorkingRoot
@@ -1181,7 +1196,7 @@ function New-ExternalExerciseGif {
         throw "External media for $ExerciseName is not animated."
     }
 
-    if ($Media.MirrorForAlternation) {
+    if ($Media.MirrorForAlternation -and $SideSequence -eq 'Continuous') {
         $mirroredPaths = [System.Collections.Generic.List[string]]::new()
         for ($index = 0; $index -lt $framePaths.Count; $index++) {
             $mirroredPath = Join-Path $frameRoot ('mirror_{0:D4}.png' -f $index)
@@ -1218,7 +1233,7 @@ function New-ExternalExerciseGif {
     }
     else {
         $patterns = @((Join-Path $frameRoot 'frame_*.png'))
-        if ($Media.MirrorForAlternation) {
+        if ($Media.MirrorForAlternation -and $SideSequence -eq 'Continuous') {
             $patterns += (Join-Path $frameRoot 'mirror_*.png')
         }
         $patterns
@@ -2348,11 +2363,23 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         }
 
         $sourceExerciseName = $regionNames[$movementIndex]
+        $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
+            [string]$exerciseSideSequences[$exerciseId]
+        }
+        else {
+            'Continuous'
+        }
         $exerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
             $bilateralExerciseNames[$exerciseId]
         }
         else {
             $sourceExerciseName
+        }
+        if ($exerciseSideSequence -ne 'Continuous' -and
+            $exerciseName.StartsWith(
+                'Alternating ',
+                [StringComparison]::Ordinal)) {
+            $exerciseName = $exerciseName.Substring('Alternating '.Length)
         }
         $effectiveRegion = if ($exerciseRegionOverrides.ContainsKey($exerciseId)) {
             [string]$exerciseRegionOverrides[$exerciseId]
@@ -2395,6 +2422,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             motionProfile = $motionProfile
             mode = $exerciseMode
             holdFramePercent = $holdFramePercent
+            sideSequence = $exerciseSideSequence
             score = 0
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
@@ -2607,6 +2635,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             New-ExternalExerciseGif `
                 -ExerciseId $exerciseId `
                 -ExerciseName $exerciseName `
+                -SideSequence $exerciseSideSequence `
                 -Media $externalExerciseMedia[$exerciseId] `
                 -GifPath $gifPath `
                 -WorkingRoot $tempRoot
@@ -2663,6 +2692,10 @@ $constraintViolations = $records | Where-Object {
     [string]::IsNullOrWhiteSpace($_['practice']) -or
     [string]::IsNullOrWhiteSpace($_['motionProfile']) -or
     $_['mode'] -notin @('Repetition', 'Hold') -or
+    $_['sideSequence'] -notin @(
+        'Continuous',
+        'ScreenLeftThenRight',
+        'ScreenRightThenLeft') -or
     ($_['mode'] -eq 'Repetition' -and $_['holdFramePercent'] -ne 0) -or
     ($_['mode'] -eq 'Hold' -and (
         $_['holdFramePercent'] -lt 1 -or $_['holdFramePercent'] -gt 99)) -or

@@ -66,6 +66,7 @@ public sealed class WorkoutCoveragePolicyTests
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,
             HoldFramePercent = 0,
+            SideSequence = ExerciseSideSequence.Continuous,
             Score = 0,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

@@ -31,6 +31,13 @@ public sealed class CatalogInvariantTests
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Id).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Name).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Video).Distinct().Count());
+        Exercise[] timedSideExercises = exercises
+            .Where(exercise =>
+                exercise.SideSequence != ExerciseSideSequence.Continuous)
+            .ToArray();
+        Assert.Equal(90, timedSideExercises.Length);
+        Assert.DoesNotContain(timedSideExercises, exercise =>
+            exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
 
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
@@ -66,6 +73,7 @@ public sealed class CatalogInvariantTests
             Assert.True(exercise.Silent);
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));
             Assert.False(string.IsNullOrWhiteSpace(exercise.MotionProfile));
+            Assert.True(Enum.IsDefined(exercise.SideSequence));
             Assert.Equal(0, exercise.Score);
 
             if (exercise.Mode == ExerciseMode.Hold)
