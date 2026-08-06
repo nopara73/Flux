@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 19;
+    private const int DatabaseVersion = 20;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -32,6 +32,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "equipment",
         "silent",
         "exercise_mode",
+        "presentation",
         "hold_frame_percent",
         "side_sequence",
     ];
@@ -68,7 +69,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -79,7 +80,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         Exercise[] catalog = ReadAndValidateBundledCatalog();
         Dictionary<int, StoredExerciseSnapshot> existingExercises =
             ReadExistingExercises(database);
-        CatalogMigrationRules.ValidatePreservedCatalog(catalog, existingExercises);
+        IReadOnlySet<int> preservedExerciseIds =
+            CatalogMigrationRules.ValidatePreservedCatalog(catalog, existingExercises);
+        Dictionary<int, StoredExerciseSnapshot> preservedExercises = existingExercises
+            .Where(entry => preservedExerciseIds.Contains(entry.Key))
+            .ToDictionary(entry => entry.Key, entry => entry.Value);
 
         database.BeginTransaction();
         try
@@ -91,11 +96,18 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     "DEFAULT 'Continuous' CHECK (side_sequence IN " +
                     "('Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
             }
+            if (oldVersion < 20)
+            {
+                database.ExecSQL(
+                    "ALTER TABLE exercises ADD COLUMN presentation TEXT NOT NULL " +
+                    "DEFAULT 'Motion' CHECK (presentation IN ('Motion', 'Still'))");
+            }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
+            DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
             InsertTaxonomy(database);
-            SynchronizeCatalog(database, catalog, existingExercises);
-            ValidatePreservedExercises(database, existingExercises, catalog);
+            SynchronizeCatalog(database, catalog, preservedExercises);
+            ValidatePreservedExercises(database, preservedExercises, catalog);
             database.SetTransactionSuccessful();
         }
         finally
@@ -148,6 +160,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     CHECK (silent = 1),
                 exercise_mode TEXT NOT NULL DEFAULT 'Repetition'
                     CHECK (exercise_mode IN ('Repetition', 'Hold')),
+                presentation TEXT NOT NULL DEFAULT 'Motion'
+                    CHECK (presentation IN ('Motion', 'Still')),
                 hold_frame_percent INTEGER NOT NULL DEFAULT 0
                     CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99),
                 side_sequence TEXT NOT NULL DEFAULT 'Continuous'
@@ -231,6 +245,26 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         database.Delete(RollupTable, null, null);
         database.Delete(WorkoutBucketTable, null, null);
         database.Delete(CanonicalGroupTable, null, null);
+    }
+
+    private static void DeleteReplacedExercises(
+        SQLiteDatabase database,
+        IEnumerable<int> existingExerciseIds,
+        IReadOnlySet<int> preservedExerciseIds)
+    {
+        foreach (int exerciseId in existingExerciseIds.Where(
+            exerciseId => !preservedExerciseIds.Contains(exerciseId)))
+        {
+            int deleted = database.Delete(
+                ExerciseTable,
+                "id = ?",
+                [exerciseId.ToString(CultureInfo.InvariantCulture)]);
+            if (deleted != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Could not retire replaced exercise {exerciseId}.");
+            }
+        }
     }
 
     private static void InsertTaxonomy(SQLiteDatabase database)
@@ -368,6 +402,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("equipment", exercise.Equipment);
         values.Put("silent", exercise.Silent ? 1 : 0);
         values.Put("exercise_mode", exercise.Mode.ToString());
+        values.Put("presentation", exercise.Presentation.ToString());
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
         values.Put("side_sequence", exercise.SideSequence.ToString());
         return values;
@@ -517,8 +552,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 Silent = cursor.GetInt(10) == 1,
                 Mode = Enum.Parse<ExerciseMode>(cursor.GetString(11)
                     ?? throw new InvalidOperationException("An exercise has no mode.")),
-                HoldFramePercent = cursor.GetInt(12),
-                SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(13)
+                Presentation = Enum.Parse<ExercisePresentation>(cursor.GetString(12)
+                    ?? throw new InvalidOperationException(
+                        "An exercise has no presentation.")),
+                HoldFramePercent = cursor.GetInt(13),
+                SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(14)
                     ?? throw new InvalidOperationException(
                         "An exercise has no side sequence.")),
             });
@@ -602,19 +640,43 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             string.IsNullOrWhiteSpace(exercise.Practice) ||
             string.IsNullOrWhiteSpace(exercise.MotionProfile) ||
             !Enum.IsDefined(exercise.Mode) ||
+            !Enum.IsDefined(exercise.Presentation) ||
             !Enum.IsDefined(exercise.SideSequence) ||
+            (exercise.Presentation == ExercisePresentation.Still &&
+                exercise.Mode != ExerciseMode.Hold) ||
             (exercise.Mode == ExerciseMode.Repetition && exercise.HoldFramePercent != 0) ||
             (exercise.Mode == ExerciseMode.Hold &&
                 exercise.HoldFramePercent is <= 0 or > 99));
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
+        bool hasInvalidReplacementMetadata = false;
+        if (requireInitialScores)
+        {
+            int[] declaredReplacementIds = exercises
+                .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
+                .Select(exercise => exercise.Id)
+                .Order()
+                .ToArray();
+            hasInvalidReplacementMetadata =
+                !declaredReplacementIds.SequenceEqual(
+                    CatalogMigrationRules.ReplacedExerciseIds.Order()) ||
+                exercises.Any(exercise =>
+                    CatalogMigrationRules.ReplacedExerciseIds.Contains(exercise.Id) !=
+                        !string.IsNullOrWhiteSpace(exercise.RetiredName) ||
+                    (!string.IsNullOrWhiteSpace(exercise.RetiredName) &&
+                        string.Equals(
+                            exercise.RetiredName,
+                            exercise.Name,
+                            StringComparison.Ordinal)));
+        }
 
         if (hasUndersizedWorkoutGroup ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||
             violatesRequirements ||
-            hasInvalidInitialScore)
+            hasInvalidInitialScore ||
+            hasInvalidReplacementMetadata)
         {
             throw new InvalidOperationException(
                 "The bundled exercise catalog does not satisfy its required invariants.");

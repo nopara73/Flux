@@ -35,9 +35,21 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(101, timedSideExercises.Length);
+        Assert.Equal(103, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
+        int[] declaredReplacementIds = exercises
+            .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
+            .Select(exercise => exercise.Id)
+            .Order()
+            .ToArray();
+        Assert.Equal(
+            CatalogMigrationRules.ReplacedExerciseIds.Order(),
+            declaredReplacementIds);
+        Assert.All(
+            exercises.Where(exercise =>
+                CatalogMigrationRules.ReplacedExerciseIds.Contains(exercise.Id)),
+            exercise => Assert.NotEqual(exercise.Name, exercise.RetiredName));
 
         Dictionary<int, ExerciseSideSequence> auditedSideSequences = new()
         {
@@ -49,9 +61,10 @@ public sealed class CatalogInvariantTests
             [279] = ExerciseSideSequence.ScreenLeftThenRight,
             [338] = ExerciseSideSequence.ScreenLeftThenRight,
             [397] = ExerciseSideSequence.ScreenRightThenLeft,
-            [619] = ExerciseSideSequence.ScreenLeftThenRight,
+            [619] = ExerciseSideSequence.Continuous,
             [884] = ExerciseSideSequence.ScreenRightThenLeft,
             [885] = ExerciseSideSequence.ScreenRightThenLeft,
+            [910] = ExerciseSideSequence.ScreenLeftThenRight,
         };
         Assert.All(auditedSideSequences, expected =>
             Assert.Equal(
@@ -67,20 +80,25 @@ public sealed class CatalogInvariantTests
         Assert.Equal(ExerciseMode.Hold, externalRotation.Mode);
         Assert.Equal(75, externalRotation.HoldFramePercent);
 
-        foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
-        {
-            foreach (WorkoutGroup group in MassGroupingTaxonomy.GetResolution(minutes).Groups)
+        string[] deficientWorkoutGroups = MassGroupingTaxonomy.SupportedMinutes
+            .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
+            .Select(group => new
             {
-                int selectableCount = exercises.Count(exercise =>
-                    WorkoutCoveragePolicy.IsSelectable(exercise, group));
-                Assert.True(
-                    selectableCount >=
-                        WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup,
-                    $"{group.Id} has only {selectableCount} primary-owned exercises " +
-                    $"meeting the {WorkoutCoveragePolicy.MinimumCoveragePercent}% " +
-                    "coverage requirement.");
-            }
-        }
+                Group = group,
+                SelectableCount = exercises.Count(exercise =>
+                    WorkoutCoveragePolicy.IsSelectable(exercise, group)),
+            })
+            .Where(result =>
+                result.SelectableCount <
+                    WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup)
+            .Select(result =>
+                $"{result.Group.Id}: {result.SelectableCount} primary-owned exercises " +
+                $"meeting the {WorkoutCoveragePolicy.MinimumCoveragePercent}% " +
+                "coverage requirement")
+            .ToArray();
+        Assert.True(
+            deficientWorkoutGroups.Length == 0,
+            string.Join(Environment.NewLine, deficientWorkoutGroups));
 
         Assert.All(exercises, exercise =>
         {
@@ -102,11 +120,24 @@ public sealed class CatalogInvariantTests
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));
             Assert.False(string.IsNullOrWhiteSpace(exercise.MotionProfile));
             Assert.True(Enum.IsDefined(exercise.SideSequence));
+            Assert.True(Enum.IsDefined(exercise.Presentation));
             Assert.Equal(0, exercise.Score);
+
+            if (exercise.Presentation == ExercisePresentation.Still)
+            {
+                Assert.Equal(ExerciseMode.Hold, exercise.Mode);
+            }
 
             if (exercise.Mode == ExerciseMode.Hold)
             {
                 Assert.InRange(exercise.HoldFramePercent, 1, 99);
+                Assert.True(
+                    File.Exists(Path.Combine(
+                        AppContext.BaseDirectory,
+                        "Assets",
+                        "exercise_hold_frames",
+                        $"exercise_{exercise.Id:D4}.png")),
+                    $"Exercise {exercise.Id} has no reviewed hold frame.");
             }
             else
             {

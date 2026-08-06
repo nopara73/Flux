@@ -136,8 +136,8 @@ public class MainActivity : Activity
         _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
         _stateStore = new SharedPreferencesWorkoutStateStore(this);
         _state = _stateStore.Load();
-        RecoverPendingScoreUpdate();
         _sessionService.Initialize(_state);
+        RecoverPendingScoreUpdate();
 
         if (!_state.WorkoutCompleted && _state.ActiveWorkoutMinutes != 0)
         {
@@ -762,6 +762,7 @@ public class MainActivity : Activity
 
     private void LoadExerciseMedia(Exercise exercise, bool forceCacheRefresh = false)
     {
+        bool usesStill = exercise.Presentation == ExercisePresentation.Still;
         bool holdDuringMove =
             exercise.Mode == ExerciseMode.Hold && _workoutPhase == WorkoutPhase.Move;
         bool holdDuringRest =
@@ -771,6 +772,30 @@ public class MainActivity : Activity
         _loopExerciseVideo = !holdDuringMove && !holdDuringRest;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
+
+        if (usesStill)
+        {
+            ClearHoldFrame();
+            _exerciseVideo.Pause();
+            _exerciseVideo.StopPlayback();
+            _mediaScrim.Animate()?.Cancel();
+            _mediaScrim.Alpha = 1f;
+            _mediaScrim.Visibility = ViewStates.Visible;
+            _mediaErrorPanel.Visibility = ViewStates.Gone;
+            _mediaLoadingText.Visibility = ViewStates.Gone;
+            ShowHoldFrame(exercise.Id);
+            SetStartAvailability(available: _mediaReady);
+            if (_workoutPhase == WorkoutPhase.Move && _mediaReady)
+            {
+                SetSkipAvailability(available: true);
+            }
+            if (_mediaReady && _countdownPausedForMediaError && _activityResumed)
+            {
+                _countdownPausedForMediaError = false;
+                ResumeCountdown();
+            }
+            return;
+        }
 
         if (holdDuringRest)
         {
@@ -807,7 +832,7 @@ public class MainActivity : Activity
 
     private string CacheVideoAsset(string assetPath, bool forceRefresh)
     {
-        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v6");
+        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v7");
         Directory.CreateDirectory(cacheRoot);
         string cachedPath = System.IO.Path.Combine(cacheRoot, System.IO.Path.GetFileName(assetPath));
         string temporaryPath = cachedPath + ".tmp";
@@ -941,6 +966,12 @@ public class MainActivity : Activity
 
     private void PlayHoldOnce()
     {
+        if (_currentExercise?.Presentation == ExercisePresentation.Still)
+        {
+            ShowHoldFrame(_currentExercise.Id);
+            return;
+        }
+
         ClearHoldFrame();
         _loopExerciseVideo = false;
         _freezeHoldAtEnd = true;
@@ -1297,6 +1328,12 @@ public class MainActivity : Activity
 
     private void RestartExerciseMediaForSide()
     {
+        if (_currentExercise?.Presentation == ExercisePresentation.Still)
+        {
+            ShowHoldFrame(_currentExercise.Id);
+            return;
+        }
+
         ClearHoldFrame();
         _exerciseVideo.Pause();
         _exerciseVideo.SeekTo(0);

@@ -35,6 +35,7 @@ public sealed class ExerciseSessionService
         ArgumentNullException.ThrowIfNull(state);
 
         NormalizeCollections(state);
+        CatalogMigrationRules.ReconcileWorkoutState(state);
         bool migratedLegacyState = state.Version < CurrentStateVersion ||
             state.LegacySelectedExerciseNames.Count > 0;
         if (migratedLegacyState)

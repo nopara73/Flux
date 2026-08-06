@@ -4,6 +4,8 @@ public sealed class WorkoutState
 {
     public int Version { get; set; } = 5;
 
+    public int CatalogRevision { get; set; }
+
     public Dictionary<string, int> SelectedExerciseIds { get; set; } = [];
 
     public Dictionary<string, ExerciseOutcome> Outcomes { get; set; } = [];

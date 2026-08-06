@@ -65,6 +65,7 @@ public sealed class WorkoutCoveragePolicyTests
             Practice = "Test practice",
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,
+            Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
             Score = 0,

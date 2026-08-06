@@ -29,6 +29,8 @@ $regions = @(
 
 $catalogNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'RealExerciseCatalog.psd1') -SkipLimitCheck
+$catalogExerciseReplacements = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'CatalogExerciseReplacements.psd1') -SkipLimitCheck
 $bilateralExerciseNames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'BilateralExerciseNames.psd1') -SkipLimitCheck
 $exercisePracticeTaxonomy = Import-PowerShellDataFile -LiteralPath (
@@ -45,14 +47,21 @@ $rawExerciseCanonicalGroups = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
+$stillExercisePresentations = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'StillExercisePresentations.psd1') -SkipLimitCheck
 $externalExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
 $exerciseSideSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseSideSequences.psd1') -SkipLimitCheck
+$baselineExerciseSideSequences = @{}
+foreach ($entry in $exerciseSideSequences.GetEnumerator()) {
+    $baselineExerciseSideSequences[[int]$entry.Key] = [string]$entry.Value
+}
 $reviewedContinuousExercises = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ReviewedContinuousExercises.psd1')
 $reviewedContinuousExerciseIds = @(
     $reviewedContinuousExercises.Ids | ForEach-Object { [int]$_ })
+$baselineReviewedContinuousExerciseIds = @($reviewedContinuousExerciseIds)
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
@@ -71,6 +80,78 @@ $retainedExerciseIds = @(
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
 $minimumPrimaryExercisesPerCanonicalGroup = 10
+
+$replacementExerciseIds = @(
+    $catalogExerciseReplacements.Keys | ForEach-Object { [int]$_ } |
+        Sort-Object -Unique)
+$invalidReplacementDefinitions = @(
+    foreach ($entry in $catalogExerciseReplacements.GetEnumerator()) {
+        $exerciseId = [int]$entry.Key
+        $replacement = $entry.Value
+        if ($exerciseId -notin $retainedExerciseIds -or
+            $replacement -isnot [System.Collections.IDictionary] -or
+            -not $replacement.ContainsKey('RetiredName') -or
+            [string]::IsNullOrWhiteSpace([string]$replacement.RetiredName) -or
+            -not $replacement.ContainsKey('Name') -or
+            [string]::IsNullOrWhiteSpace([string]$replacement.Name) -or
+            [string]$replacement.Name -eq [string]$replacement.RetiredName -or
+            -not $replacement.ContainsKey('Practice') -or
+            [string]::IsNullOrWhiteSpace([string]$replacement.Practice) -or
+            -not $replacement.ContainsKey('MotionProfile') -or
+            [string]::IsNullOrWhiteSpace([string]$replacement.MotionProfile) -or
+            -not $replacement.ContainsKey('Primary') -or
+            -not $replacement.ContainsKey('Secondary') -or
+            -not $replacement.ContainsKey('SideSequence') -or
+            [string]$replacement.SideSequence -notin @(
+                'Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft') -or
+            -not $replacement.ContainsKey('Mode') -or
+            [string]$replacement.Mode -notin @('Repetition', 'Hold') -or
+            -not $replacement.ContainsKey('Presentation') -or
+            [string]$replacement.Presentation -notin @('Motion', 'Still') -or
+            -not $replacement.ContainsKey('HoldFramePercent') -or
+            [int]$replacement.HoldFramePercent -lt 0 -or
+            [int]$replacement.HoldFramePercent -gt 99 -or
+            ([string]$replacement.Mode -eq 'Repetition' -and
+                [int]$replacement.HoldFramePercent -ne 0) -or
+            ([string]$replacement.Mode -eq 'Hold' -and
+                [int]$replacement.HoldFramePercent -eq 0) -or
+            ([string]$replacement.Presentation -eq 'Still' -and
+                [string]$replacement.Mode -ne 'Hold') -or
+            -not $replacement.ContainsKey('Media') -or
+            $replacement.Media -isnot [System.Collections.IDictionary]) {
+            $exerciseId
+        }
+    })
+if ($invalidReplacementDefinitions.Count -gt 0 -or
+    $replacementExerciseIds.Count -ne $catalogExerciseReplacements.Count) {
+    throw "The catalog replacement map contains invalid entries: $($invalidReplacementDefinitions -join ', ')."
+}
+
+foreach ($exerciseId in $replacementExerciseIds) {
+    $replacement = $catalogExerciseReplacements[$exerciseId]
+    $rawExerciseCanonicalGroups[$exerciseId] = @{
+        Primary = [string]$replacement.Primary
+        Secondary = @($replacement.Secondary | ForEach-Object { [string]$_ })
+    }
+    $externalExerciseMedia[$exerciseId] = $replacement.Media
+    $exerciseSideSequences.Remove($exerciseId)
+    $reviewedContinuousExerciseIds = @(
+        $reviewedContinuousExerciseIds | Where-Object { $_ -ne $exerciseId })
+    if ([string]$replacement.SideSequence -eq 'Continuous') {
+        $reviewedContinuousExerciseIds += $exerciseId
+    }
+    else {
+        $exerciseSideSequences[$exerciseId] = [string]$replacement.SideSequence
+    }
+    $holdExerciseFrames.Remove($exerciseId)
+    $stillExercisePresentations.Remove($exerciseId)
+    if ([string]$replacement.Mode -eq 'Hold') {
+        $holdExerciseFrames[$exerciseId] = [int]$replacement.HoldFramePercent
+    }
+    if ([string]$replacement.Presentation -eq 'Still') {
+        $stillExercisePresentations[$exerciseId] = $true
+    }
+}
 
 $canonicalIds = @($canonicalGroups | ForEach-Object { [int]$_.Id })
 $canonicalDisplayNames = @(
@@ -183,6 +264,16 @@ if ($holdExerciseFrames.Count -eq 0 -or @(
             [int]$_.Value -gt 99
         }).Count -gt 0) {
     throw 'The reviewed hold-frame map contains an invalid entry.'
+}
+
+$invalidStillPresentations = @(
+    $stillExercisePresentations.GetEnumerator() | Where-Object {
+        [int]$_.Key -notin $retainedExerciseIds -or
+        -not $holdExerciseFrames.ContainsKey([int]$_.Key) -or
+        [bool]$_.Value -ne $true
+    })
+if ($invalidStillPresentations.Count -gt 0) {
+    throw 'Every still presentation must identify a retained reviewed hold.'
 }
 
 $invalidExternalMedia = @(
@@ -2380,6 +2471,41 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         }
 
         $sourceExerciseName = $regionNames[$movementIndex]
+        $baselineExerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
+            [string]$bilateralExerciseNames[$exerciseId]
+        }
+        else {
+            $sourceExerciseName
+        }
+        $replacement = if ($catalogExerciseReplacements.ContainsKey($exerciseId)) {
+            $catalogExerciseReplacements[$exerciseId]
+        }
+        else {
+            $null
+        }
+        if ($null -ne $replacement) {
+            $baselineSideSequence = if (
+                $baselineExerciseSideSequences.ContainsKey($exerciseId)) {
+                [string]$baselineExerciseSideSequences[$exerciseId]
+            }
+            elseif ($exerciseId -in $baselineReviewedContinuousExerciseIds) {
+                'Continuous'
+            }
+            else {
+                throw "Exercise $exerciseId has no baseline side-sequence decision."
+            }
+            $retiredBaselineName = $baselineExerciseName
+            if ($baselineSideSequence -ne 'Continuous' -and
+                $retiredBaselineName.StartsWith(
+                    'Alternating ',
+                    [StringComparison]::Ordinal)) {
+                $retiredBaselineName = $retiredBaselineName.Substring(
+                    'Alternating '.Length)
+            }
+            if ([string]$replacement.RetiredName -ne $retiredBaselineName) {
+                throw "Replacement $exerciseId expects retired exercise '$($replacement.RetiredName)' but the baseline name is '$retiredBaselineName'."
+            }
+        }
         $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
             [string]$exerciseSideSequences[$exerciseId]
         }
@@ -2389,11 +2515,11 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         else {
             throw "Exercise $exerciseId is missing a reviewed side-sequence decision."
         }
-        $exerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
-            $bilateralExerciseNames[$exerciseId]
+        $exerciseName = if ($null -ne $replacement) {
+            [string]$replacement.Name
         }
         else {
-            $sourceExerciseName
+            $baselineExerciseName
         }
         if ($exerciseSideSequence -ne 'Continuous' -and
             $exerciseName.StartsWith(
@@ -2407,21 +2533,36 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         else {
             $region
         }
-        $practice = if ($exercisePracticeOverrides.ContainsKey($exerciseId)) {
+        $practice = if ($null -ne $replacement) {
+            [string]$replacement.Practice
+        }
+        elseif ($exercisePracticeOverrides.ContainsKey($exerciseId)) {
             [string]$exercisePracticeOverrides[$exerciseId]
         }
         else {
             Get-Practice -Name $exerciseName
         }
-        $motionProfile = Get-MotionProfile `
-            -Region $effectiveRegion `
-            -Name $exerciseName
+        $motionProfile = if ($null -ne $replacement) {
+            [string]$replacement.MotionProfile
+        }
+        else {
+            Get-MotionProfile `
+                -Region $effectiveRegion `
+                -Name $exerciseName
+        }
         $canonicalAssignment = $exerciseCanonicalGroups[$exerciseId]
         $primaryCanonicalGroup = [string]$canonicalAssignment.Primary
         $secondaryCanonicalGroups = @(
             $canonicalAssignment.Secondary | ForEach-Object { [string]$_ })
         $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
         $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
+        $exercisePresentation = if (
+            $stillExercisePresentations.ContainsKey($exerciseId)) {
+            'Still'
+        }
+        else {
+            'Motion'
+        }
         $holdFramePercent = if ($isHold) {
             [int]$holdExerciseFrames[$exerciseId]
         }
@@ -2435,12 +2576,19 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $records.Add([ordered]@{
             id = $exerciseId
             name = $exerciseName
+            retiredName = if ($null -ne $replacement) {
+                [string]$replacement.RetiredName
+            }
+            else {
+                $null
+            }
             video = $videoRelativePath
             primaryCanonicalGroup = $primaryCanonicalGroup
             secondaryCanonicalGroups = $secondaryCanonicalGroups
             practice = $practice
             motionProfile = $motionProfile
             mode = $exerciseMode
+            presentation = $exercisePresentation
             holdFramePercent = $holdFramePercent
             sideSequence = $exerciseSideSequence
             score = 0
@@ -2719,6 +2867,8 @@ $constraintViolations = $records | Where-Object {
     ($_['mode'] -eq 'Repetition' -and $_['holdFramePercent'] -ne 0) -or
     ($_['mode'] -eq 'Hold' -and (
         $_['holdFramePercent'] -lt 1 -or $_['holdFramePercent'] -gt 99)) -or
+    ($_['presentation'] -eq 'Still' -and $_['mode'] -ne 'Hold') -or
+    $_['presentation'] -notin @('Motion', 'Still') -or
     $_['score'] -ne 0
 }
 $syntheticNames = $records | Where-Object {

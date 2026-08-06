@@ -77,6 +77,126 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void ReviewedReplacementIsRetiredInsteadOfPreservingItsScore()
+    {
+        const int replacedId = 56;
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [replacedId] = new(
+                "Retired movement",
+                "exercise_0056.mp4",
+                -7),
+        };
+        Exercise replacement = Exercise(
+            replacedId,
+            "Clear replacement movement",
+            "exercise_0056.mp4",
+            retiredName: "Retired movement");
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.Equal(94, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
+        Assert.DoesNotContain(replacedId, preserved);
+        Assert.Equal(-7, stored[replacedId].Score);
+        Assert.Equal(0, replacement.Score);
+
+        var preNormalizationStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [replacedId] = new(
+                "Alternating Retired movement",
+                replacement.Video,
+                -6),
+        };
+        IReadOnlySet<int> preNormalizationPreserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                preNormalizationStored);
+        Assert.DoesNotContain(replacedId, preNormalizationPreserved);
+        Assert.Equal(-6, preNormalizationStored[replacedId].Score);
+
+        Exercise wrongRetiredName = Exercise(
+            replacedId,
+            replacement.Name,
+            replacement.Video,
+            retiredName: "Some other retired movement");
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [wrongRetiredName],
+                stored));
+
+        Exercise missingRetiredName = Exercise(
+            replacedId,
+            replacement.Name,
+            replacement.Video);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [missingRetiredName],
+                stored));
+
+        Exercise wrongRetiredVideo = Exercise(
+            replacedId,
+            replacement.Name,
+            "replacement.mp4",
+            retiredName: "Retired movement");
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [wrongRetiredVideo],
+                stored));
+    }
+
+    [Fact]
+    public void CatalogRevisionDropsOnlyReferencesToRetiredExercisesOnce()
+    {
+        const int replacedId = 56;
+        const int retainedId = 15;
+        const string replacedGroup = "group.replaced";
+        const string retainedGroup = "group.retained";
+        var state = new WorkoutState
+        {
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [replacedGroup] = replacedId,
+                [retainedGroup] = retainedId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [replacedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = replacedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = replacedId,
+            PendingScoreValue = -8,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+        Assert.DoesNotContain(replacedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(replacedGroup, state.Outcomes);
+        Assert.Equal(retainedId, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.False(state.PendingRestKept);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+
+        state.SelectedExerciseIds[replacedGroup] = replacedId;
+        state.PendingScoreExerciseId = replacedId;
+        state.PendingScoreValue = -1;
+
+        Assert.False(CatalogMigrationRules.ReconcileWorkoutState(state));
+        Assert.Equal(replacedId, state.SelectedExerciseIds[replacedGroup]);
+        Assert.Equal(replacedId, state.PendingScoreExerciseId);
+        Assert.Equal(-1, state.PendingScoreValue);
+    }
+
+    [Fact]
     public void MigrationAllowsOnlyExactAlternatingPrefixRemovalForTimedSides()
     {
         const string video = "exercise_0007.mp4";
@@ -143,13 +263,13 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(-3, stored[268].Score);
 
         Exercise wrongId = Exercise(
-            267,
+            266,
             corrected.Name,
             video,
             sideSequence: ExerciseSideSequence.ScreenLeftThenRight);
         var wrongStored = new Dictionary<int, StoredExerciseSnapshot>
         {
-            [267] = new(
+            [266] = new(
                 "Self-Resisted External-Rotation Push-Out",
                 video,
                 -3),
@@ -180,7 +300,7 @@ public sealed class CatalogMigrationRulesTests
             .ToDictionary(
                 exercise => exercise.Id,
                 exercise => new StoredExerciseSnapshot(
-                    exercise.Name,
+                    exercise.RetiredName ?? exercise.Name,
                     exercise.Video,
                     -exercise.Id));
 
@@ -188,7 +308,11 @@ public sealed class CatalogMigrationRulesTests
             bundled,
             versionFifteen);
 
-        Assert.Equal(versionFifteen.Keys.Order(), preserved.Order());
+        Assert.Equal(
+            versionFifteen.Keys
+                .Except(CatalogMigrationRules.ReplacedExerciseIds)
+                .Order(),
+            preserved.Order());
         Assert.All(versionFifteen, entry =>
             Assert.Equal(-entry.Key, entry.Value.Score));
         Assert.DoesNotContain(versionSixteenIds, preserved.Contains);
@@ -199,12 +323,14 @@ public sealed class CatalogMigrationRulesTests
         string name,
         string video,
         int score = 0,
-        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
+        string? retiredName = null)
     {
         return new Exercise
         {
             Id = id,
             Name = name,
+            RetiredName = retiredName,
             Video = video,
             PrimaryCanonicalGroup =
                 CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
@@ -212,6 +338,7 @@ public sealed class CatalogMigrationRulesTests
             Practice = "Test practice",
             MotionProfile = "Test motion",
             Mode = ExerciseMode.Repetition,
+            Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = sideSequence,
             Score = score,

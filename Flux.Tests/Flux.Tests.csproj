@@ -27,6 +27,7 @@
     <Compile Include="..\Flux\Models\CanonicalMuscleGroup.cs" Link="Production\Models\CanonicalMuscleGroup.cs" />
     <Compile Include="..\Flux\Models\Exercise.cs" Link="Production\Models\Exercise.cs" />
     <Compile Include="..\Flux\Models\ExerciseMode.cs" Link="Production\Models\ExerciseMode.cs" />
+    <Compile Include="..\Flux\Models\ExercisePresentation.cs" Link="Production\Models\ExercisePresentation.cs" />
     <Compile Include="..\Flux\Models\ExerciseSideSequence.cs" Link="Production\Models\ExerciseSideSequence.cs" />
     <Compile Include="..\Flux\Models\ExerciseOutcome.cs" Link="Production\Models\ExerciseOutcome.cs" />
     <Compile Include="..\Flux\Models\LegacyWorkoutState.cs" Link="Production\Models\LegacyWorkoutState.cs" />
@@ -43,6 +44,9 @@
   <ItemGroup>
     <None Include="..\Flux\Assets\exercises.json"
           Link="Assets\exercises.json"
+          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\Flux\Assets\exercise_hold_frames\*.png"
+          Link="Assets\exercise_hold_frames\%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

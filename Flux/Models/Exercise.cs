@@ -6,6 +6,8 @@ public sealed class Exercise
 
     public required string Name { get; init; }
 
+    public string? RetiredName { get; init; }
+
     public required string Video { get; init; }
 
     public required CanonicalMuscleGroup PrimaryCanonicalGroup { get; init; }
@@ -17,6 +19,8 @@ public sealed class Exercise
     public required string MotionProfile { get; init; }
 
     public required ExerciseMode Mode { get; init; }
+
+    public required ExercisePresentation Presentation { get; init; }
 
     public required int HoldFramePercent { get; init; }
 

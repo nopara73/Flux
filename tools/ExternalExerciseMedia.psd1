@@ -1814,6 +1814,7 @@
         StartSeconds = 5.0
         DurationSeconds = 11.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:0:0'
         MirrorForAlternation = $false
     }
     467 = @{

@@ -49,6 +49,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
         return new WorkoutState
         {
             Version = state.Version,
+            CatalogRevision = state.CatalogRevision,
             SelectedExerciseIds = new Dictionary<string, int>(
                 state.SelectedExerciseIds,
                 StringComparer.Ordinal),
