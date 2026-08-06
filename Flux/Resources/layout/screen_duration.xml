@@ -140,64 +140,54 @@
                         android:gravity="center" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/duration_option_labels"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-8dp"
-                    android:orientation="horizontal"
-                    android:paddingStart="74dp"
-                    android:paddingEnd="74dp">
+                    android:layout_marginTop="-8dp">
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_3" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_5" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_7" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_10" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_15" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_20" />
 
                     <TextView
                         style="@style/DurationOptionLabel"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/duration_option_30" />
-                </LinearLayout>
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/duration_option_segments"

@@ -58,7 +58,7 @@ public class MainActivity : Activity
     private View _durationDial = null!;
     private LinearLayout _durationControls = null!;
     private LinearLayout _durationStepRow = null!;
-    private LinearLayout _durationOptionLabels = null!;
+    private FrameLayout _durationOptionLabels = null!;
     private FrameLayout _durationActionBar = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
@@ -254,7 +254,7 @@ public class MainActivity : Activity
         _durationDial = FindRequiredView<View>(Resource.Id.duration_dial);
         _durationControls = FindRequiredView<LinearLayout>(Resource.Id.duration_controls);
         _durationStepRow = FindRequiredView<LinearLayout>(Resource.Id.duration_step_row);
-        _durationOptionLabels = FindRequiredView<LinearLayout>(
+        _durationOptionLabels = FindRequiredView<FrameLayout>(
             Resource.Id.duration_option_labels);
         _durationActionBar = FindRequiredView<FrameLayout>(
             Resource.Id.duration_action_bar);
@@ -317,6 +317,9 @@ public class MainActivity : Activity
 
         _exerciseMediaArea.LayoutChange += (_, _) => ResizeMediaCard();
         _completionHero.LayoutChange += (_, _) => ResizeCompletionHalo();
+        _durationSeekBar.LayoutChange += (_, _) => AlignDurationOptionLabels();
+        _durationOptionLabels.LayoutChange += (_, _) =>
+            AlignDurationOptionLabels();
     }
 
     private void BindEvents()
@@ -596,7 +599,7 @@ public class MainActivity : Activity
                 new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
             _durationIncreaseButton.LayoutParameters =
                 new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
-            _durationOptionLabels.SetPadding(DpInt(66), 0, DpInt(66), 0);
+            _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
             var segmentLayout = new LinearLayout.LayoutParams(
                 matchParent,
@@ -607,6 +610,7 @@ public class MainActivity : Activity
                 DpInt(68),
                 DpInt(68),
                 GravityFlags.Center);
+            _durationOptionLabels.Post(AlignDurationOptionLabels);
             return;
         }
 
@@ -645,7 +649,7 @@ public class MainActivity : Activity
             new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
         _durationIncreaseButton.LayoutParameters =
             new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
-        _durationOptionLabels.SetPadding(DpInt(74), 0, DpInt(74), 0);
+        _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
             matchParent,
@@ -655,6 +659,59 @@ public class MainActivity : Activity
         _beginWorkoutButton.LayoutParameters = new FrameLayout.LayoutParams(
             matchParent,
             DpInt(68));
+        _durationOptionLabels.Post(AlignDurationOptionLabels);
+    }
+
+    private void AlignDurationOptionLabels()
+    {
+        int optionCount = ExerciseSessionService.SupportedWorkoutMinutes.Count;
+        if (_durationOptionLabels.Width <= 0 ||
+            _durationSeekBar.Width <= 0 ||
+            _durationOptionLabels.ChildCount != optionCount ||
+            optionCount < 2)
+        {
+            return;
+        }
+
+        int[] seekLocation = new int[2];
+        int[] labelsLocation = new int[2];
+        _durationSeekBar.GetLocationInWindow(seekLocation);
+        _durationOptionLabels.GetLocationInWindow(labelsLocation);
+
+        float trackStart =
+            seekLocation[0] - labelsLocation[0] + _durationSeekBar.PaddingLeft;
+        float trackEnd =
+            seekLocation[0] - labelsLocation[0] +
+            _durationSeekBar.Width - _durationSeekBar.PaddingRight;
+        bool rightToLeft =
+            _durationSeekBar.LayoutDirection == LayoutDirection.Rtl;
+        int labelSlotWidth = Math.Max(
+            1,
+            (int)Math.Floor(
+                (trackEnd - trackStart) / (optionCount - 1)));
+
+        for (int index = 0; index < optionCount; index++)
+        {
+            View label = _durationOptionLabels.GetChildAt(index)
+                ?? throw new InvalidOperationException(
+                    "A duration option label is missing.");
+            if (label.LayoutParameters is FrameLayout.LayoutParams layout &&
+                layout.Width != labelSlotWidth)
+            {
+                layout.Width = labelSlotWidth;
+                label.LayoutParameters = layout;
+            }
+
+            float fraction = index / (float)(optionCount - 1);
+            if (rightToLeft)
+            {
+                fraction = 1f - fraction;
+            }
+
+            float center = trackStart + ((trackEnd - trackStart) * fraction);
+            float targetLeft = center - (labelSlotWidth / 2f);
+            label.TranslationX = targetLeft - label.Left;
+        }
     }
 
     private void ApplyWorkoutLayout(bool landscape)
