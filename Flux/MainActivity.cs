@@ -17,8 +17,7 @@ namespace Flux;
         Android.Content.PM.ConfigChanges.UiMode |
         Android.Content.PM.ConfigChanges.Locale |
         Android.Content.PM.ConfigChanges.LayoutDirection |
-        Android.Content.PM.ConfigChanges.FontScale,
-    ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+        Android.Content.PM.ConfigChanges.FontScale)]
 public class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
@@ -50,7 +49,16 @@ public class MainActivity : Activity
     private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
 
     private View _durationScreen = null!;
-    private View _durationInsetContent = null!;
+    private LinearLayout _durationInsetContent = null!;
+    private ScrollView _durationScroll = null!;
+    private LinearLayout _durationContent = null!;
+    private LinearLayout _durationIdentity = null!;
+    private ImageView _durationAppIcon = null!;
+    private View _durationDial = null!;
+    private LinearLayout _durationControls = null!;
+    private LinearLayout _durationStepRow = null!;
+    private LinearLayout _durationOptionLabels = null!;
+    private FrameLayout _durationActionBar = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
     private SeekBar _durationSeekBar = null!;
@@ -61,16 +69,19 @@ public class MainActivity : Activity
     private View _workoutPhaseSurface = null!;
     private View _workoutPhaseLeft = null!;
     private View _workoutPhaseRight = null!;
-    private View _workoutInsetContent = null!;
-    private View _workoutHeader = null!;
+    private LinearLayout _workoutInsetContent = null!;
+    private LinearLayout _workoutHeader = null!;
     private TextView _workoutProgressText = null!;
     private ProgressBar _workoutProgressBar = null!;
     private View _congratulationsScreen = null!;
-    private View _completionInsetContent = null!;
+    private LinearLayout _completionInsetContent = null!;
+    private FrameLayout _completionHero = null!;
+    private View _completionHalo = null!;
+    private FrameLayout _completionActionBar = null!;
     private TextView _workoutGroupName = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
-    private View _exerciseMediaArea = null!;
+    private FrameLayout _exerciseMediaArea = null!;
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
     private ImageView _holdFrameImage = null!;
@@ -78,18 +89,19 @@ public class MainActivity : Activity
     private TextView _mediaLoadingText = null!;
     private View _mediaErrorPanel = null!;
     private Button _mediaRetryButton = null!;
-    private View _readyPanel = null!;
+    private FrameLayout _workoutActionHost = null!;
+    private LinearLayout _readyPanel = null!;
     private Button _startButton = null!;
-    private View _countdownPanel = null!;
+    private LinearLayout _countdownPanel = null!;
     private ImageView _countdownPhaseIcon = null!;
     private TextView _countdownText = null!;
     private ProgressBar _countdownProgress = null!;
     private TextView _skipAction = null!;
-    private View _restPanel = null!;
+    private LinearLayout _restPanel = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
     private Button _keepButton = null!;
-    private View _completionMark = null!;
+    private TextView _completionMark = null!;
     private Button _doneButton = null!;
     private SystemBarsController[] _systemBarsControllers = [];
     private DurationSeekAccessibilityDelegate? _durationSeekAccessibilityDelegate;
@@ -231,7 +243,19 @@ public class MainActivity : Activity
     private void BindViews()
     {
         _durationScreen = FindRequiredView<View>(Resource.Id.duration_screen);
-        _durationInsetContent = FindRequiredView<View>(Resource.Id.duration_inset_content);
+        _durationInsetContent = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_inset_content);
+        _durationScroll = FindRequiredView<ScrollView>(Resource.Id.duration_scroll);
+        _durationContent = FindRequiredView<LinearLayout>(Resource.Id.duration_content);
+        _durationIdentity = FindRequiredView<LinearLayout>(Resource.Id.duration_identity);
+        _durationAppIcon = FindRequiredView<ImageView>(Resource.Id.duration_app_icon);
+        _durationDial = FindRequiredView<View>(Resource.Id.duration_dial);
+        _durationControls = FindRequiredView<LinearLayout>(Resource.Id.duration_controls);
+        _durationStepRow = FindRequiredView<LinearLayout>(Resource.Id.duration_step_row);
+        _durationOptionLabels = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_option_labels);
+        _durationActionBar = FindRequiredView<FrameLayout>(
+            Resource.Id.duration_action_bar);
         _durationMinutesValue = FindRequiredView<TextView>(
             Resource.Id.duration_minutes_value);
         _durationDecreaseButton = FindRequiredView<Button>(
@@ -247,17 +271,23 @@ public class MainActivity : Activity
             Resource.Id.workout_phase_surface);
         _workoutPhaseLeft = FindRequiredView<View>(Resource.Id.workout_phase_left);
         _workoutPhaseRight = FindRequiredView<View>(Resource.Id.workout_phase_right);
-        _workoutInsetContent = FindRequiredView<View>(Resource.Id.workout_inset_content);
-        _workoutHeader = FindRequiredView<View>(Resource.Id.workout_header);
+        _workoutInsetContent = FindRequiredView<LinearLayout>(
+            Resource.Id.workout_inset_content);
+        _workoutHeader = FindRequiredView<LinearLayout>(Resource.Id.workout_header);
         _workoutProgressText = FindRequiredView<TextView>(Resource.Id.workout_progress_text);
         _workoutProgressBar = FindRequiredView<ProgressBar>(Resource.Id.workout_progress_bar);
         _congratulationsScreen = FindRequiredView<View>(Resource.Id.congratulations_screen);
-        _completionInsetContent = FindRequiredView<View>(
+        _completionInsetContent = FindRequiredView<LinearLayout>(
             Resource.Id.completion_inset_content);
+        _completionHero = FindRequiredView<FrameLayout>(Resource.Id.completion_hero);
+        _completionHalo = FindRequiredView<View>(Resource.Id.completion_halo);
+        _completionActionBar = FindRequiredView<FrameLayout>(
+            Resource.Id.completion_action_bar);
         _workoutGroupName = FindRequiredView<TextView>(Resource.Id.workout_group_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
-        _exerciseMediaArea = FindRequiredView<View>(Resource.Id.exercise_media_area);
+        _exerciseMediaArea = FindRequiredView<FrameLayout>(
+            Resource.Id.exercise_media_area);
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
         _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
         _holdFrameImage = FindRequiredView<ImageView>(Resource.Id.hold_frame_image);
@@ -265,22 +295,25 @@ public class MainActivity : Activity
         _mediaLoadingText = FindRequiredView<TextView>(Resource.Id.media_loading_text);
         _mediaErrorPanel = FindRequiredView<View>(Resource.Id.media_error_panel);
         _mediaRetryButton = FindRequiredView<Button>(Resource.Id.media_retry_button);
-        _readyPanel = FindRequiredView<View>(Resource.Id.ready_panel);
+        _workoutActionHost = FindRequiredView<FrameLayout>(
+            Resource.Id.workout_action_host);
+        _readyPanel = FindRequiredView<LinearLayout>(Resource.Id.ready_panel);
         _startButton = FindRequiredView<Button>(Resource.Id.start_button);
-        _countdownPanel = FindRequiredView<View>(Resource.Id.countdown_panel);
+        _countdownPanel = FindRequiredView<LinearLayout>(Resource.Id.countdown_panel);
         _countdownPhaseIcon = FindRequiredView<ImageView>(
             Resource.Id.countdown_phase_icon);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
         _countdownProgress = FindRequiredView<ProgressBar>(Resource.Id.countdown_progress);
         _skipAction = FindRequiredView<TextView>(Resource.Id.skip_action);
-        _restPanel = FindRequiredView<View>(Resource.Id.rest_panel);
+        _restPanel = FindRequiredView<LinearLayout>(Resource.Id.rest_panel);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
         _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
-        _completionMark = FindRequiredView<View>(Resource.Id.completion_mark);
+        _completionMark = FindRequiredView<TextView>(Resource.Id.completion_mark);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
 
         _exerciseMediaArea.LayoutChange += (_, _) => ResizeMediaCard();
+        _completionHero.LayoutChange += (_, _) => ResizeCompletionHalo();
     }
 
     private void BindEvents()
@@ -324,18 +357,86 @@ public class MainActivity : Activity
 
     private void ConfigureResponsiveText()
     {
+        bool landscape = IsLandscape();
+        _workoutGroupName.SetMaxLines(2);
+        _exerciseName.SetMaxLines(landscape ? 3 : 4);
+        _countdownText.SetMaxLines(1);
+        _restCountdownText.SetMaxLines(1);
+        _durationDecreaseButton.SetMaxLines(1);
+        _durationIncreaseButton.SetMaxLines(1);
+        _completionMark.SetMaxLines(1);
+        foreach (Button button in new[]
+                 {
+                     _startButton,
+                     _keepButton,
+                     _doneButton,
+                 })
+        {
+            button.SetMaxLines(2);
+        }
+
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
             _durationMinutesValue.SetAutoSizeTextTypeUniformWithConfiguration(
-                56,
-                108,
+                landscape ? 36 : 56,
+                landscape ? 88 : 108,
                 2,
                 (int)Android.Util.ComplexUnitType.Sp);
             _exerciseName.SetAutoSizeTextTypeUniformWithConfiguration(
-                16,
-                23,
+                landscape ? 11 : 16,
+                landscape ? 19 : 23,
                 1,
                 (int)Android.Util.ComplexUnitType.Sp);
+            _workoutGroupName.SetAutoSizeTextTypeUniformWithConfiguration(
+                landscape ? 8 : 10,
+                landscape ? 12 : 13,
+                1,
+                (int)Android.Util.ComplexUnitType.Sp);
+            _countdownText.SetAutoSizeTextTypeUniformWithConfiguration(
+                landscape ? 28 : 32,
+                landscape ? 56 : 60,
+                2,
+                (int)Android.Util.ComplexUnitType.Sp);
+            _restCountdownText.SetAutoSizeTextTypeUniformWithConfiguration(
+                landscape ? 24 : 28,
+                40,
+                2,
+                (int)Android.Util.ComplexUnitType.Sp);
+            _beginWorkoutButton.SetAutoSizeTextTypeUniformWithConfiguration(
+                24,
+                34,
+                1,
+                (int)Android.Util.ComplexUnitType.Sp);
+            foreach (Button stepButton in new[]
+                     {
+                         _durationDecreaseButton,
+                         _durationIncreaseButton,
+                     })
+            {
+                stepButton.SetAutoSizeTextTypeUniformWithConfiguration(
+                    18,
+                    28,
+                    1,
+                    (int)Android.Util.ComplexUnitType.Sp);
+            }
+            _completionMark.SetAutoSizeTextTypeUniformWithConfiguration(
+                landscape ? 36 : 42,
+                landscape ? 72 : 82,
+                2,
+                (int)Android.Util.ComplexUnitType.Sp);
+            foreach (Button button in new[]
+                     {
+                         _startButton,
+                         _keepButton,
+                         _doneButton,
+                     })
+            {
+                button.SetAutoSizeTextTypeUniformWithConfiguration(
+                    14,
+                    20,
+                    1,
+                    (int)Android.Util.ComplexUnitType.Sp);
+            }
 
             return;
         }
@@ -346,16 +447,53 @@ public class MainActivity : Activity
         float fontScale = Math.Max(
             1f,
             Resources?.Configuration?.FontScale ?? 1f);
-        _durationMinutesValue.SetTextSize(
-            Android.Util.ComplexUnitType.Sp,
-            Math.Max(56f, 88f / fontScale));
-        _exerciseName.SetTextSize(
-            Android.Util.ComplexUnitType.Sp,
-            Math.Max(16f, 23f / fontScale));
+        SetResponsiveTextSize(
+            _durationMinutesValue,
+            landscape ? 36f : 56f,
+            landscape ? 88f : 108f,
+            fontScale);
+        SetResponsiveTextSize(
+            _exerciseName,
+            landscape ? 11f : 16f,
+            landscape ? 19f : 23f,
+            fontScale);
+        SetResponsiveTextSize(
+            _workoutGroupName,
+            landscape ? 8f : 10f,
+            landscape ? 12f : 13f,
+            fontScale);
+        SetResponsiveTextSize(
+            _countdownText,
+            landscape ? 28f : 32f,
+            landscape ? 56f : 60f,
+            fontScale);
+        SetResponsiveTextSize(
+            _restCountdownText,
+            landscape ? 24f : 28f,
+            40f,
+            fontScale);
+        SetResponsiveTextSize(_beginWorkoutButton, 24f, 34f, fontScale);
+        SetResponsiveTextSize(_durationDecreaseButton, 18f, 28f, fontScale);
+        SetResponsiveTextSize(_durationIncreaseButton, 18f, 28f, fontScale);
+        SetResponsiveTextSize(
+            _completionMark,
+            landscape ? 36f : 42f,
+            landscape ? 72f : 82f,
+            fontScale);
+        foreach (Button button in new[]
+                 {
+                     _startButton,
+                     _keepButton,
+                     _doneButton,
+                 })
+        {
+            SetResponsiveTextSize(button, 14f, 20f, fontScale);
+        }
     }
 
     private void ApplyResponsiveDimensions()
     {
+        bool landscape = IsLandscape();
         _exerciseMediaArea.SetMinimumHeight(
             Resources!.GetDimensionPixelSize(Resource.Dimension.workout_media_min_height));
         _readyPanel.SetMinimumHeight(
@@ -364,6 +502,283 @@ public class MainActivity : Activity
             Resources.GetDimensionPixelSize(Resource.Dimension.move_panel_min_height));
         _restPanel.SetMinimumHeight(
             Resources.GetDimensionPixelSize(Resource.Dimension.rest_panel_min_height));
+
+        ApplyDurationLayout(landscape);
+        ApplyWorkoutLayout(landscape);
+        ApplyCompletionLayout(landscape);
+        _exerciseMediaArea.Post(ResizeMediaCard);
+        _completionHero.Post(ResizeCompletionHalo);
+    }
+
+    private static void SetResponsiveTextSize(
+        TextView view,
+        float minimumSp,
+        float preferredSp,
+        float fontScale)
+    {
+        view.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            Math.Max(minimumSp, preferredSp / fontScale));
+    }
+
+    private bool IsLandscape()
+    {
+        return Resources?.Configuration?.Orientation ==
+            Android.Content.Res.Orientation.Landscape;
+    }
+
+    private void ApplyDurationLayout(bool landscape)
+    {
+        int matchParent = ViewGroup.LayoutParams.MatchParent;
+        int wrapContent = ViewGroup.LayoutParams.WrapContent;
+        int iconSize = Resources!.GetDimensionPixelSize(
+            Resource.Dimension.duration_icon_size);
+        int dialSize = Resources.GetDimensionPixelSize(
+            Resource.Dimension.duration_dial_size);
+
+        _durationInsetContent.Orientation = landscape
+            ? Orientation.Horizontal
+            : Orientation.Vertical;
+        _durationContent.Orientation = landscape
+            ? Orientation.Horizontal
+            : Orientation.Vertical;
+        _durationContent.SetGravity(landscape
+            ? GravityFlags.Center
+            : GravityFlags.CenterHorizontal);
+        _durationIdentity.Orientation = Orientation.Vertical;
+        _durationIdentity.SetGravity(GravityFlags.Center);
+
+        _durationAppIcon.LayoutParameters = new LinearLayout.LayoutParams(
+            iconSize,
+            iconSize);
+        var dialLayout = new LinearLayout.LayoutParams(dialSize, dialSize);
+        dialLayout.TopMargin = DpInt(landscape ? 8 : 22);
+        _durationDial.LayoutParameters = dialLayout;
+
+        if (landscape)
+        {
+            _durationScroll.LayoutParameters = new LinearLayout.LayoutParams(
+                0,
+                matchParent,
+                1f);
+            _durationActionBar.LayoutParameters = new LinearLayout.LayoutParams(
+                Resources.GetDimensionPixelSize(
+                    Resource.Dimension.duration_landscape_action_width),
+                matchParent);
+            _durationActionBar.SetBackgroundResource(
+                Resource.Drawable.duration_action_rail_background);
+            _durationActionBar.SetPadding(
+                DpInt(16),
+                DpInt(16),
+                DpInt(16),
+                DpInt(16));
+            _durationContent.SetPadding(
+                DpInt(16),
+                DpInt(10),
+                DpInt(16),
+                DpInt(10));
+
+            var identityLayout = new LinearLayout.LayoutParams(
+                dialSize + DpInt(28),
+                wrapContent)
+            {
+                Gravity = GravityFlags.CenterVertical,
+            };
+            _durationIdentity.LayoutParameters = identityLayout;
+
+            var controlsLayout = new LinearLayout.LayoutParams(
+                0,
+                wrapContent,
+                1f)
+            {
+                Gravity = GravityFlags.CenterVertical,
+            };
+            controlsLayout.SetMargins(DpInt(12), 0, 0, 0);
+            _durationControls.LayoutParameters = controlsLayout;
+
+            var stepRowLayout = new LinearLayout.LayoutParams(
+                matchParent,
+                DpInt(56));
+            _durationStepRow.LayoutParameters = stepRowLayout;
+            _durationDecreaseButton.LayoutParameters =
+                new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
+            _durationIncreaseButton.LayoutParameters =
+                new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
+            _durationOptionLabels.SetPadding(DpInt(66), 0, DpInt(66), 0);
+
+            var segmentLayout = new LinearLayout.LayoutParams(
+                matchParent,
+                DpInt(24));
+            segmentLayout.TopMargin = DpInt(20);
+            _durationOptionSegments.LayoutParameters = segmentLayout;
+            _beginWorkoutButton.LayoutParameters = new FrameLayout.LayoutParams(
+                DpInt(68),
+                DpInt(68),
+                GravityFlags.Center);
+            return;
+        }
+
+        _durationScroll.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            0,
+            1f);
+        _durationActionBar.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            wrapContent);
+        _durationActionBar.SetBackgroundResource(
+            Resource.Drawable.duration_action_background);
+        _durationActionBar.SetPadding(
+            DpInt(24),
+            DpInt(12),
+            DpInt(24),
+            DpInt(16));
+        _durationContent.SetPadding(
+            DpInt(24),
+            DpInt(24),
+            DpInt(24),
+            DpInt(24));
+        _durationIdentity.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            wrapContent);
+        _durationControls.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            wrapContent);
+
+        var portraitStepRowLayout = new LinearLayout.LayoutParams(
+            matchParent,
+            DpInt(64));
+        portraitStepRowLayout.TopMargin = DpInt(28);
+        _durationStepRow.LayoutParameters = portraitStepRowLayout;
+        _durationDecreaseButton.LayoutParameters =
+            new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
+        _durationIncreaseButton.LayoutParameters =
+            new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
+        _durationOptionLabels.SetPadding(DpInt(74), 0, DpInt(74), 0);
+
+        var portraitSegmentLayout = new LinearLayout.LayoutParams(
+            matchParent,
+            DpInt(24));
+        portraitSegmentLayout.TopMargin = DpInt(36);
+        _durationOptionSegments.LayoutParameters = portraitSegmentLayout;
+        _beginWorkoutButton.LayoutParameters = new FrameLayout.LayoutParams(
+            matchParent,
+            DpInt(68));
+    }
+
+    private void ApplyWorkoutLayout(bool landscape)
+    {
+        int matchParent = ViewGroup.LayoutParams.MatchParent;
+        int wrapContent = ViewGroup.LayoutParams.WrapContent;
+        int gap = Resources!.GetDimensionPixelSize(
+            Resource.Dimension.landscape_content_gap);
+
+        _workoutInsetContent.Orientation = landscape
+            ? Orientation.Horizontal
+            : Orientation.Vertical;
+        _workoutHeader.SetGravity(landscape
+            ? GravityFlags.CenterVertical
+            : GravityFlags.Top);
+
+        if (landscape)
+        {
+            _workoutHeader.LayoutParameters = new LinearLayout.LayoutParams(
+                0,
+                matchParent,
+                0.92f);
+
+            var mediaLayout = new LinearLayout.LayoutParams(
+                0,
+                matchParent,
+                1.28f);
+            mediaLayout.SetMargins(gap, 0, gap, 0);
+            _exerciseMediaArea.LayoutParameters = mediaLayout;
+
+            _workoutActionHost.LayoutParameters = new LinearLayout.LayoutParams(
+                0,
+                matchParent,
+                0.96f);
+        }
+        else
+        {
+            _workoutHeader.LayoutParameters = new LinearLayout.LayoutParams(
+                matchParent,
+                wrapContent);
+
+            var mediaLayout = new LinearLayout.LayoutParams(
+                matchParent,
+                0,
+                1f);
+            mediaLayout.SetMargins(0, DpInt(12), 0, DpInt(12));
+            _exerciseMediaArea.LayoutParameters = mediaLayout;
+
+            _workoutActionHost.LayoutParameters = new LinearLayout.LayoutParams(
+                matchParent,
+                wrapContent);
+        }
+
+        GravityFlags panelGravity = landscape
+            ? GravityFlags.Center
+            : GravityFlags.Top;
+        foreach (LinearLayout panel in new[]
+                 {
+                     _readyPanel,
+                     _countdownPanel,
+                     _restPanel,
+                 })
+        {
+            panel.LayoutParameters = new FrameLayout.LayoutParams(
+                matchParent,
+                wrapContent,
+                panelGravity);
+        }
+    }
+
+    private void ApplyCompletionLayout(bool landscape)
+    {
+        int matchParent = ViewGroup.LayoutParams.MatchParent;
+        int wrapContent = ViewGroup.LayoutParams.WrapContent;
+
+        _completionInsetContent.Orientation = landscape
+            ? Orientation.Horizontal
+            : Orientation.Vertical;
+
+        if (landscape)
+        {
+            _completionHero.LayoutParameters = new LinearLayout.LayoutParams(
+                0,
+                matchParent,
+                1f);
+            _completionActionBar.LayoutParameters = new LinearLayout.LayoutParams(
+                Resources!.GetDimensionPixelSize(
+                    Resource.Dimension.completion_landscape_action_width),
+                matchParent);
+            _completionActionBar.SetPadding(
+                DpInt(16),
+                DpInt(16),
+                DpInt(16),
+                DpInt(16));
+            _doneButton.LayoutParameters = new FrameLayout.LayoutParams(
+                matchParent,
+                DpInt(68),
+                GravityFlags.Center);
+            return;
+        }
+
+        _completionHero.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            0,
+            1f);
+        _completionActionBar.LayoutParameters = new LinearLayout.LayoutParams(
+            matchParent,
+            wrapContent);
+        _completionActionBar.SetPadding(
+            DpInt(24),
+            DpInt(12),
+            DpInt(24),
+            DpInt(16));
+        _doneButton.LayoutParameters = new FrameLayout.LayoutParams(
+            matchParent,
+            DpInt(68));
     }
 
     private void ConfigureAccessibility()
@@ -546,6 +961,11 @@ public class MainActivity : Activity
         return value * Resources!.DisplayMetrics!.Density;
     }
 
+    private int DpInt(float value)
+    {
+        return (int)Math.Round(Dp(value));
+    }
+
     private void ResizeMediaCard()
     {
         int size = Math.Min(_exerciseMediaArea.Width, _exerciseMediaArea.Height);
@@ -557,6 +977,27 @@ public class MainActivity : Activity
         }
 
         _exerciseMediaCard.LayoutParameters = new FrameLayout.LayoutParams(
+            size,
+            size,
+            GravityFlags.Center);
+    }
+
+    private void ResizeCompletionHalo()
+    {
+        int availableSize = Math.Min(
+            _completionHero.Width,
+            _completionHero.Height);
+        int maximumSize = Resources!.GetDimensionPixelSize(
+            Resource.Dimension.completion_halo_max_size);
+        int size = Math.Min(maximumSize, availableSize - DpInt(20));
+        if (size <= 0 ||
+            (_completionHalo.LayoutParameters?.Width == size &&
+             _completionHalo.LayoutParameters.Height == size))
+        {
+            return;
+        }
+
+        _completionHalo.LayoutParameters = new FrameLayout.LayoutParams(
             size,
             size,
             GravityFlags.Center);

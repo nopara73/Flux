@@ -13,11 +13,13 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/completion_hero"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <FrameLayout
+                android:id="@+id/completion_halo"
                 android:layout_width="280dp"
                 android:layout_height="280dp"
                 android:layout_gravity="center"
@@ -40,6 +42,7 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/completion_action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="24dp"
@@ -53,6 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="68dp"
+                android:maxLines="2"
                 android:text="@string/done" />
         </FrameLayout>
     </LinearLayout>

@@ -67,6 +67,8 @@
                 android:gravity="center"
                 android:hyphenationFrequency="none"
                 android:lineSpacingExtra="2dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:minHeight="44dp"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
@@ -219,6 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="68dp"
+                    android:maxLines="2"
                     android:text="@string/start" />
             </LinearLayout>
 
@@ -276,6 +279,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:includeFontPadding="false"
+                    android:maxLines="1"
                     android:text="@string/countdown_initial"
                     android:textColor="@color/move_text"
                     android:textSize="60sp" />
@@ -326,6 +330,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:includeFontPadding="false"
+                        android:maxLines="1"
                         android:text="@string/rest_initial"
                         android:textColor="@color/rest_text"
                         android:textSize="40sp" />
@@ -350,6 +355,7 @@
                     android:layout_marginTop="14dp"
                     android:contentDescription="@string/tap_to_keep_description"
                     android:minHeight="64dp"
+                    android:maxLines="2"
                     android:text="@string/tap_to_keep" />
             </LinearLayout>
         </FrameLayout>
