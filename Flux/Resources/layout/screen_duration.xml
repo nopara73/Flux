@@ -238,11 +238,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/duration_start_default"
-                android:drawableStart="@drawable/ic_arrow_forward"
-                android:drawableTint="@color/primary_text"
                 android:gravity="center"
                 android:minHeight="68dp"
                 android:textSize="34sp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:elevation="4dp"
+                android:focusable="false"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_arrow_forward"
+                android:tint="@color/primary_text" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>
