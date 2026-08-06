@@ -177,15 +177,15 @@
                     android:layout_height="match_parent"
                     android:background="@color/media_background" />
 
-                <TextView
-                    android:id="@+id/media_loading_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ProgressBar
+                    android:id="@+id/media_loading_indicator"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/media_loading"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
+                    android:importantForAccessibility="no"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/brand_graphite" />
 
                 <LinearLayout
                     android:id="@+id/media_error_panel"

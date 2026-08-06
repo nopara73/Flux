@@ -87,7 +87,7 @@ public class MainActivity : Activity
     private VideoView _exerciseVideo = null!;
     private ImageView _holdFrameImage = null!;
     private View _mediaScrim = null!;
-    private TextView _mediaLoadingText = null!;
+    private ProgressBar _mediaLoadingIndicator = null!;
     private View _mediaErrorPanel = null!;
     private Button _mediaRetryButton = null!;
     private FrameLayout _workoutActionHost = null!;
@@ -126,6 +126,7 @@ public class MainActivity : Activity
     private bool _mediaReady;
     private bool _countdownPausedForMediaError;
     private int _mediaLoadGeneration;
+    private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
     private AppScreen _appScreen = AppScreen.Duration;
     private WorkoutPhase _workoutPhase = WorkoutPhase.Ready;
@@ -293,7 +294,8 @@ public class MainActivity : Activity
         _exerciseVideo = FindRequiredView<VideoView>(Resource.Id.exercise_video);
         _holdFrameImage = FindRequiredView<ImageView>(Resource.Id.hold_frame_image);
         _mediaScrim = FindRequiredView<View>(Resource.Id.media_scrim);
-        _mediaLoadingText = FindRequiredView<TextView>(Resource.Id.media_loading_text);
+        _mediaLoadingIndicator = FindRequiredView<ProgressBar>(
+            Resource.Id.media_loading_indicator);
         _mediaErrorPanel = FindRequiredView<View>(Resource.Id.media_error_panel);
         _mediaRetryButton = FindRequiredView<Button>(Resource.Id.media_retry_button);
         _workoutActionHost = FindRequiredView<FrameLayout>(
@@ -936,6 +938,15 @@ public class MainActivity : Activity
             }
         }
 
+        bool mediaIsResting =
+            _appScreen == AppScreen.Workout &&
+            (_workoutPhase == WorkoutPhase.Rest ||
+             (_workoutPhase == WorkoutPhase.Move &&
+              _lastMovementPhase == MovementPhase.ChangeSides));
+        _exerciseMediaCard.Alpha = mediaIsResting ? 0.92f : 1f;
+        _exerciseMediaCard.ScaleX = mediaIsResting ? 0.985f : 1f;
+        _exerciseMediaCard.ScaleY = mediaIsResting ? 0.985f : 1f;
+
         int selectedDurationIndex = GetSupportedMinuteIndex(
             _selectedWorkoutMinutes);
         for (int index = 0; index < _durationOptionLabels.ChildCount; index++)
@@ -954,7 +965,7 @@ public class MainActivity : Activity
         }
 
         _mediaScrim.Animate()?.Cancel();
-        if (_mediaLoadingText.Visibility == ViewStates.Visible ||
+        if (_mediaLoadingIndicator.Visibility == ViewStates.Visible ||
             _mediaErrorPanel.Visibility == ViewStates.Visible)
         {
             _mediaScrim.Alpha = 1f;
@@ -1082,6 +1093,7 @@ public class MainActivity : Activity
 
             if (_durationOptionLabels.GetChildAt(index) is TextView label)
             {
+                label.Animate()?.Cancel();
                 bool selected = index == optionIndex;
                 label.SetTextColor(new Android.Graphics.Color(GetColor(
                     selected
@@ -1323,7 +1335,7 @@ public class MainActivity : Activity
             _mediaScrim.Alpha = 1f;
             _mediaScrim.Visibility = ViewStates.Visible;
             _mediaErrorPanel.Visibility = ViewStates.Gone;
-            _mediaLoadingText.Visibility = ViewStates.Gone;
+            _mediaLoadingIndicator.Visibility = ViewStates.Gone;
             ShowHoldFrame(exercise.Id);
             SetStartAvailability(available: _mediaReady);
             if (_workoutPhase == WorkoutPhase.Move && _mediaReady)
@@ -1342,7 +1354,7 @@ public class MainActivity : Activity
         {
             _exerciseVideo.Pause();
             _mediaErrorPanel.Visibility = ViewStates.Gone;
-            _mediaLoadingText.Visibility = ViewStates.Gone;
+            _mediaLoadingIndicator.Visibility = ViewStates.Gone;
             ShowHoldFrame(exercise.Id);
             return;
         }
@@ -1352,7 +1364,7 @@ public class MainActivity : Activity
         _mediaScrim.Animate()?.Cancel();
         _mediaScrim.Alpha = 1f;
         _mediaScrim.Visibility = ViewStates.Visible;
-        _mediaLoadingText.Visibility = ViewStates.Visible;
+        _mediaLoadingIndicator.Visibility = ViewStates.Visible;
         _mediaErrorPanel.Visibility = ViewStates.Gone;
         SetStartAvailability(available: false);
         if (_workoutPhase == WorkoutPhase.Move)
@@ -1425,9 +1437,7 @@ public class MainActivity : Activity
 
         _startButton.Enabled = available;
         _startButton.Alpha = available ? 1f : 0.5f;
-        _startButton.Text = available
-            ? GetString(Resource.String.start)
-            : GetString(Resource.String.media_loading);
+        _startButton.Text = GetString(Resource.String.start);
         _startButton.ContentDescription = available
             ? GetString(Resource.String.start)
             : GetString(Resource.String.media_loading);
@@ -1443,14 +1453,16 @@ public class MainActivity : Activity
 
     private void RevealExerciseMedia()
     {
-        if (_mediaErrorPanel.Visibility == ViewStates.Visible)
+        if (_mediaErrorPanel.Visibility == ViewStates.Visible ||
+            _revealedMediaGeneration == _mediaLoadGeneration)
         {
             return;
         }
 
+        _revealedMediaGeneration = _mediaLoadGeneration;
         int revealGeneration = _mediaLoadGeneration;
         _mediaErrorPanel.Visibility = ViewStates.Gone;
-        _mediaLoadingText.Visibility = ViewStates.Gone;
+        _mediaLoadingIndicator.Visibility = ViewStates.Gone;
         _mediaScrim.Visibility = ViewStates.Visible;
         _mediaScrim.Animate()?.Cancel();
         if (_mediaScrim.Animate() is { } animator)
@@ -1465,7 +1477,7 @@ public class MainActivity : Activity
             () =>
             {
                 if (revealGeneration == _mediaLoadGeneration &&
-                    _mediaLoadingText.Visibility != ViewStates.Visible &&
+                    _mediaLoadingIndicator.Visibility != ViewStates.Visible &&
                     _mediaErrorPanel.Visibility != ViewStates.Visible)
                 {
                     _mediaScrim.Alpha = 0f;
@@ -1491,14 +1503,13 @@ public class MainActivity : Activity
         SetStartAvailability(available: false);
         if (_workoutPhase == WorkoutPhase.Ready)
         {
-            _startButton.Text = GetString(Resource.String.media_error);
             _startButton.ContentDescription = GetString(Resource.String.media_error);
         }
         SetSkipAvailability(available: false);
         _mediaScrim.Animate()?.Cancel();
         _mediaScrim.Alpha = 1f;
         _mediaScrim.Visibility = ViewStates.Visible;
-        _mediaLoadingText.Visibility = ViewStates.Gone;
+        _mediaLoadingIndicator.Visibility = ViewStates.Gone;
         _mediaErrorPanel.Visibility = ViewStates.Visible;
         AnnouncePhaseForAccessibility(
             _mediaErrorPanel,
@@ -1604,7 +1615,7 @@ public class MainActivity : Activity
         _workoutProgressText.ContentDescription =
             $"Round {position} of {_state.ActiveWorkoutMinutes}";
         _workoutProgressBar.Max = _state.ActiveWorkoutMinutes;
-        _workoutProgressBar.Progress = position;
+        _workoutProgressBar.SetProgress(position, continuingWorkout);
         _workoutGroupName.Text = groupName;
         _workoutGroupName.ContentDescription = groupName;
         _exerciseName.Text = exercise.Name;
@@ -1672,7 +1683,7 @@ public class MainActivity : Activity
 
     private void StartCountdown()
     {
-        if (_countdownActive)
+        if (_countdownActive || !_mediaReady)
         {
             return;
         }
@@ -1681,6 +1692,7 @@ public class MainActivity : Activity
         _countdownActive = true;
         _lastMovementPhase = null;
         ShowWorkoutPhase(WorkoutPhase.Move);
+        SetSkipAvailability(available: true);
         StartCountdownTimer(CountdownSeconds * 1000L);
     }
 
