@@ -22,7 +22,8 @@ public class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
     private const int RestSeconds = 15;
-    private const long PhaseMotionDurationMilliseconds = 140L;
+    private const long PhaseMotionDurationMilliseconds = 160L;
+    private const long HueMotionDurationMilliseconds = 120L;
     private const float SkipActionEnabledAlpha = 1f;
     private const float SkipActionDisabledAlpha = 0.35f;
 
@@ -101,7 +102,7 @@ public class MainActivity : Activity
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
     private Button _keepButton = null!;
-    private TextView _completionMark = null!;
+    private ImageView _completionMark = null!;
     private Button _doneButton = null!;
     private SystemBarsController[] _systemBarsControllers = [];
     private DurationSeekAccessibilityDelegate? _durationSeekAccessibilityDelegate;
@@ -309,7 +310,7 @@ public class MainActivity : Activity
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
         _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
-        _completionMark = FindRequiredView<TextView>(Resource.Id.completion_mark);
+        _completionMark = FindRequiredView<ImageView>(Resource.Id.completion_mark);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
 
         _exerciseMediaArea.LayoutChange += (_, _) => ResizeMediaCard();
@@ -364,7 +365,6 @@ public class MainActivity : Activity
         _restCountdownText.SetMaxLines(1);
         _durationDecreaseButton.SetMaxLines(1);
         _durationIncreaseButton.SetMaxLines(1);
-        _completionMark.SetMaxLines(1);
         foreach (Button button in new[]
                  {
                      _startButton,
@@ -419,11 +419,6 @@ public class MainActivity : Activity
                     1,
                     (int)Android.Util.ComplexUnitType.Sp);
             }
-            _completionMark.SetAutoSizeTextTypeUniformWithConfiguration(
-                landscape ? 36 : 42,
-                landscape ? 72 : 82,
-                2,
-                (int)Android.Util.ComplexUnitType.Sp);
             foreach (Button button in new[]
                      {
                          _startButton,
@@ -475,11 +470,6 @@ public class MainActivity : Activity
         SetResponsiveTextSize(_beginWorkoutButton, 24f, 34f, fontScale);
         SetResponsiveTextSize(_durationDecreaseButton, 18f, 28f, fontScale);
         SetResponsiveTextSize(_durationIncreaseButton, 18f, 28f, fontScale);
-        SetResponsiveTextSize(
-            _completionMark,
-            landscape ? 36f : 42f,
-            landscape ? 72f : 82f,
-            fontScale);
         foreach (Button button in new[]
                  {
                      _startButton,
@@ -713,12 +703,10 @@ public class MainActivity : Activity
 
             _workoutActionHost.LayoutParameters = new LinearLayout.LayoutParams(
                 matchParent,
-                wrapContent);
+                Resources.GetDimensionPixelSize(
+                    Resource.Dimension.workout_action_height));
         }
 
-        GravityFlags panelGravity = landscape
-            ? GravityFlags.Center
-            : GravityFlags.Top;
         foreach (LinearLayout panel in new[]
                  {
                      _readyPanel,
@@ -728,8 +716,8 @@ public class MainActivity : Activity
         {
             panel.LayoutParameters = new FrameLayout.LayoutParams(
                 matchParent,
-                wrapContent,
-                panelGravity);
+                matchParent,
+                GravityFlags.Center);
         }
     }
 
@@ -899,7 +887,7 @@ public class MainActivity : Activity
 
         if (animate && _hasRenderedScreen)
         {
-            AnimateViewIn(target, 8f);
+            AnimateViewIn(target, 4f);
         }
     }
 
@@ -923,13 +911,19 @@ public class MainActivity : Activity
         foreach (View view in new[]
                  {
                      _durationScreen,
+                     _durationDial,
+                     _durationMinutesValue,
                      _workoutScreen,
+                     _workoutPhaseSurface,
                      _congratulationsScreen,
                      _workoutHeader,
+                     _exerciseMediaCard,
                      _readyPanel,
                      _countdownPanel,
                      _restPanel,
+                     _completionHalo,
                      _completionMark,
+                     _doneButton,
                  })
         {
             view.Animate()?.Cancel();
@@ -940,6 +934,23 @@ public class MainActivity : Activity
             {
                 view.Alpha = 1f;
             }
+        }
+
+        int selectedDurationIndex = GetSupportedMinuteIndex(
+            _selectedWorkoutMinutes);
+        for (int index = 0; index < _durationOptionLabels.ChildCount; index++)
+        {
+            View? label = _durationOptionLabels.GetChildAt(index);
+            label?.Animate()?.Cancel();
+            if (label is null)
+            {
+                continue;
+            }
+
+            bool selected = index == selectedDurationIndex;
+            label.Alpha = selected ? 1f : 0.72f;
+            label.ScaleX = selected ? 1.08f : 1f;
+            label.ScaleY = selected ? 1.08f : 1f;
         }
 
         _mediaScrim.Animate()?.Cancel();
@@ -990,9 +1001,15 @@ public class MainActivity : Activity
         int maximumSize = Resources!.GetDimensionPixelSize(
             Resource.Dimension.completion_halo_max_size);
         int size = Math.Min(maximumSize, availableSize - DpInt(20));
-        if (size <= 0 ||
-            (_completionHalo.LayoutParameters?.Width == size &&
-             _completionHalo.LayoutParameters.Height == size))
+        if (size <= 0)
+        {
+            return;
+        }
+
+        int padding = Math.Max(DpInt(16), (int)Math.Round(size * 0.16d));
+        _completionHalo.SetPadding(padding, padding, padding, padding);
+        if (_completionHalo.LayoutParameters?.Width == size &&
+            _completionHalo.LayoutParameters.Height == size)
         {
             return;
         }
@@ -1012,6 +1029,8 @@ public class MainActivity : Activity
         ClearHoldFrame();
         ResetMovementVisuals();
         _currentExercise = null;
+        _beginWorkoutButton.Enabled = true;
+        _beginWorkoutButton.Alpha = 1f;
 
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
@@ -1019,6 +1038,7 @@ public class MainActivity : Activity
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
     {
+        int previousOptionIndex = GetSupportedMinuteIndex(_selectedWorkoutMinutes);
         int normalizedMinutes = ExerciseSessionService.NormalizeLastWorkoutMinutes(minutes);
         _selectedWorkoutMinutes = normalizedMinutes;
         int optionIndex = GetSupportedMinuteIndex(normalizedMinutes);
@@ -1033,7 +1053,6 @@ public class MainActivity : Activity
         _durationMinutesValue.Text = normalizedMinutes.ToString();
         _durationMinutesValue.ContentDescription =
             $"{normalizedMinutes} minutes selected";
-        _beginWorkoutButton.Text = GetString(Resource.String.duration_start_default);
         _beginWorkoutButton.ContentDescription =
             $"Continue with a {normalizedMinutes} {minuteLabel} workout";
         _durationSeekBar.ContentDescription =
@@ -1060,6 +1079,71 @@ public class MainActivity : Activity
             segment.SetBackgroundResource(index <= optionIndex
                 ? Resource.Drawable.duration_segment_active
                 : Resource.Drawable.duration_segment_inactive);
+
+            if (_durationOptionLabels.GetChildAt(index) is TextView label)
+            {
+                bool selected = index == optionIndex;
+                label.SetTextColor(new Android.Graphics.Color(GetColor(
+                    selected
+                        ? Resource.Color.primary_text
+                        : Resource.Color.secondary_text)));
+                label.Alpha = selected ? 1f : 0.72f;
+                label.ScaleX = selected ? 1.08f : 1f;
+                label.ScaleY = selected ? 1.08f : 1f;
+            }
+        }
+
+        if (userInitiated && previousOptionIndex != optionIndex)
+        {
+            AnimateDurationSelectionChange(optionIndex);
+        }
+    }
+
+    private void AnimateDurationSelectionChange(int optionIndex)
+    {
+        _durationDial.Animate()?.Cancel();
+        _durationDial.ScaleX = 0.98f;
+        _durationDial.ScaleY = 0.98f;
+        if (_durationDial.Animate() is { } dialAnimator)
+        {
+            dialAnimator
+                .ScaleX(1f)
+                .ScaleY(1f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
+        }
+
+        _durationMinutesValue.Animate()?.Cancel();
+        _durationMinutesValue.Alpha = 0.62f;
+        _durationMinutesValue.ScaleX = 0.9f;
+        _durationMinutesValue.ScaleY = 0.9f;
+        if (_durationMinutesValue.Animate() is { } valueAnimator)
+        {
+            valueAnimator
+                .Alpha(1f)
+                .ScaleX(1f)
+                .ScaleY(1f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
+        }
+
+        if (_durationOptionLabels.GetChildAt(optionIndex) is not TextView label)
+        {
+            return;
+        }
+
+        label.Animate()?.Cancel();
+        label.Alpha = 0.72f;
+        label.ScaleX = 0.92f;
+        label.ScaleY = 0.92f;
+        if (label.Animate() is { } labelAnimator)
+        {
+            labelAnimator
+                .Alpha(1f)
+                .ScaleX(1.08f)
+                .ScaleY(1.08f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
         }
     }
 
@@ -1092,9 +1176,25 @@ public class MainActivity : Activity
 
     private void StartSelectedWorkout()
     {
-        _sessionService.StartWorkout(_state, _selectedWorkoutMinutes);
-        _stateStore.Save(_state);
-        ShowNextExercise();
+        if (!_beginWorkoutButton.Enabled)
+        {
+            return;
+        }
+
+        _beginWorkoutButton.Enabled = false;
+        _beginWorkoutButton.Alpha = 0.6f;
+        try
+        {
+            _sessionService.StartWorkout(_state, _selectedWorkoutMinutes);
+            _stateStore.Save(_state);
+            ShowNextExercise();
+        }
+        catch
+        {
+            _beginWorkoutButton.Enabled = true;
+            _beginWorkoutButton.Alpha = 1f;
+            throw;
+        }
     }
 
     private void FinishInterruptedWorkout()
@@ -1479,6 +1579,9 @@ public class MainActivity : Activity
 
     private void ShowNextExercise()
     {
+        bool continuingWorkout =
+            _appScreen == AppScreen.Workout &&
+            _workoutScreen.Visibility == ViewStates.Visible;
         WorkoutGroup? nextGroup = _sessionService.GetNextGroup(_state);
 
         if (nextGroup is null)
@@ -1517,11 +1620,44 @@ public class MainActivity : Activity
         ShowStartButton();
         LoadExerciseMedia(exercise);
         ResizeMediaCard();
+        if (continuingWorkout)
+        {
+            AnimateExerciseChange();
+        }
         AnnouncePhaseForAccessibility(
             _workoutHeader,
             $"Round {position} of {_state.ActiveWorkoutMinutes}. " +
             $"{groupName}. {exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
+    }
+
+    private void AnimateExerciseChange()
+    {
+        _workoutHeader.Animate()?.Cancel();
+        _workoutHeader.Alpha = 0.2f;
+        _workoutHeader.TranslationY = Dp(4f);
+        if (_workoutHeader.Animate() is { } headerAnimator)
+        {
+            headerAnimator
+                .Alpha(1f)
+                .TranslationY(0f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
+        }
+
+        _exerciseMediaCard.Animate()?.Cancel();
+        _exerciseMediaCard.Alpha = 0.72f;
+        _exerciseMediaCard.ScaleX = 0.985f;
+        _exerciseMediaCard.ScaleY = 0.985f;
+        if (_exerciseMediaCard.Animate() is { } mediaAnimator)
+        {
+            mediaAnimator
+                .Alpha(1f)
+                .ScaleX(1f)
+                .ScaleY(1f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
+        }
     }
 
     private void ShowStartButton()
@@ -1665,10 +1801,15 @@ public class MainActivity : Activity
         MovementPhaseState state = MovementPhaseSchedule.GetState(
             boundedMilliseconds,
             UsesTimedSides());
-        _countdownText.Text = state.SecondsRemaining.ToString();
-        _countdownText.ContentDescription = GetMovementCountdownDescription(state);
-        _countdownProgress.Progress = (int)Math.Ceiling(
-            boundedMilliseconds / 1000d);
+        string secondsText = state.SecondsRemaining.ToString();
+        if (_countdownText.Text != secondsText ||
+            state.Phase != _lastMovementPhase)
+        {
+            _countdownText.Text = secondsText;
+            _countdownText.ContentDescription =
+                GetMovementCountdownDescription(state);
+        }
+        _countdownProgress.Progress = (int)boundedMilliseconds;
         ApplyMovementPhase(state);
     }
 
@@ -1714,24 +1855,28 @@ public class MainActivity : Activity
             case MovementPhase.Continuous:
                 SetExerciseMediaMirrored(mirrored: false);
                 RenderFullWorkoutPhase(Resource.Color.move_surface);
+                AnimateMediaPhase(resting: false);
                 RestartHoldOrResumeRepetition();
                 break;
 
             case MovementPhase.FirstSide:
                 SetExerciseMediaMirrored(mirrored: false);
                 RenderTimedSideWorkoutPhase(firstSide: true);
+                AnimateMediaPhase(resting: false);
                 RestartExerciseMediaForSide();
                 break;
 
             case MovementPhase.ChangeSides:
                 _exerciseVideo.Pause();
                 RenderFullWorkoutPhase(Resource.Color.rest_surface);
+                AnimateMediaPhase(resting: true);
                 CueSideTransition();
                 break;
 
             case MovementPhase.SecondSide:
                 SetExerciseMediaMirrored(mirrored: true);
                 RenderTimedSideWorkoutPhase(firstSide: false);
+                AnimateMediaPhase(resting: false);
                 RestartExerciseMediaForSide();
                 CueSideTransition();
                 break;
@@ -1863,6 +2008,7 @@ public class MainActivity : Activity
         _workoutPhaseSurface.Visibility = ViewStates.Visible;
         SetWorkoutPhaseHalf(_workoutPhaseLeft, active: activeLeft);
         SetWorkoutPhaseHalf(_workoutPhaseRight, active: !activeLeft);
+        AnimatePhaseSurface();
     }
 
     private void SetWorkoutPhaseHalf(View half, bool active)
@@ -1879,12 +2025,43 @@ public class MainActivity : Activity
         _workoutPhaseSurface.Visibility = ViewStates.Visible;
         _workoutPhaseLeft.SetBackgroundColor(color);
         _workoutPhaseRight.SetBackgroundColor(color);
+        AnimatePhaseSurface();
+    }
+
+    private void AnimatePhaseSurface()
+    {
+        _workoutPhaseSurface.Animate()?.Cancel();
+        _workoutPhaseSurface.Alpha = 0.86f;
+        if (_workoutPhaseSurface.Animate() is { } animator)
+        {
+            animator
+                .Alpha(1f)
+                .SetDuration(HueMotionDurationMilliseconds)
+                .Start();
+        }
+    }
+
+    private void AnimateMediaPhase(bool resting)
+    {
+        _exerciseMediaCard.Animate()?.Cancel();
+        if (_exerciseMediaCard.Animate() is not { } animator)
+        {
+            return;
+        }
+
+        animator
+            .Alpha(resting ? 0.92f : 1f)
+            .ScaleX(resting ? 0.985f : 1f)
+            .ScaleY(resting ? 0.985f : 1f)
+            .SetDuration(HueMotionDurationMilliseconds)
+            .Start();
     }
 
     private void RenderRestVisuals()
     {
         SetExerciseMediaMirrored(mirrored: false);
         RenderFullWorkoutPhase(Resource.Color.rest_surface);
+        AnimateMediaPhase(resting: true);
     }
 
     private void ResetMovementVisuals()
@@ -1892,6 +2069,12 @@ public class MainActivity : Activity
         _lastMovementPhase = null;
         RenderCountdownPhase(changingSides: false);
         SetExerciseMediaMirrored(mirrored: false);
+        _exerciseMediaCard.Animate()?.Cancel();
+        _exerciseMediaCard.Alpha = 1f;
+        _exerciseMediaCard.ScaleX = 1f;
+        _exerciseMediaCard.ScaleY = 1f;
+        _workoutPhaseSurface.Animate()?.Cancel();
+        _workoutPhaseSurface.Alpha = 1f;
         _workoutPhaseSurface.Visibility = ViewStates.Gone;
     }
 
@@ -1979,10 +2162,16 @@ public class MainActivity : Activity
             _state.PendingRestEndsAtUnixMilliseconds -
                 DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
         int secondsRemaining = (int)Math.Ceiling(millisecondsRemaining / 1000d);
-        _restCountdownText.Text = secondsRemaining.ToString();
-        _restCountdownText.ContentDescription =
-            $"Rest, {secondsRemaining} seconds remaining";
-        _restProgress.Progress = secondsRemaining;
+        string secondsText = secondsRemaining.ToString();
+        if (_restCountdownText.Text != secondsText)
+        {
+            _restCountdownText.Text = secondsText;
+            _restCountdownText.ContentDescription =
+                $"Rest, {secondsRemaining} seconds remaining";
+        }
+        _restProgress.Progress = (int)Math.Min(
+            millisecondsRemaining,
+            RestSeconds * 1000L);
     }
 
     private void PauseRestCountdown()
@@ -2049,17 +2238,46 @@ public class MainActivity : Activity
         ResetMovementVisuals();
         _currentExercise = null;
         ShowAppScreen(AppScreen.Completion);
-        _completionMark.Animate()?.Cancel();
-        _completionMark.Alpha = 0f;
-        _completionMark.ScaleX = 0.86f;
-        _completionMark.ScaleY = 0.86f;
-        if (_completionMark.Animate() is { } animator)
+
+        _completionHalo.Animate()?.Cancel();
+        _completionHalo.Alpha = 0f;
+        _completionHalo.ScaleX = 0.88f;
+        _completionHalo.ScaleY = 0.88f;
+        if (_completionHalo.Animate() is { } haloAnimator)
         {
-            animator
+            haloAnimator
                 .Alpha(1f)
                 .ScaleX(1f)
                 .ScaleY(1f)
-                .SetDuration(220L)
+                .SetDuration(240L)
+                .Start();
+        }
+
+        _completionMark.Animate()?.Cancel();
+        _completionMark.Alpha = 0f;
+        _completionMark.ScaleX = 0.8f;
+        _completionMark.ScaleY = 0.8f;
+        if (_completionMark.Animate() is { } markAnimator)
+        {
+            markAnimator
+                .Alpha(1f)
+                .ScaleX(1f)
+                .ScaleY(1f)
+                .SetStartDelay(40L)
+                .SetDuration(200L)
+                .Start();
+        }
+
+        _doneButton.Animate()?.Cancel();
+        _doneButton.Alpha = 0f;
+        _doneButton.TranslationY = Dp(5f);
+        if (_doneButton.Animate() is { } doneAnimator)
+        {
+            doneAnimator
+                .Alpha(1f)
+                .TranslationY(0f)
+                .SetStartDelay(60L)
+                .SetDuration(180L)
                 .Start();
         }
         AnnouncePhaseForAccessibility(

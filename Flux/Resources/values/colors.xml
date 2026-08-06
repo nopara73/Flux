@@ -13,9 +13,12 @@
     <color name="accent">@color/brand_chartreuse</color>
     <color name="accent_text">@color/brand_graphite</color>
     <color name="accent_soft">#EAF5C9</color>
-    <color name="surface_outline">#C9C4BA</color>
-    <color name="route_inactive">#45494B</color>
+    <color name="surface_outline">#B8B3AA</color>
+    <color name="surface_outline_soft">#D8D2C8</color>
+    <color name="route_inactive">#D3CEC5</color>
     <color name="ready_surface">#1B1E21</color>
+    <color name="ready_surface_highlight">#262A2D</color>
+    <color name="ready_outline">#3C4144</color>
     <color name="move_surface">#F8E8EA</color>
     <color name="move_text">#7E2A32</color>
     <color name="move_accent">#B7444C</color>
@@ -30,4 +33,5 @@
     <color name="completion_top">#202427</color>
     <color name="completion_bottom">@color/brand_graphite</color>
     <color name="completion_gold">@color/brand_chartreuse</color>
+    <color name="completion_ring">#52CBED46</color>
 </resources>

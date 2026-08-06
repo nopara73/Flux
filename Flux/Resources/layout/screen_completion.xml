@@ -26,18 +26,17 @@
                 android:background="@drawable/completion_halo_background"
                 android:padding="46dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/completion_mark"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:accessibilityHeading="true"
                     android:background="@drawable/completion_check_background"
                     android:contentDescription="@string/workout_complete_description"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-                    android:text="@string/completion_check_mark"
-                    android:textColor="@color/completion_gold"
-                    android:textSize="82sp" />
+                    android:padding="34dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_completion_check"
+                    android:tint="@color/completion_gold" />
             </FrameLayout>
         </FrameLayout>
 
