@@ -1937,7 +1937,7 @@ public class MainActivity : Activity
         _keepButton.SetTextColor(new Android.Graphics.Color(GetColor(
             _state.PendingRestKept
                 ? Resource.Color.accent_text
-                : Resource.Color.white)));
+                : Resource.Color.primary_text)));
         _keepButton.ContentDescription = _state.PendingRestKept
             ? "Exercise kept for the next session"
             : GetString(Resource.String.tap_to_keep_description);

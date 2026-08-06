@@ -70,7 +70,7 @@
                                 android:includeFontPadding="false"
                                 android:maxLines="1"
                                 android:text="@string/duration_minutes_default"
-                                android:textColor="@color/primary_text"
+                                android:textColor="@color/brand_bone"
                                 android:textSize="88sp" />
 
                             <TextView
@@ -81,7 +81,7 @@
                                 android:importantForAccessibility="no"
                                 android:letterSpacing="0.18"
                                 android:text="@string/duration_minutes_unit"
-                                android:textColor="@color/accent_text"
+                                android:textColor="@color/brand_chartreuse"
                                 android:textSize="13sp" />
                         </LinearLayout>
                     </FrameLayout>

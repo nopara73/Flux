@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="screen_background">#F4F3EF</color>
-    <color name="screen_background_top">#FAF9F5</color>
-    <color name="screen_background_bottom">#EEF2ED</color>
-    <color name="surface">#FCFBF8</color>
-    <color name="media_background">#F7FAFC</color>
-    <color name="primary_text">#18312B</color>
-    <color name="secondary_text">#5B6B66</color>
-    <color name="accent">#176B5A</color>
-    <color name="accent_text">#135F50</color>
-    <color name="accent_soft">#DDECE6</color>
-    <color name="surface_outline">#D5DFDA</color>
-    <color name="route_inactive">#D4DCD7</color>
-    <color name="ready_surface">#EEF3EF</color>
+    <color name="brand_graphite">#121416</color>
+    <color name="brand_bone">#F5EFE7</color>
+    <color name="brand_chartreuse">#CBED46</color>
+    <color name="screen_background">@color/brand_bone</color>
+    <color name="screen_background_top">#FAF7F1</color>
+    <color name="screen_background_bottom">#F1EAE1</color>
+    <color name="surface">#FFFCF7</color>
+    <color name="media_background">#F3EFE8</color>
+    <color name="primary_text">@color/brand_graphite</color>
+    <color name="secondary_text">#5D6061</color>
+    <color name="accent">@color/brand_chartreuse</color>
+    <color name="accent_text">@color/brand_graphite</color>
+    <color name="accent_soft">#EAF5C9</color>
+    <color name="surface_outline">#C9C4BA</color>
+    <color name="route_inactive">#45494B</color>
+    <color name="ready_surface">#1B1E21</color>
     <color name="move_surface">#F8E8EA</color>
     <color name="move_text">#7E2A32</color>
     <color name="move_accent">#B7444C</color>
@@ -22,9 +25,9 @@
     <color name="rest_accent">#3D719B</color>
     <color name="rest_track">#C6DAEA</color>
     <color name="white">#FFFFFF</color>
-    <color name="button_ripple">#33FFFFFF</color>
-    <color name="quiet_ripple">#24176B5A</color>
-    <color name="completion_top">#1A574A</color>
-    <color name="completion_bottom">#123E35</color>
-    <color name="completion_gold">#F2D58B</color>
+    <color name="button_ripple">#33121416</color>
+    <color name="quiet_ripple">#24121416</color>
+    <color name="completion_top">#202427</color>
+    <color name="completion_bottom">@color/brand_graphite</color>
+    <color name="completion_gold">@color/brand_chartreuse</color>
 </resources>

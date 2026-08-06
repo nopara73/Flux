@@ -10,7 +10,7 @@ namespace Flux;
 /// </summary>
 public sealed class SystemBarsController : Java.Lang.Object, View.IOnApplyWindowInsetsListener
 {
-    private static readonly Color LegacyLightScreenNavigationColor = Color.Rgb(16, 42, 67);
+    private static readonly Color LegacyLightScreenNavigationColor = Color.Rgb(18, 20, 22);
 
     private readonly Window _window;
     private readonly View _contentView;
