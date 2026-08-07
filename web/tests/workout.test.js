@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import {
+  APPROVED_EXERCISE_CORRECTIONS,
+  CURRENT_CATALOG_REVISION,
   RESOLUTIONS,
   SUPPORTED_MINUTES,
   WorkoutSession,
@@ -341,7 +343,7 @@ test("catalog identity replacement clears inherited score and workout references
   assert.equal(restored.state.scores[String(retired.id)], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.activeWorkoutMinutes, 0);
-  assert.equal(restored.state.catalogRevision, 2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
   assert.equal(restored.getScore(changedCatalog.find((item) => item.id === retired.id)), 0);
 });
 
@@ -374,13 +376,7 @@ test("approved timed-side name cleanup preserves browser memory", () => {
 });
 
 test("approved clarity corrections preserve browser memory", () => {
-  const corrections = [
-    [255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"],
-    [268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric"],
-    [425, "Chin-Tuck Isometric", "Chin-Tuck Hold"],
-  ];
-
-  for (const [exerciseId, previousName, currentName] of corrections) {
+  for (const [exerciseId, [previousName, currentName]] of APPROVED_EXERCISE_CORRECTIONS) {
     const currentCatalog = catalog.map((item) =>
       item.id === exerciseId ? { ...item, name: currentName } : item,
     );
@@ -406,6 +402,42 @@ test("approved clarity corrections preserve browser memory", () => {
     assert.equal(restored.state.selectedExerciseIds[group.id], exerciseId);
     assert.equal(restored.getScore(currentExercise), -3);
   }
+});
+
+test("catalog revision retires replaced Android exercises from browser memory", () => {
+  const replacements = catalog.filter((item) =>
+    typeof item.retiredName === "string" && item.retiredName,
+  );
+  const replacement = replacements[0];
+  const group = RESOLUTIONS.get(30).groups.find((candidate) =>
+    isSelectable(replacement, candidate),
+  );
+  const state = createDefaultState();
+  state.catalogRevision = CURRENT_CATALOG_REVISION - 1;
+  state.activeWorkoutMinutes = 30;
+  state.selectedExerciseIds[group.id] = replacement.id;
+  for (const item of replacements) {
+    state.scores[String(item.id)] = -4;
+  }
+  state.outcomes[group.id] = "tick";
+  state.pendingRestGroupId = group.id;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 15_000;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
+  for (const item of replacements) {
+    assert.equal(restored.state.scores[String(item.id)], undefined);
+  }
+  assert.equal(restored.state.outcomes[group.id], undefined);
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("legacy browser state without a catalog revision migrates like Android", () => {
+  const restored = parseStoredState(JSON.stringify({ lastWorkoutMinutes: 10 }));
+  assert.equal(restored.catalogRevision, 0);
 });
 
 test("corrupt local state resets safely", () => {

@@ -1,16 +1,30 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-const CURRENT_CATALOG_REVISION = 2;
+export const CURRENT_CATALOG_REVISION = 3;
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set([223, 224, 245, 246]);
-const APPROVED_EXERCISE_CORRECTIONS = new Map([
+export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
-  [268, [
-    "Self-Resisted External-Rotation Push-Out",
-    "Self-Resisted External-Rotation Isometric",
-  ]],
+  [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
+  [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],
+  [394, ["Standing Open-and-Close Breathing", "Standing Arms Open and Close"]],
+  [395, ["Standing Overhead Rib-Expansion Breathing", "Standing Overhead Arm Sweep"]],
+  [397, ["Breath-Integrated Weight Shift", "Staggered-Stance Weight Shift"]],
+  [398, ["Standing Arm-Expansion Breathing", "Standing Hug and Arm Expansion"]],
+  [399, ["Shibashi Opening-the-Chest Breathing", "Shallow Squat with Chest-Opening Arms"]],
+  [400, ["Shibashi Separating-the-Clouds Breathing", "Shallow Squat with Overhead Arm Circle"]],
+  [401, ["Shibashi Alternating Swinging-Arms Breathing", "Alternating Weight Shift with Arm Swing"]],
+  [402, ["Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle"]],
+  [403, ["Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push"]],
+  [404, ["Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch"]],
+  [405, ["Shibashi Flying-Wild-Goose Breathing", "Shallow Squat with Wing Arm Raise"]],
+  [406, ["Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles"]],
+  [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
+  [588, ["Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls"]],
+  [626, ["Sumo Stance", "Sumo Squat Hold"]],
+  [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
 ]);
 
 const CANONICAL_GROUPS = Object.freeze([
@@ -468,7 +482,7 @@ function normalizeStateShape(raw) {
   state.version = Number.isInteger(raw.version) ? raw.version : state.version;
   state.catalogRevision = Number.isInteger(raw.catalogRevision)
     ? raw.catalogRevision
-    : state.catalogRevision;
+    : 0;
   state.lastWorkoutMinutes = normalizeMinutes(raw.lastWorkoutMinutes);
   state.activeWorkoutMinutes = Number.isInteger(raw.activeWorkoutMinutes)
     ? raw.activeWorkoutMinutes
@@ -841,7 +855,13 @@ export class WorkoutSession {
     const currentIdentities = Object.fromEntries(
       this.exercises.map((exercise) => [String(exercise.id), catalogIdentity(exercise)]),
     );
-    const changedExerciseIds = new Set();
+    const changedExerciseIds = new Set(
+      this.state.catalogRevision < CURRENT_CATALOG_REVISION
+        ? this.exercises
+            .filter((exercise) => typeof exercise.retiredName === "string" && exercise.retiredName)
+            .map((exercise) => exercise.id)
+        : [],
+    );
 
     for (const [exerciseId, previousIdentity] of Object.entries(previousIdentities)) {
       const currentIdentity = currentIdentities[exerciseId];
