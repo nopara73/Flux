@@ -452,7 +452,7 @@ test("initial document contains no exercise-media URL", async () => {
   assert.match(html, new RegExp(`max="${SUPPORTED_MINUTES.length - 1}"`));
 });
 
-test("browser shell pauses for buffering and uses compact landscape layout", async () => {
+test("browser shell pauses for buffering and keeps desktop layouts bounded", async () => {
   const [javascript, stylesheet] = await Promise.all([
     readFile(path.join(repositoryRoot, "web", "app.js"), "utf8"),
     readFile(path.join(repositoryRoot, "web", "styles.css"), "utf8"),
@@ -466,6 +466,9 @@ test("browser shell pauses for buffering and uses compact landscape layout", asy
   assert.match(javascript, /navigator\.wakeLock\?\.request/);
   assert.match(stylesheet, /@media \(orientation: landscape\)\s*\{/);
   assert.doesNotMatch(stylesheet, /@media \(orientation: landscape\) and \(min-width:/);
+  assert.match(stylesheet, /@media \(min-width: 1000px\)\s*\{/);
+  assert.match(stylesheet, /\.duration-controls\s*\{[\s\S]*?width: min\(100%, 640px\);/);
+  assert.match(stylesheet, /grid-template-columns: minmax\(190px, 0\.85fr\) minmax\(320px, 420px\) minmax\(220px, 0\.95fr\);/);
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
 

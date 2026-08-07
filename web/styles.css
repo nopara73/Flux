@@ -1013,6 +1013,168 @@ input:focus-visible {
   }
 }
 
+@media (min-width: 1000px) {
+  .duration-screen {
+    padding: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    overflow: auto;
+  }
+
+  .duration-scroll {
+    width: min(100%, 720px);
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .duration-content {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .duration-identity {
+    width: auto;
+    padding: 0;
+    flex: 0 0 auto;
+  }
+
+  .flux-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .duration-dial {
+    width: 250px;
+    height: 250px;
+    margin-top: 22px;
+  }
+
+  .duration-value {
+    font-size: 88px;
+  }
+
+  .duration-controls {
+    width: min(100%, 640px);
+    margin: 28px auto 0;
+    flex: 0 0 auto;
+  }
+
+  .duration-step-row {
+    height: 64px;
+  }
+
+  .step-button {
+    width: 64px;
+    height: 64px;
+  }
+
+  .duration-labels {
+    margin-right: 80px;
+    margin-left: 80px;
+    font-size: 10px;
+  }
+
+  .duration-action-bar {
+    width: auto;
+    height: auto;
+    padding: 0;
+    display: block;
+    border: 0;
+    background: transparent;
+  }
+
+  .begin-workout {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto;
+  }
+
+  .workout-screen {
+    overflow: auto;
+  }
+
+  .workout-content {
+    width: min(calc(100% - 80px), 1080px);
+    height: 100dvh;
+    min-height: 560px;
+    padding: 32px 0;
+    display: grid;
+    grid-template-columns: minmax(190px, 0.85fr) minmax(320px, 420px) minmax(220px, 0.95fr);
+    gap: 32px;
+    align-items: center;
+  }
+
+  .workout-header {
+    align-self: center;
+    display: block;
+  }
+
+  .exercise-name {
+    max-height: 4.8em;
+    font-size: clamp(18px, 1.8vw, 23px);
+  }
+
+  .exercise-media-area {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .exercise-media-card {
+    width: min(100%, 420px);
+  }
+
+  .workout-action-host {
+    width: 100%;
+    height: 180px;
+    min-width: 0;
+    min-height: 180px;
+  }
+
+  .ready-panel {
+    min-height: 180px;
+  }
+
+  .completion-screen {
+    padding: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    overflow: auto;
+  }
+
+  .completion-hero {
+    min-height: auto;
+    flex: 0 0 auto;
+  }
+
+  .completion-halo {
+    width: 260px;
+  }
+
+  .completion-action-bar {
+    width: 240px;
+    padding: 0;
+    display: block;
+  }
+
+  .completion-button {
+    width: 100%;
+    margin: 0;
+  }
+}
+
 @media (max-height: 650px) and (orientation: portrait) {
   .duration-content {
     padding-top: calc(12px + env(safe-area-inset-top));
