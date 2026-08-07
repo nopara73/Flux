@@ -1135,8 +1135,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 14.0
-        DurationSeconds = 36.0
+        StartSeconds = 33.0
+        DurationSeconds = 7.0
         FramesPerSecond = 8
         MirrorForAlternation = $false
     }
@@ -1461,8 +1461,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 10.5
+        StartSeconds = 1.5
+        DurationSeconds = 7.25
         FramesPerSecond = 12
         MirrorForAlternation = $false
     }
@@ -2370,9 +2370,10 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 60.0
-        DurationSeconds = 21.0
+        StartSeconds = 176.0
+        DurationSeconds = 12.0
         FramesPerSecond = 12
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     589 = @{
@@ -4342,8 +4343,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 338
-        DurationSeconds = 37
+        StartSeconds = 341
+        DurationSeconds = 35
         FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
@@ -4407,8 +4408,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 51
-        DurationSeconds = 38
+        StartSeconds = 56
+        DurationSeconds = 28
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false

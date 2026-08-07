@@ -434,7 +434,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
   }
 
-  assert.deepEqual(directionIds, [264, 406, 409, 477, 483, 501, 608, 743, 816]);
+  assert.deepEqual(directionIds, [264, 406, 409, 497, 588, 608, 611, 743, 816]);
   assert.ok(holds.length > 0);
   assert.ok(holds.some((item) => item.presentation === "Still"));
 });

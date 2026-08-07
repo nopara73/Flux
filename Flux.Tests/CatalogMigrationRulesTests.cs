@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(111, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(129, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -197,6 +197,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(240, "Ninja Ram Hand-Seal Hold", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(242, "Ninja Boar Hand-Seal Hold", "Ninja Shadow-Clone Hand-Seal Sequence")]
+    [InlineData(268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric")]
     [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
     [InlineData(276, "Alternating Diagonal Overhead Reach-and-Pull", "Dynamic-Resistance High Chest Press")]
     [InlineData(280, "Alternating Forward-and-Side Arm Press", "Ringing-the-Towel Wrist Inversion")]
@@ -204,11 +205,25 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(291, "Ninja Tiger Hand-Seal Hold", "Black Dragon Enters the Cave")]
     [InlineData(293, "Ninja Dragon Hand-Seal Hold", "Sword-Fingers Qigong Sequence")]
     [InlineData(294, "Ninja Rat Hand-Seal Hold", "Tiger-Claw Grip Flow")]
+    [InlineData(482, "Front Half Neck Circles", "Continuous Spot-Turn Drill")]
     [InlineData(483, "Clockwise Full Neck Circles", "Pirouette Spotting Drill")]
+    [InlineData(490, "Assisted Cheek Lift", "Bharatanatyam Alolita Shiro")]
+    [InlineData(491, "Cheek-Firming Air Hold", "Bharatanatyam Dhuta Shiro")]
+    [InlineData(492, "Forehead Knuckle Massage", "Bharatanatyam Kampita Shiro")]
+    [InlineData(493, "Face-and-Neck Lymphatic Sweep", "Alternating Bharatanatyam Paravritta Shiro")]
+    [InlineData(495, "Jawline Knuckle Massage", "Bharatanatyam Parivahita Shiro")]
+    [InlineData(497, "Forehead Finger Sweep", "Odissi Sundari Griva")]
+    [InlineData(499, "Eyebrow Pinch Massage", "Bharatanatyam Tiraschina Griva")]
+    [InlineData(500, "Eye-Socket Finger Circles", "Bharatanatyam Parivartita Griva")]
     [InlineData(501, "Counterclockwise Full Neck Circles", "Standing Horizontal Saccades")]
+    [InlineData(505, "Temple Circle Massage", "Maximal Smile and Relax")]
+    [InlineData(506, "Cheek Pinch Massage", "Eyebrow Raise and Relax")]
+    [InlineData(508, "Diagonal Arm Reach-to-Row", "Tongue Protrusion and Retraction")]
     [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
+    [InlineData(611, "Warrior II-Stance Hip Circles", "Pelvic-Floor Heel-Raise Lift")]
     [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
     [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
+    [InlineData(843, "Standing Scalene Wrist-Anchor Stretch", "Standing Cobra Pose")]
     public void SecondGenerationReplacementAcceptsImmediatelyPriorIdentity(
         int replacedId,
         string priorName,
@@ -379,7 +394,7 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void MigrationAllowsReviewedExternalRotationCorrectionOnlyForStableId()
+    public void ReviewedExternalRotationReplacementRetiresTheCorrectedPriorIdentity()
     {
         const string video = "exercise_0268.mp4";
         var stored = new Dictionary<int, StoredExerciseSnapshot>
@@ -389,24 +404,24 @@ public sealed class CatalogMigrationRulesTests
                 video,
                 -3),
         };
-        Exercise corrected = Exercise(
+        Exercise replacement = Exercise(
             268,
-            "Self-Resisted External-Rotation Isometric",
+            "Thumbs-Up Diagonal Arm Raises",
             video,
-            sideSequence: ExerciseSideSequence.ScreenLeftThenRight);
+            retiredName: "Self-Resisted External-Rotation Isometric");
 
         IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
-            [corrected],
+            [replacement],
             stored);
 
-        Assert.Contains(268, preserved);
+        Assert.DoesNotContain(268, preserved);
         Assert.Equal(-3, stored[268].Score);
 
         Exercise wrongId = Exercise(
             266,
-            corrected.Name,
+            replacement.Name,
             video,
-            sideSequence: ExerciseSideSequence.ScreenLeftThenRight);
+            retiredName: "Self-Resisted External-Rotation Isometric");
         var wrongStored = new Dictionary<int, StoredExerciseSnapshot>
         {
             [266] = new(
@@ -422,7 +437,25 @@ public sealed class CatalogMigrationRulesTests
 
     [Theory]
     [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
+    [InlineData(270, "Bodyweight Svend Press", "Palm-Squeeze Forward Press")]
+    [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]
+    [InlineData(394, "Standing Open-and-Close Breathing", "Standing Arms Open and Close")]
+    [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Standing Overhead Arm Sweep")]
+    [InlineData(397, "Breath-Integrated Weight Shift", "Staggered-Stance Weight Shift")]
+    [InlineData(398, "Standing Arm-Expansion Breathing", "Standing Hug and Arm Expansion")]
+    [InlineData(399, "Shibashi Opening-the-Chest Breathing", "Shallow Squat with Chest-Opening Arms")]
+    [InlineData(400, "Shibashi Separating-the-Clouds Breathing", "Shallow Squat with Overhead Arm Circle")]
+    [InlineData(401, "Shibashi Alternating Swinging-Arms Breathing", "Alternating Weight Shift with Arm Swing")]
+    [InlineData(402, "Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle")]
+    [InlineData(403, "Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push")]
+    [InlineData(404, "Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch")]
+    [InlineData(405, "Shibashi Flying-Wild-Goose Breathing", "Shallow Squat with Wing Arm Raise")]
+    [InlineData(406, "Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles")]
+    [InlineData(409, "Neck Controlled Articular Rotation", "Full Neck Circles")]
     [InlineData(425, "Chin-Tuck Isometric", "Chin-Tuck Hold")]
+    [InlineData(588, "Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls")]
+    [InlineData(626, "Sumo Stance", "Sumo Squat Hold")]
+    [InlineData(969, "Chair-Pose Core Hold", "Chair-Pose Hold")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -443,26 +476,35 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(-4, stored[exerciseId].Score);
     }
 
-    [Fact]
-    public void ThirdGenerationReplacementAcceptsEveryReviewedPriorIdentity()
+    [Theory]
+    [InlineData(241, "Self-Resisted Thumb C Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
+    [InlineData(289, "Self-Resisted Thumb Adduction Hold", "Heaven-to-Earth Finger Rotation")]
+    [InlineData(291, "Self-Resisted Thumb Abduction Hold", "Black Dragon Enters the Cave")]
+    [InlineData(293, "Self-Resisted Thumb Flexion Hold", "Sword-Fingers Qigong Sequence")]
+    [InlineData(294, "Self-Resisted Little-Finger Abduction Hold", "Tiger-Claw Grip Flow")]
+    [InlineData(483, "Clockwise-First Full Neck Circles", "Pirouette Spotting Drill")]
+    [InlineData(501, "Counterclockwise-First Full Neck Circles", "Standing Horizontal Saccades")]
+    public void LatestReplacementAcceptsAdditionalReviewedPriorIdentity(
+        int exerciseId,
+        string priorName,
+        string baselineRetiredName)
     {
-        const int exerciseId = 289;
-        const string video = "exercise_videos/exercise_0289.mp4";
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
         Exercise replacement = Exercise(
             exerciseId,
-            "Alternating Thumb-to-Palm Tucks",
+            "Latest replacement",
             video,
-            retiredName: "Heaven-to-Earth Finger Rotation");
+            retiredName: baselineRetiredName);
 
-        foreach (string priorName in new[]
+        foreach (string storedName in new[]
         {
-            "Ninja Horse Hand-Seal Hold",
-            "Self-Resisted Thumb Adduction Hold",
+            priorName,
+            $"Alternating {priorName}",
         })
         {
             var stored = new Dictionary<int, StoredExerciseSnapshot>
             {
-                [exerciseId] = new(priorName, video, -6),
+                [exerciseId] = new(storedName, video, -6),
             };
 
             IReadOnlySet<int> preserved =

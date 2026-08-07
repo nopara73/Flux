@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 2;
+    public const int CurrentCatalogRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
         string Name,
@@ -24,12 +24,63 @@ public static class CatalogMigrationRules
                 [255] = new(
                     "Standing Bent-Knee Calf Raise",
                     "Deep-Squat Calf Raise"),
-                [268] = new(
-                    "Self-Resisted External-Rotation Push-Out",
-                    "Self-Resisted External-Rotation Isometric"),
+                [270] = new(
+                    "Bodyweight Svend Press",
+                    "Palm-Squeeze Forward Press"),
+                [290] = new(
+                    "Universe-in-Motion Qigong",
+                    "Low Palm Scoop to Side Opening"),
+                [394] = new(
+                    "Standing Open-and-Close Breathing",
+                    "Standing Arms Open and Close"),
+                [395] = new(
+                    "Standing Overhead Rib-Expansion Breathing",
+                    "Standing Overhead Arm Sweep"),
+                [397] = new(
+                    "Breath-Integrated Weight Shift",
+                    "Staggered-Stance Weight Shift"),
+                [398] = new(
+                    "Standing Arm-Expansion Breathing",
+                    "Standing Hug and Arm Expansion"),
+                [399] = new(
+                    "Shibashi Opening-the-Chest Breathing",
+                    "Shallow Squat with Chest-Opening Arms"),
+                [400] = new(
+                    "Shibashi Separating-the-Clouds Breathing",
+                    "Shallow Squat with Overhead Arm Circle"),
+                [401] = new(
+                    "Shibashi Alternating Swinging-Arms Breathing",
+                    "Alternating Weight Shift with Arm Swing"),
+                [402] = new(
+                    "Shibashi Rowing-a-Boat Breathing",
+                    "Shallow Squat with Rowing Arm Circle"),
+                [403] = new(
+                    "Shibashi Alternating Pushing-Palms Breathing",
+                    "Alternating Weight Shift with Palm Push"),
+                [404] = new(
+                    "Shibashi Alternating Punch Breathing",
+                    "Wide-Stance Alternating Slow Punch"),
+                [405] = new(
+                    "Shibashi Flying-Wild-Goose Breathing",
+                    "Shallow Squat with Wing Arm Raise"),
+                [406] = new(
+                    "Shibashi Spinning-Wheels Breathing",
+                    "Standing Wheel Arm Circles"),
+                [409] = new(
+                    "Neck Controlled Articular Rotation",
+                    "Full Neck Circles"),
                 [425] = new(
                     "Chin-Tuck Isometric",
                     "Chin-Tuck Hold"),
+                [588] = new(
+                    "Belly-Dance Alternating Shoulder Roll",
+                    "Belly-Dance Alternating Shoulder Rolls"),
+                [626] = new(
+                    "Sumo Stance",
+                    "Sumo Squat Hold"),
+                [969] = new(
+                    "Chair-Pose Core Hold",
+                    "Chair-Pose Hold"),
             };
 
     private static readonly IReadOnlyDictionary<int, PriorReviewedReplacementIdentity>
@@ -48,6 +99,9 @@ public static class CatalogMigrationRules
                 [242] = new(
                     "Ninja Boar Hand-Seal Hold",
                     "Ninja Shadow-Clone Hand-Seal Sequence"),
+                [268] = new(
+                    "Self-Resisted External-Rotation Push-Out",
+                    "Self-Resisted External-Rotation Isometric"),
                 [274] = new(
                     "Side-Step Alternating High Curl",
                     "Dynamic-Resistance Lat Pulldown"),
@@ -69,45 +123,113 @@ public static class CatalogMigrationRules
                 [294] = new(
                     "Ninja Rat Hand-Seal Hold",
                     "Tiger-Claw Grip Flow"),
+                [482] = new(
+                    "Front Half Neck Circles",
+                    "Continuous Spot-Turn Drill"),
                 [483] = new(
                     "Clockwise Full Neck Circles",
                     "Pirouette Spotting Drill"),
+                [490] = new(
+                    "Assisted Cheek Lift",
+                    "Bharatanatyam Alolita Shiro"),
+                [491] = new(
+                    "Cheek-Firming Air Hold",
+                    "Bharatanatyam Dhuta Shiro"),
+                [492] = new(
+                    "Forehead Knuckle Massage",
+                    "Bharatanatyam Kampita Shiro"),
+                [493] = new(
+                    "Face-and-Neck Lymphatic Sweep",
+                    "Alternating Bharatanatyam Paravritta Shiro"),
+                [495] = new(
+                    "Jawline Knuckle Massage",
+                    "Bharatanatyam Parivahita Shiro"),
+                [497] = new(
+                    "Forehead Finger Sweep",
+                    "Odissi Sundari Griva"),
+                [499] = new(
+                    "Eyebrow Pinch Massage",
+                    "Bharatanatyam Tiraschina Griva"),
+                [500] = new(
+                    "Eye-Socket Finger Circles",
+                    "Bharatanatyam Parivartita Griva"),
                 [501] = new(
                     "Counterclockwise Full Neck Circles",
                     "Standing Horizontal Saccades"),
+                [505] = new(
+                    "Temple Circle Massage",
+                    "Maximal Smile and Relax"),
+                [506] = new(
+                    "Cheek Pinch Massage",
+                    "Eyebrow Raise and Relax"),
+                [508] = new(
+                    "Diagonal Arm Reach-to-Row",
+                    "Tongue Protrusion and Retraction"),
                 [572] = new(
                     "Wide-Stance Bent-Knee Rotational Stretch",
                     "Tai Chi White Crane Opens Wings"),
+                [611] = new(
+                    "Warrior II-Stance Hip Circles",
+                    "Pelvic-Floor Heel-Raise Lift"),
                 [681] = new(
                     "Rear-Arm Sweep to Front Squeeze",
                     "Belly-Dance Horizontal Figure Eight"),
                 [743] = new(
                     "Standing Backward Arm Circles",
                     "Clasped-Hands-Behind-Back Chest Opener"),
+                [843] = new(
+                    "Standing Scalene Wrist-Anchor Stretch",
+                    "Standing Cobra Pose"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
         AdditionalPriorReviewedReplacementNames =
             new Dictionary<int, IReadOnlySet<string>>
             {
+                [241] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Self-Resisted Thumb C Hold",
+                },
                 [289] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Thumb Adduction Hold",
+                },
+                [291] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Self-Resisted Thumb Abduction Hold",
+                },
+                [293] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Self-Resisted Thumb Flexion Hold",
+                },
+                [294] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Self-Resisted Little-Finger Abduction Hold",
+                },
+                [483] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Clockwise-First Full Neck Circles",
+                },
+                [501] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Counterclockwise-First Full Neck Circles",
                 },
             };
 
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
-        41, 56, 59, 98, 102, 120, 146, 159, 176, 177, 182, 183,
-        185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203, 219,
-        227, 228, 229, 230, 239, 240, 241, 242, 260, 262, 267, 272, 274,
-        275, 276, 280, 281, 284, 285, 286, 287, 288, 289, 291, 292,
-        293, 294, 295, 296, 327, 367, 393, 396, 422, 423, 467, 474,
+        41, 56, 59, 98, 102, 116, 120, 133, 146, 159, 176, 177, 182, 183,
+        185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203,
+        215, 216, 217, 218, 219, 227, 228, 229, 230, 239, 240, 241, 242,
+        260, 262, 267, 268, 272, 274, 275, 276, 280, 281, 283, 284, 285,
+        286, 287, 288, 289, 291, 292, 293, 294, 295, 296, 327, 367, 390,
+        391, 392, 393, 396, 422,
+        423, 467, 474, 475, 477,
         481, 482, 483, 490, 491, 492, 493, 495, 497, 499, 500, 501,
         502, 503, 504, 505, 506, 507, 508, 509, 510, 512, 513, 572,
-        573, 609, 610, 611, 612, 613, 614, 615, 616, 618, 619, 625,
-        636, 647, 654, 677, 678, 681, 683, 684, 685, 687, 712, 743,
-        843, 987,
+        573, 591, 609, 610, 611, 612, 613, 614, 615, 616, 618, 619, 625,
+        636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 687, 712,
+        743, 843, 845, 971, 986, 987,
     ];
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

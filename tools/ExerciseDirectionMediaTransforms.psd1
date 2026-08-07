@@ -5,10 +5,10 @@
     264 = @{ Mode = 'TemporalReverse' }
     406 = @{ Mode = 'HorizontalMirror' }
     409 = @{ Mode = 'TemporalReverse' }
-    477 = @{ Mode = 'TemporalReverse' }
-    483 = @{ Mode = 'ExactExercise'; SecondExerciseId = 501 }
-    501 = @{ Mode = 'ExactExercise'; SecondExerciseId = 483 }
+    497 = @{ Mode = 'TemporalReverse' }
+    588 = @{ Mode = 'TemporalReverse' }
     608 = @{ Mode = 'TemporalReverse' }
+    611 = @{ Mode = 'TemporalReverse' }
     743 = @{ Mode = 'TemporalReverse' }
     816 = @{ Mode = 'TemporalReverse' }
 }

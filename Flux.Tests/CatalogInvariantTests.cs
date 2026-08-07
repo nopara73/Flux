@@ -35,7 +35,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(109, timedSideExercises.Length);
+        Assert.Equal(105, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -54,10 +54,10 @@ public sealed class CatalogInvariantTests
             [264] = ExerciseDirectionSequence.BackwardThenForward,
             [406] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [409] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
-            [477] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
-            [483] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
-            [501] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [497] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [588] = ExerciseDirectionSequence.BackwardThenForward,
             [608] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [611] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
             [743] = ExerciseDirectionSequence.BackwardThenForward,
             [816] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
         };
@@ -82,17 +82,37 @@ public sealed class CatalogInvariantTests
         Dictionary<int, ExerciseSideSequence> auditedSideSequences = new()
         {
             [58] = ExerciseSideSequence.ScreenLeftThenRight,
+            [116] = ExerciseSideSequence.Continuous,
+            [117] = ExerciseSideSequence.ScreenLeftThenRight,
+            [123] = ExerciseSideSequence.ScreenRightThenLeft,
+            [143] = ExerciseSideSequence.ScreenRightThenLeft,
+            [215] = ExerciseSideSequence.ScreenLeftThenRight,
+            [216] = ExerciseSideSequence.ScreenLeftThenRight,
+            [217] = ExerciseSideSequence.Continuous,
+            [218] = ExerciseSideSequence.Continuous,
             [237] = ExerciseSideSequence.ScreenLeftThenRight,
-            [256] = ExerciseSideSequence.ScreenLeftThenRight,
-            [257] = ExerciseSideSequence.ScreenLeftThenRight,
-            [258] = ExerciseSideSequence.ScreenLeftThenRight,
-            [268] = ExerciseSideSequence.ScreenLeftThenRight,
+            [241] = ExerciseSideSequence.ScreenLeftThenRight,
+            [256] = ExerciseSideSequence.Continuous,
+            [257] = ExerciseSideSequence.Continuous,
+            [258] = ExerciseSideSequence.Continuous,
+            [268] = ExerciseSideSequence.Continuous,
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
             [279] = ExerciseSideSequence.ScreenLeftThenRight,
+            [291] = ExerciseSideSequence.Continuous,
+            [292] = ExerciseSideSequence.ScreenRightThenLeft,
+            [293] = ExerciseSideSequence.ScreenLeftThenRight,
+            [294] = ExerciseSideSequence.Continuous,
             [338] = ExerciseSideSequence.ScreenLeftThenRight,
             [397] = ExerciseSideSequence.ScreenRightThenLeft,
+            [482] = ExerciseSideSequence.Continuous,
+            [483] = ExerciseSideSequence.Continuous,
+            [501] = ExerciseSideSequence.ScreenRightThenLeft,
+            [508] = ExerciseSideSequence.ScreenLeftThenRight,
+            [611] = ExerciseSideSequence.Continuous,
             [619] = ExerciseSideSequence.Continuous,
+            [648] = ExerciseSideSequence.ScreenRightThenLeft,
+            [649] = ExerciseSideSequence.ScreenLeftThenRight,
             [884] = ExerciseSideSequence.ScreenRightThenLeft,
             [885] = ExerciseSideSequence.ScreenRightThenLeft,
             [910] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -106,10 +126,37 @@ public sealed class CatalogInvariantTests
             exercises.Single(exercise => exercise.Id == 118).SideSequence);
         Exercise externalRotation = exercises.Single(exercise => exercise.Id == 268);
         Assert.Equal(
-            "Self-Resisted External-Rotation Isometric",
+            "Thumbs-Up Diagonal Arm Raises",
             externalRotation.Name);
-        Assert.Equal(ExerciseMode.Hold, externalRotation.Mode);
-        Assert.Equal(75, externalRotation.HoldFramePercent);
+        Assert.Equal(ExerciseMode.Repetition, externalRotation.Mode);
+        Assert.Equal(ExercisePresentation.Motion, externalRotation.Presentation);
+        Assert.Equal(ExerciseSideSequence.Continuous, externalRotation.SideSequence);
+        Assert.Equal(0, externalRotation.HoldFramePercent);
+
+        Dictionary<int, string> auditedCorrectedNames = new()
+        {
+            [241] = "Straight-Hand Knuckle-Bend Flow",
+            [270] = "Palm-Squeeze Forward Press",
+            [290] = "Low Palm Scoop to Side Opening",
+            [394] = "Standing Arms Open and Close",
+            [397] = "Staggered-Stance Weight Shift",
+            [409] = "Full Neck Circles",
+            [483] = "Standing Diagonal Head Turns",
+            [490] = "Track One Thumb Side to Side",
+            [497] = "Track Finger in Circles",
+            [501] = "Single-Leg Thumb-Focus Head Turns",
+            [508] = "Curl Raised Leg with One Arm",
+            [588] = "Belly-Dance Alternating Shoulder Rolls",
+            [611] = "Wide-Stance Hip Circles",
+            [626] = "Sumo Squat Hold",
+            [649] = "Standing Clamshell",
+            [843] = "Behind-Back Wrist-Pull Neck Stretch",
+            [969] = "Chair-Pose Hold",
+        };
+        Assert.All(auditedCorrectedNames, expected =>
+            Assert.Equal(
+                expected.Value,
+                exercises.Single(exercise => exercise.Id == expected.Key).Name));
 
         string[] deficientWorkoutGroups = MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
