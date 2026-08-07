@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f5efe7" />
+    <meta name="color-scheme" content="light" />
+    <title>Flux</title>
+    <link rel="icon" href="./assets/flux_appicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <section id="duration-screen" class="app-screen duration-screen" aria-label="Workout duration">
+        <div class="duration-scroll">
+          <div class="duration-content">
+            <div class="duration-identity">
+              <img class="flux-icon" src="./assets/flux_appicon.svg" alt="Flux" />
+              <div id="duration-dial" class="duration-dial">
+                <output id="duration-value" class="duration-value" for="duration-range">10</output>
+                <span class="duration-unit" aria-hidden="true">MIN</span>
+              </div>
+            </div>
+
+            <div class="duration-controls">
+              <div class="duration-step-row">
+                <button
+                  id="duration-decrease"
+                  class="step-button"
+                  type="button"
+                  aria-label="Select previous workout duration"
+                >
+                  <span class="minus-icon" aria-hidden="true"></span>
+                </button>
+                <input
+                  id="duration-range"
+                  class="duration-range"
+                  type="range"
+                  min="0"
+                  max="6"
+                  step="1"
+                  value="3"
+                  aria-label="Workout duration"
+                />
+                <button
+                  id="duration-increase"
+                  class="step-button"
+                  type="button"
+                  aria-label="Select next workout duration"
+                >
+                  <span class="plus-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div id="duration-labels" class="duration-labels" aria-hidden="true">
+                <span>3</span><span>5</span><span>7</span><span>10</span>
+                <span>15</span><span>20</span><span>30</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="duration-action-bar">
+          <button id="begin-workout" class="primary-button begin-workout" type="button" disabled>
+            <span class="forward-arrow" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+      <section id="workout-screen" class="app-screen workout-screen" aria-label="Workout" hidden>
+        <div id="phase-surface" class="phase-surface" aria-hidden="true">
+          <div id="phase-left" class="phase-half"></div>
+          <div id="phase-right" class="phase-half"></div>
+        </div>
+
+        <div class="workout-content">
+          <header id="workout-header" class="workout-header">
+            <div class="workout-meta">
+              <span id="workout-progress-text" class="workout-progress-text">01&nbsp;&nbsp;/&nbsp;&nbsp;10</span>
+              <span id="workout-group-name" class="workout-group-name"></span>
+            </div>
+            <div class="progress-track workout-progress" aria-hidden="true">
+              <span id="workout-progress-fill"></span>
+            </div>
+            <h1 id="exercise-name" class="exercise-name"></h1>
+          </header>
+
+          <div class="exercise-media-area">
+            <div id="exercise-media-card" class="exercise-media-card">
+              <video
+                id="exercise-video"
+                muted
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+              ></video>
+              <img id="hold-frame" class="hold-frame" alt="" hidden />
+              <span id="hold-badge" class="hold-badge" hidden>HOLD</span>
+              <div id="media-scrim" class="media-scrim" aria-hidden="true">
+                <span class="loading-spinner"></span>
+              </div>
+              <div id="media-error" class="media-error" hidden>
+                <span>Demonstration unavailable</span>
+                <button id="media-retry" class="quiet-button" type="button">Try again</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="workout-action-host">
+            <div id="ready-panel" class="workout-panel ready-panel">
+              <button id="start-movement" class="primary-button action-button" type="button" disabled>
+                Start
+              </button>
+            </div>
+
+            <div id="move-panel" class="workout-panel move-panel" hidden>
+              <div class="phase-row">
+                <span id="movement-cue" class="movement-cue" aria-hidden="true">▶</span>
+                <button id="skip-exercise" class="skip-action" type="button">Skip</button>
+              </div>
+              <output id="movement-countdown" class="movement-countdown">45</output>
+              <div id="movement-track" class="progress-track movement-track" aria-hidden="true">
+                <span id="movement-progress-fill"></span>
+              </div>
+            </div>
+
+            <div id="rest-panel" class="workout-panel rest-panel" hidden>
+              <div class="phase-row rest-row">
+                <span class="pause-icon" aria-hidden="true"><i></i><i></i></span>
+                <output id="rest-countdown" class="rest-countdown">15</output>
+              </div>
+              <div class="progress-track rest-track" aria-hidden="true">
+                <span id="rest-progress-fill"></span>
+              </div>
+              <button id="keep-exercise" class="primary-button keep-button" type="button">
+                Tap to keep
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="completion-screen" class="app-screen completion-screen" aria-label="Workout complete" hidden>
+        <div class="completion-hero">
+          <div class="completion-halo">
+            <div class="completion-halo-inner">
+              <div class="completion-mark" role="img" aria-label="Workout complete">
+                <span aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="completion-action-bar">
+          <button id="done-button" class="completion-button" type="button">Done</button>
+        </div>
+      </section>
+    </main>
+    <div id="status" class="visually-hidden" aria-live="polite"></div>
+  </body>
+</html>

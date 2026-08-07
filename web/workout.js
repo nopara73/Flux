@@ -1,0 +1,864 @@
+export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30]);
+export const MOVEMENT_DURATION_MS = 45_000;
+export const REST_DURATION_MS = 15_000;
+const CURRENT_CATALOG_REVISION = 2;
+const ALTERNATING_PREFIX = "Alternating ";
+const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set([223, 224, 245, 246]);
+const APPROVED_EXERCISE_CORRECTIONS = new Map([
+  [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
+  [268, [
+    "Self-Resisted External-Rotation Push-Out",
+    "Self-Resisted External-Rotation Isometric",
+  ]],
+  [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
+]);
+
+const CANONICAL_GROUPS = Object.freeze([
+  null,
+  "MedialAndDeepKneeExtensors",
+  "PosteriorThighAndKneeFlexors",
+  "MajorHipAdductors",
+  "LateralKneeExtensors",
+  "GlutealExtensors",
+  "SpinalExtensors",
+  "CalfDeepPosteriorLegAndPlantarFoot",
+  "Soleus",
+  "ScapularGirdle",
+  "ShoulderAdductorsAndExtensors",
+  "AbdominalWall",
+  "HipAbductors",
+  "Chest",
+  "ElbowExtensors",
+  "HipFlexors",
+  "AnteriorLateralLowerLegAndDorsalFoot",
+  "DeepHipRotators",
+  "ShoulderAbductors",
+  "ForearmFlexorsAndPronators",
+  "DeepAndIntersegmentalBack",
+  "ElbowFlexors",
+  "BreathingMuscles",
+  "ForearmExtensorsAndSupinators",
+  "RotatorCuff",
+  "AccessoryHipAdductors",
+  "PosteriorNeckAndSuboccipitalMuscles",
+  "CranialMuscles",
+  "AnteriorLateralNeckAndHyoidMuscles",
+  "IntrinsicHand",
+  "PelvicFloorAndPerineum",
+]);
+
+const CANONICAL_DISPLAY_NAMES = Object.freeze([
+  null,
+  "Medial and deep knee extensors",
+  "Posterior thigh and knee flexors",
+  "Major hip adductors",
+  "Lateral knee extensors",
+  "Gluteal extensors",
+  "Spinal extensors",
+  "Calf, deep posterior leg and plantar foot",
+  "Soleus",
+  "Scapular girdle",
+  "Shoulder adductors and extensors",
+  "Abdominal wall",
+  "Hip abductors",
+  "Chest",
+  "Elbow extensors",
+  "Hip flexors",
+  "Anterior/lateral lower leg and dorsal foot",
+  "Deep hip rotators",
+  "Shoulder abductors",
+  "Forearm flexors and pronators",
+  "Deep and intersegmental back",
+  "Elbow flexors",
+  "Breathing muscles",
+  "Forearm extensors and supinators",
+  "Rotator cuff",
+  "Accessory hip adductors",
+  "Posterior neck and suboccipital muscles",
+  "Cranial muscles",
+  "Anterior/lateral neck and hyoid muscles",
+  "Intrinsic hand",
+  "Pelvic floor and perineum",
+]);
+
+const CANONICAL_KEYS = Object.freeze([
+  null,
+  "medial-deep-knee-extensors",
+  "posterior-thigh-knee-flexors",
+  "major-hip-adductors",
+  "lateral-knee-extensors",
+  "gluteal-extensors",
+  "spinal-extensors",
+  "calf-deep-posterior-leg-plantar-foot",
+  "soleus",
+  "scapular-girdle",
+  "shoulder-adductors-extensors",
+  "abdominal-wall",
+  "hip-abductors",
+  "chest",
+  "elbow-extensors",
+  "hip-flexors",
+  "anterior-lateral-lower-leg-dorsal-foot",
+  "deep-hip-rotators",
+  "shoulder-abductors",
+  "forearm-flexors-pronators",
+  "deep-intersegmental-back",
+  "elbow-flexors",
+  "breathing-muscles",
+  "forearm-extensors-supinators",
+  "rotator-cuff",
+  "accessory-hip-adductors",
+  "posterior-neck-suboccipital",
+  "cranial-muscles",
+  "anterior-lateral-neck-hyoid",
+  "intrinsic-hand",
+  "pelvic-floor-perineum",
+]);
+
+function bucket(key, displayName, ...canonicalIds) {
+  return {
+    key,
+    displayName,
+    canonicalGroups: canonicalIds.map((id) => CANONICAL_GROUPS[id]),
+  };
+}
+
+function canonicalBucket(canonicalId) {
+  return bucket(
+    CANONICAL_KEYS[canonicalId],
+    CANONICAL_DISPLAY_NAMES[canonicalId],
+    canonicalId,
+  );
+}
+
+function resolution(minutes, declaredLargestToSmallest) {
+  const groups = [...declaredLargestToSmallest]
+    .reverse()
+    .map((group, index) =>
+      Object.freeze({
+        id: `r${minutes}.${group.key}`,
+        displayName: group.displayName,
+        order: index + 1,
+        canonicalGroups: Object.freeze([...group.canonicalGroups]),
+      }),
+    );
+  return Object.freeze({ minutes, groups: Object.freeze(groups) });
+}
+
+export const RESOLUTIONS = new Map([
+  [
+    3,
+    resolution(3, [
+      bucket("lower-limbs", "Lower limbs", 1, 2, 3, 4, 5, 7, 8, 12, 15, 16, 17, 25),
+      bucket("torso-pelvic-complex", "Torso and pelvic complex", 6, 11, 13, 20, 22, 30),
+      bucket("head-neck-upper-limbs", "Head, neck and upper limbs", 9, 10, 14, 18, 19, 21, 23, 24, 26, 27, 28, 29),
+    ]),
+  ],
+  [
+    5,
+    resolution(5, [
+      bucket("hips-thighs", "Hips and thighs", 1, 2, 3, 4, 5, 12, 15, 17, 25),
+      bucket("torso", "Torso", 6, 11, 13, 20, 22, 30),
+      bucket("lower-legs-feet", "Lower legs and feet", 7, 8, 16),
+      bucket("upper-limbs", "Upper limbs", 10, 14, 18, 19, 21, 23, 24, 29),
+      bucket("head-neck-shoulder-girdle", "Head, neck and shoulder girdle", 9, 26, 27, 28),
+    ]),
+  ],
+  [
+    7,
+    resolution(7, [
+      bucket("torso", "Torso", 6, 11, 13, 20, 22, 30),
+      bucket("knee-extensors", "Knee extensors", 1, 4),
+      bucket("head-neck-upper-limbs", "Head, neck and upper limbs", 9, 10, 14, 18, 19, 21, 23, 24, 26, 27, 28, 29),
+      bucket("lower-legs-feet", "Lower legs and feet", 7, 8, 16),
+      bucket("hip-flexors-adductors", "Hip flexors and adductors", 3, 15, 25),
+      bucket("gluteals-deep-hip", "Gluteals and deep hip stabilizers", 5, 12, 17),
+      bucket("posterior-thigh-knee-flexors", "Posterior thigh and knee flexors", 2),
+    ]),
+  ],
+  [
+    10,
+    resolution(10, [
+      bucket("medial-deep-knee-extensors", "Medial and deep knee extensors", 1),
+      bucket("posterior-thigh-knee-flexors", "Posterior thigh and knee flexors", 2),
+      bucket("hip-flexors-adductors", "Hip flexors and adductors", 3, 15, 25),
+      bucket("gluteals-deep-hip", "Gluteals and deep hip stabilizers", 5, 12, 17),
+      bucket("back-abdominal-pelvic-floor", "Back, abdominal wall and pelvic floor", 6, 11, 20, 30),
+      bucket("lateral-knee-extensors", "Lateral knee extensors", 4),
+      bucket("head-neck-scapular-chest-breathing", "Head, neck, scapular girdle, chest and breathing", 9, 13, 22, 26, 27, 28),
+      bucket("posterior-lower-leg-plantar-foot", "Posterior lower leg and plantar foot", 7, 8),
+      bucket("upper-limbs", "Upper limbs", 10, 14, 18, 19, 21, 23, 24, 29),
+      bucket("anterior-lateral-lower-leg-dorsal-foot", "Anterior/lateral lower leg and dorsal foot", 16),
+    ]),
+  ],
+  [
+    15,
+    resolution(15, [
+      bucket("medial-deep-knee-extensors", "Medial and deep knee extensors", 1),
+      bucket("posterior-thigh-knee-flexors", "Posterior thigh and knee flexors", 2),
+      bucket("hip-adductors", "Hip adductors", 3, 25),
+      bucket("lateral-knee-extensors", "Lateral knee extensors", 4),
+      bucket("gluteal-extensors", "Gluteal extensors", 5),
+      bucket("posterior-lower-leg-plantar-foot", "Posterior lower leg and plantar foot", 7, 8),
+      bucket("back-spinal-stabilization", "Back and spinal stabilization", 6, 20),
+      bucket("scapular-chest-breathing", "Scapular girdle, chest and breathing", 9, 13, 22),
+      bucket("lateral-deep-hip-stabilizers", "Lateral and deep hip stabilizers", 12, 17),
+      bucket("arm-forearm-hand", "Arm, forearm and hand", 14, 19, 21, 23, 29),
+      bucket("abdominal-pelvic-floor", "Abdominal wall and pelvic floor", 11, 30),
+      bucket("shoulder", "Shoulder", 10, 18, 24),
+      bucket("hip-flexors", "Hip flexors", 15),
+      bucket("anterior-lateral-lower-leg-dorsal-foot", "Anterior/lateral lower leg and dorsal foot", 16),
+      bucket("head-neck", "Head and neck", 26, 27, 28),
+    ]),
+  ],
+  [
+    20,
+    resolution(20, [
+      bucket("medial-deep-knee-extensors", "Medial and deep knee extensors", 1),
+      bucket("posterior-thigh-knee-flexors", "Posterior thigh and knee flexors", 2),
+      bucket("major-hip-adductors", "Major hip adductors", 3),
+      bucket("lateral-knee-extensors", "Lateral knee extensors", 4),
+      bucket("gluteal-extensors", "Gluteal extensors", 5),
+      bucket("soleus", "Soleus", 8),
+      bucket("back-spinal-stabilization", "Back and spinal stabilization", 6, 20),
+      bucket("calf-flexors-plantar-foot", "Calf flexors and plantar foot", 7),
+      bucket("scapular-girdle", "Scapular girdle", 9),
+      bucket("chest-breathing", "Chest and breathing", 13, 22),
+      bucket("shoulder-adduction-extension", "Shoulder adduction and extension", 10),
+      bucket("abdominal-pelvic-floor", "Abdominal wall and pelvic floor", 11, 30),
+      bucket("lateral-deep-hip-stabilizers", "Lateral and deep hip stabilizers", 12, 17),
+      bucket("upper-arm", "Upper arm", 14, 21),
+      bucket("hip-flexors", "Hip flexors", 15),
+      bucket("anterior-lateral-lower-leg-dorsal-foot", "Anterior/lateral lower leg and dorsal foot", 16),
+      bucket("shoulder-abduction-rotation", "Shoulder abduction and rotation", 18, 24),
+      bucket("forearm-hand", "Forearm and hand", 19, 23, 29),
+      bucket("accessory-hip-adductors", "Accessory hip adductors", 25),
+      bucket("head-neck", "Head and neck", 26, 27, 28),
+    ]),
+  ],
+  [
+    30,
+    resolution(
+      30,
+      Array.from({ length: 30 }, (_, index) => canonicalBucket(index + 1)),
+    ),
+  ],
+]);
+
+const ALL_GROUPS = new Map(
+  [...RESOLUTIONS.values()].flatMap((item) => item.groups.map((group) => [group.id, group])),
+);
+
+export function getResolution(minutes) {
+  const item = RESOLUTIONS.get(minutes);
+  if (!item) {
+    throw new RangeError("Workout duration must be 3, 5, 7, 10, 15, 20, or 30 minutes.");
+  }
+  return item;
+}
+
+export function normalizeMinutes(minutes) {
+  if (!Number.isFinite(Number(minutes))) {
+    return 10;
+  }
+  return [...SUPPORTED_MINUTES].sort((left, right) => {
+    const distance = Math.abs(left - Number(minutes)) - Math.abs(right - Number(minutes));
+    return distance || right - left;
+  })[0];
+}
+
+export function getCanonicalCoverage(exercise, group) {
+  const trained = new Set([
+    exercise.primaryCanonicalGroup,
+    ...(exercise.secondaryCanonicalGroups ?? []),
+  ]);
+  return group.canonicalGroups.filter((canonicalGroup) => trained.has(canonicalGroup)).length;
+}
+
+export function getRequiredCanonicalCoverage(group) {
+  return Math.ceil(group.canonicalGroups.length / 2);
+}
+
+export function isSelectable(exercise, group) {
+  return (
+    group.canonicalGroups.includes(exercise.primaryCanonicalGroup) &&
+    getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group)
+  );
+}
+
+export function usesTimedPair(exercise) {
+  return exercise.sideSequence !== "Continuous" || exercise.directionSequence !== "None";
+}
+
+export function getMovementPhaseState(remainingMilliseconds, timedPair) {
+  if (remainingMilliseconds <= 0) {
+    return { phase: "Complete", secondsRemaining: 0, segmentDurationSeconds: 0, isExercise: false };
+  }
+
+  const bounded = Math.min(remainingMilliseconds, MOVEMENT_DURATION_MS);
+  if (!timedPair) {
+    return {
+      phase: "Continuous",
+      secondsRemaining: Math.ceil(bounded / 1000),
+      segmentDurationSeconds: 45,
+      isExercise: true,
+    };
+  }
+
+  if (bounded > 25_000) {
+    return {
+      phase: "FirstSide",
+      secondsRemaining: Math.ceil((bounded - 25_000) / 1000),
+      segmentDurationSeconds: 20,
+      isExercise: true,
+    };
+  }
+
+  if (bounded > 20_000) {
+    return {
+      phase: "ChangeSides",
+      secondsRemaining: Math.ceil((bounded - 20_000) / 1000),
+      segmentDurationSeconds: 5,
+      isExercise: false,
+    };
+  }
+
+  return {
+    phase: "SecondSide",
+    secondsRemaining: Math.ceil(bounded / 1000),
+    segmentDurationSeconds: 20,
+    isExercise: true,
+  };
+}
+
+export function getMovementPresentation(exercise, phase) {
+  if (phase === "Complete") {
+    return { cue: "None", mirrorMedia: false, activeScreenSide: null };
+  }
+
+  if (!usesTimedPair(exercise)) {
+    if (phase !== "Continuous") {
+      throw new Error(`Continuous exercise cannot use ${phase}.`);
+    }
+    return { cue: "Move", mirrorMedia: false, activeScreenSide: null };
+  }
+
+  if (phase === "ChangeSides") {
+    return { cue: "Switch", mirrorMedia: false, activeScreenSide: null };
+  }
+
+  if (phase !== "FirstSide" && phase !== "SecondSide") {
+    throw new Error(`Timed pair cannot use ${phase}.`);
+  }
+
+  const second = phase === "SecondSide";
+  if (exercise.sideSequence !== "Continuous") {
+    const firstCue =
+      exercise.sideSequence === "ScreenLeftThenRight" ? "ScreenLeft" : "ScreenRight";
+    const cue = second
+      ? firstCue === "ScreenLeft"
+        ? "ScreenRight"
+        : "ScreenLeft"
+      : firstCue;
+    return {
+      cue,
+      mirrorMedia: second,
+      activeScreenSide: cue === "ScreenLeft" ? "Left" : "Right",
+    };
+  }
+
+  const pairs = {
+    ForwardThenBackward: ["Forward", "Backward"],
+    BackwardThenForward: ["Backward", "Forward"],
+    ClockwiseThenCounterclockwise: ["Clockwise", "Counterclockwise"],
+    CounterclockwiseThenClockwise: ["Counterclockwise", "Clockwise"],
+    InwardThenOutward: ["Inward", "Outward"],
+    OutwardThenInward: ["Outward", "Inward"],
+  };
+  const pair = pairs[exercise.directionSequence];
+  if (!pair) {
+    throw new Error(`Unknown direction sequence ${exercise.directionSequence}.`);
+  }
+  return { cue: pair[second ? 1 : 0], mirrorMedia: false, activeScreenSide: null };
+}
+
+export function getExerciseVideoPath(exercise) {
+  return exercise.directionSequence === "None"
+    ? exercise.video
+    : `exercise_direction_videos/exercise_${formatExerciseId(exercise.id)}.mp4`;
+}
+
+export function getHoldFramePath(exercise) {
+  return `exercise_hold_frames/exercise_${formatExerciseId(exercise.id)}.png`;
+}
+
+export function formatExerciseId(exerciseId) {
+  return String(exerciseId).padStart(4, "0");
+}
+
+export function createDefaultState() {
+  return {
+    version: 2,
+    catalogRevision: CURRENT_CATALOG_REVISION,
+    catalogIdentities: {},
+    selectedExerciseIds: {},
+    scores: {},
+    outcomes: {},
+    pendingRestGroupId: null,
+    pendingRestEndsAtUnixMilliseconds: 0,
+    pendingRestKept: false,
+    lastWorkoutMinutes: 10,
+    activeWorkoutMinutes: 0,
+    workoutCompleted: false,
+    completionAcknowledged: false,
+  };
+}
+
+export function parseStoredState(serialized) {
+  if (!serialized) {
+    return createDefaultState();
+  }
+  try {
+    return normalizeStateShape(JSON.parse(serialized));
+  } catch {
+    return createDefaultState();
+  }
+}
+
+function normalizeStateShape(raw) {
+  const state = createDefaultState();
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return state;
+  }
+
+  state.version = Number.isInteger(raw.version) ? raw.version : state.version;
+  state.catalogRevision = Number.isInteger(raw.catalogRevision)
+    ? raw.catalogRevision
+    : state.catalogRevision;
+  state.lastWorkoutMinutes = normalizeMinutes(raw.lastWorkoutMinutes);
+  state.activeWorkoutMinutes = Number.isInteger(raw.activeWorkoutMinutes)
+    ? raw.activeWorkoutMinutes
+    : 0;
+  state.workoutCompleted = raw.workoutCompleted === true;
+  state.completionAcknowledged = raw.completionAcknowledged === true;
+  state.pendingRestGroupId =
+    typeof raw.pendingRestGroupId === "string" ? raw.pendingRestGroupId : null;
+  state.pendingRestEndsAtUnixMilliseconds = Number.isFinite(raw.pendingRestEndsAtUnixMilliseconds)
+    ? Math.trunc(raw.pendingRestEndsAtUnixMilliseconds)
+    : 0;
+  state.pendingRestKept = raw.pendingRestKept === true;
+
+  for (const [groupId, exerciseId] of Object.entries(objectOrEmpty(raw.selectedExerciseIds))) {
+    if (typeof groupId === "string" && Number.isInteger(exerciseId) && exerciseId > 0) {
+      state.selectedExerciseIds[groupId] = exerciseId;
+    }
+  }
+  for (const [exerciseId, score] of Object.entries(objectOrEmpty(raw.scores))) {
+    if (/^\d+$/.test(exerciseId) && Number.isInteger(score)) {
+      state.scores[exerciseId] = score;
+    }
+  }
+  for (const [exerciseId, identity] of Object.entries(objectOrEmpty(raw.catalogIdentities))) {
+    if (/^\d+$/.test(exerciseId) && typeof identity === "string") {
+      state.catalogIdentities[exerciseId] = identity;
+    }
+  }
+  for (const [groupId, outcome] of Object.entries(objectOrEmpty(raw.outcomes))) {
+    if (outcome === "x" || outcome === "tick") {
+      state.outcomes[groupId] = outcome;
+    }
+  }
+  return state;
+}
+
+function objectOrEmpty(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+export class WorkoutSession {
+  constructor(exercises, storedState = createDefaultState(), random = Math.random) {
+    if (!Array.isArray(exercises)) {
+      throw new TypeError("Exercise catalog must be an array.");
+    }
+    this.exercises = exercises;
+    this.exercisesById = new Map(exercises.map((exercise) => [exercise.id, exercise]));
+    if (this.exercisesById.size !== exercises.length) {
+      throw new Error("Exercise catalog contains duplicate IDs.");
+    }
+    this.state = normalizeStateShape(storedState);
+    this.random = random;
+  }
+
+  initialize() {
+    this.reconcileCatalog();
+    this.normalizeScores();
+    this.normalizeSavedLineups();
+
+    if (this.state.activeWorkoutMinutes === 0) {
+      this.resetTransientState();
+      return;
+    }
+
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      this.resetTransientState();
+      return;
+    }
+
+    const activeGroupIds = new Set(this.getActiveGroups().map((group) => group.id));
+    for (const groupId of Object.keys(this.state.outcomes)) {
+      if (!activeGroupIds.has(groupId)) {
+        delete this.state.outcomes[groupId];
+      }
+    }
+
+    this.state.workoutCompleted = this.getActiveGroups().every(
+      (group) => this.state.outcomes[group.id] !== undefined,
+    );
+    if (this.state.workoutCompleted) {
+      if (this.state.completionAcknowledged) {
+        this.prepareNextSession();
+      }
+      return;
+    }
+
+    this.state.completionAcknowledged = false;
+    this.normalizePendingRest();
+    this.repairActiveLineup();
+    this.finishInterruptedWorkout();
+  }
+
+  startWorkout(minutes) {
+    if (!SUPPORTED_MINUTES.includes(minutes)) {
+      throw new RangeError("Unsupported workout duration.");
+    }
+    if (this.state.activeWorkoutMinutes !== 0) {
+      throw new Error("A workout is already active.");
+    }
+
+    this.state.lastWorkoutMinutes = minutes;
+    this.state.activeWorkoutMinutes = minutes;
+    this.state.outcomes = {};
+    this.state.workoutCompleted = false;
+    this.state.completionAcknowledged = false;
+    this.clearPendingRest();
+    this.repairActiveLineup();
+  }
+
+  getActiveGroups() {
+    return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
+      ? getResolution(this.state.activeWorkoutMinutes).groups
+      : [];
+  }
+
+  getNextGroup() {
+    return this.getActiveGroups().find((group) => this.state.outcomes[group.id] === undefined) ?? null;
+  }
+
+  getSelectedExercise(group) {
+    const exercise = this.exercisesById.get(this.state.selectedExerciseIds[group.id]);
+    if (!exercise || !this.isSavedSelectionValid(exercise, group)) {
+      throw new Error(`No eligible exercise selected for ${group.displayName}.`);
+    }
+    return exercise;
+  }
+
+  beginRest(group, endsAtUnixMilliseconds) {
+    this.state.pendingRestGroupId = group.id;
+    this.state.pendingRestEndsAtUnixMilliseconds = Math.trunc(endsAtUnixMilliseconds);
+    this.state.pendingRestKept = false;
+  }
+
+  keepPendingRest() {
+    if (!this.state.pendingRestGroupId) {
+      return false;
+    }
+    this.state.pendingRestKept = true;
+    return true;
+  }
+
+  clearPendingRest() {
+    this.state.pendingRestGroupId = null;
+    this.state.pendingRestEndsAtUnixMilliseconds = 0;
+    this.state.pendingRestKept = false;
+  }
+
+  recordOutcome(group, keep) {
+    const nextGroup = this.getNextGroup();
+    if (!nextGroup || nextGroup.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+
+    return this.applyOutcome(group, keep);
+  }
+
+  applyOutcome(group, keep) {
+    const exercise = this.getSelectedExercise(group);
+    if (!keep) {
+      this.setScore(exercise, this.getScore(exercise) - 1);
+    }
+    this.state.outcomes[group.id] = keep ? "tick" : "x";
+    this.state.workoutCompleted = this.getActiveGroups().every(
+      (activeGroup) => this.state.outcomes[activeGroup.id] !== undefined,
+    );
+    this.state.completionAcknowledged = false;
+    return exercise;
+  }
+
+  acknowledgeCompletion() {
+    if (!this.state.workoutCompleted) {
+      throw new Error("Workout is not complete.");
+    }
+    this.state.completionAcknowledged = true;
+    this.prepareNextSession();
+  }
+
+  finishInterruptedWorkout() {
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      this.resetTransientState();
+      return;
+    }
+
+    if (this.state.pendingRestGroupId) {
+      const group = this.getActiveGroups().find(
+        (candidate) => candidate.id === this.state.pendingRestGroupId,
+      );
+      if (group && this.state.outcomes[group.id] === undefined) {
+        this.applyOutcome(group, this.state.pendingRestKept);
+      }
+      this.clearPendingRest();
+    }
+    this.prepareNextSession();
+  }
+
+  prepareNextSession() {
+    const activeGroups = this.getActiveGroups();
+    const usedExerciseIds = new Set(
+      activeGroups
+        .filter((group) => this.state.outcomes[group.id] !== "x")
+        .map((group) => this.state.selectedExerciseIds[group.id])
+        .filter(Boolean),
+    );
+
+    for (const group of activeGroups.filter((candidate) => this.state.outcomes[candidate.id] === "x")) {
+      const rejectedExerciseId = this.state.selectedExerciseIds[group.id];
+      for (const [savedGroupId, savedExerciseId] of Object.entries(this.state.selectedExerciseIds)) {
+        if (savedGroupId !== group.id && savedExerciseId === rejectedExerciseId) {
+          delete this.state.selectedExerciseIds[savedGroupId];
+        }
+      }
+
+      const replacement = this.chooseBestCandidate(
+        group,
+        new Set([...usedExerciseIds, rejectedExerciseId]),
+      );
+      this.state.selectedExerciseIds[group.id] = replacement.id;
+      usedExerciseIds.add(replacement.id);
+    }
+
+    this.resetTransientState();
+  }
+
+  repairActiveLineup() {
+    const usedExerciseIds = new Set();
+    for (const group of this.getActiveGroups()) {
+      const selectedId = this.state.selectedExerciseIds[group.id];
+      const selected = this.exercisesById.get(selectedId);
+      const valid =
+        selected &&
+        !usedExerciseIds.has(selectedId) &&
+        this.isSavedSelectionValid(selected, group);
+
+      let resolvedId = selectedId;
+      if (!valid) {
+        const excluded = new Set(usedExerciseIds);
+        if (selectedId) {
+          excluded.add(selectedId);
+        }
+        const replacement = this.chooseBestCandidate(group, excluded);
+        resolvedId = replacement.id;
+        this.state.selectedExerciseIds[group.id] = resolvedId;
+        delete this.state.outcomes[group.id];
+      }
+      usedExerciseIds.add(resolvedId);
+    }
+  }
+
+  chooseBestCandidate(group, excludedExerciseIds = new Set()) {
+    const candidates = this.exercises.filter(
+      (exercise) => isSelectable(exercise, group) && !excludedExerciseIds.has(exercise.id),
+    );
+    if (candidates.length === 0) {
+      throw new Error(`No eligible exercise exists for ${group.displayName}.`);
+    }
+
+    const highestScore = Math.max(...candidates.map((exercise) => this.getScore(exercise)));
+    const highestScored = candidates.filter((exercise) => this.getScore(exercise) === highestScore);
+    const widestCoverage = Math.max(
+      ...highestScored.map((exercise) => getCanonicalCoverage(exercise, group)),
+    );
+    const finalists = highestScored.filter(
+      (exercise) => getCanonicalCoverage(exercise, group) === widestCoverage,
+    );
+    const index = Math.min(finalists.length - 1, Math.floor(this.random() * finalists.length));
+    return finalists[Math.max(0, index)];
+  }
+
+  getScore(exercise) {
+    const saved = this.state.scores[String(exercise.id)];
+    return Number.isInteger(saved) ? saved : Number.isInteger(exercise.score) ? exercise.score : 0;
+  }
+
+  setScore(exercise, score) {
+    this.state.scores[String(exercise.id)] = Math.trunc(score);
+  }
+
+  normalizeSavedLineups() {
+    for (const [groupId, exerciseId] of Object.entries(this.state.selectedExerciseIds)) {
+      const group = ALL_GROUPS.get(groupId);
+      const exercise = this.exercisesById.get(exerciseId);
+      if (!group || !exercise || !this.isSavedSelectionValid(exercise, group)) {
+        delete this.state.selectedExerciseIds[groupId];
+      }
+    }
+  }
+
+  normalizeScores() {
+    for (const exerciseId of Object.keys(this.state.scores)) {
+      if (!this.exercisesById.has(Number(exerciseId))) {
+        delete this.state.scores[exerciseId];
+      }
+    }
+  }
+
+  normalizePendingRest() {
+    const pendingGroup = this.getActiveGroups().find(
+      (group) => group.id === this.state.pendingRestGroupId,
+    );
+    const pendingExercise = pendingGroup
+      ? this.exercisesById.get(this.state.selectedExerciseIds[pendingGroup.id])
+      : null;
+    if (
+      !pendingGroup ||
+      !pendingExercise ||
+      this.state.pendingRestEndsAtUnixMilliseconds <= 0 ||
+      this.state.outcomes[pendingGroup.id] !== undefined ||
+      !this.isAssignedToGroup(pendingExercise, pendingGroup)
+    ) {
+      this.clearPendingRest();
+    }
+  }
+
+  isSavedSelectionValid(exercise, group) {
+    return (
+      isSelectable(exercise, group) ||
+      (this.state.pendingRestGroupId === group.id && this.isAssignedToGroup(exercise, group))
+    );
+  }
+
+  isAssignedToGroup(exercise, group) {
+    return (
+      group.canonicalGroups.includes(exercise.primaryCanonicalGroup) ||
+      (exercise.secondaryCanonicalGroups ?? []).some((canonicalGroup) =>
+        group.canonicalGroups.includes(canonicalGroup),
+      )
+    );
+  }
+
+  reconcileCatalog() {
+    const previousIdentities = this.state.catalogIdentities;
+    const currentIdentities = Object.fromEntries(
+      this.exercises.map((exercise) => [String(exercise.id), catalogIdentity(exercise)]),
+    );
+    const changedExerciseIds = new Set();
+
+    for (const [exerciseId, previousIdentity] of Object.entries(previousIdentities)) {
+      const currentIdentity = currentIdentities[exerciseId];
+      const currentExercise = this.exercisesById.get(Number(exerciseId));
+      if (
+        currentIdentity === undefined ||
+        (currentIdentity !== previousIdentity &&
+          !isApprovedIdentityPreservingNameChange(
+            Number(exerciseId),
+            previousIdentity,
+            currentExercise,
+          ))
+      ) {
+        changedExerciseIds.add(Number(exerciseId));
+      }
+    }
+
+    if (changedExerciseIds.size > 0) {
+      const affectedGroupIds = Object.entries(this.state.selectedExerciseIds)
+        .filter(([, exerciseId]) => changedExerciseIds.has(exerciseId))
+        .map(([groupId]) => groupId);
+      for (const groupId of affectedGroupIds) {
+        delete this.state.selectedExerciseIds[groupId];
+        delete this.state.outcomes[groupId];
+      }
+      if (
+        this.state.pendingRestGroupId &&
+        affectedGroupIds.includes(this.state.pendingRestGroupId)
+      ) {
+        this.clearPendingRest();
+      }
+      for (const exerciseId of changedExerciseIds) {
+        delete this.state.scores[String(exerciseId)];
+      }
+    }
+
+    this.state.catalogIdentities = currentIdentities;
+    this.state.catalogRevision = Math.max(
+      this.state.catalogRevision,
+      CURRENT_CATALOG_REVISION,
+    );
+    this.state.version = 2;
+  }
+
+  resetTransientState() {
+    this.state.activeWorkoutMinutes = 0;
+    this.state.outcomes = {};
+    this.state.workoutCompleted = false;
+    this.state.completionAcknowledged = false;
+    this.clearPendingRest();
+  }
+}
+
+function catalogIdentity(exercise) {
+  return `${exercise.name}\u001f${exercise.video}`;
+}
+
+function isApprovedIdentityPreservingNameChange(exerciseId, previousIdentity, currentExercise) {
+  if (!currentExercise) {
+    return false;
+  }
+  const separatorIndex = previousIdentity.indexOf("\u001f");
+  if (separatorIndex < 0) {
+    return false;
+  }
+  const previousName = previousIdentity.slice(0, separatorIndex);
+  const previousVideo = previousIdentity.slice(separatorIndex + 1);
+  if (previousVideo !== currentExercise.video) {
+    return false;
+  }
+
+  const timedSideNormalization =
+    currentExercise.sideSequence !== "Continuous" &&
+    previousName.startsWith(ALTERNATING_PREFIX) &&
+    previousName.slice(ALTERNATING_PREFIX.length) === currentExercise.name;
+  const continuousAlternationNormalization =
+    CONTINUOUS_ALTERNATION_NORMALIZATION_IDS.has(exerciseId) &&
+    currentExercise.sideSequence === "Continuous" &&
+    currentExercise.name.startsWith(ALTERNATING_PREFIX) &&
+    previousName === currentExercise.name.slice(ALTERNATING_PREFIX.length);
+  const correction = APPROVED_EXERCISE_CORRECTIONS.get(exerciseId);
+  const approvedExerciseCorrection =
+    correction !== undefined &&
+    previousName === correction[0] &&
+    currentExercise.name === correction[1];
+
+  return (
+    timedSideNormalization ||
+    continuousAlternationNormalization ||
+    approvedExerciseCorrection
+  );
+}
