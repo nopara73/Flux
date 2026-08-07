@@ -35,8 +35,10 @@
                     android:id="@+id/duration_identity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
 
                     <ImageView
                         android:id="@+id/duration_app_icon"
