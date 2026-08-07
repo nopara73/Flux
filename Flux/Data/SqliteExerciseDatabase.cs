@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 20;
+    private const int DatabaseVersion = 21;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -35,6 +35,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "presentation",
         "hold_frame_percent",
         "side_sequence",
+        "direction_sequence",
     ];
 
     private readonly Context _context;
@@ -69,7 +70,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -102,6 +103,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     "ALTER TABLE exercises ADD COLUMN presentation TEXT NOT NULL " +
                     "DEFAULT 'Motion' CHECK (presentation IN ('Motion', 'Still'))");
             }
+            database.ExecSQL(
+                "ALTER TABLE exercises ADD COLUMN direction_sequence TEXT NOT NULL " +
+                "DEFAULT 'None' CHECK (direction_sequence IN " +
+                "('None', 'ForwardThenBackward', 'BackwardThenForward', " +
+                "'ClockwiseThenCounterclockwise', " +
+                "'CounterclockwiseThenClockwise', 'InwardThenOutward', " +
+                "'OutwardThenInward'))");
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
@@ -169,6 +177,15 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'Continuous',
                         'ScreenLeftThenRight',
                         'ScreenRightThenLeft')),
+                direction_sequence TEXT NOT NULL DEFAULT 'None'
+                    CHECK (direction_sequence IN (
+                        'None',
+                        'ForwardThenBackward',
+                        'BackwardThenForward',
+                        'ClockwiseThenCounterclockwise',
+                        'CounterclockwiseThenClockwise',
+                        'InwardThenOutward',
+                        'OutwardThenInward')),
                 CHECK (
                     (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
@@ -405,6 +422,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("presentation", exercise.Presentation.ToString());
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
         values.Put("side_sequence", exercise.SideSequence.ToString());
+        values.Put("direction_sequence", exercise.DirectionSequence.ToString());
         return values;
     }
 
@@ -559,6 +577,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(14)
                     ?? throw new InvalidOperationException(
                         "An exercise has no side sequence.")),
+                DirectionSequence = Enum.Parse<ExerciseDirectionSequence>(
+                    cursor.GetString(15)
+                        ?? throw new InvalidOperationException(
+                            "An exercise has no direction sequence.")),
             });
         }
 
@@ -642,6 +664,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.Mode) ||
             !Enum.IsDefined(exercise.Presentation) ||
             !Enum.IsDefined(exercise.SideSequence) ||
+            !Enum.IsDefined(exercise.DirectionSequence) ||
+            (exercise.SideSequence != ExerciseSideSequence.Continuous &&
+                exercise.DirectionSequence != ExerciseDirectionSequence.None) ||
+            (exercise.DirectionSequence != ExerciseDirectionSequence.None &&
+                (exercise.Mode != ExerciseMode.Repetition ||
+                    exercise.Presentation != ExercisePresentation.Motion)) ||
             (exercise.Presentation == ExercisePresentation.Still &&
                 exercise.Mode != ExerciseMode.Hold) ||
             (exercise.Mode == ExerciseMode.Repetition && exercise.HoldFramePercent != 0) ||

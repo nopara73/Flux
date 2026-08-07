@@ -21,6 +21,7 @@ namespace Flux;
 public class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
+    private const int DirectionSecondPhaseOffsetMilliseconds = 20_000;
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
@@ -1432,7 +1433,9 @@ public class MainActivity : Activity
         try
         {
             _exerciseVideo.SetVideoPath(
-                CacheVideoAsset(exercise.Video, forceCacheRefresh));
+                CacheVideoAsset(
+                    GetExerciseVideoAssetPath(exercise),
+                    forceCacheRefresh));
         }
         catch (Exception)
         {
@@ -1442,9 +1445,16 @@ public class MainActivity : Activity
 
     private string CacheVideoAsset(string assetPath, bool forceRefresh)
     {
-        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v7");
+        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v8");
         Directory.CreateDirectory(cacheRoot);
-        string cachedPath = System.IO.Path.Combine(cacheRoot, System.IO.Path.GetFileName(assetPath));
+        string assetKind = assetPath.StartsWith(
+            "exercise_direction_videos/",
+            StringComparison.Ordinal)
+            ? "directions-"
+            : "standard-";
+        string cachedPath = System.IO.Path.Combine(
+            cacheRoot,
+            assetKind + System.IO.Path.GetFileName(assetPath));
         string temporaryPath = cachedPath + ".tmp";
 
         using Stream source = Assets!.Open(assetPath);
@@ -1483,6 +1493,13 @@ public class MainActivity : Activity
         }
 
         return cachedPath;
+    }
+
+    private static string GetExerciseVideoAssetPath(Exercise exercise)
+    {
+        return exercise.DirectionSequence == ExerciseDirectionSequence.None
+            ? exercise.Video
+            : $"exercise_direction_videos/exercise_{exercise.Id:D4}.mp4";
     }
 
     private void SetStartAvailability(bool available)
@@ -1678,9 +1695,13 @@ public class MainActivity : Activity
         _exerciseName.Text = exercise.Name;
         _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}. Hold."
-            : exercise.SideSequence == ExerciseSideSequence.Continuous
+            : !MovementPhasePresentationPolicy.UsesTimedPair(
+                exercise.SideSequence,
+                exercise.DirectionSequence)
                 ? $"{exercise.Name}. Repetition."
-                : $"{exercise.Name}. First side, change, then second side.";
+                : exercise.DirectionSequence == ExerciseDirectionSequence.None
+                    ? $"{exercise.Name}. First side, change, then second side."
+                    : $"{exercise.Name}. First direction, change, then opposite direction.";
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
@@ -1869,7 +1890,7 @@ public class MainActivity : Activity
         _countdownMillisecondsRemaining = boundedMilliseconds;
         MovementPhaseState state = MovementPhaseSchedule.GetState(
             boundedMilliseconds,
-            UsesTimedSides());
+            UsesTimedPair());
         string secondsText = state.SecondsRemaining.ToString();
         if (_countdownText.Text != secondsText ||
             state.Phase != _lastMovementPhase)
@@ -1882,26 +1903,27 @@ public class MainActivity : Activity
         ApplyMovementPhase(state);
     }
 
-    private bool UsesTimedSides()
+    private bool UsesTimedPair()
     {
-        return _currentExercise?.SideSequence is
-            ExerciseSideSequence.ScreenLeftThenRight or
-            ExerciseSideSequence.ScreenRightThenLeft;
+        Exercise? exercise = _currentExercise;
+        return exercise is not null &&
+            MovementPhasePresentationPolicy.UsesTimedPair(
+                exercise.SideSequence,
+                exercise.DirectionSequence);
     }
 
-    private static string GetMovementCountdownDescription(
+    private string GetMovementCountdownDescription(
         MovementPhaseState state)
     {
+        MovementDirectionCue cue = GetCurrentMovementPresentation(state.Phase).Cue;
+        string phaseDescription = state.Phase == MovementPhase.ChangeSides
+            ? GetPairChangeDescription()
+            : GetMovementCueDescription(cue);
         return state.Phase switch
         {
-            MovementPhase.Continuous =>
-                $"Move, {state.SecondsRemaining} seconds remaining",
-            MovementPhase.FirstSide =>
-                $"First side, {state.SecondsRemaining} seconds remaining",
-            MovementPhase.ChangeSides =>
-                $"Change sides, {state.SecondsRemaining} seconds remaining",
-            MovementPhase.SecondSide =>
-                $"Second side, {state.SecondsRemaining} seconds remaining",
+            MovementPhase.Continuous or MovementPhase.FirstSide or
+                MovementPhase.ChangeSides or MovementPhase.SecondSide =>
+                $"{phaseDescription}, {state.SecondsRemaining} seconds remaining",
             MovementPhase.Complete => "Movement complete",
             _ => throw new ArgumentOutOfRangeException(nameof(state)),
         };
@@ -1917,7 +1939,9 @@ public class MainActivity : Activity
 
         MovementPhase? previousPhase = _lastMovementPhase;
         _lastMovementPhase = state.Phase;
-        RenderCountdownPhase(state.Phase == MovementPhase.ChangeSides);
+        MovementPhasePresentation presentation =
+            GetCurrentMovementPresentation(state.Phase);
+        RenderCountdownPhase(presentation.Cue);
 
         switch (state.Phase)
         {
@@ -1929,10 +1953,10 @@ public class MainActivity : Activity
                 break;
 
             case MovementPhase.FirstSide:
-                SetExerciseMediaMirrored(mirrored: false);
-                RenderTimedSideWorkoutPhase(firstSide: true);
+                SetExerciseMediaMirrored(presentation.MirrorMedia);
+                RenderTimedPairWorkoutPhase(presentation);
                 AnimateMediaPhase(resting: false);
-                RestartExerciseMediaForSide();
+                RestartExerciseMediaForPhase(state.Phase);
                 break;
 
             case MovementPhase.ChangeSides:
@@ -1943,10 +1967,10 @@ public class MainActivity : Activity
                 break;
 
             case MovementPhase.SecondSide:
-                SetExerciseMediaMirrored(mirrored: true);
-                RenderTimedSideWorkoutPhase(firstSide: false);
+                SetExerciseMediaMirrored(presentation.MirrorMedia);
+                RenderTimedPairWorkoutPhase(presentation);
                 AnimateMediaPhase(resting: false);
-                RestartExerciseMediaForSide();
+                RestartExerciseMediaForPhase(state.Phase);
                 CueSideTransition();
                 break;
 
@@ -1959,9 +1983,10 @@ public class MainActivity : Activity
             MovementPhase.Continuous when previousPhase is null =>
                 "Move, 45 seconds.",
             MovementPhase.FirstSide when previousPhase is null =>
-                "First side, 20 seconds.",
-            MovementPhase.ChangeSides => "Change sides, 5 seconds.",
-            MovementPhase.SecondSide => "Second side, 20 seconds.",
+                $"{GetMovementCueDescription(presentation.Cue)}, 20 seconds.",
+            MovementPhase.ChangeSides => $"{GetPairChangeDescription()}, 5 seconds.",
+            MovementPhase.SecondSide =>
+                $"{GetMovementCueDescription(presentation.Cue)}, 20 seconds.",
             _ => null,
         };
         if (announcement is not null)
@@ -1981,17 +2006,25 @@ public class MainActivity : Activity
         ApplyCurrentMediaPlaybackState();
     }
 
-    private void RestartExerciseMediaForSide()
+    private void RestartExerciseMediaForPhase(MovementPhase phase)
     {
-        if (_currentExercise?.Presentation == ExercisePresentation.Still)
+        Exercise exercise = _currentExercise
+            ?? throw new InvalidOperationException(
+                "A timed movement phase requires a current exercise.");
+        if (exercise.Presentation == ExercisePresentation.Still)
         {
-            ShowHoldFrame(_currentExercise.Id);
+            ShowHoldFrame(exercise.Id);
             return;
         }
 
         ClearHoldFrame();
         _exerciseVideo.Pause();
-        _exerciseVideo.SeekTo(0);
+        int positionMilliseconds =
+            exercise.DirectionSequence != ExerciseDirectionSequence.None &&
+            phase == MovementPhase.SecondSide
+                ? DirectionSecondPhaseOffsetMilliseconds
+                : 0;
+        _exerciseVideo.SeekTo(positionMilliseconds);
         RestartHoldOrResumeRepetition();
     }
 
@@ -2001,18 +2034,19 @@ public class MainActivity : Activity
         _countdownPanel.PerformHapticFeedback(FeedbackConstants.ClockTick);
     }
 
-    private void RenderCountdownPhase(bool changingSides)
+    private void RenderCountdownPhase(MovementDirectionCue cue)
     {
-        int textColorResource = changingSides
+        bool changingPair = cue == MovementDirectionCue.Switch;
+        int textColorResource = changingPair
             ? Resource.Color.rest_text
             : Resource.Color.move_text;
-        int iconResource = changingSides
-            ? Resource.Drawable.ic_phase_swap
-            : Resource.Drawable.ic_phase_active;
-        int progressResource = changingSides
+        int iconResource = GetMovementCueIcon(cue);
+        int progressResource = changingPair
             ? Resource.Drawable.rest_progress_track
             : Resource.Drawable.move_progress_track;
-        string description = changingSides ? "Change sides" : "Move";
+        string description = changingPair
+            ? GetPairChangeDescription()
+            : GetMovementCueDescription(cue);
 
         var textColor = new Android.Graphics.Color(GetColor(textColorResource));
         _countdownPhaseIcon.SetImageResource(iconResource);
@@ -2040,10 +2074,10 @@ public class MainActivity : Activity
 
     private void ApplyCurrentMediaPlaybackState()
     {
-        bool secondSide =
-            _workoutPhase == WorkoutPhase.Move &&
-            _lastMovementPhase == MovementPhase.SecondSide;
-        SetExerciseMediaMirrored(secondSide);
+        bool mirrorMedia = _workoutPhase == WorkoutPhase.Move &&
+            _lastMovementPhase is MovementPhase phase &&
+            GetCurrentMovementPresentation(phase).MirrorMedia;
+        SetExerciseMediaMirrored(mirrorMedia);
 
         if (ShouldExerciseVideoBePlaying())
         {
@@ -2062,14 +2096,70 @@ public class MainActivity : Activity
         _holdFrameImage.ScaleX = scale;
     }
 
-    private void RenderTimedSideWorkoutPhase(bool firstSide)
+    private MovementPhasePresentation GetCurrentMovementPresentation(
+        MovementPhase phase)
     {
-        bool sourceStartsOnLeft = _currentExercise?.SideSequence ==
-            ExerciseSideSequence.ScreenLeftThenRight;
-        bool activeLeft = firstSide
-            ? sourceStartsOnLeft
-            : !sourceStartsOnLeft;
-        RenderSplitWorkoutPhase(activeLeft);
+        Exercise exercise = _currentExercise
+            ?? throw new InvalidOperationException(
+                "A movement phase requires a current exercise.");
+        return MovementPhasePresentationPolicy.GetPresentation(
+            exercise.SideSequence,
+            exercise.DirectionSequence,
+            phase);
+    }
+
+    private string GetPairChangeDescription()
+    {
+        return _currentExercise?.DirectionSequence ==
+            ExerciseDirectionSequence.None
+            ? "Change sides"
+            : "Change direction";
+    }
+
+    private static string GetMovementCueDescription(MovementDirectionCue cue)
+    {
+        return cue switch
+        {
+            MovementDirectionCue.None => "Movement complete",
+            MovementDirectionCue.Move => "Move",
+            MovementDirectionCue.Switch => "Change",
+            MovementDirectionCue.ScreenLeft => "Left side",
+            MovementDirectionCue.ScreenRight => "Right side",
+            MovementDirectionCue.Forward => "Forward",
+            MovementDirectionCue.Backward => "Backward",
+            MovementDirectionCue.Clockwise => "Clockwise",
+            MovementDirectionCue.Counterclockwise => "Counterclockwise",
+            MovementDirectionCue.Inward => "Inward",
+            MovementDirectionCue.Outward => "Outward",
+            _ => throw new ArgumentOutOfRangeException(nameof(cue), cue, null),
+        };
+    }
+
+    private static int GetMovementCueIcon(MovementDirectionCue cue)
+    {
+        return cue switch
+        {
+            MovementDirectionCue.Switch => Resource.Drawable.ic_phase_swap,
+            MovementDirectionCue.Forward => Resource.Drawable.ic_direction_forward,
+            MovementDirectionCue.Backward => Resource.Drawable.ic_direction_backward,
+            MovementDirectionCue.Clockwise => Resource.Drawable.ic_direction_clockwise,
+            MovementDirectionCue.Counterclockwise =>
+                Resource.Drawable.ic_direction_counterclockwise,
+            MovementDirectionCue.Inward => Resource.Drawable.ic_direction_inward,
+            MovementDirectionCue.Outward => Resource.Drawable.ic_direction_outward,
+            _ => Resource.Drawable.ic_phase_active,
+        };
+    }
+
+    private void RenderTimedPairWorkoutPhase(MovementPhasePresentation presentation)
+    {
+        if (presentation.ActiveScreenSide is ScreenSide activeSide)
+        {
+            RenderSplitWorkoutPhase(activeSide == ScreenSide.Left);
+            return;
+        }
+
+        RenderFullWorkoutPhase(Resource.Color.move_surface);
     }
 
     private void RenderSplitWorkoutPhase(bool activeLeft)
@@ -2136,7 +2226,7 @@ public class MainActivity : Activity
     private void ResetMovementVisuals()
     {
         _lastMovementPhase = null;
-        RenderCountdownPhase(changingSides: false);
+        RenderCountdownPhase(MovementDirectionCue.Move);
         SetExerciseMediaMirrored(mirrored: false);
         _exerciseMediaCard.Animate()?.Cancel();
         _exerciseMediaCard.Alpha = 1f;

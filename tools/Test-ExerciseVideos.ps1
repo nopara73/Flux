@@ -102,14 +102,96 @@ $expectedHoldNames = @($catalog |
 $actualHoldNames = @(Get-ChildItem -LiteralPath (
         Join-Path $resolvedAssetsRoot 'exercise_hold_frames') -File -Filter '*.png' |
         Select-Object -ExpandProperty Name)
+$directionExercises = @($catalog | Where-Object directionSequence -ne 'None')
+$invalidDirectionExercises = @($directionExercises | Where-Object {
+        [string]$_.sideSequence -ne 'Continuous' -or
+        [string]$_.mode -ne 'Repetition' -or
+        [string]$_.presentation -ne 'Motion' -or
+        [string]$_.directionSequence -notin @(
+            'ForwardThenBackward',
+            'BackwardThenForward',
+            'ClockwiseThenCounterclockwise',
+            'CounterclockwiseThenClockwise',
+            'InwardThenOutward',
+            'OutwardThenInward')
+    })
+$expectedDirectionNames = @($directionExercises | ForEach-Object {
+        'exercise_{0:D4}.mp4' -f [int]$_.id
+    })
+$actualDirectionNames = @(Get-ChildItem -LiteralPath (
+        Join-Path $resolvedAssetsRoot 'exercise_direction_videos') `
+        -File -Filter '*.mp4' |
+        Select-Object -ExpandProperty Name)
 
 if (@(Compare-Object ($expectedVideoNames | Sort-Object) `
             ($actualVideoNames | Sort-Object)).Count -gt 0 -or
     @(Compare-Object ($expectedGifNames | Sort-Object) `
             ($actualGifNames | Sort-Object)).Count -gt 0 -or
     @(Compare-Object ($expectedHoldNames | Sort-Object) `
-            ($actualHoldNames | Sort-Object)).Count -gt 0) {
+            ($actualHoldNames | Sort-Object)).Count -gt 0 -or
+    @(Compare-Object ($expectedDirectionNames | Sort-Object) `
+            ($actualDirectionNames | Sort-Object)).Count -gt 0 -or
+    $invalidDirectionExercises.Count -gt 0) {
     throw 'The media directories contain missing or orphaned exercise assets.'
+}
+
+foreach ($exercise in $directionExercises) {
+    $directionVideoPath = Join-Path $resolvedAssetsRoot (
+        'exercise_direction_videos/exercise_{0:D4}.mp4' -f [int]$exercise.id)
+    $directionProbeJson = & ffprobe `
+        -v error `
+        -show_entries 'stream=codec_type,codec_name,width,height,pix_fmt:format=duration' `
+        -of json `
+        $directionVideoPath
+    if ($LASTEXITCODE -ne 0) {
+        $failures.Add("$($exercise.id): directional ffprobe failed")
+        continue
+    }
+    $directionProbe = $directionProbeJson | ConvertFrom-Json
+    $directionVideoStreams = @(
+        $directionProbe.streams | Where-Object codec_type -eq 'video')
+    $directionAudioStreams = @(
+        $directionProbe.streams | Where-Object codec_type -eq 'audio')
+    $directionDuration = [double]::Parse(
+        [string]$directionProbe.format.duration,
+        [Globalization.CultureInfo]::InvariantCulture)
+    if ($directionVideoStreams.Count -ne 1 -or
+        $directionVideoStreams[0].codec_name -ne 'h264' -or
+        $directionVideoStreams[0].width -ne 256 -or
+        $directionVideoStreams[0].height -ne 256 -or
+        $directionVideoStreams[0].pix_fmt -ne 'yuv420p' -or
+        $directionAudioStreams.Count -ne 0 -or
+        $directionDuration -lt 39.8 -or
+        $directionDuration -gt 40.2) {
+        $failures.Add(
+            "$($exercise.id): invalid directional codec, dimensions, audio, or duration")
+    }
+
+    $directionKeyframeJson = & ffprobe `
+        -v error `
+        -select_streams 'v:0' `
+        -skip_frame nokey `
+        -show_frames `
+        -show_entries 'frame=best_effort_timestamp_time' `
+        -of json `
+        $directionVideoPath
+    if ($LASTEXITCODE -ne 0) {
+        $failures.Add("$($exercise.id): directional keyframe probe failed")
+        continue
+    }
+    $directionKeyframes = @(
+        ($directionKeyframeJson | ConvertFrom-Json).frames |
+            ForEach-Object {
+                [double]::Parse(
+                    [string]$_.best_effort_timestamp_time,
+                    [Globalization.CultureInfo]::InvariantCulture)
+            })
+    if (-not ($directionKeyframes | Where-Object {
+                [Math]::Abs($_ - 20.0) -le 0.025
+            })) {
+        $failures.Add(
+            "$($exercise.id): no exact keyframe at the 20-second direction boundary")
+    }
 }
 
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) (

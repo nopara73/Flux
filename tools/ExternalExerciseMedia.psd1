@@ -562,7 +562,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 14.5
-        DurationSeconds = 22.75
+        # The source reverses direction after 28.96s. Keep only the reviewed
+        # first pass; ExerciseDirectionSequences supplies the exact reverse.
+        DurationSeconds = 14.25
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }
@@ -1260,15 +1262,16 @@
         MirrorForAlternation = $false
     }
     140 = @{
-        File = 'sumo-squat-calf-raise.mp4'
-        Url = 'https://www.youtube.com/watch?v=wfTfeXNRBvM'
-        SourcePage = 'https://www.youtube.com/watch?v=wfTfeXNRBvM'
+        File = 'sumo-squat-calf-raise-clear.mp4'
+        Url = 'https://www.youtube.com/watch?v=GD5IaDVlGhA'
+        SourcePage = 'https://www.youtube.com/watch?v=GD5IaDVlGhA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 12
+        StartSeconds = 3.5
+        DurationSeconds = 14.0
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     145 = @{
@@ -1865,7 +1868,7 @@
         DurationSeconds = 10.0
         FramesPerSecond = 10
         Crop = 'crop=220:300:210:20'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     481 = @{
         File = 'dance-spotting-exercises.mp4'
@@ -3372,11 +3375,12 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 88.5
-        DurationSeconds = 5
-        FramesPerSecond = 8
+        StartSeconds = 86
+        DurationSeconds = 4
+        FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        PingPong = $true
+        MirrorForAlternation = $false
     }
     215 = @{
         File = 'self-resisted-wrist.mp4'
@@ -3457,42 +3461,42 @@
         MirrorForAlternation = $false
     }
     223 = @{
-        File = 'karate-five-blocks.mp4'
-        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        File = 'karate-four-basic-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
+        SourcePage = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 71
-        DurationSeconds = 33
-        FramesPerSecond = 6
-        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        StartSeconds = 99
+        DurationSeconds = 11
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     224 = @{
-        File = 'karate-five-blocks.mp4'
-        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        File = 'karate-four-basic-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
+        SourcePage = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 106
-        DurationSeconds = 31
-        FramesPerSecond = 6
-        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        StartSeconds = 54
+        DurationSeconds = 13.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     225 = @{
-        File = 'karate-five-blocks.mp4'
-        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        File = 'karate-shuto-uke-solo.mp4'
+        Url = 'https://www.youtube.com/watch?v=_zs4jz2SSwA'
+        SourcePage = 'https://www.youtube.com/watch?v=_zs4jz2SSwA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 140
-        DurationSeconds = 31
-        FramesPerSecond = 6
-        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        StartSeconds = 157.8
+        DurationSeconds = 9.8
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     227 = @{
@@ -3665,29 +3669,29 @@
         MirrorForAlternation = $false
     }
     245 = @{
-        File = 'karate-five-blocks.mp4'
-        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        File = 'karate-four-basic-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
+        SourcePage = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 11
-        DurationSeconds = 27
-        FramesPerSecond = 6
-        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        StartSeconds = 30
+        DurationSeconds = 11
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     246 = @{
-        File = 'karate-five-blocks.mp4'
-        Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-        SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+        File = 'karate-four-basic-blocks.mp4'
+        Url = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
+        SourcePage = 'https://www.youtube.com/watch?v=LsZ7ewneTkY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 41
-        DurationSeconds = 27
-        FramesPerSecond = 6
-        Crop = 'crop=iw*0.875:ih:iw*0.0625:0,scale=256:164,pad=256:256:0:46'
+        StartSeconds = 132
+        DurationSeconds = 19
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     248 = @{
@@ -4494,31 +4498,31 @@
         MirrorForAlternation = $false
     }
     746 = @{
-        File = 'alex-standing-stretch.mp4'
-        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
-        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        File = 'mizi-standing.mp4'
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 396
-        DurationSeconds = 12
+        StartSeconds = 1243
+        DurationSeconds = 10
         FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        PingPong = $false
         MirrorForAlternation = $false
     }
     747 = @{
-        File = 'alex-standing-stretch.mp4'
-        Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
-        SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
+        File = 'unsupported-standing-quad-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=Uwwuc8pRRc0'
+        SourcePage = 'https://www.youtube.com/watch?v=Uwwuc8pRRc0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 479
-        DurationSeconds = 13
+        StartSeconds = 2
+        DurationSeconds = 18
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        PingPong = $false
         MirrorForAlternation = $false
     }
     748 = @{

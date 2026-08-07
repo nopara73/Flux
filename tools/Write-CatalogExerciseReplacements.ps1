@@ -27,6 +27,35 @@ function ConvertTo-Psd1Value {
     return ConvertTo-Psd1String ([string]$Value)
 }
 
+function ConvertFrom-CsvNumber {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Value,
+
+        [Parameter(Mandatory)]
+        [string]$FieldName,
+
+        [Parameter(Mandatory)]
+        [int]$ExerciseId
+    )
+
+    $normalized = $Value.Trim()
+    if ($normalized.Contains(',') -and -not $normalized.Contains('.')) {
+        $normalized = $normalized.Replace(',', '.')
+    }
+
+    $parsed = 0.0
+    if (-not [double]::TryParse(
+            $normalized,
+            [Globalization.NumberStyles]::AllowDecimalPoint,
+            [Globalization.CultureInfo]::InvariantCulture,
+            [ref]$parsed)) {
+        throw "Replacement $ExerciseId has invalid $FieldName value '$Value'."
+    }
+
+    return $parsed
+}
+
 $resolvedInputPath = [IO.Path]::GetFullPath($InputPath)
 $resolvedOutputPath = [IO.Path]::GetFullPath($OutputPath)
 $rows = @(Import-Csv -LiteralPath $resolvedInputPath)
@@ -94,12 +123,14 @@ foreach ($row in @($rows | Sort-Object { [int]$_.id })) {
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = [double]::Parse(
-                [string]$row.start_seconds,
-                [Globalization.CultureInfo]::InvariantCulture)
-            DurationSeconds = [double]::Parse(
-                [string]$row.duration_seconds,
-                [Globalization.CultureInfo]::InvariantCulture)
+            StartSeconds = ConvertFrom-CsvNumber `
+                -Value ([string]$row.start_seconds) `
+                -FieldName 'start_seconds' `
+                -ExerciseId $exerciseId
+            DurationSeconds = ConvertFrom-CsvNumber `
+                -Value ([string]$row.duration_seconds) `
+                -FieldName 'duration_seconds' `
+                -ExerciseId $exerciseId
             FramesPerSecond = if ([string]::IsNullOrWhiteSpace(
                     [string]$row.frames_per_second)) {
                 8

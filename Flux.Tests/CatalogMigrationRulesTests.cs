@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(94, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(109, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -148,6 +148,145 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void RepeatedUpgradePreservesAnAlreadyReviewedReplacementAndItsScore()
+    {
+        const int replacedId = 56;
+        const string video = "exercise_videos/exercise_0056.mp4";
+        Exercise replacement = Exercise(
+            replacedId,
+            "Shibashi Shallow Squat with Arm Float",
+            video,
+            retiredName: "Hula Kāholo");
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [replacedId] = new(replacement.Name, video, -7),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.Contains(replacedId, preserved);
+        Assert.Equal(-7, stored[replacedId].Score);
+    }
+
+    [Fact]
+    public void ReviewedNaturalAlternationNormalizationPreservesIdentityAndScore()
+    {
+        const int exerciseId = 223;
+        const string video = "exercise_videos/exercise_0223.mp4";
+        Exercise normalized = Exercise(
+            exerciseId,
+            "Alternating Karate Inside Block (Uchi-Uke)",
+            video);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new("Karate Inside Block (Uchi-Uke)", video, -3),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [normalized],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-3, stored[exerciseId].Score);
+    }
+
+    [Theory]
+    [InlineData(239, "Ninja Snake Hand-Seal Hold", "Ninja Fireball Hand-Seal Sequence")]
+    [InlineData(240, "Ninja Ram Hand-Seal Hold", "Ninja Shadow-Possession Hand-Seal Sequence")]
+    [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
+    [InlineData(242, "Ninja Boar Hand-Seal Hold", "Ninja Shadow-Clone Hand-Seal Sequence")]
+    [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
+    [InlineData(276, "Alternating Diagonal Overhead Reach-and-Pull", "Dynamic-Resistance High Chest Press")]
+    [InlineData(280, "Alternating Forward-and-Side Arm Press", "Ringing-the-Towel Wrist Inversion")]
+    [InlineData(289, "Ninja Horse Hand-Seal Hold", "Heaven-to-Earth Finger Rotation")]
+    [InlineData(291, "Ninja Tiger Hand-Seal Hold", "Black Dragon Enters the Cave")]
+    [InlineData(293, "Ninja Dragon Hand-Seal Hold", "Sword-Fingers Qigong Sequence")]
+    [InlineData(294, "Ninja Rat Hand-Seal Hold", "Tiger-Claw Grip Flow")]
+    [InlineData(483, "Clockwise Full Neck Circles", "Pirouette Spotting Drill")]
+    [InlineData(501, "Counterclockwise Full Neck Circles", "Standing Horizontal Saccades")]
+    [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
+    [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
+    [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
+    public void SecondGenerationReplacementAcceptsImmediatelyPriorIdentity(
+        int replacedId,
+        string priorName,
+        string baselineRetiredName)
+    {
+        string video = $"exercise_{replacedId:D4}.mp4";
+        Exercise replacement = Exercise(
+            replacedId,
+            "Second-generation replacement",
+            video,
+            retiredName: baselineRetiredName);
+
+        foreach (string storedName in
+            new[] { priorName, $"Alternating {priorName}" })
+        {
+            var stored = new Dictionary<int, StoredExerciseSnapshot>
+            {
+                [replacedId] = new(storedName, video, -7),
+            };
+
+            IReadOnlySet<int> preserved =
+                CatalogMigrationRules.ValidatePreservedCatalog(
+                    [replacement],
+                    stored);
+
+            Assert.DoesNotContain(replacedId, preserved);
+            Assert.Equal(-7, stored[replacedId].Score);
+        }
+    }
+
+    [Fact]
+    public void SecondGenerationReplacementStillRequiresBaselineAndStableVideo()
+    {
+        const int replacedId = 291;
+        const string priorName = "Ninja Tiger Hand-Seal Hold";
+        const string baselineRetiredName = "Black Dragon Enters the Cave";
+        const string video = "exercise_0291.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [replacedId] = new(priorName, video, -5),
+        };
+
+        Exercise wrongBaseline = Exercise(
+            replacedId,
+            "Second-generation replacement",
+            video,
+            retiredName: "Unrelated baseline");
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [wrongBaseline],
+                stored));
+
+        Exercise wrongVideo = Exercise(
+            replacedId,
+            "Second-generation replacement",
+            "replacement.mp4",
+            retiredName: baselineRetiredName);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [wrongVideo],
+                stored));
+
+        var unrelatedStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [replacedId] = new("Unrelated prior name", video, -5),
+        };
+        Exercise validReplacement = Exercise(
+            replacedId,
+            "Second-generation replacement",
+            video,
+            retiredName: baselineRetiredName);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [validReplacement],
+                unrelatedStored));
+    }
+
+    [Fact]
     public void CatalogRevisionDropsOnlyReferencesToRetiredExercisesOnce()
     {
         const int replacedId = 56;
@@ -156,6 +295,7 @@ public sealed class CatalogMigrationRulesTests
         const string retainedGroup = "group.retained";
         var state = new WorkoutState
         {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision - 1,
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [replacedGroup] = replacedId,

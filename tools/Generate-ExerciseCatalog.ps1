@@ -62,6 +62,10 @@ $reviewedContinuousExercises = Import-PowerShellDataFile -LiteralPath (
 $reviewedContinuousExerciseIds = @(
     $reviewedContinuousExercises.Ids | ForEach-Object { [int]$_ })
 $baselineReviewedContinuousExerciseIds = @($reviewedContinuousExerciseIds)
+$exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseDirectionSequences.psd1') -SkipLimitCheck
+$exerciseDirectionMediaTransforms = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseDirectionMediaTransforms.psd1') -SkipLimitCheck
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
@@ -152,6 +156,11 @@ foreach ($exerciseId in $replacementExerciseIds) {
         $stillExercisePresentations[$exerciseId] = $true
     }
 }
+
+$reviewedContinuousExerciseIds = @(
+    $reviewedContinuousExerciseIds | Where-Object {
+        -not $exerciseDirectionSequences.ContainsKey($_)
+    })
 
 $canonicalIds = @($canonicalGroups | ForEach-Object { [int]$_.Id })
 $canonicalDisplayNames = @(
@@ -322,6 +331,13 @@ if ($invalidHumanSources.Count -gt 0) {
 $validSideSequences = @(
     'ScreenLeftThenRight',
     'ScreenRightThenLeft')
+$validDirectionSequences = @(
+    'ForwardThenBackward',
+    'BackwardThenForward',
+    'ClockwiseThenCounterclockwise',
+    'CounterclockwiseThenClockwise',
+    'InwardThenOutward',
+    'OutwardThenInward')
 $invalidSideSequences = @(
     $exerciseSideSequences.GetEnumerator() | Where-Object {
         [int]$_.Key -notin $retainedExerciseIds -or
@@ -330,13 +346,44 @@ $invalidSideSequences = @(
 $invalidContinuousExerciseIds = @(
     $reviewedContinuousExerciseIds | Where-Object {
         $_ -notin $retainedExerciseIds -or
-        $exerciseSideSequences.ContainsKey($_)
+        $exerciseSideSequences.ContainsKey($_) -or
+        $exerciseDirectionSequences.ContainsKey($_)
     })
+$invalidDirectionSequences = @(
+    $exerciseDirectionSequences.GetEnumerator() | Where-Object {
+        [int]$_.Key -notin $retainedExerciseIds -or
+        [string]$_.Value -notin $validDirectionSequences -or
+        $exerciseSideSequences.ContainsKey([int]$_.Key) -or
+        $holdExerciseFrames.ContainsKey([int]$_.Key) -or
+        $stillExercisePresentations.ContainsKey([int]$_.Key)
+    })
+$invalidDirectionMediaTransforms = @(
+    $exerciseDirectionMediaTransforms.GetEnumerator() | Where-Object {
+        $transform = $_.Value
+        [int]$_.Key -notin $retainedExerciseIds -or
+        $transform -isnot [System.Collections.IDictionary] -or
+        [string]$transform.Mode -notin @(
+            'HorizontalMirror', 'TemporalReverse', 'ExactExercise') -or
+        ([string]$transform.Mode -eq 'ExactExercise' -and (
+            -not $transform.ContainsKey('SecondExerciseId') -or
+            [int]$transform.SecondExerciseId -notin $retainedExerciseIds -or
+            [int]$transform.SecondExerciseId -eq [int]$_.Key))
+    })
+$directionSequenceIds = @(
+    $exerciseDirectionSequences.Keys | ForEach-Object { [int]$_ } | Sort-Object)
+$directionTransformIds = @(
+    $exerciseDirectionMediaTransforms.Keys |
+        ForEach-Object { [int]$_ } |
+        Sort-Object)
 $reviewedSideSequenceIds = @(
     @($exerciseSideSequences.Keys | ForEach-Object { [int]$_ }) +
+        @($exerciseDirectionSequences.Keys | ForEach-Object { [int]$_ }) +
         $reviewedContinuousExerciseIds |
         Sort-Object -Unique)
 if ($invalidSideSequences.Count -gt 0 -or
+    $invalidDirectionSequences.Count -gt 0 -or
+    $invalidDirectionMediaTransforms.Count -gt 0 -or
+    @(Compare-Object $directionSequenceIds $directionTransformIds).Count -gt 0 -or
     $invalidContinuousExerciseIds.Count -gt 0 -or
     $reviewedContinuousExerciseIds.Count -ne
         @($reviewedContinuousExerciseIds | Sort-Object -Unique).Count -or
@@ -2441,9 +2488,87 @@ function New-ExerciseMp4 {
     }
 }
 
+function New-DirectionSequenceMp4 {
+    param(
+        [string]$SourceVideoPath,
+        [string]$OutputPath,
+        [string]$WorkingRoot,
+        [ValidateSet('HorizontalMirror', 'TemporalReverse', 'ExactExercise')]
+        [string]$Transform,
+        [string]$ExactSecondVideoPath = ''
+    )
+
+    $exerciseKey = [IO.Path]::GetFileNameWithoutExtension($OutputPath)
+    $secondDirectionPath = $SourceVideoPath
+    $secondDirectionFilter = '[1:v]hflip,trim=duration=20,' +
+        'setpts=PTS-STARTPTS[second];'
+    if ($Transform -eq 'TemporalReverse') {
+        $secondDirectionPath = Join-Path $WorkingRoot "$exerciseKey-reverse.mp4"
+        & ffmpeg `
+            -hide_banner `
+            -loglevel error `
+            -y `
+            -i $SourceVideoPath `
+            -vf 'reverse' `
+            -an `
+            -map_metadata -1 `
+            -c:v libx264 `
+            -profile:v baseline `
+            -level 3.0 `
+            -preset medium `
+            -crf 24 `
+            -movflags +faststart `
+            $secondDirectionPath
+        if ($LASTEXITCODE -ne 0 -or
+            -not (Test-Path -LiteralPath $secondDirectionPath)) {
+            throw "FFmpeg could not reverse $SourceVideoPath."
+        }
+        $secondDirectionFilter = '[1:v]trim=duration=20,' +
+            'setpts=PTS-STARTPTS[second];'
+    }
+    elseif ($Transform -eq 'ExactExercise') {
+        if ([string]::IsNullOrWhiteSpace($ExactSecondVideoPath) -or
+            -not (Test-Path -LiteralPath $ExactSecondVideoPath)) {
+            throw "The exact opposite-direction source is missing for $OutputPath."
+        }
+        $secondDirectionPath = $ExactSecondVideoPath
+        $secondDirectionFilter = '[1:v]trim=duration=20,' +
+            'setpts=PTS-STARTPTS[second];'
+    }
+
+    $filter =
+        '[0:v]trim=duration=20,setpts=PTS-STARTPTS[first];' +
+        $secondDirectionFilter +
+        '[first][second]concat=n=2:v=1:a=0,fps=20,format=yuv420p[out]'
+    & ffmpeg `
+        -hide_banner `
+        -loglevel error `
+        -y `
+        -stream_loop -1 `
+        -i $SourceVideoPath `
+        -stream_loop -1 `
+        -i $secondDirectionPath `
+        -filter_complex $filter `
+        -map '[out]' `
+        -an `
+        -map_metadata -1 `
+        -c:v libx264 `
+        -profile:v baseline `
+        -level 3.0 `
+        -preset medium `
+        -crf 24 `
+        -force_key_frames '0,20' `
+        -movflags +faststart `
+        $OutputPath
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $OutputPath)) {
+        throw "FFmpeg could not build the two-direction demonstration $OutputPath."
+    }
+}
+
 $resolvedOutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 $gifOutputRoot = Join-Path $resolvedOutputRoot 'exercise_gifs'
 $videoOutputRoot = Join-Path $resolvedOutputRoot 'exercise_videos'
+$directionVideoOutputRoot = Join-Path $resolvedOutputRoot 'exercise_direction_videos'
 $holdFrameOutputRoot = Join-Path $resolvedOutputRoot 'exercise_hold_frames'
 $catalogPath = Join-Path $resolvedOutputRoot 'exercises.json'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("FluxExerciseFrames-" + [Guid]::NewGuid().ToString('N'))
@@ -2451,6 +2576,7 @@ $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("FluxExerciseFrames-" + [Guid]
 New-Item -ItemType Directory -Force -Path $resolvedOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $gifOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $videoOutputRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $directionVideoOutputRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $holdFrameOutputRoot | Out-Null
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
@@ -2509,11 +2635,19 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
             [string]$exerciseSideSequences[$exerciseId]
         }
-        elseif ($exerciseId -in $reviewedContinuousExerciseIds) {
+        elseif ($exerciseId -in $reviewedContinuousExerciseIds -or
+            $exerciseDirectionSequences.ContainsKey($exerciseId)) {
             'Continuous'
         }
         else {
             throw "Exercise $exerciseId is missing a reviewed side-sequence decision."
+        }
+        $exerciseDirectionSequence = if (
+            $exerciseDirectionSequences.ContainsKey($exerciseId)) {
+            [string]$exerciseDirectionSequences[$exerciseId]
+        }
+        else {
+            'None'
         }
         $exerciseName = if ($null -ne $replacement) {
             [string]$replacement.Name
@@ -2591,6 +2725,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             presentation = $exercisePresentation
             holdFramePercent = $holdFramePercent
             sideSequence = $exerciseSideSequence
+            directionSequence = $exerciseDirectionSequence
             score = 0
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
@@ -2826,6 +2961,32 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
     }
 }
 
+foreach ($entry in $exerciseDirectionSequences.GetEnumerator()) {
+    $exerciseId = [int]$entry.Key
+    $sourceVideoPath = Join-Path $videoOutputRoot (
+        'exercise_{0:D4}.mp4' -f $exerciseId)
+    $directionVideoPath = Join-Path $directionVideoOutputRoot (
+        'exercise_{0:D4}.mp4' -f $exerciseId)
+    if (-not (Test-Path -LiteralPath $sourceVideoPath)) {
+        throw "Direction-sequence source video $exerciseId is missing."
+    }
+    $transform = $exerciseDirectionMediaTransforms[$exerciseId]
+    $exactSecondVideoPath = if (
+        [string]$transform.Mode -eq 'ExactExercise') {
+        Join-Path $videoOutputRoot (
+            'exercise_{0:D4}.mp4' -f [int]$transform.SecondExerciseId)
+    }
+    else {
+        ''
+    }
+    New-DirectionSequenceMp4 `
+        -SourceVideoPath $sourceVideoPath `
+        -OutputPath $directionVideoPath `
+        -WorkingRoot $tempRoot `
+        -Transform ([string]$transform.Mode) `
+        -ExactSecondVideoPath $exactSecondVideoPath
+}
+
 if ($records.Count -ne $expectedExerciseCount) {
     throw "Expected $expectedExerciseCount exercise records but generated $($records.Count)."
 }
@@ -2864,6 +3025,18 @@ $constraintViolations = $records | Where-Object {
         'Continuous',
         'ScreenLeftThenRight',
         'ScreenRightThenLeft') -or
+    $_['directionSequence'] -notin @(
+        'None',
+        'ForwardThenBackward',
+        'BackwardThenForward',
+        'ClockwiseThenCounterclockwise',
+        'CounterclockwiseThenClockwise',
+        'InwardThenOutward',
+        'OutwardThenInward') -or
+    ($_['sideSequence'] -ne 'Continuous' -and
+        $_['directionSequence'] -ne 'None') -or
+    ($_['directionSequence'] -ne 'None' -and (
+        $_['mode'] -ne 'Repetition' -or $_['presentation'] -ne 'Motion')) -or
     ($_['mode'] -eq 'Repetition' -and $_['holdFramePercent'] -ne 0) -or
     ($_['mode'] -eq 'Hold' -and (
         $_['holdFramePercent'] -lt 1 -or $_['holdFramePercent'] -gt 99)) -or
@@ -2901,6 +3074,13 @@ if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
                 $holdExerciseFrames.Keys |
                     ForEach-Object { [int]$_ } |
                     Where-Object { $_ -in $retainedExerciseIds })
+        },
+        @{
+            Path = $directionVideoOutputRoot
+            Extension = 'mp4'
+            ExpectedIds = @(
+                $exerciseDirectionSequences.Keys |
+                    ForEach-Object { [int]$_ })
         })
     foreach ($mediaDirectory in $mediaDirectories) {
         $resolvedMediaDirectory = [IO.Path]::GetFullPath([string]$mediaDirectory.Path)
@@ -2936,6 +3116,15 @@ if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
     if ($missingHoldFrames) {
         throw 'At least one hold record is missing its static countdown frame.'
     }
+
+    $missingDirectionVideos = $records | Where-Object {
+        $_['directionSequence'] -ne 'None' -and
+        -not (Test-Path -LiteralPath (Join-Path $directionVideoOutputRoot (
+                    'exercise_{0:D4}.mp4' -f $_['id'])))
+    }
+    if ($missingDirectionVideos) {
+        throw 'At least one directional record is missing its two-direction MP4 asset.'
+    }
 }
 
 $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $catalogPath -Encoding utf8
@@ -2952,3 +3141,4 @@ Remove-Item -LiteralPath $resolvedTempRoot -Recurse -Force
 Write-Output "Catalog: $catalogPath"
 Write-Output "Records: $($records.Count)"
 Write-Output "MP4 directory: $videoOutputRoot"
+Write-Output "Direction MP4 directory: $directionVideoOutputRoot"

@@ -26,6 +26,9 @@ public sealed class Exercise
 
     public required ExerciseSideSequence SideSequence { get; init; }
 
+    public ExerciseDirectionSequence DirectionSequence { get; init; } =
+        ExerciseDirectionSequence.None;
+
     public int Score { get; set; } = 0;
 
     public required bool OnlyFeetTouchGround { get; init; }

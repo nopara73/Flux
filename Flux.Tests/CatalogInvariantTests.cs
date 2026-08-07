@@ -35,9 +35,36 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(103, timedSideExercises.Length);
+        Assert.Equal(107, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
+        Exercise[] timedDirectionExercises = exercises
+            .Where(exercise =>
+                exercise.DirectionSequence != ExerciseDirectionSequence.None)
+            .ToArray();
+        Assert.Equal(8, timedDirectionExercises.Length);
+        Assert.All(timedDirectionExercises, exercise =>
+        {
+            Assert.Equal(ExerciseSideSequence.Continuous, exercise.SideSequence);
+            Assert.Equal(ExerciseMode.Repetition, exercise.Mode);
+            Assert.Equal(ExercisePresentation.Motion, exercise.Presentation);
+        });
+        Dictionary<int, ExerciseDirectionSequence> auditedDirectionSequences = new()
+        {
+            [406] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [409] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [477] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [483] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [501] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [608] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [743] = ExerciseDirectionSequence.BackwardThenForward,
+            [816] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+        };
+        Assert.All(auditedDirectionSequences, expected =>
+            Assert.Equal(
+                expected.Value,
+                exercises.Single(exercise => exercise.Id == expected.Key)
+                    .DirectionSequence));
         int[] declaredReplacementIds = exercises
             .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
             .Select(exercise => exercise.Id)
@@ -120,6 +147,7 @@ public sealed class CatalogInvariantTests
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));
             Assert.False(string.IsNullOrWhiteSpace(exercise.MotionProfile));
             Assert.True(Enum.IsDefined(exercise.SideSequence));
+            Assert.True(Enum.IsDefined(exercise.DirectionSequence));
             Assert.True(Enum.IsDefined(exercise.Presentation));
             Assert.Equal(0, exercise.Score);
 
