@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(109, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(111, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -418,6 +418,60 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.ValidatePreservedCatalog(
                 [wrongId],
                 wrongStored));
+    }
+
+    [Theory]
+    [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
+    [InlineData(425, "Chin-Tuck Isometric", "Chin-Tuck Hold")]
+    public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
+        int exerciseId,
+        string previousName,
+        string correctedName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(previousName, video, -4),
+        };
+        Exercise corrected = Exercise(exerciseId, correctedName, video);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [corrected],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-4, stored[exerciseId].Score);
+    }
+
+    [Fact]
+    public void ThirdGenerationReplacementAcceptsEveryReviewedPriorIdentity()
+    {
+        const int exerciseId = 289;
+        const string video = "exercise_videos/exercise_0289.mp4";
+        Exercise replacement = Exercise(
+            exerciseId,
+            "Alternating Thumb-to-Palm Tucks",
+            video,
+            retiredName: "Heaven-to-Earth Finger Rotation");
+
+        foreach (string priorName in new[]
+        {
+            "Ninja Horse Hand-Seal Hold",
+            "Self-Resisted Thumb Adduction Hold",
+        })
+        {
+            var stored = new Dictionary<int, StoredExerciseSnapshot>
+            {
+                [exerciseId] = new(priorName, video, -6),
+            };
+
+            IReadOnlySet<int> preserved =
+                CatalogMigrationRules.ValidatePreservedCatalog(
+                    [replacement],
+                    stored);
+
+            Assert.DoesNotContain(exerciseId, preserved);
+        }
     }
 
     [Fact]

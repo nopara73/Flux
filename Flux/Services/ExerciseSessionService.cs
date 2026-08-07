@@ -5,10 +5,13 @@ namespace Flux.Services;
 public sealed class ExerciseSessionService
 {
     public const int MinimumWorkoutMinutes = 3;
-    public const int MaximumWorkoutMinutes = 30;
+    public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
 
     private const int CurrentStateVersion = 5;
+
+    private static readonly IReadOnlyList<int> WorkoutMinutes =
+        Array.AsReadOnly([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 
     private static readonly IReadOnlyDictionary<string, WorkoutGroup> KnownWorkoutGroups =
         MassGroupingTaxonomy.SupportedMinutes
@@ -28,7 +31,7 @@ public sealed class ExerciseSessionService
     }
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
-        MassGroupingTaxonomy.SupportedMinutes;
+        WorkoutMinutes;
 
     public void Initialize(WorkoutState state)
     {
@@ -93,7 +96,7 @@ public sealed class ExerciseSessionService
             throw new ArgumentOutOfRangeException(
                 nameof(minutes),
                 minutes,
-                "Workout duration must be one of 3, 5, 7, 10, 15, 20, or 30 minutes.");
+                "Workout duration must be one of 3, 5, 7, 10, 15, 20, 30, 45, 60, or 90 minutes.");
         }
 
         if (state.ActiveWorkoutMinutes != 0)
@@ -117,7 +120,7 @@ public sealed class ExerciseSessionService
     {
         ArgumentNullException.ThrowIfNull(state);
         return IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)
-            ? MassGroupingTaxonomy.GetResolution(state.ActiveWorkoutMinutes).Groups
+            ? CreateWorkoutSchedule(state.ActiveWorkoutMinutes)
             : [];
     }
 
@@ -126,7 +129,9 @@ public sealed class ExerciseSessionService
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(group);
 
-        if (!state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) ||
+        if (!state.SelectedExerciseIds.TryGetValue(
+                group.SelectionKey,
+                out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
             !IsSavedSelectionValid(state, exercise, group))
         {
@@ -143,6 +148,18 @@ public sealed class ExerciseSessionService
 
         return GetActiveGroups(state)
             .FirstOrDefault(group => !state.Outcomes.ContainsKey(group.Id));
+    }
+
+    public bool IsFinalPendingGroup(WorkoutState state, WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        IReadOnlyList<WorkoutGroup> activeGroups = GetActiveGroups(state);
+        WorkoutGroup? nextGroup = activeGroups
+            .FirstOrDefault(activeGroup => !state.Outcomes.ContainsKey(activeGroup.Id));
+        return nextGroup?.Id == group.Id &&
+            state.Outcomes.Count == activeGroups.Count - 1;
     }
 
     public Exercise RecordOutcome(
@@ -258,18 +275,22 @@ public sealed class ExerciseSessionService
 
     private void PrepareNextSession(WorkoutState state)
     {
-        WorkoutGroup[] activeGroups = GetActiveGroups(state).ToArray();
-        var usedExerciseIds = activeGroups
-            .Where(group => !state.Outcomes.TryGetValue(
-                group.Id,
-                out ExerciseOutcome outcome) || outcome != ExerciseOutcome.X)
+        WorkoutGroup[] activeRounds = GetActiveGroups(state).ToArray();
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
+        HashSet<string> rejectedSelectionKeys = activeRounds
+            .Where(round => state.Outcomes.TryGetValue(
+                round.Id,
+                out ExerciseOutcome outcome) && outcome == ExerciseOutcome.X)
+            .Select(round => round.SelectionKey)
+            .ToHashSet(StringComparer.Ordinal);
+        var usedExerciseIds = selectionGroups
+            .Where(group => !rejectedSelectionKeys.Contains(group.Id))
             .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
             .Where(exerciseId => exerciseId != 0)
             .ToHashSet();
 
-        foreach (WorkoutGroup group in activeGroups.Where(group =>
-                     state.Outcomes.TryGetValue(group.Id, out ExerciseOutcome outcome) &&
-                     outcome == ExerciseOutcome.X))
+        foreach (WorkoutGroup group in selectionGroups.Where(group =>
+                     rejectedSelectionKeys.Contains(group.Id)))
         {
             int currentExerciseId = state.SelectedExerciseIds[group.Id];
             foreach (string savedGroupId in state.SelectedExerciseIds
@@ -336,8 +357,9 @@ public sealed class ExerciseSessionService
     private void RepairActiveLineup(WorkoutState state)
     {
         var usedExerciseIds = new HashSet<int>();
+        IReadOnlyList<WorkoutGroup> activeRounds = GetActiveGroups(state);
 
-        foreach (WorkoutGroup group in GetActiveGroups(state))
+        foreach (WorkoutGroup group in GetSelectionGroups(state))
         {
             bool hasValidSelection = state.SelectedExerciseIds.TryGetValue(
                     group.Id,
@@ -358,7 +380,15 @@ public sealed class ExerciseSessionService
                     group,
                     excludedExerciseIds);
                 state.SelectedExerciseIds[group.Id] = replacement.Id;
-                state.Outcomes.Remove(group.Id);
+                foreach (WorkoutGroup round in activeRounds.Where(round =>
+                             round.SelectionKey == group.Id))
+                {
+                    state.Outcomes.Remove(round.Id);
+                }
+                if (PendingRestMatchesSelectionGroup(state, group.Id))
+                {
+                    ClearPendingRest(state);
+                }
                 selectedExerciseId = replacement.Id;
             }
 
@@ -366,14 +396,24 @@ public sealed class ExerciseSessionService
         }
     }
 
-    private static bool IsSavedSelectionValid(
+    private bool IsSavedSelectionValid(
         WorkoutState state,
         Exercise exercise,
         WorkoutGroup group)
     {
         return WorkoutCoveragePolicy.IsSelectable(exercise, group) ||
-            (state.PendingRestGroupId == group.Id &&
+            (PendingRestMatchesSelectionGroup(state, group.SelectionKey) &&
              IsAssignedToGroup(exercise, group));
+    }
+
+    private bool PendingRestMatchesSelectionGroup(
+        WorkoutState state,
+        string selectionGroupId)
+    {
+        return state.PendingRestGroupId is string pendingRoundId &&
+            GetActiveGroups(state).Any(round =>
+                round.Id == pendingRoundId &&
+                round.SelectionKey == selectionGroupId);
     }
 
     private static bool IsAssignedToGroup(Exercise exercise, WorkoutGroup group)
@@ -507,7 +547,9 @@ public sealed class ExerciseSessionService
         WorkoutGroup? pendingGroup = GetActiveGroups(state)
             .SingleOrDefault(group => group.Id == pendingGroupId);
         if (pendingGroup is null ||
-            !state.SelectedExerciseIds.TryGetValue(pendingGroupId, out int exerciseId) ||
+            !state.SelectedExerciseIds.TryGetValue(
+                pendingGroup.SelectionKey,
+                out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
             !IsAssignedToGroup(exercise, pendingGroup))
         {
@@ -549,11 +591,63 @@ public sealed class ExerciseSessionService
 
     public static int NormalizeLastWorkoutMinutes(int minutes)
     {
-        return MassGroupingTaxonomy.NormalizeMinutes(minutes);
+        return WorkoutMinutes
+            .OrderBy(candidate => Math.Abs(candidate - minutes))
+            .ThenByDescending(candidate => candidate)
+            .First();
     }
 
     public static bool IsValidWorkoutMinutes(int minutes)
     {
-        return MassGroupingTaxonomy.SupportedMinutes.Contains(minutes);
+        return WorkoutMinutes.Contains(minutes);
+    }
+
+    private static IReadOnlyList<WorkoutGroup> GetSelectionGroups(
+        WorkoutState state)
+    {
+        return IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)
+            ? GetBaseResolution(state.ActiveWorkoutMinutes).Groups
+            : [];
+    }
+
+    private static WorkoutResolution GetBaseResolution(int workoutMinutes)
+    {
+        int resolutionMinutes = workoutMinutes > 30 ? 30 : workoutMinutes;
+        return MassGroupingTaxonomy.GetResolution(resolutionMinutes);
+    }
+
+    private static IReadOnlyList<WorkoutGroup> CreateWorkoutSchedule(
+        int workoutMinutes)
+    {
+        WorkoutResolution resolution = GetBaseResolution(workoutMinutes);
+        if (workoutMinutes <= 30)
+        {
+            return resolution.Groups;
+        }
+
+        int completeSets = workoutMinutes / resolution.Groups.Count;
+        int extraSets = workoutMinutes % resolution.Groups.Count;
+        int extraSetStartIndex = resolution.Groups.Count - extraSets;
+        var rounds = new List<WorkoutGroup>(workoutMinutes);
+
+        for (int groupIndex = 0;
+             groupIndex < resolution.Groups.Count;
+             groupIndex++)
+        {
+            WorkoutGroup selectionGroup = resolution.Groups[groupIndex];
+            int setCount = completeSets +
+                (extraSets > 0 && groupIndex >= extraSetStartIndex ? 1 : 0);
+            for (int setNumber = 1; setNumber <= setCount; setNumber++)
+            {
+                rounds.Add(selectionGroup with
+                {
+                    Id = $"{selectionGroup.Id}.set{setNumber}",
+                    Order = rounds.Count + 1,
+                    SelectionGroupId = selectionGroup.Id,
+                });
+            }
+        }
+
+        return rounds.AsReadOnly();
     }
 }

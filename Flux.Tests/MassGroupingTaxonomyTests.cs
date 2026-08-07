@@ -158,9 +158,12 @@ public sealed class MassGroupingTaxonomyTests
     [Fact]
     public void SupportedMinutesAreExactAndOrdered()
     {
-        int[] expected = [3, 5, 7, 10, 15, 20, 30];
-        Assert.Equal(expected, MassGroupingTaxonomy.SupportedMinutes);
-        Assert.Equal(expected, ExerciseSessionService.SupportedWorkoutMinutes);
+        Assert.Equal(
+            [3, 5, 7, 10, 15, 20, 30],
+            MassGroupingTaxonomy.SupportedMinutes);
+        Assert.Equal(
+            [3, 5, 7, 10, 15, 20, 30, 45, 60, 90],
+            ExerciseSessionService.SupportedWorkoutMinutes);
     }
 
     [Fact]
@@ -294,12 +297,31 @@ public sealed class MassGroupingTaxonomyTests
     [InlineData(18, 20)]
     [InlineData(25, 30)]
     [InlineData(100, 30)]
-    public void NormalizeMinutesUsesNearestResolutionAndRoundsTiesUp(
+    public void NormalizeTaxonomyMinutesUsesNearestResolutionAndRoundsTiesUp(
         int requested,
         int expected)
     {
         Assert.Equal(expected, MassGroupingTaxonomy.NormalizeMinutes(requested));
-        Assert.Equal(expected, ExerciseSessionService.NormalizeLastWorkoutMinutes(requested));
+    }
+
+    [Theory]
+    [InlineData(-100, 3)]
+    [InlineData(0, 3)]
+    [InlineData(6, 7)]
+    [InlineData(25, 30)]
+    [InlineData(37, 30)]
+    [InlineData(38, 45)]
+    [InlineData(52, 45)]
+    [InlineData(53, 60)]
+    [InlineData(75, 90)]
+    [InlineData(100, 90)]
+    public void NormalizeWorkoutMinutesIncludesLongDurationsAndRoundsTiesUp(
+        int requested,
+        int expected)
+    {
+        Assert.Equal(
+            expected,
+            ExerciseSessionService.NormalizeLastWorkoutMinutes(requested));
     }
 
     [Theory]

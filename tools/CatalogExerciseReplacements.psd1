@@ -824,6 +824,32 @@
             MirrorForAlternation = $false
         }
     }
+    260 = @{
+        RetiredName = 'Behind-the-Back Self-Resisted Press'
+        Name = 'Standing Triceps Kickbacks'
+        Practice = 'Standing bodyweight conditioning'
+        MotionProfile = 'TricepsKickback'
+        Primary = 'ElbowExtensors'
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'standing-triceps-kickbacks.mp4'
+            Url = 'https://www.youtube.com/watch?v=8puNdUFEhLk'
+            SourcePage = 'https://www.youtube.com/watch?v=8puNdUFEhLk'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 202
+            DurationSeconds = 16
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     262 = @{
         RetiredName = 'Standing Scapular Depression'
         Name = 'Standing Hands-to-Thigh Abdominal Press'
@@ -1164,25 +1190,26 @@
     }
     289 = @{
         RetiredName = 'Heaven-to-Earth Finger Rotation'
-        Name = 'Self-Resisted Thumb Adduction Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbAdductionIsometric'
+        Name = 'Alternating Thumb-to-Palm Tucks'
+        Practice = 'Hand mobility and coordination'
+        MotionProfile = 'ThumbOppositionTuck'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 34
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-thumb-directions.mp4'
-            Url = 'https://www.youtube.com/watch?v=fruDylrn_jw'
-            SourcePage = 'https://www.youtube.com/watch?v=fruDylrn_jw'
+            File = 'hands-brain-warmups.mp4'
+            Url = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
+            SourcePage = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 66.4
-            DurationSeconds = 9
-            FramesPerSecond = 10
+            StartSeconds = 16
+            DurationSeconds = 26
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -2809,6 +2836,32 @@
             Video = $true
             StartSeconds = 6
             DurationSeconds = 8
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    987 = @{
+        RetiredName = 'Karate Shiko-Dachi Core Brace'
+        Name = 'Wide-Plié Alternating Heel Lifts'
+        Practice = 'Ballet conditioning'
+        MotionProfile = 'WidePlieAlternatingHeelLift'
+        Primary = 'AccessoryHipAdductors'
+        Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'wide-plie-alternating-heel-lifts.mp4'
+            Url = 'https://www.youtube.com/watch?v=wLzJ1kKucj0'
+            SourcePage = 'https://www.youtube.com/watch?v=wLzJ1kKucj0'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 7
+            DurationSeconds = 22
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false

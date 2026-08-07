@@ -58,6 +58,149 @@ public sealed class ExerciseSessionServiceTests
             Assert.Contains(pair.Second.PrimaryCanonicalGroup, pair.First.CanonicalGroups));
     }
 
+    [Theory]
+    [InlineData(45, 1, 2)]
+    [InlineData(60, 2, 2)]
+    [InlineData(90, 3, 3)]
+    public void LongWorkoutsRepeatTheThirtyMinuteLineupBySet(
+        int minutes,
+        int firstHalfSets,
+        int secondHalfSets)
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] exercises = selectionGroups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, minutes);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(minutes, rounds.Length);
+        Assert.Equal(Enumerable.Range(1, minutes), rounds.Select(round => round.Order));
+        Assert.Equal(minutes, rounds.Select(round => round.Id).Distinct().Count());
+
+        for (int index = 0; index < selectionGroups.Length; index++)
+        {
+            WorkoutGroup selectionGroup = selectionGroups[index];
+            WorkoutGroup[] groupRounds = rounds
+                .Where(round => round.SelectionKey == selectionGroup.Id)
+                .ToArray();
+            int expectedSets = index < 15 ? firstHalfSets : secondHalfSets;
+            Assert.Equal(expectedSets, groupRounds.Length);
+            Assert.All(groupRounds, round =>
+                Assert.Equal(
+                    state.SelectedExerciseIds[selectionGroup.Id],
+                    service.GetSelectedExercise(state, round).Id));
+        }
+    }
+
+    [Fact]
+    public void RejectedSetReplacesTheSharedExerciseOnceAfterLongWorkout()
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        WorkoutGroup target = selectionGroups[^1];
+        Exercise[] baseline = selectionGroups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise original = baseline[^1];
+        Exercise replacement = QualifiedForGroup(1000, target, 5);
+        var service = new ExerciseSessionService(
+            [.. baseline, replacement],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 45);
+        WorkoutGroup[] targetRounds = service.GetActiveGroups(state)
+            .Where(round => round.SelectionKey == target.Id)
+            .ToArray();
+
+        foreach (WorkoutGroup round in service.GetActiveGroups(state))
+        {
+            bool keep = round.Id != targetRounds[0].Id;
+            service.RecordOutcome(state, round, keep);
+        }
+
+        Assert.Equal(9, original.Score);
+        Assert.Equal(original.Id, state.SelectedExerciseIds[target.Id]);
+        service.AcknowledgeCompletion(state);
+        service.Initialize(state);
+
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+    }
+
+    [Fact]
+    public void InterruptedLongWorkoutSettlesPendingRepeatedRoundExactlyOnce()
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        WorkoutGroup target = selectionGroups[15];
+        Exercise[] baseline = selectionGroups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise original = baseline[15];
+        Exercise replacement = QualifiedForGroup(1000, target, 5);
+        var service = new ExerciseSessionService(
+            [.. baseline, replacement],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 45);
+        WorkoutGroup pendingRound = service.GetActiveGroups(state)
+            .First(round => round.SelectionKey == target.Id);
+
+        foreach (WorkoutGroup round in service.GetActiveGroups(state)
+                     .TakeWhile(round => round.Id != pendingRound.Id))
+        {
+            service.RecordOutcome(state, round, keep: true);
+        }
+        state.PendingRestGroupId = pendingRound.Id;
+        state.PendingRestEndsAtUnixMilliseconds = 123456;
+
+        Exercise? penalty = service.FinishInterruptedWorkout(state);
+        Exercise? repeated = service.FinishInterruptedWorkout(state);
+
+        Assert.Same(original, penalty);
+        Assert.Null(repeated);
+        Assert.Equal(9, original.Score);
+        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+    }
+
+    [Fact]
+    public void FinalPendingRoundInLongWorkoutIsTheLastSet()
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] exercises = selectionGroups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 45);
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+
+        foreach (WorkoutGroup round in rounds[..^1])
+        {
+            Assert.False(service.IsFinalPendingGroup(state, round));
+            service.RecordOutcome(state, round, keep: true);
+        }
+
+        Assert.True(service.IsFinalPendingGroup(state, rounds[^1]));
+        Assert.Equal(2, rounds
+            .Count(round => round.SelectionKey == rounds[^1].SelectionKey));
+    }
+
     [Fact]
     public void SelectionPrefersPrimaryAssignmentOverHigherScoringSecondary()
     {
@@ -867,6 +1010,24 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[first.Id]);
         Assert.Equal(service.GetActiveGroups(state)[1].Id, service.GetNextGroup(state)?.Id);
+    }
+
+    [Fact]
+    public void FinalPendingGroupIsIdentifiedOnlyAfterEarlierRoundsFinish()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3);
+        IReadOnlyList<WorkoutGroup> groups = service.GetActiveGroups(state);
+
+        Assert.False(service.IsFinalPendingGroup(state, groups[0]));
+        service.RecordOutcome(state, groups[0], keep: true);
+        Assert.False(service.IsFinalPendingGroup(state, groups[1]));
+        service.RecordOutcome(state, groups[1], keep: true);
+
+        Assert.True(service.IsFinalPendingGroup(state, groups[2]));
+        Assert.False(service.IsFinalPendingGroup(state, groups[1]));
     }
 
     private static Exercise[] ThreeGroupCatalog()

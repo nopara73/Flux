@@ -35,7 +35,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(107, timedSideExercises.Length);
+        Assert.Equal(109, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -83,6 +83,9 @@ public sealed class CatalogInvariantTests
         {
             [58] = ExerciseSideSequence.ScreenLeftThenRight,
             [237] = ExerciseSideSequence.ScreenLeftThenRight,
+            [256] = ExerciseSideSequence.ScreenLeftThenRight,
+            [257] = ExerciseSideSequence.ScreenLeftThenRight,
+            [258] = ExerciseSideSequence.ScreenLeftThenRight,
             [268] = ExerciseSideSequence.ScreenLeftThenRight,
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,

@@ -13,6 +13,25 @@ public static class CatalogMigrationRules
         string Name,
         string BaselineRetiredName);
 
+    private sealed record ApprovedExerciseCorrection(
+        string PreviousName,
+        string CurrentName);
+
+    private static readonly IReadOnlyDictionary<int, ApprovedExerciseCorrection>
+        ApprovedExerciseCorrections =
+            new Dictionary<int, ApprovedExerciseCorrection>
+            {
+                [255] = new(
+                    "Standing Bent-Knee Calf Raise",
+                    "Deep-Squat Calf Raise"),
+                [268] = new(
+                    "Self-Resisted External-Rotation Push-Out",
+                    "Self-Resisted External-Rotation Isometric"),
+                [425] = new(
+                    "Chin-Tuck Isometric",
+                    "Chin-Tuck Hold"),
+            };
+
     private static readonly IReadOnlyDictionary<int, PriorReviewedReplacementIdentity>
         PriorReviewedReplacementIdentities =
             new Dictionary<int, PriorReviewedReplacementIdentity>
@@ -67,18 +86,28 @@ public static class CatalogMigrationRules
                     "Clasped-Hands-Behind-Back Chest Opener"),
             };
 
+    private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
+        AdditionalPriorReviewedReplacementNames =
+            new Dictionary<int, IReadOnlySet<string>>
+            {
+                [289] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Self-Resisted Thumb Adduction Hold",
+                },
+            };
+
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
         41, 56, 59, 98, 102, 120, 146, 159, 176, 177, 182, 183,
         185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203, 219,
-        227, 228, 229, 230, 239, 240, 241, 242, 262, 267, 272, 274,
+        227, 228, 229, 230, 239, 240, 241, 242, 260, 262, 267, 272, 274,
         275, 276, 280, 281, 284, 285, 286, 287, 288, 289, 291, 292,
         293, 294, 295, 296, 327, 367, 393, 396, 422, 423, 467, 474,
         481, 482, 483, 490, 491, 492, 493, 495, 497, 499, 500, 501,
         502, 503, 504, 505, 506, 507, 508, 509, 510, 512, 513, 572,
         573, 609, 610, 611, 612, 613, 614, 615, 616, 618, 619, 625,
         636, 647, 654, 677, 678, 681, 683, 684, 685, 687, 712, 743,
-        843,
+        843, 987,
     ];
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -150,8 +179,22 @@ public static class CatalogMigrationRules
                     NameMatchesWithOptionalAlternatingPrefix(
                         stored.Name,
                         priorIdentity.Name);
+                bool additionalPriorReviewedIdentityMatches =
+                    AdditionalPriorReviewedReplacementNames.TryGetValue(
+                        exerciseId,
+                        out IReadOnlySet<string>? priorNames) &&
+                    priorIdentity is not null &&
+                    string.Equals(
+                        replacement.RetiredName,
+                        priorIdentity.BaselineRetiredName,
+                        StringComparison.Ordinal) &&
+                    priorNames.Any(priorName =>
+                        NameMatchesWithOptionalAlternatingPrefix(
+                            stored.Name,
+                            priorName));
                 if ((!baselineRetiredNameMatches &&
-                        !priorReviewedIdentityMatches) ||
+                        !priorReviewedIdentityMatches &&
+                        !additionalPriorReviewedIdentityMatches) ||
                     !string.Equals(
                         stored.Video,
                         replacement.Video,
@@ -191,14 +234,16 @@ public static class CatalogMigrationRules
                     bundled.Name[AlternatingPrefix.Length..],
                     StringComparison.Ordinal);
             bool nameIsApprovedExerciseCorrection =
-                exerciseId == 268 &&
+                ApprovedExerciseCorrections.TryGetValue(
+                    exerciseId,
+                    out ApprovedExerciseCorrection? correction) &&
                 string.Equals(
                     stored.Name,
-                    "Self-Resisted External-Rotation Push-Out",
+                    correction.PreviousName,
                     StringComparison.Ordinal) &&
                 string.Equals(
                     bundled.Name,
-                    "Self-Resisted External-Rotation Isometric",
+                    correction.CurrentName,
                     StringComparison.Ordinal);
             if ((!nameIsPreserved &&
                     !nameIsApprovedTimedSideNormalization &&

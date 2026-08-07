@@ -1131,7 +1131,7 @@ public class MainActivity : Activity
             $"Continue with a {normalizedMinutes} {minuteLabel} workout";
         _durationSeekBar.ContentDescription =
             $"Workout duration, {normalizedMinutes} {minuteLabel}. " +
-            "Options: 3, 5, 7, 10, 15, 20, and 30 minutes";
+            "Options: 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes";
         _durationOptionSegments.ContentDescription =
             $"{normalizedMinutes} minute workout selected";
 
@@ -1804,7 +1804,10 @@ public class MainActivity : Activity
         {
             FreezeHoldOnFinalFrame();
         }
-        PlayWhistleCue(_restStartWhistleId);
+        if (!_sessionService.IsFinalPendingGroup(_state, _currentWorkoutGroup))
+        {
+            PlayWhistleCue(_restStartWhistleId);
+        }
 
         BeginRest();
     }
@@ -2669,7 +2672,7 @@ public class MainActivity : Activity
 #pragma warning restore CA1422
             info.ContentDescription =
                 $"Workout duration, {minutes} minutes. " +
-                "Options: 3, 5, 7, 10, 15, 20, and 30 minutes";
+                "Options: 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes";
         }
 
         public override bool PerformAccessibilityAction(
