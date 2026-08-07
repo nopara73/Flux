@@ -110,7 +110,11 @@ public class MainActivity : Activity
 
     private WorkoutCountDownTimer? _countdownTimer;
     private WorkoutCountDownTimer? _restTimer;
-    private Android.Media.ToneGenerator? _toneGenerator;
+    private Android.Media.SoundPool? _whistleSoundPool;
+    private int _movementStartWhistleId;
+    private int _sideChangeWhistleId;
+    private int _restStartWhistleId;
+    private int _workoutCompleteWhistleId;
     private Android.Media.MediaPlayer? _activeMediaPlayer;
     private VideoPreparedListener? _videoPreparedListener;
     private VideoErrorListener? _videoErrorListener;
@@ -146,6 +150,7 @@ public class MainActivity : Activity
         ConfigureSystemBars();
         BindEvents();
         ConfigureVideoView();
+        ConfigureWhistleCues();
 
         _exerciseDatabase = new SqliteExerciseDatabase(this);
         _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
@@ -222,9 +227,9 @@ public class MainActivity : Activity
         _mediaLoadGeneration++;
         CancelCountdown(resetToStart: false);
         PauseRestCountdown();
-        _toneGenerator?.Release();
-        _toneGenerator?.Dispose();
-        _toneGenerator = null;
+        _whistleSoundPool?.Release();
+        _whistleSoundPool?.Dispose();
+        _whistleSoundPool = null;
         _exerciseVideo?.StopPlayback();
         ClearHoldFrame();
         _activeMediaPlayer = null;
@@ -1766,7 +1771,7 @@ public class MainActivity : Activity
             return;
         }
 
-        PlayBeep(Android.Media.Tone.PropBeep);
+        PlayWhistleCue(_movementStartWhistleId);
         _countdownActive = true;
         _lastMovementPhase = null;
         ShowWorkoutPhase(WorkoutPhase.Move);
@@ -1799,7 +1804,7 @@ public class MainActivity : Activity
         {
             FreezeHoldOnFinalFrame();
         }
-        PlayBeep(Android.Media.Tone.PropBeep2);
+        PlayWhistleCue(_restStartWhistleId);
 
         BeginRest();
     }
@@ -1963,7 +1968,7 @@ public class MainActivity : Activity
                 _exerciseVideo.Pause();
                 RenderFullWorkoutPhase(Resource.Color.rest_surface);
                 AnimateMediaPhase(resting: true);
-                CueSideTransition();
+                CueSideChange();
                 break;
 
             case MovementPhase.SecondSide:
@@ -1971,7 +1976,7 @@ public class MainActivity : Activity
                 RenderTimedPairWorkoutPhase(presentation);
                 AnimateMediaPhase(resting: false);
                 RestartExerciseMediaForPhase(state.Phase);
-                CueSideTransition();
+                CueMovementRestart();
                 break;
 
             default:
@@ -2028,9 +2033,15 @@ public class MainActivity : Activity
         RestartHoldOrResumeRepetition();
     }
 
-    private void CueSideTransition()
+    private void CueSideChange()
     {
-        PlayBeep(Android.Media.Tone.PropBeep);
+        PlayWhistleCue(_sideChangeWhistleId);
+        _countdownPanel.PerformHapticFeedback(FeedbackConstants.ClockTick);
+    }
+
+    private void CueMovementRestart()
+    {
+        PlayWhistleCue(_movementStartWhistleId);
         _countdownPanel.PerformHapticFeedback(FeedbackConstants.ClockTick);
     }
 
@@ -2376,10 +2387,9 @@ public class MainActivity : Activity
         _sessionService.ClearPendingRest(_state);
 
         SaveStateAndScore(keep ? null : exercise);
-        PlayBeep(Android.Media.Tone.PropBeep);
-
         if (_state.WorkoutCompleted)
         {
+            PlayWhistleCue(_workoutCompleteWhistleId);
             ShowCongratulations();
         }
         else
@@ -2451,14 +2461,85 @@ public class MainActivity : Activity
         FinishAndRemoveTask();
     }
 
-    private void PlayBeep(Android.Media.Tone tone)
+    private void ConfigureWhistleCues()
     {
         try
         {
-            _toneGenerator ??= new Android.Media.ToneGenerator(
-                Android.Media.Stream.Music,
-                90);
-            _toneGenerator.StartTone(tone, 220);
+            ConfigureWhistleCuesCore();
+        }
+        catch (Exception)
+        {
+            _whistleSoundPool?.Release();
+            _whistleSoundPool?.Dispose();
+            _whistleSoundPool = null;
+            _movementStartWhistleId = 0;
+            _sideChangeWhistleId = 0;
+            _restStartWhistleId = 0;
+            _workoutCompleteWhistleId = 0;
+        }
+    }
+
+    private void ConfigureWhistleCuesCore()
+    {
+        using var attributesBuilder = new Android.Media.AudioAttributes.Builder();
+        Android.Media.AudioAttributes.Builder configuredAttributesBuilder =
+            attributesBuilder.SetUsage(
+                Android.Media.AudioUsageKind.Media)
+            ?? throw new InvalidOperationException(
+                "Unable to configure whistle audio usage.");
+        configuredAttributesBuilder = configuredAttributesBuilder.SetContentType(
+            Android.Media.AudioContentType.Sonification)
+            ?? throw new InvalidOperationException(
+                "Unable to configure whistle audio content.");
+        using Android.Media.AudioAttributes attributes =
+            configuredAttributesBuilder.Build()
+            ?? throw new InvalidOperationException(
+                "Unable to create whistle audio attributes.");
+        using var soundPoolBuilder = new Android.Media.SoundPool.Builder();
+        Android.Media.SoundPool.Builder configuredSoundPoolBuilder =
+            soundPoolBuilder.SetMaxStreams(1)
+            ?? throw new InvalidOperationException(
+                "Unable to configure whistle playback streams.");
+        configuredSoundPoolBuilder = configuredSoundPoolBuilder.SetAudioAttributes(
+            attributes)
+            ?? throw new InvalidOperationException(
+                "Unable to configure whistle playback attributes.");
+        Android.Media.SoundPool soundPool = configuredSoundPoolBuilder.Build()
+            ?? throw new InvalidOperationException(
+                "Unable to create whistle playback.");
+        _whistleSoundPool = soundPool;
+        _movementStartWhistleId = soundPool.Load(
+            this,
+            Resource.Raw.whistle_start,
+            1);
+        _sideChangeWhistleId = soundPool.Load(
+            this,
+            Resource.Raw.whistle_side_change,
+            1);
+        _restStartWhistleId = soundPool.Load(
+            this,
+            Resource.Raw.whistle_rest,
+            1);
+        _workoutCompleteWhistleId = soundPool.Load(
+            this,
+            Resource.Raw.whistle_complete,
+            1);
+    }
+
+    private void PlayWhistleCue(int soundId)
+    {
+        try
+        {
+            if (soundId > 0)
+            {
+                _whistleSoundPool?.Play(
+                    soundId,
+                    0.78f,
+                    0.78f,
+                    1,
+                    0,
+                    1f);
+            }
         }
         catch (Exception)
         {
