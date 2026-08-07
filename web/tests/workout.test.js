@@ -467,8 +467,11 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, /@media \(orientation: landscape\)\s*\{/);
   assert.doesNotMatch(stylesheet, /@media \(orientation: landscape\) and \(min-width:/);
   assert.match(stylesheet, /@media \(min-width: 1000px\)\s*\{/);
-  assert.match(stylesheet, /\.duration-controls\s*\{[\s\S]*?width: min\(100%, 640px\);/);
-  assert.match(stylesheet, /grid-template-columns: minmax\(190px, 0\.85fr\) minmax\(320px, 420px\) minmax\(220px, 0\.95fr\);/);
+  assert.match(stylesheet, /\.duration-controls\s*\{[\s\S]*?width: min\(100%, clamp\(760px, 58vw, 1120px\)\);/);
+  assert.match(stylesheet, /width: clamp\(300px, min\(20vw, 34dvh\), 420px\);/);
+  assert.match(stylesheet, /width: min\(calc\(100% - 48px\), 1760px\);/);
+  assert.match(stylesheet, /grid-template-columns: minmax\(220px, 1fr\) minmax\(420px, 720px\) minmax\(240px, 1fr\);/);
+  assert.match(stylesheet, /width: min\(100%, 64dvh, 720px\);/);
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
 

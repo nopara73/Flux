@@ -1015,16 +1015,16 @@ input:focus-visible {
 
 @media (min-width: 1000px) {
   .duration-screen {
-    padding: 40px;
+    padding: clamp(32px, 4vw, 72px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 28px;
+    gap: clamp(32px, 4dvh, 52px);
     overflow: auto;
   }
 
   .duration-scroll {
-    width: min(100%, 720px);
+    width: min(100%, 1240px);
     height: auto;
     min-height: 0;
     flex: 0 0 auto;
@@ -1047,39 +1047,78 @@ input:focus-visible {
   }
 
   .flux-icon {
-    width: 56px;
-    height: 56px;
+    width: clamp(68px, 4.2vw, 88px);
+    height: clamp(68px, 4.2vw, 88px);
   }
 
   .duration-dial {
-    width: 250px;
-    height: 250px;
-    margin-top: 22px;
+    width: clamp(300px, min(20vw, 34dvh), 420px);
+    height: clamp(300px, min(20vw, 34dvh), 420px);
+    margin-top: clamp(20px, 2.5dvh, 32px);
+    border-width: 3px;
+  }
+
+  .duration-dial::after {
+    inset: 14px;
   }
 
   .duration-value {
-    font-size: 88px;
+    font-size: clamp(100px, min(8vw, 13dvh), 150px);
+  }
+
+  .duration-unit {
+    font-size: clamp(16px, 1vw, 20px);
   }
 
   .duration-controls {
-    width: min(100%, 640px);
-    margin: 28px auto 0;
+    width: min(100%, clamp(760px, 58vw, 1120px));
+    margin: clamp(32px, 4dvh, 52px) auto 0;
     flex: 0 0 auto;
   }
 
   .duration-step-row {
-    height: 64px;
+    height: clamp(74px, 6vw, 92px);
   }
 
   .step-button {
-    width: 64px;
+    width: clamp(74px, 6vw, 92px);
+    height: clamp(74px, 6vw, 92px);
+    border-radius: 20px;
+  }
+
+  .duration-range {
     height: 64px;
+    margin: 0 clamp(14px, 1.5vw, 24px);
+    padding: 0 clamp(16px, 1.5vw, 24px);
+  }
+
+  .duration-range::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  .duration-range::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  .duration-range::-webkit-slider-thumb {
+    width: 36px;
+    height: 36px;
+    margin-top: -14px;
+    background: radial-gradient(circle, var(--chartreuse) 0 7px, var(--graphite) 7.5px);
+  }
+
+  .duration-range::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
+    background: radial-gradient(circle, var(--chartreuse) 0 7px, var(--graphite) 7.5px);
   }
 
   .duration-labels {
-    margin-right: 80px;
-    margin-left: 80px;
-    font-size: 10px;
+    margin-right: calc(clamp(74px, 6vw, 92px) + clamp(34px, 2.4vw, 48px));
+    margin-left: calc(clamp(74px, 6vw, 92px) + clamp(34px, 2.4vw, 48px));
+    font-size: clamp(11px, 0.75vw, 14px);
   }
 
   .duration-action-bar {
@@ -1092,9 +1131,13 @@ input:focus-visible {
   }
 
   .begin-workout {
-    width: 68px;
-    height: 68px;
+    width: clamp(78px, 6vw, 96px);
+    height: clamp(78px, 6vw, 96px);
     margin: 0 auto;
+  }
+
+  .forward-arrow {
+    transform: scale(1.18);
   }
 
   .workout-screen {
@@ -1102,24 +1145,49 @@ input:focus-visible {
   }
 
   .workout-content {
-    width: min(calc(100% - 80px), 1080px);
+    width: min(calc(100% - 48px), 1760px);
     height: 100dvh;
     min-height: 560px;
-    padding: 32px 0;
+    padding: clamp(28px, 5dvh, 64px) 0;
     display: grid;
-    grid-template-columns: minmax(190px, 0.85fr) minmax(320px, 420px) minmax(220px, 0.95fr);
-    gap: 32px;
+    grid-template-columns: minmax(220px, 1fr) minmax(420px, 720px) minmax(240px, 1fr);
+    gap: clamp(24px, 3vw, 56px);
     align-items: center;
   }
 
   .workout-header {
+    padding: clamp(24px, 2.5vw, 36px);
     align-self: center;
     display: block;
+    border: 1px solid rgb(18 20 22 / 12%);
+    border-radius: 24px;
+    background: rgb(255 252 247 / 74%);
+    box-shadow: 0 12px 30px rgb(18 20 22 / 10%);
+    backdrop-filter: blur(8px);
+  }
+
+  .workout-progress-text {
+    min-height: 52px;
+    font-size: clamp(15px, 1vw, 18px);
+  }
+
+  .workout-group-name {
+    min-height: 52px;
+    padding: 9px 16px;
+    border-radius: 14px;
+    font-size: clamp(14px, 1.1vw, 18px);
+  }
+
+  .workout-progress {
+    height: 7px;
+    margin-top: 10px;
   }
 
   .exercise-name {
     max-height: 4.8em;
-    font-size: clamp(18px, 1.8vw, 23px);
+    margin-top: 16px;
+    font-size: clamp(32px, 2.5vw, 46px);
+    line-height: 1.12;
   }
 
   .exercise-media-area {
@@ -1131,26 +1199,97 @@ input:focus-visible {
   }
 
   .exercise-media-card {
-    width: min(100%, 420px);
+    width: min(100%, 64dvh, 720px);
+    border-width: 2px;
+    box-shadow: 0 18px 48px rgb(18 20 22 / 18%);
   }
 
   .workout-action-host {
     width: 100%;
-    height: 180px;
+    height: 300px;
     min-width: 0;
-    min-height: 180px;
+    min-height: 300px;
+    overflow: hidden;
+    border: 1px solid rgb(18 20 22 / 12%);
+    border-radius: 24px;
+    background: rgb(255 252 247 / 74%);
+    box-shadow: 0 12px 30px rgb(18 20 22 / 10%);
+    backdrop-filter: blur(8px);
+  }
+
+  .workout-panel {
+    padding: 30px;
   }
 
   .ready-panel {
-    min-height: 180px;
+    min-height: 300px;
+    border: 0;
+    border-radius: 23px;
+  }
+
+  .action-button {
+    min-height: 88px;
+    font-size: 26px;
+  }
+
+  .phase-row {
+    min-height: 64px;
+  }
+
+  .movement-cue {
+    font-size: 48px;
+  }
+
+  .skip-action {
+    min-width: 64px;
+    min-height: 64px;
+    font-size: 18px;
+  }
+
+  .movement-countdown {
+    font-size: clamp(84px, 7vw, 132px);
+  }
+
+  .movement-track {
+    height: 10px;
+    margin-top: 18px;
+  }
+
+  .rest-panel {
+    min-height: 0;
+    padding: 24px 30px;
+  }
+
+  .rest-row {
+    min-height: 72px;
+  }
+
+  .pause-icon i {
+    width: 7px;
+    height: 32px;
+  }
+
+  .rest-countdown {
+    font-size: 72px;
+  }
+
+  .rest-track {
+    height: 10px;
+    margin-top: 10px;
+  }
+
+  .keep-button {
+    min-height: 80px;
+    margin-top: 18px;
+    font-size: 24px;
   }
 
   .completion-screen {
-    padding: 40px;
+    padding: clamp(32px, 5vw, 72px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: clamp(40px, 5dvh, 64px);
     overflow: auto;
   }
 
@@ -1160,18 +1299,31 @@ input:focus-visible {
   }
 
   .completion-halo {
-    width: 260px;
+    width: clamp(340px, min(32vw, 50dvh), 540px);
+    padding: clamp(20px, 2vw, 32px);
+    border-width: 3px;
+  }
+
+  .completion-halo-inner {
+    padding: clamp(30px, 3vw, 48px);
+  }
+
+  .completion-mark span {
+    border-bottom-width: clamp(8px, 0.7vw, 12px);
+    border-left-width: clamp(8px, 0.7vw, 12px);
   }
 
   .completion-action-bar {
-    width: 240px;
+    width: clamp(320px, 26vw, 500px);
     padding: 0;
     display: block;
   }
 
   .completion-button {
     width: 100%;
+    height: clamp(76px, 6vw, 96px);
     margin: 0;
+    font-size: clamp(22px, 2vw, 28px);
   }
 }
 
