@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 21;
+    private const int DatabaseVersion = 22;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -70,7 +70,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -103,13 +103,16 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     "ALTER TABLE exercises ADD COLUMN presentation TEXT NOT NULL " +
                     "DEFAULT 'Motion' CHECK (presentation IN ('Motion', 'Still'))");
             }
-            database.ExecSQL(
-                "ALTER TABLE exercises ADD COLUMN direction_sequence TEXT NOT NULL " +
-                "DEFAULT 'None' CHECK (direction_sequence IN " +
-                "('None', 'ForwardThenBackward', 'BackwardThenForward', " +
-                "'ClockwiseThenCounterclockwise', " +
-                "'CounterclockwiseThenClockwise', 'InwardThenOutward', " +
-                "'OutwardThenInward'))");
+            if (oldVersion < 21)
+            {
+                database.ExecSQL(
+                    "ALTER TABLE exercises ADD COLUMN direction_sequence TEXT NOT NULL " +
+                    "DEFAULT 'None' CHECK (direction_sequence IN " +
+                    "('None', 'ForwardThenBackward', 'BackwardThenForward', " +
+                    "'ClockwiseThenCounterclockwise', " +
+                    "'CounterclockwiseThenClockwise', 'InwardThenOutward', " +
+                    "'OutwardThenInward'))");
+            }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);

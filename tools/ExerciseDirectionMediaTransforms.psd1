@@ -2,6 +2,7 @@
     # A mirror preserves breathing and performance timing. Pure movements can
     # be reversed without making visible speech or breathing run backward.
     # The two neck-circle records use each other's separately filmed direction.
+    264 = @{ Mode = 'TemporalReverse' }
     406 = @{ Mode = 'HorizontalMirror' }
     409 = @{ Mode = 'TemporalReverse' }
     477 = @{ Mode = 'TemporalReverse' }

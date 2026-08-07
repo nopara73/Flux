@@ -3870,8 +3870,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 27
-        DurationSeconds = 17
+        StartSeconds = 28
+        DurationSeconds = 5.5
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false

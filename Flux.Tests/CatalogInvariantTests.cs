@@ -42,7 +42,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.DirectionSequence != ExerciseDirectionSequence.None)
             .ToArray();
-        Assert.Equal(8, timedDirectionExercises.Length);
+        Assert.Equal(9, timedDirectionExercises.Length);
         Assert.All(timedDirectionExercises, exercise =>
         {
             Assert.Equal(ExerciseSideSequence.Continuous, exercise.SideSequence);
@@ -51,6 +51,7 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, ExerciseDirectionSequence> auditedDirectionSequences = new()
         {
+            [264] = ExerciseDirectionSequence.BackwardThenForward,
             [406] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [409] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [477] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
