@@ -11,10 +11,13 @@ on:
       - "Flux/Assets/exercise_direction_videos/**"
       - "Flux/Assets/exercise_hold_frames/**"
       - "Flux/Resources/raw/**"
-      - "Flux/Services/MassGroupingTaxonomy.cs"
-      - "Flux/Services/MovementPhaseSchedule.cs"
-      - "Flux/Services/MovementPhasePresentationPolicy.cs"
-      - "Flux/Services/WorkoutCoveragePolicy.cs"
+      - "Flux/Flux.csproj"
+      - "Flux/MainActivity.cs"
+      - "Flux/Models/**"
+      - "Flux/Services/**"
+      - "Flux/Resources/drawable/**"
+      - "Flux/Resources/layout/**"
+      - "Flux/Resources/values/**"
       - "tools/flux_appicon.svg"
   workflow_dispatch:
 
@@ -44,6 +47,13 @@ jobs:
             /Flux/Assets/exercise_direction_videos/**
             /Flux/Assets/exercise_hold_frames/**
             /Flux/Resources/raw/**
+            /Flux/Flux.csproj
+            /Flux/MainActivity.cs
+            /Flux/Models/**
+            /Flux/Services/**
+            /Flux/Resources/drawable/**
+            /Flux/Resources/layout/**
+            /Flux/Resources/values/**
             /tools/flux_appicon.svg
           sparse-checkout-cone-mode: false
 

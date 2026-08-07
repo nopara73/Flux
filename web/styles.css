@@ -281,7 +281,7 @@ button:disabled {
 .duration-labels {
   margin: -8px 80px 0;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   color: var(--secondary);
   font-size: 10px;
   font-weight: 600;
@@ -921,8 +921,9 @@ input:focus-visible {
   }
 
   .duration-labels {
-    margin-right: 72px;
-    margin-left: 72px;
+    margin-right: 68px;
+    margin-left: 68px;
+    font-size: 9px;
   }
 
   .duration-action-bar {
@@ -1054,8 +1055,9 @@ input:focus-visible {
   }
 
   .duration-labels {
-    margin-right: 72px;
-    margin-left: 72px;
+    margin-right: 68px;
+    margin-left: 68px;
+    font-size: 9px;
   }
 }
 

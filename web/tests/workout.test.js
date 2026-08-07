@@ -8,12 +8,14 @@ import {
   RESOLUTIONS,
   SUPPORTED_MINUTES,
   WorkoutSession,
+  createWorkoutSchedule,
   createDefaultState,
   getCanonicalCoverage,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementPhaseState,
   getMovementPresentation,
+  getSelectionKey,
   isSelectable,
   normalizeMinutes,
   parseStoredState,
@@ -26,15 +28,19 @@ const catalog = JSON.parse(
 );
 
 test("duration inventory and legacy normalization match Flux", () => {
-  assert.deepEqual(SUPPORTED_MINUTES, [3, 5, 7, 10, 15, 20, 30]);
+  assert.deepEqual(SUPPORTED_MINUTES, [3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
   assert.equal(normalizeMinutes(6), 7);
   assert.equal(normalizeMinutes(4), 5);
+  assert.equal(normalizeMinutes(37), 30);
+  assert.equal(normalizeMinutes(38), 45);
+  assert.equal(normalizeMinutes(52), 45);
+  assert.equal(normalizeMinutes(53), 60);
+  assert.equal(normalizeMinutes(75), 90);
   assert.equal(normalizeMinutes(undefined), 10);
 });
 
 test("every resolution covers all canonical leaves once in scheduled order", () => {
-  for (const minutes of SUPPORTED_MINUTES) {
-    const resolution = RESOLUTIONS.get(minutes);
+  for (const [minutes, resolution] of RESOLUTIONS) {
     assert.equal(resolution.groups.length, minutes);
     assert.deepEqual(
       resolution.groups.map((group) => group.order),
@@ -56,8 +62,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 328);
   assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 328);
 
-  for (const minutes of SUPPORTED_MINUTES) {
-    const resolution = RESOLUTIONS.get(minutes);
+  for (const [minutes, resolution] of RESOLUTIONS) {
     for (const group of resolution.groups) {
       const selectable = catalog.filter((exercise) => isSelectable(exercise, group));
       assert.ok(selectable.length >= 10, `${group.id} has ${selectable.length} choices`);
@@ -71,6 +76,93 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     assert.equal(selected.length, minutes);
     assert.equal(new Set(selected.map((exercise) => exercise.id)).size, minutes);
   }
+
+  for (const minutes of [45, 60, 90]) {
+    const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+    session.startWorkout(minutes);
+    const selected = session
+      .getActiveGroups()
+      .map((group) => session.getSelectedExercise(group));
+    assert.equal(selected.length, minutes);
+    assert.equal(new Set(selected.map((exercise) => exercise.id)).size, 30);
+  }
+});
+
+test("long workouts repeat the thirty-minute lineup with unique round IDs", () => {
+  for (const [minutes, firstHalfSets, secondHalfSets] of [
+    [45, 1, 2],
+    [60, 2, 2],
+    [90, 3, 3],
+  ]) {
+    const rounds = createWorkoutSchedule(minutes);
+    const selectionGroups = RESOLUTIONS.get(30).groups;
+    assert.equal(rounds.length, minutes);
+    assert.deepEqual(
+      rounds.map((round) => round.order),
+      Array.from({ length: minutes }, (_, index) => index + 1),
+    );
+    assert.equal(new Set(rounds.map((round) => round.id)).size, minutes);
+
+    for (const [index, selectionGroup] of selectionGroups.entries()) {
+      const groupRounds = rounds.filter(
+        (round) => getSelectionKey(round) === selectionGroup.id,
+      );
+      assert.equal(groupRounds.length, index < 15 ? firstHalfSets : secondHalfSets);
+      assert.deepEqual(
+        groupRounds.map((round) => round.id),
+        groupRounds.map((round, setIndex) => `${selectionGroup.id}.set${setIndex + 1}`),
+      );
+    }
+  }
+});
+
+test("a rejected repeated round replaces its shared exercise once", () => {
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(45);
+  const rounds = session.getActiveGroups();
+  const target = rounds.find((round) => round.id.endsWith(".set2"));
+  const selectionKey = getSelectionKey(target);
+  const rejected = session.getSelectedExercise(target);
+
+  for (const round of rounds) {
+    session.recordOutcome(round, round.id !== target.id);
+  }
+
+  assert.equal(session.getScore(rejected), -1);
+  assert.equal(session.state.selectedExerciseIds[selectionKey], rejected.id);
+  session.acknowledgeCompletion();
+  assert.notEqual(session.state.selectedExerciseIds[selectionKey], rejected.id);
+  assert.equal(session.state.activeWorkoutMinutes, 0);
+});
+
+test("interrupted long workout settles a pending repeated round exactly once", () => {
+  const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  started.initialize();
+  started.startWorkout(45);
+  const rounds = started.getActiveGroups();
+  const pendingRound = rounds.find((round) => round.id.endsWith(".set2"));
+  const performed = started.getSelectedExercise(pendingRound);
+  for (const round of rounds.slice(0, pendingRound.order - 1)) {
+    started.recordOutcome(round, true);
+  }
+  started.beginRest(pendingRound, Date.now() + 15_000);
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(started.state)),
+    () => 0,
+  );
+  restored.initialize();
+  assert.equal(restored.getScore(performed), -1);
+  assert.equal(restored.state.activeWorkoutMinutes, 0);
+
+  const restoredAgain = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(restored.state)),
+    () => 0,
+  );
+  restoredAgain.initialize();
+  assert.equal(restoredAgain.getScore(performed), -1);
 });
 
 test("selection requires primary ownership and ranks score before coverage", () => {
@@ -352,6 +444,12 @@ test("initial document contains no exercise-media URL", async () => {
   assert.doesNotMatch(html, /exercise_(?:videos|direction_videos|hold_frames)\//);
   assert.match(html, /src="\.\/app\.js"/);
   assert.doesNotMatch(html, /settings|sign[ -]?in|learn more/i);
+  const durationLabels = html.match(/id="duration-labels"[\s\S]+?<\/div>/)?.[0] ?? "";
+  assert.deepEqual(
+    [...durationLabels.matchAll(/<span>(\d+)<\/span>/g)].map((item) => Number(item[1])),
+    SUPPORTED_MINUTES,
+  );
+  assert.match(html, new RegExp(`max="${SUPPORTED_MINUTES.length - 1}"`));
 });
 
 test("browser shell pauses for buffering and uses compact landscape layout", async () => {
@@ -368,6 +466,7 @@ test("browser shell pauses for buffering and uses compact landscape layout", asy
   assert.match(javascript, /navigator\.wakeLock\?\.request/);
   assert.match(stylesheet, /@media \(orientation: landscape\)\s*\{/);
   assert.doesNotMatch(stylesheet, /@media \(orientation: landscape\) and \(min-width:/);
+  assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
 
 function exercise(id, primaryCanonicalGroup, secondaryCanonicalGroups, score) {

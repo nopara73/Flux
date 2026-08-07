@@ -182,7 +182,7 @@ function renderDuration(minutes, userInitiated) {
   elements.durationRange.style.setProperty("--range-progress", progress);
   elements.durationRange.setAttribute(
     "aria-valuetext",
-    `${minutes} minutes. Options: 3, 5, 7, 10, 15, 20, and 30 minutes`,
+    `${minutes} minutes. Options: 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes`,
   );
   elements.durationDecrease.disabled = index === 0;
   elements.durationIncrease.disabled = index === SUPPORTED_MINUTES.length - 1;

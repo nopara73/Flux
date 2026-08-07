@@ -1,4 +1,4 @@
-export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30]);
+export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
 const CURRENT_CATALOG_REVISION = 2;
@@ -255,6 +255,40 @@ export function getResolution(minutes) {
     throw new RangeError("Workout duration must be 3, 5, 7, 10, 15, 20, or 30 minutes.");
   }
   return item;
+}
+
+export function getSelectionKey(group) {
+  return group.selectionGroupId ?? group.id;
+}
+
+export function createWorkoutSchedule(minutes) {
+  if (!SUPPORTED_MINUTES.includes(minutes)) {
+    throw new RangeError("Unsupported workout duration.");
+  }
+
+  const resolution = getResolution(minutes > 30 ? 30 : minutes);
+  if (minutes <= 30) {
+    return resolution.groups;
+  }
+
+  const completeSets = Math.floor(minutes / resolution.groups.length);
+  const extraSets = minutes % resolution.groups.length;
+  const extraSetStartIndex = resolution.groups.length - extraSets;
+  const rounds = [];
+  for (let groupIndex = 0; groupIndex < resolution.groups.length; groupIndex++) {
+    const selectionGroup = resolution.groups[groupIndex];
+    const setCount = completeSets +
+      (extraSets > 0 && groupIndex >= extraSetStartIndex ? 1 : 0);
+    for (let setNumber = 1; setNumber <= setCount; setNumber++) {
+      rounds.push(Object.freeze({
+        ...selectionGroup,
+        id: `${selectionGroup.id}.set${setNumber}`,
+        order: rounds.length + 1,
+        selectionGroupId: selectionGroup.id,
+      }));
+    }
+  }
+  return Object.freeze(rounds);
 }
 
 export function normalizeMinutes(minutes) {
@@ -546,7 +580,15 @@ export class WorkoutSession {
 
   getActiveGroups() {
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? getResolution(this.state.activeWorkoutMinutes).groups
+      ? createWorkoutSchedule(this.state.activeWorkoutMinutes)
+      : [];
+  }
+
+  getSelectionGroups() {
+    return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
+      ? getResolution(
+          this.state.activeWorkoutMinutes > 30 ? 30 : this.state.activeWorkoutMinutes,
+        ).groups
       : [];
   }
 
@@ -555,7 +597,9 @@ export class WorkoutSession {
   }
 
   getSelectedExercise(group) {
-    const exercise = this.exercisesById.get(this.state.selectedExerciseIds[group.id]);
+    const exercise = this.exercisesById.get(
+      this.state.selectedExerciseIds[getSelectionKey(group)],
+    );
     if (!exercise || !this.isSavedSelectionValid(exercise, group)) {
       throw new Error(`No eligible exercise selected for ${group.displayName}.`);
     }
@@ -632,14 +676,21 @@ export class WorkoutSession {
 
   prepareNextSession() {
     const activeGroups = this.getActiveGroups();
-    const usedExerciseIds = new Set(
+    const selectionGroups = this.getSelectionGroups();
+    const rejectedSelectionKeys = new Set(
       activeGroups
-        .filter((group) => this.state.outcomes[group.id] !== "x")
+        .filter((group) => this.state.outcomes[group.id] === "x")
+        .map(getSelectionKey),
+    );
+    const usedExerciseIds = new Set(
+      selectionGroups
+        .filter((group) => !rejectedSelectionKeys.has(group.id))
         .map((group) => this.state.selectedExerciseIds[group.id])
         .filter(Boolean),
     );
 
-    for (const group of activeGroups.filter((candidate) => this.state.outcomes[candidate.id] === "x")) {
+    for (const group of selectionGroups.filter((candidate) =>
+      rejectedSelectionKeys.has(candidate.id))) {
       const rejectedExerciseId = this.state.selectedExerciseIds[group.id];
       for (const [savedGroupId, savedExerciseId] of Object.entries(this.state.selectedExerciseIds)) {
         if (savedGroupId !== group.id && savedExerciseId === rejectedExerciseId) {
@@ -660,7 +711,8 @@ export class WorkoutSession {
 
   repairActiveLineup() {
     const usedExerciseIds = new Set();
-    for (const group of this.getActiveGroups()) {
+    const activeGroups = this.getActiveGroups();
+    for (const group of this.getSelectionGroups()) {
       const selectedId = this.state.selectedExerciseIds[group.id];
       const selected = this.exercisesById.get(selectedId);
       const valid =
@@ -677,7 +729,13 @@ export class WorkoutSession {
         const replacement = this.chooseBestCandidate(group, excluded);
         resolvedId = replacement.id;
         this.state.selectedExerciseIds[group.id] = resolvedId;
-        delete this.state.outcomes[group.id];
+        for (const round of activeGroups.filter((candidate) =>
+          getSelectionKey(candidate) === group.id)) {
+          delete this.state.outcomes[round.id];
+        }
+        if (this.pendingRestMatchesSelectionGroup(group.id)) {
+          this.clearPendingRest();
+        }
       }
       usedExerciseIds.add(resolvedId);
     }
@@ -735,7 +793,9 @@ export class WorkoutSession {
       (group) => group.id === this.state.pendingRestGroupId,
     );
     const pendingExercise = pendingGroup
-      ? this.exercisesById.get(this.state.selectedExerciseIds[pendingGroup.id])
+      ? this.exercisesById.get(
+          this.state.selectedExerciseIds[getSelectionKey(pendingGroup)],
+        )
       : null;
     if (
       !pendingGroup ||
@@ -751,7 +811,19 @@ export class WorkoutSession {
   isSavedSelectionValid(exercise, group) {
     return (
       isSelectable(exercise, group) ||
-      (this.state.pendingRestGroupId === group.id && this.isAssignedToGroup(exercise, group))
+      (this.pendingRestMatchesSelectionGroup(getSelectionKey(group)) &&
+        this.isAssignedToGroup(exercise, group))
+    );
+  }
+
+  pendingRestMatchesSelectionGroup(selectionGroupId) {
+    if (!this.state.pendingRestGroupId) {
+      return false;
+    }
+    return this.getActiveGroups().some(
+      (round) =>
+        round.id === this.state.pendingRestGroupId &&
+        getSelectionKey(round) === selectionGroupId,
     );
   }
 
@@ -793,11 +865,15 @@ export class WorkoutSession {
         .map(([groupId]) => groupId);
       for (const groupId of affectedGroupIds) {
         delete this.state.selectedExerciseIds[groupId];
-        delete this.state.outcomes[groupId];
+        for (const round of this.getActiveGroups().filter((candidate) =>
+          getSelectionKey(candidate) === groupId)) {
+          delete this.state.outcomes[round.id];
+        }
       }
       if (
         this.state.pendingRestGroupId &&
-        affectedGroupIds.includes(this.state.pendingRestGroupId)
+        affectedGroupIds.some((groupId) =>
+          this.pendingRestMatchesSelectionGroup(groupId))
       ) {
         this.clearPendingRest();
       }
