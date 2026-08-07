@@ -1131,13 +1131,14 @@ input:focus-visible {
   }
 
   .begin-workout {
-    width: clamp(78px, 6vw, 96px);
-    height: clamp(78px, 6vw, 96px);
+    width: clamp(112px, 8vw, 144px);
+    height: clamp(112px, 8vw, 144px);
     margin: 0 auto;
+    border-radius: 32px;
   }
 
   .forward-arrow {
-    transform: scale(1.18);
+    transform: scale(1.7);
   }
 
   .workout-screen {

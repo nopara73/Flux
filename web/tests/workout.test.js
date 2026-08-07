@@ -469,6 +469,7 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, /@media \(min-width: 1000px\)\s*\{/);
   assert.match(stylesheet, /\.duration-controls\s*\{[\s\S]*?width: min\(100%, clamp\(760px, 58vw, 1120px\)\);/);
   assert.match(stylesheet, /width: clamp\(300px, min\(20vw, 34dvh\), 420px\);/);
+  assert.match(stylesheet, /width: clamp\(112px, 8vw, 144px\);/);
   assert.match(stylesheet, /width: min\(calc\(100% - 48px\), 1760px\);/);
   assert.match(stylesheet, /grid-template-columns: minmax\(220px, 1fr\) minmax\(420px, 720px\) minmax\(240px, 1fr\);/);
   assert.match(stylesheet, /width: min\(100%, 64dvh, 720px\);/);
