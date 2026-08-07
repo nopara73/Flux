@@ -109,8 +109,9 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:contentDescription="@string/duration_decrease_description"
-                        android:drawableStart="@drawable/ic_minus"
-                        android:drawableTint="@color/accent_text"
+                        android:foreground="@drawable/ic_minus"
+                        android:foregroundGravity="center"
+                        android:foregroundTint="@color/accent_text"
                         android:gravity="center" />
 
                     <SeekBar
@@ -135,8 +136,9 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:contentDescription="@string/duration_increase_description"
-                        android:drawableStart="@drawable/ic_plus"
-                        android:drawableTint="@color/accent_text"
+                        android:foreground="@drawable/ic_plus"
+                        android:foregroundGravity="center"
+                        android:foregroundTint="@color/accent_text"
                         android:gravity="center" />
                 </LinearLayout>
 
