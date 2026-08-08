@@ -151,7 +151,7 @@
     263 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowExtensors') }
     264 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     265 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowExtensors') }
-    266 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowFlexors', 'AbdominalWall') }
+    266 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     267 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'SpinalExtensors', 'ShoulderAbductors', 'AbdominalWall') }
     268 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
     269 = @{ Primary = 'ElbowFlexors'; Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand') }

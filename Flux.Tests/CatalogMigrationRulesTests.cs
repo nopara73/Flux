@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(130, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(129, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -168,6 +168,62 @@ public sealed class CatalogMigrationRulesTests
 
         Assert.Contains(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
+    }
+
+    [Fact]
+    public void RemovedReviewedReplacementRestoresBaselineWithoutItsScore()
+    {
+        const int exerciseId = 266;
+        const string video = "exercise_videos/exercise_0266.mp4";
+        Exercise restored = Exercise(
+            exerciseId,
+            "Standing Palms-Up Arm Raise",
+            video);
+        var replacedStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(
+                "Zyzz Diagonal-Reach Pose Hold",
+                video,
+                -7),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [restored],
+            replacedStored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, replacedStored[exerciseId].Score);
+
+        var restoredStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(restored.Name, video, -3),
+        };
+        preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [restored],
+            restoredStored);
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-3, restoredStored[exerciseId].Score);
+
+        var unrelatedStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new("Unrelated movement", video, -5),
+        };
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [restored],
+                unrelatedStored));
+
+        var wrongVideoStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(
+                "Zyzz Diagonal-Reach Pose Hold",
+                "different-video.mp4",
+                -5),
+        };
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [restored],
+                wrongVideoStored));
     }
 
     [Fact]

@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 5;
+    public const int CurrentCatalogRevision = 6;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -17,6 +17,10 @@ public static class CatalogMigrationRules
     private sealed record ApprovedExerciseCorrection(
         string PreviousName,
         string CurrentName);
+
+    private sealed record RestoredReviewedExerciseIdentity(
+        string PreviousReplacementName,
+        string RestoredName);
 
     private static readonly IReadOnlyDictionary<int, ApprovedExerciseCorrection>
         ApprovedExerciseCorrections =
@@ -82,6 +86,15 @@ public static class CatalogMigrationRules
                 [969] = new(
                     "Chair-Pose Core Hold",
                     "Chair-Pose Hold"),
+            };
+
+    private static readonly IReadOnlyDictionary<int, RestoredReviewedExerciseIdentity>
+        RestoredReviewedExerciseIdentities =
+            new Dictionary<int, RestoredReviewedExerciseIdentity>
+            {
+                [266] = new(
+                    "Zyzz Diagonal-Reach Pose Hold",
+                    "Standing Palms-Up Arm Raise"),
             };
 
     private static readonly IReadOnlyDictionary<int, PriorReviewedReplacementIdentity>
@@ -225,7 +238,7 @@ public static class CatalogMigrationRules
         41, 56, 59, 98, 102, 116, 120, 133, 146, 159, 176, 177, 182, 183,
         185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203,
         215, 216, 217, 218, 219, 227, 228, 229, 230, 239, 240, 241, 242,
-        260, 262, 266, 267, 268, 272, 274, 275, 276, 280, 281, 283, 284, 285,
+        260, 262, 267, 268, 272, 274, 275, 276, 280, 281, 283, 284, 285,
         286, 287, 288, 289, 291, 292, 293, 294, 295, 296, 327, 367, 390,
         391, 392, 393, 396, 422,
         423, 467, 474, 475, 477,
@@ -242,6 +255,7 @@ public static class CatalogMigrationRules
             {
                 [4] = new HashSet<int> { 591 },
                 [5] = new HashSet<int> { 266 },
+                [6] = new HashSet<int> { 266 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -271,6 +285,7 @@ public static class CatalogMigrationRules
         }
 
         var alreadyReviewedReplacementIds = new HashSet<int>();
+        var restoredReviewedExerciseIds = new HashSet<int>();
 
         foreach ((int exerciseId, StoredExerciseSnapshot stored) in storedExercises)
         {
@@ -379,22 +394,41 @@ public static class CatalogMigrationRules
                     bundled.Name,
                     correction.CurrentName,
                     StringComparison.Ordinal);
+            bool nameIsApprovedReviewedRestoration =
+                RestoredReviewedExerciseIdentities.TryGetValue(
+                    exerciseId,
+                    out RestoredReviewedExerciseIdentity? restoration) &&
+                string.Equals(
+                    stored.Name,
+                    restoration.PreviousReplacementName,
+                    StringComparison.Ordinal) &&
+                string.Equals(
+                    bundled.Name,
+                    restoration.RestoredName,
+                    StringComparison.Ordinal);
             if ((!nameIsPreserved &&
                     !nameIsApprovedTimedSideNormalization &&
                     !nameIsApprovedContinuousAlternationNormalization &&
-                    !nameIsApprovedExerciseCorrection) ||
+                    !nameIsApprovedExerciseCorrection &&
+                    !nameIsApprovedReviewedRestoration) ||
                 !string.Equals(stored.Video, bundled.Video, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(
                     $"The bundled catalog would change the stable identity or " +
                     $"demonstration of existing exercise {exerciseId}.");
             }
+
+            if (nameIsApprovedReviewedRestoration)
+            {
+                restoredReviewedExerciseIds.Add(exerciseId);
+            }
         }
 
         return storedExercises.Keys
             .Where(exerciseId =>
-                !ReplacedExerciseIdSet.Contains(exerciseId) ||
-                alreadyReviewedReplacementIds.Contains(exerciseId))
+                (!ReplacedExerciseIdSet.Contains(exerciseId) ||
+                    alreadyReviewedReplacementIds.Contains(exerciseId)) &&
+                !restoredReviewedExerciseIds.Contains(exerciseId))
             .ToHashSet();
     }
 
