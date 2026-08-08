@@ -1579,6 +1579,32 @@
             MirrorForAlternation = $false
         }
     }
+    326 = @{
+        RetiredName = 'Wide-Stance Alternating Straight Punches'
+        Name = 'Staggered-Stance Jab-Cross'
+        Practice = 'Martial arts striking'
+        MotionProfile = 'JabCross'
+        Primary = 'Chest'
+        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'chuck-norris-private-lesson.mp4'
+            Url = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
+            SourcePage = 'https://tubitv.com/movies/100049201/chuck-norris-private-lesson'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 544.45
+            DurationSeconds = 13.8
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
     327 = @{
         RetiredName = 'First-Position Standing Row'
         Name = 'Muay Thai Horizontal Elbow Strike'

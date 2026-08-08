@@ -35,7 +35,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(105, timedSideExercises.Length);
+        Assert.Equal(106, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -103,6 +103,7 @@ public sealed class CatalogInvariantTests
             [292] = ExerciseSideSequence.ScreenRightThenLeft,
             [293] = ExerciseSideSequence.ScreenLeftThenRight,
             [294] = ExerciseSideSequence.Continuous,
+            [326] = ExerciseSideSequence.ScreenRightThenLeft,
             [338] = ExerciseSideSequence.ScreenLeftThenRight,
             [397] = ExerciseSideSequence.ScreenRightThenLeft,
             [482] = ExerciseSideSequence.Continuous,
@@ -138,6 +139,7 @@ public sealed class CatalogInvariantTests
             [241] = "Straight-Hand Knuckle-Bend Flow",
             [270] = "Palm-Squeeze Forward Press",
             [290] = "Low Palm Scoop to Side Opening",
+            [326] = "Staggered-Stance Jab-Cross",
             [394] = "Standing Arms Open and Close",
             [397] = "Staggered-Stance Weight Shift",
             [409] = "Full Neck Circles",

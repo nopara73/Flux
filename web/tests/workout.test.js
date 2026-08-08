@@ -408,7 +408,7 @@ test("catalog revision retires only exercises changed by that revision", () => {
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
   );
-  const replacement = catalog.find((item) => item.id === 266);
+  const replacement = catalog.find((item) => item.id === 326);
   const historicalReplacement = replacements.find((item) => item.id === 591);
   const group = RESOLUTIONS.get(30).groups.find((candidate) =>
     isSelectable(replacement, candidate),
@@ -430,7 +430,10 @@ test("catalog revision retires only exercises changed by that revision", () => {
 
   assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
   for (const item of replacements) {
-    assert.equal(restored.state.scores[String(item.id)], -4);
+    assert.equal(
+      restored.state.scores[String(item.id)],
+      item.id === replacement.id ? undefined : -4,
+    );
   }
   assert.equal(restored.state.scores[String(replacement.id)], undefined);
   assert.equal(restored.state.scores[String(historicalReplacement.id)], -4);

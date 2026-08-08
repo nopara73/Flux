@@ -1396,15 +1396,16 @@
         MirrorForAlternation = $false
     }
     180 = @{
-        File = 'karate-front-snap-kick.mp4'
-        Url = 'https://www.youtube.com/watch?v=A63-Qe8LgCc'
-        SourcePage = 'https://www.youtube.com/watch?v=A63-Qe8LgCc'
+        File = 'chuck-norris-private-lesson.mp4'
+        Url = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
+        SourcePage = 'https://tubitv.com/movies/100049201/chuck-norris-private-lesson'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 18.5
-        DurationSeconds = 5.0
-        FramesPerSecond = 12
+        StartSeconds = 1050.4
+        DurationSeconds = 10.4
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
     }
     184 = @{
