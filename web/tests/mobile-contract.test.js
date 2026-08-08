@@ -7,9 +7,11 @@ import test from "node:test";
 import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  LAST_CUMULATIVE_CATALOG_REVISION,
   MOVEMENT_DURATION_MS,
   RESOLUTIONS,
   REST_DURATION_MS,
+  SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SUPPORTED_MINUTES,
 } from "../workout.js";
 
@@ -53,6 +55,17 @@ test("web catalog migration matches the mobile workout contract", () => {
   assert.equal(
     CURRENT_CATALOG_REVISION,
     integerConstant(catalogMigrationRules, "CurrentCatalogRevision"),
+  );
+  assert.equal(
+    LAST_CUMULATIVE_CATALOG_REVISION,
+    integerConstant(catalogMigrationRules, "LastCumulativeWorkoutStateRevision"),
+  );
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION].map(([revision, exerciseIds]) => [
+      revision,
+      [...exerciseIds],
+    ]),
+    scopedCatalogInvalidations(catalogMigrationRules),
   );
   assert.deepEqual(
     [...APPROVED_EXERCISE_CORRECTIONS],
@@ -99,4 +112,16 @@ function approvedExerciseCorrections(contents) {
   return [...contents.slice(start, end).matchAll(
     /\[(\d+)\]\s*=\s*new\(\s*"([^"]+)",\s*"([^"]+)"\s*\)/g,
   )].map((item) => [Number(item[1]), [item[2], item[3]]]);
+}
+
+function scopedCatalogInvalidations(contents) {
+  const start = contents.indexOf("ScopedWorkoutStateInvalidationsByRevision =");
+  const end = contents.indexOf("private static readonly", start);
+  assert.ok(start >= 0 && end > start, "Could not read mobile scoped catalog invalidations.");
+  return [...contents.slice(start, end).matchAll(
+    /\[(\d+)\]\s*=\s*new HashSet<int>\s*\{([^}]+)\}/g,
+  )].map((item) => [
+    Number(item[1]),
+    [...item[2].matchAll(/\d+/g)].map((exerciseId) => Number(exerciseId[0])),
+  ]);
 }
