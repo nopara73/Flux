@@ -1,7 +1,11 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 3;
+export const CURRENT_CATALOG_REVISION = 4;
+const LAST_CUMULATIVE_CATALOG_REVISION = 3;
+const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
+  [4, new Set([591])],
+]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set([223, 224, 245, 246]);
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
@@ -855,12 +859,9 @@ export class WorkoutSession {
     const currentIdentities = Object.fromEntries(
       this.exercises.map((exercise) => [String(exercise.id), catalogIdentity(exercise)]),
     );
-    const changedExerciseIds = new Set(
-      this.state.catalogRevision < CURRENT_CATALOG_REVISION
-        ? this.exercises
-            .filter((exercise) => typeof exercise.retiredName === "string" && exercise.retiredName)
-            .map((exercise) => exercise.id)
-        : [],
+    const changedExerciseIds = catalogInvalidationIdsSince(
+      this.state.catalogRevision,
+      this.exercises,
     );
 
     for (const [exerciseId, previousIdentity] of Object.entries(previousIdentities)) {
@@ -921,6 +922,27 @@ export class WorkoutSession {
 
 function catalogIdentity(exercise) {
   return `${exercise.name}\u001f${exercise.video}`;
+}
+
+function catalogInvalidationIdsSince(priorRevision, exercises) {
+  const invalidatedExerciseIds = new Set();
+  if (priorRevision < LAST_CUMULATIVE_CATALOG_REVISION) {
+    for (const exercise of exercises) {
+      if (typeof exercise.retiredName === "string" && exercise.retiredName) {
+        invalidatedExerciseIds.add(exercise.id);
+      }
+    }
+  }
+
+  for (const [revision, exerciseIds] of SCOPED_CATALOG_INVALIDATIONS_BY_REVISION) {
+    if (revision > priorRevision) {
+      for (const exerciseId of exerciseIds) {
+        invalidatedExerciseIds.add(exerciseId);
+      }
+    }
+  }
+
+  return invalidatedExerciseIds;
 }
 
 function isApprovedIdentityPreservingNameChange(exerciseId, previousIdentity, currentExercise) {

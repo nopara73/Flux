@@ -6383,18 +6383,22 @@
   },
   {
     "id": 591,
-    "name": "Standing Speed-Bag Punches",
+    "name": "Shadow Boxing",
     "retiredName": "Bharatanatyam Natyarambhe Hold",
     "video": "exercise_videos/exercise_0591.mp4",
     "primaryCanonicalGroup": "ShoulderAbductors",
     "secondaryCanonicalGroups": [
       "ScapularGirdle",
+      "Chest",
       "ElbowExtensors",
       "ForearmFlexorsAndPronators",
-      "ForearmExtensorsAndSupinators"
+      "RotatorCuff",
+      "AbdominalWall",
+      "DeepAndIntersegmentalBack",
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
-    "practice": "Shadow boxing",
-    "motionProfile": "SpeedBag",
+    "practice": "Boxing",
+    "motionProfile": "MartialHand",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,

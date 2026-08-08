@@ -7,7 +7,8 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 3;
+    public const int CurrentCatalogRevision = 4;
+    private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
         string Name,
@@ -168,6 +169,9 @@ public static class CatalogMigrationRules
                 [572] = new(
                     "Wide-Stance Bent-Knee Rotational Stretch",
                     "Tai Chi White Crane Opens Wings"),
+                [591] = new(
+                    "Standing Speed-Bag Punches",
+                    "Bharatanatyam Natyarambhe Hold"),
                 [611] = new(
                     "Warrior II-Stance Hip Circles",
                     "Pelvic-Floor Heel-Raise Lift"),
@@ -231,6 +235,13 @@ public static class CatalogMigrationRules
         636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 687, 712,
         743, 843, 845, 971, 986, 987,
     ];
+
+    private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
+        ScopedWorkoutStateInvalidationsByRevision =
+            new Dictionary<int, IReadOnlySet<int>>
+            {
+                [4] = new HashSet<int> { 591 },
+            };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
     [
@@ -396,6 +407,26 @@ public static class CatalogMigrationRules
                 expectedName,
                 StringComparison.Ordinal));
 
+    private static IReadOnlySet<int> GetWorkoutStateInvalidationExerciseIds(
+        int priorCatalogRevision)
+    {
+        var invalidatedExerciseIds = priorCatalogRevision <
+            LastCumulativeWorkoutStateRevision
+                ? new HashSet<int>(ReplacedExerciseIdSet)
+                : [];
+
+        foreach ((int revision, IReadOnlySet<int> exerciseIds) in
+            ScopedWorkoutStateInvalidationsByRevision)
+        {
+            if (revision > priorCatalogRevision)
+            {
+                invalidatedExerciseIds.UnionWith(exerciseIds);
+            }
+        }
+
+        return invalidatedExerciseIds;
+    }
+
     public static bool ReconcileWorkoutState(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
@@ -407,9 +438,11 @@ public static class CatalogMigrationRules
 
         state.SelectedExerciseIds ??= [];
         state.Outcomes ??= [];
+        IReadOnlySet<int> invalidatedExerciseIds =
+            GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
 
         string[] groupsWithRetiredSelections = state.SelectedExerciseIds
-            .Where(selection => ReplacedExerciseIdSet.Contains(selection.Value))
+            .Where(selection => invalidatedExerciseIds.Contains(selection.Value))
             .Select(selection => selection.Key)
             .ToArray();
 
@@ -429,7 +462,7 @@ public static class CatalogMigrationRules
             state.PendingRestKept = false;
         }
 
-        if (ReplacedExerciseIdSet.Contains(state.PendingScoreExerciseId))
+        if (invalidatedExerciseIds.Contains(state.PendingScoreExerciseId))
         {
             state.PendingScoreExerciseId = 0;
             state.PendingScoreValue = 0;

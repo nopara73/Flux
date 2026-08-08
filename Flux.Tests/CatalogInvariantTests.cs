@@ -147,6 +147,7 @@ public sealed class CatalogInvariantTests
             [501] = "Single-Leg Thumb-Focus Head Turns",
             [508] = "Curl Raised Leg with One Arm",
             [588] = "Belly-Dance Alternating Shoulder Rolls",
+            [591] = "Shadow Boxing",
             [611] = "Wide-Stance Hip Circles",
             [626] = "Sumo Squat Hold",
             [649] = "Standing Clamshell",
@@ -157,6 +158,20 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expected.Value,
                 exercises.Single(exercise => exercise.Id == expected.Key).Name));
+
+        Exercise shadowBoxing = exercises.Single(exercise => exercise.Id == 591);
+        Assert.Equal(
+            CanonicalMuscleGroup.ShoulderAbductors,
+            shadowBoxing.PrimaryCanonicalGroup);
+        Assert.Equal(ExerciseSideSequence.Continuous, shadowBoxing.SideSequence);
+        Assert.Equal(ExerciseMode.Repetition, shadowBoxing.Mode);
+        Assert.Equal(ExercisePresentation.Motion, shadowBoxing.Presentation);
+        Assert.Contains(
+            CanonicalMuscleGroup.Chest,
+            shadowBoxing.SecondaryCanonicalGroups);
+        Assert.Contains(
+            CanonicalMuscleGroup.AbdominalWall,
+            shadowBoxing.SecondaryCanonicalGroups);
 
         string[] deficientWorkoutGroups = MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)

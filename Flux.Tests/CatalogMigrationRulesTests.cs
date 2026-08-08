@@ -220,6 +220,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(506, "Cheek Pinch Massage", "Eyebrow Raise and Relax")]
     [InlineData(508, "Diagonal Arm Reach-to-Row", "Tongue Protrusion and Retraction")]
     [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
+    [InlineData(591, "Standing Speed-Bag Punches", "Bharatanatyam Natyarambhe Hold")]
     [InlineData(611, "Warrior II-Stance Hip Circles", "Pelvic-Floor Heel-Raise Lift")]
     [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
     [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
@@ -302,11 +303,13 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void CatalogRevisionDropsOnlyReferencesToRetiredExercisesOnce()
+    public void CatalogRevisionDropsOnlyReferencesChangedByThatRevisionOnce()
     {
-        const int replacedId = 56;
+        const int replacedId = 591;
+        const int historicalReplacementId = 56;
         const int retainedId = 15;
         const string replacedGroup = "group.replaced";
+        const string historicalReplacementGroup = "group.historical";
         const string retainedGroup = "group.retained";
         var state = new WorkoutState
         {
@@ -314,11 +317,13 @@ public sealed class CatalogMigrationRulesTests
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [replacedGroup] = replacedId,
+                [historicalReplacementGroup] = historicalReplacementId,
                 [retainedGroup] = retainedId,
             },
             Outcomes = new Dictionary<string, ExerciseOutcome>
             {
                 [replacedGroup] = ExerciseOutcome.X,
+                [historicalReplacementGroup] = ExerciseOutcome.Tick,
                 [retainedGroup] = ExerciseOutcome.Tick,
             },
             PendingRestGroupId = replacedGroup,
@@ -333,6 +338,12 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
         Assert.DoesNotContain(replacedGroup, state.SelectedExerciseIds);
         Assert.DoesNotContain(replacedGroup, state.Outcomes);
+        Assert.Equal(
+            historicalReplacementId,
+            state.SelectedExerciseIds[historicalReplacementGroup]);
+        Assert.Equal(
+            ExerciseOutcome.Tick,
+            state.Outcomes[historicalReplacementGroup]);
         Assert.Equal(retainedId, state.SelectedExerciseIds[retainedGroup]);
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
         Assert.Null(state.PendingRestGroupId);
@@ -349,6 +360,35 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(replacedId, state.SelectedExerciseIds[replacedGroup]);
         Assert.Equal(replacedId, state.PendingScoreExerciseId);
         Assert.Equal(-1, state.PendingScoreValue);
+    }
+
+    [Fact]
+    public void LegacyCatalogRevisionStillDropsAllHistoricalReplacements()
+    {
+        const int historicalReplacementId = 56;
+        const string groupId = "group.historical";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 2,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groupId] = historicalReplacementId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groupId] = ExerciseOutcome.X,
+            },
+            PendingScoreExerciseId = historicalReplacementId,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(groupId, state.SelectedExerciseIds);
+        Assert.DoesNotContain(groupId, state.Outcomes);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
     [Fact]

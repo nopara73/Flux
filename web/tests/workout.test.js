@@ -404,11 +404,12 @@ test("approved clarity corrections preserve browser memory", () => {
   }
 });
 
-test("catalog revision retires replaced Android exercises from browser memory", () => {
+test("catalog revision retires only exercises changed by that revision", () => {
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
   );
-  const replacement = replacements[0];
+  const replacement = replacements.find((item) => item.id === 591);
+  const historicalReplacement = replacements.find((item) => item.id !== 591);
   const group = RESOLUTIONS.get(30).groups.find((candidate) =>
     isSelectable(replacement, candidate),
   );
@@ -428,10 +429,33 @@ test("catalog revision retires replaced Android exercises from browser memory", 
 
   assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
   for (const item of replacements) {
-    assert.equal(restored.state.scores[String(item.id)], undefined);
+    assert.equal(
+      restored.state.scores[String(item.id)],
+      item.id === replacement.id ? undefined : -4,
+    );
   }
+  assert.equal(restored.state.scores[String(historicalReplacement.id)], -4);
   assert.equal(restored.state.outcomes[group.id], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("legacy catalog revision still retires every historical replacement", () => {
+  const replacements = catalog.filter((item) =>
+    typeof item.retiredName === "string" && item.retiredName,
+  );
+  const state = createDefaultState();
+  state.catalogRevision = 2;
+  for (const item of replacements) {
+    state.scores[String(item.id)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const item of replacements) {
+    assert.equal(restored.state.scores[String(item.id)], undefined);
+  }
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

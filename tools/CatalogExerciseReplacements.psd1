@@ -2565,26 +2565,26 @@
     }
     591 = @{
         RetiredName = 'Bharatanatyam Natyarambhe Hold'
-        Name = 'Standing Speed-Bag Punches'
-        Practice = 'Shadow boxing'
-        MotionProfile = 'SpeedBag'
+        Name = 'Shadow Boxing'
+        Practice = 'Boxing'
+        MotionProfile = 'MartialHand'
         Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
+        Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'standing-speed-bag-punches.mp4'
-            Url = 'https://www.youtube.com/watch?v=OOHFTjpK5LM'
-            SourcePage = 'https://www.youtube.com/watch?v=OOHFTjpK5LM'
+            File = 'muhammad-ali-shadow-boxing.mp4'
+            Url = 'https://www.youtube.com/watch?v=wxNW3EdBqNY'
+            SourcePage = 'https://www.aparchive.com/metadata/youtube/9c93e31e534efdfca06629f48cdbaa70'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 24
-            DurationSeconds = 16
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            StartSeconds = 18.8
+            DurationSeconds = 12.2
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
