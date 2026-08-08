@@ -763,15 +763,16 @@
         MirrorForAlternation = $false
     }
     626 = @{
-        File = 'sumo-stance.mp4'
-        Url = 'https://www.youtube.com/watch?v=ED5-6FQvkdE'
-        SourcePage = 'https://www.youtube.com/watch?v=ED5-6FQvkdE'
+        File = 'bruce-lee-original-screen-test.mp4'
+        Url = 'https://www.youtube.com/watch?v=rvaI5bixCMY'
+        SourcePage = 'https://artsandculture.google.com/asset/bruce-lee-s-original-screen-test-american-broadcasting-corporation/vgGpTTLd7QFvNQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 18.0
-        DurationSeconds = 8.0
+        StartSeconds = 487.0
+        DurationSeconds = 4.5
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     608 = @{
