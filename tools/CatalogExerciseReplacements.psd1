@@ -1033,6 +1033,32 @@
             MirrorForAlternation = $false
         }
     }
+    266 = @{
+        RetiredName = 'Standing Palms-Up Arm Raise'
+        Name = 'Zyzz Diagonal-Reach Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'BodybuildingPose'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowFlexors', 'AbdominalWall')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 1
+        Media = @{
+            File = 'zyzz-diagonal-reach-pose-hold.mp4'
+            Url = 'https://www.youtube.com/watch?v=dh5f79ZfKTk'
+            SourcePage = 'https://www.youtube.com/watch?v=dh5f79ZfKTk'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 580
+            DurationSeconds = 1
+            FramesPerSecond = 10
+            Crop = 'crop=480:360:80:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     267 = @{
         RetiredName = 'T-Position Shoulder Rotation'
         Name = 'Floor Touch to Calf Raise'

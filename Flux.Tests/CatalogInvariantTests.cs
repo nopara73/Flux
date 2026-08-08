@@ -35,7 +35,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(105, timedSideExercises.Length);
+        Assert.Equal(106, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -95,6 +95,7 @@ public sealed class CatalogInvariantTests
             [256] = ExerciseSideSequence.Continuous,
             [257] = ExerciseSideSequence.Continuous,
             [258] = ExerciseSideSequence.Continuous,
+            [266] = ExerciseSideSequence.ScreenLeftThenRight,
             [268] = ExerciseSideSequence.Continuous,
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -136,6 +137,7 @@ public sealed class CatalogInvariantTests
         Dictionary<int, string> auditedCorrectedNames = new()
         {
             [241] = "Straight-Hand Knuckle-Bend Flow",
+            [266] = "Zyzz Diagonal-Reach Pose Hold",
             [270] = "Palm-Squeeze Forward Press",
             [290] = "Low Palm Scoop to Side Opening",
             [394] = "Standing Arms Open and Close",
@@ -172,6 +174,27 @@ public sealed class CatalogInvariantTests
         Assert.Contains(
             CanonicalMuscleGroup.AbdominalWall,
             shadowBoxing.SecondaryCanonicalGroups);
+
+        Exercise zyzzPose = exercises.Single(exercise => exercise.Id == 266);
+        Assert.Equal(
+            CanonicalMuscleGroup.ShoulderAbductors,
+            zyzzPose.PrimaryCanonicalGroup);
+        Assert.Equal(ExerciseSideSequence.ScreenLeftThenRight, zyzzPose.SideSequence);
+        Assert.Equal(ExerciseMode.Hold, zyzzPose.Mode);
+        Assert.Equal(ExercisePresentation.Still, zyzzPose.Presentation);
+        Assert.Equal(1, zyzzPose.HoldFramePercent);
+        Assert.Contains(
+            CanonicalMuscleGroup.ScapularGirdle,
+            zyzzPose.SecondaryCanonicalGroups);
+        Assert.Contains(
+            CanonicalMuscleGroup.RotatorCuff,
+            zyzzPose.SecondaryCanonicalGroups);
+        Assert.Contains(
+            CanonicalMuscleGroup.ElbowFlexors,
+            zyzzPose.SecondaryCanonicalGroups);
+        Assert.Contains(
+            CanonicalMuscleGroup.AbdominalWall,
+            zyzzPose.SecondaryCanonicalGroups);
 
         string[] deficientWorkoutGroups = MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)

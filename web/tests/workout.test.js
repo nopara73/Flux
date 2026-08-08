@@ -408,8 +408,8 @@ test("catalog revision retires only exercises changed by that revision", () => {
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
   );
-  const replacement = replacements.find((item) => item.id === 591);
-  const historicalReplacement = replacements.find((item) => item.id !== 591);
+  const replacement = replacements.find((item) => item.id === 266);
+  const historicalReplacement = replacements.find((item) => item.id === 591);
   const group = RESOLUTIONS.get(30).groups.find((candidate) =>
     isSelectable(replacement, candidate),
   );

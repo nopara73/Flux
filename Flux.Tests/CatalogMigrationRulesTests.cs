@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(129, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(130, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -305,8 +305,8 @@ public sealed class CatalogMigrationRulesTests
     [Fact]
     public void CatalogRevisionDropsOnlyReferencesChangedByThatRevisionOnce()
     {
-        const int replacedId = 591;
-        const int historicalReplacementId = 56;
+        const int replacedId = 266;
+        const int historicalReplacementId = 591;
         const int retainedId = 15;
         const string replacedGroup = "group.replaced";
         const string historicalReplacementGroup = "group.historical";
