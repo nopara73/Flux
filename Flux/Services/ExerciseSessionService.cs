@@ -8,7 +8,7 @@ public sealed class ExerciseSessionService
     public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
 
-    private const int CurrentStateVersion = 5;
+    private const int CurrentStateVersion = 6;
 
     private static readonly IReadOnlyList<int> WorkoutMinutes =
         Array.AsReadOnly([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
@@ -75,6 +75,7 @@ public sealed class ExerciseSessionService
             return;
         }
 
+        NormalizeActiveExtraSetSelectionGroups(state);
         NormalizeOutcomes(state);
         NormalizeCompletionState(state);
         NormalizePendingRest(state);
@@ -114,13 +115,16 @@ public sealed class ExerciseSessionService
         ClearPendingRest(state);
         ClearLegacyMigrationState(state);
         RepairActiveLineup(state);
+        state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
     }
 
     public IReadOnlyList<WorkoutGroup> GetActiveGroups(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
         return IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)
-            ? CreateWorkoutSchedule(state.ActiveWorkoutMinutes)
+            ? CreateWorkoutSchedule(
+                state.ActiveWorkoutMinutes,
+                GetEffectiveExtraSetSelectionGroups(state))
             : [];
     }
 
@@ -283,6 +287,18 @@ public sealed class ExerciseSessionService
                 out ExerciseOutcome outcome) && outcome == ExerciseOutcome.X)
             .Select(round => round.SelectionKey)
             .ToHashSet(StringComparer.Ordinal);
+        state.LastKeptExerciseIds = activeRounds
+            .GroupBy(round => round.SelectionKey, StringComparer.Ordinal)
+            .Where(rounds =>
+                rounds.Any(round => state.Outcomes.TryGetValue(
+                    round.Id,
+                    out ExerciseOutcome outcome) && outcome == ExerciseOutcome.Tick) &&
+                rounds.All(round => !state.Outcomes.TryGetValue(
+                    round.Id,
+                    out ExerciseOutcome outcome) || outcome != ExerciseOutcome.X))
+            .Select(rounds => state.SelectedExerciseIds.GetValueOrDefault(rounds.Key))
+            .Where(exerciseId => exerciseId != 0)
+            .ToHashSet();
         var usedExerciseIds = selectionGroups
             .Where(group => !rejectedSelectionKeys.Contains(group.Id))
             .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
@@ -486,8 +502,27 @@ public sealed class ExerciseSessionService
     {
         state.SelectedExerciseIds ??= [];
         state.Outcomes ??= [];
+        state.LastKeptExerciseIds ??= [];
+        state.ActiveExtraSetSelectionGroupIds ??= [];
         state.LegacySelectedExerciseNames ??= [];
         state.LegacyOutcomes ??= [];
+    }
+
+    private void NormalizeActiveExtraSetSelectionGroups(WorkoutState state)
+    {
+        int expectedExtraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
+        HashSet<string> validSelectionGroupIds = GetSelectionGroups(state)
+            .Select(group => group.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        bool isValid = state.ActiveExtraSetSelectionGroupIds.Count == expectedExtraSets &&
+            state.ActiveExtraSetSelectionGroupIds.All(validSelectionGroupIds.Contains);
+        if (!isValid)
+        {
+            state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
+        }
+
+        state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
+            !_exercisesById.ContainsKey(exerciseId));
     }
 
     private void NormalizeSavedLineups(WorkoutState state)
@@ -582,6 +617,7 @@ public sealed class ExerciseSessionService
     {
         state.ActiveWorkoutMinutes = 0;
         state.Outcomes.Clear();
+        state.ActiveExtraSetSelectionGroupIds.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
         state.PendingRestGroupId = null;
@@ -616,8 +652,45 @@ public sealed class ExerciseSessionService
         return MassGroupingTaxonomy.GetResolution(resolutionMinutes);
     }
 
+    private static int GetExtraSetCount(int workoutMinutes)
+    {
+        if (workoutMinutes <= 30)
+        {
+            return 0;
+        }
+
+        return workoutMinutes % GetBaseResolution(workoutMinutes).Groups.Count;
+    }
+
+    private HashSet<string> ChooseExtraSetSelectionGroups(WorkoutState state)
+    {
+        int extraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
+        if (extraSets == 0)
+        {
+            return [];
+        }
+
+        return GetSelectionGroups(state)
+            .OrderByDescending(group =>
+                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                state.LastKeptExerciseIds.Contains(exerciseId))
+            .ThenByDescending(group => group.Order)
+            .Take(extraSets)
+            .Select(group => group.Id)
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private IReadOnlySet<string> GetEffectiveExtraSetSelectionGroups(WorkoutState state)
+    {
+        int expectedExtraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
+        return state.ActiveExtraSetSelectionGroupIds.Count == expectedExtraSets
+            ? state.ActiveExtraSetSelectionGroupIds
+            : ChooseExtraSetSelectionGroups(state);
+    }
+
     private static IReadOnlyList<WorkoutGroup> CreateWorkoutSchedule(
-        int workoutMinutes)
+        int workoutMinutes,
+        IReadOnlySet<string> extraSetSelectionGroupIds)
     {
         WorkoutResolution resolution = GetBaseResolution(workoutMinutes);
         if (workoutMinutes <= 30)
@@ -626,8 +699,6 @@ public sealed class ExerciseSessionService
         }
 
         int completeSets = workoutMinutes / resolution.Groups.Count;
-        int extraSets = workoutMinutes % resolution.Groups.Count;
-        int extraSetStartIndex = resolution.Groups.Count - extraSets;
         var rounds = new List<WorkoutGroup>(workoutMinutes);
 
         for (int groupIndex = 0;
@@ -636,7 +707,7 @@ public sealed class ExerciseSessionService
         {
             WorkoutGroup selectionGroup = resolution.Groups[groupIndex];
             int setCount = completeSets +
-                (extraSets > 0 && groupIndex >= extraSetStartIndex ? 1 : 0);
+                (extraSetSelectionGroupIds.Contains(selectionGroup.Id) ? 1 : 0);
             for (int setNumber = 1; setNumber <= setCount; setNumber++)
             {
                 rounds.Add(selectionGroup with

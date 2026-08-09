@@ -100,6 +100,63 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void FortyFiveMinuteExtraSetsPreferPreviouslyKeptExercisesThenMuscleMass()
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseline = selectionGroups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .ToArray();
+        Exercise[] replacements = selectionGroups
+            .Select((group, index) => QualifiedForGroup(1001 + index, group, -1))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [.. baseline, .. replacements],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 30);
+
+        WorkoutGroup[] previousRounds = service.GetActiveGroups(state).ToArray();
+        foreach (WorkoutGroup round in previousRounds)
+        {
+            service.RecordOutcome(state, round, keep: round.Order <= 10);
+        }
+
+        int[] expectedKeptExerciseIds = previousRounds
+            .Take(10)
+            .Select(round => state.SelectedExerciseIds[round.SelectionKey])
+            .ToArray();
+        service.AcknowledgeCompletion(state);
+        service.Initialize(state);
+        Assert.Equal(expectedKeptExerciseIds.Order(), state.LastKeptExerciseIds.Order());
+
+        service.StartWorkout(state, 45);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        string[] extraSetGroupIds = selectionGroups
+            .Where(group => rounds.Count(round => round.SelectionKey == group.Id) == 2)
+            .Select(group => group.Id)
+            .ToArray();
+        string[] expectedExtraSetGroupIds = selectionGroups
+            .Take(10)
+            .Concat(selectionGroups.TakeLast(5))
+            .Select(group => group.Id)
+            .ToArray();
+        Assert.Equal(expectedExtraSetGroupIds, extraSetGroupIds);
+        Assert.Equal(
+            expectedExtraSetGroupIds.Order(),
+            state.ActiveExtraSetSelectionGroupIds.Order());
+
+        service.Initialize(state);
+        Assert.Equal(expectedExtraSetGroupIds, selectionGroups
+            .Where(group => service.GetActiveGroups(state)
+                .Count(round => round.SelectionKey == group.Id) == 2)
+            .Select(group => group.Id));
+    }
+
+    [Fact]
     public void RejectedSetReplacesTheSharedExerciseOnceAfterLongWorkout()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
@@ -890,7 +947,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(5, state.Version);
+        Assert.Equal(6, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(

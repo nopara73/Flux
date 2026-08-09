@@ -56,6 +56,10 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             Outcomes = new Dictionary<string, ExerciseOutcome>(
                 state.Outcomes,
                 StringComparer.Ordinal),
+            LastKeptExerciseIds = new HashSet<int>(state.LastKeptExerciseIds),
+            ActiveExtraSetSelectionGroupIds = new HashSet<string>(
+                state.ActiveExtraSetSelectionGroupIds,
+                StringComparer.Ordinal),
             PendingRestGroupId = state.PendingRestGroupId,
             PendingRestEndsAtUnixMilliseconds = state.PendingRestEndsAtUnixMilliseconds,
             PendingRestKept = state.PendingRestKept,

@@ -486,8 +486,12 @@ public static class CatalogMigrationRules
 
         state.SelectedExerciseIds ??= [];
         state.Outcomes ??= [];
+        state.LastKeptExerciseIds ??= [];
+        state.ActiveExtraSetSelectionGroupIds ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
+
+        state.LastKeptExerciseIds.RemoveWhere(invalidatedExerciseIds.Contains);
 
         string[] groupsWithRetiredSelections = state.SelectedExerciseIds
             .Where(selection => invalidatedExerciseIds.Contains(selection.Value))

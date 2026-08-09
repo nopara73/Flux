@@ -257,6 +257,46 @@ test("unequal resistance roles always receive a timed side swap", () => {
   }
 });
 
+test("forty-five-minute extra sets prefer previous keeps then muscle mass", () => {
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(30);
+  const previousRounds = session.getActiveGroups();
+  for (const round of previousRounds) {
+    session.recordOutcome(round, round.order <= 10);
+  }
+  const expectedKeptExerciseIds = previousRounds
+    .slice(0, 10)
+    .map((round) => session.state.selectedExerciseIds[getSelectionKey(round)]);
+  session.acknowledgeCompletion();
+  assert.deepEqual(
+    [...session.state.lastKeptExerciseIds].sort((left, right) => left - right),
+    [...expectedKeptExerciseIds].sort((left, right) => left - right),
+  );
+
+  session.startWorkout(45);
+  const selectionGroups = RESOLUTIONS.get(30).groups;
+  const rounds = session.getActiveGroups();
+  const extraSetGroupIds = selectionGroups
+    .filter((group) => rounds.filter((round) => getSelectionKey(round) === group.id).length === 2)
+    .map((group) => group.id);
+  const expectedExtraSetGroupIds = [
+    ...selectionGroups.slice(0, 10),
+    ...selectionGroups.slice(-5),
+  ].map((group) => group.id);
+  assert.deepEqual(extraSetGroupIds, expectedExtraSetGroupIds);
+  assert.deepEqual(
+    [...session.state.activeExtraSetSelectionGroupIds].sort(),
+    [...expectedExtraSetGroupIds].sort(),
+  );
+
+  session.state.lastKeptExerciseIds = [];
+  const frozenExtraSetGroupIds = selectionGroups
+    .filter((group) => session.getActiveGroups()
+      .filter((round) => getSelectionKey(round) === group.id).length === 2)
+    .map((group) => group.id);
+  assert.deepEqual(frozenExtraSetGroupIds, expectedExtraSetGroupIds);
+});
+
 test("rejection decrements once, purges saved copies, and replaces only rejected slots", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3);

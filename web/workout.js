@@ -286,7 +286,7 @@ export function getSelectionKey(group) {
   return group.selectionGroupId ?? group.id;
 }
 
-export function createWorkoutSchedule(minutes) {
+export function createWorkoutSchedule(minutes, extraSetSelectionGroupIds = null) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
     throw new RangeError("Unsupported workout duration.");
   }
@@ -298,12 +298,16 @@ export function createWorkoutSchedule(minutes) {
 
   const completeSets = Math.floor(minutes / resolution.groups.length);
   const extraSets = minutes % resolution.groups.length;
-  const extraSetStartIndex = resolution.groups.length - extraSets;
+  const selectedExtraSets = extraSetSelectionGroupIds instanceof Set
+    ? extraSetSelectionGroupIds
+    : new Set(extraSets === 0
+      ? []
+      : resolution.groups.slice(-extraSets).map((group) => group.id));
   const rounds = [];
   for (let groupIndex = 0; groupIndex < resolution.groups.length; groupIndex++) {
     const selectionGroup = resolution.groups[groupIndex];
     const setCount = completeSets +
-      (extraSets > 0 && groupIndex >= extraSetStartIndex ? 1 : 0);
+      (selectedExtraSets.has(selectionGroup.id) ? 1 : 0);
     for (let setNumber = 1; setNumber <= setCount; setNumber++) {
       rounds.push(Object.freeze({
         ...selectionGroup,
@@ -457,12 +461,14 @@ export function formatExerciseId(exerciseId) {
 
 export function createDefaultState() {
   return {
-    version: 2,
+    version: 3,
     catalogRevision: CURRENT_CATALOG_REVISION,
     catalogIdentities: {},
     selectedExerciseIds: {},
     scores: {},
     outcomes: {},
+    lastKeptExerciseIds: [],
+    activeExtraSetSelectionGroupIds: [],
     pendingRestGroupId: null,
     pendingRestEndsAtUnixMilliseconds: 0,
     pendingRestKept: false,
@@ -527,7 +533,18 @@ function normalizeStateShape(raw) {
       state.outcomes[groupId] = outcome;
     }
   }
+  state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
+  state.activeExtraSetSelectionGroupIds = Array.isArray(raw.activeExtraSetSelectionGroupIds)
+    ? [...new Set(raw.activeExtraSetSelectionGroupIds.filter((groupId) =>
+        typeof groupId === "string"))]
+    : [];
   return state;
+}
+
+function uniquePositiveIntegers(value) {
+  return Array.isArray(value)
+    ? [...new Set(value.filter((item) => Number.isInteger(item) && item > 0))]
+    : [];
 }
 
 function objectOrEmpty(value) {
@@ -552,6 +569,7 @@ export class WorkoutSession {
     this.reconcileCatalog();
     this.normalizeScores();
     this.normalizeSavedLineups();
+    this.normalizeKeptExerciseIds();
 
     if (this.state.activeWorkoutMinutes === 0) {
       this.resetTransientState();
@@ -563,6 +581,7 @@ export class WorkoutSession {
       return;
     }
 
+    this.normalizeActiveExtraSetSelectionGroups();
     const activeGroupIds = new Set(this.getActiveGroups().map((group) => group.id));
     for (const groupId of Object.keys(this.state.outcomes)) {
       if (!activeGroupIds.has(groupId)) {
@@ -601,11 +620,15 @@ export class WorkoutSession {
     this.state.completionAcknowledged = false;
     this.clearPendingRest();
     this.repairActiveLineup();
+    this.state.activeExtraSetSelectionGroupIds = this.chooseExtraSetSelectionGroups();
   }
 
   getActiveGroups() {
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? createWorkoutSchedule(this.state.activeWorkoutMinutes)
+      ? createWorkoutSchedule(
+          this.state.activeWorkoutMinutes,
+          this.getEffectiveExtraSetSelectionGroups(),
+        )
       : [];
   }
 
@@ -707,6 +730,16 @@ export class WorkoutSession {
         .filter((group) => this.state.outcomes[group.id] === "x")
         .map(getSelectionKey),
     );
+    this.state.lastKeptExerciseIds = [...new Set(
+      selectionGroups
+        .filter((group) => {
+          const rounds = activeGroups.filter((round) => getSelectionKey(round) === group.id);
+          return rounds.some((round) => this.state.outcomes[round.id] === "tick") &&
+            rounds.every((round) => this.state.outcomes[round.id] !== "x");
+        })
+        .map((group) => this.state.selectedExerciseIds[group.id])
+        .filter(Boolean),
+    )];
     const usedExerciseIds = new Set(
       selectionGroups
         .filter((group) => !rejectedSelectionKeys.has(group.id))
@@ -813,6 +846,53 @@ export class WorkoutSession {
     }
   }
 
+  normalizeKeptExerciseIds() {
+    this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter((exerciseId) =>
+      this.exercisesById.has(exerciseId));
+  }
+
+  normalizeActiveExtraSetSelectionGroups() {
+    const expectedExtraSets = this.getExtraSetCount();
+    const selectionGroupIds = new Set(this.getSelectionGroups().map((group) => group.id));
+    const valid = this.state.activeExtraSetSelectionGroupIds.length === expectedExtraSets &&
+      this.state.activeExtraSetSelectionGroupIds.every((groupId) =>
+        selectionGroupIds.has(groupId));
+    if (!valid) {
+      this.state.activeExtraSetSelectionGroupIds = this.chooseExtraSetSelectionGroups();
+    }
+  }
+
+  getExtraSetCount() {
+    if (this.state.activeWorkoutMinutes <= 30) {
+      return 0;
+    }
+    return this.state.activeWorkoutMinutes % this.getSelectionGroups().length;
+  }
+
+  chooseExtraSetSelectionGroups() {
+    const extraSets = this.getExtraSetCount();
+    if (extraSets === 0) {
+      return [];
+    }
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    return [...this.getSelectionGroups()]
+      .sort((left, right) => {
+        const leftKept = keptExerciseIds.has(this.state.selectedExerciseIds[left.id]) ? 1 : 0;
+        const rightKept = keptExerciseIds.has(this.state.selectedExerciseIds[right.id]) ? 1 : 0;
+        return rightKept - leftKept || right.order - left.order;
+      })
+      .slice(0, extraSets)
+      .map((group) => group.id);
+  }
+
+  getEffectiveExtraSetSelectionGroups() {
+    const expectedExtraSets = this.getExtraSetCount();
+    const groupIds = this.state.activeExtraSetSelectionGroupIds.length === expectedExtraSets
+      ? this.state.activeExtraSetSelectionGroupIds
+      : this.chooseExtraSetSelectionGroups();
+    return new Set(groupIds);
+  }
+
   normalizePendingRest() {
     const pendingGroup = this.getActiveGroups().find(
       (group) => group.id === this.state.pendingRestGroupId,
@@ -908,6 +988,8 @@ export class WorkoutSession {
       for (const exerciseId of changedExerciseIds) {
         delete this.state.scores[String(exerciseId)];
       }
+      this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter((exerciseId) =>
+        !changedExerciseIds.has(exerciseId));
     }
 
     this.state.catalogIdentities = currentIdentities;
@@ -915,12 +997,13 @@ export class WorkoutSession {
       this.state.catalogRevision,
       CURRENT_CATALOG_REVISION,
     );
-    this.state.version = 2;
+    this.state.version = 3;
   }
 
   resetTransientState() {
     this.state.activeWorkoutMinutes = 0;
     this.state.outcomes = {};
+    this.state.activeExtraSetSelectionGroupIds = [];
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
     this.clearPendingRest();

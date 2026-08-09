@@ -17,8 +17,17 @@ import {
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(testDirectory, "..", "..");
-const [sessionService, taxonomy, movementSchedule, mainActivity, catalogMigrationRules, catalogJson] = await Promise.all([
+const [
+  sessionService,
+  workoutState,
+  taxonomy,
+  movementSchedule,
+  mainActivity,
+  catalogMigrationRules,
+  catalogJson,
+] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
+  source("Flux", "Models", "WorkoutState.cs"),
   source("Flux", "Services", "MassGroupingTaxonomy.cs"),
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
@@ -35,6 +44,15 @@ test("web duration choices match the mobile workout contract", () => {
   assert.deepEqual(
     [...RESOLUTIONS.keys()],
     integerArray(taxonomy, "SupportedMinutes"),
+  );
+});
+
+test("web and mobile persist keep-first extra-set scheduling", () => {
+  assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
+  assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
+  assert.match(
+    sessionService,
+    /OrderByDescending\(group\s*=>[\s\S]*LastKeptExerciseIds\.Contains\(exerciseId\)\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
   );
 });
 
