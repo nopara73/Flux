@@ -26,6 +26,18 @@ public static class CatalogMigrationRules
         ApprovedExerciseCorrections =
             new Dictionary<int, ApprovedExerciseCorrection>
             {
+                [105] = new(
+                    "Plie Squat",
+                    "Wide Turned-Out Squat"),
+                [188] = new(
+                    "Parallel Demi-Plie",
+                    "Narrow Turned-Out Shallow Squat"),
+                [197] = new(
+                    "First-Position Plie-Releve",
+                    "Parallel Squat-to-Calf Raise"),
+                [198] = new(
+                    "Second-Position Plie-Releve",
+                    "Wide Squat to Feet-Together Calf Raise"),
                 [255] = new(
                     "Standing Bent-Knee Calf Raise",
                     "Deep-Squat Calf Raise"),

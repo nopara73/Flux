@@ -106,7 +106,7 @@
         'Narrow-Stance Squat'
         'Wide-Stance Squat'
         'Sumo Squat'
-        'Plie Squat'
+        'Wide Turned-Out Squat'
         'Quarter Squat'
         'Half Squat'
         'Deep Squat'

@@ -29,5 +29,6 @@
 - Maintain at least 10 such selectable primary-owned exercises in every roll-up at every supported resolution.
 - Require an accurate human demonstration for every exercise; exclude synthetic or approximate media.
 - Make the plain exercise name and silent demonstration sufficient to copy at a glance; reject movements that depend on narration, hidden effort, specialist terminology, or memorized choreography.
+- For stance-defined movements, keep both feet and the full body relationship readable throughout; reject partial-body camera cuts, postage-stamp subjects, and ambiguous group framing.
 - Prefer a reviewed still image when one settled posture communicates the whole exercise more clearly than looping video.
 - Make hold demonstrations settle and remain on the final position during the timer.

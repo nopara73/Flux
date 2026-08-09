@@ -197,15 +197,16 @@
         MirrorForAlternation = $false
     }
     105 = @{
-        File = 'plie-squat.mp4'
-        Url = 'https://www.youtube.com/watch?v=yNKVK2axeNI'
-        SourcePage = 'https://howcast.com/videos/509540-how-to-do-a-plie-squat-thighs-workout/'
+        File = 'wide-turned-out-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
+        SourcePage = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 42.6
-        DurationSeconds = 3.1
-        FramesPerSecond = 10
+        StartSeconds = 49.0
+        DurationSeconds = 6.5
+        FramesPerSecond = 12
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     111 = @{
@@ -1203,14 +1204,15 @@
     }
     130 = @{
         File = 'squat-to-side-leg-lift.mp4'
-        Url = 'https://www.youtube.com/watch?v=34QHngh1OEw'
-        SourcePage = 'https://www.youtube.com/watch?v=34QHngh1OEw'
+        Url = 'https://www.youtube.com/watch?v=cZq6TqoOHYU'
+        SourcePage = 'https://www.youtube.com/watch?v=cZq6TqoOHYU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3.2
-        DurationSeconds = 13.3
+        StartSeconds = 4.0
+        DurationSeconds = 11.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     131 = @{
@@ -1445,15 +1447,16 @@
         MirrorForAlternation = $false
     }
     198 = @{
-        File = 'second-position-plie-releve.mp4'
-        Url = 'https://www.youtube.com/watch?v=_d3Hf983Nx4'
-        SourcePage = 'https://www.youtube.com/watch?v=_d3Hf983Nx4'
+        File = 'wide-turned-out-squat-to-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=x0G3kn_A2lw'
+        SourcePage = 'https://www.youtube.com/watch?v=x0G3kn_A2lw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
+        StartSeconds = 13.0
         DurationSeconds = 5.0
-        FramesPerSecond = 12
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     199 = @{
@@ -1698,15 +1701,16 @@
         MirrorForAlternation = $true
     }
     188 = @{
-        File = 'parallel-plie.mp4'
-        Url = 'https://www.youtube.com/watch?v=S5Omw7Q0MpM'
-        SourcePage = 'https://www.youtube.com/watch?v=S5Omw7Q0MpM'
+        File = 'narrow-turned-out-shallow-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
+        SourcePage = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 28.0
-        DurationSeconds = 20.0
-        FramesPerSecond = 10
+        StartSeconds = 16.5
+        DurationSeconds = 7.5
+        FramesPerSecond = 12
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     194 = @{
@@ -1747,13 +1751,13 @@
     }
     197 = @{
         File = 'first-second-plie-releve.mp4'
-        Url = 'https://www.youtube.com/watch?v=QsPvqA-ok8c'
-        SourcePage = 'https://www.youtube.com/watch?v=QsPvqA-ok8c'
+        Url = 'https://www.youtube.com/watch?v=tY_HLvG_h-U'
+        SourcePage = 'https://www.youtube.com/watch?v=tY_HLvG_h-U'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 20.0
+        StartSeconds = 11.0
+        DurationSeconds = 29.0
         FramesPerSecond = 10
         MirrorForAlternation = $false
     }

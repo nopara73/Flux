@@ -12,6 +12,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set([223, 224, 245, 246]);
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
+  [105, ["Plie Squat", "Wide Turned-Out Squat"]],
+  [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
+  [197, ["First-Position Plie-Releve", "Parallel Squat-to-Calf Raise"]],
+  [198, ["Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise"]],
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
   [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
   [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],

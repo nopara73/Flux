@@ -153,6 +153,10 @@ public sealed class CatalogInvariantTests
 
         Dictionary<int, string> auditedCorrectedNames = new()
         {
+            [105] = "Wide Turned-Out Squat",
+            [188] = "Narrow Turned-Out Shallow Squat",
+            [197] = "Parallel Squat-to-Calf Raise",
+            [198] = "Wide Squat to Feet-Together Calf Raise",
             [241] = "Straight-Hand Knuckle-Bend Flow",
             [270] = "Palm-Squeeze Forward Press",
             [290] = "Low Palm Scoop to Side Opening",
