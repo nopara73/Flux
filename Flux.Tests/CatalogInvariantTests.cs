@@ -35,7 +35,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(106, timedSideExercises.Length);
+        Assert.Equal(110, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -90,11 +90,12 @@ public sealed class CatalogInvariantTests
             [216] = ExerciseSideSequence.ScreenLeftThenRight,
             [217] = ExerciseSideSequence.Continuous,
             [218] = ExerciseSideSequence.Continuous,
+            [220] = ExerciseSideSequence.ScreenLeftThenRight,
             [237] = ExerciseSideSequence.ScreenLeftThenRight,
             [241] = ExerciseSideSequence.ScreenLeftThenRight,
-            [256] = ExerciseSideSequence.Continuous,
-            [257] = ExerciseSideSequence.Continuous,
-            [258] = ExerciseSideSequence.Continuous,
+            [256] = ExerciseSideSequence.ScreenLeftThenRight,
+            [257] = ExerciseSideSequence.ScreenLeftThenRight,
+            [258] = ExerciseSideSequence.ScreenLeftThenRight,
             [268] = ExerciseSideSequence.Continuous,
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -122,6 +123,22 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expected.Value,
                 exercises.Single(exercise => exercise.Id == expected.Key).SideSequence));
+
+        int[] unequalResistanceRoleExerciseIds =
+        [
+            220, 239, 240, 256, 257, 258, 269, 278, 279, 285, 286, 287,
+            508, 843,
+        ];
+        Assert.All(unequalResistanceRoleExerciseIds, exerciseId =>
+            Assert.NotEqual(
+                ExerciseSideSequence.Continuous,
+                exercises.Single(exercise => exercise.Id == exerciseId).SideSequence));
+
+        int[] symmetricResistanceExerciseIds = [229, 230, 238, 242, 248, 262, 270];
+        Assert.All(symmetricResistanceExerciseIds, exerciseId =>
+            Assert.Equal(
+                ExerciseSideSequence.Continuous,
+                exercises.Single(exercise => exercise.Id == exerciseId).SideSequence));
         Assert.Equal(
             ExerciseSideSequence.Continuous,
             exercises.Single(exercise => exercise.Id == 118).SideSequence);

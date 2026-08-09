@@ -235,6 +235,28 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
   });
 });
 
+test("unequal resistance roles always receive a timed side swap", () => {
+  const unequalRoleIds = [
+    220, 239, 240, 256, 257, 258, 269, 278, 279, 285, 286, 287, 508, 843,
+  ];
+  for (const exerciseId of unequalRoleIds) {
+    assert.notEqual(
+      catalog.find((item) => item.id === exerciseId).sideSequence,
+      "Continuous",
+      `exercise ${exerciseId} must swap unequal resistance roles`,
+    );
+  }
+
+  const symmetricIds = [229, 230, 238, 242, 248, 262, 270];
+  for (const exerciseId of symmetricIds) {
+    assert.equal(
+      catalog.find((item) => item.id === exerciseId).sideSequence,
+      "Continuous",
+      `exercise ${exerciseId} should remain a symmetric continuous movement`,
+    );
+  }
+});
+
 test("rejection decrements once, purges saved copies, and replaces only rejected slots", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3);

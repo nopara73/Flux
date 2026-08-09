@@ -22,6 +22,7 @@
 - Keep every movement inside a 3 m × 3 m space.
 - Keep movements quiet; exclude jumping, stomping, clapping, and vocalization.
 - Use symmetric or naturally alternating movement when it flows cleanly; otherwise require the explicit 20-second first side, 5-second change, 20-second second side protocol.
+- Treat unequal worker/resister, over/under, or interlocked limb roles as sided even when both limbs exert force; swap roles with the 20-5-20 protocol.
 - Assign every canonical group the exercise meaningfully trains; mere involvement does not qualify.
 - Assign one primary scheduling group representing the clearest intended stimulus.
 - Let an exercise compete only in a roll-up containing its primary group and where it trains at least half of the roll-up's canonical leaves.
