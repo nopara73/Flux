@@ -1,7 +1,7 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 16;
+export const CURRENT_CATALOG_REVISION = 17;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -22,12 +22,18 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
+  [21, ["Standing-Scale Balance", "Standing-Scale Balance Hold"]],
   [105, ["Plie Squat", "Wide Turned-Out Squat"]],
   [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
   [197, ["First-Position Plie-Releve", "Parallel Squat-to-Calf Raise"]],
   [198, ["Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise"]],
   [199, ["Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat"]],
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
+  [145, ["Standing Knee Extension", "Standing Knee-Extension Hold"]],
+  [256, ["Self-Resisted Overhead Pull", "Self-Resisted Overhead Pull Hold"]],
+  [257, ["Self-Resisted Chest-Level Pull", "Self-Resisted Chest-Level Pull Hold"]],
+  [258, ["Self-Resisted Low Pull", "Self-Resisted Low Pull Hold"]],
+  [262, ["Standing Hands-to-Thigh Abdominal Press", "Standing Hands-to-Thigh Abdominal Press Hold"]],
   [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
   [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],
   [231, ["Karate Reverse Punch", "Step-Through Karate Reverse Punch"]],
@@ -45,13 +51,19 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [406, ["Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles"]],
   [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
+  [396, ["Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold"]],
+  [510, ["Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold"]],
   [588, ["Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls"]],
   [617, ["Standing Side-Leg Circles", "Standing Forward Side-Leg Circles"]],
   [626, ["Sumo Stance", "Sumo Squat Hold"]],
+  [712, ["Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold"]],
   [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
+  [1000, ["Standing Forward Fold", "Standing Forward-Fold Hold"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
+  [21, new Set(["Alternating Standing-Scale Balance"])],
+  [145, new Set(["Alternating Standing Knee Extension"])],
   [394, new Set(["Standing Open-and-Close Breathing"])],
   [395, new Set(["Standing Overhead Rib-Expansion Breathing"])],
   [397, new Set(["Breath-Integrated Weight Shift"])],

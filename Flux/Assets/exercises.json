@@ -130,7 +130,7 @@
   },
   {
     "id": 21,
-    "name": "Standing-Scale Balance",
+    "name": "Standing-Scale Balance Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_0021.mp4",
     "primaryCanonicalGroup": "SpinalExtensors",
@@ -1586,7 +1586,7 @@
   },
   {
     "id": 145,
-    "name": "Standing Knee Extension",
+    "name": "Standing Knee-Extension Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_0145.mp4",
     "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
@@ -1596,9 +1596,9 @@
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
-    "mode": "Repetition",
-    "presentation": "Motion",
-    "holdFramePercent": 0,
+    "mode": "Hold",
+    "presentation": "Still",
+    "holdFramePercent": 90,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
     "score": 0,
@@ -3616,7 +3616,7 @@
   },
   {
     "id": 256,
-    "name": "Self-Resisted Overhead Pull",
+    "name": "Self-Resisted Overhead Pull Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_0256.mp4",
     "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
@@ -3643,7 +3643,7 @@
   },
   {
     "id": 257,
-    "name": "Self-Resisted Chest-Level Pull",
+    "name": "Self-Resisted Chest-Level Pull Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_0257.mp4",
     "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
@@ -3670,7 +3670,7 @@
   },
   {
     "id": 258,
-    "name": "Self-Resisted Low Pull",
+    "name": "Self-Resisted Low Pull Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_0258.mp4",
     "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
@@ -3746,7 +3746,7 @@
   },
   {
     "id": 262,
-    "name": "Standing Hands-to-Thigh Abdominal Press",
+    "name": "Standing Hands-to-Thigh Abdominal Press Hold",
     "retiredName": "Standing Scapular Depression",
     "video": "exercise_videos/exercise_0262.mp4",
     "primaryCanonicalGroup": "AbdominalWall",
@@ -5201,7 +5201,7 @@
   },
   {
     "id": 396,
-    "name": "Unsupported Single-Leg Balance",
+    "name": "Unsupported Single-Leg Balance Hold",
     "retiredName": "Standing Arm-Lift Breathing",
     "video": "exercise_videos/exercise_0396.mp4",
     "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
@@ -6128,7 +6128,7 @@
   },
   {
     "id": 510,
-    "name": "Clasped-Hands Chest-Opening Forward Fold",
+    "name": "Clasped-Hands Chest-Opening Forward-Fold Hold",
     "retiredName": "Maximal Jaw Open and Close",
     "video": "exercise_videos/exercise_0510.mp4",
     "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
@@ -7179,7 +7179,7 @@
   },
   {
     "id": 712,
-    "name": "Standing Arms-Back Chest Opener",
+    "name": "Standing Arms-Back Chest-Opener Hold",
     "retiredName": "Thoracic Expansion Hold",
     "video": "exercise_videos/exercise_0712.mp4",
     "primaryCanonicalGroup": "Chest",
@@ -8286,7 +8286,7 @@
   },
   {
     "id": 1000,
-    "name": "Standing Forward Fold",
+    "name": "Standing Forward-Fold Hold",
     "retiredName": null,
     "video": "exercise_videos/exercise_1000.mp4",
     "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
@@ -8294,7 +8294,7 @@
       "SpinalExtensors",
       "DeepAndIntersegmentalBack"
     ],
-    "practice": "Stretching",
+    "practice": "Standing mobility and movement practice",
     "motionProfile": "SpineFlexion",
     "mode": "Hold",
     "presentation": "Still",

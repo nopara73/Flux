@@ -555,12 +555,18 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(21, "Standing-Scale Balance", "Standing-Scale Balance Hold")]
     [InlineData(105, "Plie Squat", "Wide Turned-Out Squat")]
     [InlineData(188, "Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat")]
     [InlineData(197, "First-Position Plie-Releve", "Parallel Squat-to-Calf Raise")]
     [InlineData(198, "Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise")]
     [InlineData(199, "Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat")]
     [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
+    [InlineData(145, "Standing Knee Extension", "Standing Knee-Extension Hold")]
+    [InlineData(256, "Self-Resisted Overhead Pull", "Self-Resisted Overhead Pull Hold")]
+    [InlineData(257, "Self-Resisted Chest-Level Pull", "Self-Resisted Chest-Level Pull Hold")]
+    [InlineData(258, "Self-Resisted Low Pull", "Self-Resisted Low Pull Hold")]
+    [InlineData(262, "Standing Hands-to-Thigh Abdominal Press", "Standing Hands-to-Thigh Abdominal Press Hold")]
     [InlineData(270, "Bodyweight Svend Press", "Palm-Squeeze Forward Press")]
     [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]
     [InlineData(394, "Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round")]
@@ -577,10 +583,14 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(406, "Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles")]
     [InlineData(409, "Neck Controlled Articular Rotation", "Full Neck Circles")]
     [InlineData(425, "Chin-Tuck Isometric", "Chin-Tuck Hold")]
+    [InlineData(396, "Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold")]
+    [InlineData(510, "Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold")]
     [InlineData(588, "Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls")]
     [InlineData(617, "Standing Side-Leg Circles", "Standing Forward Side-Leg Circles")]
     [InlineData(626, "Sumo Stance", "Sumo Squat Hold")]
+    [InlineData(712, "Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold")]
     [InlineData(969, "Chair-Pose Core Hold", "Chair-Pose Hold")]
+    [InlineData(1000, "Standing Forward Fold", "Standing Forward-Fold Hold")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -602,6 +612,8 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(21, "Alternating Standing-Scale Balance", "Standing-Scale Balance Hold")]
+    [InlineData(145, "Alternating Standing Knee Extension", "Standing Knee-Extension Hold")]
     [InlineData(394, "Standing Open-and-Close Breathing", "Inhale Arms Open, Exhale Arms Close and Round")]
     [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Overhead Hold with Deep Ribcage Breaths")]
     [InlineData(397, "Breath-Integrated Weight Shift", "Exhale Forward, Inhale Back Weight Shift")]

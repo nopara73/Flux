@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 16;
+    public const int CurrentCatalogRevision = 17;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -26,6 +26,9 @@ public static class CatalogMigrationRules
         ApprovedExerciseCorrections =
             new Dictionary<int, ApprovedExerciseCorrection>
             {
+                [21] = new(
+                    "Standing-Scale Balance",
+                    "Standing-Scale Balance Hold"),
                 [105] = new(
                     "Plie Squat",
                     "Wide Turned-Out Squat"),
@@ -44,6 +47,21 @@ public static class CatalogMigrationRules
                 [255] = new(
                     "Standing Bent-Knee Calf Raise",
                     "Deep-Squat Calf Raise"),
+                [145] = new(
+                    "Standing Knee Extension",
+                    "Standing Knee-Extension Hold"),
+                [256] = new(
+                    "Self-Resisted Overhead Pull",
+                    "Self-Resisted Overhead Pull Hold"),
+                [257] = new(
+                    "Self-Resisted Chest-Level Pull",
+                    "Self-Resisted Chest-Level Pull Hold"),
+                [258] = new(
+                    "Self-Resisted Low Pull",
+                    "Self-Resisted Low Pull Hold"),
+                [262] = new(
+                    "Standing Hands-to-Thigh Abdominal Press",
+                    "Standing Hands-to-Thigh Abdominal Press Hold"),
                 [270] = new(
                     "Bodyweight Svend Press",
                     "Palm-Squeeze Forward Press"),
@@ -95,6 +113,12 @@ public static class CatalogMigrationRules
                 [425] = new(
                     "Chin-Tuck Isometric",
                     "Chin-Tuck Hold"),
+                [396] = new(
+                    "Unsupported Single-Leg Balance",
+                    "Unsupported Single-Leg Balance Hold"),
+                [510] = new(
+                    "Clasped-Hands Chest-Opening Forward Fold",
+                    "Clasped-Hands Chest-Opening Forward-Fold Hold"),
                 [588] = new(
                     "Belly-Dance Alternating Shoulder Roll",
                     "Belly-Dance Alternating Shoulder Rolls"),
@@ -104,15 +128,29 @@ public static class CatalogMigrationRules
                 [626] = new(
                     "Sumo Stance",
                     "Sumo Squat Hold"),
+                [712] = new(
+                    "Standing Arms-Back Chest Opener",
+                    "Standing Arms-Back Chest-Opener Hold"),
                 [969] = new(
                     "Chair-Pose Core Hold",
                     "Chair-Pose Hold"),
+                [1000] = new(
+                    "Standing Forward Fold",
+                    "Standing Forward-Fold Hold"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
         AdditionalApprovedExerciseCorrectionPreviousNames =
             new Dictionary<int, IReadOnlySet<string>>
             {
+                [21] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Standing-Scale Balance",
+                },
+                [145] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Standing Knee Extension",
+                },
                 [394] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Open-and-Close Breathing",

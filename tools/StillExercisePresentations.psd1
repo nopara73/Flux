@@ -3,6 +3,7 @@
     # Timed-side stills are mirrored after the five-second change phase.
     21 = $true
     136 = $true
+    145 = $true
     220 = $true
     238 = $true
     248 = $true

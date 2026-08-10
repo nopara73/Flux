@@ -74,6 +74,12 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   const overheadBreathingHold = catalog.find((exercise) => exercise.id === 395);
   assert.equal(overheadBreathingHold.mode, "Hold");
   assert.equal(overheadBreathingHold.presentation, "Still");
+  const standingKneeExtensionHold = catalog.find((exercise) => exercise.id === 145);
+  assert.equal(standingKneeExtensionHold.name, "Standing Knee-Extension Hold");
+  assert.equal(standingKneeExtensionHold.mode, "Hold");
+  assert.equal(standingKneeExtensionHold.presentation, "Still");
+  assert.equal(standingKneeExtensionHold.holdFramePercent, 90);
+  assert.equal(standingKneeExtensionHold.sideSequence, "ScreenRightThenLeft");
   const forwardSideLegCircles = catalog.find((exercise) => exercise.id === 617);
   const backwardSideLegCircles = catalog.find((exercise) => exercise.id === 620);
   assert.equal(forwardSideLegCircles.name, "Standing Forward Side-Leg Circles");
@@ -712,6 +718,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
     if (item.mode === "Hold") {
       holds.push(item);
+      assert.match(item.name, /\b(?:hold|isometric|pose|stance|stretch)\b/i);
       await assertFile(
         path.join(repositoryRoot, "Flux", "Assets", getHoldFramePath(item)),
       );

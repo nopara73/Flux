@@ -41,6 +41,14 @@ public sealed class CatalogInvariantTests
         Exercise overheadBreathingHold = exercises.Single(exercise => exercise.Id == 395);
         Assert.Equal(ExerciseMode.Hold, overheadBreathingHold.Mode);
         Assert.Equal(ExercisePresentation.Still, overheadBreathingHold.Presentation);
+        Exercise standingKneeExtensionHold = exercises.Single(exercise => exercise.Id == 145);
+        Assert.Equal("Standing Knee-Extension Hold", standingKneeExtensionHold.Name);
+        Assert.Equal(ExerciseMode.Hold, standingKneeExtensionHold.Mode);
+        Assert.Equal(ExercisePresentation.Still, standingKneeExtensionHold.Presentation);
+        Assert.Equal(90, standingKneeExtensionHold.HoldFramePercent);
+        Assert.Equal(
+            ExerciseSideSequence.ScreenRightThenLeft,
+            standingKneeExtensionHold.SideSequence);
         Exercise[] timedSideExercises = exercises
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
@@ -189,9 +197,11 @@ public sealed class CatalogInvariantTests
 
         Dictionary<int, string> auditedCorrectedNames = new()
         {
+            [21] = "Standing-Scale Balance Hold",
             [105] = "Wide Turned-Out Squat",
             [126] = "Squat to Alternating Side Kick",
             [135] = "Standing Lateral Arm Pulses",
+            [145] = "Standing Knee-Extension Hold",
             [188] = "Narrow Turned-Out Shallow Squat",
             [195] = "Side Lunge to Knee-Up Balance",
             [197] = "Parallel Squat-to-Calf Raise",
@@ -219,6 +229,10 @@ public sealed class CatalogInvariantTests
             [241] = "Opposite-Hand-Resisted Thumb Adduction Hold",
             [245] = "Opposite-Hand-Resisted Elbow-Flexion Hold",
             [246] = "Bodyweight Cuban Rotation",
+            [256] = "Self-Resisted Overhead Pull Hold",
+            [257] = "Self-Resisted Chest-Level Pull Hold",
+            [258] = "Self-Resisted Low Pull Hold",
+            [262] = "Standing Hands-to-Thigh Abdominal Press Hold",
             [270] = "Palm-Squeeze Forward Press",
             [283] = "Opposite-Hand-Resisted Thumb Abduction Hold",
             [289] = "Opposite-Hand-Resisted Thumb Flexion Hold",
@@ -227,6 +241,7 @@ public sealed class CatalogInvariantTests
             [338] = "Overhead Triceps Stretch with Side Bend",
             [394] = "Inhale Arms Open, Exhale Arms Close and Round",
             [395] = "Overhead Hold with Deep Ribcage Breaths",
+            [396] = "Unsupported Single-Leg Balance Hold",
             [397] = "Exhale Forward, Inhale Back Weight Shift",
             [398] = "Inhale Arms Open, Exhale Self-Hug and Fold",
             [399] = "Inhale Chest Open, Exhale Arms Close with Shallow Squat",
@@ -238,6 +253,7 @@ public sealed class CatalogInvariantTests
             [497] = "Track Finger in Circles",
             [501] = "Single-Leg Thumb-Focus Head Turns",
             [508] = "Curl Raised Leg with One Arm",
+            [510] = "Clasped-Hands Chest-Opening Forward-Fold Hold",
             [513] = "Collarbone-Anchored Diagonal Neck Stretch",
             [588] = "Belly-Dance Alternating Shoulder Rolls",
             [591] = "Shadow Boxing",
@@ -245,8 +261,10 @@ public sealed class CatalogInvariantTests
             [626] = "Sumo Squat Hold",
             [649] = "Standing Clamshell",
             [686] = "Standing Knee-to-Chest Glute Stretch",
+            [712] = "Standing Arms-Back Chest-Opener Hold",
             [843] = "Arm-Behind-Back Assisted Side Neck Stretch",
             [969] = "Chair-Pose Hold",
+            [1000] = "Standing Forward-Fold Hold",
         };
         Assert.All(auditedCorrectedNames, expected =>
             Assert.Equal(
@@ -347,6 +365,9 @@ public sealed class CatalogInvariantTests
 
             if (exercise.Mode == ExerciseMode.Hold)
             {
+                Assert.Matches(
+                    "(?i)\\b(hold|isometric|pose|stance|stretch)\\b",
+                    exercise.Name);
                 Assert.InRange(exercise.HoldFramePercent, 1, 99);
                 Assert.True(
                     File.Exists(Path.Combine(

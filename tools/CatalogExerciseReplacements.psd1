@@ -1427,7 +1427,7 @@
     }
     262 = @{
         RetiredName = 'Standing Scapular Depression'
-        Name = 'Standing Hands-to-Thigh Abdominal Press'
+        Name = 'Standing Hands-to-Thigh Abdominal Press Hold'
         Practice = 'Self-resistance isometrics'
         MotionProfile = 'AbdominalIsometric'
         Primary = 'AbdominalWall'
@@ -2206,7 +2206,7 @@
     }
     396 = @{
         RetiredName = 'Standing Arm-Lift Breathing'
-        Name = 'Unsupported Single-Leg Balance'
+        Name = 'Unsupported Single-Leg Balance Hold'
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'BalanceHold'
         Primary = 'AnteriorLateralLowerLegAndDorsalFoot'
@@ -2905,7 +2905,7 @@
     }
     510 = @{
         RetiredName = 'Maximal Jaw Open and Close'
-        Name = 'Clasped-Hands Chest-Opening Forward Fold'
+        Name = 'Clasped-Hands Chest-Opening Forward-Fold Hold'
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'ForwardFold'
         Primary = 'PosteriorThighAndKneeFlexors'
@@ -3567,7 +3567,6 @@
             StartSeconds = 450
             DurationSeconds = 7.8
             FramesPerSecond = 8
-            DelayCentiseconds = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $true
@@ -3646,7 +3645,6 @@
             StartSeconds = 200.7
             DurationSeconds = 11.8
             FramesPerSecond = 8
-            DelayCentiseconds = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
@@ -3654,7 +3652,7 @@
     }
     712 = @{
         RetiredName = 'Thoracic Expansion Hold'
-        Name = 'Standing Arms-Back Chest Opener'
+        Name = 'Standing Arms-Back Chest-Opener Hold'
         Practice = 'Standing mobility and stretching'
         MotionProfile = 'ChestOpenerHold'
         Primary = 'Chest'
