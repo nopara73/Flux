@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 7;
+    public const int CurrentCatalogRevision = 13;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -47,27 +47,30 @@ public static class CatalogMigrationRules
                 [290] = new(
                     "Universe-in-Motion Qigong",
                     "Low Palm Scoop to Side Opening"),
+                [231] = new(
+                    "Karate Reverse Punch",
+                    "Step-Through Karate Reverse Punch"),
                 [394] = new(
-                    "Standing Open-and-Close Breathing",
-                    "Standing Arms Open and Close"),
+                    "Standing Arms Open and Close",
+                    "Inhale Arms Open, Exhale Arms Close and Round"),
                 [395] = new(
-                    "Standing Overhead Rib-Expansion Breathing",
-                    "Standing Overhead Arm Sweep"),
+                    "Standing Overhead Arm Sweep",
+                    "Overhead Hold with Deep Ribcage Breaths"),
                 [397] = new(
-                    "Breath-Integrated Weight Shift",
-                    "Staggered-Stance Weight Shift"),
+                    "Staggered-Stance Weight Shift",
+                    "Exhale Forward, Inhale Back Weight Shift"),
                 [398] = new(
-                    "Standing Arm-Expansion Breathing",
-                    "Standing Hug and Arm Expansion"),
+                    "Standing Hug and Arm Expansion",
+                    "Inhale Arms Open, Exhale Self-Hug and Fold"),
                 [399] = new(
-                    "Shibashi Opening-the-Chest Breathing",
-                    "Shallow Squat with Chest-Opening Arms"),
+                    "Shallow Squat with Chest-Opening Arms",
+                    "Inhale Chest Open, Exhale Arms Close with Shallow Squat"),
                 [400] = new(
-                    "Shibashi Separating-the-Clouds Breathing",
-                    "Shallow Squat with Overhead Arm Circle"),
+                    "Shallow Squat with Overhead Arm Circle",
+                    "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down"),
                 [401] = new(
-                    "Shibashi Alternating Swinging-Arms Breathing",
-                    "Alternating Weight Shift with Arm Swing"),
+                    "Alternating Weight Shift with Arm Swing",
+                    "Alternating Inhale-Twist, Exhale-Push"),
                 [402] = new(
                     "Shibashi Rowing-a-Boat Breathing",
                     "Shallow Squat with Rowing Arm Circle"),
@@ -100,6 +103,40 @@ public static class CatalogMigrationRules
                     "Chair-Pose Hold"),
             };
 
+    private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
+        AdditionalApprovedExerciseCorrectionPreviousNames =
+            new Dictionary<int, IReadOnlySet<string>>
+            {
+                [394] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Open-and-Close Breathing",
+                },
+                [395] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Overhead Rib-Expansion Breathing",
+                },
+                [397] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Breath-Integrated Weight Shift",
+                },
+                [398] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Arm-Expansion Breathing",
+                },
+                [399] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Shibashi Opening-the-Chest Breathing",
+                },
+                [400] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Shibashi Separating-the-Clouds Breathing",
+                },
+                [401] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Shibashi Alternating Swinging-Arms Breathing",
+                },
+            };
+
     private static readonly IReadOnlyDictionary<int, RestoredReviewedExerciseIdentity>
         RestoredReviewedExerciseIdentities =
             new Dictionary<int, RestoredReviewedExerciseIdentity>
@@ -113,6 +150,42 @@ public static class CatalogMigrationRules
         PriorReviewedReplacementIdentities =
             new Dictionary<int, PriorReviewedReplacementIdentity>
             {
+                [195] = new(
+                    "Lateral Lunge to Balance",
+                    "Ballet Degage a la Seconde"),
+                [211] = new(
+                    "Open-Finger Wrist Extension",
+                    "Karate Backfist Strike (Uraken-Uchi)"),
+                [213] = new(
+                    "Open-Finger Wrist Flexion",
+                    "Karate Hammer-Fist Strike (Tetsui-Uchi)"),
+                [214] = new(
+                    "Neutral-Fist Wrist Flexion and Extension",
+                    "Wing Chun Biu-Sau Palm Strike"),
+                [215] = new(
+                    "Up-and-Down Wrist Glides",
+                    "Self-Resisted Wrist Radial-Deviation Pulses"),
+                [216] = new(
+                    "Side-to-Side Wrist Glides",
+                    "Self-Resisted Wrist Ulnar-Deviation Pulses"),
+                [217] = new(
+                    "Bilateral Wrist Figure Eights",
+                    "Self-Resisted Wrist-Extension Pulses"),
+                [218] = new(
+                    "Hook-to-Fist Tendon Glides",
+                    "Self-Resisted Wrist-Flexion Pulses"),
+                [232] = new(
+                    "Palms-Down Fist Wrist Flexion and Extension",
+                    "Karate Knife-Hand Chop"),
+                [233] = new(
+                    "Bilateral Wrist Circles",
+                    "Karate Ridge-Hand Strike (Haito-Uchi)"),
+                [234] = new(
+                    "Palms-Up Fist Wrist Flexion and Extension",
+                    "Karate Flat-Fist Strike (Hiraken)"),
+                [236] = new(
+                    "Alternating Hand Open and Close",
+                    "Karate Spear-Hand Strike (Nukite)"),
                 [239] = new(
                     "Ninja Snake Hand-Seal Hold",
                     "Ninja Fireball Hand-Seal Sequence"),
@@ -137,6 +210,9 @@ public static class CatalogMigrationRules
                 [280] = new(
                     "Alternating Forward-and-Side Arm Press",
                     "Ringing-the-Towel Wrist Inversion"),
+                [283] = new(
+                    "Sequential Finger Waves",
+                    "Qigong Fist Rotation"),
                 [289] = new(
                     "Ninja Horse Hand-Seal Hold",
                     "Heaven-to-Earth Finger Rotation"),
@@ -191,6 +267,9 @@ public static class CatalogMigrationRules
                 [508] = new(
                     "Diagonal Arm Reach-to-Row",
                     "Tongue Protrusion and Retraction"),
+                [513] = new(
+                    "Standing Unilateral SCM Stretch",
+                    "Scapular Retraction"),
                 [572] = new(
                     "Wide-Stance Bent-Knee Rotational Stretch",
                     "Tai Chi White Crane Opens Wings"),
@@ -207,7 +286,7 @@ public static class CatalogMigrationRules
                     "Standing Backward Arm Circles",
                     "Clasped-Hands-Behind-Back Chest Opener"),
                 [843] = new(
-                    "Standing Scalene Wrist-Anchor Stretch",
+                    "Behind-Back Wrist-Pull Neck Stretch",
                     "Standing Cobra Pose"),
             };
 
@@ -218,10 +297,12 @@ public static class CatalogMigrationRules
                 [241] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Thumb C Hold",
+                    "Straight-Hand Knuckle-Bend Flow",
                 },
                 [289] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Thumb Adduction Hold",
+                    "Alternating Thumb-to-Palm Tucks",
                 },
                 [291] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -243,21 +324,27 @@ public static class CatalogMigrationRules
                 {
                     "Counterclockwise-First Full Neck Circles",
                 },
+                [843] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Scalene Wrist-Anchor Stretch",
+                },
             };
 
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
-        41, 56, 59, 98, 102, 116, 120, 133, 146, 159, 176, 177, 182, 183,
+        41, 56, 59, 98, 102, 116, 120, 126, 133, 135, 146, 159, 176, 177, 182, 183,
         185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203,
-        215, 216, 217, 218, 219, 227, 228, 229, 230, 239, 240, 241, 242,
+        211, 212, 213, 214,
+        215, 216, 217, 218, 219, 223, 224, 225, 227, 228, 229, 230, 232, 233, 234, 236, 237,
+        239, 240, 241, 242, 245, 246,
         260, 262, 267, 268, 272, 274, 275, 276, 280, 281, 283, 284, 285,
-        286, 287, 288, 289, 291, 292, 293, 294, 295, 296, 326, 327, 367, 390,
+        286, 287, 288, 289, 291, 292, 293, 294, 295, 296, 326, 327, 338, 367, 390,
         391, 392, 393, 396, 422,
         423, 467, 474, 475, 477,
         481, 482, 483, 490, 491, 492, 493, 495, 497, 499, 500, 501,
         502, 503, 504, 505, 506, 507, 508, 509, 510, 512, 513, 572,
         573, 591, 609, 610, 611, 612, 613, 614, 615, 616, 618, 619, 625,
-        636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 687, 712,
+        636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686, 687, 712,
         743, 843, 845, 971, 986, 987,
     ];
 
@@ -269,11 +356,20 @@ public static class CatalogMigrationRules
                 [5] = new HashSet<int> { 266 },
                 [6] = new HashSet<int> { 266 },
                 [7] = new HashSet<int> { 326 },
+                [8] = new HashSet<int> { 211, 212, 213, 214, 232, 233, 234, 236 },
+                [9] = new HashSet<int> { 195 },
+                [10] = new HashSet<int> { 126, 135, 338, 686 },
+                [11] = new HashSet<int>
+                {
+                    211, 213, 214, 215, 216, 217, 218, 232,
+                    233, 234, 236, 237, 240, 241, 283, 289,
+                },
+                [12] = new HashSet<int> { 513, 843 },
+                [13] = new HashSet<int> { 223, 224, 225, 245, 246 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
     [
-        223, 224, 245, 246,
     ];
 
     public static IReadOnlySet<int> ReplacedExerciseIds => ReplacedExerciseIdSet;
@@ -399,10 +495,14 @@ public static class CatalogMigrationRules
                 ApprovedExerciseCorrections.TryGetValue(
                     exerciseId,
                     out ApprovedExerciseCorrection? correction) &&
-                string.Equals(
-                    stored.Name,
-                    correction.PreviousName,
-                    StringComparison.Ordinal) &&
+                (string.Equals(
+                        stored.Name,
+                        correction.PreviousName,
+                        StringComparison.Ordinal) ||
+                    (AdditionalApprovedExerciseCorrectionPreviousNames.TryGetValue(
+                            exerciseId,
+                            out IReadOnlySet<string>? additionalPreviousNames) &&
+                        additionalPreviousNames.Contains(stored.Name))) &&
                 string.Equals(
                     bundled.Name,
                     correction.CurrentName,
@@ -490,8 +590,6 @@ public static class CatalogMigrationRules
         state.ActiveExtraSetSelectionGroupIds ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
-
-        state.LastKeptExerciseIds.RemoveWhere(invalidatedExerciseIds.Contains);
 
         string[] groupsWithRetiredSelections = state.SelectedExerciseIds
             .Where(selection => invalidatedExerciseIds.Contains(selection.Value))

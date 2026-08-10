@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(130, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(148, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -227,17 +227,17 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void ReviewedNaturalAlternationNormalizationPreservesIdentityAndScore()
+    public void ClarifiedStepThroughNamePreservesIdentityAndScore()
     {
-        const int exerciseId = 223;
-        const string video = "exercise_videos/exercise_0223.mp4";
+        const int exerciseId = 231;
+        const string video = "exercise_videos/exercise_0231.mp4";
         Exercise normalized = Exercise(
             exerciseId,
-            "Alternating Karate Inside Block (Uchi-Uke)",
+            "Step-Through Karate Reverse Punch",
             video);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
-            [exerciseId] = new("Karate Inside Block (Uchi-Uke)", video, -3),
+            [exerciseId] = new("Karate Reverse Punch", video, -3),
         };
 
         IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
@@ -249,6 +249,18 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(195, "Lateral Lunge to Balance", "Ballet Degage a la Seconde")]
+    [InlineData(211, "Open-Finger Wrist Extension", "Karate Backfist Strike (Uraken-Uchi)")]
+    [InlineData(213, "Open-Finger Wrist Flexion", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
+    [InlineData(214, "Neutral-Fist Wrist Flexion and Extension", "Wing Chun Biu-Sau Palm Strike")]
+    [InlineData(215, "Up-and-Down Wrist Glides", "Self-Resisted Wrist Radial-Deviation Pulses")]
+    [InlineData(216, "Side-to-Side Wrist Glides", "Self-Resisted Wrist Ulnar-Deviation Pulses")]
+    [InlineData(217, "Bilateral Wrist Figure Eights", "Self-Resisted Wrist-Extension Pulses")]
+    [InlineData(218, "Hook-to-Fist Tendon Glides", "Self-Resisted Wrist-Flexion Pulses")]
+    [InlineData(232, "Palms-Down Fist Wrist Flexion and Extension", "Karate Knife-Hand Chop")]
+    [InlineData(233, "Bilateral Wrist Circles", "Karate Ridge-Hand Strike (Haito-Uchi)")]
+    [InlineData(234, "Palms-Up Fist Wrist Flexion and Extension", "Karate Flat-Fist Strike (Hiraken)")]
+    [InlineData(236, "Alternating Hand Open and Close", "Karate Spear-Hand Strike (Nukite)")]
     [InlineData(239, "Ninja Snake Hand-Seal Hold", "Ninja Fireball Hand-Seal Sequence")]
     [InlineData(240, "Ninja Ram Hand-Seal Hold", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
@@ -257,6 +269,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
     [InlineData(276, "Alternating Diagonal Overhead Reach-and-Pull", "Dynamic-Resistance High Chest Press")]
     [InlineData(280, "Alternating Forward-and-Side Arm Press", "Ringing-the-Towel Wrist Inversion")]
+    [InlineData(283, "Sequential Finger Waves", "Qigong Fist Rotation")]
     [InlineData(289, "Ninja Horse Hand-Seal Hold", "Heaven-to-Earth Finger Rotation")]
     [InlineData(291, "Ninja Tiger Hand-Seal Hold", "Black Dragon Enters the Cave")]
     [InlineData(293, "Ninja Dragon Hand-Seal Hold", "Sword-Fingers Qigong Sequence")]
@@ -275,12 +288,13 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(505, "Temple Circle Massage", "Maximal Smile and Relax")]
     [InlineData(506, "Cheek Pinch Massage", "Eyebrow Raise and Relax")]
     [InlineData(508, "Diagonal Arm Reach-to-Row", "Tongue Protrusion and Retraction")]
+    [InlineData(513, "Standing Unilateral SCM Stretch", "Scapular Retraction")]
     [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
     [InlineData(591, "Standing Speed-Bag Punches", "Bharatanatyam Natyarambhe Hold")]
     [InlineData(611, "Warrior II-Stance Hip Circles", "Pelvic-Floor Heel-Raise Lift")]
     [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
     [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
-    [InlineData(843, "Standing Scalene Wrist-Anchor Stretch", "Standing Cobra Pose")]
+    [InlineData(843, "Behind-Back Wrist-Pull Neck Stretch", "Standing Cobra Pose")]
     public void SecondGenerationReplacementAcceptsImmediatelyPriorIdentity(
         int replacedId,
         string priorName,
@@ -359,9 +373,13 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void CatalogRevisionDropsOnlyReferencesChangedByThatRevisionOnce()
+    public void CatalogRevisionDropsChangedTransientReferencesButPreservesKeepMarkers()
     {
-        const int replacedId = 326;
+        const int replacedId = 223;
+        int[] latestReplacementIds =
+        [
+            223, 224, 225, 245, 246,
+        ];
         const int historicalReplacementId = 591;
         const int retainedId = 15;
         const string replacedGroup = "group.replaced";
@@ -387,6 +405,7 @@ public sealed class CatalogMigrationRulesTests
             PendingRestKept = true,
             PendingScoreExerciseId = replacedId,
             PendingScoreValue = -8,
+            LastKeptExerciseIds = [.. latestReplacementIds, historicalReplacementId, retainedId],
         };
 
         Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
@@ -407,6 +426,10 @@ public sealed class CatalogMigrationRulesTests
         Assert.False(state.PendingRestKept);
         Assert.Equal(0, state.PendingScoreExerciseId);
         Assert.Equal(0, state.PendingScoreValue);
+        Assert.All(latestReplacementIds, exerciseId =>
+            Assert.Contains(exerciseId, state.LastKeptExerciseIds));
+        Assert.Contains(historicalReplacementId, state.LastKeptExerciseIds);
+        Assert.Contains(retainedId, state.LastKeptExerciseIds);
 
         state.SelectedExerciseIds[replacedGroup] = replacedId;
         state.PendingScoreExerciseId = replacedId;
@@ -539,13 +562,13 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
     [InlineData(270, "Bodyweight Svend Press", "Palm-Squeeze Forward Press")]
     [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]
-    [InlineData(394, "Standing Open-and-Close Breathing", "Standing Arms Open and Close")]
-    [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Standing Overhead Arm Sweep")]
-    [InlineData(397, "Breath-Integrated Weight Shift", "Staggered-Stance Weight Shift")]
-    [InlineData(398, "Standing Arm-Expansion Breathing", "Standing Hug and Arm Expansion")]
-    [InlineData(399, "Shibashi Opening-the-Chest Breathing", "Shallow Squat with Chest-Opening Arms")]
-    [InlineData(400, "Shibashi Separating-the-Clouds Breathing", "Shallow Squat with Overhead Arm Circle")]
-    [InlineData(401, "Shibashi Alternating Swinging-Arms Breathing", "Alternating Weight Shift with Arm Swing")]
+    [InlineData(394, "Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round")]
+    [InlineData(395, "Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths")]
+    [InlineData(397, "Staggered-Stance Weight Shift", "Exhale Forward, Inhale Back Weight Shift")]
+    [InlineData(398, "Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold")]
+    [InlineData(399, "Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
+    [InlineData(400, "Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]
+    [InlineData(401, "Alternating Weight Shift with Arm Swing", "Alternating Inhale-Twist, Exhale-Push")]
     [InlineData(402, "Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle")]
     [InlineData(403, "Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push")]
     [InlineData(404, "Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch")]
@@ -577,13 +600,44 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(394, "Standing Open-and-Close Breathing", "Inhale Arms Open, Exhale Arms Close and Round")]
+    [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Overhead Hold with Deep Ribcage Breaths")]
+    [InlineData(397, "Breath-Integrated Weight Shift", "Exhale Forward, Inhale Back Weight Shift")]
+    [InlineData(398, "Standing Arm-Expansion Breathing", "Inhale Arms Open, Exhale Self-Hug and Fold")]
+    [InlineData(399, "Shibashi Opening-the-Chest Breathing", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
+    [InlineData(400, "Shibashi Separating-the-Clouds Breathing", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]
+    [InlineData(401, "Shibashi Alternating Swinging-Arms Breathing", "Alternating Inhale-Twist, Exhale-Push")]
+    public void MigrationAllowsEarlierNameAcrossSecondClarityCorrection(
+        int exerciseId,
+        string earlierName,
+        string correctedName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(earlierName, video, -5),
+        };
+        Exercise corrected = Exercise(exerciseId, correctedName, video);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [corrected],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-5, stored[exerciseId].Score);
+    }
+
+    [Theory]
     [InlineData(241, "Self-Resisted Thumb C Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
+    [InlineData(241, "Straight-Hand Knuckle-Bend Flow", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(289, "Self-Resisted Thumb Adduction Hold", "Heaven-to-Earth Finger Rotation")]
+    [InlineData(289, "Alternating Thumb-to-Palm Tucks", "Heaven-to-Earth Finger Rotation")]
     [InlineData(291, "Self-Resisted Thumb Abduction Hold", "Black Dragon Enters the Cave")]
     [InlineData(293, "Self-Resisted Thumb Flexion Hold", "Sword-Fingers Qigong Sequence")]
     [InlineData(294, "Self-Resisted Little-Finger Abduction Hold", "Tiger-Claw Grip Flow")]
     [InlineData(483, "Clockwise-First Full Neck Circles", "Pirouette Spotting Drill")]
     [InlineData(501, "Counterclockwise-First Full Neck Circles", "Standing Horizontal Saccades")]
+    [InlineData(843, "Standing Scalene Wrist-Anchor Stretch", "Standing Cobra Pose")]
     public void LatestReplacementAcceptsAdditionalReviewedPriorIdentity(
         int exerciseId,
         string priorName,

@@ -156,6 +156,99 @@ public sealed class ExerciseSessionServiceTests
             .Select(group => group.Id));
     }
 
+    [Theory]
+    [InlineData(3, 5, 3)]
+    [InlineData(5, 3, 3)]
+    public void KeptExercisesFillCompatibleSlotsAfterWorkoutDurationChanges(
+        int previousMinutes,
+        int nextMinutes,
+        int expectedCarriedCount)
+    {
+        WorkoutGroup[] previousGroups = MassGroupingTaxonomy
+            .GetResolution(previousMinutes)
+            .Groups
+            .ToArray();
+        WorkoutGroup[] nextGroups = MassGroupingTaxonomy
+            .GetResolution(nextMinutes)
+            .Groups
+            .ToArray();
+        Exercise[] keptExercises = previousGroups
+            .Select((group, index) => FullyCoveredExercise(
+                index + 1,
+                group.CanonicalGroups.Order().First()))
+            .ToArray();
+        Exercise[] nextDurationAlternatives = nextGroups
+            .Select((group, index) => FullyCoveredExercise(
+                101 + index,
+                group.CanonicalGroups.Order().First(),
+                score: 10))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [.. keptExercises, .. nextDurationAlternatives],
+            new Random(1));
+        var state = new WorkoutState
+        {
+            SelectedExerciseIds = previousGroups
+                .Zip(keptExercises)
+                .ToDictionary(pair => pair.First.Id, pair => pair.Second.Id),
+        };
+
+        service.StartWorkout(state, previousMinutes);
+        foreach (WorkoutGroup round in service.GetActiveGroups(state))
+        {
+            service.RecordOutcome(state, round, keep: true);
+        }
+        service.AcknowledgeCompletion(state);
+        service.Initialize(state);
+
+        foreach ((WorkoutGroup group, Exercise alternative) in
+                 nextGroups.Zip(nextDurationAlternatives))
+        {
+            state.SelectedExerciseIds[group.Id] = alternative.Id;
+        }
+
+        service.StartWorkout(state, nextMinutes);
+
+        HashSet<int> keptExerciseIds = keptExercises
+            .Select(exercise => exercise.Id)
+            .ToHashSet();
+        int[] selectedExerciseIds = nextGroups
+            .Select(group => state.SelectedExerciseIds[group.Id])
+            .ToArray();
+        Assert.Equal(previousMinutes, state.LastKeptExerciseIds.Count);
+        Assert.Equal(
+            expectedCarriedCount,
+            selectedExerciseIds.Count(keptExerciseIds.Contains));
+        Assert.Equal(nextMinutes, selectedExerciseIds.Distinct().Count());
+    }
+
+    [Fact]
+    public void InterruptedWorkoutPreservesUnreviewedKeepUntilExplicitRejection()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        Exercise kept = exercises[0];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            LastKeptExerciseIds = [kept.Id],
+        };
+
+        service.StartWorkout(state, 3);
+        service.FinishInterruptedWorkout(state);
+
+        Assert.Contains(kept.Id, state.LastKeptExerciseIds);
+
+        service.StartWorkout(state, 3);
+        foreach (WorkoutGroup round in service.GetActiveGroups(state))
+        {
+            bool keep = service.GetSelectedExercise(state, round).Id != kept.Id;
+            service.RecordOutcome(state, round, keep);
+        }
+        service.FinishInterruptedWorkout(state);
+
+        Assert.DoesNotContain(kept.Id, state.LastKeptExerciseIds);
+    }
+
     [Fact]
     public void RejectedSetReplacesTheSharedExerciseOnceAfterLongWorkout()
     {

@@ -54,6 +54,32 @@ test("web and mobile persist keep-first extra-set scheduling", () => {
     sessionService,
     /OrderByDescending\(group\s*=>[\s\S]*LastKeptExerciseIds\.Contains\(exerciseId\)\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
   );
+  assert.match(
+    sessionService,
+    /LastKeptExerciseIds\.ExceptWith\(rejectedExerciseIds\);[\s\S]*LastKeptExerciseIds\.UnionWith\(newlyKeptExerciseIds\);/,
+  );
+});
+
+test("web and mobile carry kept exercises across workout durations", () => {
+  assert.match(
+    sessionService,
+    /StartWorkout\([\s\S]*CarryKeptExercisesForward\(state, previousWorkoutMinutes\);[\s\S]*RepairActiveLineup\(state\);/,
+  );
+  assert.match(
+    sessionService,
+    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*WorkoutCoveragePolicy\.IsSelectable/,
+  );
+});
+
+test("web and mobile preserve deployed keeps by catalog membership", () => {
+  assert.doesNotMatch(
+    catalogMigrationRules,
+    /LastKeptExerciseIds\.RemoveWhere\(invalidatedExerciseIds\.Contains\)/,
+  );
+  assert.match(
+    sessionService,
+    /NormalizeKeptExerciseIds\([\s\S]*!_exercisesById\.ContainsKey\(exerciseId\)/,
+  );
 });
 
 test("web movement and rest timing match the mobile workout contract", () => {

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import {
+  ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
   RESOLUTIONS,
@@ -63,6 +64,16 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(catalog.length, 328);
   assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 328);
   assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 328);
+  const breathingExercises = catalog.filter(
+    (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
+  );
+  assert.equal(breathingExercises.length, 10);
+  for (const exercise of breathingExercises) {
+    assert.match(exercise.name, /\b(?:inhale|exhale|breath)/i);
+  }
+  const overheadBreathingHold = catalog.find((exercise) => exercise.id === 395);
+  assert.equal(overheadBreathingHold.mode, "Hold");
+  assert.equal(overheadBreathingHold.presentation, "Still");
 
   for (const [minutes, resolution] of RESOLUTIONS) {
     for (const group of resolution.groups) {
@@ -297,6 +308,87 @@ test("forty-five-minute extra sets prefer previous keeps then muscle mass", () =
   assert.deepEqual(frozenExtraSetGroupIds, expectedExtraSetGroupIds);
 });
 
+test("kept exercises fill compatible slots after workout duration changes", () => {
+  const allCanonicalGroups = RESOLUTIONS.get(30).groups
+    .flatMap((group) => group.canonicalGroups);
+
+  for (const [previousMinutes, nextMinutes, expectedCarriedCount] of [
+    [3, 5, 3],
+    [5, 3, 3],
+  ]) {
+    const previousGroups = RESOLUTIONS.get(previousMinutes).groups;
+    const nextGroups = RESOLUTIONS.get(nextMinutes).groups;
+    const keptExercises = previousGroups.map((group, index) => {
+      const primary = group.canonicalGroups[0];
+      return exercise(
+        index + 1,
+        primary,
+        allCanonicalGroups.filter((candidate) => candidate !== primary),
+        0,
+      );
+    });
+    const nextDurationAlternatives = nextGroups.map((group, index) => {
+      const primary = group.canonicalGroups[0];
+      return exercise(
+        101 + index,
+        primary,
+        allCanonicalGroups.filter((candidate) => candidate !== primary),
+        10,
+      );
+    });
+    const state = createDefaultState();
+    for (const [index, group] of previousGroups.entries()) {
+      state.selectedExerciseIds[group.id] = keptExercises[index].id;
+    }
+    const session = new WorkoutSession(
+      [...keptExercises, ...nextDurationAlternatives],
+      state,
+      () => 0,
+    );
+
+    session.startWorkout(previousMinutes);
+    for (const round of session.getActiveGroups()) {
+      session.recordOutcome(round, true);
+    }
+    session.acknowledgeCompletion();
+
+    for (const [index, group] of nextGroups.entries()) {
+      session.state.selectedExerciseIds[group.id] = nextDurationAlternatives[index].id;
+    }
+    session.startWorkout(nextMinutes);
+
+    const keptExerciseIds = new Set(keptExercises.map((item) => item.id));
+    const selectedExerciseIds = nextGroups.map(
+      (group) => session.state.selectedExerciseIds[group.id],
+    );
+    assert.equal(session.state.lastKeptExerciseIds.length, previousMinutes);
+    assert.equal(
+      selectedExerciseIds.filter((exerciseId) => keptExerciseIds.has(exerciseId)).length,
+      expectedCarriedCount,
+    );
+    assert.equal(new Set(selectedExerciseIds).size, nextMinutes);
+  }
+});
+
+test("an interrupted workout preserves unreviewed keeps until explicit rejection", () => {
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(3);
+  const kept = session.getSelectedExercise(session.getActiveGroups().at(-1));
+  session.state.lastKeptExerciseIds = [kept.id];
+
+  session.finishInterruptedWorkout();
+
+  assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), true);
+
+  session.startWorkout(3);
+  for (const round of session.getActiveGroups()) {
+    session.recordOutcome(round, session.getSelectedExercise(round).id !== kept.id);
+  }
+  session.acknowledgeCompletion();
+
+  assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), false);
+});
+
 test("rejection decrements once, purges saved copies, and replaces only rejected slots", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3);
@@ -389,6 +481,7 @@ test("catalog identity replacement clears inherited score and workout references
   const retired = started.getSelectedExercise(group);
   started.setScore(retired, -4);
   started.beginRest(group, Date.now() + 15_000);
+  started.state.lastKeptExerciseIds = [retired.id];
 
   const changedCatalog = catalog.map((item) =>
     item.id === retired.id
@@ -406,6 +499,7 @@ test("catalog identity replacement clears inherited score and workout references
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.activeWorkoutMinutes, 0);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+  assert.deepEqual(restored.state.lastKeptExerciseIds, [retired.id]);
   assert.equal(restored.getScore(changedCatalog.find((item) => item.id === retired.id)), 0);
 });
 
@@ -466,11 +560,48 @@ test("approved clarity corrections preserve browser memory", () => {
   }
 });
 
+test("second clarity corrections preserve earlier browser memory", () => {
+  for (const [exerciseId, previousNames] of
+    ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES) {
+    const currentName = APPROVED_EXERCISE_CORRECTIONS.get(exerciseId)[1];
+    const currentCatalog = catalog.map((item) =>
+      item.id === exerciseId ? { ...item, name: currentName } : item,
+    );
+    const currentExercise = currentCatalog.find((item) => item.id === exerciseId);
+    const group = RESOLUTIONS.get(30).groups.find((candidate) =>
+      isSelectable(currentExercise, candidate),
+    );
+
+    for (const previousName of previousNames) {
+      const priorCatalog = currentCatalog.map((item) =>
+        item.id === exerciseId ? { ...item, name: previousName } : item,
+      );
+      const prior = new WorkoutSession(priorCatalog, createDefaultState(), () => 0);
+      prior.initialize();
+      prior.state.selectedExerciseIds[group.id] = exerciseId;
+      prior.setScore(priorCatalog.find((item) => item.id === exerciseId), -4);
+
+      const restored = new WorkoutSession(
+        currentCatalog,
+        parseStoredState(JSON.stringify(prior.state)),
+        () => 0,
+      );
+      restored.initialize();
+
+      assert.equal(restored.state.selectedExerciseIds[group.id], exerciseId);
+      assert.equal(restored.getScore(currentExercise), -4);
+    }
+  }
+});
+
 test("catalog revision retires only exercises changed by that revision", () => {
+  const latestReplacementIds = new Set([
+    223, 224, 225, 245, 246,
+  ]);
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
   );
-  const replacement = catalog.find((item) => item.id === 326);
+  const replacement = catalog.find((item) => item.id === 223);
   const historicalReplacement = replacements.find((item) => item.id === 591);
   const group = RESOLUTIONS.get(30).groups.find((candidate) =>
     isSelectable(replacement, candidate),
@@ -494,7 +625,7 @@ test("catalog revision retires only exercises changed by that revision", () => {
   for (const item of replacements) {
     assert.equal(
       restored.state.scores[String(item.id)],
-      item.id === replacement.id ? undefined : -4,
+      latestReplacementIds.has(item.id) ? undefined : -4,
     );
   }
   assert.equal(restored.state.scores[String(replacement.id)], undefined);
@@ -502,6 +633,32 @@ test("catalog revision retires only exercises changed by that revision", () => {
   assert.equal(restored.state.outcomes[group.id], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("deployment migration preserves present keeps and drops missing exercises", () => {
+  const present = catalog.find((item) => item.id === 223);
+  const group = RESOLUTIONS.get(30).groups.find((candidate) =>
+    isSelectable(present, candidate),
+  );
+  const state = createDefaultState();
+  state.catalogRevision = CURRENT_CATALOG_REVISION - 1;
+  state.selectedExerciseIds[group.id] = present.id;
+  state.lastKeptExerciseIds = [present.id, 999999];
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(state)),
+    () => 0,
+  );
+  restored.initialize();
+
+  assert.deepEqual(restored.state.lastKeptExerciseIds, [present.id]);
+  assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+
+  restored.startWorkout(30);
+
+  assert.equal(restored.state.selectedExerciseIds[group.id], present.id);
 });
 
 test("legacy catalog revision still retires every historical replacement", () => {

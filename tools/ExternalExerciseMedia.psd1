@@ -254,9 +254,10 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 63.2
-        DurationSeconds = 9.1
+        StartSeconds = 68.0
+        DurationSeconds = 4.0
         FramesPerSecond = 10
+        PingPong = $true
         MirrorForAlternation = $true
     }
     124 = @{
@@ -783,9 +784,10 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 50.7
-        DurationSeconds = 7.4
+        StartSeconds = 31.0
+        DurationSeconds = 10.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     666 = @{
@@ -798,6 +800,7 @@
         StartSeconds = 55.0
         DurationSeconds = 6.3
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $true
     }
     677 = @{
@@ -945,6 +948,7 @@
         StartSeconds = 0.0
         DurationSeconds = 16.75
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     818 = @{
@@ -984,6 +988,7 @@
         StartSeconds = 54.0
         DurationSeconds = 10.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     885 = @{
@@ -996,6 +1001,7 @@
         StartSeconds = 111.5
         DurationSeconds = 8.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     948 = @{
@@ -1008,6 +1014,7 @@
         StartSeconds = 4.0
         DurationSeconds = 15.0
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $true
     }
     969 = @{
@@ -1161,9 +1168,10 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 6.5
-        DurationSeconds = 7.5
+        StartSeconds = 15.0
+        DurationSeconds = 4.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:0:0'
         MirrorForAlternation = $false
     }
     120 = @{
@@ -1225,6 +1233,7 @@
         StartSeconds = 0.0
         DurationSeconds = 18.0
         FramesPerSecond = 8
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     132 = @{
@@ -1311,6 +1320,7 @@
         StartSeconds = 0.0
         DurationSeconds = 3.0
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $true
     }
     168 = @{
@@ -1359,6 +1369,7 @@
         StartSeconds = 30.5
         DurationSeconds = 18.0
         FramesPerSecond = 8
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $true
     }
     159 = @{
@@ -1429,8 +1440,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 42.0
-        DurationSeconds = 18.0
+        StartSeconds = 52.0
+        DurationSeconds = 5.5
         FramesPerSecond = 8
         MirrorForAlternation = $true
     }
@@ -1590,6 +1601,7 @@
         StartSeconds = 3.0
         DurationSeconds = 15.5
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     161 = @{
@@ -1602,6 +1614,7 @@
         StartSeconds = 0.0
         DurationSeconds = 37.5
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     169 = @{
@@ -1624,8 +1637,10 @@
         Youtube = $true
         Video = $true
         StartSeconds = 0.0
-        DurationSeconds = 14.5
+        DurationSeconds = 4.8
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
         MirrorForAlternation = $true
     }
     177 = @{
@@ -1650,6 +1665,7 @@
         StartSeconds = 8.0
         DurationSeconds = 30.0
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     179 = @{
@@ -1662,6 +1678,7 @@
         StartSeconds = 0.0
         DurationSeconds = 10.5
         FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     182 = @{
@@ -2251,6 +2268,7 @@
         StartSeconds = 4.6
         DurationSeconds = 18.0
         FramesPerSecond = 10
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     379 = @{
@@ -2586,8 +2604,8 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 760
-        DurationSeconds = 8
+        StartSeconds = 764
+        DurationSeconds = 12
         FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
         MirrorForAlternation = $false

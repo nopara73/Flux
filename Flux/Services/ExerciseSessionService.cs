@@ -49,6 +49,7 @@ public sealed class ExerciseSessionService
         state.Version = CurrentStateVersion;
         state.LastWorkoutMinutes = NormalizeLastWorkoutMinutes(state.LastWorkoutMinutes);
         NormalizeSavedLineups(state);
+        NormalizeKeptExerciseIds(state);
 
         if (migratedLegacyState && state.ActiveWorkoutMinutes > 0)
         {
@@ -107,6 +108,8 @@ public sealed class ExerciseSessionService
 
         NormalizeCollections(state);
         state.Version = CurrentStateVersion;
+        int previousWorkoutMinutes = NormalizeLastWorkoutMinutes(
+            state.LastWorkoutMinutes);
         state.LastWorkoutMinutes = minutes;
         state.ActiveWorkoutMinutes = minutes;
         state.Outcomes.Clear();
@@ -114,6 +117,7 @@ public sealed class ExerciseSessionService
         state.CompletionAcknowledged = false;
         ClearPendingRest(state);
         ClearLegacyMigrationState(state);
+        CarryKeptExercisesForward(state, previousWorkoutMinutes);
         RepairActiveLineup(state);
         state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
     }
@@ -287,7 +291,7 @@ public sealed class ExerciseSessionService
                 out ExerciseOutcome outcome) && outcome == ExerciseOutcome.X)
             .Select(round => round.SelectionKey)
             .ToHashSet(StringComparer.Ordinal);
-        state.LastKeptExerciseIds = activeRounds
+        HashSet<int> newlyKeptExerciseIds = activeRounds
             .GroupBy(round => round.SelectionKey, StringComparer.Ordinal)
             .Where(rounds =>
                 rounds.Any(round => state.Outcomes.TryGetValue(
@@ -299,6 +303,13 @@ public sealed class ExerciseSessionService
             .Select(rounds => state.SelectedExerciseIds.GetValueOrDefault(rounds.Key))
             .Where(exerciseId => exerciseId != 0)
             .ToHashSet();
+        HashSet<int> rejectedExerciseIds = rejectedSelectionKeys
+            .Select(selectionKey =>
+                state.SelectedExerciseIds.GetValueOrDefault(selectionKey))
+            .Where(exerciseId => exerciseId != 0)
+            .ToHashSet();
+        state.LastKeptExerciseIds.ExceptWith(rejectedExerciseIds);
+        state.LastKeptExerciseIds.UnionWith(newlyKeptExerciseIds);
         var usedExerciseIds = selectionGroups
             .Where(group => !rejectedSelectionKeys.Contains(group.Id))
             .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
@@ -412,6 +423,44 @@ public sealed class ExerciseSessionService
         }
     }
 
+    private void CarryKeptExercisesForward(
+        WorkoutState state,
+        int previousWorkoutMinutes)
+    {
+        if (state.LastKeptExerciseIds.Count == 0)
+        {
+            return;
+        }
+
+        IReadOnlyList<WorkoutGroup> targetGroups = GetSelectionGroups(state);
+        var assignedTargetGroupIds = new HashSet<string>(StringComparer.Ordinal);
+        IEnumerable<int> orderedKeptExerciseIds = GetBaseResolution(
+                previousWorkoutMinutes)
+            .Groups
+            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
+            .Concat(state.LastKeptExerciseIds.Order())
+            .Where(state.LastKeptExerciseIds.Contains)
+            .Distinct();
+
+        foreach (int exerciseId in orderedKeptExerciseIds)
+        {
+            if (!_exercisesById.TryGetValue(exerciseId, out Exercise? exercise))
+            {
+                continue;
+            }
+
+            WorkoutGroup? targetGroup = targetGroups.SingleOrDefault(group =>
+                WorkoutCoveragePolicy.IsSelectable(exercise, group));
+            if (targetGroup is null ||
+                !assignedTargetGroupIds.Add(targetGroup.Id))
+            {
+                continue;
+            }
+
+            state.SelectedExerciseIds[targetGroup.Id] = exerciseId;
+        }
+    }
+
     private bool IsSavedSelectionValid(
         WorkoutState state,
         Exercise exercise,
@@ -521,6 +570,10 @@ public sealed class ExerciseSessionService
             state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
         }
 
+    }
+
+    private void NormalizeKeptExerciseIds(WorkoutState state)
+    {
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
     }

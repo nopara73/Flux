@@ -176,6 +176,52 @@ public sealed class WorkoutStateInvariantTests
             groupId => Assert.False(state.SelectedExerciseIds.ContainsKey(groupId)));
     }
 
+    [Fact]
+    public void CatalogUpgradePreservesPresentKeepMarkersAndDropsMissingExercises()
+    {
+        Exercise present = Exercise(
+            223,
+            CanonicalMuscleGroup.ScapularGirdle);
+        Exercise torso = Exercise(
+            1001,
+            CanonicalMuscleGroup.SpinalExtensors);
+        Exercise lower = Exercise(
+            1002,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors);
+        string savedGroupId = MassGroupingTaxonomy.GetGroup(
+            3,
+            present.PrimaryCanonicalGroup).Id;
+        var priorState = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision - 1,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [savedGroupId] = present.Id,
+            },
+            LastKeptExerciseIds = [present.Id, 999999],
+        };
+        string serialized = JsonSerializer.Serialize(priorState, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                serialized,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+        var service = new ExerciseSessionService(
+            [present, torso, lower],
+            new Random(1));
+
+        service.Initialize(restored);
+
+        Assert.Equal([present.Id], restored.LastKeptExerciseIds);
+        Assert.DoesNotContain(savedGroupId, restored.SelectedExerciseIds);
+        Assert.Equal(
+            CatalogMigrationRules.CurrentCatalogRevision,
+            restored.CatalogRevision);
+
+        service.StartWorkout(restored, 3);
+
+        Assert.Equal(present.Id, restored.SelectedExerciseIds[savedGroupId]);
+    }
+
     private static Exercise Exercise(
         int id,
         CanonicalMuscleGroup primary,

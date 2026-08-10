@@ -1,16 +1,25 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 7;
+export const CURRENT_CATALOG_REVISION = 13;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
   [5, new Set([266])],
   [6, new Set([266])],
   [7, new Set([326])],
+  [8, new Set([211, 212, 213, 214, 232, 233, 234, 236])],
+  [9, new Set([195])],
+  [10, new Set([126, 135, 338, 686])],
+  [11, new Set([
+    211, 213, 214, 215, 216, 217, 218, 232,
+    233, 234, 236, 237, 240, 241, 283, 289,
+  ])],
+  [12, new Set([513, 843])],
+  [13, new Set([223, 224, 225, 245, 246])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
-const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set([223, 224, 245, 246]);
+const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [105, ["Plie Squat", "Wide Turned-Out Squat"]],
   [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
@@ -19,13 +28,14 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
   [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
   [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],
-  [394, ["Standing Open-and-Close Breathing", "Standing Arms Open and Close"]],
-  [395, ["Standing Overhead Rib-Expansion Breathing", "Standing Overhead Arm Sweep"]],
-  [397, ["Breath-Integrated Weight Shift", "Staggered-Stance Weight Shift"]],
-  [398, ["Standing Arm-Expansion Breathing", "Standing Hug and Arm Expansion"]],
-  [399, ["Shibashi Opening-the-Chest Breathing", "Shallow Squat with Chest-Opening Arms"]],
-  [400, ["Shibashi Separating-the-Clouds Breathing", "Shallow Squat with Overhead Arm Circle"]],
-  [401, ["Shibashi Alternating Swinging-Arms Breathing", "Alternating Weight Shift with Arm Swing"]],
+  [231, ["Karate Reverse Punch", "Step-Through Karate Reverse Punch"]],
+  [394, ["Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round"]],
+  [395, ["Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths"]],
+  [397, ["Staggered-Stance Weight Shift", "Exhale Forward, Inhale Back Weight Shift"]],
+  [398, ["Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold"]],
+  [399, ["Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat"]],
+  [400, ["Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down"]],
+  [401, ["Alternating Weight Shift with Arm Swing", "Alternating Inhale-Twist, Exhale-Push"]],
   [402, ["Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle"]],
   [403, ["Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push"]],
   [404, ["Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch"]],
@@ -36,6 +46,16 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [588, ["Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls"]],
   [626, ["Sumo Stance", "Sumo Squat Hold"]],
   [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
+]);
+
+export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
+  [394, new Set(["Standing Open-and-Close Breathing"])],
+  [395, new Set(["Standing Overhead Rib-Expansion Breathing"])],
+  [397, new Set(["Breath-Integrated Weight Shift"])],
+  [398, new Set(["Standing Arm-Expansion Breathing"])],
+  [399, new Set(["Shibashi Opening-the-Chest Breathing"])],
+  [400, new Set(["Shibashi Separating-the-Clouds Breathing"])],
+  [401, new Set(["Shibashi Alternating Swinging-Arms Breathing"])],
 ]);
 
 const CANONICAL_GROUPS = Object.freeze([
@@ -613,12 +633,14 @@ export class WorkoutSession {
       throw new Error("A workout is already active.");
     }
 
+    const previousWorkoutMinutes = normalizeMinutes(this.state.lastWorkoutMinutes);
     this.state.lastWorkoutMinutes = minutes;
     this.state.activeWorkoutMinutes = minutes;
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
     this.clearPendingRest();
+    this.carryKeptExercisesForward(previousWorkoutMinutes);
     this.repairActiveLineup();
     this.state.activeExtraSetSelectionGroupIds = this.chooseExtraSetSelectionGroups();
   }
@@ -730,7 +752,7 @@ export class WorkoutSession {
         .filter((group) => this.state.outcomes[group.id] === "x")
         .map(getSelectionKey),
     );
-    this.state.lastKeptExerciseIds = [...new Set(
+    const newlyKeptExerciseIds = new Set(
       selectionGroups
         .filter((group) => {
           const rounds = activeGroups.filter((round) => getSelectionKey(round) === group.id);
@@ -739,7 +761,18 @@ export class WorkoutSession {
         })
         .map((group) => this.state.selectedExerciseIds[group.id])
         .filter(Boolean),
-    )];
+    );
+    const rejectedExerciseIds = new Set(
+      [...rejectedSelectionKeys]
+        .map((selectionKey) => this.state.selectedExerciseIds[selectionKey])
+        .filter(Boolean),
+    );
+    this.state.lastKeptExerciseIds = [...new Set([
+      ...this.state.lastKeptExerciseIds.filter(
+        (exerciseId) => !rejectedExerciseIds.has(exerciseId),
+      ),
+      ...newlyKeptExerciseIds,
+    ])];
     const usedExerciseIds = new Set(
       selectionGroups
         .filter((group) => !rejectedSelectionKeys.has(group.id))
@@ -796,6 +829,36 @@ export class WorkoutSession {
         }
       }
       usedExerciseIds.add(resolvedId);
+    }
+  }
+
+  carryKeptExercisesForward(previousWorkoutMinutes) {
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    if (keptExerciseIds.size === 0) {
+      return;
+    }
+
+    const previousGroups = getResolution(
+      previousWorkoutMinutes > 30 ? 30 : previousWorkoutMinutes,
+    ).groups;
+    const orderedKeptExerciseIds = [...new Set([
+      ...previousGroups.map((group) => this.state.selectedExerciseIds[group.id]),
+      ...[...keptExerciseIds].sort((left, right) => left - right),
+    ].filter((exerciseId) => keptExerciseIds.has(exerciseId)))];
+    const targetGroups = this.getSelectionGroups();
+    const assignedTargetGroupIds = new Set();
+
+    for (const exerciseId of orderedKeptExerciseIds) {
+      const exercise = this.exercisesById.get(exerciseId);
+      const targetGroup = exercise
+        ? targetGroups.find((group) => isSelectable(exercise, group))
+        : null;
+      if (!targetGroup || assignedTargetGroupIds.has(targetGroup.id)) {
+        continue;
+      }
+
+      this.state.selectedExerciseIds[targetGroup.id] = exerciseId;
+      assignedTargetGroupIds.add(targetGroup.id);
     }
   }
 
@@ -988,9 +1051,9 @@ export class WorkoutSession {
       for (const exerciseId of changedExerciseIds) {
         delete this.state.scores[String(exerciseId)];
       }
-      this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter((exerciseId) =>
-        !changedExerciseIds.has(exerciseId));
     }
+
+    this.normalizeKeptExerciseIds();
 
     this.state.catalogIdentities = currentIdentities;
     this.state.catalogRevision = Math.max(
@@ -1059,9 +1122,12 @@ function isApprovedIdentityPreservingNameChange(exerciseId, previousIdentity, cu
     currentExercise.name.startsWith(ALTERNATING_PREFIX) &&
     previousName === currentExercise.name.slice(ALTERNATING_PREFIX.length);
   const correction = APPROVED_EXERCISE_CORRECTIONS.get(exerciseId);
+  const additionalCorrectionNames =
+    ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES.get(exerciseId);
   const approvedExerciseCorrection =
     correction !== undefined &&
-    previousName === correction[0] &&
+    (previousName === correction[0] ||
+      additionalCorrectionNames?.has(previousName) === true) &&
     currentExercise.name === correction[1];
 
   return (

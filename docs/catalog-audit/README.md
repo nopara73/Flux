@@ -7,12 +7,12 @@ demonstration visibly shows, and whether those two signals make the action
 immediately copyable.
 
 - Catalog entries reviewed: 328
-- Entries retained unchanged: 219
-- Entries retired: 109
-- Reviewed replacements added: 109
-- Retained exercises changed from motion to a still endpoint: 29
-- Replacement still endpoints: 23
-- Final presentation mix: 276 motion demonstrations, 52 still endpoints
+- Entries retained: 185
+- Entries retired: 148
+- Reviewed replacements added: 148
+- Retained still endpoints: 24
+- Replacement still endpoints: 33
+- Final presentation mix: 271 motion demonstrations, 57 still endpoints
 - Final canonical-leaf coverage: at least 10 primary-owned exercises in every leaf
 - Final workout coverage: at least 10 selectable exercises in every supported roll-up
 
