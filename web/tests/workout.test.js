@@ -255,7 +255,7 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
 
 test("unequal resistance roles always receive a timed side swap", () => {
   const unequalRoleIds = [
-    220, 239, 240, 256, 257, 258, 269, 278, 279, 285, 286, 287, 508, 843,
+    220, 239, 256, 257, 258, 269, 278, 279, 285, 286, 287, 508, 843,
   ];
   for (const exerciseId of unequalRoleIds) {
     assert.notEqual(
@@ -603,7 +603,7 @@ test("second clarity corrections preserve earlier browser memory", () => {
 
 test("catalog revision retires only exercises changed by that revision", () => {
   const latestReplacementIds = new Set([
-    223, 224, 225, 245, 246,
+    223, 224, 225, 234, 239, 240, 245, 246,
   ]);
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,

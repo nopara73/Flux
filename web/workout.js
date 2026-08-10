@@ -1,7 +1,7 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 15;
+export const CURRENT_CATALOG_REVISION = 16;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -17,6 +17,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [12, new Set([513, 843])],
   [13, new Set([223, 224, 225, 245, 246])],
+  [16, new Set([234, 239, 240])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();

@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 15;
+    public const int CurrentCatalogRevision = 16;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -187,16 +187,16 @@ public static class CatalogMigrationRules
                     "Bilateral Wrist Circles",
                     "Karate Ridge-Hand Strike (Haito-Uchi)"),
                 [234] = new(
-                    "Palms-Up Fist Wrist Flexion and Extension",
+                    "Opposite-Hand-Resisted Thumb Opposition Hold",
                     "Karate Flat-Fist Strike (Hiraken)"),
                 [236] = new(
                     "Alternating Hand Open and Close",
                     "Karate Spear-Hand Strike (Nukite)"),
                 [239] = new(
-                    "Ninja Snake Hand-Seal Hold",
+                    "Self-Resisted Finger Spread",
                     "Ninja Fireball Hand-Seal Sequence"),
                 [240] = new(
-                    "Ninja Ram Hand-Seal Hold",
+                    "Self-Resisted Finger Squeeze",
                     "Ninja Shadow-Possession Hand-Seal Sequence"),
                 [241] = new(
                     "Ninja Monkey Hand-Seal Hold",
@@ -300,6 +300,18 @@ public static class CatalogMigrationRules
         AdditionalPriorReviewedReplacementNames =
             new Dictionary<int, IReadOnlySet<string>>
             {
+                [234] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Palms-Up Fist Wrist Flexion and Extension",
+                },
+                [239] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Ninja Snake Hand-Seal Hold",
+                },
+                [240] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Ninja Ram Hand-Seal Hold",
+                },
                 [241] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Thumb C Hold",
@@ -372,6 +384,7 @@ public static class CatalogMigrationRules
                 },
                 [12] = new HashSet<int> { 513, 843 },
                 [13] = new HashSet<int> { 223, 224, 225, 245, 246 },
+                [16] = new HashSet<int> { 234, 239, 240 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

@@ -45,7 +45,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(115, timedSideExercises.Length);
+        Assert.Equal(113, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -109,9 +109,11 @@ public sealed class CatalogInvariantTests
             [220] = ExerciseSideSequence.ScreenLeftThenRight,
             [232] = ExerciseSideSequence.ScreenLeftThenRight,
             [233] = ExerciseSideSequence.ScreenLeftThenRight,
-            [234] = ExerciseSideSequence.ScreenLeftThenRight,
+            [234] = ExerciseSideSequence.Continuous,
             [236] = ExerciseSideSequence.ScreenLeftThenRight,
             [237] = ExerciseSideSequence.Continuous,
+            [239] = ExerciseSideSequence.ScreenLeftThenRight,
+            [240] = ExerciseSideSequence.Continuous,
             [241] = ExerciseSideSequence.ScreenLeftThenRight,
             [256] = ExerciseSideSequence.ScreenLeftThenRight,
             [257] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -160,7 +162,7 @@ public sealed class CatalogInvariantTests
 
         int[] unequalResistanceRoleExerciseIds =
         [
-            211, 213, 214, 215, 218, 220, 233, 234, 236, 239, 240, 241,
+            211, 213, 214, 215, 218, 220, 233, 236, 239, 241,
             256, 257, 258, 269, 278, 279, 283, 285, 286, 287, 289, 508, 843,
         ];
         Assert.All(unequalResistanceRoleExerciseIds, exerciseId =>
@@ -209,9 +211,11 @@ public sealed class CatalogInvariantTests
             [231] = "Step-Through Karate Reverse Punch",
             [232] = "Extended Side Angle Hold",
             [233] = "Standing Wrist Flexion Stretch",
-            [234] = "Opposite-Hand-Resisted Thumb Opposition Hold",
+            [234] = "Alternating Thumb-to-Palm Tucks",
             [236] = "Opposite-Hand-Resisted Thumb Extension Hold",
             [237] = "Opposed Thumb-and-Index Extension Isometric",
+            [239] = "Straight-Finger Knuckle Bends",
+            [240] = "Hook Fingers to Full Fist",
             [241] = "Opposite-Hand-Resisted Thumb Adduction Hold",
             [245] = "Opposite-Hand-Resisted Elbow-Flexion Hold",
             [246] = "Bodyweight Cuban Rotation",

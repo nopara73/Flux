@@ -1168,25 +1168,25 @@
     }
     234 = @{
         RetiredName = 'Karate Flat-Fist Strike (Hiraken)'
-        Name = 'Opposite-Hand-Resisted Thumb Opposition Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbOppositionIsometric'
+        Name = 'Alternating Thumb-to-Palm Tucks'
+        Practice = 'Hand mobility and coordination'
+        MotionProfile = 'ThumbOppositionTuck'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 32
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'hand-isometrics-no-equipment.mp4'
-            Url = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
-            SourcePage = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
+            File = 'hands-brain-warmups.mp4'
+            Url = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
+            SourcePage = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 284.08
-            DurationSeconds = 9.32
-            FramesPerSecond = 10
+            StartSeconds = 16
+            DurationSeconds = 26
+            FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
@@ -1246,9 +1246,9 @@
     }
     239 = @{
         RetiredName = 'Ninja Fireball Hand-Seal Sequence'
-        Name = 'Self-Resisted Finger Spread'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'FingerAbductionIsometric'
+        Name = 'Straight-Finger Knuckle Bends'
+        Practice = 'Hand therapy tendon gliding'
+        MotionProfile = 'FingerMotion'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
         SideSequence = 'ScreenLeftThenRight'
@@ -1256,40 +1256,42 @@
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'hand-isometrics-no-equipment.mp4'
-            Url = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
-            SourcePage = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
+            File = 'straight-hand-knuckle-bend-flow.mp4'
+            Url = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
+            SourcePage = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 74
-            DurationSeconds = 7.8
+            StartSeconds = 51.5
+            DurationSeconds = 3
             FramesPerSecond = 10
-            PingPong = $false
+            Crop = 'crop=ih*65/72:ih*65/72:iw*25/64:ih*7/144'
+            PingPong = $true
             MirrorForAlternation = $false
         }
     }
     240 = @{
         RetiredName = 'Ninja Shadow-Possession Hand-Seal Sequence'
-        Name = 'Self-Resisted Finger Squeeze'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'FingerAdductionIsometric'
+        Name = 'Hook Fingers to Full Fist'
+        Practice = 'Hand therapy tendon gliding'
+        MotionProfile = 'FingerMotion'
         Primary = 'ForearmFlexorsAndPronators'
         Secondary = @('IntrinsicHand', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'hand-isometrics-no-equipment.mp4'
-            Url = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
-            SourcePage = 'https://www.youtube.com/watch?v=WCFSiRkIgEo'
+            File = 'hook-to-fist-tendon-glides.mp4'
+            Url = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
+            SourcePage = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 171
-            DurationSeconds = 17.9
+            StartSeconds = 139
+            DurationSeconds = 12
             FramesPerSecond = 10
+            Crop = 'crop=ih*17/18:ih*3/4:(iw-ih*17/18)/2:ih*5/72,crop=iw*0.88:ih:iw*0.10:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
