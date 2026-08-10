@@ -45,7 +45,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(114, timedSideExercises.Length);
+        Assert.Equal(115, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -134,7 +134,9 @@ public sealed class CatalogInvariantTests
             [501] = ExerciseSideSequence.ScreenRightThenLeft,
             [508] = ExerciseSideSequence.ScreenLeftThenRight,
             [611] = ExerciseSideSequence.Continuous,
+            [617] = ExerciseSideSequence.ScreenLeftThenRight,
             [619] = ExerciseSideSequence.Continuous,
+            [620] = ExerciseSideSequence.ScreenLeftThenRight,
             [648] = ExerciseSideSequence.ScreenRightThenLeft,
             [649] = ExerciseSideSequence.ScreenLeftThenRight,
             [686] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -146,6 +148,15 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expected.Value,
                 exercises.Single(exercise => exercise.Id == expected.Key).SideSequence));
+
+        Exercise forwardSideLegCircles = exercises.Single(exercise => exercise.Id == 617);
+        Exercise backwardSideLegCircles = exercises.Single(exercise => exercise.Id == 620);
+        Assert.Equal("Standing Forward Side-Leg Circles", forwardSideLegCircles.Name);
+        Assert.Equal("Standing Backward Side-Leg Circles", backwardSideLegCircles.Name);
+        Assert.NotEqual(forwardSideLegCircles.Video, backwardSideLegCircles.Video);
+        Assert.Equal(
+            CanonicalMuscleGroup.HipAbductors,
+            backwardSideLegCircles.PrimaryCanonicalGroup);
 
         int[] unequalResistanceRoleExerciseIds =
         [

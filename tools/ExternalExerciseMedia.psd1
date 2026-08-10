@@ -3036,6 +3036,19 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
     }
+    620 = @{
+        File = 'standing-pilates.mp4'
+        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 335
+        DurationSeconds = 8
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $true
+    }
     648 = @{
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'

@@ -266,6 +266,7 @@
     617 = @{ Primary = 'PelvicFloorAndPerineum'; Secondary = @('DeepHipRotators', 'HipAbductors', 'GlutealExtensors', 'AbdominalWall') }
     618 = @{ Primary = 'PelvicFloorAndPerineum'; Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'ShoulderAbductors') }
     619 = @{ Primary = 'PelvicFloorAndPerineum'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
+    620 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'AbdominalWall') }
     625 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall') }
     626 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     632 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall') }

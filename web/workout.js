@@ -1,7 +1,7 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 13;
+export const CURRENT_CATALOG_REVISION = 14;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -44,6 +44,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
   [588, ["Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls"]],
+  [617, ["Standing Side-Leg Circles", "Standing Forward Side-Leg Circles"]],
   [626, ["Sumo Stance", "Sumo Squat Hold"]],
   [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
 ]);

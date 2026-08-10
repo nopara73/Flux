@@ -193,7 +193,7 @@ public sealed class WorkoutStateInvariantTests
             present.PrimaryCanonicalGroup).Id;
         var priorState = new WorkoutState
         {
-            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision - 1,
+            CatalogRevision = 12,
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [savedGroupId] = present.Id,

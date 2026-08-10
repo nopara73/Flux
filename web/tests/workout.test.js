@@ -61,9 +61,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 328);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 328);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 328);
+  assert.equal(catalog.length, 329);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 329);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 329);
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -74,6 +74,13 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   const overheadBreathingHold = catalog.find((exercise) => exercise.id === 395);
   assert.equal(overheadBreathingHold.mode, "Hold");
   assert.equal(overheadBreathingHold.presentation, "Still");
+  const forwardSideLegCircles = catalog.find((exercise) => exercise.id === 617);
+  const backwardSideLegCircles = catalog.find((exercise) => exercise.id === 620);
+  assert.equal(forwardSideLegCircles.name, "Standing Forward Side-Leg Circles");
+  assert.equal(backwardSideLegCircles.name, "Standing Backward Side-Leg Circles");
+  assert.equal(backwardSideLegCircles.sideSequence, "ScreenLeftThenRight");
+  assert.equal(backwardSideLegCircles.primaryCanonicalGroup, "HipAbductors");
+  assert.notEqual(forwardSideLegCircles.video, backwardSideLegCircles.video);
 
   for (const [minutes, resolution] of RESOLUTIONS) {
     for (const group of resolution.groups) {
@@ -607,7 +614,7 @@ test("catalog revision retires only exercises changed by that revision", () => {
     isSelectable(replacement, candidate),
   );
   const state = createDefaultState();
-  state.catalogRevision = CURRENT_CATALOG_REVISION - 1;
+  state.catalogRevision = 12;
   state.activeWorkoutMinutes = 30;
   state.selectedExerciseIds[group.id] = replacement.id;
   for (const item of replacements) {
@@ -641,7 +648,7 @@ test("deployment migration preserves present keeps and drops missing exercises",
     isSelectable(present, candidate),
   );
   const state = createDefaultState();
-  state.catalogRevision = CURRENT_CATALOG_REVISION - 1;
+  state.catalogRevision = 12;
   state.selectedExerciseIds[group.id] = present.id;
   state.lastKeptExerciseIds = [present.id, 999999];
 

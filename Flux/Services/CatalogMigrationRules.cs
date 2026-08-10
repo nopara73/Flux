@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 13;
+    public const int CurrentCatalogRevision = 14;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -95,6 +95,9 @@ public static class CatalogMigrationRules
                 [588] = new(
                     "Belly-Dance Alternating Shoulder Roll",
                     "Belly-Dance Alternating Shoulder Rolls"),
+                [617] = new(
+                    "Standing Side-Leg Circles",
+                    "Standing Forward Side-Leg Circles"),
                 [626] = new(
                     "Sumo Stance",
                     "Sumo Squat Hold"),

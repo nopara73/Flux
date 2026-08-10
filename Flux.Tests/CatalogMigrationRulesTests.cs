@@ -387,7 +387,7 @@ public sealed class CatalogMigrationRulesTests
         const string retainedGroup = "group.retained";
         var state = new WorkoutState
         {
-            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision - 1,
+            CatalogRevision = 12,
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [replacedGroup] = replacedId,
@@ -577,6 +577,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(409, "Neck Controlled Articular Rotation", "Full Neck Circles")]
     [InlineData(425, "Chin-Tuck Isometric", "Chin-Tuck Hold")]
     [InlineData(588, "Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls")]
+    [InlineData(617, "Standing Side-Leg Circles", "Standing Forward Side-Leg Circles")]
     [InlineData(626, "Sumo Stance", "Sumo Squat Hold")]
     [InlineData(969, "Chair-Pose Core Hold", "Chair-Pose Hold")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(

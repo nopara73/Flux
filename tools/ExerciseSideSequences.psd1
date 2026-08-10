@@ -83,6 +83,7 @@
     612 = 'ScreenRightThenLeft'
     617 = 'ScreenLeftThenRight'
     619 = 'ScreenLeftThenRight'
+    620 = 'ScreenLeftThenRight'
     632 = 'ScreenRightThenLeft'
     636 = 'ScreenRightThenLeft'
     647 = 'ScreenRightThenLeft'
