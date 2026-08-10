@@ -8,6 +8,12 @@ $resolvedAssetsRoot = [IO.Path]::GetFullPath($AssetsRoot)
 $catalogPath = Join-Path $resolvedAssetsRoot 'exercises.json'
 $catalog = @(Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json)
 $failures = [System.Collections.Generic.List[string]]::new()
+$reviewedWorkoutCadenceDurationRanges = @{
+    231 = @{ Minimum = 3.8; Maximum = 4.1 }
+    681 = @{ Minimum = 5.3; Maximum = 5.7 }
+    684 = @{ Minimum = 4.8; Maximum = 5.1 }
+    687 = @{ Minimum = 7.3; Maximum = 7.7 }
+}
 
 if ($catalog.Count -lt 30) {
     throw "Expected at least 30 catalog records, found $($catalog.Count)."
@@ -244,6 +250,14 @@ try {
             $duration -lt 0.4 -or
             $duration -gt 60) {
             $failures.Add("$($exercise.id): invalid codec, dimensions, audio, or duration")
+        }
+
+        $cadenceRange = $reviewedWorkoutCadenceDurationRanges[[int]$exercise.id]
+        if ($null -ne $cadenceRange -and
+            ($duration -lt [double]$cadenceRange.Minimum -or
+                $duration -gt [double]$cadenceRange.Maximum)) {
+            $failures.Add(
+                "$($exercise.id): reviewed workout-cadence duration regressed")
         }
 
         if ([string]$exercise.mode -eq 'Hold') {

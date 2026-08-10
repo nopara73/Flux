@@ -3512,8 +3512,8 @@
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 22.5
-            DurationSeconds = 17.5
+            StartSeconds = 33.25
+            DurationSeconds = 5.5
             FramesPerSecond = 10
             Crop = 'crop=300:300:170:30'
             PingPong = $false
@@ -3567,6 +3567,7 @@
             StartSeconds = 450
             DurationSeconds = 7.8
             FramesPerSecond = 8
+            DelayCentiseconds = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $true
@@ -3645,6 +3646,7 @@
             StartSeconds = 200.7
             DurationSeconds = 11.8
             FramesPerSecond = 8
+            DelayCentiseconds = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
