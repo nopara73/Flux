@@ -624,7 +624,7 @@
     }
     199 = @{
         RetiredName = 'Horse-Stance Knee Bend'
-        Name = 'Alternating Deep Side Lunge'
+        Name = 'Wide-Stance Side-to-Side Squat'
         Practice = 'Bodyweight strength'
         MotionProfile = 'SideLunge'
         Primary = 'AccessoryHipAdductors'

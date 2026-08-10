@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 14;
+    public const int CurrentCatalogRevision = 15;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -38,6 +38,9 @@ public static class CatalogMigrationRules
                 [198] = new(
                     "Second-Position Plie-Releve",
                     "Wide Squat to Feet-Together Calf Raise"),
+                [199] = new(
+                    "Alternating Deep Side Lunge",
+                    "Wide-Stance Side-to-Side Squat"),
                 [255] = new(
                     "Standing Bent-Knee Calf Raise",
                     "Deep-Squat Calf Raise"),
@@ -418,7 +421,16 @@ public static class CatalogMigrationRules
                         stored.Video,
                         replacement.Video,
                         StringComparison.Ordinal);
-                if (currentReviewedIdentityMatches)
+                bool approvedCorrectionMatches =
+                    IsApprovedExerciseCorrection(
+                        exerciseId,
+                        stored.Name,
+                        replacement.Name) &&
+                    string.Equals(
+                        stored.Video,
+                        replacement.Video,
+                        StringComparison.Ordinal);
+                if (currentReviewedIdentityMatches || approvedCorrectionMatches)
                 {
                     alreadyReviewedReplacementIds.Add(exerciseId);
                     continue;
@@ -495,21 +507,10 @@ public static class CatalogMigrationRules
                     bundled.Name[AlternatingPrefix.Length..],
                     StringComparison.Ordinal);
             bool nameIsApprovedExerciseCorrection =
-                ApprovedExerciseCorrections.TryGetValue(
+                IsApprovedExerciseCorrection(
                     exerciseId,
-                    out ApprovedExerciseCorrection? correction) &&
-                (string.Equals(
-                        stored.Name,
-                        correction.PreviousName,
-                        StringComparison.Ordinal) ||
-                    (AdditionalApprovedExerciseCorrectionPreviousNames.TryGetValue(
-                            exerciseId,
-                            out IReadOnlySet<string>? additionalPreviousNames) &&
-                        additionalPreviousNames.Contains(stored.Name))) &&
-                string.Equals(
-                    bundled.Name,
-                    correction.CurrentName,
-                    StringComparison.Ordinal);
+                    stored.Name,
+                    bundled.Name);
             bool nameIsApprovedReviewedRestoration =
                 RestoredReviewedExerciseIdentities.TryGetValue(
                     exerciseId,
@@ -557,6 +558,26 @@ public static class CatalogMigrationRules
                 storedName[AlternatingPrefix.Length..],
                 expectedName,
                 StringComparison.Ordinal));
+
+    private static bool IsApprovedExerciseCorrection(
+        int exerciseId,
+        string storedName,
+        string bundledName) =>
+        ApprovedExerciseCorrections.TryGetValue(
+            exerciseId,
+            out ApprovedExerciseCorrection? correction) &&
+        (string.Equals(
+                storedName,
+                correction.PreviousName,
+                StringComparison.Ordinal) ||
+            (AdditionalApprovedExerciseCorrectionPreviousNames.TryGetValue(
+                    exerciseId,
+                    out IReadOnlySet<string>? additionalPreviousNames) &&
+                additionalPreviousNames.Contains(storedName))) &&
+        string.Equals(
+            bundledName,
+            correction.CurrentName,
+            StringComparison.Ordinal);
 
     private static IReadOnlySet<int> GetWorkoutStateInvalidationExerciseIds(
         int priorCatalogRevision)

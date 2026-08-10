@@ -194,6 +194,7 @@ public sealed class CatalogInvariantTests
             [195] = "Side Lunge to Knee-Up Balance",
             [197] = "Parallel Squat-to-Calf Raise",
             [198] = "Wide Squat to Feet-Together Calf Raise",
+            [199] = "Wide-Stance Side-to-Side Squat",
             [211] = "Opposite-Hand-Resisted Wrist Extension Hold",
             [212] = "Bent-Over Triceps Pulse",
             [213] = "Opposite-Hand-Resisted Wrist Flexion Hold",

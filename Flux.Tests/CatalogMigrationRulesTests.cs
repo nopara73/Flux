@@ -559,6 +559,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(188, "Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat")]
     [InlineData(197, "First-Position Plie-Releve", "Parallel Squat-to-Calf Raise")]
     [InlineData(198, "Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise")]
+    [InlineData(199, "Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat")]
     [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
     [InlineData(270, "Bodyweight Svend Press", "Palm-Squeeze Forward Press")]
     [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]

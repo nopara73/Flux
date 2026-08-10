@@ -1,7 +1,7 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 14;
+export const CURRENT_CATALOG_REVISION = 15;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -25,6 +25,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
   [197, ["First-Position Plie-Releve", "Parallel Squat-to-Calf Raise"]],
   [198, ["Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise"]],
+  [199, ["Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat"]],
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
   [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
   [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],
