@@ -1825,14 +1825,14 @@
         Presentation = 'Still'
         HoldFramePercent = 45
         Media = @{
-            File = 'self-resisted-thumb-directions.mp4'
-            Url = 'https://www.youtube.com/watch?v=fruDylrn_jw'
-            SourcePage = 'https://www.youtube.com/watch?v=fruDylrn_jw'
+            File = 'isometric-thumb-flexion.mp4'
+            Url = 'https://www.youtube.com/watch?v=XrbaDQj3HTQ'
+            SourcePage = 'https://www.youtube.com/watch?v=XrbaDQj3HTQ'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 72.8
-            DurationSeconds = 3
+            StartSeconds = 0
+            DurationSeconds = 18
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:0:0'
             PingPong = $false
