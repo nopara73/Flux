@@ -681,15 +681,6 @@ export class WorkoutSession {
     return this.getActiveGroups().find((group) => this.state.outcomes[group.id] === undefined) ?? null;
   }
 
-  isFinalPendingGroup(group) {
-    const activeGroups = this.getActiveGroups();
-    const nextGroup = activeGroups.find(
-      (activeGroup) => this.state.outcomes[activeGroup.id] === undefined,
-    );
-    return nextGroup?.id === group.id &&
-      Object.keys(this.state.outcomes).length === activeGroups.length - 1;
-  }
-
   getSelectedExercise(group) {
     const exercise = this.exercisesById.get(
       this.state.selectedExerciseIds[getSelectionKey(group)],

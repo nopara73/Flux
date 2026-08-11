@@ -97,22 +97,22 @@ test("web movement and rest timing match the mobile workout contract", () => {
   );
 });
 
-test("web and mobile cue the final movement before keep without replaying it", () => {
+test("web and mobile separate the exercise whistle from the final completion cue", () => {
   assert.match(
     mainActivity,
-    /IsFinalPendingGroup\(_state, _currentWorkoutGroup\)[\s\S]*PlayWhistleCue\(_workoutCompleteWhistleId\);[\s\S]*_workoutCompleteWhistlePlayedForCurrentRound = true;[\s\S]*else[\s\S]*PlayWhistleCue\(_restStartWhistleId\);[\s\S]*BeginRest\(\);/,
+    /private void CompleteCountdown\(\)[\s\S]*PlayWhistleCue\(_restStartWhistleId\);[\s\S]*BeginRest\(\);/,
   );
   assert.match(
     mainActivity,
-    /if \(_state\.WorkoutCompleted\)[\s\S]*if \(!_workoutCompleteWhistlePlayedForCurrentRound\)[\s\S]*PlayWhistleCue\(_workoutCompleteWhistleId\);[\s\S]*ShowCongratulations\(\);/,
+    /private void FinalizeCurrentRound\(bool keep\)[\s\S]*if \(_state\.WorkoutCompleted\)[\s\S]*PlayWhistleCue\(_workoutCompleteWhistleId\);[\s\S]*ShowCongratulations\(\);/,
   );
   assert.match(
     webApp,
-    /session\.isFinalPendingGroup\(currentGroup\)[\s\S]*playSound\("complete"\);[\s\S]*workoutCompleteCuePlayedForCurrentRound = true;[\s\S]*else[\s\S]*playSound\("rest"\);/,
+    /function completeMovement\(\)[\s\S]*playSound\("rest"\);[\s\S]*session\.beginRest/,
   );
   assert.match(
     webApp,
-    /session\.state\.workoutCompleted\)[\s\S]*showCompletion\(!workoutCompleteCuePlayedForCurrentRound\);/,
+    /function completeRest\(\)[\s\S]*session\.state\.workoutCompleted\)[\s\S]*showCompletion\(true\);/,
   );
 });
 

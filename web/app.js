@@ -79,7 +79,6 @@ let movementRunning = false;
 let movementPauseReason = null;
 let restTimer = null;
 let restActive = false;
-let workoutCompleteCuePlayedForCurrentRound = false;
 let wakeLock = null;
 let wakeLockRequestPending = false;
 let wakeLockGeneration = 0;
@@ -212,7 +211,6 @@ function showDuration() {
   resetMovementVisuals();
   currentGroup = null;
   currentExercise = null;
-  workoutCompleteCuePlayedForCurrentRound = false;
   selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
   renderDuration(selectedMinutes, false);
   elements.beginWorkout.disabled = !session;
@@ -246,7 +244,6 @@ function showNextExercise() {
 
   currentGroup = nextGroup;
   currentExercise = session.getSelectedExercise(nextGroup);
-  workoutCompleteCuePlayedForCurrentRound = false;
   const total = session.state.activeWorkoutMinutes;
   const position = nextGroup.order;
 
@@ -658,12 +655,7 @@ function completeMovement() {
   if (currentExercise?.mode === "Hold") {
     showReviewedHoldFrame();
   }
-  if (session.isFinalPendingGroup(currentGroup)) {
-    playSound("complete");
-    workoutCompleteCuePlayedForCurrentRound = true;
-  } else {
-    playSound("rest");
-  }
+  playSound("rest");
   session.beginRest(currentGroup, Date.now() + REST_DURATION_MS);
   persistState();
   restActive = true;
@@ -723,7 +715,7 @@ function completeRest() {
   session.clearPendingRest();
   persistState();
   if (session.state.workoutCompleted) {
-    showCompletion(!workoutCompleteCuePlayedForCurrentRound);
+    showCompletion(true);
   } else {
     showNextExercise();
   }
