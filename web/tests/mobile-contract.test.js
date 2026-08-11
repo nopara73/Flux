@@ -23,6 +23,7 @@ const [
   taxonomy,
   movementSchedule,
   mainActivity,
+  webApp,
   catalogMigrationRules,
   catalogJson,
 ] = await Promise.all([
@@ -31,6 +32,7 @@ const [
   source("Flux", "Services", "MassGroupingTaxonomy.cs"),
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
+  source("web", "app.js"),
   source("Flux", "Services", "CatalogMigrationRules.cs"),
   source("Flux", "Assets", "exercises.json"),
 ]);
@@ -92,6 +94,25 @@ test("web movement and rest timing match the mobile workout contract", () => {
   assert.equal(
     REST_DURATION_MS / 1000,
     integerConstant(mainActivity, "RestSeconds"),
+  );
+});
+
+test("web and mobile cue the final movement before keep without replaying it", () => {
+  assert.match(
+    mainActivity,
+    /IsFinalPendingGroup\(_state, _currentWorkoutGroup\)[\s\S]*PlayWhistleCue\(_workoutCompleteWhistleId\);[\s\S]*_workoutCompleteWhistlePlayedForCurrentRound = true;[\s\S]*else[\s\S]*PlayWhistleCue\(_restStartWhistleId\);[\s\S]*BeginRest\(\);/,
+  );
+  assert.match(
+    mainActivity,
+    /if \(_state\.WorkoutCompleted\)[\s\S]*if \(!_workoutCompleteWhistlePlayedForCurrentRound\)[\s\S]*PlayWhistleCue\(_workoutCompleteWhistleId\);[\s\S]*ShowCongratulations\(\);/,
+  );
+  assert.match(
+    webApp,
+    /session\.isFinalPendingGroup\(currentGroup\)[\s\S]*playSound\("complete"\);[\s\S]*workoutCompleteCuePlayedForCurrentRound = true;[\s\S]*else[\s\S]*playSound\("rest"\);/,
+  );
+  assert.match(
+    webApp,
+    /session\.state\.workoutCompleted\)[\s\S]*showCompletion\(!workoutCompleteCuePlayedForCurrentRound\);/,
   );
 });
 

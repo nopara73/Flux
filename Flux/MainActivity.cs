@@ -130,6 +130,7 @@ public class MainActivity : Activity
     private bool _freezeHoldAtEnd;
     private bool _mediaReady;
     private bool _countdownPausedForMediaError;
+    private bool _workoutCompleteWhistlePlayedForCurrentRound;
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
@@ -1103,6 +1104,7 @@ public class MainActivity : Activity
         ClearHoldFrame();
         ResetMovementVisuals();
         _currentExercise = null;
+        _workoutCompleteWhistlePlayedForCurrentRound = false;
         _beginWorkoutButton.Enabled = true;
         _beginWorkoutButton.Alpha = 1f;
 
@@ -1686,6 +1688,7 @@ public class MainActivity : Activity
             _currentWorkoutGroup);
         _currentExercise = exercise;
         _lastMovementPhase = null;
+        _workoutCompleteWhistlePlayedForCurrentRound = false;
         SetExerciseMediaMirrored(mirrored: false);
         int position = _currentWorkoutGroup.Order;
 
@@ -1804,7 +1807,12 @@ public class MainActivity : Activity
         {
             FreezeHoldOnFinalFrame();
         }
-        if (!_sessionService.IsFinalPendingGroup(_state, _currentWorkoutGroup))
+        if (_sessionService.IsFinalPendingGroup(_state, _currentWorkoutGroup))
+        {
+            PlayWhistleCue(_workoutCompleteWhistleId);
+            _workoutCompleteWhistlePlayedForCurrentRound = true;
+        }
+        else
         {
             PlayWhistleCue(_restStartWhistleId);
         }
@@ -2392,7 +2400,10 @@ public class MainActivity : Activity
         SaveStateAndScore(keep ? null : exercise);
         if (_state.WorkoutCompleted)
         {
-            PlayWhistleCue(_workoutCompleteWhistleId);
+            if (!_workoutCompleteWhistlePlayedForCurrentRound)
+            {
+                PlayWhistleCue(_workoutCompleteWhistleId);
+            }
             ShowCongratulations();
         }
         else

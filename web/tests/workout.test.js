@@ -42,6 +42,19 @@ test("duration inventory and legacy normalization match Flux", () => {
   assert.equal(normalizeMinutes(undefined), 10);
 });
 
+test("the final round is identified before its keep window", () => {
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(3);
+  const groups = session.getActiveGroups();
+
+  assert.equal(session.isFinalPendingGroup(groups[0]), false);
+  session.recordOutcome(groups[0], true);
+  assert.equal(session.isFinalPendingGroup(groups[1]), false);
+  session.recordOutcome(groups[1], true);
+  assert.equal(session.isFinalPendingGroup(groups[2]), true);
+  assert.equal(session.isFinalPendingGroup(groups[1]), false);
+});
+
 test("every resolution covers all canonical leaves once in scheduled order", () => {
   for (const [minutes, resolution] of RESOLUTIONS) {
     assert.equal(resolution.groups.length, minutes);
