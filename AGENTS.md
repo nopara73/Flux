@@ -15,6 +15,7 @@
 - Select worthwhile exercises first; assign muscle groups afterward.
 - Reject trivial gestures and ineffective dance steps.
 - Use real named movements or postures; do not invent count-inflating variants.
+- Allow similar exercises when a real variation meaningfully changes stance, leverage, range of motion, balance demand, contraction, tempo, or training emphasis; reject only true duplicates and cosmetic renames.
 - Draw broadly from any movement practices.
 - Keep all ground contact at the feet; exclude floor, seated, kneeling, and hand-supported work. Contact by any body part other than the feet is transiently allowed, meaning: it must be momentary.
 - Require zero equipment, including walls, chairs, partners, and props.
