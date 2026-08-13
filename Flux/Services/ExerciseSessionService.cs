@@ -8,7 +8,7 @@ public sealed class ExerciseSessionService
     public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
 
-    private const int CurrentStateVersion = 6;
+    private const int CurrentStateVersion = 7;
 
     private static readonly IReadOnlyList<int> WorkoutMinutes =
         Array.AsReadOnly([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
@@ -76,7 +76,7 @@ public sealed class ExerciseSessionService
             return;
         }
 
-        NormalizeActiveExtraSetSelectionGroups(state);
+        NormalizeActiveLongWorkoutAllocation(state);
         NormalizeOutcomes(state);
         NormalizeCompletionState(state);
         NormalizePendingRest(state);
@@ -119,7 +119,7 @@ public sealed class ExerciseSessionService
         ClearLegacyMigrationState(state);
         CarryKeptExercisesForward(state, previousWorkoutMinutes);
         RepairActiveLineup(state);
-        state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
+        SetActiveLongWorkoutAllocation(state);
     }
 
     public IReadOnlyList<WorkoutGroup> GetActiveGroups(WorkoutState state)
@@ -128,6 +128,7 @@ public sealed class ExerciseSessionService
         return IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)
             ? CreateWorkoutSchedule(
                 state.ActiveWorkoutMinutes,
+                GetEffectiveFullSideSelectionGroups(state),
                 GetEffectiveExtraSetSelectionGroups(state))
             : [];
     }
@@ -553,23 +554,42 @@ public sealed class ExerciseSessionService
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
+        state.ActiveFullSideSelectionGroupIds ??= [];
         state.LegacySelectedExerciseNames ??= [];
         state.LegacyOutcomes ??= [];
     }
 
-    private void NormalizeActiveExtraSetSelectionGroups(WorkoutState state)
+    private void NormalizeActiveLongWorkoutAllocation(WorkoutState state)
     {
-        int expectedExtraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
-        HashSet<string> validSelectionGroupIds = GetSelectionGroups(state)
+        if (!IsLongWorkoutAllocationValid(state))
+        {
+            SetActiveLongWorkoutAllocation(state);
+        }
+    }
+
+    private bool IsLongWorkoutAllocationValid(WorkoutState state)
+    {
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
+        HashSet<string> validSelectionGroupIds = selectionGroups
             .Select(group => group.Id)
             .ToHashSet(StringComparer.Ordinal);
-        bool isValid = state.ActiveExtraSetSelectionGroupIds.Count == expectedExtraSets &&
+        HashSet<string> sidedSelectionGroupIds = selectionGroups
+            .Where(group =>
+                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+                exercise.SideSequence != ExerciseSideSequence.Continuous)
+            .Select(group => group.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        int extraMinutes = GetExtraMinuteCount(state.ActiveWorkoutMinutes);
+        int expectedFullSides = Math.Min(extraMinutes, sidedSelectionGroupIds.Count);
+        int repeatedMinutes = extraMinutes - expectedFullSides;
+        int expectedPartialExtraSets = selectionGroups.Length == 0
+            ? 0
+            : repeatedMinutes % selectionGroups.Length;
+        return state.ActiveFullSideSelectionGroupIds.Count == expectedFullSides &&
+            state.ActiveFullSideSelectionGroupIds.All(sidedSelectionGroupIds.Contains) &&
+            state.ActiveExtraSetSelectionGroupIds.Count == expectedPartialExtraSets &&
             state.ActiveExtraSetSelectionGroupIds.All(validSelectionGroupIds.Contains);
-        if (!isValid)
-        {
-            state.ActiveExtraSetSelectionGroupIds = ChooseExtraSetSelectionGroups(state);
-        }
-
     }
 
     private void NormalizeKeptExerciseIds(WorkoutState state)
@@ -671,6 +691,7 @@ public sealed class ExerciseSessionService
         state.ActiveWorkoutMinutes = 0;
         state.Outcomes.Clear();
         state.ActiveExtraSetSelectionGroupIds.Clear();
+        state.ActiveFullSideSelectionGroupIds.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
         state.PendingRestGroupId = null;
@@ -705,44 +726,77 @@ public sealed class ExerciseSessionService
         return MassGroupingTaxonomy.GetResolution(resolutionMinutes);
     }
 
-    private static int GetExtraSetCount(int workoutMinutes)
+    private static int GetExtraMinuteCount(int workoutMinutes)
     {
         if (workoutMinutes <= 30)
         {
             return 0;
         }
 
-        return workoutMinutes % GetBaseResolution(workoutMinutes).Groups.Count;
+        return workoutMinutes - GetBaseResolution(workoutMinutes).Groups.Count;
     }
 
-    private HashSet<string> ChooseExtraSetSelectionGroups(WorkoutState state)
+    private LongWorkoutAllocation ChooseLongWorkoutAllocation(WorkoutState state)
     {
-        int extraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
-        if (extraSets == 0)
+        int extraMinutes = GetExtraMinuteCount(state.ActiveWorkoutMinutes);
+        if (extraMinutes == 0)
         {
-            return [];
+            return new LongWorkoutAllocation([], []);
         }
 
-        return GetSelectionGroups(state)
+        WorkoutGroup[] rankedGroups = GetSelectionGroups(state)
             .OrderByDescending(group =>
                 state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
                 state.LastKeptExerciseIds.Contains(exerciseId))
             .ThenByDescending(group => group.Order)
-            .Take(extraSets)
+            .ToArray();
+        HashSet<string> fullSideGroups = rankedGroups
+            .Where(group =>
+                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+                exercise.SideSequence != ExerciseSideSequence.Continuous)
+            .Take(extraMinutes)
             .Select(group => group.Id)
             .ToHashSet(StringComparer.Ordinal);
+        int repeatMinutes = extraMinutes - fullSideGroups.Count;
+        int partialExtraSets = repeatMinutes % rankedGroups.Length;
+        HashSet<string> extraSetGroups = rankedGroups
+            .Take(partialExtraSets)
+            .Select(group => group.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        return new LongWorkoutAllocation(fullSideGroups, extraSetGroups);
+    }
+
+    private void SetActiveLongWorkoutAllocation(WorkoutState state) =>
+        ApplyLongWorkoutAllocation(state, ChooseLongWorkoutAllocation(state));
+
+    private static void ApplyLongWorkoutAllocation(
+        WorkoutState state,
+        LongWorkoutAllocation allocation)
+    {
+        state.ActiveFullSideSelectionGroupIds =
+            new HashSet<string>(allocation.FullSideSelectionGroupIds, StringComparer.Ordinal);
+        state.ActiveExtraSetSelectionGroupIds =
+            new HashSet<string>(allocation.ExtraSetSelectionGroupIds, StringComparer.Ordinal);
     }
 
     private IReadOnlySet<string> GetEffectiveExtraSetSelectionGroups(WorkoutState state)
     {
-        int expectedExtraSets = GetExtraSetCount(state.ActiveWorkoutMinutes);
-        return state.ActiveExtraSetSelectionGroupIds.Count == expectedExtraSets
+        return IsLongWorkoutAllocationValid(state)
             ? state.ActiveExtraSetSelectionGroupIds
-            : ChooseExtraSetSelectionGroups(state);
+            : ChooseLongWorkoutAllocation(state).ExtraSetSelectionGroupIds;
+    }
+
+    private IReadOnlySet<string> GetEffectiveFullSideSelectionGroups(WorkoutState state)
+    {
+        return IsLongWorkoutAllocationValid(state)
+            ? state.ActiveFullSideSelectionGroupIds
+            : ChooseLongWorkoutAllocation(state).FullSideSelectionGroupIds;
     }
 
     private static IReadOnlyList<WorkoutGroup> CreateWorkoutSchedule(
         int workoutMinutes,
+        IReadOnlySet<string> fullSideSelectionGroupIds,
         IReadOnlySet<string> extraSetSelectionGroupIds)
     {
         WorkoutResolution resolution = GetBaseResolution(workoutMinutes);
@@ -751,15 +805,18 @@ public sealed class ExerciseSessionService
             return resolution.Groups;
         }
 
-        int completeSets = workoutMinutes / resolution.Groups.Count;
-        var rounds = new List<WorkoutGroup>(workoutMinutes);
+        int extraMinutes = workoutMinutes - resolution.Groups.Count;
+        int repeatedMinutes = extraMinutes - fullSideSelectionGroupIds.Count;
+        int completeExtraSets = repeatedMinutes / resolution.Groups.Count;
+        var rounds = new List<WorkoutGroup>(
+            resolution.Groups.Count + repeatedMinutes);
 
         for (int groupIndex = 0;
              groupIndex < resolution.Groups.Count;
              groupIndex++)
         {
             WorkoutGroup selectionGroup = resolution.Groups[groupIndex];
-            int setCount = completeSets +
+            int setCount = 1 + completeExtraSets +
                 (extraSetSelectionGroupIds.Contains(selectionGroup.Id) ? 1 : 0);
             for (int setNumber = 1; setNumber <= setCount; setNumber++)
             {
@@ -768,10 +825,16 @@ public sealed class ExerciseSessionService
                     Id = $"{selectionGroup.Id}.set{setNumber}",
                     Order = rounds.Count + 1,
                     SelectionGroupId = selectionGroup.Id,
+                    UsesFullSideTiming = setNumber == 1 &&
+                        fullSideSelectionGroupIds.Contains(selectionGroup.Id),
                 });
             }
         }
 
         return rounds.AsReadOnly();
     }
+
+    private sealed record LongWorkoutAllocation(
+        HashSet<string> FullSideSelectionGroupIds,
+        HashSet<string> ExtraSetSelectionGroupIds);
 }

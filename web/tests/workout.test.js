@@ -16,6 +16,7 @@ import {
   getCanonicalCoverage,
   getExerciseVideoPath,
   getHoldFramePath,
+  getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
   getSelectionKey,
@@ -109,7 +110,13 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     const selected = session
       .getActiveGroups()
       .map((group) => session.getSelectedExercise(group));
-    assert.equal(selected.length, minutes);
+    assert.equal(
+      session.getActiveGroups().reduce(
+        (total, group) => total + (group.usesFullSideTiming ? 2 : 1),
+        0,
+      ),
+      minutes,
+    );
     assert.equal(new Set(selected.map((exercise) => exercise.id)).size, 30);
   }
 });
@@ -142,9 +149,30 @@ test("long workouts repeat the thirty-minute lineup with unique round IDs", () =
   }
 });
 
+test("long workouts spend extra minutes on full sides before repeated sets", () => {
+  const selectionGroups = RESOLUTIONS.get(30).groups;
+  const exercises = selectionGroups.map((group, index) => ({
+    ...exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0),
+    sideSequence: index < 12 ? "ScreenRightThenLeft" : "Continuous",
+  }));
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+
+  session.startWorkout(45);
+
+  const rounds = session.getActiveGroups();
+  assert.equal(rounds.length, 33);
+  assert.equal(rounds.filter((round) => round.usesFullSideTiming).length, 12);
+  assert.equal(session.state.activeFullSideSelectionGroupIds.length, 12);
+  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 3);
+  assert.equal(
+    rounds.reduce((total, round) => total + (round.usesFullSideTiming ? 2 : 1), 0),
+    45,
+  );
+});
+
 test("a rejected repeated round replaces its shared exercise once", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(45);
+  session.startWorkout(90);
   const rounds = session.getActiveGroups();
   const target = rounds.find((round) => round.id.endsWith(".set2"));
   const selectionKey = getSelectionKey(target);
@@ -164,7 +192,7 @@ test("a rejected repeated round replaces its shared exercise once", () => {
 test("interrupted long workout settles a pending repeated round exactly once", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
-  started.startWorkout(45);
+  started.startWorkout(90);
   const rounds = started.getActiveGroups();
   const pendingRound = rounds.find((round) => round.id.endsWith(".set2"));
   const performed = started.getSelectedExercise(pendingRound);
@@ -259,6 +287,28 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
   });
 });
 
+test("full-side rounds use exact 45/15/45 boundaries", () => {
+  assert.equal(getMovementDurationMs({ usesFullSideTiming: true }), 105_000);
+  assert.deepEqual(getMovementPhaseState(105_000, true, true), {
+    phase: "FirstSide",
+    secondsRemaining: 45,
+    segmentDurationSeconds: 45,
+    isExercise: true,
+  });
+  assert.deepEqual(getMovementPhaseState(60_000, true, true), {
+    phase: "ChangeSides",
+    secondsRemaining: 15,
+    segmentDurationSeconds: 15,
+    isExercise: false,
+  });
+  assert.deepEqual(getMovementPhaseState(45_000, true, true), {
+    phase: "SecondSide",
+    secondsRemaining: 45,
+    segmentDurationSeconds: 45,
+    isExercise: true,
+  });
+});
+
 test("unequal resistance roles always receive a timed side swap", () => {
   const unequalRoleIds = [
     220, 239, 256, 257, 258, 269, 278, 279, 285, 286, 287, 508, 843,
@@ -281,7 +331,7 @@ test("unequal resistance roles always receive a timed side swap", () => {
   }
 });
 
-test("forty-five-minute extra sets prefer previous keeps then muscle mass", () => {
+test("forty-five-minute full sides prefer previous keeps then muscle mass", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(30);
   const previousRounds = session.getActiveGroups();
@@ -300,25 +350,34 @@ test("forty-five-minute extra sets prefer previous keeps then muscle mass", () =
   session.startWorkout(45);
   const selectionGroups = RESOLUTIONS.get(30).groups;
   const rounds = session.getActiveGroups();
-  const extraSetGroupIds = selectionGroups
-    .filter((group) => rounds.filter((round) => getSelectionKey(round) === group.id).length === 2)
+  const expectedFullSideGroupIds = [...selectionGroups]
+    .filter((group) => session.getSelectedExercise(group).sideSequence !== "Continuous")
+    .sort((left, right) => {
+      const leftKept = expectedKeptExerciseIds.includes(
+        session.state.selectedExerciseIds[left.id],
+      ) ? 1 : 0;
+      const rightKept = expectedKeptExerciseIds.includes(
+        session.state.selectedExerciseIds[right.id],
+      ) ? 1 : 0;
+      return rightKept - leftKept || right.order - left.order;
+    })
+    .slice(0, 15)
     .map((group) => group.id);
-  const expectedExtraSetGroupIds = [
-    ...selectionGroups.slice(0, 10),
-    ...selectionGroups.slice(-5),
-  ].map((group) => group.id);
-  assert.deepEqual(extraSetGroupIds, expectedExtraSetGroupIds);
   assert.deepEqual(
-    [...session.state.activeExtraSetSelectionGroupIds].sort(),
-    [...expectedExtraSetGroupIds].sort(),
+    [...session.state.activeFullSideSelectionGroupIds].sort(),
+    [...expectedFullSideGroupIds].sort(),
+  );
+  assert.equal(
+    rounds.reduce((total, round) => total + (round.usesFullSideTiming ? 2 : 1),
+    0),
+    45,
   );
 
   session.state.lastKeptExerciseIds = [];
-  const frozenExtraSetGroupIds = selectionGroups
-    .filter((group) => session.getActiveGroups()
-      .filter((round) => getSelectionKey(round) === group.id).length === 2)
-    .map((group) => group.id);
-  assert.deepEqual(frozenExtraSetGroupIds, expectedExtraSetGroupIds);
+  assert.deepEqual(
+    [...session.state.activeFullSideSelectionGroupIds].sort(),
+    [...expectedFullSideGroupIds].sort(),
+  );
 });
 
 test("kept exercises fill compatible slots after workout duration changes", () => {

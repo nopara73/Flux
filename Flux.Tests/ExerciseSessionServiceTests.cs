@@ -100,6 +100,69 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void FortyFiveMinutesUpgradeSidedExercisesBeforeAddingRepeatedSets()
+    {
+        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] exercises = selectionGroups
+            .Select((group, index) => QualifiedForGroup(
+                index + 1,
+                group,
+                sideSequence: index < 12
+                    ? ExerciseSideSequence.ScreenRightThenLeft
+                    : ExerciseSideSequence.Continuous))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 45);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(33, rounds.Length);
+        Assert.Equal(12, rounds.Count(round => round.UsesFullSideTiming));
+        Assert.All(rounds.Where(round => round.UsesFullSideTiming), round =>
+            Assert.NotEqual(
+                ExerciseSideSequence.Continuous,
+                service.GetSelectedExercise(state, round).SideSequence));
+        Assert.Equal(3, state.ActiveExtraSetSelectionGroupIds.Count);
+        Assert.Equal(12, state.ActiveFullSideSelectionGroupIds.Count);
+        Assert.Equal(45, rounds.Sum(round => round.UsesFullSideTiming ? 2 : 1));
+    }
+
+    [Fact]
+    public void KeptSidedExercisesReceiveFullSideTimingBeforeLargerUnkeptMuscles()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(
+                index + 1,
+                group,
+                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            LastKeptExerciseIds = exercises.Take(4).Select(exercise => exercise.Id).ToHashSet(),
+        };
+
+        service.StartWorkout(state, 45);
+
+        string[] expected = groups.Take(4)
+            .Concat(groups.TakeLast(11))
+            .Select(group => group.Id)
+            .ToArray();
+        Assert.Equal(expected.Order(), state.ActiveFullSideSelectionGroupIds.Order());
+        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
+        Assert.Equal(30, service.GetActiveGroups(state).Count);
+
+        state.LastKeptExerciseIds.Clear();
+        service.Initialize(state);
+        Assert.Equal(expected.Order(), state.ActiveFullSideSelectionGroupIds.Order());
+    }
+
+    [Fact]
     public void FortyFiveMinuteExtraSetsPreferPreviouslyKeptExercisesThenMuscleMass()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
@@ -1040,7 +1103,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(6, state.Version);
+        Assert.Equal(7, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -1197,7 +1260,8 @@ public sealed class ExerciseSessionServiceTests
     private static Exercise QualifiedForGroup(
         int id,
         WorkoutGroup group,
-        int score = 0)
+        int score = 0,
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
     {
         CanonicalMuscleGroup primary = group.CanonicalGroups
             .Order()
@@ -1209,7 +1273,8 @@ public sealed class ExerciseSessionServiceTests
             primary,
             minutes,
             WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group),
-            score);
+            score,
+            sideSequence: sideSequence);
     }
 
     private static Exercise QualifiedExercise(
@@ -1232,7 +1297,8 @@ public sealed class ExerciseSessionServiceTests
         int minutes,
         int inBucketCoverage,
         int score = 0,
-        params CanonicalMuscleGroup[] additionalSecondaries)
+        CanonicalMuscleGroup[]? additionalSecondaries = null,
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, primary);
         if (inBucketCoverage is < 1 || inBucketCoverage > group.CanonicalGroups.Count)
@@ -1244,11 +1310,11 @@ public sealed class ExerciseSessionServiceTests
             .Where(candidate => candidate != primary)
             .Order()
             .Take(inBucketCoverage - 1)
-            .Concat(additionalSecondaries)
+            .Concat(additionalSecondaries ?? [])
             .Where(candidate => candidate != primary)
             .Distinct()
             .ToArray();
-        return Exercise(id, primary, score, secondary);
+        return Exercise(id, primary, score, sideSequence, secondary);
     }
 
     private static Exercise FullyCoveredExercise(
@@ -1270,6 +1336,14 @@ public sealed class ExerciseSessionServiceTests
         CanonicalMuscleGroup primary,
         int score = 0,
         params CanonicalMuscleGroup[] secondary)
+        => Exercise(id, primary, score, ExerciseSideSequence.Continuous, secondary);
+
+    private static Exercise Exercise(
+        int id,
+        CanonicalMuscleGroup primary,
+        int score,
+        ExerciseSideSequence sideSequence,
+        params CanonicalMuscleGroup[] secondary)
     {
         return new Exercise
         {
@@ -1283,7 +1357,7 @@ public sealed class ExerciseSessionServiceTests
             Mode = ExerciseMode.Repetition,
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
-            SideSequence = ExerciseSideSequence.Continuous,
+            SideSequence = sideSequence,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

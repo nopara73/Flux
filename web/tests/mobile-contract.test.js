@@ -7,6 +7,7 @@ import test from "node:test";
 import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  FULL_SIDE_MOVEMENT_DURATION_MS,
   LAST_CUMULATIVE_CATALOG_REVISION,
   MOVEMENT_DURATION_MS,
   RESOLUTIONS,
@@ -49,9 +50,10 @@ test("web duration choices match the mobile workout contract", () => {
   );
 });
 
-test("web and mobile persist keep-first extra-set scheduling", () => {
+test("web and mobile persist keep-first long-workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
+  assert.match(workoutState, /HashSet<string> ActiveFullSideSelectionGroupIds/);
   assert.match(
     sessionService,
     /OrderByDescending\(group\s*=>[\s\S]*LastKeptExerciseIds\.Contains\(exerciseId\)\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
@@ -91,6 +93,12 @@ test("web movement and rest timing match the mobile workout contract", () => {
   );
   assert.equal(integerConstant(movementSchedule, "SideDurationSeconds"), 20);
   assert.equal(integerConstant(movementSchedule, "SideChangeDurationSeconds"), 5);
+  assert.equal(
+    FULL_SIDE_MOVEMENT_DURATION_MS / 1000,
+    integerConstant(movementSchedule, "FullSideTotalDurationSeconds"),
+  );
+  assert.equal(integerConstant(movementSchedule, "FullSideDurationSeconds"), 45);
+  assert.equal(integerConstant(movementSchedule, "FullSideChangeDurationSeconds"), 15);
   assert.equal(
     REST_DURATION_MS / 1000,
     integerConstant(mainActivity, "RestSeconds"),

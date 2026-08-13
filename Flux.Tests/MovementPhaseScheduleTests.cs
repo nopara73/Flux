@@ -58,6 +58,31 @@ public sealed class MovementPhaseScheduleTests
     }
 
     [Theory]
+    [InlineData(105_000, MovementPhase.FirstSide, 45, 45, true)]
+    [InlineData(60_001, MovementPhase.FirstSide, 1, 45, true)]
+    [InlineData(60_000, MovementPhase.ChangeSides, 15, 15, false)]
+    [InlineData(45_001, MovementPhase.ChangeSides, 1, 15, false)]
+    [InlineData(45_000, MovementPhase.SecondSide, 45, 45, true)]
+    [InlineData(1, MovementPhase.SecondSide, 1, 45, true)]
+    public void Full_side_exercises_follow_the_forty_five_fifteen_forty_five_schedule(
+        long remainingMilliseconds,
+        MovementPhase expectedPhase,
+        int expectedSeconds,
+        int expectedDuration,
+        bool expectedIsExercise)
+    {
+        MovementPhaseState state = MovementPhaseSchedule.GetState(
+            remainingMilliseconds,
+            usesTimedSides: true,
+            usesFullSideTiming: true);
+
+        Assert.Equal(expectedPhase, state.Phase);
+        Assert.Equal(expectedSeconds, state.SecondsRemaining);
+        Assert.Equal(expectedDuration, state.SegmentDurationSeconds);
+        Assert.Equal(expectedIsExercise, state.IsExercise);
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(-1)]
     [InlineData(long.MinValue)]

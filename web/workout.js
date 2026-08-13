@@ -1,5 +1,6 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
+export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const REST_DURATION_MS = 15_000;
 export const CURRENT_CATALOG_REVISION = 17;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
@@ -321,7 +322,11 @@ export function getSelectionKey(group) {
   return group.selectionGroupId ?? group.id;
 }
 
-export function createWorkoutSchedule(minutes, extraSetSelectionGroupIds = null) {
+export function createWorkoutSchedule(
+  minutes,
+  fullSideSelectionGroupIds = null,
+  extraSetSelectionGroupIds = null,
+) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
     throw new RangeError("Unsupported workout duration.");
   }
@@ -331,8 +336,13 @@ export function createWorkoutSchedule(minutes, extraSetSelectionGroupIds = null)
     return resolution.groups;
   }
 
-  const completeSets = Math.floor(minutes / resolution.groups.length);
-  const extraSets = minutes % resolution.groups.length;
+  const extraMinutes = minutes - resolution.groups.length;
+  const fullSideGroups = fullSideSelectionGroupIds instanceof Set
+    ? fullSideSelectionGroupIds
+    : new Set();
+  const repeatedMinutes = extraMinutes - fullSideGroups.size;
+  const completeExtraSets = Math.floor(repeatedMinutes / resolution.groups.length);
+  const extraSets = repeatedMinutes % resolution.groups.length;
   const selectedExtraSets = extraSetSelectionGroupIds instanceof Set
     ? extraSetSelectionGroupIds
     : new Set(extraSets === 0
@@ -341,7 +351,7 @@ export function createWorkoutSchedule(minutes, extraSetSelectionGroupIds = null)
   const rounds = [];
   for (let groupIndex = 0; groupIndex < resolution.groups.length; groupIndex++) {
     const selectionGroup = resolution.groups[groupIndex];
-    const setCount = completeSets +
+    const setCount = 1 + completeExtraSets +
       (selectedExtraSets.has(selectionGroup.id) ? 1 : 0);
     for (let setNumber = 1; setNumber <= setCount; setNumber++) {
       rounds.push(Object.freeze({
@@ -349,6 +359,7 @@ export function createWorkoutSchedule(minutes, extraSetSelectionGroupIds = null)
         id: `${selectionGroup.id}.set${setNumber}`,
         order: rounds.length + 1,
         selectionGroupId: selectionGroup.id,
+        usesFullSideTiming: setNumber === 1 && fullSideGroups.has(selectionGroup.id),
       }));
     }
   }
@@ -388,12 +399,23 @@ export function usesTimedPair(exercise) {
   return exercise.sideSequence !== "Continuous" || exercise.directionSequence !== "None";
 }
 
-export function getMovementPhaseState(remainingMilliseconds, timedPair) {
+export function getMovementDurationMs(group) {
+  return group?.usesFullSideTiming ? FULL_SIDE_MOVEMENT_DURATION_MS : MOVEMENT_DURATION_MS;
+}
+
+export function getMovementPhaseState(
+  remainingMilliseconds,
+  timedPair,
+  fullSideTiming = false,
+) {
   if (remainingMilliseconds <= 0) {
     return { phase: "Complete", secondsRemaining: 0, segmentDurationSeconds: 0, isExercise: false };
   }
 
-  const bounded = Math.min(remainingMilliseconds, MOVEMENT_DURATION_MS);
+  const totalDuration = fullSideTiming
+    ? FULL_SIDE_MOVEMENT_DURATION_MS
+    : MOVEMENT_DURATION_MS;
+  const bounded = Math.min(remainingMilliseconds, totalDuration);
   if (!timedPair) {
     return {
       phase: "Continuous",
@@ -403,20 +425,24 @@ export function getMovementPhaseState(remainingMilliseconds, timedPair) {
     };
   }
 
-  if (bounded > 25_000) {
+  const sideDuration = fullSideTiming ? 45_000 : 20_000;
+  const changeDuration = fullSideTiming ? 15_000 : 5_000;
+  const firstSideEnd = sideDuration + changeDuration;
+
+  if (bounded > firstSideEnd) {
     return {
       phase: "FirstSide",
-      secondsRemaining: Math.ceil((bounded - 25_000) / 1000),
-      segmentDurationSeconds: 20,
+      secondsRemaining: Math.ceil((bounded - firstSideEnd) / 1000),
+      segmentDurationSeconds: sideDuration / 1000,
       isExercise: true,
     };
   }
 
-  if (bounded > 20_000) {
+  if (bounded > sideDuration) {
     return {
       phase: "ChangeSides",
-      secondsRemaining: Math.ceil((bounded - 20_000) / 1000),
-      segmentDurationSeconds: 5,
+      secondsRemaining: Math.ceil((bounded - sideDuration) / 1000),
+      segmentDurationSeconds: changeDuration / 1000,
       isExercise: false,
     };
   }
@@ -424,7 +450,7 @@ export function getMovementPhaseState(remainingMilliseconds, timedPair) {
   return {
     phase: "SecondSide",
     secondsRemaining: Math.ceil(bounded / 1000),
-    segmentDurationSeconds: 20,
+    segmentDurationSeconds: sideDuration / 1000,
     isExercise: true,
   };
 }
@@ -496,7 +522,7 @@ export function formatExerciseId(exerciseId) {
 
 export function createDefaultState() {
   return {
-    version: 3,
+    version: 4,
     catalogRevision: CURRENT_CATALOG_REVISION,
     catalogIdentities: {},
     selectedExerciseIds: {},
@@ -504,6 +530,7 @@ export function createDefaultState() {
     outcomes: {},
     lastKeptExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
+    activeFullSideSelectionGroupIds: [],
     pendingRestGroupId: null,
     pendingRestEndsAtUnixMilliseconds: 0,
     pendingRestKept: false,
@@ -573,6 +600,10 @@ function normalizeStateShape(raw) {
     ? [...new Set(raw.activeExtraSetSelectionGroupIds.filter((groupId) =>
         typeof groupId === "string"))]
     : [];
+  state.activeFullSideSelectionGroupIds = Array.isArray(raw.activeFullSideSelectionGroupIds)
+    ? [...new Set(raw.activeFullSideSelectionGroupIds.filter((groupId) =>
+        typeof groupId === "string"))]
+    : [];
   return state;
 }
 
@@ -616,7 +647,7 @@ export class WorkoutSession {
       return;
     }
 
-    this.normalizeActiveExtraSetSelectionGroups();
+    this.normalizeActiveLongWorkoutAllocation();
     const activeGroupIds = new Set(this.getActiveGroups().map((group) => group.id));
     for (const groupId of Object.keys(this.state.outcomes)) {
       if (!activeGroupIds.has(groupId)) {
@@ -657,13 +688,14 @@ export class WorkoutSession {
     this.clearPendingRest();
     this.carryKeptExercisesForward(previousWorkoutMinutes);
     this.repairActiveLineup();
-    this.state.activeExtraSetSelectionGroupIds = this.chooseExtraSetSelectionGroups();
+    this.setActiveLongWorkoutAllocation();
   }
 
   getActiveGroups() {
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
       ? createWorkoutSchedule(
           this.state.activeWorkoutMinutes,
+          this.getEffectiveFullSideSelectionGroups(),
           this.getEffectiveExtraSetSelectionGroups(),
         )
       : [];
@@ -929,45 +961,91 @@ export class WorkoutSession {
       this.exercisesById.has(exerciseId));
   }
 
-  normalizeActiveExtraSetSelectionGroups() {
-    const expectedExtraSets = this.getExtraSetCount();
-    const selectionGroupIds = new Set(this.getSelectionGroups().map((group) => group.id));
-    const valid = this.state.activeExtraSetSelectionGroupIds.length === expectedExtraSets &&
-      this.state.activeExtraSetSelectionGroupIds.every((groupId) =>
-        selectionGroupIds.has(groupId));
-    if (!valid) {
-      this.state.activeExtraSetSelectionGroupIds = this.chooseExtraSetSelectionGroups();
+  normalizeActiveLongWorkoutAllocation() {
+    if (!this.isLongWorkoutAllocationValid()) {
+      this.setActiveLongWorkoutAllocation();
     }
   }
 
-  getExtraSetCount() {
+  isLongWorkoutAllocationValid() {
+    const selectionGroups = this.getSelectionGroups();
+    const selectionGroupIds = new Set(this.getSelectionGroups().map((group) => group.id));
+    const sidedSelectionGroupIds = new Set(selectionGroups
+      .filter((group) => {
+        const exercise = this.exercisesById.get(this.state.selectedExerciseIds[group.id]);
+        return exercise && exercise.sideSequence !== "Continuous";
+      })
+      .map((group) => group.id));
+    const extraMinutes = this.getExtraMinuteCount();
+    const expectedFullSides = Math.min(extraMinutes, sidedSelectionGroupIds.size);
+    const repeatedMinutes = extraMinutes - expectedFullSides;
+    const expectedPartialExtraSets = selectionGroups.length === 0
+      ? 0
+      : repeatedMinutes % selectionGroups.length;
+    return this.state.activeFullSideSelectionGroupIds.length === expectedFullSides &&
+      this.state.activeFullSideSelectionGroupIds.every((groupId) =>
+        sidedSelectionGroupIds.has(groupId)) &&
+      this.state.activeExtraSetSelectionGroupIds.length === expectedPartialExtraSets &&
+      this.state.activeExtraSetSelectionGroupIds.every((groupId) =>
+        selectionGroupIds.has(groupId));
+  }
+
+  getExtraMinuteCount() {
     if (this.state.activeWorkoutMinutes <= 30) {
       return 0;
     }
-    return this.state.activeWorkoutMinutes % this.getSelectionGroups().length;
+    return this.state.activeWorkoutMinutes - this.getSelectionGroups().length;
   }
 
-  chooseExtraSetSelectionGroups() {
-    const extraSets = this.getExtraSetCount();
-    if (extraSets === 0) {
-      return [];
+  chooseLongWorkoutAllocation() {
+    const extraMinutes = this.getExtraMinuteCount();
+    if (extraMinutes === 0) {
+      return { fullSideSelectionGroupIds: [], extraSetSelectionGroupIds: [] };
     }
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    return [...this.getSelectionGroups()]
+    const rankedGroups = [...this.getSelectionGroups()]
       .sort((left, right) => {
         const leftKept = keptExerciseIds.has(this.state.selectedExerciseIds[left.id]) ? 1 : 0;
         const rightKept = keptExerciseIds.has(this.state.selectedExerciseIds[right.id]) ? 1 : 0;
         return rightKept - leftKept || right.order - left.order;
+      });
+    const fullSideSelectionGroupIds = rankedGroups
+      .filter((group) => {
+        const exercise = this.exercisesById.get(this.state.selectedExerciseIds[group.id]);
+        return exercise && exercise.sideSequence !== "Continuous";
       })
-      .slice(0, extraSets)
+      .slice(0, extraMinutes)
       .map((group) => group.id);
+    const repeatedMinutes = extraMinutes - fullSideSelectionGroupIds.length;
+    const partialExtraSets = repeatedMinutes % rankedGroups.length;
+    return {
+      fullSideSelectionGroupIds,
+      extraSetSelectionGroupIds: rankedGroups
+        .slice(0, partialExtraSets)
+        .map((group) => group.id),
+    };
+  }
+
+  setActiveLongWorkoutAllocation() {
+    this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation());
+  }
+
+  applyLongWorkoutAllocation(allocation) {
+    this.state.activeFullSideSelectionGroupIds = [...allocation.fullSideSelectionGroupIds];
+    this.state.activeExtraSetSelectionGroupIds = [...allocation.extraSetSelectionGroupIds];
   }
 
   getEffectiveExtraSetSelectionGroups() {
-    const expectedExtraSets = this.getExtraSetCount();
-    const groupIds = this.state.activeExtraSetSelectionGroupIds.length === expectedExtraSets
+    const groupIds = this.isLongWorkoutAllocationValid()
       ? this.state.activeExtraSetSelectionGroupIds
-      : this.chooseExtraSetSelectionGroups();
+      : this.chooseLongWorkoutAllocation().extraSetSelectionGroupIds;
+    return new Set(groupIds);
+  }
+
+  getEffectiveFullSideSelectionGroups() {
+    const groupIds = this.isLongWorkoutAllocationValid()
+      ? this.state.activeFullSideSelectionGroupIds
+      : this.chooseLongWorkoutAllocation().fullSideSelectionGroupIds;
     return new Set(groupIds);
   }
 
@@ -1075,13 +1153,14 @@ export class WorkoutSession {
       this.state.catalogRevision,
       CURRENT_CATALOG_REVISION,
     );
-    this.state.version = 3;
+    this.state.version = 4;
   }
 
   resetTransientState() {
     this.state.activeWorkoutMinutes = 0;
     this.state.outcomes = {};
     this.state.activeExtraSetSelectionGroupIds = [];
+    this.state.activeFullSideSelectionGroupIds = [];
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
     this.clearPendingRest();

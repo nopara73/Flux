@@ -5,7 +5,8 @@ public sealed record WorkoutGroup(
     string DisplayName,
     int Order,
     IReadOnlySet<CanonicalMuscleGroup> CanonicalGroups,
-    string? SelectionGroupId = null)
+    string? SelectionGroupId = null,
+    bool UsesFullSideTiming = false)
 {
     public string SelectionKey => SelectionGroupId ?? Id;
 }

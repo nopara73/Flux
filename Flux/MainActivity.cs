@@ -1688,13 +1688,17 @@ public class MainActivity : Activity
         _lastMovementPhase = null;
         SetExerciseMediaMirrored(mirrored: false);
         int position = _currentWorkoutGroup.Order;
+        int totalRounds = _sessionService.GetActiveGroups(_state).Count;
+        int movementDurationMilliseconds = GetCurrentMovementDurationMilliseconds();
 
         string groupName = _currentWorkoutGroup.DisplayName;
-        _workoutProgressText.Text = $"{position:D2}  /  {_state.ActiveWorkoutMinutes:D2}";
+        _workoutProgressText.Text = $"{position:D2}  /  {totalRounds:D2}";
         _workoutProgressText.ContentDescription =
-            $"Round {position} of {_state.ActiveWorkoutMinutes}";
-        _workoutProgressBar.Max = _state.ActiveWorkoutMinutes;
+            $"Round {position} of {totalRounds}";
+        _workoutProgressBar.Max = totalRounds;
         _workoutProgressBar.SetProgress(position, continuingWorkout);
+        _countdownProgress.Max = movementDurationMilliseconds;
+        _countdownProgress.Progress = movementDurationMilliseconds;
         _workoutGroupName.Text = groupName;
         _workoutGroupName.ContentDescription = groupName;
         _exerciseName.Text = exercise.Name;
@@ -1720,7 +1724,7 @@ public class MainActivity : Activity
         }
         AnnouncePhaseForAccessibility(
             _workoutHeader,
-            $"Round {position} of {_state.ActiveWorkoutMinutes}. " +
+            $"Round {position} of {totalRounds}. " +
             $"{groupName}. {exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
     }
@@ -1776,7 +1780,7 @@ public class MainActivity : Activity
         _lastMovementPhase = null;
         ShowWorkoutPhase(WorkoutPhase.Move);
         SetSkipAvailability(available: true);
-        StartCountdownTimer(CountdownSeconds * 1000L);
+        StartCountdownTimer(GetCurrentMovementDurationMilliseconds());
     }
 
     private void SkipExercise()
@@ -1888,14 +1892,16 @@ public class MainActivity : Activity
 
     private void UpdateMoveCountdown(long millisecondsRemaining)
     {
+        int movementDurationMilliseconds = GetCurrentMovementDurationMilliseconds();
         long boundedMilliseconds = Math.Clamp(
             millisecondsRemaining,
             0L,
-            CountdownSeconds * 1000L);
+            movementDurationMilliseconds);
         _countdownMillisecondsRemaining = boundedMilliseconds;
         MovementPhaseState state = MovementPhaseSchedule.GetState(
             boundedMilliseconds,
-            UsesTimedPair());
+            UsesTimedPair(),
+            _currentWorkoutGroup.UsesFullSideTiming);
         string secondsText = state.SecondsRemaining.ToString();
         if (_countdownText.Text != secondsText ||
             state.Phase != _lastMovementPhase)
@@ -1916,6 +1922,11 @@ public class MainActivity : Activity
                 exercise.SideSequence,
                 exercise.DirectionSequence);
     }
+
+    private int GetCurrentMovementDurationMilliseconds() =>
+        (_currentWorkoutGroup?.UsesFullSideTiming == true
+            ? MovementPhaseSchedule.FullSideTotalDurationSeconds
+            : CountdownSeconds) * 1_000;
 
     private string GetMovementCountdownDescription(
         MovementPhaseState state)

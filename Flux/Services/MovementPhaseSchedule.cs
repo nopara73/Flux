@@ -20,17 +20,16 @@ public static class MovementPhaseSchedule
     public const int TotalDurationSeconds = 45;
     public const int SideDurationSeconds = 20;
     public const int SideChangeDurationSeconds = 5;
+    public const int FullSideDurationSeconds = 45;
+    public const int FullSideChangeDurationSeconds = 15;
+    public const int FullSideTotalDurationSeconds = 105;
 
     private const long TotalDurationMilliseconds =
         TotalDurationSeconds * 1_000L;
-    private const long SecondSideStartMilliseconds =
-        SideDurationSeconds * 1_000L;
-    private const long FirstSideEndMilliseconds =
-        (SideDurationSeconds + SideChangeDurationSeconds) * 1_000L;
-
     public static MovementPhaseState GetState(
         long remainingMilliseconds,
-        bool usesTimedSides)
+        bool usesTimedSides,
+        bool usesFullSideTiming = false)
     {
         if (remainingMilliseconds <= 0)
         {
@@ -41,9 +40,12 @@ public static class MovementPhaseSchedule
                 IsExercise: false);
         }
 
+        long totalDurationMilliseconds = usesFullSideTiming
+            ? FullSideTotalDurationSeconds * 1_000L
+            : TotalDurationMilliseconds;
         var boundedRemainingMilliseconds = Math.Min(
             remainingMilliseconds,
-            TotalDurationMilliseconds);
+            totalDurationMilliseconds);
 
         if (!usesTimedSides)
         {
@@ -54,30 +56,40 @@ public static class MovementPhaseSchedule
                 IsExercise: true);
         }
 
-        if (boundedRemainingMilliseconds > FirstSideEndMilliseconds)
+        int sideDurationSeconds = usesFullSideTiming
+            ? FullSideDurationSeconds
+            : SideDurationSeconds;
+        int sideChangeDurationSeconds = usesFullSideTiming
+            ? FullSideChangeDurationSeconds
+            : SideChangeDurationSeconds;
+        long secondSideStartMilliseconds = sideDurationSeconds * 1_000L;
+        long firstSideEndMilliseconds =
+            (sideDurationSeconds + sideChangeDurationSeconds) * 1_000L;
+
+        if (boundedRemainingMilliseconds > firstSideEndMilliseconds)
         {
             return new MovementPhaseState(
                 MovementPhase.FirstSide,
                 ToDisplayedSeconds(
-                    boundedRemainingMilliseconds - FirstSideEndMilliseconds),
-                SideDurationSeconds,
+                    boundedRemainingMilliseconds - firstSideEndMilliseconds),
+                sideDurationSeconds,
                 IsExercise: true);
         }
 
-        if (boundedRemainingMilliseconds > SecondSideStartMilliseconds)
+        if (boundedRemainingMilliseconds > secondSideStartMilliseconds)
         {
             return new MovementPhaseState(
                 MovementPhase.ChangeSides,
                 ToDisplayedSeconds(
-                    boundedRemainingMilliseconds - SecondSideStartMilliseconds),
-                SideChangeDurationSeconds,
+                    boundedRemainingMilliseconds - secondSideStartMilliseconds),
+                sideChangeDurationSeconds,
                 IsExercise: false);
         }
 
         return new MovementPhaseState(
             MovementPhase.SecondSide,
             ToDisplayedSeconds(boundedRemainingMilliseconds),
-            SideDurationSeconds,
+            sideDurationSeconds,
             IsExercise: true);
     }
 

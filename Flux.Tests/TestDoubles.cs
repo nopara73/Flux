@@ -60,6 +60,9 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             ActiveExtraSetSelectionGroupIds = new HashSet<string>(
                 state.ActiveExtraSetSelectionGroupIds,
                 StringComparer.Ordinal),
+            ActiveFullSideSelectionGroupIds = new HashSet<string>(
+                state.ActiveFullSideSelectionGroupIds,
+                StringComparer.Ordinal),
             PendingRestGroupId = state.PendingRestGroupId,
             PendingRestEndsAtUnixMilliseconds = state.PendingRestEndsAtUnixMilliseconds,
             PendingRestKept = state.PendingRestKept,

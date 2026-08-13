@@ -1,10 +1,10 @@
 import {
-  MOVEMENT_DURATION_MS,
   REST_DURATION_MS,
   SUPPORTED_MINUTES,
   WorkoutSession,
   getExerciseVideoPath,
   getHoldFramePath,
+  getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
   parseStoredState,
@@ -244,7 +244,7 @@ function showNextExercise() {
 
   currentGroup = nextGroup;
   currentExercise = session.getSelectedExercise(nextGroup);
-  const total = session.state.activeWorkoutMinutes;
+  const total = session.getActiveGroups().length;
   const position = nextGroup.order;
 
   elements.workoutProgressText.textContent =
@@ -449,7 +449,7 @@ function startMovement() {
   }
   playSound("start");
   requestWakeLock();
-  movementRemaining = MOVEMENT_DURATION_MS;
+  movementRemaining = getMovementDurationMs(currentGroup);
   movementPauseReason = null;
   lastMovementPhase = null;
   showMovePanel();
@@ -472,11 +472,16 @@ function updateMovement() {
     return;
   }
   movementRemaining = Math.max(0, movementEndsAt - performance.now());
-  const state = getMovementPhaseState(movementRemaining, usesTimedPair(currentExercise));
+  const movementDuration = getMovementDurationMs(currentGroup);
+  const state = getMovementPhaseState(
+    movementRemaining,
+    usesTimedPair(currentExercise),
+    currentGroup?.usesFullSideTiming === true,
+  );
   elements.movementCountdown.value = String(state.secondsRemaining);
   elements.movementCountdown.textContent = String(state.secondsRemaining);
   elements.movementProgressFill.style.transform =
-    `scaleX(${movementRemaining / MOVEMENT_DURATION_MS})`;
+    `scaleX(${movementRemaining / movementDuration})`;
 
   if (state.phase !== lastMovementPhase && state.phase !== "Complete") {
     applyMovementPhase(state.phase);
@@ -504,7 +509,7 @@ function applyMovementPhase(phase) {
     playSound("side_change");
     elements.status.textContent =
       currentExercise.directionSequence === "None"
-        ? "Change sides, 5 seconds."
+        ? `Change sides, ${currentGroup?.usesFullSideTiming ? 15 : 5} seconds.`
         : "Change direction, 5 seconds.";
     return;
   }
@@ -518,8 +523,9 @@ function applyMovementPhase(phase) {
   }
   restartMediaForPhase(phase);
 
+  const segmentSeconds = currentGroup?.usesFullSideTiming ? 45 : 20;
   elements.status.textContent =
-    phase === "Continuous" ? "Move, 45 seconds." : `${description}, 20 seconds.`;
+    phase === "Continuous" ? "Move, 45 seconds." : `${description}, ${segmentSeconds} seconds.`;
 
   if (phase === "SecondSide") {
     playSound("start");

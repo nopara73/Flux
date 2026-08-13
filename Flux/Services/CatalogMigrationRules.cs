@@ -663,6 +663,7 @@ public static class CatalogMigrationRules
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
+        state.ActiveFullSideSelectionGroupIds ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
 
