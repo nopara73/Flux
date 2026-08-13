@@ -248,6 +248,80 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(-3, stored[exerciseId].Score);
     }
 
+    [Fact]
+    public void ClarifiedStepThroughNameAcceptsHistoricalAlternatingIdentity()
+    {
+        const int exerciseId = 231;
+        const string video = "exercise_videos/exercise_0231.mp4";
+        Exercise normalized = Exercise(
+            exerciseId,
+            "Step-Through Karate Reverse Punch",
+            video);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new("Alternating Karate Reverse Punch", video, -4),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [normalized],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-4, stored[exerciseId].Score);
+    }
+
+    [Fact]
+    public void ReplacementAcceptsHistoricalUnprefixedRetiredIdentity()
+    {
+        const int exerciseId = 223;
+        const string video = "exercise_videos/exercise_0223.mp4";
+        Exercise replacement = Exercise(
+            exerciseId,
+            "Self-Resisted Forearm Supination Hold",
+            video,
+            retiredName: "Alternating Karate Inside Block (Uchi-Uke)");
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new("Karate Inside Block (Uchi-Uke)", video, -6),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-6, stored[exerciseId].Score);
+    }
+
+    [Theory]
+    [InlineData(
+        397,
+        "Alternating Breath-Integrated Weight Shift",
+        "Exhale Forward, Inhale Back Weight Shift")]
+    [InlineData(
+        617,
+        "Alternating Standing Side-Leg Circles",
+        "Standing Forward Side-Leg Circles")]
+    public void ClarityCorrectionAcceptsHistoricalAlternatingIdentity(
+        int exerciseId,
+        string historicalName,
+        string currentName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        Exercise corrected = Exercise(exerciseId, currentName, video);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(historicalName, video, -2),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [corrected],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-2, stored[exerciseId].Score);
+    }
+
     [Theory]
     [InlineData(195, "Lateral Lunge to Balance", "Ballet Degage a la Seconde")]
     [InlineData(211, "Open-Finger Wrist Extension", "Karate Backfist Strike (Uraken-Uchi)")]

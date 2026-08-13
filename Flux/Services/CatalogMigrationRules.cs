@@ -157,6 +157,10 @@ public static class CatalogMigrationRules
                 {
                     "Alternating Standing Knee Extension",
                 },
+                [231] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Karate Reverse Punch",
+                },
                 [394] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Open-and-Close Breathing",
@@ -168,6 +172,7 @@ public static class CatalogMigrationRules
                 [397] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Breath-Integrated Weight Shift",
+                    "Alternating Breath-Integrated Weight Shift",
                 },
                 [398] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -184,6 +189,10 @@ public static class CatalogMigrationRules
                 [401] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Shibashi Alternating Swinging-Arms Breathing",
+                },
+                [617] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Standing Side-Leg Circles",
                 },
             };
 
@@ -655,6 +664,11 @@ public static class CatalogMigrationRules
             string.Equals(
                 storedName[AlternatingPrefix.Length..],
                 expectedName,
+                StringComparison.Ordinal)) ||
+        (expectedName.StartsWith(AlternatingPrefix, StringComparison.Ordinal) &&
+            string.Equals(
+                storedName,
+                expectedName[AlternatingPrefix.Length..],
                 StringComparison.Ordinal));
 
     private static bool IsApprovedExerciseCorrection(

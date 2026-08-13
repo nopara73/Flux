@@ -85,13 +85,18 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
   [21, new Set(["Alternating Standing-Scale Balance"])],
   [145, new Set(["Alternating Standing Knee Extension"])],
+  [231, new Set(["Alternating Karate Reverse Punch"])],
   [394, new Set(["Standing Open-and-Close Breathing"])],
   [395, new Set(["Standing Overhead Rib-Expansion Breathing"])],
-  [397, new Set(["Breath-Integrated Weight Shift"])],
+  [397, new Set([
+    "Breath-Integrated Weight Shift",
+    "Alternating Breath-Integrated Weight Shift",
+  ])],
   [398, new Set(["Standing Arm-Expansion Breathing"])],
   [399, new Set(["Shibashi Opening-the-Chest Breathing"])],
   [400, new Set(["Shibashi Separating-the-Clouds Breathing"])],
   [401, new Set(["Shibashi Alternating Swinging-Arms Breathing"])],
+  [617, new Set(["Alternating Standing Side-Leg Circles"])],
 ]);
 
 const CANONICAL_GROUPS = Object.freeze([
