@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(148, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(149, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -251,6 +251,7 @@ public sealed class CatalogMigrationRulesTests
     [Theory]
     [InlineData(195, "Lateral Lunge to Balance", "Ballet Degage a la Seconde")]
     [InlineData(211, "Open-Finger Wrist Extension", "Karate Backfist Strike (Uraken-Uchi)")]
+    [InlineData(212, "Bent-Over Triceps Pulse", "Karate Palm-Heel Strike (Teisho)")]
     [InlineData(213, "Open-Finger Wrist Flexion", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
     [InlineData(214, "Neutral-Fist Wrist Flexion and Extension", "Wing Chun Biu-Sau Palm Strike")]
     [InlineData(215, "Up-and-Down Wrist Glides", "Self-Resisted Wrist Radial-Deviation Pulses")]
@@ -265,6 +266,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(240, "Self-Resisted Finger Squeeze", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(242, "Ninja Boar Hand-Seal Hold", "Ninja Shadow-Clone Hand-Seal Sequence")]
+    [InlineData(260, "Standing Triceps Kickbacks", "Behind-the-Back Self-Resisted Press")]
     [InlineData(268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric")]
     [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
     [InlineData(276, "Alternating Diagonal Overhead Reach-and-Pull", "Dynamic-Resistance High Chest Press")]
@@ -288,10 +290,12 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(505, "Temple Circle Massage", "Maximal Smile and Relax")]
     [InlineData(506, "Cheek Pinch Massage", "Eyebrow Raise and Relax")]
     [InlineData(508, "Diagonal Arm Reach-to-Row", "Tongue Protrusion and Retraction")]
+    [InlineData(512, "Upper-Cervical Erector Stretch", "Scapular Protraction")]
     [InlineData(513, "Standing Unilateral SCM Stretch", "Scapular Retraction")]
     [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
     [InlineData(591, "Standing Speed-Bag Punches", "Bharatanatyam Natyarambhe Hold")]
     [InlineData(611, "Warrior II-Stance Hip Circles", "Pelvic-Floor Heel-Raise Lift")]
+    [InlineData(649, "Standing Clamshell", "Standing Side-Leg Raise")]
     [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
     [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
     [InlineData(843, "Behind-Back Wrist-Pull Neck Stretch", "Standing Cobra Pose")]
@@ -557,6 +561,8 @@ public sealed class CatalogMigrationRulesTests
     [Theory]
     [InlineData(21, "Standing-Scale Balance", "Standing-Scale Balance Hold")]
     [InlineData(105, "Plie Squat", "Wide Turned-Out Squat")]
+    [InlineData(119, "Squat to Calf Raise", "Tiptoe Walk")]
+    [InlineData(139, "Wide-Squat Heel Raise", "Wide-Squat Alternating Heel Raises")]
     [InlineData(188, "Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat")]
     [InlineData(197, "First-Position Plie-Releve", "Parallel Squat-to-Calf Raise")]
     [InlineData(198, "Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise")]
@@ -609,6 +615,96 @@ public sealed class CatalogMigrationRulesTests
 
         Assert.Contains(exerciseId, preserved);
         Assert.Equal(-4, stored[exerciseId].Score);
+    }
+
+    [Fact]
+    public void LatestCatalogRevisionDropsEveryChangedExerciseReference()
+    {
+        const int replacedId = 212;
+        const int retainedId = 198;
+        const string replacedGroup = "group.replaced";
+        const string retainedGroup = "group.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 17,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [replacedGroup] = replacedId,
+                [retainedGroup] = retainedId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [replacedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = replacedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = replacedId,
+            PendingScoreValue = -2,
+            LastKeptExerciseIds = [replacedId, retainedId],
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(replacedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(replacedGroup, state.Outcomes);
+        Assert.Equal(retainedId, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.False(state.PendingRestKept);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Assert.Contains(replacedId, state.LastKeptExerciseIds);
+        Assert.Contains(retainedId, state.LastKeptExerciseIds);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
+    [InlineData(115)]
+    [InlineData(119)]
+    [InlineData(140)]
+    [InlineData(260)]
+    [InlineData(326)]
+    [InlineData(340)]
+    [InlineData(512)]
+    [InlineData(649)]
+    public void LatestCatalogRevisionDropsOtherChangedExerciseReferences(
+        int changedExerciseId)
+    {
+        const string groupId = "changed.group";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 17,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groupId] = changedExerciseId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groupId] = ExerciseOutcome.Tick,
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(groupId, state.SelectedExerciseIds);
+        Assert.DoesNotContain(groupId, state.Outcomes);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void LatestCatalogRevisionResetsOnlySemanticReplacementScores()
+    {
+        Assert.Equal(
+            new HashSet<int> { 115, 212, 260, 512, 649 },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
+
+        Assert.DoesNotContain(119, CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
+        Assert.DoesNotContain(140, CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
+        Assert.DoesNotContain(326, CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
+        Assert.DoesNotContain(340, CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
     }
 
     [Theory]

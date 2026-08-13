@@ -2,7 +2,7 @@ export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60,
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 17;
+export const CURRENT_CATALOG_REVISION = 18;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -19,12 +19,32 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [12, new Set([513, 843])],
   [13, new Set([223, 224, 225, 245, 246])],
   [16, new Set([234, 239, 240])],
+  [18, new Set([115, 119, 140, 212, 260, 326, 340, 512, 649])],
+]);
+export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
+  [4, new Set([591])],
+  [5, new Set([266])],
+  [6, new Set([266])],
+  [7, new Set([326])],
+  [8, new Set([211, 212, 213, 214, 232, 233, 234, 236])],
+  [9, new Set([195])],
+  [10, new Set([126, 135, 338, 686])],
+  [11, new Set([
+    211, 213, 214, 215, 216, 217, 218, 232,
+    233, 234, 236, 237, 240, 241, 283, 289,
+  ])],
+  [12, new Set([513, 843])],
+  [13, new Set([223, 224, 225, 245, 246])],
+  [16, new Set([234, 239, 240])],
+  [18, new Set([115, 212, 260, 512, 649])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [21, ["Standing-Scale Balance", "Standing-Scale Balance Hold"]],
   [105, ["Plie Squat", "Wide Turned-Out Squat"]],
+  [119, ["Squat to Calf Raise", "Tiptoe Walk"]],
+  [139, ["Wide-Squat Heel Raise", "Wide-Squat Alternating Heel Raises"]],
   [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
   [197, ["First-Position Plie-Releve", "Parallel Squat-to-Calf Raise"]],
   [198, ["Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise"]],
@@ -1105,6 +1125,12 @@ export class WorkoutSession {
     const changedExerciseIds = catalogInvalidationIdsSince(
       this.state.catalogRevision,
       this.exercises,
+      SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
+    );
+    const scoreResetExerciseIds = catalogInvalidationIdsSince(
+      this.state.catalogRevision,
+      this.exercises,
+      SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
     );
 
     for (const [exerciseId, previousIdentity] of Object.entries(previousIdentities)) {
@@ -1120,6 +1146,7 @@ export class WorkoutSession {
           ))
       ) {
         changedExerciseIds.add(Number(exerciseId));
+        scoreResetExerciseIds.add(Number(exerciseId));
       }
     }
 
@@ -1141,9 +1168,10 @@ export class WorkoutSession {
       ) {
         this.clearPendingRest();
       }
-      for (const exerciseId of changedExerciseIds) {
-        delete this.state.scores[String(exerciseId)];
-      }
+    }
+
+    for (const exerciseId of scoreResetExerciseIds) {
+      delete this.state.scores[String(exerciseId)];
     }
 
     this.normalizeKeptExerciseIds();
@@ -1171,7 +1199,7 @@ function catalogIdentity(exercise) {
   return `${exercise.name}\u001f${exercise.video}`;
 }
 
-function catalogInvalidationIdsSince(priorRevision, exercises) {
+function catalogInvalidationIdsSince(priorRevision, exercises, scopedInvalidations) {
   const invalidatedExerciseIds = new Set();
   if (priorRevision < LAST_CUMULATIVE_CATALOG_REVISION) {
     for (const exercise of exercises) {
@@ -1181,7 +1209,7 @@ function catalogInvalidationIdsSince(priorRevision, exercises) {
     }
   }
 
-  for (const [revision, exerciseIds] of SCOPED_CATALOG_INVALIDATIONS_BY_REVISION) {
+  for (const [revision, exerciseIds] of scopedInvalidations) {
     if (revision > priorRevision) {
       for (const exerciseId of exerciseIds) {
         invalidatedExerciseIds.add(exerciseId);

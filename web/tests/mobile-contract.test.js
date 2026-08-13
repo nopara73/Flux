@@ -13,6 +13,7 @@ import {
   RESOLUTIONS,
   REST_DURATION_MS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
+  SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   SUPPORTED_MINUTES,
 } from "../workout.js";
 
@@ -141,6 +142,16 @@ test("web catalog migration matches the mobile workout contract", () => {
     scopedCatalogInvalidations(catalogMigrationRules),
   );
   assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION].map(([revision, exerciseIds]) => [
+      revision,
+      [...exerciseIds],
+    ]),
+    scopedCatalogInvalidations(
+      catalogMigrationRules,
+      "ScopedScoreInvalidationsByRevision =",
+    ),
+  );
+  assert.deepEqual(
     [...APPROVED_EXERCISE_CORRECTIONS],
     approvedExerciseCorrections(catalogMigrationRules),
   );
@@ -187,8 +198,11 @@ function approvedExerciseCorrections(contents) {
   )].map((item) => [Number(item[1]), [item[2], item[3]]]);
 }
 
-function scopedCatalogInvalidations(contents) {
-  const start = contents.indexOf("ScopedWorkoutStateInvalidationsByRevision =");
+function scopedCatalogInvalidations(
+  contents,
+  name = "ScopedWorkoutStateInvalidationsByRevision =",
+) {
+  const start = contents.indexOf(name);
   const end = contents.indexOf("private static readonly", start);
   assert.ok(start >= 0 && end > start, "Could not read mobile scoped catalog invalidations.");
   return [...contents.slice(start, end).matchAll(

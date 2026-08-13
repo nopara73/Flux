@@ -765,15 +765,15 @@
         MirrorForAlternation = $false
     }
     626 = @{
-        File = 'bruce-lee-original-screen-test.mp4'
-        Url = 'https://www.youtube.com/watch?v=rvaI5bixCMY'
-        SourcePage = 'https://artsandculture.google.com/asset/bruce-lee-s-original-screen-test-american-broadcasting-corporation/vgGpTTLd7QFvNQ'
+        File = 'sumo-squat-hold-bodyweight.mp4'
+        Url = 'https://www.youtube.com/watch?v=eoGaQ9PRhXc'
+        SourcePage = 'https://www.youtube.com/watch?v=eoGaQ9PRhXc'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 487.0
-        DurationSeconds = 4.5
-        FramesPerSecond = 10
+        StartSeconds = 0.25
+        DurationSeconds = 5.5
+        FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -1162,16 +1162,16 @@
         MirrorForAlternation = $false
     }
     119 = @{
-        File = 'squat-to-calf-raise.mp4'
-        Url = 'https://www.youtube.com/watch?v=1W0DlNuJbsc'
-        SourcePage = 'https://www.youtube.com/watch?v=1W0DlNuJbsc'
+        File = 'tiptoe-walk.mp4'
+        Url = 'https://www.youtube.com/watch?v=YlC805YW-pw'
+        SourcePage = 'https://www.youtube.com/watch?v=YlC805YW-pw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 15.0
-        DurationSeconds = 4.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:0:0'
+        StartSeconds = 2.25
+        DurationSeconds = 5.75
+        FramesPerSecond = 12
+        Crop = 'crop=480:360:80:0'
         MirrorForAlternation = $false
     }
     120 = @{
@@ -1274,15 +1274,15 @@
         MirrorForAlternation = $false
     }
     140 = @{
-        File = 'sumo-squat-calf-raise-clear.mp4'
-        Url = 'https://www.youtube.com/watch?v=GD5IaDVlGhA'
-        SourcePage = 'https://www.youtube.com/watch?v=GD5IaDVlGhA'
+        File = 'sumo-squat-calf-raise-exact.mp4'
+        Url = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
+        SourcePage = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3.5
-        DurationSeconds = 14.0
-        FramesPerSecond = 8
+        StartSeconds = 5.0
+        DurationSeconds = 2.2
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -1324,16 +1324,17 @@
         MirrorForAlternation = $true
     }
     168 = @{
-        File = 'toy-soldier-march.mp4'
-        Url = 'https://www.youtube.com/watch?v=6NVowqZQiYQ'
-        SourcePage = 'https://www.youtube.com/watch?v=6NVowqZQiYQ'
+        File = 'quickcoach-toy-soldier.mp4'
+        Url = 'https://www.youtube.com/watch?v=P1r5d8YxRkw'
+        SourcePage = 'https://www.youtube.com/watch?v=P1r5d8YxRkw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 15.5
-        DurationSeconds = 6.0
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0.7
+        DurationSeconds = 7.7
+        FramesPerSecond = 8
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
     142 = @{
         File = 'lateral-squat-walk-no-band.mp4'
@@ -1544,15 +1545,16 @@
         MirrorForAlternation = $false
     }
     115 = @{
-        File = 'bodyweight-sissy-squat.mp4'
-        Url = 'https://www.youtube.com/watch?v=OfLQh20uKkI'
-        SourcePage = 'https://www.youtube.com/watch?v=OfLQh20uKkI'
+        File = 'pistol-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+        SourcePage = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3.0
-        DurationSeconds = 22.0
-        FramesPerSecond = 10
+        StartSeconds = 14.35
+        DurationSeconds = 7.65
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     138 = @{
@@ -1563,14 +1565,15 @@
         Youtube = $true
         Video = $true
         StartSeconds = 0.0
-        DurationSeconds = 11.5
-        FramesPerSecond = 10
+        DurationSeconds = 3.17
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     139 = @{
-        File = 'wide-squat-calf-raise.mp4'
-        Url = 'https://www.youtube.com/watch?v=8_MhIi-pSb8'
-        SourcePage = 'https://www.youtube.com/watch?v=8_MhIi-pSb8'
+        File = 'wide-squat-alternating-heel-raises.mp4'
+        Url = 'https://www.youtube.com/watch?v=wYoE11arXIw'
+        SourcePage = 'https://www.youtube.com/watch?v=wYoE11arXIw'
         Human = $true
         Youtube = $true
         Video = $true
@@ -1675,10 +1678,10 @@
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0.25
+        DurationSeconds = 10.8
+        FramesPerSecond = 8
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     182 = @{
@@ -3063,17 +3066,17 @@
         MirrorForAlternation = $true
     }
     649 = @{
-        File = 'standing-pilates.mp4'
-        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
-        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+        File = 'standing-bent-knee-hip-abduction.mp4'
+        Url = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
+        SourcePage = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 300
-        DurationSeconds = 7
+        StartSeconds = 6.05
+        DurationSeconds = 3.75
         FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        Crop = 'crop=360:360:217:0'
+        MirrorForAlternation = $false
     }
     806 = @{
         File = 'standing-pilates.mp4'
@@ -3248,15 +3251,15 @@
         MirrorForAlternation = $false
     }
     326 = @{
-        File = 'growing-nojump.mp4'
-        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
-        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        File = 'chuck-norris-private-lesson.mp4'
+        Url = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
+        SourcePage = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1710
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 544.45
+        DurationSeconds = 13.8
+        FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -3381,14 +3384,14 @@
         MirrorForAlternation = $true
     }
     212 = @{
-        File = 'karate-hand-strikes.mp4'
-        Url = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
-        SourcePage = 'https://www.youtube.com/watch?v=5LQgMlx1oiE'
+        File = 'unsupported-sissy-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=O5pGabUeFtg'
+        SourcePage = 'https://www.youtube.com/watch?v=O5pGabUeFtg'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 105.5
-        DurationSeconds = 7
+        StartSeconds = 3.25
+        DurationSeconds = 14.5
         FramesPerSecond = 8
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true

@@ -668,7 +668,7 @@ test("second clarity corrections preserve earlier browser memory", () => {
 
 test("catalog revision retires only exercises changed by that revision", () => {
   const latestReplacementIds = new Set([
-    223, 224, 225, 234, 239, 240, 245, 246,
+    115, 212, 223, 224, 225, 234, 239, 240, 245, 246, 260, 512, 649,
   ]);
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
@@ -705,6 +705,42 @@ test("catalog revision retires only exercises changed by that revision", () => {
   assert.equal(restored.state.outcomes[group.id], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("revision workout invalidations preserve scores for unchanged exercise identities", () => {
+  const workoutOnlyIds = [119, 140, 326, 340];
+  const state = createDefaultState();
+  state.catalogRevision = 17;
+
+  for (const exerciseId of workoutOnlyIds) {
+    state.selectedExerciseIds[`changed.${exerciseId}`] = exerciseId;
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of workoutOnlyIds) {
+    assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
+    assert.equal(restored.state.scores[String(exerciseId)], -4);
+  }
+});
+
+test("revision semantic replacements reset scores", () => {
+  const semanticReplacementIds = [115, 212, 260, 512, 649];
+  const state = createDefaultState();
+  state.catalogRevision = 17;
+
+  for (const exerciseId of semanticReplacementIds) {
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of semanticReplacementIds) {
+    assert.equal(restored.state.scores[String(exerciseId)], undefined);
+  }
 });
 
 test("deployment migration preserves present keeps and drops missing exercises", () => {

@@ -121,7 +121,8 @@ foreach ($row in @($rows | Sort-Object { [int]$_.id })) {
             Url = [string]$row.url
             SourcePage = [string]$row.url
             Human = $true
-            Youtube = $true
+            Youtube = [string]$row.url -match
+                '(?i)(youtube\.com|youtu\.be)'
             Video = $true
             StartSeconds = ConvertFrom-CsvNumber `
                 -Value ([string]$row.start_seconds) `

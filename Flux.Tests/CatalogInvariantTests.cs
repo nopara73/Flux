@@ -53,7 +53,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(113, timedSideExercises.Length);
+        Assert.Equal(115, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -100,6 +100,7 @@ public sealed class CatalogInvariantTests
         Dictionary<int, ExerciseSideSequence> auditedSideSequences = new()
         {
             [58] = ExerciseSideSequence.ScreenLeftThenRight,
+            [115] = ExerciseSideSequence.ScreenLeftThenRight,
             [116] = ExerciseSideSequence.Continuous,
             [117] = ExerciseSideSequence.ScreenLeftThenRight,
             [123] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -148,7 +149,7 @@ public sealed class CatalogInvariantTests
             [619] = ExerciseSideSequence.Continuous,
             [620] = ExerciseSideSequence.ScreenLeftThenRight,
             [648] = ExerciseSideSequence.ScreenRightThenLeft,
-            [649] = ExerciseSideSequence.ScreenLeftThenRight,
+            [649] = ExerciseSideSequence.ScreenRightThenLeft,
             [686] = ExerciseSideSequence.ScreenLeftThenRight,
             [884] = ExerciseSideSequence.ScreenRightThenLeft,
             [885] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -194,13 +195,26 @@ public sealed class CatalogInvariantTests
         Assert.Equal(ExercisePresentation.Motion, externalRotation.Presentation);
         Assert.Equal(ExerciseSideSequence.Continuous, externalRotation.SideSequence);
         Assert.Equal(0, externalRotation.HoldFramePercent);
+        Exercise unsupportedSissySquat = exercises.Single(exercise => exercise.Id == 212);
+        Assert.Equal(
+            "Unsupported Sissy Squat",
+            unsupportedSissySquat.Name);
+        Assert.Equal(ExerciseMode.Repetition, unsupportedSissySquat.Mode);
+        Assert.Equal(ExercisePresentation.Motion, unsupportedSissySquat.Presentation);
+        Assert.Equal(0, unsupportedSissySquat.HoldFramePercent);
+        Assert.Equal(
+            ExerciseSideSequence.Continuous,
+            unsupportedSissySquat.SideSequence);
 
         Dictionary<int, string> auditedCorrectedNames = new()
         {
             [21] = "Standing-Scale Balance Hold",
             [105] = "Wide Turned-Out Squat",
+            [115] = "Pistol Squat",
+            [119] = "Tiptoe Walk",
             [126] = "Squat to Alternating Side Kick",
             [135] = "Standing Lateral Arm Pulses",
+            [139] = "Wide-Squat Alternating Heel Raises",
             [145] = "Standing Knee-Extension Hold",
             [188] = "Narrow Turned-Out Shallow Squat",
             [195] = "Side Lunge to Knee-Up Balance",
@@ -208,7 +222,7 @@ public sealed class CatalogInvariantTests
             [198] = "Wide Squat to Feet-Together Calf Raise",
             [199] = "Wide-Stance Side-to-Side Squat",
             [211] = "Opposite-Hand-Resisted Wrist Extension Hold",
-            [212] = "Bent-Over Triceps Pulse",
+            [212] = "Unsupported Sissy Squat",
             [213] = "Opposite-Hand-Resisted Wrist Flexion Hold",
             [214] = "Opposite-Hand-Resisted Wrist Ulnar-Deviation Hold",
             [215] = "Opposite-Hand-Resisted Wrist Radial-Deviation Hold",
@@ -254,12 +268,13 @@ public sealed class CatalogInvariantTests
             [501] = "Single-Leg Thumb-Focus Head Turns",
             [508] = "Curl Raised Leg with One Arm",
             [510] = "Clasped-Hands Chest-Opening Forward-Fold Hold",
+            [512] = "Standing Upper-Back and Neck Hug Stretch",
             [513] = "Collarbone-Anchored Diagonal Neck Stretch",
             [588] = "Belly-Dance Alternating Shoulder Rolls",
             [591] = "Shadow Boxing",
             [611] = "Wide-Stance Hip Circles",
             [626] = "Sumo Squat Hold",
-            [649] = "Standing Clamshell",
+            [649] = "Standing Bent-Knee Hip Abduction",
             [686] = "Standing Knee-to-Chest Glute Stretch",
             [712] = "Standing Arms-Back Chest-Opener Hold",
             [843] = "Arm-Behind-Back Assisted Side Neck Stretch",

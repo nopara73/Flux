@@ -130,6 +130,32 @@
             MirrorForAlternation = $false
         }
     }
+    115 = @{
+        RetiredName = 'Sissy Squat'
+        Name = 'Pistol Squat'
+        Practice = 'Calisthenics'
+        MotionProfile = 'SingleLegSquat'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pistol-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            SourcePage = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 14.35
+            DurationSeconds = 7.65
+            FramesPerSecond = 20
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     116 = @{
         RetiredName = 'Cossack Squat'
         Name = 'Alternating Cossack Squat'
@@ -726,24 +752,24 @@
     }
     212 = @{
         RetiredName = 'Karate Palm-Heel Strike (Teisho)'
-        Name = 'Bent-Over Triceps Pulse'
-        Practice = 'Standing bodyweight conditioning'
-        MotionProfile = 'BentOverRearArmPulse'
-        Primary = 'ElbowExtensors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'SpinalExtensors', 'AbdominalWall')
+        Name = 'Unsupported Sissy Squat'
+        Practice = 'Bodyweight strength'
+        MotionProfile = 'SissySquat'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'Soleus', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'bat-wings-workout.mp4'
-            Url = 'https://www.youtube.com/watch?v=E1FkoDDbzu4'
-            SourcePage = 'https://www.youtube.com/watch?v=E1FkoDDbzu4'
+            File = 'unsupported-sissy-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=O5pGabUeFtg'
+            SourcePage = 'https://www.youtube.com/watch?v=O5pGabUeFtg'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 245
-            DurationSeconds = 25
+            StartSeconds = 3.25
+            DurationSeconds = 14.5
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -1401,24 +1427,24 @@
     }
     260 = @{
         RetiredName = 'Behind-the-Back Self-Resisted Press'
-        Name = 'Standing Triceps Kickbacks'
-        Practice = 'Standing bodyweight conditioning'
-        MotionProfile = 'TricepsKickback'
-        Primary = 'ElbowExtensors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Name = 'Dancer Pose Hold'
+        Practice = 'Yoga'
+        MotionProfile = 'DancerPose'
+        Primary = 'HipFlexors'
+        Secondary = @('LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
-            File = 'standing-triceps-kickbacks.mp4'
-            Url = 'https://www.youtube.com/watch?v=8puNdUFEhLk'
-            SourcePage = 'https://www.youtube.com/watch?v=8puNdUFEhLk'
+            File = 'dancer-pose-yyoga.mp4'
+            Url = 'https://www.youtube.com/watch?v=aAgvS7xDvN0'
+            SourcePage = 'https://www.youtube.com/watch?v=aAgvS7xDvN0'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 202
-            DurationSeconds = 16
+            StartSeconds = 142
+            DurationSeconds = 6
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -2002,8 +2028,8 @@
         Name = 'Staggered-Stance Jab-Cross'
         Practice = 'Martial arts striking'
         MotionProfile = 'JabCross'
-        Primary = 'Chest'
-        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        Primary = 'ElbowExtensors'
+        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2931,24 +2957,24 @@
     }
     512 = @{
         RetiredName = 'Scapular Protraction'
-        Name = 'Upper-Cervical Erector Stretch'
-        Practice = 'Clinical stretching'
+        Name = 'Standing Upper-Back and Neck Hug Stretch'
+        Practice = 'Standing yoga'
         MotionProfile = 'NeckStretch'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
         Secondary = @('SpinalExtensors', 'DeepAndIntersegmentalBack')
         SideSequence = 'Continuous'
         Mode = 'Hold'
         Presentation = 'Still'
-        HoldFramePercent = 50
+        HoldFramePercent = 72
         Media = @{
-            File = 'neck-istretch-upper-cervical-erector.mp4'
-            Url = 'https://www.youtube.com/watch?v=sPl0jBS0DIE'
-            SourcePage = 'https://www.youtube.com/watch?v=sPl0jBS0DIE'
+            File = 'standing-upper-back-neck-hug-stretch.mp4'
+            Url = 'https://www.youtube.com/watch?v=ngQxxLnJ-5I'
+            SourcePage = 'https://www.youtube.com/watch?v=ngQxxLnJ-5I'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 5
-            DurationSeconds = 3.5
+            StartSeconds = 175.5
+            DurationSeconds = 7
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -3393,27 +3419,27 @@
     }
     649 = @{
         RetiredName = 'Standing Side-Leg Raise'
-        Name = 'Standing Clamshell'
-        Practice = 'Physical therapy'
-        MotionProfile = 'HipExternalRotation'
+        Name = 'Standing Bent-Knee Hip Abduction'
+        Practice = 'Standing conditioning'
+        MotionProfile = 'HipAbductionBentKnee'
         Primary = 'HipAbductors'
         Secondary = @('DeepHipRotators', 'GlutealExtensors')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'standing-clamshell.mp4'
-            Url = 'https://www.youtube.com/watch?v=QaGshpzTSxA'
-            SourcePage = 'https://www.youtube.com/watch?v=QaGshpzTSxA'
+            File = 'standing-bent-knee-hip-abduction.mp4'
+            Url = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
+            SourcePage = 'https://www.youtube.com/watch?v=_nDwMxCHLnA'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 9.75
-            DurationSeconds = 4.5
+            StartSeconds = 6.05
+            DurationSeconds = 3.75
             FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
+            Crop = 'crop=360:360:217:0'
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }

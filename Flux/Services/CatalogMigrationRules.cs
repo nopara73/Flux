@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 17;
+    public const int CurrentCatalogRevision = 18;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -32,6 +32,12 @@ public static class CatalogMigrationRules
                 [105] = new(
                     "Plie Squat",
                     "Wide Turned-Out Squat"),
+                [119] = new(
+                    "Squat to Calf Raise",
+                    "Tiptoe Walk"),
+                [139] = new(
+                    "Wide-Squat Heel Raise",
+                    "Wide-Squat Alternating Heel Raises"),
                 [188] = new(
                     "Parallel Demi-Plie",
                     "Narrow Turned-Out Shallow Squat"),
@@ -200,6 +206,9 @@ public static class CatalogMigrationRules
                 [211] = new(
                     "Open-Finger Wrist Extension",
                     "Karate Backfist Strike (Uraken-Uchi)"),
+                [212] = new(
+                    "Bent-Over Triceps Pulse",
+                    "Karate Palm-Heel Strike (Teisho)"),
                 [213] = new(
                     "Open-Finger Wrist Flexion",
                     "Karate Hammer-Fist Strike (Tetsui-Uchi)"),
@@ -242,6 +251,9 @@ public static class CatalogMigrationRules
                 [242] = new(
                     "Ninja Boar Hand-Seal Hold",
                     "Ninja Shadow-Clone Hand-Seal Sequence"),
+                [260] = new(
+                    "Standing Triceps Kickbacks",
+                    "Behind-the-Back Self-Resisted Press"),
                 [268] = new(
                     "Self-Resisted External-Rotation Push-Out",
                     "Self-Resisted External-Rotation Isometric"),
@@ -311,6 +323,9 @@ public static class CatalogMigrationRules
                 [508] = new(
                     "Diagonal Arm Reach-to-Row",
                     "Tongue Protrusion and Retraction"),
+                [512] = new(
+                    "Upper-Cervical Erector Stretch",
+                    "Scapular Protraction"),
                 [513] = new(
                     "Standing Unilateral SCM Stretch",
                     "Scapular Retraction"),
@@ -323,6 +338,9 @@ public static class CatalogMigrationRules
                 [611] = new(
                     "Warrior II-Stance Hip Circles",
                     "Pelvic-Floor Heel-Raise Lift"),
+                [649] = new(
+                    "Standing Clamshell",
+                    "Standing Side-Leg Raise"),
                 [681] = new(
                     "Rear-Arm Sweep to Front Squeeze",
                     "Belly-Dance Horizontal Figure Eight"),
@@ -388,7 +406,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
-        41, 56, 59, 98, 102, 116, 120, 126, 133, 135, 146, 159, 176, 177, 182, 183,
+        41, 56, 59, 98, 102, 115, 116, 120, 126, 133, 135, 146, 159, 176, 177, 182, 183,
         185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203,
         211, 212, 213, 214,
         215, 216, 217, 218, 219, 223, 224, 225, 227, 228, 229, 230, 232, 233, 234, 236, 237,
@@ -423,6 +441,32 @@ public static class CatalogMigrationRules
                 [12] = new HashSet<int> { 513, 843 },
                 [13] = new HashSet<int> { 223, 224, 225, 245, 246 },
                 [16] = new HashSet<int> { 234, 239, 240 },
+                [18] = new HashSet<int>
+                {
+                    115, 119, 140, 212, 260, 326, 340, 512, 649,
+                },
+            };
+
+    private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
+        ScopedScoreInvalidationsByRevision =
+            new Dictionary<int, IReadOnlySet<int>>
+            {
+                [4] = new HashSet<int> { 591 },
+                [5] = new HashSet<int> { 266 },
+                [6] = new HashSet<int> { 266 },
+                [7] = new HashSet<int> { 326 },
+                [8] = new HashSet<int> { 211, 212, 213, 214, 232, 233, 234, 236 },
+                [9] = new HashSet<int> { 195 },
+                [10] = new HashSet<int> { 126, 135, 338, 686 },
+                [11] = new HashSet<int>
+                {
+                    211, 213, 214, 215, 216, 217, 218, 232,
+                    233, 234, 236, 237, 240, 241, 283, 289,
+                },
+                [12] = new HashSet<int> { 513, 843 },
+                [13] = new HashSet<int> { 223, 224, 225, 245, 246 },
+                [16] = new HashSet<int> { 234, 239, 240 },
+                [18] = new HashSet<int> { 115, 212, 260, 512, 649 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -430,6 +474,9 @@ public static class CatalogMigrationRules
     ];
 
     public static IReadOnlySet<int> ReplacedExerciseIds => ReplacedExerciseIdSet;
+
+    public static IReadOnlyDictionary<int, IReadOnlySet<int>>
+        ScoreInvalidationsByRevision => ScopedScoreInvalidationsByRevision;
 
     public static IReadOnlySet<int> ValidatePreservedCatalog(
         IReadOnlyCollection<Exercise> bundledCatalog,
