@@ -26,6 +26,7 @@ const [
   movementSchedule,
   mainActivity,
   webApp,
+  workoutModule,
   catalogMigrationRules,
   catalogJson,
 ] = await Promise.all([
@@ -35,6 +36,7 @@ const [
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
   source("web", "app.js"),
+  source("web", "workout.js"),
   source("Flux", "Services", "CatalogMigrationRules.cs"),
   source("Flux", "Assets", "exercises.json"),
 ]);
@@ -84,6 +86,17 @@ test("web and mobile preserve deployed keeps by catalog membership", () => {
   assert.match(
     sessionService,
     /NormalizeKeptExerciseIds\([\s\S]*!_exercisesById\.ContainsKey\(exerciseId\)/,
+  );
+});
+
+test("web and mobile finalize rejected replacements when Done is acknowledged", () => {
+  assert.match(
+    sessionService,
+    /AcknowledgeCompletion\([\s\S]*state\.CompletionAcknowledged\s*=\s*true;[\s\S]*PrepareNextSession\(state\);/,
+  );
+  assert.match(
+    workoutModule,
+    /acknowledgeCompletion\(\)[\s\S]*this\.state\.completionAcknowledged\s*=\s*true;[\s\S]*this\.prepareNextSession\(\);/,
   );
 });
 

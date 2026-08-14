@@ -350,6 +350,51 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void DoneAtomicallyReplacesEveryRejectedExerciseBeforeRelaunch()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseline = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise[] replacements = groups
+            .Select((group, index) => QualifiedForGroup(1001 + index, group, 0))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [.. baseline, .. replacements],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 30);
+        int[] rejectedIds = service.GetActiveGroups(state)
+            .Where(round => round.Order % 2 == 1)
+            .Select(round => service.GetSelectedExercise(state, round).Id)
+            .ToArray();
+
+        foreach (WorkoutGroup round in service.GetActiveGroups(state))
+        {
+            service.RecordOutcome(state, round, keep: round.Order % 2 == 0);
+        }
+
+        service.AcknowledgeCompletion(state);
+
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        Assert.Empty(state.Outcomes);
+        Assert.False(state.WorkoutCompleted);
+        Assert.False(state.CompletionAcknowledged);
+        Assert.All(rejectedIds, rejectedId =>
+            Assert.DoesNotContain(rejectedId, state.SelectedExerciseIds.Values));
+
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        service.Initialize(restored);
+        Assert.All(rejectedIds, rejectedId =>
+            Assert.DoesNotContain(rejectedId, restored.SelectedExerciseIds.Values));
+    }
+
+    [Fact]
     public void InterruptedLongWorkoutSettlesPendingRepeatedRoundExactlyOnce()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy

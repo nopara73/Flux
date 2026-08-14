@@ -218,6 +218,7 @@ public sealed class ExerciseSessionService
         }
 
         state.CompletionAcknowledged = true;
+        PrepareNextSession(state);
     }
 
     public Exercise? FinishInterruptedWorkout(WorkoutState state)
