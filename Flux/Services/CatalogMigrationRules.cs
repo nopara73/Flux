@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 20;
+    public const int CurrentCatalogRevision = 21;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -459,22 +459,94 @@ public static class CatalogMigrationRules
                 },
             };
 
+    private static readonly IReadOnlyDictionary<int, string>
+        CatalogClarityResetPreviousNames =
+            new Dictionary<int, string>
+            {
+                [15] = "Skater-RDL Balance",
+                [16] = "Star-Tap Balance",
+                [17] = "Single-Leg RDL-Rotation Balance",
+                [19] = "Side-to-Side Pendulum Balance",
+                [20] = "Front-to-Back Pendulum Balance",
+                [31] = "Tai Chi Golden-Rooster Balance Drill",
+                [47] = "Walking with Horizontal Head Turns",
+                [97] = "Heel-to-Toe Balance Rocks",
+                [107] = "Half Squat",
+                [135] = "Standing Lateral Arm Pulses",
+                [150] = "Cross-Body Hip-Adduction Sweep",
+                [169] = "Standing Knee Drive",
+                [179] = "Axe-Kick Leg Raise",
+                [180] = "Karate Front Snap Kick",
+                [193] = "Shibashi Forward Scoop to Overhead Reach",
+                [219] = "Shibashi Soft-Knee Palm Press-Down",
+                [220] = "Interlocked Hook-Fist Pull-Apart Isometric",
+                [229] = "Overhead Palm-Press Hold",
+                [230] = "Low Palm-Press Hold",
+                [239] = "Straight-Finger Knuckle Bends",
+                [241] = "Flamenco Wrist Circles",
+                [242] = "Five-Position Hand Flow",
+                [248] = "Standing Palm-Press Hold",
+                [251] = "Waiter's Bow",
+                [256] = "Self-Resisted Overhead Pull Hold",
+                [257] = "Self-Resisted Chest-Level Pull Hold",
+                [258] = "Self-Resisted Low Pull Hold",
+                [262] = "Standing Hands-to-Thigh Abdominal Press Hold",
+                [266] = "Standing Palms-Up Arm Raise",
+                [268] = "Thumbs-Up Diagonal Arm Raises",
+                [269] = "Self-Resisted Curl-and-Press",
+                [270] = "Palm-Squeeze Forward Press",
+                [275] = "Standing Figure-Eight Side Reach",
+                [278] = "Dynamic-Resistance Lateral Triceps Extension",
+                [279] = "Dynamic-Resistance Triceps Pushdown",
+                [282] = "Qigong Drilling Fists",
+                [283] = "Flamenco Finger Flourish",
+                [285] = "Opposite-Hand-Resisted Supinated Curl",
+                [286] = "Opposite-Hand-Resisted Hammer Curl",
+                [287] = "Opposite-Hand-Resisted Reverse Curl",
+                [291] = "Fingertip Spider Presses",
+                [294] = "Finger-Spread to Interlace Stretch",
+                [314] = "Alternating Forward Lunge with Biceps Curl",
+                [321] = "Alternating Cross-Step Arms Raise",
+                [326] = "Staggered-Stance Jab-Cross",
+                [329] = "Qigong Gathering Qi",
+                [390] = "Three-Inhale Arm Sweep and Exhale Fold",
+                [391] = "Bellows Breathing with Arm Pumps",
+                [394] = "Inhale Arms Open, Exhale Arms Close and Round",
+                [395] = "Overhead Hold with Deep Ribcage Breaths",
+                [396] = "Unsupported Single-Leg Balance Hold",
+                [397] = "Exhale Forward, Inhale Back Weight Shift",
+                [425] = "Chin-Tuck Hold",
+                [507] = "First-Position Plié Elbow-Pull Pulse",
+                [508] = "Curl Raised Leg with One Arm",
+                [513] = "Collarbone-Anchored Diagonal Neck Stretch",
+                [516] = "Shoulder Shrug",
+                [572] = "Standing Side-Lunge Adductor Stretch",
+                [576] = "Qigong Crane-Wing Shoulder Lift",
+                [577] = "Qigong Swimming-Dragon Shoulder Roll",
+                [615] = "Standing Forward-and-Back Pelvic Tilts",
+                [618] = "Alternating Standing Windmill",
+                [677] = "T-Arm Rear Pulse",
+                [683] = "Goalpost Open-In-and-Lift",
+                [685] = "Wing Chun Chain Punching",
+                [745] = "Dynamic Hug",
+                [816] = "Torso Circle",
+                [834] = "Alternating Cross-Step Lat Pulldown",
+            };
+
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
-        41, 56, 59, 98, 102, 115, 116, 120, 126, 133, 135, 146, 159, 176, 177, 182, 183,
-        185, 187, 191, 192, 193, 194, 195, 196, 199, 201, 203,
-        211, 212, 213, 214,
-        215, 216, 217, 218, 219, 223, 224, 225, 227, 228, 229, 230, 232, 233, 234, 236, 237,
-        239, 240, 241, 242, 245, 246,
-        260, 262, 267, 268, 272, 274, 275, 276, 280, 281, 283, 284, 285,
-        286, 287, 288, 289, 291, 292, 293, 294, 295, 296, 326, 327, 338, 367, 390,
-        391, 392, 393, 396, 422,
-        423, 467, 474, 475, 477,
-        481, 482, 483, 490, 491, 492, 493, 495, 497, 499, 500, 501,
-        502, 503, 504, 505, 506, 507, 508, 509, 510, 512, 513, 572,
-        573, 591, 609, 610, 611, 612, 613, 614, 615, 616, 618, 619, 625,
-        636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686, 687, 712,
-        743, 843, 845, 971, 986, 987, 996, 997, 998, 999,
+        15, 16, 17, 19, 20, 31, 41, 47, 56, 59, 97, 98, 102, 107, 115, 116,
+        120, 126, 133, 135, 146, 150, 159, 169, 176, 177, 179, 180, 182, 183, 185, 187,
+        191, 192, 193, 194, 195, 196, 199, 201, 203, 211, 212, 213, 214, 215, 216, 217,
+        218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 232, 233, 234, 236, 237, 239,
+        240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 266, 267, 268, 269,
+        270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
+        289, 291, 292, 293, 294, 295, 296, 314, 321, 326, 327, 329, 338, 367, 390, 391,
+        392, 393, 394, 395, 396, 397, 422, 423, 425, 467, 474, 475, 477, 481, 482, 483,
+        490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
+        509, 510, 512, 513, 516, 572, 573, 576, 577, 591, 609, 610, 611, 612, 613, 614,
+        615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
+        687, 712, 743, 745, 816, 834, 843, 845, 971, 986, 987, 996, 997, 998, 999,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -505,6 +577,15 @@ public static class CatalogMigrationRules
                     211, 213, 214, 215, 218, 223, 224,
                     236, 237, 241, 242, 245, 283, 289,
                 },
+                [21] = new HashSet<int>
+                {
+                    15, 16, 17, 19, 20, 31, 47, 97, 107, 135, 150, 169,
+                    179, 180, 193, 219, 220, 229, 230, 239, 241, 242, 248, 251,
+                    256, 257, 258, 262, 266, 268, 269, 270, 275, 278, 279, 282,
+                    283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
+                    394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
+                    615, 618, 677, 683, 685, 745, 816, 834,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -531,6 +612,15 @@ public static class CatalogMigrationRules
                 {
                     211, 213, 214, 215, 218, 223, 224,
                     236, 237, 241, 242, 245, 283, 289,
+                },
+                [21] = new HashSet<int>
+                {
+                    15, 16, 17, 19, 20, 31, 47, 97, 107, 135, 150, 169,
+                    179, 180, 193, 219, 220, 229, 230, 239, 241, 242, 248, 251,
+                    256, 257, 258, 262, 266, 268, 269, 270, 275, 278, 279, 282,
+                    283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
+                    394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
+                    615, 618, 677, 683, 685, 745, 816, 834,
                 },
             };
 
@@ -628,9 +718,29 @@ public static class CatalogMigrationRules
                         NameMatchesWithOptionalAlternatingPrefix(
                             stored.Name,
                             priorName));
+                bool catalogClarityResetIdentityMatches =
+                    CatalogClarityResetPreviousNames.TryGetValue(
+                        exerciseId,
+                        out string? clarityResetPreviousName) &&
+                    NameMatchesWithOptionalAlternatingPrefix(
+                        stored.Name,
+                        clarityResetPreviousName);
+                bool reviewedRestorationPreviousIdentityMatches =
+                    RestoredReviewedExerciseIdentities.TryGetValue(
+                        exerciseId,
+                        out RestoredReviewedExerciseIdentity? restoredIdentity) &&
+                    string.Equals(
+                        replacement.RetiredName,
+                        restoredIdentity.RestoredName,
+                        StringComparison.Ordinal) &&
+                    NameMatchesWithOptionalAlternatingPrefix(
+                        stored.Name,
+                        restoredIdentity.PreviousReplacementName);
                 if ((!baselineRetiredNameMatches &&
                         !priorReviewedIdentityMatches &&
-                        !additionalPriorReviewedIdentityMatches) ||
+                        !additionalPriorReviewedIdentityMatches &&
+                        !catalogClarityResetIdentityMatches &&
+                        !reviewedRestorationPreviousIdentityMatches) ||
                     !string.Equals(
                         stored.Video,
                         replacement.Video,

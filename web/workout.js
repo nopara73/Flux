@@ -2,7 +2,7 @@ export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60,
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 20;
+export const CURRENT_CATALOG_REVISION = 21;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -24,6 +24,14 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     211, 213, 214, 215, 218, 223, 224,
     236, 237, 241, 242, 245, 283, 289,
   ])],
+  [21, new Set([
+    15, 16, 17, 19, 20, 31, 47, 97, 107, 135, 150, 169,
+    179, 180, 193, 219, 220, 229, 230, 239, 241, 242, 248, 251,
+    256, 257, 258, 262, 266, 268, 269, 270, 275, 278, 279, 282,
+    283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
+    394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
+    615, 618, 677, 683, 685, 745, 816, 834,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -44,6 +52,14 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [20, new Set([
     211, 213, 214, 215, 218, 223, 224,
     236, 237, 241, 242, 245, 283, 289,
+  ])],
+  [21, new Set([
+    15, 16, 17, 19, 20, 31, 47, 97, 107, 135, 150, 169,
+    179, 180, 193, 219, 220, 229, 230, 239, 241, 242, 248, 251,
+    256, 257, 258, 262, 266, 268, 269, 270, 275, 278, 279, 282,
+    283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
+    394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
+    615, 618, 677, 683, 685, 745, 816, 834,
   ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";

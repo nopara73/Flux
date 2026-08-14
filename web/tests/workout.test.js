@@ -8,6 +8,7 @@ import {
   ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
   SUPPORTED_MINUTES,
   WorkoutSession,
@@ -72,9 +73,10 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   for (const exercise of breathingExercises) {
     assert.match(exercise.name, /\b(?:inhale|exhale|breath)/i);
   }
-  const overheadBreathingHold = catalog.find((exercise) => exercise.id === 395);
-  assert.equal(overheadBreathingHold.mode, "Hold");
-  assert.equal(overheadBreathingHold.presentation, "Still");
+  const overheadBreathingFlow = catalog.find((exercise) => exercise.id === 395);
+  assert.equal(overheadBreathingFlow.name, "Inhale Reach Up, Exhale Knee Lift");
+  assert.equal(overheadBreathingFlow.mode, "Repetition");
+  assert.equal(overheadBreathingFlow.presentation, "Motion");
   const standingKneeExtensionHold = catalog.find((exercise) => exercise.id === 145);
   assert.equal(standingKneeExtensionHold.name, "Standing Knee-Extension Hold");
   assert.equal(standingKneeExtensionHold.mode, "Hold");
@@ -309,24 +311,32 @@ test("full-side rounds use exact 45/15/45 boundaries", () => {
   });
 });
 
-test("unequal resistance roles always receive a timed side swap", () => {
-  const unequalRoleIds = [
-    220, 239, 256, 257, 258, 269, 278, 279, 285, 286, 287, 508, 843,
+test("reviewed sided movements always receive a timed side swap", () => {
+  const sidedIds = [
+    16, 20, 47, 97, 179, 180, 220, 239, 241, 242,
+    257, 258, 278, 279, 283, 285, 286, 291, 294,
+    326, 329, 396, 513, 685,
   ];
-  for (const exerciseId of unequalRoleIds) {
+  for (const exerciseId of sidedIds) {
     assert.notEqual(
       catalog.find((item) => item.id === exerciseId).sideSequence,
       "Continuous",
-      `exercise ${exerciseId} must swap unequal resistance roles`,
+      `exercise ${exerciseId} must receive separate side phases`,
     );
   }
 
-  const symmetricIds = [229, 230, 238, 242, 248, 262, 270];
-  for (const exerciseId of symmetricIds) {
+  const continuousIds = [
+    15, 17, 19, 31, 107, 135, 150, 169, 193, 219,
+    229, 230, 248, 251, 256, 262, 266, 268, 269, 270,
+    275, 282, 287, 314, 321, 390, 391, 394, 395, 397,
+    425, 507, 508, 516, 572, 576, 577, 615, 618, 677,
+    683, 745, 816, 834,
+  ];
+  for (const exerciseId of continuousIds) {
     assert.equal(
       catalog.find((item) => item.id === exerciseId).sideSequence,
       "Continuous",
-      `exercise ${exerciseId} should remain a symmetric continuous movement`,
+      `exercise ${exerciseId} should remain a naturally continuous movement`,
     );
   }
 });
@@ -667,10 +677,11 @@ test("second clarity corrections preserve earlier browser memory", () => {
 });
 
 test("catalog revision retires only exercises changed by that revision", () => {
-  const latestReplacementIds = new Set([
-    115, 211, 212, 213, 214, 215, 218, 223, 224, 225, 234,
-    236, 237, 239, 240, 241, 242, 245, 246, 260, 283, 289, 512, 649,
-  ]);
+  const latestReplacementIds = new Set(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION]
+      .filter(([revision]) => revision > 12)
+      .flatMap(([, exerciseIds]) => [...exerciseIds]),
+  );
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
   );
@@ -709,7 +720,7 @@ test("catalog revision retires only exercises changed by that revision", () => {
 });
 
 test("revision workout invalidations preserve scores for unchanged exercise identities", () => {
-  const workoutOnlyIds = [119, 140, 326, 340];
+  const workoutOnlyIds = [119, 140, 340];
   const state = createDefaultState();
   state.catalogRevision = 17;
 
@@ -751,6 +762,24 @@ test("unclear exercise replacement revision resets every changed score", () => {
   ];
   const state = createDefaultState();
   state.catalogRevision = 19;
+
+  for (const exerciseId of changedIds) {
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of changedIds) {
+    assert.equal(restored.state.scores[String(exerciseId)], undefined);
+  }
+});
+
+test("catalog clarity reset revision resets every replaced identity", () => {
+  const changedIds = [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(21)];
+  assert.equal(changedIds.length, 68);
+  const state = createDefaultState();
+  state.catalogRevision = 20;
 
   for (const exerciseId of changedIds) {
     state.scores[String(exerciseId)] = -4;
@@ -841,7 +870,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
   }
 
-  assert.deepEqual(directionIds, [264, 406, 409, 497, 588, 608, 611, 743, 816]);
+  assert.deepEqual(directionIds, [264, 406, 409, 497, 588, 608, 611, 743]);
   assert.ok(holds.length > 0);
   assert.ok(holds.some((item) => item.presentation === "Still"));
 });

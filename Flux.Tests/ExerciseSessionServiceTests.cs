@@ -144,6 +144,7 @@ public sealed class ExerciseSessionServiceTests
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState
         {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
             LastKeptExerciseIds = exercises.Take(4).Select(exercise => exercise.Id).ToHashSet(),
         };
 

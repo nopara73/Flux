@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(153, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(191, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -171,14 +171,15 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void RemovedReviewedReplacementRestoresBaselineWithoutItsScore()
+    public void ReplacingRestoredExerciseAcceptsEveryReviewedIdentityWithoutItsScore()
     {
         const int exerciseId = 266;
         const string video = "exercise_videos/exercise_0266.mp4";
-        Exercise restored = Exercise(
+        Exercise replacement = Exercise(
             exerciseId,
-            "Standing Palms-Up Arm Raise",
-            video);
+            "Alternating T-Arm Lifts",
+            video,
+            retiredName: "Standing Palms-Up Arm Raise");
         var replacedStored = new Dictionary<int, StoredExerciseSnapshot>
         {
             [exerciseId] = new(
@@ -188,7 +189,7 @@ public sealed class CatalogMigrationRulesTests
         };
 
         IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
-            [restored],
+            [replacement],
             replacedStored);
 
         Assert.DoesNotContain(exerciseId, preserved);
@@ -196,13 +197,23 @@ public sealed class CatalogMigrationRulesTests
 
         var restoredStored = new Dictionary<int, StoredExerciseSnapshot>
         {
-            [exerciseId] = new(restored.Name, video, -3),
+            [exerciseId] = new("Standing Palms-Up Arm Raise", video, -3),
         };
         preserved = CatalogMigrationRules.ValidatePreservedCatalog(
-            [restored],
+            [replacement],
             restoredStored);
-        Assert.Contains(exerciseId, preserved);
+        Assert.DoesNotContain(exerciseId, preserved);
         Assert.Equal(-3, restoredStored[exerciseId].Score);
+
+        var currentStored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(replacement.Name, video, -2),
+        };
+        preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            currentStored);
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-2, currentStored[exerciseId].Score);
 
         var unrelatedStored = new Dictionary<int, StoredExerciseSnapshot>
         {
@@ -210,7 +221,7 @@ public sealed class CatalogMigrationRulesTests
         };
         Assert.Throws<InvalidOperationException>(() =>
             CatalogMigrationRules.ValidatePreservedCatalog(
-                [restored],
+                [replacement],
                 unrelatedStored));
 
         var wrongVideoStored = new Dictionary<int, StoredExerciseSnapshot>
@@ -222,7 +233,7 @@ public sealed class CatalogMigrationRulesTests
         };
         Assert.Throws<InvalidOperationException>(() =>
             CatalogMigrationRules.ValidatePreservedCatalog(
-                [restored],
+                [replacement],
                 wrongVideoStored));
     }
 
@@ -464,7 +475,7 @@ public sealed class CatalogMigrationRulesTests
             236, 237, 239, 240, 241, 242, 245, 246, 283, 289,
         ];
         const int historicalReplacementId = 591;
-        const int retainedId = 15;
+        const int retainedId = 22;
         const string replacedGroup = "group.replaced";
         const string historicalReplacementGroup = "group.historical";
         const string retainedGroup = "group.retained";
@@ -796,6 +807,53 @@ public sealed class CatalogMigrationRulesTests
                 236, 237, 241, 242, 245, 283, 289,
             },
             CatalogMigrationRules.ScoreInvalidationsByRevision[20]);
+    }
+
+    [Fact]
+    public void CatalogClarityResetRevisionResetsEveryReplacedIdentity()
+    {
+        Assert.Equal(
+            new HashSet<int>
+            {
+                15, 16, 17, 19, 20, 31, 47, 97, 107, 135, 150, 169,
+                179, 180, 193, 219, 220, 229, 230, 239, 241, 242, 248, 251,
+                256, 257, 258, 262, 266, 268, 269, 270, 275, 278, 279, 282,
+                283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
+                394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
+                615, 618, 677, 683, 685, 745, 816, 834,
+            },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[21]);
+    }
+
+    [Theory]
+    [InlineData(229, "Overhead Palm-Press Hold", "Alternating Boxing Uppercut")]
+    [InlineData(239, "Straight-Finger Knuckle Bends", "Ninja Fireball Hand-Seal Sequence")]
+    [InlineData(326, "Staggered-Stance Jab-Cross", "Wide-Stance Alternating Straight Punches")]
+    public void CatalogClarityResetAcceptsReviewedPreviousIdentityAndResetsIt(
+        int exerciseId,
+        string previousName,
+        string baselineRetiredName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(previousName, video, -7),
+        };
+        Exercise replacement = Exercise(
+            exerciseId,
+            "Clear replacement",
+            video,
+            retiredName: baselineRetiredName);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+
+        stored[exerciseId] = new(previousName, "wrong.mp4", -7);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored));
     }
 
     [Theory]

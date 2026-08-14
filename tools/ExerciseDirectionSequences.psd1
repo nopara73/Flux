@@ -9,5 +9,4 @@
     608 = 'CounterclockwiseThenClockwise'
     611 = 'CounterclockwiseThenClockwise'
     743 = 'BackwardThenForward'
-    816 = 'ClockwiseThenCounterclockwise'
 }

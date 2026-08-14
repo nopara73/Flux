@@ -64,6 +64,7 @@ $reviewedContinuousExerciseIds = @(
 $baselineReviewedContinuousExerciseIds = @($reviewedContinuousExerciseIds)
 $exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionSequences.psd1') -SkipLimitCheck
+$retiredDirectionOnlyExerciseIds = @(816)
 $exerciseDirectionMediaTransforms = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionMediaTransforms.psd1') -SkipLimitCheck
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
@@ -1246,6 +1247,8 @@ function New-ExternalExerciseGif {
                 --no-playlist `
                 --no-warnings `
                 --no-progress `
+                --impersonate chrome `
+                --extractor-args 'youtube:player_client=android' `
                 --retries 5 `
                 --fragment-retries 5 `
                 --retry-sleep 1 `
@@ -1262,6 +1265,8 @@ function New-ExternalExerciseGif {
                     --no-playlist `
                     --no-warnings `
                     --no-progress `
+                    --impersonate chrome `
+                    --extractor-args 'youtube:player_client=android' `
                     --retries 5 `
                     --fragment-retries 5 `
                     --retry-sleep 1 `
@@ -2614,7 +2619,9 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 $baselineExerciseSideSequences.ContainsKey($exerciseId)) {
                 [string]$baselineExerciseSideSequences[$exerciseId]
             }
-            elseif ($exerciseId -in $baselineReviewedContinuousExerciseIds) {
+            elseif ($exerciseId -in $baselineReviewedContinuousExerciseIds -or
+                $exerciseDirectionSequences.ContainsKey($exerciseId) -or
+                $exerciseId -in $retiredDirectionOnlyExerciseIds) {
                 'Continuous'
             }
             else {
