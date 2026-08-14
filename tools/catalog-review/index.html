@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flux exercise review</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <button id="previous" class="nav" type="button" aria-label="Previous exercise">‹</button>
+        <div id="progress">Loading catalog…</div>
+        <button id="next" class="nav" type="button" aria-label="Next exercise">›</button>
+      </header>
+
+      <h1 id="exercise-name"></h1>
+
+      <section class="media-area">
+        <div class="media-card">
+          <video id="exercise-video" muted playsinline preload="auto"></video>
+          <img id="hold-frame" alt="Exercise demonstration" hidden />
+          <div id="media-message">Loading…</div>
+        </div>
+      </section>
+
+      <section id="verdicts" class="verdicts">
+        <button type="button" data-verdict="nothingburger">Nothingburger</button>
+        <button type="button" data-verdict="unclear">Unclear</button>
+        <button type="button" data-verdict="stupid">Stupid</button>
+        <button type="button" data-verdict="good">Good</button>
+      </section>
+    </main>
+  </body>
+</html>
