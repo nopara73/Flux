@@ -10,27 +10,11 @@
 
 # Exercise selection guidelines
 
-- Follow the canonical muscle-group taxonomy and roll-ups in [`Flux/Services/MassGroupingTaxonomy.cs`](Flux/Services/MassGroupingTaxonomy.cs).
-- Schedule every workout resolution from smallest to largest estimated muscle mass.
-- Select worthwhile exercises first; assign muscle groups afterward.
-- Reject trivial gestures and ineffective dance steps.
-- Use real named movements or postures; do not invent count-inflating variants.
-- Allow similar exercises when a real variation meaningfully changes stance, leverage, range of motion, balance demand, contraction, tempo, or training emphasis; reject only true duplicates and cosmetic renames.
-- Draw broadly from any movement practices.
-- Keep all ground contact at the feet; exclude floor, seated, kneeling, and hand-supported work. Contact by any body part other than the feet is transiently allowed, meaning: it must be momentary.
-- Require zero equipment, including walls, chairs, partners, and props.
-- Keep every movement practical both barefoot and in ordinary shoes.
-- Keep every movement inside a 3 m × 3 m space.
-- Keep movements quiet; exclude jumping, stomping, clapping, and vocalization.
-- Use symmetric or naturally alternating movement when it flows cleanly; otherwise require the explicit 20-second first side, 5-second change, 20-second second side protocol.
-- Above 30 minutes, upgrade selected sided exercises to 45 seconds per side with a 15-second change before allocating repeated sets; rank within each tier by prior keep, then muscle mass.
-- Treat unequal worker/resister, over/under, or interlocked limb roles as sided even when both limbs exert force; swap roles with the 20-5-20 protocol.
-- Assign every canonical group the exercise meaningfully trains; mere involvement does not qualify.
-- Assign one primary scheduling group representing the clearest intended stimulus.
-- Let an exercise compete only in a roll-up containing its primary group and where it trains at least half of the roll-up's canonical leaves.
-- Maintain at least 10 such selectable primary-owned exercises in every roll-up at every supported resolution.
-- Require an accurate human demonstration for every exercise; exclude synthetic or approximate media.
-- Make the plain exercise name and silent demonstration sufficient to copy at a glance; reject movements that depend on narration, hidden effort, specialist terminology, or memorized choreography.
-- For stance-defined movements, keep both feet and the full body relationship readable throughout; reject partial-body camera cuts, postage-stamp subjects, and ambiguous group framing.
-- Prefer a reviewed still image when one settled posture communicates the whole exercise more clearly than looping video.
-- Make hold demonstrations settle and remain on the final position during the timer.
+- Select real, established, worthwhile exercises first; never invent movements, filler, or artificial variations.
+- Accept an exercise only when an ordinary person can immediately copy it for 45 seconds from its plain name and final silent demonstration. Any uncertainty means rejection.
+- Require feet-only ground contact, zero equipment, ordinary-shoe compatibility, quiet execution, and a 2 m × 2 m maximum area.
+- Require exact human media showing the complete natural movement at normal speed. Reject approximate, composited, obscured, mismatched, or misleading demonstrations.
+- Allow similar exercises.
+- Derive timing, sides, directions, name, and muscle associations from the demonstrated movement—never force the demonstration to fit predetermined metadata.
+- Assign muscle groups only after approval; coverage requirements never justify admitting a weak exercise.
+- Review the final packaged exercise—including crop, loop, hold frame, and every timer phase—inside an actual workout before promotion.
