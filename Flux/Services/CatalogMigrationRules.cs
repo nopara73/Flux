@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 19;
+    public const int CurrentCatalogRevision = 20;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -236,6 +236,12 @@ public static class CatalogMigrationRules
                 [218] = new(
                     "Hook-to-Fist Tendon Glides",
                     "Self-Resisted Wrist-Flexion Pulses"),
+                [223] = new(
+                    "Self-Resisted Forearm Supination Hold",
+                    "Alternating Karate Inside Block (Uchi-Uke)"),
+                [224] = new(
+                    "Opposite-Hand-Resisted Multi-Direction Wrist Hold",
+                    "Alternating Karate Downward Sweep Block (Gedan-Barai)"),
                 [232] = new(
                     "Palms-Down Fist Wrist Flexion and Extension",
                     "Karate Knife-Hand Chop"),
@@ -248,6 +254,9 @@ public static class CatalogMigrationRules
                 [236] = new(
                     "Alternating Hand Open and Close",
                     "Karate Spear-Hand Strike (Nukite)"),
+                [237] = new(
+                    "Opposed Thumb-and-Index Extension Isometric",
+                    "Forearm Pronation and Supination"),
                 [239] = new(
                     "Self-Resisted Finger Spread",
                     "Ninja Fireball Hand-Seal Sequence"),
@@ -260,6 +269,9 @@ public static class CatalogMigrationRules
                 [242] = new(
                     "Ninja Boar Hand-Seal Hold",
                     "Ninja Shadow-Clone Hand-Seal Sequence"),
+                [245] = new(
+                    "Opposite-Hand-Resisted Elbow-Flexion Hold",
+                    "Alternating Karate Rising Block (Age-Uke)"),
                 [260] = new(
                     "Standing Triceps Kickbacks",
                     "Behind-the-Back Self-Resisted Press"),
@@ -365,6 +377,26 @@ public static class CatalogMigrationRules
         AdditionalPriorReviewedReplacementNames =
             new Dictionary<int, IReadOnlySet<string>>
             {
+                [211] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Wrist Extension Hold",
+                },
+                [213] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Wrist Flexion Hold",
+                },
+                [214] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Wrist Ulnar-Deviation Hold",
+                },
+                [215] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Wrist Radial-Deviation Hold",
+                },
+                [218] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Little-Finger Abduction Hold",
+                },
                 [234] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Palms-Up Fist Wrist Flexion and Extension",
@@ -381,11 +413,25 @@ public static class CatalogMigrationRules
                 {
                     "Self-Resisted Thumb C Hold",
                     "Straight-Hand Knuckle-Bend Flow",
+                    "Opposite-Hand-Resisted Thumb Adduction Hold",
+                },
+                [242] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Five-Fingertip Press Isometric",
+                },
+                [236] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Thumb Extension Hold",
+                },
+                [283] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand-Resisted Thumb Abduction Hold",
                 },
                 [289] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Thumb Adduction Hold",
                     "Alternating Thumb-to-Palm Tucks",
+                    "Opposite-Hand-Resisted Thumb Flexion Hold",
                 },
                 [291] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -454,6 +500,11 @@ public static class CatalogMigrationRules
                 {
                     115, 119, 140, 212, 260, 326, 340, 512, 649,
                 },
+                [20] = new HashSet<int>
+                {
+                    211, 213, 214, 215, 218, 223, 224,
+                    236, 237, 241, 242, 245, 283, 289,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -476,6 +527,11 @@ public static class CatalogMigrationRules
                 [13] = new HashSet<int> { 223, 224, 225, 245, 246 },
                 [16] = new HashSet<int> { 234, 239, 240 },
                 [18] = new HashSet<int> { 115, 212, 260, 512, 649 },
+                [20] = new HashSet<int>
+                {
+                    211, 213, 214, 215, 218, 223, 224,
+                    236, 237, 241, 242, 245, 283, 289,
+                },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

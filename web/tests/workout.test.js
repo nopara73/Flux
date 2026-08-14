@@ -668,7 +668,8 @@ test("second clarity corrections preserve earlier browser memory", () => {
 
 test("catalog revision retires only exercises changed by that revision", () => {
   const latestReplacementIds = new Set([
-    115, 212, 223, 224, 225, 234, 239, 240, 245, 246, 260, 512, 649,
+    115, 211, 212, 213, 214, 215, 218, 223, 224, 225, 234,
+    236, 237, 239, 240, 241, 242, 245, 246, 260, 283, 289, 512, 649,
   ]);
   const replacements = catalog.filter((item) =>
     typeof item.retiredName === "string" && item.retiredName,
@@ -739,6 +740,26 @@ test("revision semantic replacements reset scores", () => {
   restored.reconcileCatalog();
 
   for (const exerciseId of semanticReplacementIds) {
+    assert.equal(restored.state.scores[String(exerciseId)], undefined);
+  }
+});
+
+test("unclear exercise replacement revision resets every changed score", () => {
+  const changedIds = [
+    211, 213, 214, 215, 218, 223, 224,
+    236, 237, 241, 242, 245, 283, 289,
+  ];
+  const state = createDefaultState();
+  state.catalogRevision = 19;
+
+  for (const exerciseId of changedIds) {
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of changedIds) {
     assert.equal(restored.state.scores[String(exerciseId)], undefined);
   }
 });

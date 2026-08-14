@@ -332,14 +332,18 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(216, "Side-to-Side Wrist Glides", "Self-Resisted Wrist Ulnar-Deviation Pulses")]
     [InlineData(217, "Bilateral Wrist Figure Eights", "Self-Resisted Wrist-Extension Pulses")]
     [InlineData(218, "Hook-to-Fist Tendon Glides", "Self-Resisted Wrist-Flexion Pulses")]
+    [InlineData(223, "Self-Resisted Forearm Supination Hold", "Alternating Karate Inside Block (Uchi-Uke)")]
+    [InlineData(224, "Opposite-Hand-Resisted Multi-Direction Wrist Hold", "Alternating Karate Downward Sweep Block (Gedan-Barai)")]
     [InlineData(232, "Palms-Down Fist Wrist Flexion and Extension", "Karate Knife-Hand Chop")]
     [InlineData(233, "Bilateral Wrist Circles", "Karate Ridge-Hand Strike (Haito-Uchi)")]
     [InlineData(234, "Opposite-Hand-Resisted Thumb Opposition Hold", "Karate Flat-Fist Strike (Hiraken)")]
     [InlineData(236, "Alternating Hand Open and Close", "Karate Spear-Hand Strike (Nukite)")]
+    [InlineData(237, "Opposed Thumb-and-Index Extension Isometric", "Forearm Pronation and Supination")]
     [InlineData(239, "Self-Resisted Finger Spread", "Ninja Fireball Hand-Seal Sequence")]
     [InlineData(240, "Self-Resisted Finger Squeeze", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(242, "Ninja Boar Hand-Seal Hold", "Ninja Shadow-Clone Hand-Seal Sequence")]
+    [InlineData(245, "Opposite-Hand-Resisted Elbow-Flexion Hold", "Alternating Karate Rising Block (Age-Uke)")]
     [InlineData(260, "Standing Triceps Kickbacks", "Behind-the-Back Self-Resisted Press")]
     [InlineData(268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric")]
     [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
@@ -456,7 +460,8 @@ public sealed class CatalogMigrationRulesTests
         const int replacedId = 223;
         int[] latestReplacementIds =
         [
-            223, 224, 225, 234, 239, 240, 245, 246,
+            211, 213, 214, 215, 218, 223, 224, 225, 234,
+            236, 237, 239, 240, 241, 242, 245, 246, 283, 289,
         ];
         const int historicalReplacementId = 591;
         const int retainedId = 15;
@@ -781,6 +786,18 @@ public sealed class CatalogMigrationRulesTests
         Assert.DoesNotContain(340, CatalogMigrationRules.ScoreInvalidationsByRevision[18]);
     }
 
+    [Fact]
+    public void UnclearExerciseReplacementRevisionResetsEveryChangedScore()
+    {
+        Assert.Equal(
+            new HashSet<int>
+            {
+                211, 213, 214, 215, 218, 223, 224,
+                236, 237, 241, 242, 245, 283, 289,
+            },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[20]);
+    }
+
     [Theory]
     [InlineData(21, "Alternating Standing-Scale Balance", "Standing-Scale Balance Hold")]
     [InlineData(145, "Alternating Standing Knee Extension", "Standing Knee-Extension Hold")]
@@ -817,6 +834,16 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(240, "Ninja Ram Hand-Seal Hold", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Self-Resisted Thumb C Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(241, "Straight-Hand Knuckle-Bend Flow", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
+    [InlineData(211, "Opposite-Hand-Resisted Wrist Extension Hold", "Karate Backfist Strike (Uraken-Uchi)")]
+    [InlineData(213, "Opposite-Hand-Resisted Wrist Flexion Hold", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
+    [InlineData(214, "Opposite-Hand-Resisted Wrist Ulnar-Deviation Hold", "Wing Chun Biu-Sau Palm Strike")]
+    [InlineData(215, "Opposite-Hand-Resisted Wrist Radial-Deviation Hold", "Self-Resisted Wrist Radial-Deviation Pulses")]
+    [InlineData(218, "Opposite-Hand-Resisted Little-Finger Abduction Hold", "Self-Resisted Wrist-Flexion Pulses")]
+    [InlineData(236, "Opposite-Hand-Resisted Thumb Extension Hold", "Karate Spear-Hand Strike (Nukite)")]
+    [InlineData(241, "Opposite-Hand-Resisted Thumb Adduction Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
+    [InlineData(242, "Five-Fingertip Press Isometric", "Ninja Shadow-Clone Hand-Seal Sequence")]
+    [InlineData(283, "Opposite-Hand-Resisted Thumb Abduction Hold", "Qigong Fist Rotation")]
+    [InlineData(289, "Opposite-Hand-Resisted Thumb Flexion Hold", "Heaven-to-Earth Finger Rotation")]
     [InlineData(289, "Self-Resisted Thumb Adduction Hold", "Heaven-to-Earth Finger Rotation")]
     [InlineData(289, "Alternating Thumb-to-Palm Tucks", "Heaven-to-Earth Finger Rotation")]
     [InlineData(291, "Self-Resisted Thumb Abduction Hold", "Black Dragon Enters the Cave")]

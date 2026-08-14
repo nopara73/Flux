@@ -2,7 +2,7 @@ export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60,
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 19;
+export const CURRENT_CATALOG_REVISION = 20;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -20,6 +20,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [13, new Set([223, 224, 225, 245, 246])],
   [16, new Set([234, 239, 240])],
   [18, new Set([115, 119, 140, 212, 260, 326, 340, 512, 649])],
+  [20, new Set([
+    211, 213, 214, 215, 218, 223, 224,
+    236, 237, 241, 242, 245, 283, 289,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -37,6 +41,10 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [13, new Set([223, 224, 225, 245, 246])],
   [16, new Set([234, 239, 240])],
   [18, new Set([115, 212, 260, 512, 649])],
+  [20, new Set([
+    211, 213, 214, 215, 218, 223, 224,
+    236, 237, 241, 242, 245, 283, 289,
+  ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();

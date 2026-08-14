@@ -726,28 +726,28 @@
     }
     211 = @{
         RetiredName = 'Karate Backfist Strike (Uraken-Uchi)'
-        Name = 'Opposite-Hand-Resisted Wrist Extension Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'WristExtensionIsometric'
+        Name = 'Assisted Wrist Flexion-Extension Glides'
+        Practice = 'Hand mobility'
+        MotionProfile = 'AssistedWristGlide'
         Primary = 'ForearmExtensorsAndSupinators'
         Secondary = @('ForearmFlexorsAndPronators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 45
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-wrist.mp4'
-            Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
-            SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+            File = 'assisted-wrist-flexion-extension-glides.mp4'
+            Url = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
+            SourcePage = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 315.5
-            DurationSeconds = 23.5
-            FramesPerSecond = 5
+            StartSeconds = 42.2
+            DurationSeconds = 10
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     212 = @{
@@ -778,80 +778,80 @@
     }
     213 = @{
         RetiredName = 'Karate Hammer-Fist Strike (Tetsui-Uchi)'
-        Name = 'Opposite-Hand-Resisted Wrist Flexion Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'WristFlexionIsometric'
+        Name = 'Assisted Side-to-Side Wrist Glides'
+        Practice = 'Hand mobility'
+        MotionProfile = 'AssistedLateralWristGlide'
         Primary = 'ForearmFlexorsAndPronators'
         Secondary = @('ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 48
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-wrist.mp4'
-            Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
-            SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+            File = 'assisted-side-to-side-wrist-glides.mp4'
+            Url = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
+            SourcePage = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 471.5
-            DurationSeconds = 24
-            FramesPerSecond = 5
+            StartSeconds = 56.4
+            DurationSeconds = 9.8
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     214 = @{
         RetiredName = 'Wing Chun Biu-Sau Palm Strike'
-        Name = 'Opposite-Hand-Resisted Wrist Ulnar-Deviation Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'WristUlnarDeviationIsometric'
+        Name = 'Wrist Circles'
+        Practice = 'Hand mobility'
+        MotionProfile = 'WristCircle'
         Primary = 'ForearmFlexorsAndPronators'
         Secondary = @('ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 47
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-wrist.mp4'
-            Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
-            SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+            File = 'standing-wrist-circles.mp4'
+            Url = 'https://www.youtube.com/watch?v=wRSk1_C6yOM'
+            SourcePage = 'https://www.youtube.com/watch?v=wRSk1_C6yOM'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 205.5
-            DurationSeconds = 22.5
-            FramesPerSecond = 5
+            StartSeconds = 0.5
+            DurationSeconds = 18
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     215 = @{
         RetiredName = 'Self-Resisted Wrist Radial-Deviation Pulses'
-        Name = 'Opposite-Hand-Resisted Wrist Radial-Deviation Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'WristRadialDeviationIsometric'
+        Name = 'Forearm Pronation-Supination Flow'
+        Practice = 'Forearm mobility'
+        MotionProfile = 'ForearmRotation'
         Primary = 'ForearmFlexorsAndPronators'
         Secondary = @('ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 49
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-wrist.mp4'
-            Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
-            SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+            File = 'airborne-forearm-pronation-supination.mp4'
+            Url = 'https://www.youtube.com/watch?v=TaUlull7E5M'
+            SourcePage = 'https://www.youtube.com/watch?v=TaUlull7E5M'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 66.5
-            DurationSeconds = 21.5
-            FramesPerSecond = 5
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            StartSeconds = 9
+            DurationSeconds = 8
+            FramesPerSecond = 10
+            Crop = 'crop=ih*0.56:ih*0.56:(iw-ih*0.56)/2:ih*0.22'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     216 = @{
@@ -908,26 +908,26 @@
     }
     218 = @{
         RetiredName = 'Self-Resisted Wrist-Flexion Pulses'
-        Name = 'Opposite-Hand-Resisted Little-Finger Abduction Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'LittleFingerAbductionIsometric'
+        Name = 'Sequential Finger Waves'
+        Practice = 'Hand coordination'
+        MotionProfile = 'SequentialFingerWave'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 37
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-little-finger-abduction.mp4'
-            Url = 'https://www.youtube.com/watch?v=80aUWTfVxnQ'
-            SourcePage = 'https://www.youtube.com/watch?v=80aUWTfVxnQ'
+            File = 'sequential-finger-waves.mp4'
+            Url = 'https://www.youtube.com/watch?v=8G3iErBm3co'
+            SourcePage = 'https://www.youtube.com/watch?v=8G3iErBm3co'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 0
-            DurationSeconds = 21.5
+            StartSeconds = 36
+            DurationSeconds = 32
             FramesPerSecond = 10
-            Crop = 'crop=540:540:350:180'
+            Crop = 'crop=iw:ih*29/36:0:ih/18'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -960,54 +960,54 @@
     }
     223 = @{
         RetiredName = 'Alternating Karate Inside Block (Uchi-Uke)'
-        Name = 'Self-Resisted Forearm Supination Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ForearmSupinationIsometric'
+        Name = 'Controlled Wrist Circles'
+        Practice = 'Wrist mobility'
+        MotionProfile = 'WristCAR'
         Primary = 'ForearmExtensorsAndSupinators'
         Secondary = @('ForearmFlexorsAndPronators', 'ElbowFlexors')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 55
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'standing-self-resisted-arm-isometrics.mp4'
-            Url = 'https://www.youtube.com/watch?v=4sUmpO8ZRvQ'
-            SourcePage = 'https://www.youtube.com/watch?v=4sUmpO8ZRvQ'
+            File = 'standing-wrist-cars.mp4'
+            Url = 'https://www.youtube.com/watch?v=fFp6Y-OzC-U'
+            SourcePage = 'https://www.youtube.com/watch?v=fFp6Y-OzC-U'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 720
-            DurationSeconds = 25
+            StartSeconds = 4
+            DurationSeconds = 28
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     224 = @{
         RetiredName = 'Alternating Karate Downward Sweep Block (Gedan-Barai)'
-        Name = 'Opposite-Hand-Resisted Multi-Direction Wrist Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'WristStabilizationIsometric'
+        Name = 'Qigong Interlaced Wrist Rolls'
+        Practice = 'Qigong'
+        MotionProfile = 'InterlacedWristRoll'
         Primary = 'ForearmExtensorsAndSupinators'
         Secondary = @('ForearmFlexorsAndPronators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
         Presentation = 'Motion'
-        HoldFramePercent = 50
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-wrist.mp4'
-            Url = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
-            SourcePage = 'https://www.youtube.com/watch?v=Z0QeYB-o77c'
+            File = 'qigong-interlaced-wrist-rolls.mp4'
+            Url = 'https://www.youtube.com/watch?v=mlD8wFbZzRk'
+            SourcePage = 'https://www.youtube.com/watch?v=mlD8wFbZzRk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 600
-            DurationSeconds = 25
+            StartSeconds = 25
+            DurationSeconds = 30
             FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=ih*0.72:ih*0.72:(iw-ih*0.72)/2:ih*0.08'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     225 = @{
@@ -1220,50 +1220,50 @@
     }
     236 = @{
         RetiredName = 'Karate Spear-Hand Strike (Nukite)'
-        Name = 'Opposite-Hand-Resisted Thumb Extension Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbExtensionIsometric'
+        Name = 'Bilateral Wrist Figure Eights'
+        Practice = 'Wrist mobility'
+        MotionProfile = 'WristFigureEight'
         Primary = 'ForearmExtensorsAndSupinators'
         Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-thumb-directions.mp4'
-            Url = 'https://www.youtube.com/watch?v=fruDylrn_jw'
-            SourcePage = 'https://www.youtube.com/watch?v=fruDylrn_jw'
+            File = 'bilateral-wrist-figure-eights.mp4'
+            Url = 'https://www.youtube.com/watch?v=zOu0WqtV4GM'
+            SourcePage = 'https://www.youtube.com/watch?v=zOu0WqtV4GM'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 66.4
-            DurationSeconds = 3
+            StartSeconds = 5
+            DurationSeconds = 30
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:0:0'
+            Crop = 'crop=ih*9/10:ih*9/10:(iw-ih*9/10)/2:ih/20'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     237 = @{
         RetiredName = 'Forearm Pronation and Supination'
-        Name = 'Opposed Thumb-and-Index Extension Isometric'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'FingerExtensionIsometric'
+        Name = 'Sequential Finger Curl Waves'
+        Practice = 'Hand coordination'
+        MotionProfile = 'FingerWaveRotation'
         Primary = 'ForearmExtensorsAndSupinators'
         Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'hand-rqMM9X8vDUs.mp4'
-            Url = 'https://www.youtube.com/watch?v=rqMM9X8vDUs'
-            SourcePage = 'https://www.youtube.com/watch?v=rqMM9X8vDUs'
+            File = 'wrist-and-finger-wave-rotations.mp4'
+            Url = 'https://www.youtube.com/watch?v=5WhZjAgg4-g'
+            SourcePage = 'https://www.youtube.com/watch?v=5WhZjAgg4-g'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 0
-            DurationSeconds = 34
+            StartSeconds = 26
+            DurationSeconds = 24
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -1324,79 +1324,80 @@
     }
     241 = @{
         RetiredName = 'Ninja Water-Dragon 44 Hand-Seal Sequence'
-        Name = 'Opposite-Hand-Resisted Thumb Adduction Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbAdductionIsometric'
+        Name = 'Flamenco Wrist Circles'
+        Practice = 'Flamenco'
+        MotionProfile = 'FlamencoWristCircle'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 45
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-thumb-directions.mp4'
-            Url = 'https://www.youtube.com/watch?v=fruDylrn_jw'
-            SourcePage = 'https://www.youtube.com/watch?v=fruDylrn_jw'
+            File = 'flamenco-wrist-circles.mp4'
+            Url = 'https://www.youtube.com/watch?v=YgWLIGJ_YD0'
+            SourcePage = 'https://www.youtube.com/watch?v=YgWLIGJ_YD0'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 68.9
-            DurationSeconds = 2.8
+            StartSeconds = 45
+            DurationSeconds = 9
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:0:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     242 = @{
         RetiredName = 'Ninja Shadow-Clone Hand-Seal Sequence'
-        Name = 'Five-Fingertip Press Isometric'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'FingertipPressIsometric'
+        Name = 'Five-Position Hand Flow'
+        Practice = 'Hand therapy'
+        MotionProfile = 'FivePositionTendonGlide'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'Chest')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 28
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'five-fingertip-press-isometric.mp4'
-            Url = 'https://www.youtube.com/watch?v=O_i5y10jjRU'
-            SourcePage = 'https://www.youtube.com/watch?v=O_i5y10jjRU'
+            File = 'five-position-tendon-glide.mp4'
+            Url = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
+            SourcePage = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 0
-            DurationSeconds = 14.5
+            StartSeconds = 44
+            DurationSeconds = 20
             FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     245 = @{
         RetiredName = 'Alternating Karate Rising Block (Age-Uke)'
-        Name = 'Opposite-Hand-Resisted Elbow-Flexion Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ElbowFlexionIsometric'
+        Name = 'Straight-Punch to Shovel-Hook Combo'
+        Practice = 'Boxing'
+        MotionProfile = 'ShovelHookCombo'
         Primary = 'ElbowFlexors'
-        Secondary = @('ForearmFlexorsAndPronators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 60
+        Secondary = @('ForearmFlexorsAndPronators', 'Chest', 'AbdominalWall', 'ElbowExtensors')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'standing-self-resisted-arm-isometrics.mp4'
-            Url = 'https://www.youtube.com/watch?v=4sUmpO8ZRvQ'
-            SourcePage = 'https://www.youtube.com/watch?v=4sUmpO8ZRvQ'
+            File = 'standing-shovel-hooks.mp4'
+            Url = 'https://www.youtube.com/watch?v=_LKGaPiU4Ho'
+            SourcePage = 'https://www.youtube.com/watch?v=_LKGaPiU4Ho'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 360
-            DurationSeconds = 25
-            FramesPerSecond = 8
+            StartSeconds = 63.1
+            DurationSeconds = 14.5
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $true
+            MirrorForAlternation = $false
         }
     }
     246 = @{
@@ -1687,26 +1688,26 @@
     }
     283 = @{
         RetiredName = 'Qigong Fist Rotation'
-        Name = 'Opposite-Hand-Resisted Thumb Abduction Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbAbductionIsometric'
+        Name = 'Flamenco Finger Flourish'
+        Practice = 'Flamenco'
+        MotionProfile = 'FingerFlourish'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 45
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'self-resisted-thumb-directions.mp4'
-            Url = 'https://www.youtube.com/watch?v=fruDylrn_jw'
-            SourcePage = 'https://www.youtube.com/watch?v=fruDylrn_jw'
+            File = 'flamenco-finger-flourish.mp4'
+            Url = 'https://www.youtube.com/watch?v=YgWLIGJ_YD0'
+            SourcePage = 'https://www.youtube.com/watch?v=YgWLIGJ_YD0'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 70.8
-            DurationSeconds = 3
+            StartSeconds = 118
+            DurationSeconds = 28
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:0:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1843,26 +1844,26 @@
     }
     289 = @{
         RetiredName = 'Heaven-to-Earth Finger Rotation'
-        Name = 'Opposite-Hand-Resisted Thumb Flexion Hold'
-        Practice = 'Hand therapy isometrics'
-        MotionProfile = 'ThumbFlexionIsometric'
+        Name = 'Thumb-to-Fingertip Opposition'
+        Practice = 'Hand therapy'
+        MotionProfile = 'ThumbOpposition'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 45
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
-            File = 'isometric-thumb-flexion.mp4'
-            Url = 'https://www.youtube.com/watch?v=XrbaDQj3HTQ'
-            SourcePage = 'https://www.youtube.com/watch?v=XrbaDQj3HTQ'
+            File = 'thumb-to-fingertip-opposition.mp4'
+            Url = 'https://www.youtube.com/watch?v=H5qap5Ktrlk'
+            SourcePage = 'https://www.youtube.com/watch?v=H5qap5Ktrlk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 0
-            DurationSeconds = 18
+            StartSeconds = 10
+            DurationSeconds = 9
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:0:0'
+            Crop = 'crop=450:450:15:20'
             PingPong = $false
             MirrorForAlternation = $false
         }

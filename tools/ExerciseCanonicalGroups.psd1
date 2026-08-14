@@ -134,7 +134,7 @@
     240 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('IntrinsicHand', 'ForearmExtensorsAndSupinators') }
     241 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     242 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'Chest') }
-    245 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators') }
+    245 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'Chest', 'AbdominalWall', 'ElbowExtensors') }
     246 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
     248 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAbductors') }
     251 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall') }
