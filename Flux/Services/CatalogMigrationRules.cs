@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 21;
+    public const int CurrentCatalogRevision = 22;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -143,6 +143,33 @@ public static class CatalogMigrationRules
                 [1000] = new(
                     "Standing Forward Fold",
                     "Standing Forward-Fold Hold"),
+                [136] = new(
+                    "Goddess Pose",
+                    "Wide Turned-Out Squat Hold"),
+                [225] = new(
+                    "Clenched-Fist Wrist Extensor Stretch",
+                    "Opposite-Hand Fist-Down Wrist Stretch"),
+                [241] = new(
+                    "Hook-Fist Tendon Glide",
+                    "Open Hand to Hook Fist"),
+                [242] = new(
+                    "Full-Fist Tendon Glide",
+                    "Open Hand to Full Fist"),
+                [251] = new(
+                    "Standing Swan-Dive Hinge",
+                    "Arm Sweep to Forward Hinge"),
+                [283] = new(
+                    "Straight-Fist Tendon Glide",
+                    "Open Hand to Straight Fist"),
+                [291] = new(
+                    "Open-to-Claw Tendon Glide",
+                    "Open Hand to Claw Fist"),
+                [293] = new(
+                    "Finger-Web Space Stretch",
+                    "Opposite-Hand Finger-Web Stretches"),
+                [683] = new(
+                    "Alternating Palm-Up T-Arm Flips",
+                    "Alternating Palm-Up Shoulder Rotations"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -209,9 +236,15 @@ public static class CatalogMigrationRules
         PriorReviewedReplacementIdentities =
             new Dictionary<int, PriorReviewedReplacementIdentity>
             {
+                [135] = new(
+                    "Standing Snow Angels",
+                    "Mountain Pose to Upward Salute"),
                 [195] = new(
                     "Lateral Lunge to Balance",
                     "Ballet Degage a la Seconde"),
+                [201] = new(
+                    "Shibashi Split-Stance Rock and Palm Press",
+                    "Alternating Boxing Jab"),
                 [211] = new(
                     "Open-Finger Wrist Extension",
                     "Karate Backfist Strike (Uraken-Uchi)"),
@@ -242,6 +275,9 @@ public static class CatalogMigrationRules
                 [224] = new(
                     "Opposite-Hand-Resisted Multi-Direction Wrist Hold",
                     "Alternating Karate Downward Sweep Block (Gedan-Barai)"),
+                [229] = new(
+                    "Standing Elbow-Squeeze Chest Press",
+                    "Alternating Boxing Uppercut"),
                 [232] = new(
                     "Palms-Down Fist Wrist Flexion and Extension",
                     "Karate Knife-Hand Chop"),
@@ -272,12 +308,30 @@ public static class CatalogMigrationRules
                 [245] = new(
                     "Opposite-Hand-Resisted Elbow-Flexion Hold",
                     "Alternating Karate Rising Block (Age-Uke)"),
+                [256] = new(
+                    "Bent-Over Straight-Arm Lat Sweeps",
+                    "Self-Resisted Overhead Pull Hold"),
+                [257] = new(
+                    "Karate Knife-Hand Block",
+                    "Self-Resisted Chest-Level Pull Hold"),
                 [260] = new(
                     "Standing Triceps Kickbacks",
                     "Behind-the-Back Self-Resisted Press"),
+                [266] = new(
+                    "Alternating T-Arm Lifts",
+                    "Standing Palms-Up Arm Raise"),
+                [267] = new(
+                    "Floor Touch to Calf Raise",
+                    "T-Position Shoulder Rotation"),
                 [268] = new(
                     "Self-Resisted External-Rotation Push-Out",
                     "Self-Resisted External-Rotation Isometric"),
+                [269] = new(
+                    "C-Rotation Arm Curls",
+                    "Self-Resisted Curl-and-Press"),
+                [270] = new(
+                    "Goalpost Elbow Open-and-Close",
+                    "Palm-Squeeze Forward Press"),
                 [274] = new(
                     "Side-Step Alternating High Curl",
                     "Dynamic-Resistance Lat Pulldown"),
@@ -359,15 +413,24 @@ public static class CatalogMigrationRules
                 [611] = new(
                     "Warrior II-Stance Hip Circles",
                     "Pelvic-Floor Heel-Raise Lift"),
+                [636] = new(
+                    "Alternating Curtsy Floor Reach",
+                    "Deadlift Kickback"),
                 [649] = new(
                     "Standing Clamshell",
                     "Standing Side-Leg Raise"),
+                [677] = new(
+                    "T-Arm Side-to-Side Sweep",
+                    "Alternating Belly-Dance Hip Drop"),
                 [681] = new(
                     "Rear-Arm Sweep to Front Squeeze",
                     "Belly-Dance Horizontal Figure Eight"),
                 [743] = new(
                     "Standing Backward Arm Circles",
                     "Clasped-Hands-Behind-Back Chest Opener"),
+                [745] = new(
+                    "Standing Overhead Presses",
+                    "Dynamic Hug"),
                 [843] = new(
                     "Behind-Back Wrist-Pull Neck Stretch",
                     "Standing Cobra Pose"),
@@ -380,10 +443,12 @@ public static class CatalogMigrationRules
                 [211] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Opposite-Hand-Resisted Wrist Extension Hold",
+                    "Assisted Wrist Flexion-Extension Glides",
                 },
                 [213] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Opposite-Hand-Resisted Wrist Flexion Hold",
+                    "Assisted Side-to-Side Wrist Glides",
                 },
                 [214] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -400,6 +465,7 @@ public static class CatalogMigrationRules
                 [234] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Palms-Up Fist Wrist Flexion and Extension",
+                    "Alternating Thumb-to-Palm Tucks",
                 },
                 [239] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -432,6 +498,7 @@ public static class CatalogMigrationRules
                     "Self-Resisted Thumb Adduction Hold",
                     "Alternating Thumb-to-Palm Tucks",
                     "Opposite-Hand-Resisted Thumb Flexion Hold",
+                    "Thumb-to-Fingertip Opposition",
                 },
                 [291] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -456,6 +523,10 @@ public static class CatalogMigrationRules
                 [843] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Scalene Wrist-Anchor Stretch",
+                },
+                [572] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Cossack Side-to-Side Shifts",
                 },
             };
 
@@ -536,12 +607,13 @@ public static class CatalogMigrationRules
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
         15, 16, 17, 19, 20, 31, 41, 47, 56, 59, 97, 98, 102, 107, 115, 116,
-        120, 126, 133, 135, 146, 150, 159, 169, 176, 177, 179, 180, 182, 183, 185, 187,
+        117, 120, 126, 133, 135, 146, 150, 159, 169, 176, 177, 179, 180, 182, 183, 184,
+        185, 186, 187,
         191, 192, 193, 194, 195, 196, 199, 201, 203, 211, 212, 213, 214, 215, 216, 217,
-        218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 232, 233, 234, 236, 237, 239,
-        240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 266, 267, 268, 269,
+        218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 231, 232, 233, 234, 236, 237, 239,
+        240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 265, 266, 267, 268, 269,
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
-        289, 291, 292, 293, 294, 295, 296, 314, 321, 326, 327, 329, 338, 367, 390, 391,
+        289, 291, 292, 293, 294, 295, 296, 301, 314, 321, 326, 327, 329, 338, 367, 390, 391,
         392, 393, 394, 395, 396, 397, 422, 423, 425, 467, 474, 475, 477, 481, 482, 483,
         490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
         509, 510, 512, 513, 516, 572, 573, 576, 577, 591, 609, 610, 611, 612, 613, 614,
@@ -586,6 +658,11 @@ public static class CatalogMigrationRules
                     394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
                     615, 618, 677, 683, 685, 745, 816, 834,
                 },
+                [22] = new HashSet<int>
+                {
+                    117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
+                    263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -621,6 +698,11 @@ public static class CatalogMigrationRules
                     283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
                     394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
                     615, 618, 677, 683, 685, 745, 816, 834,
+                },
+                [22] = new HashSet<int>
+                {
+                    117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
+                    263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
                 },
             };
 

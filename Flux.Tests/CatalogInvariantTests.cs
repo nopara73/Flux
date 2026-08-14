@@ -54,7 +54,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(104, timedSideExercises.Length);
+        Assert.Equal(110, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -102,14 +102,16 @@ public sealed class CatalogInvariantTests
             [58] = ExerciseSideSequence.ScreenLeftThenRight,
             [115] = ExerciseSideSequence.ScreenLeftThenRight,
             [116] = ExerciseSideSequence.Continuous,
-            [117] = ExerciseSideSequence.ScreenLeftThenRight,
+            [117] = ExerciseSideSequence.ScreenRightThenLeft,
             [123] = ExerciseSideSequence.ScreenRightThenLeft,
             [126] = ExerciseSideSequence.Continuous,
             [135] = ExerciseSideSequence.Continuous,
             [143] = ExerciseSideSequence.ScreenRightThenLeft,
-            [211] = ExerciseSideSequence.Continuous,
+            [184] = ExerciseSideSequence.ScreenRightThenLeft,
+            [186] = ExerciseSideSequence.ScreenRightThenLeft,
+            [211] = ExerciseSideSequence.ScreenLeftThenRight,
             [212] = ExerciseSideSequence.Continuous,
-            [213] = ExerciseSideSequence.Continuous,
+            [213] = ExerciseSideSequence.ScreenLeftThenRight,
             [214] = ExerciseSideSequence.Continuous,
             [215] = ExerciseSideSequence.ScreenRightThenLeft,
             [216] = ExerciseSideSequence.Continuous,
@@ -118,7 +120,8 @@ public sealed class CatalogInvariantTests
             [220] = ExerciseSideSequence.ScreenRightThenLeft,
             [232] = ExerciseSideSequence.ScreenLeftThenRight,
             [233] = ExerciseSideSequence.ScreenLeftThenRight,
-            [234] = ExerciseSideSequence.Continuous,
+            [225] = ExerciseSideSequence.ScreenLeftThenRight,
+            [234] = ExerciseSideSequence.ScreenLeftThenRight,
             [236] = ExerciseSideSequence.Continuous,
             [237] = ExerciseSideSequence.Continuous,
             [239] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -126,11 +129,11 @@ public sealed class CatalogInvariantTests
             [241] = ExerciseSideSequence.ScreenRightThenLeft,
             [242] = ExerciseSideSequence.ScreenRightThenLeft,
             [245] = ExerciseSideSequence.ScreenRightThenLeft,
-            [256] = ExerciseSideSequence.Continuous,
-            [257] = ExerciseSideSequence.ScreenRightThenLeft,
+            [256] = ExerciseSideSequence.ScreenRightThenLeft,
+            [257] = ExerciseSideSequence.Continuous,
             [258] = ExerciseSideSequence.ScreenRightThenLeft,
             [268] = ExerciseSideSequence.Continuous,
-            [269] = ExerciseSideSequence.Continuous,
+            [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
             [279] = ExerciseSideSequence.ScreenRightThenLeft,
             [283] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -153,8 +156,11 @@ public sealed class CatalogInvariantTests
             [620] = ExerciseSideSequence.ScreenLeftThenRight,
             [648] = ExerciseSideSequence.ScreenRightThenLeft,
             [649] = ExerciseSideSequence.ScreenRightThenLeft,
+            [572] = ExerciseSideSequence.ScreenRightThenLeft,
+            [636] = ExerciseSideSequence.ScreenRightThenLeft,
             [685] = ExerciseSideSequence.ScreenRightThenLeft,
             [686] = ExerciseSideSequence.ScreenLeftThenRight,
+            [745] = ExerciseSideSequence.ScreenLeftThenRight,
             [884] = ExerciseSideSequence.ScreenRightThenLeft,
             [885] = ExerciseSideSequence.ScreenRightThenLeft,
             [910] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -179,9 +185,10 @@ public sealed class CatalogInvariantTests
 
         int[] auditedSidedClarityReplacementIds =
         [
-            16, 20, 47, 97, 179, 180, 220, 239, 241, 242,
-            257, 258, 278, 279, 283, 285, 286, 291, 294,
-            326, 329, 396, 513, 685,
+            16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
+            213, 220, 225, 234, 239, 241, 242, 256, 258, 269,
+            278, 279, 283, 285, 286, 291, 294, 326, 329, 396,
+            513, 572, 636, 685, 745,
         ];
         Assert.All(auditedSidedClarityReplacementIds, exerciseId =>
             Assert.NotEqual(
@@ -191,10 +198,10 @@ public sealed class CatalogInvariantTests
         int[] auditedContinuousClarityReplacementIds =
         [
             15, 17, 19, 31, 107, 135, 150, 169, 193, 219,
-            229, 230, 248, 251, 256, 262, 266, 268, 269, 270,
-            275, 282, 287, 314, 321, 390, 391, 394, 395, 397,
-            425, 507, 508, 516, 572, 576, 577, 615, 618, 677,
-            683, 745, 816, 834,
+            201, 229, 230, 248, 251, 257, 262, 263, 265, 266,
+            267, 268, 270, 275, 282, 287, 289, 301, 314, 321,
+            390, 391, 394, 395, 397, 425, 507, 508, 516, 576,
+            577, 615, 618, 677, 683, 816, 834,
         ];
         Assert.All(auditedContinuousClarityReplacementIds, exerciseId =>
             Assert.Equal(
@@ -229,7 +236,7 @@ public sealed class CatalogInvariantTests
             [115] = "Pistol Squat",
             [119] = "Tiptoe Walk",
             [126] = "Squat to Alternating Side Kick",
-            [135] = "Standing Snow Angels",
+            [135] = "Overhead Squat Hold",
             [139] = "Wide-Squat Alternating Heel Raises",
             [145] = "Standing Knee-Extension Hold",
             [188] = "Narrow Turned-Out Shallow Squat",
@@ -237,9 +244,9 @@ public sealed class CatalogInvariantTests
             [197] = "Parallel Squat-to-Calf Raise",
             [198] = "Wide Squat to Feet-Together Calf Raise",
             [199] = "Wide-Stance Side-to-Side Squat",
-            [211] = "Assisted Wrist Flexion-Extension Glides",
+            [211] = "Bent-Elbow Wrist-Flexion Stretch",
             [212] = "Unsupported Sissy Squat",
-            [213] = "Assisted Side-to-Side Wrist Glides",
+            [213] = "Bent-Elbow Wrist-Extension Stretch",
             [214] = "Wrist Circles",
             [215] = "Forearm Pronation-Supination Flow",
             [216] = "Interlaced-Finger Palm-Out Stretch",
@@ -247,26 +254,26 @@ public sealed class CatalogInvariantTests
             [218] = "Sequential Finger Waves",
             [223] = "Controlled Wrist Circles",
             [224] = "Qigong Interlaced Wrist Rolls",
-            [225] = "Clenched-Fist Wrist Extensor Stretch",
-            [231] = "Step-Through Karate Reverse Punch",
+            [225] = "Opposite-Hand Fist-Down Wrist Stretch",
+            [231] = "Karate Reverse Punch",
             [232] = "Extended Side Angle Hold",
             [233] = "Standing Wrist Flexion Stretch",
-            [234] = "Alternating Thumb-to-Palm Tucks",
+            [234] = "Straight Fingers to Knuckle Bend",
             [236] = "Bilateral Wrist Figure Eights",
             [237] = "Sequential Finger Curl Waves",
             [239] = "Tabletop Tendon Glide",
             [240] = "Hook Fingers to Full Fist",
-            [241] = "Hook-Fist Tendon Glide",
-            [242] = "Full-Fist Tendon Glide",
+            [241] = "Open Hand to Hook Fist",
+            [242] = "Open Hand to Full Fist",
             [245] = "Straight-Punch to Shovel-Hook Combo",
             [246] = "Bodyweight Cuban Rotation",
-            [256] = "Bent-Over Straight-Arm Lat Sweeps",
-            [257] = "Karate Knife-Hand Block",
+            [256] = "Overhead Side-Stretch Hold",
+            [257] = "Finger Spread to Interlace Stretch",
             [258] = "Karate Downward Block",
             [262] = "Standing Bicycle Crunches",
-            [270] = "Goalpost Elbow Open-and-Close",
-            [283] = "Straight-Fist Tendon Glide",
-            [289] = "Thumb-to-Fingertip Opposition",
+            [270] = "Goalpost Chest-Opener Hold",
+            [283] = "Open Hand to Straight Fist",
+            [289] = "Fingertip Spider Presses",
             [290] = "Low Palm Scoop to Side Opening",
             [326] = "Rear-Hand Straight Punch",
             [338] = "Overhead Triceps Stretch with Side Bend",
@@ -328,7 +335,7 @@ public sealed class CatalogInvariantTests
             shadowBoxing.SecondaryCanonicalGroups);
 
         Exercise restoredShoulderRaise = exercises.Single(exercise => exercise.Id == 266);
-        Assert.Equal("Alternating T-Arm Lifts", restoredShoulderRaise.Name);
+        Assert.Equal("T-Arm Shoulder Hold", restoredShoulderRaise.Name);
         Assert.Equal("Standing Palms-Up Arm Raise", restoredShoulderRaise.RetiredName);
         Assert.Equal(
             CanonicalMuscleGroup.ShoulderAbductors,
@@ -336,9 +343,9 @@ public sealed class CatalogInvariantTests
         Assert.Equal(
             ExerciseSideSequence.Continuous,
             restoredShoulderRaise.SideSequence);
-        Assert.Equal(ExerciseMode.Repetition, restoredShoulderRaise.Mode);
-        Assert.Equal(ExercisePresentation.Motion, restoredShoulderRaise.Presentation);
-        Assert.Equal(0, restoredShoulderRaise.HoldFramePercent);
+        Assert.Equal(ExerciseMode.Hold, restoredShoulderRaise.Mode);
+        Assert.Equal(ExercisePresentation.Still, restoredShoulderRaise.Presentation);
+        Assert.Equal(50, restoredShoulderRaise.HoldFramePercent);
         Assert.Contains(
             CanonicalMuscleGroup.ScapularGirdle,
             restoredShoulderRaise.SecondaryCanonicalGroups);
@@ -348,7 +355,7 @@ public sealed class CatalogInvariantTests
         Assert.DoesNotContain(
             CanonicalMuscleGroup.ElbowFlexors,
             restoredShoulderRaise.SecondaryCanonicalGroups);
-        Assert.DoesNotContain(
+        Assert.Contains(
             CanonicalMuscleGroup.AbdominalWall,
             restoredShoulderRaise.SecondaryCanonicalGroups);
 

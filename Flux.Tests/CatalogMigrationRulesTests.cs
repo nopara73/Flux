@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(191, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(198, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -334,7 +334,9 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(135, "Standing Snow Angels", "Mountain Pose to Upward Salute")]
     [InlineData(195, "Lateral Lunge to Balance", "Ballet Degage a la Seconde")]
+    [InlineData(201, "Shibashi Split-Stance Rock and Palm Press", "Alternating Boxing Jab")]
     [InlineData(211, "Open-Finger Wrist Extension", "Karate Backfist Strike (Uraken-Uchi)")]
     [InlineData(212, "Bent-Over Triceps Pulse", "Karate Palm-Heel Strike (Teisho)")]
     [InlineData(213, "Open-Finger Wrist Flexion", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
@@ -345,6 +347,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(218, "Hook-to-Fist Tendon Glides", "Self-Resisted Wrist-Flexion Pulses")]
     [InlineData(223, "Self-Resisted Forearm Supination Hold", "Alternating Karate Inside Block (Uchi-Uke)")]
     [InlineData(224, "Opposite-Hand-Resisted Multi-Direction Wrist Hold", "Alternating Karate Downward Sweep Block (Gedan-Barai)")]
+    [InlineData(229, "Standing Elbow-Squeeze Chest Press", "Alternating Boxing Uppercut")]
     [InlineData(232, "Palms-Down Fist Wrist Flexion and Extension", "Karate Knife-Hand Chop")]
     [InlineData(233, "Bilateral Wrist Circles", "Karate Ridge-Hand Strike (Haito-Uchi)")]
     [InlineData(234, "Opposite-Hand-Resisted Thumb Opposition Hold", "Karate Flat-Fist Strike (Hiraken)")]
@@ -355,8 +358,14 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(241, "Ninja Monkey Hand-Seal Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(242, "Ninja Boar Hand-Seal Hold", "Ninja Shadow-Clone Hand-Seal Sequence")]
     [InlineData(245, "Opposite-Hand-Resisted Elbow-Flexion Hold", "Alternating Karate Rising Block (Age-Uke)")]
+    [InlineData(256, "Bent-Over Straight-Arm Lat Sweeps", "Self-Resisted Overhead Pull Hold")]
+    [InlineData(257, "Karate Knife-Hand Block", "Self-Resisted Chest-Level Pull Hold")]
     [InlineData(260, "Standing Triceps Kickbacks", "Behind-the-Back Self-Resisted Press")]
+    [InlineData(266, "Alternating T-Arm Lifts", "Standing Palms-Up Arm Raise")]
+    [InlineData(267, "Floor Touch to Calf Raise", "T-Position Shoulder Rotation")]
     [InlineData(268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric")]
+    [InlineData(269, "C-Rotation Arm Curls", "Self-Resisted Curl-and-Press")]
+    [InlineData(270, "Goalpost Elbow Open-and-Close", "Palm-Squeeze Forward Press")]
     [InlineData(274, "Side-Step Alternating High Curl", "Dynamic-Resistance Lat Pulldown")]
     [InlineData(276, "Alternating Diagonal Overhead Reach-and-Pull", "Dynamic-Resistance High Chest Press")]
     [InlineData(280, "Alternating Forward-and-Side Arm Press", "Ringing-the-Towel Wrist Inversion")]
@@ -384,9 +393,12 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(572, "Wide-Stance Bent-Knee Rotational Stretch", "Tai Chi White Crane Opens Wings")]
     [InlineData(591, "Standing Speed-Bag Punches", "Bharatanatyam Natyarambhe Hold")]
     [InlineData(611, "Warrior II-Stance Hip Circles", "Pelvic-Floor Heel-Raise Lift")]
+    [InlineData(636, "Alternating Curtsy Floor Reach", "Deadlift Kickback")]
     [InlineData(649, "Standing Clamshell", "Standing Side-Leg Raise")]
+    [InlineData(677, "T-Arm Side-to-Side Sweep", "Alternating Belly-Dance Hip Drop")]
     [InlineData(681, "Rear-Arm Sweep to Front Squeeze", "Belly-Dance Horizontal Figure Eight")]
     [InlineData(743, "Standing Backward Arm Circles", "Clasped-Hands-Behind-Back Chest Opener")]
+    [InlineData(745, "Standing Overhead Presses", "Dynamic Hug")]
     [InlineData(843, "Behind-Back Wrist-Pull Neck Stretch", "Standing Cobra Pose")]
     public void SecondGenerationReplacementAcceptsImmediatelyPriorIdentity(
         int replacedId,
@@ -687,6 +699,15 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(712, "Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold")]
     [InlineData(969, "Chair-Pose Core Hold", "Chair-Pose Hold")]
     [InlineData(1000, "Standing Forward Fold", "Standing Forward-Fold Hold")]
+    [InlineData(136, "Goddess Pose", "Wide Turned-Out Squat Hold")]
+    [InlineData(225, "Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch")]
+    [InlineData(241, "Hook-Fist Tendon Glide", "Open Hand to Hook Fist")]
+    [InlineData(242, "Full-Fist Tendon Glide", "Open Hand to Full Fist")]
+    [InlineData(251, "Standing Swan-Dive Hinge", "Arm Sweep to Forward Hinge")]
+    [InlineData(283, "Straight-Fist Tendon Glide", "Open Hand to Straight Fist")]
+    [InlineData(291, "Open-to-Claw Tendon Glide", "Open Hand to Claw Fist")]
+    [InlineData(293, "Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches")]
+    [InlineData(683, "Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -825,6 +846,18 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.ScoreInvalidationsByRevision[21]);
     }
 
+    [Fact]
+    public void ReviewerAuditRevisionResetsOnlySemanticReplacementScores()
+    {
+        Assert.Equal(
+            new HashSet<int>
+            {
+                117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
+                263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
+            },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[22]);
+    }
+
     [Theory]
     [InlineData(229, "Overhead Palm-Press Hold", "Alternating Boxing Uppercut")]
     [InlineData(239, "Straight-Finger Knuckle Bends", "Ninja Fireball Hand-Seal Sequence")]
@@ -888,12 +921,15 @@ public sealed class CatalogMigrationRulesTests
 
     [Theory]
     [InlineData(234, "Palms-Up Fist Wrist Flexion and Extension", "Karate Flat-Fist Strike (Hiraken)")]
+    [InlineData(234, "Alternating Thumb-to-Palm Tucks", "Karate Flat-Fist Strike (Hiraken)")]
     [InlineData(239, "Ninja Snake Hand-Seal Hold", "Ninja Fireball Hand-Seal Sequence")]
     [InlineData(240, "Ninja Ram Hand-Seal Hold", "Ninja Shadow-Possession Hand-Seal Sequence")]
     [InlineData(241, "Self-Resisted Thumb C Hold", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(241, "Straight-Hand Knuckle-Bend Flow", "Ninja Water-Dragon 44 Hand-Seal Sequence")]
     [InlineData(211, "Opposite-Hand-Resisted Wrist Extension Hold", "Karate Backfist Strike (Uraken-Uchi)")]
+    [InlineData(211, "Assisted Wrist Flexion-Extension Glides", "Karate Backfist Strike (Uraken-Uchi)")]
     [InlineData(213, "Opposite-Hand-Resisted Wrist Flexion Hold", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
+    [InlineData(213, "Assisted Side-to-Side Wrist Glides", "Karate Hammer-Fist Strike (Tetsui-Uchi)")]
     [InlineData(214, "Opposite-Hand-Resisted Wrist Ulnar-Deviation Hold", "Wing Chun Biu-Sau Palm Strike")]
     [InlineData(215, "Opposite-Hand-Resisted Wrist Radial-Deviation Hold", "Self-Resisted Wrist Radial-Deviation Pulses")]
     [InlineData(218, "Opposite-Hand-Resisted Little-Finger Abduction Hold", "Self-Resisted Wrist-Flexion Pulses")]
@@ -904,12 +940,14 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(289, "Opposite-Hand-Resisted Thumb Flexion Hold", "Heaven-to-Earth Finger Rotation")]
     [InlineData(289, "Self-Resisted Thumb Adduction Hold", "Heaven-to-Earth Finger Rotation")]
     [InlineData(289, "Alternating Thumb-to-Palm Tucks", "Heaven-to-Earth Finger Rotation")]
+    [InlineData(289, "Thumb-to-Fingertip Opposition", "Heaven-to-Earth Finger Rotation")]
     [InlineData(291, "Self-Resisted Thumb Abduction Hold", "Black Dragon Enters the Cave")]
     [InlineData(293, "Self-Resisted Thumb Flexion Hold", "Sword-Fingers Qigong Sequence")]
     [InlineData(294, "Self-Resisted Little-Finger Abduction Hold", "Tiger-Claw Grip Flow")]
     [InlineData(483, "Clockwise-First Full Neck Circles", "Pirouette Spotting Drill")]
     [InlineData(501, "Counterclockwise-First Full Neck Circles", "Standing Horizontal Saccades")]
     [InlineData(843, "Standing Scalene Wrist-Anchor Stretch", "Standing Cobra Pose")]
+    [InlineData(572, "Cossack Side-to-Side Shifts", "Tai Chi White Crane Opens Wings")]
     public void LatestReplacementAcceptsAdditionalReviewedPriorIdentity(
         int exerciseId,
         string priorName,

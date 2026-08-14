@@ -9,7 +9,7 @@ $catalogPath = Join-Path $resolvedAssetsRoot 'exercises.json'
 $catalog = @(Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json)
 $failures = [System.Collections.Generic.List[string]]::new()
 $reviewedWorkoutCadenceDurationRanges = @{
-    231 = @{ Minimum = 3.8; Maximum = 4.1 }
+    231 = @{ Minimum = 5.5; Maximum = 5.8 }
     681 = @{ Minimum = 5.3; Maximum = 5.7 }
     684 = @{ Minimum = 4.8; Maximum = 5.1 }
     687 = @{ Minimum = 7.3; Maximum = 7.7 }

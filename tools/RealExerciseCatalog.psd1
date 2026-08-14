@@ -137,7 +137,7 @@
         'Warrior II Pose'
         'Reverse Warrior Pose'
         'Extended Side Angle Pose'
-        'Goddess Pose'
+        'Wide Turned-Out Squat Hold'
         'Chair Pose'
         'Eagle Pose'
         'Tree Pose'

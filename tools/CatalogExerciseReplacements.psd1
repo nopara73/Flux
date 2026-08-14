@@ -416,6 +416,31 @@
             MirrorForAlternation = $false
         }
     }
+    117 = @{
+        RetiredName = 'Lateral Squat'
+        Name = 'Side-Lunge Hold'
+        Practice = 'Bodyweight isometrics'
+        MotionProfile = 'SideLungeHold'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 5
+        Media = @{
+            File = 'lateral-lunge.mp4'
+            Url = 'https://www.youtube.com/watch?v=Jky9kOx0L84'
+            SourcePage = 'https://howcast.com/videos/513679-how-to-do-a-side-lunge-warrior-fitness/'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 68
+            DurationSeconds = 4
+            FramesPerSecond = 10
+            PingPong = $true
+            MirrorForAlternation = $true
+        }
+    }
     120 = @{
         RetiredName = 'Duck Walk'
         Name = 'Split Squat Pulse'
@@ -496,27 +521,25 @@
     }
     135 = @{
         RetiredName = 'Mountain Pose to Upward Salute'
-        Name = 'Standing Snow Angels'
-        Practice = 'Shoulder mobility'
-        MotionProfile = 'StandingSnowAngel'
+        Name = 'Overhead Squat Hold'
+        Practice = 'Bodyweight isometrics'
+        MotionProfile = 'OverheadSquatHold'
         Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'RotatorCuff')
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 38
         Media = @{
-            File = 'ynsG-MumciA.mp4'
-            Url = 'https://www.youtube.com/watch?v=ynsG-MumciA'
-            SourcePage = 'https://www.youtube.com/watch?v=ynsG-MumciA'
+            File = 'bodyweight-overhead-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
+            SourcePage = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 1
-            DurationSeconds = 10
+            StartSeconds = 2
+            DurationSeconds = 21
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $false
             MirrorForAlternation = $false
         }
     }
@@ -778,6 +801,32 @@
             MirrorForAlternation = $false
         }
     }
+    184 = @{
+        RetiredName = 'Tai Chi Heel Kick'
+        Name = 'Split-Squat Hold'
+        Practice = 'Bodyweight isometrics'
+        MotionProfile = 'SplitSquatHold'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'split-squat-pulse.mp4'
+            Url = 'https://www.youtube.com/watch?v=Y6YDaqdhJ2U'
+            SourcePage = 'https://www.youtube.com/watch?v=Y6YDaqdhJ2U'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0.2
+            DurationSeconds = 17.4
+            FramesPerSecond = 8
+            Crop = 'crop=480:360:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     185 = @{
         RetiredName = 'Tai Chi Toe Kick'
         Name = 'Shibashi Side-to-Side Cloud Hands'
@@ -800,6 +849,32 @@
             DurationSeconds = 8
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    186 = @{
+        RetiredName = 'Tai Chi Lotus Kick'
+        Name = 'Hip-Airplane Hold'
+        Practice = 'Hip stability training'
+        MotionProfile = 'HipAirplaneHold'
+        Primary = 'DeepHipRotators'
+        Secondary = @('HipFlexors', 'HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'standing-hip-airplane-full-body.mp4'
+            Url = 'https://www.youtube.com/watch?v=orlH8p9llo4'
+            SourcePage = 'https://www.youtube.com/watch?v=orlH8p9llo4'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 12
+            FramesPerSecond = 8
+            Crop = 'crop=480:360:0:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1011,27 +1086,27 @@
         }
     }
     201 = @{
-        RetiredName = 'Boxing Jab'
-        Name = 'Shibashi Split-Stance Rock and Palm Press'
-        Practice = 'Taiji Qigong Shibashi'
-        MotionProfile = 'SplitStanceRock'
+        RetiredName = 'Alternating Boxing Jab'
+        Name = 'Wide-Stance Tiptoe Hold'
+        Practice = 'Calf isometrics'
+        MotionProfile = 'WideStanceTiptoeHold'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'Chest', 'ElbowExtensors', 'AbdominalWall')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Secondary = @('Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 5
         Media = @{
-            File = 'shibashi-set1.mp4'
-            Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
-            SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
+            File = 'sumo-squat-calf-raise-exact.mp4'
+            Url = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
+            SourcePage = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 463
-            DurationSeconds = 8
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            StartSeconds = 5
+            DurationSeconds = 0.5
+            FramesPerSecond = 20
+            Crop = 'crop=300:300:170:50'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1064,15 +1139,15 @@
     }
     211 = @{
         RetiredName = 'Karate Backfist Strike (Uraken-Uchi)'
-        Name = 'Assisted Wrist Flexion-Extension Glides'
-        Practice = 'Hand mobility'
-        MotionProfile = 'AssistedWristGlide'
+        Name = 'Bent-Elbow Wrist-Flexion Stretch'
+        Practice = 'Wrist stretching'
+        MotionProfile = 'WristFlexionStretch'
         Primary = 'ForearmExtensorsAndSupinators'
-        Secondary = @('ForearmFlexorsAndPronators')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Secondary = @('IntrinsicHand')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
             File = 'assisted-wrist-flexion-extension-glides.mp4'
             Url = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
@@ -1080,10 +1155,10 @@
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 42.2
-            DurationSeconds = 10
+            StartSeconds = 47
+            DurationSeconds = 1
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=540:540:280:170'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1116,26 +1191,26 @@
     }
     213 = @{
         RetiredName = 'Karate Hammer-Fist Strike (Tetsui-Uchi)'
-        Name = 'Assisted Side-to-Side Wrist Glides'
-        Practice = 'Hand mobility'
-        MotionProfile = 'AssistedLateralWristGlide'
+        Name = 'Bent-Elbow Wrist-Extension Stretch'
+        Practice = 'Wrist stretching'
+        MotionProfile = 'WristExtensionStretch'
         Primary = 'ForearmFlexorsAndPronators'
-        Secondary = @('ForearmExtensorsAndSupinators')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Secondary = @('IntrinsicHand')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
-            File = 'assisted-side-to-side-wrist-glides.mp4'
+            File = 'assisted-wrist-flexion-extension-glides.mp4'
             Url = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
             SourcePage = 'https://www.youtube.com/watch?v=4ZCF49cyjFk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 56.4
-            DurationSeconds = 9.8
+            StartSeconds = 49
+            DurationSeconds = 1
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=540:540:280:170'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1376,7 +1451,7 @@
     }
     225 = @{
         RetiredName = 'Karate Knife-Hand Block (Shuto-Uke)'
-        Name = 'Clenched-Fist Wrist Extensor Stretch'
+        Name = 'Opposite-Hand Fist-Down Wrist Stretch'
         Practice = 'Wrist mobility'
         MotionProfile = 'WristFlexionStretch'
         Primary = 'ForearmExtensorsAndSupinators'
@@ -1454,28 +1529,28 @@
     }
     229 = @{
         RetiredName = 'Alternating Boxing Uppercut'
-        Name = 'Standing Elbow-Squeeze Chest Press'
-        Practice = 'Standing upper-body conditioning'
-        MotionProfile = 'ElbowSqueezePress'
+        Name = 'Alternating Boxing Jabs'
+        Practice = 'Boxing conditioning'
+        MotionProfile = 'BoxingJab'
         Primary = 'Chest'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowExtensors', 'AbdominalWall')
+        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'kfP_9z-BtmA.mp4'
-            Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
-            SourcePage = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
+            File = 'boxing-five-punches.mp4'
+            Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
+            SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 92
-            DurationSeconds = 24
+            StartSeconds = 2
+            DurationSeconds = 7.5
             FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
             PingPong = $false
-            MirrorForAlternation = $false
+            MirrorForAlternation = $true
         }
     }
     230 = @{
@@ -1498,6 +1573,32 @@
             Video = $true
             StartSeconds = 226
             DurationSeconds = 22
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    231 = @{
+        RetiredName = 'Step-Through Karate Reverse Punch'
+        Name = 'Karate Reverse Punch'
+        Practice = 'Karate conditioning'
+        MotionProfile = 'ReversePunch'
+        Primary = 'ElbowExtensors'
+        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'chuck-norris-private-lesson.mp4'
+            Url = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
+            SourcePage = 'https://www.youtube.com/watch?v=TIo6D2CO6uI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 449.8
+            DurationSeconds = 5.9
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -1558,26 +1659,26 @@
     }
     234 = @{
         RetiredName = 'Karate Flat-Fist Strike (Hiraken)'
-        Name = 'Alternating Thumb-to-Palm Tucks'
-        Practice = 'Hand mobility and coordination'
-        MotionProfile = 'ThumbOppositionTuck'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'Continuous'
+        Name = 'Straight Fingers to Knuckle Bend'
+        Practice = 'Hand and forearm mobility'
+        MotionProfile = 'KnuckleBend'
+        Primary = 'ForearmFlexorsAndPronators'
+        Secondary = @('IntrinsicHand', 'ForearmExtensorsAndSupinators')
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'hands-brain-warmups.mp4'
-            Url = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
-            SourcePage = 'https://www.youtube.com/watch?v=4o1iRDFm8Ww'
+            File = 'straight-hand-knuckle-bend-flow.mp4'
+            Url = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
+            SourcePage = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 16
-            DurationSeconds = 26
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            StartSeconds = 47
+            DurationSeconds = 9.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih*65/72:ih*65/72:iw*25/64:ih*7/144'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1688,7 +1789,7 @@
     }
     241 = @{
         RetiredName = 'Ninja Water-Dragon 44 Hand-Seal Sequence'
-        Name = 'Hook-Fist Tendon Glide'
+        Name = 'Open Hand to Hook Fist'
         Practice = 'Hand therapy'
         MotionProfile = 'HookFistTendonGlide'
         Primary = 'IntrinsicHand'
@@ -1714,7 +1815,7 @@
     }
     242 = @{
         RetiredName = 'Ninja Shadow-Clone Hand-Seal Sequence'
-        Name = 'Full-Fist Tendon Glide'
+        Name = 'Open Hand to Full Fist'
         Practice = 'Hand therapy'
         MotionProfile = 'FullFistTendonGlide'
         Primary = 'IntrinsicHand'
@@ -1743,8 +1844,8 @@
         Name = 'Straight-Punch to Shovel-Hook Combo'
         Practice = 'Boxing'
         MotionProfile = 'ShovelHookCombo'
-        Primary = 'ElbowFlexors'
-        Secondary = @('ForearmFlexorsAndPronators', 'Chest', 'AbdominalWall', 'ElbowExtensors')
+        Primary = 'Chest'
+        Secondary = @('ForearmFlexorsAndPronators', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -1818,7 +1919,7 @@
     }
     251 = @{
         RetiredName = 'Waiter''s Bow'
-        Name = 'Standing Swan-Dive Hinge'
+        Name = 'Arm Sweep to Forward Hinge'
         Practice = 'Standing yoga'
         MotionProfile = 'SwanDiveHinge'
         Primary = 'SpinalExtensors'
@@ -1844,25 +1945,25 @@
     }
     256 = @{
         RetiredName = 'Self-Resisted Overhead Pull Hold'
-        Name = 'Bent-Over Straight-Arm Lat Sweeps'
-        Practice = 'Standing strength and mobility'
-        MotionProfile = 'LatSweep'
+        Name = 'Overhead Side-Stretch Hold'
+        Practice = 'Standing stretching'
+        MotionProfile = 'OverheadSideStretch'
         Primary = 'ShoulderAdductorsAndExtensors'
-        Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
-            File = 'oRRKLd8dGUQ.mp4'
-            Url = 'https://www.youtube.com/watch?v=oRRKLd8dGUQ'
-            SourcePage = 'https://www.youtube.com/watch?v=oRRKLd8dGUQ'
+            File = 'alternating-overhead-side-stretch.mp4'
+            Url = 'https://www.youtube.com/watch?v=gTEBlnqcJ2c'
+            SourcePage = 'https://www.youtube.com/watch?v=gTEBlnqcJ2c'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 6
-            DurationSeconds = 8
-            FramesPerSecond = 10
+            StartSeconds = 14
+            DurationSeconds = 10
+            FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
@@ -1870,27 +1971,27 @@
     }
     257 = @{
         RetiredName = 'Self-Resisted Chest-Level Pull Hold'
-        Name = 'Karate Knife-Hand Block'
-        Practice = 'Karate'
-        MotionProfile = 'KnifeHandBlock'
-        Primary = 'ForearmFlexorsAndPronators'
-        Secondary = @('ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'IntrinsicHand', 'RotatorCuff')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Finger Spread to Interlace Stretch'
+        Practice = 'Hand mobility'
+        MotionProfile = 'FingerSpreadInterlace'
+        Primary = 'IntrinsicHand'
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'MZWdIHO75hU.mp4'
-            Url = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
-            SourcePage = 'https://www.youtube.com/watch?v=MZWdIHO75hU'
+            File = 'finger-spread-interlace-stretch.mp4'
+            Url = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
+            SourcePage = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 150
-            DurationSeconds = 20
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $false
+            StartSeconds = 399
+            DurationSeconds = 9
+            FramesPerSecond = 10
+            Crop = 'crop=ih*17/18:ih*13/18:iw*41/128:ih/9'
+            PingPong = $true
             MirrorForAlternation = $false
         }
     }
@@ -1972,17 +2073,69 @@
             MirrorForAlternation = $false
         }
     }
-    266 = @{
-        RetiredName = 'Standing Palms-Up Arm Raise'
-        Name = 'Alternating T-Arm Lifts'
-        Practice = 'Standing shoulder endurance'
-        MotionProfile = 'AlternatingTArmLift'
+    263 = @{
+        RetiredName = 'Standing Straight-Arm Pressback'
+        Name = 'Bent-Over Straight-Arm Pressback Hold'
+        Practice = 'Standing isometrics'
+        MotionProfile = 'StraightArmPressbackHold'
+        Primary = 'ShoulderAdductorsAndExtensors'
+        Secondary = @('ScapularGirdle', 'ElbowExtensors', 'SpinalExtensors', 'AbdominalWall')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'bat-wings-workout.mp4'
+            Url = 'https://www.youtube.com/watch?v=E1FkoDDbzu4'
+            SourcePage = 'https://www.youtube.com/watch?v=E1FkoDDbzu4'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 245
+            DurationSeconds = 25
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    265 = @{
+        RetiredName = 'Standing Bent-Elbow Arm Raise'
+        Name = 'Standing Speed-Bag Punches'
+        Practice = 'Boxing conditioning'
+        MotionProfile = 'SpeedBagPunch'
         Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'RotatorCuff')
+        Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'RotatorCuff', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
+        Media = @{
+            File = 'standing-speed-bag-punches.mp4'
+            Url = 'https://www.youtube.com/watch?v=OOHFTjpK5LM'
+            SourcePage = 'https://www.youtube.com/watch?v=OOHFTjpK5LM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 24
+            DurationSeconds = 16
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    266 = @{
+        RetiredName = 'Standing Palms-Up Arm Raise'
+        Name = 'T-Arm Shoulder Hold'
+        Practice = 'Shoulder isometrics'
+        MotionProfile = 'TArmHold'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
             File = 'kfP_9z-BtmA.mp4'
             Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
@@ -1990,8 +2143,8 @@
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 158
-            DurationSeconds = 24
+            StartSeconds = 159.5
+            DurationSeconds = 1
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -2000,27 +2153,25 @@
     }
     267 = @{
         RetiredName = 'T-Position Shoulder Rotation'
-        Name = 'Floor Touch to Calf Raise'
-        Practice = 'Low-impact standing conditioning'
-        MotionProfile = 'FoldCalfRaise'
+        Name = 'Standing Calf-Raise Hold'
+        Practice = 'Calf isometrics'
+        MotionProfile = 'CalfRaiseHold'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'SpinalExtensors', 'ShoulderAbductors', 'AbdominalWall')
+        Secondary = @('Soleus', 'AbdominalWall')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 15
         Media = @{
-            File = 'mizi-standing.mp4'
-            Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
-            SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+            File = 'ballet-second-position-releve.webm'
+            Url = 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Relev%C3%A9%2C_ballet_technique_tutorial.webm'
+            SourcePage = 'https://commons.wikimedia.org/wiki/File:Relev%C3%A9,_ballet_technique_tutorial.webm'
             Human = $true
-            Youtube = $true
             Video = $true
-            StartSeconds = 20
-            DurationSeconds = 8
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $false
+            StartSeconds = 3.2
+            DurationSeconds = 3.6
+            FramesPerSecond = 10
+            PingPong = $true
             MirrorForAlternation = $false
         }
     }
@@ -2052,41 +2203,41 @@
     }
     269 = @{
         RetiredName = 'Self-Resisted Curl-and-Press'
-        Name = 'C-Rotation Arm Curls'
-        Practice = 'Standing arm conditioning'
-        MotionProfile = 'CRotationCurl'
+        Name = 'Standing Leg-Resistance Biceps Curl'
+        Practice = 'Standing strength and balance'
+        MotionProfile = 'LegResistanceCurl'
         Primary = 'ElbowFlexors'
-        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAdductorsAndExtensors')
-        SideSequence = 'Continuous'
+        Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'kfP_9z-BtmA.mp4'
-            Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
-            SourcePage = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
+            File = 'standing-leg-resistance-biceps-curl.mp4'
+            Url = 'https://www.youtube.com/watch?v=AMoeIeT3Gyw'
+            SourcePage = 'https://www.youtube.com/watch?v=AMoeIeT3Gyw'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 31
-            DurationSeconds = 24
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            StartSeconds = 389.1
+            DurationSeconds = 3.6
+            FramesPerSecond = 10
+            Crop = 'crop=320:360:80:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     270 = @{
         RetiredName = 'Palm-Squeeze Forward Press'
-        Name = 'Goalpost Elbow Open-and-Close'
-        Practice = 'Standing chest conditioning'
-        MotionProfile = 'GoalpostElbowOpenClose'
+        Name = 'Goalpost Chest-Opener Hold'
+        Practice = 'Standing stretching'
+        MotionProfile = 'GoalpostChestOpener'
         Primary = 'Chest'
-        Secondary = @('ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'IntrinsicHand')
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
             File = 'kfP_9z-BtmA.mp4'
             Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
@@ -2338,7 +2489,7 @@
     }
     283 = @{
         RetiredName = 'Qigong Fist Rotation'
-        Name = 'Straight-Fist Tendon Glide'
+        Name = 'Open Hand to Straight Fist'
         Practice = 'Hand therapy'
         MotionProfile = 'StraightFistTendonGlide'
         Primary = 'IntrinsicHand'
@@ -2494,9 +2645,9 @@
     }
     289 = @{
         RetiredName = 'Heaven-to-Earth Finger Rotation'
-        Name = 'Thumb-to-Fingertip Opposition'
-        Practice = 'Hand therapy'
-        MotionProfile = 'ThumbOpposition'
+        Name = 'Fingertip Spider Presses'
+        Practice = 'Hand conditioning'
+        MotionProfile = 'FingertipSpiderPress'
         Primary = 'IntrinsicHand'
         Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
         SideSequence = 'Continuous'
@@ -2504,23 +2655,23 @@
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'thumb-to-fingertip-opposition.mp4'
-            Url = 'https://www.youtube.com/watch?v=H5qap5Ktrlk'
-            SourcePage = 'https://www.youtube.com/watch?v=H5qap5Ktrlk'
+            File = 'fingertip-spider-presses.mp4'
+            Url = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
+            SourcePage = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 10
-            DurationSeconds = 9
+            StartSeconds = 53
+            DurationSeconds = 17
             FramesPerSecond = 10
-            Crop = 'crop=450:450:15:20'
+            Crop = 'crop=ih*35/36:ih*13/18:iw*39/128:ih/9'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     291 = @{
         RetiredName = 'Black Dragon Enters the Cave'
-        Name = 'Open-to-Claw Tendon Glide'
+        Name = 'Open Hand to Claw Fist'
         Practice = 'Hand therapy'
         MotionProfile = 'ClawTendonGlide'
         Primary = 'IntrinsicHand'
@@ -2572,7 +2723,7 @@
     }
     293 = @{
         RetiredName = 'Sword-Fingers Qigong Sequence'
-        Name = 'Finger-Web Space Stretch'
+        Name = 'Opposite-Hand Finger-Web Stretches'
         Practice = 'Active isolated stretching'
         MotionProfile = 'FingerMotion'
         Primary = 'IntrinsicHand'
@@ -2674,6 +2825,32 @@
             MirrorForAlternation = $false
         }
     }
+    301 = @{
+        RetiredName = 'Large Arm Sweep Up and Down'
+        Name = 'Overhead Arm Pumps'
+        Practice = 'Shoulder endurance'
+        MotionProfile = 'OverheadArmPump'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowExtensors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'standing-bellows-breath-arm-pumps.mp4'
+            Url = 'https://www.youtube.com/watch?v=VSUQcIC_r1k'
+            SourcePage = 'https://www.youtube.com/watch?v=VSUQcIC_r1k'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 60
+            DurationSeconds = 16
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     314 = @{
         RetiredName = 'Alternating Forward Lunge with Biceps Curl'
         Name = 'Alternating Forward Lunge Pulses'
@@ -2732,7 +2909,7 @@
         Practice = 'Boxing conditioning'
         MotionProfile = 'RearHandStraightPunch'
         Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3869,24 +4046,24 @@
     }
     572 = @{
         RetiredName = 'Tai Chi White Crane Opens Wings'
-        Name = 'Cossack Side-to-Side Shifts'
-        Practice = 'Standing adductor mobility'
-        MotionProfile = 'CossackShift'
+        Name = 'Standing Side-Lunge Adductor Stretch'
+        Practice = 'Standing stretching'
+        MotionProfile = 'SideLungeAdductorStretch'
         Primary = 'MajorHipAdductors'
         Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
-            File = '2_lCvBvHRFI.mp4'
-            Url = 'https://www.youtube.com/watch?v=2_lCvBvHRFI'
-            SourcePage = 'https://www.youtube.com/watch?v=2_lCvBvHRFI'
+            File = 'standing-side-lunge-adductor-stretch.mp4'
+            Url = 'https://www.youtube.com/watch?v=O-ASSBN_5pQ'
+            SourcePage = 'https://www.youtube.com/watch?v=O-ASSBN_5pQ'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 435
-            DurationSeconds = 20
+            StartSeconds = 3
+            DurationSeconds = 31
             FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
@@ -4281,27 +4458,26 @@
     }
     636 = @{
         RetiredName = 'Deadlift Kickback'
-        Name = 'Alternating Curtsy Floor Reach'
-        Practice = 'Standing Pilates'
-        MotionProfile = 'CurtsyLunge'
+        Name = 'Curtsy-Lunge Hold'
+        Practice = 'Bodyweight isometrics'
+        MotionProfile = 'CurtsyLungeHold'
         Primary = 'GlutealExtensors'
-        Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'DeepAndIntersegmentalBack', 'AbdominalWall')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 28
         Media = @{
-            File = 'standing-pilates.mp4'
-            Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
-            SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
+            File = 'mizi-standing.mp4'
+            Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+            SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 1535.5
-            DurationSeconds = 24
-            FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $false
+            StartSeconds = 410
+            DurationSeconds = 8
+            FramesPerSecond = 10
+            Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
             MirrorForAlternation = $false
         }
     }
@@ -4382,27 +4558,27 @@
         }
     }
     677 = @{
-        RetiredName = 'Belly-Dance Hip Drop'
-        Name = 'T-Arm Side-to-Side Sweep'
-        Practice = 'Standing upper-back conditioning'
-        MotionProfile = 'TArmSideSweep'
+        RetiredName = 'Alternating Belly-Dance Hip Drop'
+        Name = 'Bent-Elbow Reverse-Fly Hold'
+        Practice = 'Upper-back isometrics'
+        MotionProfile = 'ReverseFlyHold'
         Primary = 'ScapularGirdle'
         Secondary = @('ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ShoulderAbductors')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 33
         Media = @{
-            File = 'kfP_9z-BtmA.mp4'
-            Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
-            SourcePage = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
+            File = 'PJO1hQSMPT4.mp4'
+            Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
+            SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 128
-            DurationSeconds = 22
+            StartSeconds = 125
+            DurationSeconds = 3
             FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=250:305:0:55'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -4461,7 +4637,7 @@
     }
     683 = @{
         RetiredName = 'Belly-Dance Umi'
-        Name = 'Alternating Palm-Up T-Arm Flips'
+        Name = 'Alternating Palm-Up Shoulder Rotations'
         Practice = 'Shoulder mobility'
         MotionProfile = 'AlternatingPalmFlip'
         Primary = 'RotatorCuff'
@@ -4643,26 +4819,26 @@
     }
     745 = @{
         RetiredName = 'Dynamic Hug'
-        Name = 'Standing Overhead Presses'
-        Practice = 'Standing upper-body conditioning'
-        MotionProfile = 'OverheadPress'
-        Primary = 'Chest'
-        Secondary = @('ScapularGirdle', 'RotatorCuff', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
+        Name = 'One-Arm Curl Against Other Hand'
+        Practice = 'Self-resistance'
+        MotionProfile = 'ArmCurl'
+        Primary = 'ElbowFlexors'
+        Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand')
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'kfP_9z-BtmA.mp4'
-            Url = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
-            SourcePage = 'https://www.youtube.com/watch?v=kfP_9z-BtmA'
+            File = 'self-resistance-arms.mp4'
+            Url = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+            SourcePage = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 318
-            DurationSeconds = 24
+            StartSeconds = 54
+            DurationSeconds = 7
             FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=640:720:0:0'
             PingPong = $false
             MirrorForAlternation = $false
         }

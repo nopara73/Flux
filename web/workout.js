@@ -2,7 +2,7 @@ export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60,
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 21;
+export const CURRENT_CATALOG_REVISION = 22;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -32,6 +32,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
     615, 618, 677, 683, 685, 745, 816, 834,
   ])],
+  [22, new Set([
+    117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
+    263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -60,6 +64,10 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     283, 285, 286, 287, 291, 294, 314, 321, 326, 329, 390, 391,
     394, 395, 396, 397, 425, 507, 508, 513, 516, 572, 576, 577,
     615, 618, 677, 683, 685, 745, 816, 834,
+  ])],
+  [22, new Set([
+    117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
+    263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
   ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
@@ -104,6 +112,15 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [712, ["Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold"]],
   [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
   [1000, ["Standing Forward Fold", "Standing Forward-Fold Hold"]],
+  [136, ["Goddess Pose", "Wide Turned-Out Squat Hold"]],
+  [225, ["Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch"]],
+  [241, ["Hook-Fist Tendon Glide", "Open Hand to Hook Fist"]],
+  [242, ["Full-Fist Tendon Glide", "Open Hand to Full Fist"]],
+  [251, ["Standing Swan-Dive Hinge", "Arm Sweep to Forward Hinge"]],
+  [283, ["Straight-Fist Tendon Glide", "Open Hand to Straight Fist"]],
+  [291, ["Open-to-Claw Tendon Glide", "Open Hand to Claw Fist"]],
+  [293, ["Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches"]],
+  [683, ["Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
