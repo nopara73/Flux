@@ -108,4 +108,8 @@
     939 = 'ScreenLeftThenRight'
     948 = 'ScreenRightThenLeft'
     949 = 'ScreenRightThenLeft'
+    996 = 'ScreenRightThenLeft'
+    997 = 'ScreenRightThenLeft'
+    998 = 'ScreenRightThenLeft'
+    999 = 'ScreenRightThenLeft'
 }

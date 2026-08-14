@@ -133,6 +133,7 @@ public class MainActivity : Activity
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
+    private string? _exerciseVideoCacheRoot;
     private AppScreen _appScreen = AppScreen.Duration;
     private WorkoutPhase _workoutPhase = WorkoutPhase.Ready;
     private MovementPhase? _lastMovementPhase;
@@ -1450,7 +1451,7 @@ public class MainActivity : Activity
 
     private string CacheVideoAsset(string assetPath, bool forceRefresh)
     {
-        string cacheRoot = System.IO.Path.Combine(CacheDir!.AbsolutePath, "exercise-videos-v8");
+        string cacheRoot = GetVersionedVideoCacheRoot();
         Directory.CreateDirectory(cacheRoot);
         string assetKind = assetPath.StartsWith(
             "exercise_direction_videos/",
@@ -1498,6 +1499,76 @@ public class MainActivity : Activity
         }
 
         return cachedPath;
+    }
+
+    private string GetVersionedVideoCacheRoot()
+    {
+        if (_exerciseVideoCacheRoot is not null)
+        {
+            return _exerciseVideoCacheRoot;
+        }
+
+        long versionCode = GetInstalledVersionCode();
+        string cacheParent = System.IO.Path.Combine(
+            CacheDir!.AbsolutePath,
+            "exercise-videos");
+        string versionRoot = System.IO.Path.Combine(
+            cacheParent,
+            versionCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        Directory.CreateDirectory(versionRoot);
+
+        foreach (string staleRoot in Directory.EnumerateDirectories(cacheParent))
+        {
+            if (string.Equals(staleRoot, versionRoot, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            try
+            {
+                Directory.Delete(staleRoot, recursive: true);
+            }
+            catch (IOException)
+            {
+                // Android may still have an old cached video open briefly.
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // Cache cleanup is best-effort and must not block playback.
+            }
+        }
+
+        _exerciseVideoCacheRoot = versionRoot;
+        return versionRoot;
+    }
+
+    private long GetInstalledVersionCode()
+    {
+        Android.Content.PM.PackageManager packageManager = PackageManager!;
+        string packageName = PackageName!;
+
+        if (OperatingSystem.IsAndroidVersionAtLeast(33))
+        {
+            Android.Content.PM.PackageInfo packageInfo = packageManager.GetPackageInfo(
+                packageName,
+                Android.Content.PM.PackageManager.PackageInfoFlags.Of(0L))
+                ?? throw new InvalidOperationException(
+                    "Android could not resolve the installed Flux package.");
+            return packageInfo.LongVersionCode;
+        }
+
+#pragma warning disable CS0618
+        Android.Content.PM.PackageInfo legacyPackageInfo = packageManager.GetPackageInfo(
+            packageName,
+            Android.Content.PM.PackageInfoFlags.Activities)
+            ?? throw new InvalidOperationException(
+                "Android could not resolve the installed Flux package.");
+#pragma warning restore CS0618
+        return OperatingSystem.IsAndroidVersionAtLeast(28)
+            ? legacyPackageInfo.LongVersionCode
+#pragma warning disable CS0618
+            : legacyPackageInfo.VersionCode;
+#pragma warning restore CS0618
     }
 
     private static string GetExerciseVideoAssetPath(Exercise exercise)

@@ -62,9 +62,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 329);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 329);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 329);
+  assert.equal(catalog.length, 333);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 333);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 333);
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );

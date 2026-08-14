@@ -53,7 +53,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(115, timedSideExercises.Length);
+        Assert.Equal(117, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -154,6 +154,10 @@ public sealed class CatalogInvariantTests
             [884] = ExerciseSideSequence.ScreenRightThenLeft,
             [885] = ExerciseSideSequence.ScreenRightThenLeft,
             [910] = ExerciseSideSequence.ScreenLeftThenRight,
+            [996] = ExerciseSideSequence.ScreenLeftThenRight,
+            [997] = ExerciseSideSequence.ScreenLeftThenRight,
+            [998] = ExerciseSideSequence.Continuous,
+            [999] = ExerciseSideSequence.Continuous,
         };
         Assert.All(auditedSideSequences, expected =>
             Assert.Equal(
@@ -268,6 +272,10 @@ public sealed class CatalogInvariantTests
             [501] = "Single-Leg Thumb-Focus Head Turns",
             [508] = "Curl Raised Leg with One Arm",
             [510] = "Clasped-Hands Chest-Opening Forward-Fold Hold",
+            [996] = "Partial Pistol Squat",
+            [997] = "Bottom Pistol Squat Hold",
+            [998] = "Deep-Squat Thoracic Rotation",
+            [999] = "Deep-Squat Walk",
             [512] = "Standing Upper-Back and Neck Hug Stretch",
             [513] = "Collarbone-Anchored Diagonal Neck Stretch",
             [588] = "Belly-Dance Alternating Shoulder Rolls",

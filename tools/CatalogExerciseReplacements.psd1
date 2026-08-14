@@ -3858,4 +3858,108 @@
             MirrorForAlternation = $false
         }
     }
+    996 = @{
+        RetiredName = 'Flamenco Core Brace and Release'
+        Name = 'Partial Pistol Squat'
+        Practice = 'Calisthenics'
+        MotionProfile = 'PartialSingleLegSquat'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pistol-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            SourcePage = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 14.35
+            DurationSeconds = 2.4
+            FramesPerSecond = 20
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $true
+            MirrorForAlternation = $false
+        }
+    }
+    997 = @{
+        RetiredName = 'Ballet Passe March'
+        Name = 'Bottom Pistol Squat Hold'
+        Practice = 'Calisthenics'
+        MotionProfile = 'PistolSquatHold'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'pistol-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            SourcePage = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 17
+            DurationSeconds = 3
+            FramesPerSecond = 20
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    998 = @{
+        RetiredName = 'Ballet Arabesque Reach'
+        Name = 'Deep-Squat Thoracic Rotation'
+        Practice = 'Deep-squat mobility'
+        MotionProfile = 'DeepSquatRotation'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'deep-squat-thoracic-rotations.mp4'
+            Url = 'https://www.youtube.com/watch?v=nwtq2DLip2E'
+            SourcePage = 'https://www.youtube.com/watch?v=nwtq2DLip2E'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 11.6
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    999 = @{
+        RetiredName = 'Standing Pilates Hundred Arms'
+        Name = 'Deep-Squat Walk'
+        Practice = 'Deep-squat locomotion'
+        MotionProfile = 'DeepSquatWalk'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'deep-squat-walk.mp4'
+            Url = 'https://www.youtube.com/watch?v=CxpaehaicOA'
+            SourcePage = 'https://www.youtube.com/watch?v=CxpaehaicOA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 5
+            DurationSeconds = 15.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
 }
