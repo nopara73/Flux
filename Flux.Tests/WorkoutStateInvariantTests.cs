@@ -280,7 +280,8 @@ public sealed class WorkoutStateInvariantTests
             Name = $"Exercise {id}",
             Video = $"exercise_{id:D4}.mp4",
             PrimaryCanonicalGroup = primary,
-            SecondaryCanonicalGroups = Enum.GetValues<CanonicalMuscleGroup>()
+            SecondaryCanonicalGroups = MassGroupingTaxonomy.GetGroup(3, primary)
+                .CanonicalGroups
                 .Where(group => group != primary)
                 .ToArray(),
             Practice = "Test practice",
@@ -289,10 +290,11 @@ public sealed class WorkoutStateInvariantTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            InsectCompatibility = ExerciseInsectCompatibility.Compatible,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
-            MaxSpaceMeters = 3,
+            MaxSpaceMeters = 2,
             Equipment = "None",
             Silent = true,
         };

@@ -344,7 +344,7 @@
         Practice = 'Ballet conditioning'
         MotionProfile = 'PlieSquat'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -1533,7 +1533,7 @@
         Practice = 'Boxing conditioning'
         MotionProfile = 'BoxingJab'
         Primary = 'Chest'
-        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -1845,7 +1845,7 @@
         Practice = 'Boxing'
         MotionProfile = 'ShovelHookCombo'
         Primary = 'Chest'
-        Secondary = @('ForearmFlexorsAndPronators', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors')
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2363,7 +2363,7 @@
         Practice = 'Boxing conditioning'
         MotionProfile = 'StraightPunch'
         Primary = 'ElbowExtensors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2415,7 +2415,7 @@
         Practice = 'Boxing'
         MotionProfile = 'MartialHand'
         Primary = 'Chest'
-        Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors')
+        Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors', 'ForearmExtensorsAndSupinators')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2441,7 +2441,7 @@
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'OverheadPunch'
         Primary = 'ElbowExtensors'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle')
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ForearmExtensorsAndSupinators')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3236,6 +3236,318 @@
             StartSeconds = 78
             DurationSeconds = 12
             FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    407 = @{
+        RetiredName = 'Neck Half-Circle'
+        Name = 'Inhale-Up, Exhale-Down Arm Circles'
+        Practice = 'Breath-led mobility'
+        MotionProfile = 'BreathingArmCircle'
+        Primary = 'BreathingMuscles'
+        Secondary = @('ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'OuFFmDFwLX4.mp4'
+            Url = 'https://www.youtube.com/watch?v=OuFFmDFwLX4'
+            SourcePage = 'https://www.youtube.com/watch?v=OuFFmDFwLX4'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 22
+            DurationSeconds = 9.233
+            FramesPerSecond = 10
+            Crop = 'crop=ih*8/9:ih:(iw-ih*8/9)/2-ih/6:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    408 = @{
+        RetiredName = 'Neck Figure Eight'
+        Name = 'Split-Squat Torso Rotation with Thumb Tracking'
+        Practice = 'Balance and gaze-control mobility'
+        MotionProfile = 'SplitSquatThumbTrackingRotation'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'ScapularGirdle', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'RotatorCuff', 'PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = '4Tv-F_XWw1U.mp4'
+            Url = 'https://www.youtube.com/watch?v=4Tv-F_XWw1U'
+            SourcePage = 'https://www.youtube.com/watch?v=4Tv-F_XWw1U'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 22.9
+            DurationSeconds = 5.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/4:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    410 = @{
+        RetiredName = 'Nose Diamond Trace'
+        Name = 'Squat with Upward Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'UpwardThumbTrackingSquat'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'v4U3miAL4Q8.mp4'
+            Url = 'https://www.youtube.com/watch?v=v4U3miAL4Q8'
+            SourcePage = 'https://www.youtube.com/watch?v=v4U3miAL4Q8'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 15.25
+            DurationSeconds = 7
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    411 = @{
+        RetiredName = 'Nose Circle'
+        Name = 'Squat with Downward Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'DownwardThumbTrackingSquat'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'YWMrXZKu_js.mp4'
+            Url = 'https://www.youtube.com/watch?v=YWMrXZKu_js'
+            SourcePage = 'https://www.youtube.com/watch?v=YWMrXZKu_js'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 10.75
+            DurationSeconds = 10
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    412 = @{
+        RetiredName = 'Nose Square'
+        Name = 'Lateral Lunge with Sideward Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'LateralLungeThumbTracking'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ScapularGirdle', 'ShoulderAbductors', 'RotatorCuff')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'hxL4Rt1gKdI.mp4'
+            Url = 'https://www.youtube.com/watch?v=hxL4Rt1gKdI'
+            SourcePage = 'https://www.youtube.com/watch?v=hxL4Rt1gKdI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 13.313
+            DurationSeconds = 2.937
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    413 = @{
+        RetiredName = 'Nose Infinity Sign'
+        Name = 'March in Place with Sideward Eye Shifts Between Thumbs'
+        Practice = 'Brain-calibration training'
+        MotionProfile = 'MarchingEyeShift'
+        Primary = 'CranialMuscles'
+        Secondary = @('HipFlexors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = '8a9IHhOTG3E.mp4'
+            Url = 'https://www.youtube.com/watch?v=8a9IHhOTG3E'
+            SourcePage = 'https://www.youtube.com/watch?v=8a9IHhOTG3E'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 2.1
+            DurationSeconds = 1.8
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)*5/7:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    414 = @{
+        RetiredName = 'Ear-to-Shoulder Glide'
+        Name = 'Heel Raises with Fixed-Thumb Head Turns'
+        Practice = 'Gaze stability and calf balance'
+        MotionProfile = 'HeelRaiseGazeStabilityHeadTurn'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'eNXANtzul-k.mp4'
+            Url = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            SourcePage = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0.584
+            DurationSeconds = 5.505
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    415 = @{
+        RetiredName = 'Chin-to-Collarbone Turn'
+        Name = 'Heel Raises with Fixed-Thumb Head Nods'
+        Practice = 'Gaze stability and calf balance'
+        MotionProfile = 'HeelRaiseGazeStabilityHeadNod'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'eNXANtzul-k.mp4'
+            Url = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            SourcePage = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 7.507
+            DurationSeconds = 7.174
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    416 = @{
+        RetiredName = 'Diagonal Head Tilt'
+        Name = 'Heel Raises with Fixed-Thumb Head Tilts'
+        Practice = 'Gaze stability and calf balance'
+        MotionProfile = 'HeelRaiseGazeStabilityHeadTilt'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'eNXANtzul-k.mp4'
+            Url = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            SourcePage = 'https://www.youtube.com/watch?v=eNXANtzul-k'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 15.015
+            DurationSeconds = 4.171
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    417 = @{
+        RetiredName = 'Side-to-Side Head Translation'
+        Name = 'Narrow Squat and Overhead Reach with Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'NarrowSquatThumbTracking'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'keT0aOn3Hiw.mp4'
+            Url = 'https://www.youtube.com/watch?v=keT0aOn3Hiw'
+            SourcePage = 'https://www.youtube.com/watch?v=keT0aOn3Hiw'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 2.961
+            DurationSeconds = 3.67
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    418 = @{
+        RetiredName = 'Forward-and-Back Head Translation'
+        Name = 'Heel-Bounce Horizontal Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'HeelBounceHorizontalThumbTracking'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ScapularGirdle', 'RotatorCuff', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'DGAyfAK_JPQ.mp4'
+            Url = 'https://www.youtube.com/watch?v=DGAyfAK_JPQ'
+            SourcePage = 'https://www.youtube.com/watch?v=DGAyfAK_JPQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 9.76
+            DurationSeconds = 6.84
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    419 = @{
+        RetiredName = 'Occipital Nod'
+        Name = 'Heel-Bounce Vertical Thumb Tracking'
+        Practice = 'Vestibular rehabilitation'
+        MotionProfile = 'HeelBounceVerticalThumbTracking'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ScapularGirdle', 'RotatorCuff', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'TCmHVtZ4M8Q.mp4'
+            Url = 'https://www.youtube.com/watch?v=TCmHVtZ4M8Q'
+            SourcePage = 'https://www.youtube.com/watch?v=TCmHVtZ4M8Q'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 7.382
+            DurationSeconds = 5.255
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false

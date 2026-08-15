@@ -25,7 +25,7 @@ public sealed class WorkoutCoveragePolicyTests
     }
 
     [Fact]
-    public void SelectabilityRequiresPrimaryOwnershipAndAtLeastHalfOfBucket()
+    public void SelectabilityRequiresMeaningfulCoverageAndTracksPrimaryOwnershipSeparately()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
         CanonicalMuscleGroup[] leaves = group.CanonicalGroups.ToArray();
@@ -47,7 +47,9 @@ public sealed class WorkoutCoveragePolicyTests
         Assert.Equal(6, WorkoutCoveragePolicy.GetCanonicalCoverage(exactlyHalf, group));
         Assert.True(WorkoutCoveragePolicy.IsSelectable(exactlyHalf, group));
         Assert.Equal(6, WorkoutCoveragePolicy.GetCanonicalCoverage(secondaryOnly, group));
-        Assert.False(WorkoutCoveragePolicy.IsSelectable(secondaryOnly, group));
+        Assert.True(WorkoutCoveragePolicy.IsSelectable(secondaryOnly, group));
+        Assert.True(WorkoutCoveragePolicy.IsPrimaryForGroup(exactlyHalf, group));
+        Assert.False(WorkoutCoveragePolicy.IsPrimaryForGroup(secondaryOnly, group));
     }
 
     private static Exercise Exercise(

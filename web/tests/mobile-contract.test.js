@@ -34,6 +34,8 @@ const [
   catalogJson,
   workoutModifiers,
   exerciseModel,
+  modifierPolicy,
+  exerciseDatabase,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -46,6 +48,8 @@ const [
   source("Flux", "Assets", "exercises.json"),
   source("Flux", "Models", "WorkoutModifiers.cs"),
   source("Flux", "Models", "Exercise.cs"),
+  source("Flux", "Services", "WorkoutModifierPolicy.cs"),
+  source("Flux", "Data", "SqliteExerciseDatabase.cs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -100,14 +104,44 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     sessionService,
-    /ChooseBestCandidate\([\s\S]*IsSelectable\(exercise, group, modifiers\)/,
+    /ChooseBestDistinctLineup\([\s\S]*IsSelectable\(exercise, group, modifiers\)/,
+  );
+  assert.match(
+    modifierPolicy,
+    /WorkoutCoveragePolicy\.IsSelectable\(exercise, group\)[\s\S]*IsCompatible\(exercise, profile\)/,
+  );
+  assert.match(
+    modifierPolicy,
+    /SupportedProfiles[\s\S]*FindCoverageDeficiencies/,
+  );
+  assert.match(
+    modifierPolicy,
+    /FindDistinctLineupDeficiencies[\s\S]*GetMaximumDistinctLineupSize/,
+  );
+  assert.match(
+    modifierPolicy,
+    /MinimumExcludedExercisesPerGroup\s*=\s*5[\s\S]*FindModifierExclusionDeficiencies/,
+  );
+  assert.match(
+    workoutModule,
+    /MODIFIER_RULES[\s\S]*MINIMUM_EXCLUDED_EXERCISES_PER_GROUP\s*=\s*5[\s\S]*findWorkoutModifierExclusionDeficiencies/,
+  );
+  assert.match(
+    workoutModule,
+    /findWorkoutProfileLineupDeficiencies[\s\S]*getMaximumDistinctLineupSize/,
+  );
+  assert.match(
+    webApp,
+    /findWorkoutProfileCoverageDeficiencies[\s\S]*findWorkoutProfileLineupDeficiencies[\s\S]*findWorkoutModifierExclusionDeficiencies/,
+  );
+  assert.match(
+    exerciseDatabase,
+    /FindCoverageDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*FindModifierExclusionDeficiencies[\s\S]*hasUndersizedModifierExclusionPool/,
   );
   assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
   assert.ok(catalog.every((exercise) =>
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible));
-  assert.equal(catalog.filter((exercise) =>
-    exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible).length, 147);
   assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
 });
 

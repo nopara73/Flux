@@ -10,8 +10,14 @@ Movements are selected for their value first, then assigned on a best-effort
 basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
 scheduling group plus every secondary group it meaningfully trains. Full-body
 exercises remain eligible wherever their hardest work fits. Every workout
-bucket has at least 10 primary-owned choices that meaningfully cover at least
-half of its canonical leaves.
+bucket has at least 10 choices that meaningfully cover at least half of its
+canonical leaves for every supported modifier profile. Primary ownership is
+preferred after score/keep priority; truthful secondary associations remain
+eligible. Each primitive modifier also requires at least five normal-profile
+choices per bucket that it explicitly excludes, so enabling a modifier cannot
+silently erase the catalog's contrasting movement class. Every supported
+duration/profile combination must admit a distinct exercise for every scheduled
+group.
 
 The canonical leaves roll up explicitly into seven mass-ordered workout
 resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. Every workout schedules those
@@ -32,7 +38,7 @@ Every retained movement:
   the reviewed 20-second / 5-second change / 20-second protocol;
 - keeps all ground contact at the feet;
 - works in ordinary shoes or barefoot;
-- fits inside 3 m × 3 m;
+- fits inside 2 m × 2 m;
 - needs no wall, chair, floor work, prop, partner, or equipment;
 - avoids jumping, stomping, clapping, and vocalization.
 
@@ -69,9 +75,9 @@ There is no separate rest skip. During a normally reached rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the
 next workout by an exercise from the same active rolled-up group. A candidate
-must own the bucket through its primary assignment and train at least half of
-that bucket's canonical leaves. Flux then chooses the highest score, prefers the
-widest in-bucket coverage, and randomizes exact ties. Every workout uses one
+must train at least half of that bucket's canonical leaves. Flux then chooses
+the highest score, prefers primary ownership, prefers the widest in-bucket
+coverage, and randomizes exact ties. Every workout uses one
 distinct exercise per group.
 Progress, rest state, last-used resolution, and scores persist locally.
 

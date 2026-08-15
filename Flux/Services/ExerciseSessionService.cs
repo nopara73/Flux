@@ -11,9 +11,6 @@ public sealed class ExerciseSessionService
     private const int CurrentStateVersion = 7;
     private const string SelectionProfilePrefix = "p";
     private const char SelectionProfileSeparator = '|';
-    private const WorkoutModifiers SupportedWorkoutModifiers =
-        WorkoutModifiers.Insect;
-
     private static readonly IReadOnlyList<int> WorkoutMinutes =
         Array.AsReadOnly([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 
@@ -22,14 +19,9 @@ public sealed class ExerciseSessionService
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
             .ToDictionary(group => group.Id, StringComparer.Ordinal);
 
-    private static readonly int InsectProfileExerciseCount =
-        MassGroupingTaxonomy.GetResolution(30).Groups.Count;
-
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly IReadOnlyDictionary<int, Exercise> _exercisesById;
     private readonly Random _random;
-    private readonly bool _insectClassificationComplete;
-    private readonly bool _insectSelectionProfileReady;
 
     public ExerciseSessionService(IReadOnlyList<Exercise> exercises, Random? random = null)
     {
@@ -37,25 +29,10 @@ public sealed class ExerciseSessionService
         _exercises = exercises;
         _exercisesById = exercises.ToDictionary(exercise => exercise.Id);
         _random = random ?? Random.Shared;
-        _insectClassificationComplete = exercises.Count > 0 &&
-            exercises.All(exercise =>
-                exercise.InsectCompatibility !=
-                    ExerciseInsectCompatibility.Unreviewed);
-        _insectSelectionProfileReady = _insectClassificationComplete &&
-            exercises.Count(exercise =>
-                exercise.InsectCompatibility ==
-                    ExerciseInsectCompatibility.Compatible) >=
-                InsectProfileExerciseCount;
     }
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
         WorkoutMinutes;
-
-    public bool IsInsectClassificationComplete =>
-        _insectClassificationComplete;
-
-    public bool IsInsectSelectionProfileReady =>
-        _insectSelectionProfileReady;
 
     public void Initialize(WorkoutState state)
     {
@@ -153,21 +130,11 @@ public sealed class ExerciseSessionService
         state.CompletionAcknowledged = false;
         ClearPendingRest(state);
         ClearLegacyMigrationState(state);
-        if (UsesModifierSelectionProfile(modifiers) &&
-            !_insectSelectionProfileReady)
-        {
-            SeedNeutralModifierProfileFromBase(state);
-        }
         CarryKeptExercisesForward(
             state,
             previousWorkoutMinutes,
             previousWorkoutModifiers);
         RepairActiveLineup(state);
-        if (UsesModifierSelectionProfile(modifiers) &&
-            !_insectSelectionProfileReady)
-        {
-            SynchronizeNeutralModifierProfileToBase(state);
-        }
         SetActiveLongWorkoutAllocation(state);
     }
 
@@ -374,15 +341,23 @@ public sealed class ExerciseSessionService
             .ToHashSet();
         state.LastKeptExerciseIds.ExceptWith(rejectedExerciseIds);
         state.LastKeptExerciseIds.UnionWith(newlyKeptExerciseIds);
-        var usedExerciseIds = selectionGroups
+        var currentExerciseIds = selectionGroups
             .Where(group => !rejectedSelectionKeys.Contains(group.Id))
-            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
-                GetSelectionStorageKey(
-                    group.Id,
-                    state.ActiveWorkoutModifiers)))
-            .Where(exerciseId => exerciseId != 0)
-            .ToHashSet();
-
+            .Select(group => new
+            {
+                group.Id,
+                ExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers)),
+            })
+            .Where(entry => entry.ExerciseId != 0)
+            .ToDictionary(
+                entry => entry.Id,
+                entry => entry.ExerciseId,
+                StringComparer.Ordinal);
+        var excludedExerciseIdsByGroup = new Dictionary<string, IReadOnlySet<int>>(
+            StringComparer.Ordinal);
         foreach (WorkoutGroup group in selectionGroups.Where(group =>
                      rejectedSelectionKeys.Contains(group.Id)))
         {
@@ -390,6 +365,10 @@ public sealed class ExerciseSessionService
                 group.Id,
                 state.ActiveWorkoutModifiers);
             int currentExerciseId = state.SelectedExerciseIds[selectionStorageKey];
+            excludedExerciseIdsByGroup[group.Id] = new HashSet<int>
+            {
+                currentExerciseId,
+            };
             foreach (string savedGroupId in state.SelectedExerciseIds
                          .Where(entry =>
                              entry.Key != selectionStorageKey &&
@@ -399,115 +378,196 @@ public sealed class ExerciseSessionService
             {
                 state.SelectedExerciseIds.Remove(savedGroupId);
             }
-
-            var excludedExerciseIds = new HashSet<int>(usedExerciseIds)
-            {
-                currentExerciseId,
-            };
-            Exercise replacement = ChooseBestCandidate(
-                group,
-                excludedExerciseIds,
-                state.ActiveWorkoutModifiers);
-            state.SelectedExerciseIds[selectionStorageKey] = replacement.Id;
-            usedExerciseIds.Add(replacement.Id);
         }
 
-        if (UsesModifierSelectionProfile(state.ActiveWorkoutModifiers) &&
-            !_insectSelectionProfileReady)
-        {
-            SynchronizeNeutralModifierProfileToBase(state);
-        }
+        IReadOnlyDictionary<string, int> nextLineup = ChooseBestDistinctLineup(
+            state,
+            selectionGroups,
+            state.ActiveWorkoutModifiers,
+            state.LastKeptExerciseIds,
+            currentExerciseIds,
+            excludedExerciseIdsByGroup);
+        ApplyDistinctLineup(
+            state,
+            selectionGroups,
+            nextLineup,
+            clearChangedProgress: false);
 
         ResetToDurationSelection(state);
     }
 
-    private Exercise ChooseBestCandidate(
-        WorkoutGroup group,
-        IReadOnlySet<int> excludedExerciseIds,
-        WorkoutModifiers modifiers)
+    private IReadOnlyDictionary<string, int> ChooseBestDistinctLineup(
+        WorkoutState state,
+        IReadOnlyList<WorkoutGroup> groups,
+        WorkoutModifiers modifiers,
+        IReadOnlySet<int>? preferredExerciseIds = null,
+        IReadOnlyDictionary<string, int>? currentExerciseIds = null,
+        IReadOnlyDictionary<string, IReadOnlySet<int>>? excludedExerciseIdsByGroup = null,
+        IReadOnlyList<int>? preferredTieOrder = null,
+        bool allowSavedSelectionException = false)
     {
-        Exercise[] candidates = _exercises
-            .Where(exercise =>
-                IsSelectable(exercise, group, modifiers) &&
-                !excludedExerciseIds.Contains(exercise.Id))
-            .ToArray();
-
-        if (candidates.Length == 0)
+        if (groups.Count == 0)
         {
-            throw new InvalidOperationException(
-                $"No distinct primary-owned exercise eligible for the active workout profile " +
-                $"with at least " +
-                $"{WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage exists for " +
-                $"{group.DisplayName}.");
+            return new Dictionary<string, int>(StringComparer.Ordinal);
         }
 
-        int highestScore = candidates.Max(exercise => exercise.Score);
-        Exercise[] highestScoreBucket = candidates
-            .Where(exercise => exercise.Score == highestScore)
-            .ToArray();
+        preferredExerciseIds ??= new HashSet<int>();
+        currentExerciseIds ??= new Dictionary<string, int>(StringComparer.Ordinal);
+        excludedExerciseIdsByGroup ??=
+            new Dictionary<string, IReadOnlySet<int>>(StringComparer.Ordinal);
 
-        (Exercise Exercise, int Coverage)[] coveredCandidates = highestScoreBucket
-            .Select(exercise => (
-                exercise,
-                WorkoutCoveragePolicy.GetCanonicalCoverage(exercise, group)))
-            .ToArray();
-        int highestCoverage = coveredCandidates.Max(candidate => candidate.Coverage);
-        Exercise[] broadestCoverageBucket = coveredCandidates
-            .Where(candidate => candidate.Coverage == highestCoverage)
-            .Select(candidate => candidate.Exercise)
-            .ToArray();
+        bool IsAllowed(Exercise exercise, WorkoutGroup group)
+        {
+            if (excludedExerciseIdsByGroup.TryGetValue(
+                    group.Id,
+                    out IReadOnlySet<int>? excludedExerciseIds) &&
+                excludedExerciseIds.Contains(exercise.Id))
+            {
+                return false;
+            }
 
-        return broadestCoverageBucket[_random.Next(broadestCoverageBucket.Length)];
+            if (IsSelectable(exercise, group, modifiers))
+            {
+                return true;
+            }
+
+            return allowSavedSelectionException &&
+                currentExerciseIds.GetValueOrDefault(group.Id) == exercise.Id &&
+                IsSavedSelectionValid(state, exercise, group, modifiers);
+        }
+
+        var candidates = _exercises
+            .Where(exercise => groups.Any(group => IsAllowed(exercise, group)))
+            .ToList();
+        Shuffle(candidates);
+        if (preferredTieOrder is not null)
+        {
+            Dictionary<int, int> tieOrder = preferredTieOrder
+                .Select((exerciseId, index) => (exerciseId, index))
+                .GroupBy(entry => entry.exerciseId)
+                .ToDictionary(group => group.Key, group => group.First().index);
+            candidates = candidates
+                .OrderBy(exercise => tieOrder.GetValueOrDefault(
+                    exercise.Id,
+                    int.MaxValue))
+                .ToList();
+        }
+
+        if (candidates.Count < groups.Count)
+        {
+            throw CreateDistinctLineupException(groups, candidates.Count);
+        }
+
+        int[] orderedScores = candidates
+            .Select(exercise => exercise.Score)
+            .Distinct()
+            .Order()
+            .ToArray();
+        Dictionary<int, int> scoreRanks = orderedScores
+            .Select((score, rank) => (score, rank))
+            .ToDictionary(entry => entry.score, entry => entry.rank);
+        int maximumCoverage = groups.Max(group => group.CanonicalGroups.Count);
+        long totalCoverageRange = checked((long)groups.Count * maximumCoverage);
+        long primaryWeight = checked(totalCoverageRange + 1L);
+        long totalPrimaryAndCoverageRange = checked(
+            groups.Count * (primaryWeight + maximumCoverage));
+        long scoreWeight = checked(totalPrimaryAndCoverageRange + 1L);
+        long totalScoreRange = checked(
+            groups.Count *
+            ((long)(orderedScores.Length - 1) * scoreWeight +
+             primaryWeight +
+             maximumCoverage));
+        long currentSelectionWeight = checked(totalScoreRange + 1L);
+        long totalCurrentSelectionRange = checked(
+            groups.Count * currentSelectionWeight + totalScoreRange);
+        long preferredExerciseWeight = checked(totalCurrentSelectionRange + 1L);
+
+        var allowed = new bool[groups.Count, candidates.Count];
+        var utilities = new long[groups.Count, candidates.Count];
+        long maximumUtility = 0;
+        for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+        {
+            WorkoutGroup group = groups[groupIndex];
+            for (int exerciseIndex = 0;
+                 exerciseIndex < candidates.Count;
+                 exerciseIndex++)
+            {
+                Exercise exercise = candidates[exerciseIndex];
+                if (!IsAllowed(exercise, group))
+                {
+                    continue;
+                }
+
+                allowed[groupIndex, exerciseIndex] = true;
+                long utility = checked(
+                    (preferredExerciseIds.Contains(exercise.Id)
+                        ? preferredExerciseWeight
+                        : 0L) +
+                    (currentExerciseIds.GetValueOrDefault(group.Id) == exercise.Id
+                        ? currentSelectionWeight
+                        : 0L) +
+                    (long)scoreRanks[exercise.Score] * scoreWeight +
+                    (WorkoutCoveragePolicy.IsPrimaryForGroup(exercise, group)
+                        ? primaryWeight
+                        : 0L) +
+                    WorkoutCoveragePolicy.GetCanonicalCoverage(exercise, group));
+                utilities[groupIndex, exerciseIndex] = utility;
+                maximumUtility = Math.Max(maximumUtility, utility);
+            }
+        }
+
+        int[] assignedCandidateIndexes = SolveMaximumWeightAssignment(
+            utilities,
+            allowed,
+            maximumUtility);
+        var result = new Dictionary<string, int>(
+            groups.Count,
+            StringComparer.Ordinal);
+        for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+        {
+            int candidateIndex = assignedCandidateIndexes[groupIndex];
+            if (candidateIndex < 0 ||
+                !allowed[groupIndex, candidateIndex])
+            {
+                throw CreateDistinctLineupException(groups, candidates.Count);
+            }
+
+            result[groups[groupIndex].Id] = candidates[candidateIndex].Id;
+        }
+
+        return result;
     }
 
     private void RepairActiveLineup(WorkoutState state)
     {
-        var usedExerciseIds = new HashSet<int>();
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
         IReadOnlyList<WorkoutGroup> activeRounds = GetActiveGroups(state);
-
-        foreach (WorkoutGroup group in GetSelectionGroups(state))
-        {
-            string selectionStorageKey = GetSelectionStorageKey(
-                group.Id,
-                state.ActiveWorkoutModifiers);
-            bool hasValidSelection = state.SelectedExerciseIds.TryGetValue(
-                    selectionStorageKey,
-                    out int selectedExerciseId) &&
-                !usedExerciseIds.Contains(selectedExerciseId) &&
-                _exercisesById.TryGetValue(selectedExerciseId, out Exercise? selected) &&
-                IsSavedSelectionValid(
-                    state,
-                    selected,
-                    group,
-                    state.ActiveWorkoutModifiers);
-
-            if (!hasValidSelection)
+        Dictionary<string, int> currentExerciseIds = selectionGroups
+            .Select(group => new
             {
-                var excludedExerciseIds = new HashSet<int>(usedExerciseIds);
-                if (selectedExerciseId != 0)
-                {
-                    excludedExerciseIds.Add(selectedExerciseId);
-                }
-
-                Exercise replacement = ChooseBestCandidate(
-                    group,
-                    excludedExerciseIds,
-                    state.ActiveWorkoutModifiers);
-                state.SelectedExerciseIds[selectionStorageKey] = replacement.Id;
-                foreach (WorkoutGroup round in activeRounds.Where(round =>
-                             round.SelectionKey == group.Id))
-                {
-                    state.Outcomes.Remove(round.Id);
-                }
-                if (PendingRestMatchesSelectionGroup(state, group.Id))
-                {
-                    ClearPendingRest(state);
-                }
-                selectedExerciseId = replacement.Id;
-            }
-
-            usedExerciseIds.Add(selectedExerciseId);
-        }
+                group.Id,
+                ExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers)),
+            })
+            .Where(entry => entry.ExerciseId != 0)
+            .ToDictionary(
+                entry => entry.Id,
+                entry => entry.ExerciseId,
+                StringComparer.Ordinal);
+        IReadOnlyDictionary<string, int> repairedLineup = ChooseBestDistinctLineup(
+            state,
+            selectionGroups,
+            state.ActiveWorkoutModifiers,
+            currentExerciseIds: currentExerciseIds,
+            allowSavedSelectionException: true);
+        ApplyDistinctLineup(
+            state,
+            selectionGroups,
+            repairedLineup,
+            clearChangedProgress: true,
+            activeRounds);
     }
 
     private void CarryKeptExercisesForward(
@@ -520,9 +580,8 @@ public sealed class ExerciseSessionService
             return;
         }
 
-        IReadOnlyList<WorkoutGroup> targetGroups = GetSelectionGroups(state);
-        var assignedTargetGroupIds = new HashSet<string>(StringComparer.Ordinal);
-        IEnumerable<int> orderedKeptExerciseIds = GetBaseResolution(
+        WorkoutGroup[] targetGroups = GetSelectionGroups(state).ToArray();
+        int[] orderedKeptExerciseIds = GetBaseResolution(
                 previousWorkoutMinutes)
             .Groups
             .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
@@ -531,31 +590,207 @@ public sealed class ExerciseSessionService
                     previousWorkoutModifiers)))
             .Concat(state.LastKeptExerciseIds.Order())
             .Where(state.LastKeptExerciseIds.Contains)
-            .Distinct();
+            .Distinct()
+            .ToArray();
+        Dictionary<string, int> currentExerciseIds = targetGroups
+            .Select(group => new
+            {
+                group.Id,
+                ExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers)),
+            })
+            .Where(entry => entry.ExerciseId != 0)
+            .ToDictionary(
+                entry => entry.Id,
+                entry => entry.ExerciseId,
+                StringComparer.Ordinal);
+        IReadOnlyDictionary<string, int> carriedLineup = ChooseBestDistinctLineup(
+            state,
+            targetGroups,
+            state.ActiveWorkoutModifiers,
+            state.LastKeptExerciseIds,
+            currentExerciseIds,
+            preferredTieOrder: orderedKeptExerciseIds);
+        ApplyDistinctLineup(
+            state,
+            targetGroups,
+            carriedLineup,
+            clearChangedProgress: false);
+    }
 
-        foreach (int exerciseId in orderedKeptExerciseIds)
+    private void ApplyDistinctLineup(
+        WorkoutState state,
+        IReadOnlyList<WorkoutGroup> groups,
+        IReadOnlyDictionary<string, int> lineup,
+        bool clearChangedProgress,
+        IReadOnlyList<WorkoutGroup>? activeRounds = null)
+    {
+        activeRounds ??= GetActiveGroups(state);
+        foreach (WorkoutGroup group in groups)
         {
-            if (!_exercisesById.TryGetValue(exerciseId, out Exercise? exercise))
+            string selectionStorageKey = GetSelectionStorageKey(
+                group.Id,
+                state.ActiveWorkoutModifiers);
+            int previousExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
+                selectionStorageKey);
+            int nextExerciseId = lineup[group.Id];
+            state.SelectedExerciseIds[selectionStorageKey] = nextExerciseId;
+            if (!clearChangedProgress || previousExerciseId == nextExerciseId)
             {
                 continue;
             }
 
-            WorkoutGroup? targetGroup = targetGroups.FirstOrDefault(group =>
-                !assignedTargetGroupIds.Contains(group.Id) &&
-                IsSelectable(
-                    exercise,
-                    group,
-                    state.ActiveWorkoutModifiers));
-            if (targetGroup is null)
+            foreach (WorkoutGroup round in activeRounds.Where(round =>
+                         round.SelectionKey == group.Id))
             {
-                continue;
+                state.Outcomes.Remove(round.Id);
             }
 
-            assignedTargetGroupIds.Add(targetGroup.Id);
-            state.SelectedExerciseIds[GetSelectionStorageKey(
-                targetGroup.Id,
-                state.ActiveWorkoutModifiers)] = exerciseId;
+            if (PendingRestMatchesSelectionGroup(state, group.Id))
+            {
+                ClearPendingRest(state);
+            }
         }
+    }
+
+    private InvalidOperationException CreateDistinctLineupException(
+        IReadOnlyList<WorkoutGroup> groups,
+        int candidateCount)
+    {
+        return new InvalidOperationException(
+            $"No distinct exercise lineup exists for the active workout profile " +
+            $"across {groups.Count} groups and {candidateCount} eligible exercises " +
+            $"with at least {WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage.");
+    }
+
+    private void Shuffle<T>(IList<T> items)
+    {
+        for (int index = items.Count - 1; index > 0; index--)
+        {
+            int swapIndex = _random.Next(index + 1);
+            (items[index], items[swapIndex]) = (items[swapIndex], items[index]);
+        }
+    }
+
+    private static int[] SolveMaximumWeightAssignment(
+        long[,] utilities,
+        bool[,] allowed,
+        long maximumUtility)
+    {
+        int groupCount = utilities.GetLength(0);
+        int candidateCount = utilities.GetLength(1);
+        if (candidateCount < groupCount)
+        {
+            return Enumerable.Repeat(-1, groupCount).ToArray();
+        }
+
+        long invalidCost = checked(
+            (maximumUtility + 1L) * (groupCount + 1L));
+        var costs = new long[groupCount, candidateCount];
+        for (int groupIndex = 0; groupIndex < groupCount; groupIndex++)
+        {
+            for (int candidateIndex = 0;
+                 candidateIndex < candidateCount;
+                 candidateIndex++)
+            {
+                costs[groupIndex, candidateIndex] =
+                    allowed[groupIndex, candidateIndex]
+                        ? maximumUtility - utilities[groupIndex, candidateIndex]
+                        : invalidCost;
+            }
+        }
+
+        var rowPotential = new long[groupCount + 1];
+        var columnPotential = new long[candidateCount + 1];
+        var matchedRowByColumn = new int[candidateCount + 1];
+        var previousColumn = new int[candidateCount + 1];
+        const long infinity = long.MaxValue / 4;
+
+        for (int row = 1; row <= groupCount; row++)
+        {
+            matchedRowByColumn[0] = row;
+            int column = 0;
+            var minimumReducedCost = Enumerable
+                .Repeat(infinity, candidateCount + 1)
+                .ToArray();
+            var visitedColumns = new bool[candidateCount + 1];
+            do
+            {
+                visitedColumns[column] = true;
+                int currentRow = matchedRowByColumn[column];
+                long delta = infinity;
+                int nextColumn = 0;
+                for (int candidateColumn = 1;
+                     candidateColumn <= candidateCount;
+                     candidateColumn++)
+                {
+                    if (visitedColumns[candidateColumn])
+                    {
+                        continue;
+                    }
+
+                    long reducedCost = costs[currentRow - 1, candidateColumn - 1] -
+                        rowPotential[currentRow] -
+                        columnPotential[candidateColumn];
+                    if (reducedCost < minimumReducedCost[candidateColumn])
+                    {
+                        minimumReducedCost[candidateColumn] = reducedCost;
+                        previousColumn[candidateColumn] = column;
+                    }
+
+                    if (minimumReducedCost[candidateColumn] < delta)
+                    {
+                        delta = minimumReducedCost[candidateColumn];
+                        nextColumn = candidateColumn;
+                    }
+                }
+
+                if (delta == infinity)
+                {
+                    return Enumerable.Repeat(-1, groupCount).ToArray();
+                }
+
+                for (int candidateColumn = 0;
+                     candidateColumn <= candidateCount;
+                     candidateColumn++)
+                {
+                    if (visitedColumns[candidateColumn])
+                    {
+                        rowPotential[matchedRowByColumn[candidateColumn]] += delta;
+                        columnPotential[candidateColumn] -= delta;
+                    }
+                    else
+                    {
+                        minimumReducedCost[candidateColumn] -= delta;
+                    }
+                }
+
+                column = nextColumn;
+            }
+            while (matchedRowByColumn[column] != 0);
+
+            do
+            {
+                int priorColumn = previousColumn[column];
+                matchedRowByColumn[column] = matchedRowByColumn[priorColumn];
+                column = priorColumn;
+            }
+            while (column != 0);
+        }
+
+        var assignment = Enumerable.Repeat(-1, groupCount).ToArray();
+        for (int column = 1; column <= candidateCount; column++)
+        {
+            int row = matchedRowByColumn[column];
+            if (row != 0)
+            {
+                assignment[row - 1] = column - 1;
+            }
+        }
+
+        return assignment;
     }
 
     private bool IsSavedSelectionValid(
@@ -575,57 +810,14 @@ public sealed class ExerciseSessionService
         WorkoutGroup group,
         WorkoutModifiers modifiers)
     {
-        return IsInsectFilteringActive(modifiers)
-            ? exercise.InsectCompatibility ==
-                ExerciseInsectCompatibility.Compatible
-            : WorkoutCoveragePolicy.IsSelectable(exercise, group);
+        return WorkoutModifierPolicy.IsSelectable(exercise, group, modifiers);
     }
 
     private bool IsCompatibleWithModifiers(
         Exercise exercise,
         WorkoutModifiers modifiers)
     {
-        return !IsInsectFilteringActive(modifiers) ||
-            exercise.InsectCompatibility ==
-                ExerciseInsectCompatibility.Compatible;
-    }
-
-    private void SeedNeutralModifierProfileFromBase(WorkoutState state)
-    {
-        foreach (WorkoutGroup group in GetSelectionGroups(state))
-        {
-            string profileKey = GetSelectionStorageKey(
-                group.Id,
-                state.ActiveWorkoutModifiers);
-            if (state.SelectedExerciseIds.TryGetValue(
-                    group.Id,
-                    out int exerciseId) &&
-                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
-                WorkoutCoveragePolicy.IsSelectable(exercise, group))
-            {
-                state.SelectedExerciseIds[profileKey] = exerciseId;
-            }
-            else
-            {
-                state.SelectedExerciseIds.Remove(profileKey);
-            }
-        }
-    }
-
-    private void SynchronizeNeutralModifierProfileToBase(WorkoutState state)
-    {
-        foreach (WorkoutGroup group in GetSelectionGroups(state))
-        {
-            string profileKey = GetSelectionStorageKey(
-                group.Id,
-                state.ActiveWorkoutModifiers);
-            if (state.SelectedExerciseIds.TryGetValue(
-                    profileKey,
-                    out int exerciseId))
-            {
-                state.SelectedExerciseIds[group.Id] = exerciseId;
-            }
-        }
+        return WorkoutModifierPolicy.IsCompatible(exercise, modifiers);
     }
 
     private bool PendingRestMatchesSelectionGroup(
@@ -830,10 +1022,10 @@ public sealed class ExerciseSessionService
                 selectionStorageKey,
                 out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
-            (IsInsectFilteringActive(state.ActiveWorkoutModifiers)
-                ? exercise.InsectCompatibility !=
-                    ExerciseInsectCompatibility.Compatible
-                : !IsAssignedToGroup(exercise, pendingGroup)))
+            !WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                state.ActiveWorkoutModifiers) ||
+            !IsAssignedToGroup(exercise, pendingGroup))
         {
             return null;
         }
@@ -890,18 +1082,7 @@ public sealed class ExerciseSessionService
     public static WorkoutModifiers NormalizeWorkoutModifiers(
         WorkoutModifiers modifiers)
     {
-        return modifiers & SupportedWorkoutModifiers;
-    }
-
-    private static bool UsesModifierSelectionProfile(WorkoutModifiers modifiers)
-    {
-        return NormalizeWorkoutModifiers(modifiers) != WorkoutModifiers.None;
-    }
-
-    private bool IsInsectFilteringActive(WorkoutModifiers modifiers)
-    {
-        return _insectSelectionProfileReady &&
-            (NormalizeWorkoutModifiers(modifiers) & WorkoutModifiers.Insect) != 0;
+        return WorkoutModifierPolicy.Normalize(modifiers);
     }
 
     private string GetSelectionStorageKey(

@@ -4,15 +4,16 @@ Flux contains 328 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
-demand; assignment is a practical workout index, not an anatomical claim.
+demand. Primary ownership is preferred when score and keep history tie, while
+meaningful secondary associations remain real scheduling eligibility.
 
 The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
 and 30-group resolutions. Every resolution covers every leaf exactly once and
 schedules its declared mass hierarchy from smallest to largest. A selectable
-exercise must own its bucket through its primary assignment and train at least
-half of that bucket's canonical leaves. Every bucket at every supported
-resolution has at least 10 such choices; the 30-group resolution therefore also
-maintains at least 10 primary representatives in every canonical leaf.
+exercise must train at least half of that bucket's canonical leaves. Every
+bucket at every supported resolution and modifier profile has at least 10 such
+choices. Primary ownership is a preference after score/keep priority, never a
+reason to discard a truthful secondary association or admit a weak quota-filler.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
@@ -26,7 +27,7 @@ Every entry must:
   to inflate the count;
 - keep all ground contact at the feet;
 - remain practical in ordinary shoes or barefoot;
-- fit inside a 3 m × 3 m space;
+- fit inside a 2 m × 2 m space;
 - require no wall, chair, floor exercise, prop, partner, or equipment;
 - avoid jumping, stomping, clapping, vocalization, and other
   neighbor-disturbing actions;

@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 40;
+    private const int DatabaseVersion = 41;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -71,7 +71,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -665,11 +665,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasUndersizedWorkoutGroup = MassGroupingTaxonomy.SupportedMinutes
-            .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
-            .Any(group => exercises.Count(exercise =>
-                    WorkoutCoveragePolicy.IsSelectable(exercise, group)) <
-                WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup);
+        bool hasUndersizedWorkoutProfile =
+            WorkoutModifierPolicy.FindCoverageDeficiencies(exercises).Count > 0;
+        bool hasInfeasibleWorkoutProfileLineup =
+            WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).Count > 0;
+        bool hasUndersizedModifierExclusionPool =
+            WorkoutModifierPolicy.FindModifierExclusionDeficiencies(exercises).Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -678,7 +679,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             exercise.SecondaryCanonicalGroups.Any(group => !Enum.IsDefined(group)) ||
             !exercise.OnlyFeetTouchGround ||
             !exercise.ShoeAgnostic ||
-            exercise.MaxSpaceMeters is <= 0 or > 3 ||
+            exercise.MaxSpaceMeters is <= 0 or > 2 ||
             exercise.Equipment != "None" ||
             !exercise.Silent ||
             string.IsNullOrWhiteSpace(exercise.Practice) ||
@@ -721,7 +722,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                             StringComparison.Ordinal)));
         }
 
-        if (hasUndersizedWorkoutGroup ||
+        if (hasUndersizedWorkoutProfile ||
+            hasInfeasibleWorkoutProfileLineup ||
+            hasUndersizedModifierExclusionPool ||
+            !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||

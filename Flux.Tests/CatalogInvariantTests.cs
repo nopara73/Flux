@@ -33,40 +33,55 @@ public sealed class CatalogInvariantTests
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Video).Distinct().Count());
         Assert.DoesNotContain(exercises, exercise =>
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
-        Assert.Equal(
-            147,
-            exercises.Count(exercise =>
-                exercise.InsectCompatibility == ExerciseInsectCompatibility.Compatible));
-        Assert.Equal(
-            186,
-            exercises.Count(exercise =>
-                exercise.InsectCompatibility == ExerciseInsectCompatibility.Incompatible));
+        Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises));
         Assert.All(
             exercises.Where(exercise => exercise.Mode == ExerciseMode.Hold),
             exercise => Assert.Equal(
                 ExerciseInsectCompatibility.Incompatible,
                 exercise.InsectCompatibility));
-        var insectService = new ExerciseSessionService(exercises, new Random(1));
-        Assert.True(insectService.IsInsectClassificationComplete);
-        Assert.True(insectService.IsInsectSelectionProfileReady);
-        foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+        WorkoutProfileCoverageDeficiency[] profileDeficiencies =
+            WorkoutModifierPolicy.FindCoverageDeficiencies(exercises).ToArray();
+        Assert.True(
+            profileDeficiencies.Length == 0,
+            string.Join(Environment.NewLine, profileDeficiencies.Select(deficiency =>
+                $"{deficiency.GroupId} + {deficiency.Profile}: " +
+                $"{deficiency.SelectableExerciseCount}/" +
+                $"{WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup}")));
+        WorkoutProfileLineupDeficiency[] lineupDeficiencies =
+            WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
+        Assert.True(
+            lineupDeficiencies.Length == 0,
+            string.Join(Environment.NewLine, lineupDeficiencies.Select(deficiency =>
+                $"{deficiency.Minutes} minutes + {deficiency.Profile}: " +
+                $"{deficiency.MaximumDistinctExerciseCount}/" +
+                $"{deficiency.RequiredDistinctExerciseCount} distinct exercises")));
+        WorkoutModifierExclusionDeficiency[] exclusionDeficiencies =
+            WorkoutModifierPolicy.FindModifierExclusionDeficiencies(exercises).ToArray();
+        Assert.True(
+            exclusionDeficiencies.Length == 0,
+            string.Join(Environment.NewLine, exclusionDeficiencies.Select(deficiency =>
+                $"{deficiency.GroupId} excluding {deficiency.Modifier}: " +
+                $"{deficiency.ExcludedExerciseCount}/" +
+                $"{deficiency.RequiredExcludedExerciseCount}")));
+        var profileService = new ExerciseSessionService(exercises, new Random(1));
+        foreach (WorkoutModifiers profile in WorkoutModifierPolicy.SupportedProfiles)
         {
-            var insectState = new WorkoutState();
-            insectService.StartWorkout(
-                insectState,
-                minutes,
-                WorkoutModifiers.Insect);
-            Assert.All(insectService.GetActiveGroups(insectState), group =>
-                Assert.Equal(
-                    ExerciseInsectCompatibility.Compatible,
-                    insectService.GetSelectedExercise(insectState, group)
-                        .InsectCompatibility));
+            foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+            {
+                var profileState = new WorkoutState();
+                profileService.StartWorkout(profileState, minutes, profile);
+                Assert.All(profileService.GetActiveGroups(profileState), group =>
+                    Assert.True(WorkoutModifierPolicy.IsSelectable(
+                        profileService.GetSelectedExercise(profileState, group),
+                        group,
+                        profile)));
+            }
         }
         Exercise[] breathingExercises = exercises
             .Where(exercise =>
                 exercise.PrimaryCanonicalGroup == CanonicalMuscleGroup.BreathingMuscles)
             .ToArray();
-        Assert.Equal(10, breathingExercises.Length);
+        Assert.Equal(11, breathingExercises.Length);
         Assert.All(breathingExercises, exercise =>
             Assert.Matches("(?i)\\b(inhale|exhale|breath)", exercise.Name));
         Exercise overheadBreathingFlow = exercises.Single(exercise => exercise.Id == 395);
@@ -85,7 +100,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .ToArray();
-        Assert.Equal(110, timedSideExercises.Length);
+        Assert.Equal(119, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] timedDirectionExercises = exercises
@@ -176,6 +191,18 @@ public sealed class CatalogInvariantTests
             [326] = ExerciseSideSequence.ScreenRightThenLeft,
             [338] = ExerciseSideSequence.ScreenLeftThenRight,
             [397] = ExerciseSideSequence.Continuous,
+            [407] = ExerciseSideSequence.Continuous,
+            [408] = ExerciseSideSequence.ScreenRightThenLeft,
+            [410] = ExerciseSideSequence.ScreenLeftThenRight,
+            [411] = ExerciseSideSequence.ScreenLeftThenRight,
+            [412] = ExerciseSideSequence.ScreenLeftThenRight,
+            [413] = ExerciseSideSequence.ScreenRightThenLeft,
+            [414] = ExerciseSideSequence.ScreenRightThenLeft,
+            [415] = ExerciseSideSequence.ScreenRightThenLeft,
+            [416] = ExerciseSideSequence.ScreenRightThenLeft,
+            [417] = ExerciseSideSequence.Continuous,
+            [418] = ExerciseSideSequence.Continuous,
+            [419] = ExerciseSideSequence.ScreenLeftThenRight,
             [482] = ExerciseSideSequence.Continuous,
             [483] = ExerciseSideSequence.Continuous,
             [501] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -402,7 +429,7 @@ public sealed class CatalogInvariantTests
                 result.SelectableCount <
                     WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup)
             .Select(result =>
-                $"{result.Group.Id}: {result.SelectableCount} primary-owned exercises " +
+                $"{result.Group.Id}: {result.SelectableCount} exercises " +
                 $"meeting the {WorkoutCoveragePolicy.MinimumCoveragePercent}% " +
                 "coverage requirement")
             .ToArray();
@@ -424,7 +451,7 @@ public sealed class CatalogInvariantTests
                 Assert.True(Enum.IsDefined(group)));
             Assert.True(exercise.OnlyFeetTouchGround);
             Assert.True(exercise.ShoeAgnostic);
-            Assert.InRange(exercise.MaxSpaceMeters, 1, 3);
+            Assert.InRange(exercise.MaxSpaceMeters, 1, 2);
             Assert.Equal("None", exercise.Equipment);
             Assert.True(exercise.Silent);
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));

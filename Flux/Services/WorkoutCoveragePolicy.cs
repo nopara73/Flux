@@ -36,8 +36,14 @@ public static class WorkoutCoveragePolicy
         ArgumentNullException.ThrowIfNull(exercise);
         ArgumentNullException.ThrowIfNull(group);
 
-        return group.CanonicalGroups.Contains(exercise.PrimaryCanonicalGroup) &&
-            GetCanonicalCoverage(exercise, group) >=
-                GetRequiredCanonicalCoverage(group);
+        return GetCanonicalCoverage(exercise, group) >=
+            GetRequiredCanonicalCoverage(group);
+    }
+
+    public static bool IsPrimaryForGroup(Exercise exercise, WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+        ArgumentNullException.ThrowIfNull(group);
+        return group.CanonicalGroups.Contains(exercise.PrimaryCanonicalGroup);
     }
 }

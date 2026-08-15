@@ -2762,7 +2762,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             score = 0
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
-            maxSpaceMeters = 3
+            maxSpaceMeters = 2
             equipment = 'None'
             silent = $true
         })
@@ -3040,7 +3040,7 @@ $constraintViolations = $records | Where-Object {
     -not $_['onlyFeetTouchGround'] -or
     -not $_['shoeAgnostic'] -or
     $_['maxSpaceMeters'] -le 0 -or
-    $_['maxSpaceMeters'] -gt 3 -or
+    $_['maxSpaceMeters'] -gt 2 -or
     $_['equipment'] -ne 'None' -or
     -not $_['silent'] -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or

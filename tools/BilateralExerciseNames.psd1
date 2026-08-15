@@ -278,8 +278,6 @@
     327 = 'First-Position Standing Row'
 
     # HEAD: remove single-axis diagonal and static one-direction drills.
-    415 = 'Head Turn-and-Nod Sequence'
-    416 = 'Four-Direction Head Tilt Flow'
     421 = 'Neck Flexion-Extension Flow'
     424 = 'Neck Side-Bend Flow'
     425 = 'Chin-Tuck Hold'

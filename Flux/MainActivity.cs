@@ -1161,8 +1161,10 @@ public class MainActivity : Activity
         bool userInitiated = false)
     {
         _selectedWorkoutModifiers = enabled
-            ? WorkoutModifiers.Insect
-            : WorkoutModifiers.None;
+            ? _selectedWorkoutModifiers | WorkoutModifiers.Insect
+            : _selectedWorkoutModifiers & ~WorkoutModifiers.Insect;
+        _selectedWorkoutModifiers =
+            WorkoutModifierPolicy.Normalize(_selectedWorkoutModifiers);
         _insectModifierButton.Checked = enabled;
         _insectModifierButton.ContentDescription =
             GetString(Resource.String.insect_modifier_description);

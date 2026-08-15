@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 22;
+    public const int CurrentCatalogRevision = 23;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -614,7 +614,8 @@ public static class CatalogMigrationRules
         240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 265, 266, 267, 268, 269,
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
         289, 291, 292, 293, 294, 295, 296, 301, 314, 321, 326, 327, 329, 338, 367, 390, 391,
-        392, 393, 394, 395, 396, 397, 422, 423, 425, 467, 474, 475, 477, 481, 482, 483,
+        392, 393, 394, 395, 396, 397, 407, 408, 410, 411, 412, 413, 414, 415, 416, 417,
+        418, 419, 422, 423, 425, 467, 474, 475, 477, 481, 482, 483,
         490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
         509, 510, 512, 513, 516, 572, 573, 576, 577, 591, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
@@ -663,6 +664,10 @@ public static class CatalogMigrationRules
                     117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
                     263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
                 },
+                [23] = new HashSet<int>
+                {
+                    407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -703,6 +708,10 @@ public static class CatalogMigrationRules
                 {
                     117, 135, 184, 186, 201, 211, 213, 229, 231, 234, 256, 257,
                     263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
+                },
+                [23] = new HashSet<int>
+                {
+                    407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
                 },
             };
 

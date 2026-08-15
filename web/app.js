@@ -3,11 +3,15 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
+  findWorkoutModifierExclusionDeficiencies,
+  findWorkoutProfileCoverageDeficiencies,
+  findWorkoutProfileLineupDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
+  isModifierMetadataComplete,
   parseStoredState,
   usesTimedPair,
 } from "./workout.js";
@@ -97,6 +101,18 @@ async function bootstrap() {
       throw new Error(`Catalog request failed with ${response.status}.`);
     }
     const exercises = await response.json();
+    const coverageDeficiencies =
+      findWorkoutProfileCoverageDeficiencies(exercises);
+    const lineupDeficiencies =
+      findWorkoutProfileLineupDeficiencies(exercises);
+    const exclusionDeficiencies =
+      findWorkoutModifierExclusionDeficiencies(exercises);
+    if (!isModifierMetadataComplete(exercises) ||
+        coverageDeficiencies.length > 0 ||
+        lineupDeficiencies.length > 0 ||
+        exclusionDeficiencies.length > 0) {
+      throw new Error("Catalog does not satisfy workout modifier coverage.");
+    }
     session = new WorkoutSession(exercises, loadState());
     session.initialize();
     persistState();

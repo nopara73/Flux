@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(198, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(210, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -856,6 +856,17 @@ public sealed class CatalogMigrationRulesTests
                 263, 265, 266, 267, 269, 270, 289, 301, 572, 636, 677, 745,
             },
             CatalogMigrationRules.ScoreInvalidationsByRevision[22]);
+    }
+
+    [Fact]
+    public void ModifierCoverageRevisionResetsEveryNewReplacementScore()
+    {
+        Assert.Equal(
+            new HashSet<int>
+            {
+                407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
+            },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[23]);
     }
 
     [Theory]
