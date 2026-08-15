@@ -1,6 +1,7 @@
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
+export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const CURRENT_CATALOG_REVISION = 22;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
@@ -469,6 +470,10 @@ export function getMovementDurationMs(group) {
   return group?.usesFullSideTiming ? FULL_SIDE_MOVEMENT_DURATION_MS : MOVEMENT_DURATION_MS;
 }
 
+export function getMovementCountdownDurationMs(group) {
+  return getMovementDurationMs(group) + PREPARATION_DURATION_MS;
+}
+
 export function getMovementPhaseState(
   remainingMilliseconds,
   timedPair,
@@ -478,14 +483,25 @@ export function getMovementPhaseState(
     return { phase: "Complete", secondsRemaining: 0, segmentDurationSeconds: 0, isExercise: false };
   }
 
-  const totalDuration = fullSideTiming
+  const movementDuration = fullSideTiming
     ? FULL_SIDE_MOVEMENT_DURATION_MS
     : MOVEMENT_DURATION_MS;
+  const totalDuration = movementDuration + PREPARATION_DURATION_MS;
   const bounded = Math.min(remainingMilliseconds, totalDuration);
+  if (bounded > movementDuration) {
+    return {
+      phase: "Preparation",
+      secondsRemaining: Math.ceil((bounded - movementDuration) / 1000),
+      segmentDurationSeconds: PREPARATION_DURATION_MS / 1000,
+      isExercise: false,
+    };
+  }
+
+  const boundedMovement = Math.min(bounded, movementDuration);
   if (!timedPair) {
     return {
       phase: "Continuous",
-      secondsRemaining: Math.ceil(bounded / 1000),
+      secondsRemaining: Math.ceil(boundedMovement / 1000),
       segmentDurationSeconds: 45,
       isExercise: true,
     };
@@ -495,19 +511,19 @@ export function getMovementPhaseState(
   const changeDuration = fullSideTiming ? 15_000 : 5_000;
   const firstSideEnd = sideDuration + changeDuration;
 
-  if (bounded > firstSideEnd) {
+  if (boundedMovement > firstSideEnd) {
     return {
       phase: "FirstSide",
-      secondsRemaining: Math.ceil((bounded - firstSideEnd) / 1000),
+      secondsRemaining: Math.ceil((boundedMovement - firstSideEnd) / 1000),
       segmentDurationSeconds: sideDuration / 1000,
       isExercise: true,
     };
   }
 
-  if (bounded > sideDuration) {
+  if (boundedMovement > sideDuration) {
     return {
       phase: "ChangeSides",
-      secondsRemaining: Math.ceil((bounded - sideDuration) / 1000),
+      secondsRemaining: Math.ceil((boundedMovement - sideDuration) / 1000),
       segmentDurationSeconds: changeDuration / 1000,
       isExercise: false,
     };
@@ -515,7 +531,7 @@ export function getMovementPhaseState(
 
   return {
     phase: "SecondSide",
-    secondsRemaining: Math.ceil(bounded / 1000),
+    secondsRemaining: Math.ceil(boundedMovement / 1000),
     segmentDurationSeconds: sideDuration / 1000,
     isExercise: true,
   };

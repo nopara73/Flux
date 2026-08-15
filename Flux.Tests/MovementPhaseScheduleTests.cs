@@ -5,6 +5,38 @@ namespace Flux.Tests;
 public sealed class MovementPhaseScheduleTests
 {
     [Theory]
+    [InlineData(50_000, false, false, 5)]
+    [InlineData(49_999, false, false, 5)]
+    [InlineData(45_001, false, false, 1)]
+    [InlineData(50_000, true, false, 5)]
+    [InlineData(45_001, true, false, 1)]
+    [InlineData(110_000, true, true, 5)]
+    [InlineData(105_001, true, true, 1)]
+    public void Every_exercise_starts_with_a_silent_five_second_preparation(
+        long remainingMilliseconds,
+        bool usesTimedSides,
+        bool usesFullSideTiming,
+        int expectedSeconds)
+    {
+        MovementPhaseState state = MovementPhaseSchedule.GetState(
+            remainingMilliseconds,
+            usesTimedSides,
+            usesFullSideTiming);
+
+        Assert.Equal(MovementPhase.Preparation, state.Phase);
+        Assert.Equal(expectedSeconds, state.SecondsRemaining);
+        Assert.Equal(5, state.SegmentDurationSeconds);
+        Assert.False(state.IsExercise);
+    }
+
+    [Fact]
+    public void Countdown_duration_adds_preparation_without_shortening_movement()
+    {
+        Assert.Equal(50, MovementPhaseSchedule.GetCountdownDurationSeconds(false));
+        Assert.Equal(110, MovementPhaseSchedule.GetCountdownDurationSeconds(true));
+    }
+
+    [Theory]
     [InlineData(45_000, MovementPhase.Continuous, 45)]
     [InlineData(44_999, MovementPhase.Continuous, 45)]
     [InlineData(44_000, MovementPhase.Continuous, 44)]
@@ -100,7 +132,7 @@ public sealed class MovementPhaseScheduleTests
     }
 
     [Theory]
-    [InlineData(45_001)]
+    [InlineData(50_001)]
     [InlineData(long.MaxValue)]
     public void Countdown_values_above_the_workout_duration_are_bounded(
         long remainingMilliseconds)
@@ -112,10 +144,10 @@ public sealed class MovementPhaseScheduleTests
             remainingMilliseconds,
             usesTimedSides: true);
 
-        Assert.Equal(45, continuous.SecondsRemaining);
-        Assert.Equal(MovementPhase.Continuous, continuous.Phase);
-        Assert.Equal(20, timedSides.SecondsRemaining);
-        Assert.Equal(MovementPhase.FirstSide, timedSides.Phase);
+        Assert.Equal(5, continuous.SecondsRemaining);
+        Assert.Equal(MovementPhase.Preparation, continuous.Phase);
+        Assert.Equal(5, timedSides.SecondsRemaining);
+        Assert.Equal(MovementPhase.Preparation, timedSides.Phase);
     }
 
     private static void AssertComplete(MovementPhaseState state)

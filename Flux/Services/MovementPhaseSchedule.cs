@@ -2,6 +2,7 @@ namespace Flux.Services;
 
 public enum MovementPhase
 {
+    Preparation,
     Continuous,
     FirstSide,
     ChangeSides,
@@ -17,12 +18,19 @@ public readonly record struct MovementPhaseState(
 
 public static class MovementPhaseSchedule
 {
+    public const int PreparationDurationSeconds = 5;
     public const int TotalDurationSeconds = 45;
     public const int SideDurationSeconds = 20;
     public const int SideChangeDurationSeconds = 5;
     public const int FullSideDurationSeconds = 45;
     public const int FullSideChangeDurationSeconds = 15;
     public const int FullSideTotalDurationSeconds = 105;
+
+    public static int GetCountdownDurationSeconds(bool usesFullSideTiming) =>
+        PreparationDurationSeconds +
+        (usesFullSideTiming
+            ? FullSideTotalDurationSeconds
+            : TotalDurationSeconds);
 
     private const long TotalDurationMilliseconds =
         TotalDurationSeconds * 1_000L;
@@ -40,18 +48,34 @@ public static class MovementPhaseSchedule
                 IsExercise: false);
         }
 
-        long totalDurationMilliseconds = usesFullSideTiming
+        long movementDurationMilliseconds = usesFullSideTiming
             ? FullSideTotalDurationSeconds * 1_000L
             : TotalDurationMilliseconds;
+        long totalDurationMilliseconds = movementDurationMilliseconds +
+            PreparationDurationSeconds * 1_000L;
         var boundedRemainingMilliseconds = Math.Min(
             remainingMilliseconds,
             totalDurationMilliseconds);
+
+        if (boundedRemainingMilliseconds > movementDurationMilliseconds)
+        {
+            return new MovementPhaseState(
+                MovementPhase.Preparation,
+                ToDisplayedSeconds(
+                    boundedRemainingMilliseconds - movementDurationMilliseconds),
+                PreparationDurationSeconds,
+                IsExercise: false);
+        }
+
+        long boundedMovementMilliseconds = Math.Min(
+            boundedRemainingMilliseconds,
+            movementDurationMilliseconds);
 
         if (!usesTimedSides)
         {
             return new MovementPhaseState(
                 MovementPhase.Continuous,
-                ToDisplayedSeconds(boundedRemainingMilliseconds),
+                ToDisplayedSeconds(boundedMovementMilliseconds),
                 TotalDurationSeconds,
                 IsExercise: true);
         }
@@ -66,29 +90,29 @@ public static class MovementPhaseSchedule
         long firstSideEndMilliseconds =
             (sideDurationSeconds + sideChangeDurationSeconds) * 1_000L;
 
-        if (boundedRemainingMilliseconds > firstSideEndMilliseconds)
+        if (boundedMovementMilliseconds > firstSideEndMilliseconds)
         {
             return new MovementPhaseState(
                 MovementPhase.FirstSide,
                 ToDisplayedSeconds(
-                    boundedRemainingMilliseconds - firstSideEndMilliseconds),
+                    boundedMovementMilliseconds - firstSideEndMilliseconds),
                 sideDurationSeconds,
                 IsExercise: true);
         }
 
-        if (boundedRemainingMilliseconds > secondSideStartMilliseconds)
+        if (boundedMovementMilliseconds > secondSideStartMilliseconds)
         {
             return new MovementPhaseState(
                 MovementPhase.ChangeSides,
                 ToDisplayedSeconds(
-                    boundedRemainingMilliseconds - secondSideStartMilliseconds),
+                    boundedMovementMilliseconds - secondSideStartMilliseconds),
                 sideChangeDurationSeconds,
                 IsExercise: false);
         }
 
         return new MovementPhaseState(
             MovementPhase.SecondSide,
-            ToDisplayedSeconds(boundedRemainingMilliseconds),
+            ToDisplayedSeconds(boundedMovementMilliseconds),
             sideDurationSeconds,
             IsExercise: true);
     }

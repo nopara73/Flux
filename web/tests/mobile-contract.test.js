@@ -10,6 +10,7 @@ import {
   FULL_SIDE_MOVEMENT_DURATION_MS,
   LAST_CUMULATIVE_CATALOG_REVISION,
   MOVEMENT_DURATION_MS,
+  PREPARATION_DURATION_MS,
   RESOLUTIONS,
   REST_DURATION_MS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
@@ -108,6 +109,10 @@ test("web movement and rest timing match the mobile workout contract", () => {
   assert.equal(integerConstant(movementSchedule, "SideDurationSeconds"), 20);
   assert.equal(integerConstant(movementSchedule, "SideChangeDurationSeconds"), 5);
   assert.equal(
+    PREPARATION_DURATION_MS / 1000,
+    integerConstant(movementSchedule, "PreparationDurationSeconds"),
+  );
+  assert.equal(
     FULL_SIDE_MOVEMENT_DURATION_MS / 1000,
     integerConstant(movementSchedule, "FullSideTotalDurationSeconds"),
   );
@@ -120,6 +125,18 @@ test("web movement and rest timing match the mobile workout contract", () => {
 });
 
 test("web and mobile separate the exercise whistle from the final completion cue", () => {
+  const mobileStart = methodBody(mainActivity, "private void StartCountdown()", "private void SkipExercise()");
+  const webStart = methodBody(webApp, "function startMovement()", "function setMovementDeadline(");
+  assert.doesNotMatch(mobileStart, /PlayWhistleCue/);
+  assert.doesNotMatch(webStart, /playSound/);
+  assert.match(
+    mainActivity,
+    /previousPhase == MovementPhase\.Preparation[\s\S]*CueMovementRestart\(\)/,
+  );
+  assert.match(
+    webApp,
+    /previousPhase === "Preparation" \|\| phase === "SecondSide"[\s\S]*playSound\("start"\)/,
+  );
   assert.match(
     mainActivity,
     /private void CompleteCountdown\(\)[\s\S]*PlayWhistleCue\(_restStartWhistleId\);[\s\S]*BeginRest\(\);/,
@@ -180,6 +197,13 @@ test("web catalog migration matches the mobile workout contract", () => {
 
 async function source(...segments) {
   return readFile(path.join(repositoryRoot, ...segments), "utf8");
+}
+
+function methodBody(contents, startMarker, endMarker) {
+  const start = contents.indexOf(startMarker);
+  const end = contents.indexOf(endMarker, start + startMarker.length);
+  assert.ok(start >= 0 && end > start, `Could not isolate ${startMarker}.`);
+  return contents.slice(start, end);
 }
 
 function integerArray(contents, name) {

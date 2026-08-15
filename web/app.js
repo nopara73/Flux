@@ -4,7 +4,7 @@ import {
   WorkoutSession,
   getExerciseVideoPath,
   getHoldFramePath,
-  getMovementDurationMs,
+  getMovementCountdownDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
   parseStoredState,
@@ -447,9 +447,8 @@ function startMovement() {
   if (!currentExercise || !currentGroup || !mediaReady || movementRunning) {
     return;
   }
-  playSound("start");
   requestWakeLock();
-  movementRemaining = getMovementDurationMs(currentGroup);
+  movementRemaining = getMovementCountdownDurationMs(currentGroup);
   movementPauseReason = null;
   lastMovementPhase = null;
   showMovePanel();
@@ -472,7 +471,7 @@ function updateMovement() {
     return;
   }
   movementRemaining = Math.max(0, movementEndsAt - performance.now());
-  const movementDuration = getMovementDurationMs(currentGroup);
+  const movementDuration = getMovementCountdownDurationMs(currentGroup);
   const state = getMovementPhaseState(
     movementRemaining,
     usesTimedPair(currentExercise),
@@ -495,11 +494,26 @@ function applyMovementPhase(phase) {
   if (!currentExercise) {
     return;
   }
+  const previousPhase = lastMovementPhase;
   lastMovementPhase = phase;
+  elements.movePanel.classList.toggle(
+    "change",
+    phase === "Preparation" || phase === "ChangeSides",
+  );
+
+  if (phase === "Preparation") {
+    elements.movementCue.textContent = cueSymbol("Move");
+    setMediaMirrored(false);
+    setFullPhaseSurface("rest");
+    elements.mediaCard.classList.add("resting");
+    elements.video.pause();
+    elements.status.textContent = "Prepare, 5 seconds.";
+    return;
+  }
+
   const presentation = getMovementPresentation(currentExercise, phase);
   const description = movementCueDescription(presentation.cue);
   elements.movementCue.textContent = cueSymbol(presentation.cue);
-  elements.movePanel.classList.toggle("change", phase === "ChangeSides");
 
   if (phase === "ChangeSides") {
     setMediaMirrored(false);
@@ -527,7 +541,7 @@ function applyMovementPhase(phase) {
   elements.status.textContent =
     phase === "Continuous" ? "Move, 45 seconds." : `${description}, ${segmentSeconds} seconds.`;
 
-  if (phase === "SecondSide") {
+  if (previousPhase === "Preparation" || phase === "SecondSide") {
     playSound("start");
   }
 }
@@ -608,8 +622,13 @@ function resumePausedMovementWhenVisible() {
   const phaseState = getMovementPhaseState(
     movementRemaining,
     usesTimedPair(currentExercise),
+    currentGroup?.usesFullSideTiming === true,
   );
-  if (currentExercise.presentation === "Still" || phaseState.phase === "ChangeSides") {
+  if (
+    currentExercise.presentation === "Still" ||
+    phaseState.phase === "Preparation" ||
+    phaseState.phase === "ChangeSides"
+  ) {
     resumeMovement();
     return;
   }

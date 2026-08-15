@@ -159,6 +159,7 @@ public sealed class MovementPhasePresentationPolicyTests
     }
 
     [Theory]
+    [InlineData(MovementPhase.Preparation)]
     [InlineData(MovementPhase.FirstSide)]
     [InlineData(MovementPhase.ChangeSides)]
     [InlineData(MovementPhase.SecondSide)]

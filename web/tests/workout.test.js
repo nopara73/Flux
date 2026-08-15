@@ -17,6 +17,7 @@ import {
   getCanonicalCoverage,
   getExerciseVideoPath,
   getHoldFramePath,
+  getMovementCountdownDurationMs,
   getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
@@ -244,6 +245,13 @@ test("selection requires primary ownership and ranks score before coverage", () 
 });
 
 test("movement countdown uses exact continuous and 20/5/20 boundaries", () => {
+  assert.deepEqual(getMovementPhaseState(50_000, false), {
+    phase: "Preparation",
+    secondsRemaining: 5,
+    segmentDurationSeconds: 5,
+    isExercise: false,
+  });
+  assert.equal(getMovementPhaseState(45_001, false).secondsRemaining, 1);
   assert.deepEqual(getMovementPhaseState(45_000, false), {
     phase: "Continuous",
     secondsRemaining: 45,
@@ -291,6 +299,13 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
 
 test("full-side rounds use exact 45/15/45 boundaries", () => {
   assert.equal(getMovementDurationMs({ usesFullSideTiming: true }), 105_000);
+  assert.equal(getMovementCountdownDurationMs({ usesFullSideTiming: true }), 110_000);
+  assert.deepEqual(getMovementPhaseState(110_000, true, true), {
+    phase: "Preparation",
+    secondsRemaining: 5,
+    segmentDurationSeconds: 5,
+    isExercise: false,
+  });
   assert.deepEqual(getMovementPhaseState(105_000, true, true), {
     phase: "FirstSide",
     secondsRemaining: 45,

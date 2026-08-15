@@ -1006,7 +1006,8 @@ public class MainActivity : Activity
             _appScreen == AppScreen.Workout &&
             (_workoutPhase == WorkoutPhase.Rest ||
              (_workoutPhase == WorkoutPhase.Move &&
-              _lastMovementPhase == MovementPhase.ChangeSides));
+              _lastMovementPhase is MovementPhase.Preparation or
+                  MovementPhase.ChangeSides));
         _exerciseMediaCard.Alpha = mediaIsResting ? 0.92f : 1f;
         _exerciseMediaCard.ScaleX = mediaIsResting ? 0.985f : 1f;
         _exerciseMediaCard.ScaleY = mediaIsResting ? 0.985f : 1f;
@@ -1760,7 +1761,7 @@ public class MainActivity : Activity
         SetExerciseMediaMirrored(mirrored: false);
         int position = _currentWorkoutGroup.Order;
         int totalRounds = _sessionService.GetActiveGroups(_state).Count;
-        int movementDurationMilliseconds = GetCurrentMovementDurationMilliseconds();
+        int countdownDurationMilliseconds = GetCurrentCountdownDurationMilliseconds();
 
         string groupName = _currentWorkoutGroup.DisplayName;
         _workoutProgressText.Text = $"{position:D2}  /  {totalRounds:D2}";
@@ -1768,8 +1769,8 @@ public class MainActivity : Activity
             $"Round {position} of {totalRounds}";
         _workoutProgressBar.Max = totalRounds;
         _workoutProgressBar.SetProgress(position, continuingWorkout);
-        _countdownProgress.Max = movementDurationMilliseconds;
-        _countdownProgress.Progress = movementDurationMilliseconds;
+        _countdownProgress.Max = countdownDurationMilliseconds;
+        _countdownProgress.Progress = countdownDurationMilliseconds;
         _workoutGroupName.Text = groupName;
         _workoutGroupName.ContentDescription = groupName;
         _exerciseName.Text = exercise.Name;
@@ -1846,12 +1847,11 @@ public class MainActivity : Activity
             return;
         }
 
-        PlayWhistleCue(_movementStartWhistleId);
         _countdownActive = true;
         _lastMovementPhase = null;
         ShowWorkoutPhase(WorkoutPhase.Move);
         SetSkipAvailability(available: true);
-        StartCountdownTimer(GetCurrentMovementDurationMilliseconds());
+        StartCountdownTimer(GetCurrentCountdownDurationMilliseconds());
     }
 
     private void SkipExercise()
@@ -1963,11 +1963,11 @@ public class MainActivity : Activity
 
     private void UpdateMoveCountdown(long millisecondsRemaining)
     {
-        int movementDurationMilliseconds = GetCurrentMovementDurationMilliseconds();
+        int countdownDurationMilliseconds = GetCurrentCountdownDurationMilliseconds();
         long boundedMilliseconds = Math.Clamp(
             millisecondsRemaining,
             0L,
-            movementDurationMilliseconds);
+            countdownDurationMilliseconds);
         _countdownMillisecondsRemaining = boundedMilliseconds;
         MovementPhaseState state = MovementPhaseSchedule.GetState(
             boundedMilliseconds,
@@ -1999,16 +1999,25 @@ public class MainActivity : Activity
             ? MovementPhaseSchedule.FullSideTotalDurationSeconds
             : CountdownSeconds) * 1_000;
 
+    private int GetCurrentCountdownDurationMilliseconds() =>
+        GetCurrentMovementDurationMilliseconds() +
+        MovementPhaseSchedule.PreparationDurationSeconds * 1_000;
+
     private string GetMovementCountdownDescription(
         MovementPhaseState state)
     {
+        if (state.Phase == MovementPhase.Preparation)
+        {
+            return $"Prepare, {state.SecondsRemaining} seconds remaining";
+        }
+
         MovementDirectionCue cue = GetCurrentMovementPresentation(state.Phase).Cue;
         string phaseDescription = state.Phase == MovementPhase.ChangeSides
             ? GetPairChangeDescription()
             : GetMovementCueDescription(cue);
         return state.Phase switch
         {
-            MovementPhase.Continuous or MovementPhase.FirstSide or
+            MovementPhase.Preparation or MovementPhase.Continuous or MovementPhase.FirstSide or
                 MovementPhase.ChangeSides or MovementPhase.SecondSide =>
                 $"{phaseDescription}, {state.SecondsRemaining} seconds remaining",
             MovementPhase.Complete => "Movement complete",
@@ -2026,6 +2035,20 @@ public class MainActivity : Activity
 
         MovementPhase? previousPhase = _lastMovementPhase;
         _lastMovementPhase = state.Phase;
+
+        if (state.Phase == MovementPhase.Preparation)
+        {
+            SetExerciseMediaMirrored(mirrored: false);
+            RenderPreparationPhase();
+            RenderFullWorkoutPhase(Resource.Color.rest_surface);
+            AnimateMediaPhase(resting: true);
+            _exerciseVideo.Pause();
+            AnnouncePhaseForAccessibility(
+                _countdownPanel,
+                $"Prepare, {MovementPhaseSchedule.PreparationDurationSeconds} seconds.");
+            return;
+        }
+
         MovementPhasePresentation presentation =
             GetCurrentMovementPresentation(state.Phase);
         RenderCountdownPhase(presentation.Cue);
@@ -2036,7 +2059,15 @@ public class MainActivity : Activity
                 SetExerciseMediaMirrored(mirrored: false);
                 RenderFullWorkoutPhase(Resource.Color.move_surface);
                 AnimateMediaPhase(resting: false);
-                RestartHoldOrResumeRepetition();
+                if (previousPhase == MovementPhase.Preparation)
+                {
+                    RestartExerciseMediaForPhase(state.Phase);
+                    CueMovementRestart();
+                }
+                else
+                {
+                    RestartHoldOrResumeRepetition();
+                }
                 break;
 
             case MovementPhase.FirstSide:
@@ -2044,6 +2075,10 @@ public class MainActivity : Activity
                 RenderTimedPairWorkoutPhase(presentation);
                 AnimateMediaPhase(resting: false);
                 RestartExerciseMediaForPhase(state.Phase);
+                if (previousPhase == MovementPhase.Preparation)
+                {
+                    CueMovementRestart();
+                }
                 break;
 
             case MovementPhase.ChangeSides:
@@ -2067,9 +2102,9 @@ public class MainActivity : Activity
 
         string? announcement = state.Phase switch
         {
-            MovementPhase.Continuous when previousPhase is null =>
+            MovementPhase.Continuous when previousPhase is null or MovementPhase.Preparation =>
                 "Move, 45 seconds.",
-            MovementPhase.FirstSide when previousPhase is null =>
+            MovementPhase.FirstSide when previousPhase is null or MovementPhase.Preparation =>
                 $"{GetMovementCueDescription(presentation.Cue)}, 20 seconds.",
             MovementPhase.ChangeSides => $"{GetPairChangeDescription()}, 5 seconds.",
             MovementPhase.SecondSide =>
@@ -2151,6 +2186,20 @@ public class MainActivity : Activity
         _countdownProgress.ProgressDrawable = GetDrawable(progressResource);
     }
 
+    private void RenderPreparationPhase()
+    {
+        var textColor = new Android.Graphics.Color(
+            GetColor(Resource.Color.rest_text));
+        _countdownPhaseIcon.SetImageResource(Resource.Drawable.ic_phase_active);
+        _countdownPhaseIcon.ImageTintList =
+            Android.Content.Res.ColorStateList.ValueOf(textColor);
+        _countdownPhaseIcon.ContentDescription = "Prepare";
+        _countdownText.SetTextColor(textColor);
+        _skipAction.SetTextColor(textColor);
+        _countdownProgress.ProgressDrawable =
+            GetDrawable(Resource.Drawable.rest_progress_track);
+    }
+
     private bool ShouldExerciseVideoBePlaying()
     {
         if (!_activityResumed || !_mediaReady ||
@@ -2169,6 +2218,7 @@ public class MainActivity : Activity
     {
         bool mirrorMedia = _workoutPhase == WorkoutPhase.Move &&
             _lastMovementPhase is MovementPhase phase &&
+            phase != MovementPhase.Preparation &&
             GetCurrentMovementPresentation(phase).MirrorMedia;
         SetExerciseMediaMirrored(mirrorMedia);
 
