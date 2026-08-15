@@ -62,6 +62,12 @@ $reviewedContinuousExercises = Import-PowerShellDataFile -LiteralPath (
 $reviewedContinuousExerciseIds = @(
     $reviewedContinuousExercises.Ids | ForEach-Object { [int]$_ })
 $baselineReviewedContinuousExerciseIds = @($reviewedContinuousExerciseIds)
+$insectCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseInsectCompatibility.psd1') -SkipLimitCheck
+$insectCompatibleExerciseIds = @(
+    $insectCompatibilityReview.Compatible | ForEach-Object { [int]$_ })
+$insectIncompatibleExerciseIds = @(
+    $insectCompatibilityReview.Incompatible | ForEach-Object { [int]$_ })
 $exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionSequences.psd1') -SkipLimitCheck
 $retiredDirectionOnlyExerciseIds = @(816)
@@ -390,6 +396,19 @@ if ($invalidSideSequences.Count -gt 0 -or
         @($reviewedContinuousExerciseIds | Sort-Object -Unique).Count -or
     @(Compare-Object $retainedExerciseIds $reviewedSideSequenceIds).Count -gt 0) {
     throw 'Every retained exercise must have an explicit reviewed side-sequence decision.'
+}
+
+$reviewedInsectExerciseIds = @(
+    $insectCompatibleExerciseIds + $insectIncompatibleExerciseIds |
+        Sort-Object -Unique)
+if ($insectCompatibleExerciseIds.Count -ne
+        @($insectCompatibleExerciseIds | Sort-Object -Unique).Count -or
+    $insectIncompatibleExerciseIds.Count -ne
+        @($insectIncompatibleExerciseIds | Sort-Object -Unique).Count -or
+    @($insectCompatibleExerciseIds | Where-Object {
+            $_ -in $insectIncompatibleExerciseIds }).Count -gt 0 -or
+    @(Compare-Object $retainedExerciseIds $reviewedInsectExerciseIds).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one insect-compatibility review.'
 }
 
 if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
@@ -2733,6 +2752,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             holdFramePercent = $holdFramePercent
             sideSequence = $exerciseSideSequence
             directionSequence = $exerciseDirectionSequence
+            insectCompatibility = if (
+                $exerciseId -in $insectCompatibleExerciseIds) {
+                'Compatible'
+            }
+            else {
+                'Incompatible'
+            }
             score = 0
             onlyFeetTouchGround = $true
             shoeAgnostic = $true

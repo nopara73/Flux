@@ -1,6 +1,7 @@
 import {
   REST_DURATION_MS,
   SUPPORTED_MINUTES,
+  WORKOUT_MODIFIERS,
   WorkoutSession,
   getExerciseVideoPath,
   getHoldFramePath,
@@ -24,6 +25,7 @@ const elements = {
   durationRange: byId("duration-range"),
   durationLabels: [...byId("duration-labels").children],
   beginWorkout: byId("begin-workout"),
+  insectModifier: byId("insect-modifier"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
   phaseLeft: byId("phase-left"),
@@ -66,6 +68,7 @@ const sounds = Object.fromEntries(
 
 let session = null;
 let selectedMinutes = 10;
+let selectedModifiers = WORKOUT_MODIFIERS.None;
 let currentGroup = null;
 let currentExercise = null;
 let mediaGeneration = 0;
@@ -98,7 +101,9 @@ async function bootstrap() {
     session.initialize();
     persistState();
     selectedMinutes = session.state.lastWorkoutMinutes;
+    selectedModifiers = session.state.lastWorkoutModifiers;
     renderDuration(selectedMinutes, false);
+    renderInsectModifier();
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       showCompletion(false);
@@ -119,6 +124,7 @@ function bindEvents() {
     selectDurationByIndex(Number(elements.durationRange.value), true);
   });
   elements.beginWorkout.addEventListener("click", startWorkout);
+  elements.insectModifier.addEventListener("click", toggleInsectModifier);
   elements.startMovement.addEventListener("click", startMovement);
   elements.skipExercise.addEventListener("click", skipExercise);
   elements.keepExercise.addEventListener("click", keepExercise);
@@ -198,6 +204,16 @@ function renderDuration(minutes, userInitiated) {
   }
 }
 
+function toggleInsectModifier() {
+  selectedModifiers ^= WORKOUT_MODIFIERS.Insect;
+  renderInsectModifier();
+}
+
+function renderInsectModifier() {
+  const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Insect) !== 0;
+  elements.insectModifier.setAttribute("aria-pressed", String(enabled));
+}
+
 function showScreen(screen) {
   elements.durationScreen.hidden = screen !== "duration";
   elements.workoutScreen.hidden = screen !== "workout";
@@ -212,7 +228,9 @@ function showDuration() {
   currentGroup = null;
   currentExercise = null;
   selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
+  selectedModifiers = session?.state.lastWorkoutModifiers ?? selectedModifiers;
   renderDuration(selectedMinutes, false);
+  renderInsectModifier();
   elements.beginWorkout.disabled = !session;
   showScreen("duration");
 }
@@ -223,7 +241,7 @@ function startWorkout() {
   }
   elements.beginWorkout.disabled = true;
   try {
-    session.startWorkout(selectedMinutes);
+    session.startWorkout(selectedMinutes, selectedModifiers);
     persistState();
     showNextExercise();
   } catch (error) {

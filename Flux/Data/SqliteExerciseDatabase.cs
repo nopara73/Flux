@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 38;
+    private const int DatabaseVersion = 40;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -36,6 +36,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "hold_frame_percent",
         "side_sequence",
         "direction_sequence",
+        "insect_compatibility",
     ];
 
     private readonly Context _context;
@@ -70,7 +71,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -112,6 +113,14 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     "'ClockwiseThenCounterclockwise', " +
                     "'CounterclockwiseThenClockwise', 'InwardThenOutward', " +
                     "'OutwardThenInward'))");
+            }
+            if (oldVersion < 39)
+            {
+                database.ExecSQL(
+                    "ALTER TABLE exercises ADD COLUMN insect_compatibility " +
+                    "TEXT NOT NULL DEFAULT 'Unreviewed' CHECK " +
+                    "(insect_compatibility IN " +
+                    "('Unreviewed', 'Compatible', 'Incompatible'))");
             }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
@@ -189,6 +198,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'CounterclockwiseThenClockwise',
                         'InwardThenOutward',
                         'OutwardThenInward')),
+                insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (insect_compatibility IN (
+                        'Unreviewed',
+                        'Compatible',
+                        'Incompatible')),
                 CHECK (
                     (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
@@ -426,6 +440,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
         values.Put("side_sequence", exercise.SideSequence.ToString());
         values.Put("direction_sequence", exercise.DirectionSequence.ToString());
+        values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
         return values;
     }
 
@@ -584,6 +599,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(15)
                         ?? throw new InvalidOperationException(
                             "An exercise has no direction sequence.")),
+                InsectCompatibility = Enum.Parse<ExerciseInsectCompatibility>(
+                    cursor.GetString(16)
+                        ?? throw new InvalidOperationException(
+                            "An exercise has no insect compatibility review.")),
             });
         }
 
@@ -668,6 +687,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.Presentation) ||
             !Enum.IsDefined(exercise.SideSequence) ||
             !Enum.IsDefined(exercise.DirectionSequence) ||
+            !Enum.IsDefined(exercise.InsectCompatibility) ||
             (exercise.SideSequence != ExerciseSideSequence.Continuous &&
                 exercise.DirectionSequence != ExerciseDirectionSequence.None) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&

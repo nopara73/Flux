@@ -29,6 +29,9 @@ public sealed class Exercise
     public ExerciseDirectionSequence DirectionSequence { get; init; } =
         ExerciseDirectionSequence.None;
 
+    public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
+        ExerciseInsectCompatibility.Unreviewed;
+
     public int Score { get; set; } = 0;
 
     public required bool OnlyFeetTouchGround { get; init; }

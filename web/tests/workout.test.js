@@ -8,9 +8,11 @@ import {
   ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  EXERCISE_INSECT_COMPATIBILITY,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
   SUPPORTED_MINUTES,
+  WORKOUT_MODIFIERS,
   WorkoutSession,
   createWorkoutSchedule,
   createDefaultState,
@@ -43,6 +45,183 @@ test("duration inventory and legacy normalization match Flux", () => {
   assert.equal(normalizeMinutes(53), 60);
   assert.equal(normalizeMinutes(75), 90);
   assert.equal(normalizeMinutes(undefined), 10);
+});
+
+test("missing modifier state defaults off", () => {
+  const state = parseStoredState(JSON.stringify({
+    version: 4,
+    lastWorkoutMinutes: 10,
+    activeWorkoutMinutes: 0,
+  }));
+  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
+});
+
+test("unreviewed catalog keeps insect modifier behavior neutral", () => {
+  const exercises = RESOLUTIONS.get(3).groups.map((group, index) =>
+    exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0));
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+
+  assert.equal(session.insectClassificationComplete, false);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
+  assert.equal(session.getActiveGroups().length, 3);
+  assert.equal(session.insectSelectionProfileReady, false);
+  for (const group of session.getActiveGroups()) {
+    assert.equal(
+      session.state.selectedExerciseIds[`p1|${group.id}`],
+      session.state.selectedExerciseIds[group.id],
+    );
+  }
+});
+
+test("insect selection is composed with score and coverage instead of post-filtered", () => {
+  const exercises = reviewedInsectCatalog();
+
+  const normal = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+  );
+  normal.startWorkout(3);
+  assert.ok(normal.getActiveGroups().every((group) =>
+    normal.getSelectedExercise(group).insectCompatibility ===
+      EXERCISE_INSECT_COMPATIBILITY.Incompatible));
+
+  const insect = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+  );
+  insect.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+  assert.equal(insect.insectClassificationComplete, true);
+  assert.equal(insect.insectSelectionProfileReady, true);
+  assert.ok(insect.getActiveGroups().every((group) =>
+    insect.getSelectedExercise(group).insectCompatibility ===
+      EXERCISE_INSECT_COMPATIBILITY.Compatible));
+});
+
+test("fully reviewed catalog with fewer than thirty compatible exercises remains neutral", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.flatMap((group, index) => [
+    exercise(
+      index + 1,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ),
+    exercise(
+      101 + index,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      100,
+      EXERCISE_INSECT_COMPATIBILITY.Incompatible,
+    ),
+  ]);
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+
+  assert.equal(session.insectClassificationComplete, true);
+  assert.equal(session.insectSelectionProfileReady, false);
+  assert.ok(session.getActiveGroups().every((group) =>
+    session.getSelectedExercise(group).insectCompatibility ===
+      EXERCISE_INSECT_COMPATIBILITY.Incompatible));
+});
+
+test("modifier profiles share keeps without forgetting excluded exercises", () => {
+  const session = new WorkoutSession(
+    reviewedInsectCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+
+  session.startWorkout(3);
+  const keptIds = session.getActiveGroups().map((group) =>
+    session.getSelectedExercise(group).id);
+  for (const group of session.getActiveGroups()) {
+    session.recordOutcome(group, true);
+  }
+  session.acknowledgeCompletion();
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+
+  assert.deepEqual([...session.state.lastKeptExerciseIds].sort(), [...keptIds].sort());
+  assert.ok(session.getActiveGroups().every((group) =>
+    session.getSelectedExercise(group).insectCompatibility ===
+      EXERCISE_INSECT_COMPATIBILITY.Compatible));
+
+  session.finishInterruptedWorkout();
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  assert.deepEqual(
+    session.getActiveGroups().map((group) => session.getSelectedExercise(group).id).sort(),
+    [...keptIds].sort(),
+  );
+});
+
+test("neutral modifier profile does not reselect a rejected exercise", () => {
+  const exercises = RESOLUTIONS.get(3).groups.flatMap((group, index) => [
+    exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10),
+    exercise(2 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 7),
+    exercise(3 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 5),
+  ]);
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+  const groups = session.getActiveGroups();
+  const rejectedId = session.getSelectedExercise(groups[0]).id;
+
+  session.recordOutcome(groups[0], false);
+  for (const group of groups.slice(1)) {
+    session.recordOutcome(group, true);
+  }
+  session.acknowledgeCompletion();
+
+  assert.equal(
+    Object.values(session.state.selectedExerciseIds).includes(rejectedId),
+    false,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+  assert.notEqual(session.getSelectedExercise(session.getActiveGroups()[0]).id, rejectedId);
+});
+
+test("insect profile carries keeps into long workout before allocating extra sets", () => {
+  const session = new WorkoutSession(
+    reviewedInsectCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+  const keptExerciseIds = session.getActiveGroups().map((group) =>
+    session.getSelectedExercise(group).id);
+  for (const group of session.getActiveGroups()) {
+    session.recordOutcome(group, true);
+  }
+  session.acknowledgeCompletion();
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.Insect);
+
+  const keptGroups = session.getSelectionGroups().filter((group) =>
+    keptExerciseIds.includes(session.getSelectedExercise(group).id));
+  assert.equal(keptGroups.length, keptExerciseIds.length);
+  assert.ok(keptGroups.every((group) =>
+    session.state.activeExtraSetSelectionGroupIds.includes(group.id)));
+  assert.ok(keptGroups.every((group) =>
+    session.state.selectedExerciseIds[`p1|${group.id}`] !== undefined));
+});
+
+test("reviewed production catalog activates insect mode at every duration", () => {
+  for (const minutes of SUPPORTED_MINUTES) {
+    const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.Insect);
+
+    assert.equal(session.insectClassificationComplete, true);
+    assert.equal(session.insectSelectionProfileReady, true);
+    assert.ok(session.getActiveGroups().every((group) =>
+      session.getSelectedExercise(group).insectCompatibility ===
+        EXERCISE_INSECT_COMPATIBILITY.Compatible));
+  }
 });
 
 test("every resolution covers all canonical leaves once in scheduled order", () => {
@@ -929,7 +1108,13 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
 
-function exercise(id, primaryCanonicalGroup, secondaryCanonicalGroups, score) {
+function exercise(
+  id,
+  primaryCanonicalGroup,
+  secondaryCanonicalGroups,
+  score,
+  insectCompatibility = EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+) {
   return {
     id,
     name: `Exercise ${id}`,
@@ -937,11 +1122,38 @@ function exercise(id, primaryCanonicalGroup, secondaryCanonicalGroups, score) {
     primaryCanonicalGroup,
     secondaryCanonicalGroups,
     score,
+    insectCompatibility,
     sideSequence: "Continuous",
     directionSequence: "None",
     mode: "Repetition",
     presentation: "Motion",
   };
+}
+
+function reviewedInsectCatalog() {
+  const canonicalGroups = RESOLUTIONS.get(30).groups.map(
+    (group) => group.canonicalGroups[0],
+  );
+  const exercises = [];
+  let exerciseId = 10_000;
+  for (const primary of canonicalGroups) {
+    const secondary = canonicalGroups.filter((group) => group !== primary);
+    exercises.push(exercise(
+      exerciseId++,
+      primary,
+      secondary,
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ));
+    exercises.push(exercise(
+      exerciseId++,
+      primary,
+      secondary,
+      100,
+      EXERCISE_INSECT_COMPATIBILITY.Incompatible,
+    ));
+  }
+  return exercises;
 }
 
 async function assertFile(file) {

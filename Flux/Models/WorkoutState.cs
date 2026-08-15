@@ -28,7 +28,13 @@ public sealed class WorkoutState
 
     public int LastWorkoutMinutes { get; set; } = 10;
 
+    public WorkoutModifiers LastWorkoutModifiers { get; set; } =
+        WorkoutModifiers.None;
+
     public int ActiveWorkoutMinutes { get; set; }
+
+    public WorkoutModifiers ActiveWorkoutModifiers { get; set; } =
+        WorkoutModifiers.None;
 
     public bool WorkoutCompleted { get; set; }
 

@@ -49,6 +49,7 @@ public class MainActivity : Activity
     private WorkoutGroup _currentWorkoutGroup = null!;
     private Exercise? _currentExercise;
     private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
+    private WorkoutModifiers _selectedWorkoutModifiers = WorkoutModifiers.None;
 
     private View _durationScreen = null!;
     private LinearLayout _durationInsetContent = null!;
@@ -60,6 +61,8 @@ public class MainActivity : Activity
     private LinearLayout _durationControls = null!;
     private LinearLayout _durationStepRow = null!;
     private FrameLayout _durationOptionLabels = null!;
+    private GridLayout _durationModifierGrid = null!;
+    private CheckBox _insectModifierButton = null!;
     private FrameLayout _durationActionBar = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
@@ -170,6 +173,7 @@ public class MainActivity : Activity
         }
 
         _selectedWorkoutMinutes = _state.LastWorkoutMinutes;
+        _selectedWorkoutModifiers = _state.LastWorkoutModifiers;
 
         if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
@@ -263,6 +267,10 @@ public class MainActivity : Activity
         _durationStepRow = FindRequiredView<LinearLayout>(Resource.Id.duration_step_row);
         _durationOptionLabels = FindRequiredView<FrameLayout>(
             Resource.Id.duration_option_labels);
+        _durationModifierGrid = FindRequiredView<GridLayout>(
+            Resource.Id.duration_modifier_grid);
+        _insectModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.insect_modifier_button);
         _durationActionBar = FindRequiredView<FrameLayout>(
             Resource.Id.duration_action_bar);
         _durationMinutesValue = FindRequiredView<TextView>(
@@ -344,6 +352,10 @@ public class MainActivity : Activity
                     userInitiated: true);
             }
         };
+        _insectModifierButton.Click += (_, _) =>
+            SetSelectedInsectModifier(
+                _insectModifierButton.Checked,
+                userInitiated: true);
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
         _skipAction.Click += (_, _) => SkipExercise();
@@ -608,6 +620,15 @@ public class MainActivity : Activity
                 new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
             _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
+            var modifierGridLayout = new LinearLayout.LayoutParams(
+                matchParent,
+                wrapContent);
+            modifierGridLayout.TopMargin = DpInt(16);
+            _durationModifierGrid.LayoutParameters = modifierGridLayout;
+            _durationModifierGrid.ColumnCount = 5;
+            _insectModifierButton.LayoutParameters =
+                CreateModifierTileLayout(DpInt(56));
+
             var segmentLayout = new LinearLayout.LayoutParams(
                 matchParent,
                 DpInt(24));
@@ -657,6 +678,15 @@ public class MainActivity : Activity
         _durationIncreaseButton.LayoutParameters =
             new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
         _durationOptionLabels.SetPadding(0, 0, 0, 0);
+
+        var portraitModifierGridLayout = new LinearLayout.LayoutParams(
+            matchParent,
+            wrapContent);
+        portraitModifierGridLayout.TopMargin = DpInt(32);
+        _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
+        _durationModifierGrid.ColumnCount = 4;
+        _insectModifierButton.LayoutParameters =
+            CreateModifierTileLayout(DpInt(64));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
             matchParent,
@@ -1053,6 +1083,18 @@ public class MainActivity : Activity
         return (int)Math.Round(Dp(value));
     }
 
+    private GridLayout.LayoutParams CreateModifierTileLayout(int size)
+    {
+        var layout = new GridLayout.LayoutParams
+        {
+            Width = size,
+            Height = size,
+        };
+        int margin = DpInt(6);
+        layout.SetMargins(margin, margin, margin, margin);
+        return layout;
+    }
+
     private void ResizeMediaCard()
     {
         int size = Math.Min(_exerciseMediaArea.Width, _exerciseMediaArea.Height);
@@ -1110,6 +1152,45 @@ public class MainActivity : Activity
 
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
+        SetSelectedInsectModifier(
+            (_state.LastWorkoutModifiers & WorkoutModifiers.Insect) != 0);
+    }
+
+    private void SetSelectedInsectModifier(
+        bool enabled,
+        bool userInitiated = false)
+    {
+        _selectedWorkoutModifiers = enabled
+            ? WorkoutModifiers.Insect
+            : WorkoutModifiers.None;
+        _insectModifierButton.Checked = enabled;
+        _insectModifierButton.ContentDescription =
+            GetString(Resource.String.insect_modifier_description);
+        if (OperatingSystem.IsAndroidVersionAtLeast(30))
+        {
+            _insectModifierButton.StateDescription = GetString(enabled
+                ? Resource.String.insect_modifier_on
+                : Resource.String.insect_modifier_off);
+        }
+
+        if (!userInitiated)
+        {
+            return;
+        }
+
+        _insectModifierButton.PerformHapticFeedback(
+            FeedbackConstants.ClockTick);
+        _insectModifierButton.Animate()?.Cancel();
+        _insectModifierButton.ScaleX = 0.92f;
+        _insectModifierButton.ScaleY = 0.92f;
+        if (_insectModifierButton.Animate() is { } animator)
+        {
+            animator
+                .ScaleX(1f)
+                .ScaleY(1f)
+                .SetDuration(PhaseMotionDurationMilliseconds)
+                .Start();
+        }
     }
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
@@ -1262,7 +1343,10 @@ public class MainActivity : Activity
         _beginWorkoutButton.Alpha = 0.6f;
         try
         {
-            _sessionService.StartWorkout(_state, _selectedWorkoutMinutes);
+            _sessionService.StartWorkout(
+                _state,
+                _selectedWorkoutMinutes,
+                _selectedWorkoutModifiers);
             _stateStore.Save(_state);
             ShowNextExercise();
         }

@@ -211,6 +211,32 @@
                         android:text="@string/duration_option_90" />
                 </FrameLayout>
 
+                <GridLayout
+                    android:id="@+id/duration_modifier_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:alignmentMode="alignMargins"
+                    android:columnCount="4"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:useDefaultMargins="false">
+
+                    <CheckBox
+                        android:id="@+id/insect_modifier_button"
+                        style="@style/DurationModifierTile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_margin="6dp"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/insect_modifier_description"
+                        android:foreground="@drawable/ic_insect"
+                        android:foregroundGravity="center"
+                        android:foregroundTint="@color/insect_modifier_icon_tint"
+                        android:text="" />
+                </GridLayout>
+
                 <LinearLayout
                     android:id="@+id/duration_option_segments"
                     android:layout_width="match_parent"

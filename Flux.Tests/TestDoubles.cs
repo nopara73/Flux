@@ -69,7 +69,9 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             PendingScoreExerciseId = state.PendingScoreExerciseId,
             PendingScoreValue = state.PendingScoreValue,
             LastWorkoutMinutes = state.LastWorkoutMinutes,
+            LastWorkoutModifiers = state.LastWorkoutModifiers,
             ActiveWorkoutMinutes = state.ActiveWorkoutMinutes,
+            ActiveWorkoutModifiers = state.ActiveWorkoutModifiers,
             WorkoutCompleted = state.WorkoutCompleted,
             CompletionAcknowledged = state.CompletionAcknowledged,
             LegacySelectedExerciseNames = new Dictionary<string, string>(

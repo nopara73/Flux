@@ -299,6 +299,58 @@ button:disabled {
   transform: scale(1.08);
 }
 
+.duration-modifiers {
+  min-height: 64px;
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.modifier-tile {
+  width: 64px;
+  height: 64px;
+  padding: 16px;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: var(--graphite);
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgb(18 20 22 / 12%);
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 80ms ease;
+}
+
+button.modifier-tile:not(:disabled):active {
+  transform: scale(0.92);
+}
+
+.modifier-tile[aria-pressed="true"] {
+  border: 2px solid var(--chartreuse);
+  color: var(--chartreuse);
+  background: var(--graphite);
+  box-shadow:
+    0 2px 6px rgb(18 20 22 / 22%),
+    0 0 0 4px rgb(203 237 70 / 9%);
+}
+
+.modifier-tile:focus-visible {
+  outline: 3px solid rgb(18 20 22 / 46%);
+  outline-offset: 3px;
+}
+
+.insect-icon {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
 .duration-action-bar {
   flex: 0 0 auto;
   padding: 12px 24px calc(16px + env(safe-area-inset-bottom));
@@ -926,6 +978,17 @@ input:focus-visible {
     font-size: 9px;
   }
 
+  .duration-modifiers {
+    min-height: 56px;
+    margin-top: 16px;
+  }
+
+  .modifier-tile {
+    width: 56px;
+    height: 56px;
+    padding: 12px;
+  }
+
   .duration-action-bar {
     width: calc(104px + env(safe-area-inset-right));
     height: 100dvh;
@@ -1119,6 +1182,24 @@ input:focus-visible {
     margin-right: calc(clamp(74px, 6vw, 92px) + clamp(34px, 2.4vw, 48px));
     margin-left: calc(clamp(74px, 6vw, 92px) + clamp(34px, 2.4vw, 48px));
     font-size: clamp(11px, 0.75vw, 14px);
+  }
+
+  .duration-modifiers {
+    min-height: clamp(74px, 6vw, 92px);
+    margin-top: clamp(24px, 3dvh, 40px);
+    gap: 16px;
+  }
+
+  .modifier-tile {
+    width: clamp(74px, 6vw, 92px);
+    height: clamp(74px, 6vw, 92px);
+    padding: clamp(18px, 1.5vw, 24px);
+    border-radius: 20px;
+  }
+
+  .insect-icon {
+    width: 100%;
+    height: 100%;
   }
 
   .duration-action-bar {
@@ -1358,6 +1439,17 @@ input:focus-visible {
 
   .duration-step-row {
     margin-top: 12px;
+  }
+
+  .duration-modifiers {
+    min-height: 56px;
+    margin-top: 16px;
+  }
+
+  .modifier-tile {
+    width: 56px;
+    height: 56px;
+    padding: 12px;
   }
 
   .exercise-media-card {

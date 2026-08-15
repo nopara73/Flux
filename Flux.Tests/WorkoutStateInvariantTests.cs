@@ -200,6 +200,7 @@ public sealed class WorkoutStateInvariantTests
             },
             LastKeptExerciseIds = [present.Id, 999999],
         };
+
         string serialized = JsonSerializer.Serialize(priorState, JsonOptions);
         WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
                 serialized,
@@ -220,6 +221,52 @@ public sealed class WorkoutStateInvariantTests
         service.StartWorkout(restored, 3);
 
         Assert.Equal(present.Id, restored.SelectedExerciseIds[savedGroupId]);
+    }
+
+    [Fact]
+    public void MissingModifierFieldsDefaultToOff()
+    {
+        const string json =
+            """
+            {
+              "version": 7,
+              "lastWorkoutMinutes": 10,
+              "activeWorkoutMinutes": 0
+            }
+            """;
+
+        WorkoutState state = JsonSerializer.Deserialize<WorkoutState>(json, JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
+    }
+
+    [Fact]
+    public void ModifierPreferencePersistsWhileActiveSnapshotClearsWithWorkout()
+    {
+        Exercise[] exercises =
+        [
+            Exercise(1, CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Exercise(2, CanonicalMuscleGroup.SpinalExtensors),
+            Exercise(3, CanonicalMuscleGroup.ScapularGirdle),
+        ];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(json, JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal(WorkoutModifiers.Insect, restored.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.Insect, restored.ActiveWorkoutModifiers);
+
+        service.FinishInterruptedWorkout(restored);
+
+        Assert.Equal(WorkoutModifiers.Insect, restored.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.None, restored.ActiveWorkoutModifiers);
+        Assert.Equal(0, restored.ActiveWorkoutMinutes);
     }
 
     private static Exercise Exercise(

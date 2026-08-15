@@ -7,6 +7,7 @@ import test from "node:test";
 import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  EXERCISE_INSECT_COMPATIBILITY,
   FULL_SIDE_MOVEMENT_DURATION_MS,
   LAST_CUMULATIVE_CATALOG_REVISION,
   MOVEMENT_DURATION_MS,
@@ -16,6 +17,7 @@ import {
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   SUPPORTED_MINUTES,
+  WORKOUT_MODIFIERS,
 } from "../workout.js";
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -30,6 +32,8 @@ const [
   workoutModule,
   catalogMigrationRules,
   catalogJson,
+  workoutModifiers,
+  exerciseModel,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -40,6 +44,8 @@ const [
   source("web", "workout.js"),
   source("Flux", "Services", "CatalogMigrationRules.cs"),
   source("Flux", "Assets", "exercises.json"),
+  source("Flux", "Models", "WorkoutModifiers.cs"),
+  source("Flux", "Models", "Exercise.cs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -71,12 +77,38 @@ test("web and mobile persist keep-first long-workout allocation", () => {
 test("web and mobile carry kept exercises across workout durations", () => {
   assert.match(
     sessionService,
-    /StartWorkout\([\s\S]*CarryKeptExercisesForward\(state, previousWorkoutMinutes\);[\s\S]*RepairActiveLineup\(state\);/,
+    /StartWorkout\([\s\S]*CarryKeptExercisesForward\([\s\S]*previousWorkoutMinutes,[\s\S]*previousWorkoutModifiers\);[\s\S]*RepairActiveLineup\(state\);/,
   );
   assert.match(
     sessionService,
-    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*WorkoutCoveragePolicy\.IsSelectable/,
+    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*IsSelectable\(/,
   );
+});
+
+test("web and mobile persist one combined duration and modifier selection context", () => {
+  assert.equal(WORKOUT_MODIFIERS.Insect, 1);
+  assert.match(workoutModifiers, /Insect\s*=\s*1/);
+  assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
+  assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
+  assert.match(
+    sessionService,
+    /StartWorkout\([\s\S]*state\.LastWorkoutModifiers\s*=\s*modifiers;[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
+  );
+  assert.match(
+    workoutModule,
+    /startWorkout\(minutes, modifiers[\s\S]*this\.state\.lastWorkoutModifiers\s*=\s*modifiers;[\s\S]*this\.state\.activeWorkoutModifiers\s*=\s*modifiers;/,
+  );
+  assert.match(
+    sessionService,
+    /ChooseBestCandidate\([\s\S]*IsSelectable\(exercise, group, modifiers\)/,
+  );
+  assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
+  assert.ok(catalog.every((exercise) =>
+    exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
+    exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible));
+  assert.equal(catalog.filter((exercise) =>
+    exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible).length, 147);
+  assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
 });
 
 test("web and mobile preserve deployed keeps by catalog membership", () => {

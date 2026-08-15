@@ -9,6 +9,10 @@ public sealed class ExerciseSessionService
     public const int DefaultWorkoutMinutes = 10;
 
     private const int CurrentStateVersion = 7;
+    private const string SelectionProfilePrefix = "p";
+    private const char SelectionProfileSeparator = '|';
+    private const WorkoutModifiers SupportedWorkoutModifiers =
+        WorkoutModifiers.Insect;
 
     private static readonly IReadOnlyList<int> WorkoutMinutes =
         Array.AsReadOnly([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
@@ -18,9 +22,14 @@ public sealed class ExerciseSessionService
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
             .ToDictionary(group => group.Id, StringComparer.Ordinal);
 
+    private static readonly int InsectProfileExerciseCount =
+        MassGroupingTaxonomy.GetResolution(30).Groups.Count;
+
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly IReadOnlyDictionary<int, Exercise> _exercisesById;
     private readonly Random _random;
+    private readonly bool _insectClassificationComplete;
+    private readonly bool _insectSelectionProfileReady;
 
     public ExerciseSessionService(IReadOnlyList<Exercise> exercises, Random? random = null)
     {
@@ -28,10 +37,25 @@ public sealed class ExerciseSessionService
         _exercises = exercises;
         _exercisesById = exercises.ToDictionary(exercise => exercise.Id);
         _random = random ?? Random.Shared;
+        _insectClassificationComplete = exercises.Count > 0 &&
+            exercises.All(exercise =>
+                exercise.InsectCompatibility !=
+                    ExerciseInsectCompatibility.Unreviewed);
+        _insectSelectionProfileReady = _insectClassificationComplete &&
+            exercises.Count(exercise =>
+                exercise.InsectCompatibility ==
+                    ExerciseInsectCompatibility.Compatible) >=
+                InsectProfileExerciseCount;
     }
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
         WorkoutMinutes;
+
+    public bool IsInsectClassificationComplete =>
+        _insectClassificationComplete;
+
+    public bool IsInsectSelectionProfileReady =>
+        _insectSelectionProfileReady;
 
     public void Initialize(WorkoutState state)
     {
@@ -48,6 +72,10 @@ public sealed class ExerciseSessionService
 
         state.Version = CurrentStateVersion;
         state.LastWorkoutMinutes = NormalizeLastWorkoutMinutes(state.LastWorkoutMinutes);
+        state.LastWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.LastWorkoutModifiers);
+        state.ActiveWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.ActiveWorkoutModifiers);
         NormalizeSavedLineups(state);
         NormalizeKeptExerciseIds(state);
 
@@ -89,7 +117,10 @@ public sealed class ExerciseSessionService
         }
     }
 
-    public void StartWorkout(WorkoutState state, int minutes)
+    public void StartWorkout(
+        WorkoutState state,
+        int minutes,
+        WorkoutModifiers modifiers = WorkoutModifiers.None)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -108,17 +139,35 @@ public sealed class ExerciseSessionService
 
         NormalizeCollections(state);
         state.Version = CurrentStateVersion;
+        modifiers = NormalizeWorkoutModifiers(modifiers);
         int previousWorkoutMinutes = NormalizeLastWorkoutMinutes(
             state.LastWorkoutMinutes);
+        WorkoutModifiers previousWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.LastWorkoutModifiers);
         state.LastWorkoutMinutes = minutes;
+        state.LastWorkoutModifiers = modifiers;
         state.ActiveWorkoutMinutes = minutes;
+        state.ActiveWorkoutModifiers = modifiers;
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
         ClearPendingRest(state);
         ClearLegacyMigrationState(state);
-        CarryKeptExercisesForward(state, previousWorkoutMinutes);
+        if (UsesModifierSelectionProfile(modifiers) &&
+            !_insectSelectionProfileReady)
+        {
+            SeedNeutralModifierProfileFromBase(state);
+        }
+        CarryKeptExercisesForward(
+            state,
+            previousWorkoutMinutes,
+            previousWorkoutModifiers);
         RepairActiveLineup(state);
+        if (UsesModifierSelectionProfile(modifiers) &&
+            !_insectSelectionProfileReady)
+        {
+            SynchronizeNeutralModifierProfileToBase(state);
+        }
         SetActiveLongWorkoutAllocation(state);
     }
 
@@ -138,11 +187,18 @@ public sealed class ExerciseSessionService
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(group);
 
+        string selectionStorageKey = GetSelectionStorageKey(
+            group.SelectionKey,
+            state.ActiveWorkoutModifiers);
         if (!state.SelectedExerciseIds.TryGetValue(
-                group.SelectionKey,
+                selectionStorageKey,
                 out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
-            !IsSavedSelectionValid(state, exercise, group))
+            !IsSavedSelectionValid(
+                state,
+                exercise,
+                group,
+                state.ActiveWorkoutModifiers))
         {
             throw new InvalidOperationException(
                 $"No eligible exercise is selected for {group.DisplayName}.");
@@ -302,29 +358,41 @@ public sealed class ExerciseSessionService
                 rounds.All(round => !state.Outcomes.TryGetValue(
                     round.Id,
                     out ExerciseOutcome outcome) || outcome != ExerciseOutcome.X))
-            .Select(rounds => state.SelectedExerciseIds.GetValueOrDefault(rounds.Key))
+            .Select(rounds => state.SelectedExerciseIds.GetValueOrDefault(
+                GetSelectionStorageKey(
+                    rounds.Key,
+                    state.ActiveWorkoutModifiers)))
             .Where(exerciseId => exerciseId != 0)
             .ToHashSet();
         HashSet<int> rejectedExerciseIds = rejectedSelectionKeys
             .Select(selectionKey =>
-                state.SelectedExerciseIds.GetValueOrDefault(selectionKey))
+                state.SelectedExerciseIds.GetValueOrDefault(
+                    GetSelectionStorageKey(
+                        selectionKey,
+                        state.ActiveWorkoutModifiers)))
             .Where(exerciseId => exerciseId != 0)
             .ToHashSet();
         state.LastKeptExerciseIds.ExceptWith(rejectedExerciseIds);
         state.LastKeptExerciseIds.UnionWith(newlyKeptExerciseIds);
         var usedExerciseIds = selectionGroups
             .Where(group => !rejectedSelectionKeys.Contains(group.Id))
-            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
+            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
+                GetSelectionStorageKey(
+                    group.Id,
+                    state.ActiveWorkoutModifiers)))
             .Where(exerciseId => exerciseId != 0)
             .ToHashSet();
 
         foreach (WorkoutGroup group in selectionGroups.Where(group =>
                      rejectedSelectionKeys.Contains(group.Id)))
         {
-            int currentExerciseId = state.SelectedExerciseIds[group.Id];
+            string selectionStorageKey = GetSelectionStorageKey(
+                group.Id,
+                state.ActiveWorkoutModifiers);
+            int currentExerciseId = state.SelectedExerciseIds[selectionStorageKey];
             foreach (string savedGroupId in state.SelectedExerciseIds
                          .Where(entry =>
-                             entry.Key != group.Id &&
+                             entry.Key != selectionStorageKey &&
                              entry.Value == currentExerciseId)
                          .Select(entry => entry.Key)
                          .ToArray())
@@ -338,9 +406,16 @@ public sealed class ExerciseSessionService
             };
             Exercise replacement = ChooseBestCandidate(
                 group,
-                excludedExerciseIds);
-            state.SelectedExerciseIds[group.Id] = replacement.Id;
+                excludedExerciseIds,
+                state.ActiveWorkoutModifiers);
+            state.SelectedExerciseIds[selectionStorageKey] = replacement.Id;
             usedExerciseIds.Add(replacement.Id);
+        }
+
+        if (UsesModifierSelectionProfile(state.ActiveWorkoutModifiers) &&
+            !_insectSelectionProfileReady)
+        {
+            SynchronizeNeutralModifierProfileToBase(state);
         }
 
         ResetToDurationSelection(state);
@@ -348,18 +423,20 @@ public sealed class ExerciseSessionService
 
     private Exercise ChooseBestCandidate(
         WorkoutGroup group,
-        IReadOnlySet<int> excludedExerciseIds)
+        IReadOnlySet<int> excludedExerciseIds,
+        WorkoutModifiers modifiers)
     {
         Exercise[] candidates = _exercises
             .Where(exercise =>
-                WorkoutCoveragePolicy.IsSelectable(exercise, group) &&
+                IsSelectable(exercise, group, modifiers) &&
                 !excludedExerciseIds.Contains(exercise.Id))
             .ToArray();
 
         if (candidates.Length == 0)
         {
             throw new InvalidOperationException(
-                $"No distinct primary-owned exercise with at least " +
+                $"No distinct primary-owned exercise eligible for the active workout profile " +
+                $"with at least " +
                 $"{WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage exists for " +
                 $"{group.DisplayName}.");
         }
@@ -390,12 +467,19 @@ public sealed class ExerciseSessionService
 
         foreach (WorkoutGroup group in GetSelectionGroups(state))
         {
+            string selectionStorageKey = GetSelectionStorageKey(
+                group.Id,
+                state.ActiveWorkoutModifiers);
             bool hasValidSelection = state.SelectedExerciseIds.TryGetValue(
-                    group.Id,
+                    selectionStorageKey,
                     out int selectedExerciseId) &&
                 !usedExerciseIds.Contains(selectedExerciseId) &&
                 _exercisesById.TryGetValue(selectedExerciseId, out Exercise? selected) &&
-                IsSavedSelectionValid(state, selected, group);
+                IsSavedSelectionValid(
+                    state,
+                    selected,
+                    group,
+                    state.ActiveWorkoutModifiers);
 
             if (!hasValidSelection)
             {
@@ -407,8 +491,9 @@ public sealed class ExerciseSessionService
 
                 Exercise replacement = ChooseBestCandidate(
                     group,
-                    excludedExerciseIds);
-                state.SelectedExerciseIds[group.Id] = replacement.Id;
+                    excludedExerciseIds,
+                    state.ActiveWorkoutModifiers);
+                state.SelectedExerciseIds[selectionStorageKey] = replacement.Id;
                 foreach (WorkoutGroup round in activeRounds.Where(round =>
                              round.SelectionKey == group.Id))
                 {
@@ -427,7 +512,8 @@ public sealed class ExerciseSessionService
 
     private void CarryKeptExercisesForward(
         WorkoutState state,
-        int previousWorkoutMinutes)
+        int previousWorkoutMinutes,
+        WorkoutModifiers previousWorkoutModifiers)
     {
         if (state.LastKeptExerciseIds.Count == 0)
         {
@@ -439,7 +525,10 @@ public sealed class ExerciseSessionService
         IEnumerable<int> orderedKeptExerciseIds = GetBaseResolution(
                 previousWorkoutMinutes)
             .Groups
-            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(group.Id))
+            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
+                GetSelectionStorageKey(
+                    group.Id,
+                    previousWorkoutModifiers)))
             .Concat(state.LastKeptExerciseIds.Order())
             .Where(state.LastKeptExerciseIds.Contains)
             .Distinct();
@@ -451,26 +540,92 @@ public sealed class ExerciseSessionService
                 continue;
             }
 
-            WorkoutGroup? targetGroup = targetGroups.SingleOrDefault(group =>
-                WorkoutCoveragePolicy.IsSelectable(exercise, group));
-            if (targetGroup is null ||
-                !assignedTargetGroupIds.Add(targetGroup.Id))
+            WorkoutGroup? targetGroup = targetGroups.FirstOrDefault(group =>
+                !assignedTargetGroupIds.Contains(group.Id) &&
+                IsSelectable(
+                    exercise,
+                    group,
+                    state.ActiveWorkoutModifiers));
+            if (targetGroup is null)
             {
                 continue;
             }
 
-            state.SelectedExerciseIds[targetGroup.Id] = exerciseId;
+            assignedTargetGroupIds.Add(targetGroup.Id);
+            state.SelectedExerciseIds[GetSelectionStorageKey(
+                targetGroup.Id,
+                state.ActiveWorkoutModifiers)] = exerciseId;
         }
     }
 
     private bool IsSavedSelectionValid(
         WorkoutState state,
         Exercise exercise,
-        WorkoutGroup group)
+        WorkoutGroup group,
+        WorkoutModifiers modifiers)
     {
-        return WorkoutCoveragePolicy.IsSelectable(exercise, group) ||
+        return IsSelectable(exercise, group, modifiers) ||
             (PendingRestMatchesSelectionGroup(state, group.SelectionKey) &&
+             IsCompatibleWithModifiers(exercise, modifiers) &&
              IsAssignedToGroup(exercise, group));
+    }
+
+    private bool IsSelectable(
+        Exercise exercise,
+        WorkoutGroup group,
+        WorkoutModifiers modifiers)
+    {
+        return IsInsectFilteringActive(modifiers)
+            ? exercise.InsectCompatibility ==
+                ExerciseInsectCompatibility.Compatible
+            : WorkoutCoveragePolicy.IsSelectable(exercise, group);
+    }
+
+    private bool IsCompatibleWithModifiers(
+        Exercise exercise,
+        WorkoutModifiers modifiers)
+    {
+        return !IsInsectFilteringActive(modifiers) ||
+            exercise.InsectCompatibility ==
+                ExerciseInsectCompatibility.Compatible;
+    }
+
+    private void SeedNeutralModifierProfileFromBase(WorkoutState state)
+    {
+        foreach (WorkoutGroup group in GetSelectionGroups(state))
+        {
+            string profileKey = GetSelectionStorageKey(
+                group.Id,
+                state.ActiveWorkoutModifiers);
+            if (state.SelectedExerciseIds.TryGetValue(
+                    group.Id,
+                    out int exerciseId) &&
+                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+                WorkoutCoveragePolicy.IsSelectable(exercise, group))
+            {
+                state.SelectedExerciseIds[profileKey] = exerciseId;
+            }
+            else
+            {
+                state.SelectedExerciseIds.Remove(profileKey);
+            }
+        }
+    }
+
+    private void SynchronizeNeutralModifierProfileToBase(WorkoutState state)
+    {
+        foreach (WorkoutGroup group in GetSelectionGroups(state))
+        {
+            string profileKey = GetSelectionStorageKey(
+                group.Id,
+                state.ActiveWorkoutModifiers);
+            if (state.SelectedExerciseIds.TryGetValue(
+                    profileKey,
+                    out int exerciseId))
+            {
+                state.SelectedExerciseIds[group.Id] = exerciseId;
+            }
+        }
     }
 
     private bool PendingRestMatchesSelectionGroup(
@@ -576,7 +731,11 @@ public sealed class ExerciseSessionService
             .ToHashSet(StringComparer.Ordinal);
         HashSet<string> sidedSelectionGroupIds = selectionGroups
             .Where(group =>
-                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                state.SelectedExerciseIds.TryGetValue(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers),
+                    out int exerciseId) &&
                 _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .Select(group => group.Id)
@@ -601,15 +760,20 @@ public sealed class ExerciseSessionService
 
     private void NormalizeSavedLineups(WorkoutState state)
     {
-        foreach (string groupId in state.SelectedExerciseIds.Keys.ToArray())
+        foreach (string selectionStorageKey in
+                 state.SelectedExerciseIds.Keys.ToArray())
         {
-            if (!KnownWorkoutGroups.TryGetValue(groupId, out WorkoutGroup? group) ||
+            if (!TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out string groupId,
+                    out WorkoutModifiers modifiers) ||
+                !KnownWorkoutGroups.TryGetValue(groupId, out WorkoutGroup? group) ||
                 !_exercisesById.TryGetValue(
-                    state.SelectedExerciseIds[groupId],
+                    state.SelectedExerciseIds[selectionStorageKey],
                     out Exercise? exercise) ||
-                !IsSavedSelectionValid(state, exercise, group))
+                !IsSavedSelectionValid(state, exercise, group, modifiers))
             {
-                state.SelectedExerciseIds.Remove(groupId);
+                state.SelectedExerciseIds.Remove(selectionStorageKey);
             }
         }
     }
@@ -655,12 +819,21 @@ public sealed class ExerciseSessionService
 
         WorkoutGroup? pendingGroup = GetActiveGroups(state)
             .SingleOrDefault(group => group.Id == pendingGroupId);
-        if (pendingGroup is null ||
-            !state.SelectedExerciseIds.TryGetValue(
+        string? selectionStorageKey = pendingGroup is null
+            ? null
+            : GetSelectionStorageKey(
                 pendingGroup.SelectionKey,
+                state.ActiveWorkoutModifiers);
+        if (pendingGroup is null ||
+            selectionStorageKey is null ||
+            !state.SelectedExerciseIds.TryGetValue(
+                selectionStorageKey,
                 out int exerciseId) ||
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
-            !IsAssignedToGroup(exercise, pendingGroup))
+            (IsInsectFilteringActive(state.ActiveWorkoutModifiers)
+                ? exercise.InsectCompatibility !=
+                    ExerciseInsectCompatibility.Compatible
+                : !IsAssignedToGroup(exercise, pendingGroup)))
         {
             return null;
         }
@@ -690,6 +863,7 @@ public sealed class ExerciseSessionService
     private static void ResetToDurationSelection(WorkoutState state)
     {
         state.ActiveWorkoutMinutes = 0;
+        state.ActiveWorkoutModifiers = WorkoutModifiers.None;
         state.Outcomes.Clear();
         state.ActiveExtraSetSelectionGroupIds.Clear();
         state.ActiveFullSideSelectionGroupIds.Clear();
@@ -711,6 +885,64 @@ public sealed class ExerciseSessionService
     public static bool IsValidWorkoutMinutes(int minutes)
     {
         return WorkoutMinutes.Contains(minutes);
+    }
+
+    public static WorkoutModifiers NormalizeWorkoutModifiers(
+        WorkoutModifiers modifiers)
+    {
+        return modifiers & SupportedWorkoutModifiers;
+    }
+
+    private static bool UsesModifierSelectionProfile(WorkoutModifiers modifiers)
+    {
+        return NormalizeWorkoutModifiers(modifiers) != WorkoutModifiers.None;
+    }
+
+    private bool IsInsectFilteringActive(WorkoutModifiers modifiers)
+    {
+        return _insectSelectionProfileReady &&
+            (NormalizeWorkoutModifiers(modifiers) & WorkoutModifiers.Insect) != 0;
+    }
+
+    private string GetSelectionStorageKey(
+        string selectionGroupId,
+        WorkoutModifiers modifiers)
+    {
+        WorkoutModifiers normalized = NormalizeWorkoutModifiers(modifiers);
+        return normalized == WorkoutModifiers.None
+            ? selectionGroupId
+            : $"{SelectionProfilePrefix}{(int)normalized}" +
+                $"{SelectionProfileSeparator}{selectionGroupId}";
+    }
+
+    private static bool TryParseSelectionStorageKey(
+        string selectionStorageKey,
+        out string selectionGroupId,
+        out WorkoutModifiers modifiers)
+    {
+        int separatorIndex = selectionStorageKey.IndexOf(
+            SelectionProfileSeparator);
+        if (selectionStorageKey.StartsWith(
+                SelectionProfilePrefix,
+                StringComparison.Ordinal) &&
+            separatorIndex > SelectionProfilePrefix.Length &&
+            int.TryParse(
+                selectionStorageKey.AsSpan(
+                    SelectionProfilePrefix.Length,
+                    separatorIndex - SelectionProfilePrefix.Length),
+                out int modifierValue))
+        {
+            modifiers = NormalizeWorkoutModifiers(
+                (WorkoutModifiers)modifierValue);
+            selectionGroupId = selectionStorageKey[(separatorIndex + 1)..];
+            return modifierValue > 0 &&
+                (int)modifiers == modifierValue &&
+                selectionGroupId.Length > 0;
+        }
+
+        selectionGroupId = selectionStorageKey;
+        modifiers = WorkoutModifiers.None;
+        return selectionGroupId.Length > 0;
     }
 
     private static IReadOnlyList<WorkoutGroup> GetSelectionGroups(
@@ -747,13 +979,21 @@ public sealed class ExerciseSessionService
 
         WorkoutGroup[] rankedGroups = GetSelectionGroups(state)
             .OrderByDescending(group =>
-                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                state.SelectedExerciseIds.TryGetValue(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers),
+                    out int exerciseId) &&
                 state.LastKeptExerciseIds.Contains(exerciseId))
             .ThenByDescending(group => group.Order)
             .ToArray();
         HashSet<string> fullSideGroups = rankedGroups
             .Where(group =>
-                state.SelectedExerciseIds.TryGetValue(group.Id, out int exerciseId) &&
+                state.SelectedExerciseIds.TryGetValue(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers),
+                    out int exerciseId) &&
                 _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
                 exercise.SideSequence != ExerciseSideSequence.Continuous)
             .Take(extraMinutes)

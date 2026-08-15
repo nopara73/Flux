@@ -31,6 +31,37 @@ public sealed class CatalogInvariantTests
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Id).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Name).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Video).Distinct().Count());
+        Assert.DoesNotContain(exercises, exercise =>
+            exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
+        Assert.Equal(
+            147,
+            exercises.Count(exercise =>
+                exercise.InsectCompatibility == ExerciseInsectCompatibility.Compatible));
+        Assert.Equal(
+            186,
+            exercises.Count(exercise =>
+                exercise.InsectCompatibility == ExerciseInsectCompatibility.Incompatible));
+        Assert.All(
+            exercises.Where(exercise => exercise.Mode == ExerciseMode.Hold),
+            exercise => Assert.Equal(
+                ExerciseInsectCompatibility.Incompatible,
+                exercise.InsectCompatibility));
+        var insectService = new ExerciseSessionService(exercises, new Random(1));
+        Assert.True(insectService.IsInsectClassificationComplete);
+        Assert.True(insectService.IsInsectSelectionProfileReady);
+        foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+        {
+            var insectState = new WorkoutState();
+            insectService.StartWorkout(
+                insectState,
+                minutes,
+                WorkoutModifiers.Insect);
+            Assert.All(insectService.GetActiveGroups(insectState), group =>
+                Assert.Equal(
+                    ExerciseInsectCompatibility.Compatible,
+                    insectService.GetSelectedExercise(insectState, group)
+                        .InsectCompatibility));
+        }
         Exercise[] breathingExercises = exercises
             .Where(exercise =>
                 exercise.PrimaryCanonicalGroup == CanonicalMuscleGroup.BreathingMuscles)

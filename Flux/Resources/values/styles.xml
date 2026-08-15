@@ -43,6 +43,14 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="DurationModifierTile" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:background">@drawable/insect_modifier_background</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
     <style name="FluxPrimaryButton" parent="@android:style/Widget.Material.Button">
         <item name="android:background">@drawable/primary_button_background</item>
         <item name="android:elevation">3dp</item>

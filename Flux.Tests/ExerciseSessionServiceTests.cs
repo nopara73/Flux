@@ -5,6 +5,176 @@ namespace Flux.Tests;
 
 public sealed class ExerciseSessionServiceTests
 {
+    [Fact]
+    public void UnreviewedCatalogKeepsInsectModifierBehaviorNeutral()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+
+        Assert.False(service.IsInsectClassificationComplete);
+        Assert.False(service.IsInsectSelectionProfileReady);
+        Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.Insect, state.ActiveWorkoutModifiers);
+        Assert.Equal(3, service.GetActiveGroups(state).Count);
+        Assert.All(service.GetActiveGroups(state), group =>
+        {
+            string profileKey = $"p1|{group.SelectionKey}";
+            Assert.Equal(
+                state.SelectedExerciseIds[group.SelectionKey],
+                state.SelectedExerciseIds[profileKey]);
+        });
+    }
+
+    [Fact]
+    public void InsectSelectionFiltersBeforeScoreAndCoverageRanking()
+    {
+        Exercise[] exercises = ReviewedInsectCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+
+        var normal = new WorkoutState();
+        service.StartWorkout(normal, 3);
+        Assert.All(service.GetActiveGroups(normal), group =>
+            Assert.Equal(
+                ExerciseInsectCompatibility.Incompatible,
+                service.GetSelectedExercise(normal, group).InsectCompatibility));
+
+        var insect = new WorkoutState();
+        service.StartWorkout(insect, 3, WorkoutModifiers.Insect);
+        Assert.True(service.IsInsectClassificationComplete);
+        Assert.True(service.IsInsectSelectionProfileReady);
+        Assert.All(service.GetActiveGroups(insect), group =>
+            Assert.Equal(
+                ExerciseInsectCompatibility.Compatible,
+                service.GetSelectedExercise(insect, group).InsectCompatibility));
+    }
+
+    [Fact]
+    public void FullyReviewedCatalogWithFewerThanThirtyCompatibleExercisesRemainsNeutral()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] exercises = groups.SelectMany((group, index) => new[]
+        {
+            QualifiedForGroup(
+                1 + index,
+                group,
+                insectCompatibility: ExerciseInsectCompatibility.Compatible),
+            QualifiedForGroup(
+                101 + index,
+                group,
+                score: 100,
+                insectCompatibility: ExerciseInsectCompatibility.Incompatible),
+        }).ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+
+        Assert.True(service.IsInsectClassificationComplete);
+        Assert.False(service.IsInsectSelectionProfileReady);
+        Assert.All(service.GetActiveGroups(state), group =>
+            Assert.Equal(
+                ExerciseInsectCompatibility.Incompatible,
+                service.GetSelectedExercise(state, group).InsectCompatibility));
+    }
+
+    [Fact]
+    public void ModifierProfilesShareKeepsWithoutForgettingExcludedExercises()
+    {
+        var service = new ExerciseSessionService(
+            ReviewedInsectCatalog(),
+            new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3);
+        int[] keptIds = service.GetActiveGroups(state)
+            .Select(group => service.GetSelectedExercise(state, group).Id)
+            .ToArray();
+        foreach (WorkoutGroup group in service.GetActiveGroups(state))
+        {
+            service.RecordOutcome(state, group, keep: true);
+        }
+        service.AcknowledgeCompletion(state);
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+
+        Assert.Equal(keptIds.Order(), state.LastKeptExerciseIds.Order());
+        Assert.All(service.GetActiveGroups(state), group =>
+            Assert.Equal(
+                ExerciseInsectCompatibility.Compatible,
+                service.GetSelectedExercise(state, group).InsectCompatibility));
+
+        service.FinishInterruptedWorkout(state);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal(
+            keptIds.Order(),
+            service.GetActiveGroups(state)
+                .Select(group => service.GetSelectedExercise(state, group).Id)
+                .Order());
+    }
+
+    [Fact]
+    public void NeutralModifierProfileDoesNotReselectRejectedExercise()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+        WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
+        int rejectedExerciseId = service.GetSelectedExercise(state, groups[0]).Id;
+
+        service.RecordOutcome(state, groups[0], keep: false);
+        foreach (WorkoutGroup group in groups.Skip(1))
+        {
+            service.RecordOutcome(state, group, keep: true);
+        }
+        service.AcknowledgeCompletion(state);
+
+        Assert.DoesNotContain(rejectedExerciseId, state.SelectedExerciseIds.Values);
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+
+        Assert.NotEqual(
+            rejectedExerciseId,
+            service.GetSelectedExercise(state, service.GetActiveGroups(state)[0]).Id);
+    }
+
+    [Fact]
+    public void InsectProfileCarriesKeepsIntoLongWorkoutBeforeAllocatingExtraSets()
+    {
+        var service = new ExerciseSessionService(
+            ReviewedInsectCatalog(),
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.Insect);
+        int[] keptExerciseIds = service.GetActiveGroups(state)
+            .Select(group => service.GetSelectedExercise(state, group).Id)
+            .ToArray();
+        foreach (WorkoutGroup group in service.GetActiveGroups(state))
+        {
+            service.RecordOutcome(state, group, keep: true);
+        }
+        service.AcknowledgeCompletion(state);
+
+        service.StartWorkout(state, 45, WorkoutModifiers.Insect);
+
+        WorkoutGroup[] keptGroups = service.GetActiveGroups(state)
+            .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
+            .Select(rounds => rounds.First())
+            .Where(group => keptExerciseIds.Contains(
+                service.GetSelectedExercise(state, group).Id))
+            .ToArray();
+        Assert.Equal(keptExerciseIds.Length, keptGroups.Length);
+        Assert.All(keptGroups, group =>
+            Assert.Contains(
+                group.SelectionKey,
+                state.ActiveExtraSetSelectionGroupIds));
+        Assert.All(keptGroups, group =>
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p1|{group.SelectionKey}")));
+    }
+
     [Theory]
     [InlineData(3)]
     [InlineData(5)]
@@ -1303,11 +1473,44 @@ public sealed class ExerciseSessionServiceTests
         ];
     }
 
+    private static Exercise[] ReviewedInsectCatalog()
+    {
+        var exercises = new List<Exercise>();
+        int exerciseId = 10_000;
+        foreach (CanonicalMuscleGroup primary in
+                 Enum.GetValues<CanonicalMuscleGroup>())
+        {
+            CanonicalMuscleGroup[] secondary =
+                Enum.GetValues<CanonicalMuscleGroup>()
+                    .Where(group => group != primary)
+                    .ToArray();
+            exercises.Add(Exercise(
+                exerciseId++,
+                primary,
+                0,
+                ExerciseSideSequence.Continuous,
+                ExerciseInsectCompatibility.Compatible,
+                secondary));
+
+            exercises.Add(Exercise(
+                exerciseId++,
+                primary,
+                100,
+                ExerciseSideSequence.Continuous,
+                ExerciseInsectCompatibility.Incompatible,
+                secondary));
+        }
+
+        return exercises.ToArray();
+    }
+
     private static Exercise QualifiedForGroup(
         int id,
         WorkoutGroup group,
         int score = 0,
-        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
+        ExerciseInsectCompatibility insectCompatibility =
+            ExerciseInsectCompatibility.Unreviewed)
     {
         CanonicalMuscleGroup primary = group.CanonicalGroups
             .Order()
@@ -1320,7 +1523,8 @@ public sealed class ExerciseSessionServiceTests
             minutes,
             WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group),
             score,
-            sideSequence: sideSequence);
+            sideSequence: sideSequence,
+            insectCompatibility: insectCompatibility);
     }
 
     private static Exercise QualifiedExercise(
@@ -1344,7 +1548,9 @@ public sealed class ExerciseSessionServiceTests
         int inBucketCoverage,
         int score = 0,
         CanonicalMuscleGroup[]? additionalSecondaries = null,
-        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous)
+        ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
+        ExerciseInsectCompatibility insectCompatibility =
+            ExerciseInsectCompatibility.Unreviewed)
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, primary);
         if (inBucketCoverage is < 1 || inBucketCoverage > group.CanonicalGroups.Count)
@@ -1360,7 +1566,13 @@ public sealed class ExerciseSessionServiceTests
             .Where(candidate => candidate != primary)
             .Distinct()
             .ToArray();
-        return Exercise(id, primary, score, sideSequence, secondary);
+        return Exercise(
+            id,
+            primary,
+            score,
+            sideSequence,
+            insectCompatibility,
+            secondary);
     }
 
     private static Exercise FullyCoveredExercise(
@@ -1390,6 +1602,21 @@ public sealed class ExerciseSessionServiceTests
         int score,
         ExerciseSideSequence sideSequence,
         params CanonicalMuscleGroup[] secondary)
+        => Exercise(
+            id,
+            primary,
+            score,
+            sideSequence,
+            ExerciseInsectCompatibility.Unreviewed,
+            secondary);
+
+    private static Exercise Exercise(
+        int id,
+        CanonicalMuscleGroup primary,
+        int score,
+        ExerciseSideSequence sideSequence,
+        ExerciseInsectCompatibility insectCompatibility,
+        params CanonicalMuscleGroup[] secondary)
     {
         return new Exercise
         {
@@ -1404,6 +1631,7 @@ public sealed class ExerciseSessionServiceTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = sideSequence,
+            InsectCompatibility = insectCompatibility,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
