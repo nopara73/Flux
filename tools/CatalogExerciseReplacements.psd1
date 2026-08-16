@@ -138,7 +138,7 @@
         MotionProfile = 'HighKneeOverheadReach'
         Primary = 'Soleus'
         Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -1352,7 +1352,7 @@
         MotionProfile = 'HighKneeCrossBodyPull'
         Primary = 'ShoulderAdductorsAndExtensors'
         Secondary = @('AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -1898,7 +1898,7 @@
         MotionProfile = 'SideTapPalmPush'
         Primary = 'Chest'
         Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -2468,7 +2468,7 @@
         MotionProfile = 'HighKneePunch'
         Primary = 'ForearmFlexorsAndPronators'
         Secondary = @('ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'ElbowExtensors', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3040,7 +3040,7 @@
         MotionProfile = 'StepTouchArmArc'
         Primary = 'BreathingMuscles'
         Secondary = @('ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'SpinalExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3144,7 +3144,7 @@
         MotionProfile = 'HighKneeCrossBodySweep'
         Primary = 'BreathingMuscles'
         Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'DeepAndIntersegmentalBack')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3170,7 +3170,7 @@
         MotionProfile = 'KneeLiftOverheadReach'
         Primary = 'BreathingMuscles'
         Secondary = @('ShoulderAbductors', 'ScapularGirdle')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3222,7 +3222,7 @@
         MotionProfile = 'SideTapCrossBodySweep'
         Primary = 'BreathingMuscles'
         Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'GlutealExtensors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4519,7 +4519,7 @@
         MotionProfile = 'WideStepElbowPull'
         Primary = 'ElbowFlexors'
         Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4727,7 +4727,7 @@
         MotionProfile = 'SideStepRainbowReach'
         Primary = 'ShoulderAbductors'
         Secondary = @('ScapularGirdle', 'RotatorCuff')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4753,7 +4753,7 @@
         MotionProfile = 'HighKneeGoalpostPull'
         Primary = 'RotatorCuff'
         Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'DeepAndIntersegmentalBack')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5009,7 +5009,7 @@
         MotionProfile = 'HighKneeSideReach'
         Primary = 'PelvicFloorAndPerineum'
         Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5474,7 +5474,7 @@
         MotionProfile = 'SideStepOverheadReach'
         Primary = 'DeepAndIntersegmentalBack'
         Secondary = @('AbdominalWall', 'SpinalExtensors', 'DeepHipRotators')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5500,7 +5500,7 @@
         MotionProfile = 'DiagonalKneeOverheadPull'
         Primary = 'ShoulderAdductorsAndExtensors'
         Secondary = @('ScapularGirdle', 'ElbowFlexors', 'AccessoryHipAdductors', 'HipAbductors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0

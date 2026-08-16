@@ -885,10 +885,11 @@ test("full-side rounds use exact 45/15/45 boundaries", () => {
 
 test("reviewed sided movements always receive a timed side swap", () => {
   const sidedIds = [
-    16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
-    213, 220, 225, 234, 239, 241, 242, 256, 258, 269,
-    278, 279, 283, 285, 286, 291, 294, 326, 329, 396,
-    513, 572, 636, 685, 745,
+    16, 20, 31, 47, 97, 117, 179, 180, 184, 186, 211,
+    213, 219, 220, 225, 234, 239, 241, 242, 248, 256, 258, 269,
+    278, 279, 282, 283, 285, 286, 291, 294, 326, 329, 390,
+    394, 395, 396, 397, 508, 513, 572, 576, 577, 618, 636,
+    685, 745, 816, 834,
   ];
   for (const exerciseId of sidedIds) {
     assert.notEqual(
@@ -898,12 +899,31 @@ test("reviewed sided movements always receive a timed side swap", () => {
     );
   }
 
+  const correctedOneSideMedia = new Map([
+    [31, "ScreenRightThenLeft"],
+    [219, "ScreenLeftThenRight"],
+    [248, "ScreenRightThenLeft"],
+    [282, "ScreenLeftThenRight"],
+    [390, "ScreenLeftThenRight"],
+    [394, "ScreenLeftThenRight"],
+    [395, "ScreenLeftThenRight"],
+    [397, "ScreenRightThenLeft"],
+    [508, "ScreenRightThenLeft"],
+    [576, "ScreenLeftThenRight"],
+    [577, "ScreenRightThenLeft"],
+    [618, "ScreenLeftThenRight"],
+    [816, "ScreenLeftThenRight"],
+    [834, "ScreenLeftThenRight"],
+  ]);
+  for (const [exerciseId, sideSequence] of correctedOneSideMedia) {
+    assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, sideSequence);
+  }
+
   const continuousIds = [
-    15, 17, 19, 31, 107, 135, 150, 169, 193, 219,
-    201, 229, 230, 248, 251, 257, 262, 263, 265, 266,
-    267, 268, 270, 275, 282, 287, 289, 301, 314, 321,
-    390, 391, 394, 395, 397, 425, 507, 508, 516, 576,
-    577, 615, 618, 677, 683, 816, 834,
+    15, 17, 19, 107, 135, 150, 169, 193,
+    201, 229, 230, 251, 257, 262, 263, 265, 266,
+    267, 268, 270, 275, 287, 289, 301, 314, 321,
+    391, 425, 507, 516, 615, 677, 683,
   ];
   for (const exerciseId of continuousIds) {
     assert.equal(
@@ -1325,6 +1345,29 @@ test("revision semantic replacements reset scores", () => {
 
   for (const exerciseId of semanticReplacementIds) {
     assert.equal(restored.state.scores[String(exerciseId)], undefined);
+  }
+});
+
+test("unilateral timing revision rebuilds workouts without resetting scores", () => {
+  const timingCorrectionIds = [
+    31, 219, 248, 282, 390, 394, 395,
+    397, 508, 576, 577, 618, 816, 834,
+  ];
+  const state = createDefaultState();
+  state.catalogRevision = 24;
+
+  for (const exerciseId of timingCorrectionIds) {
+    state.selectedExerciseIds[`changed.${exerciseId}`] = exerciseId;
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(25), false);
+  for (const exerciseId of timingCorrectionIds) {
+    assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
+    assert.equal(restored.state.scores[String(exerciseId)], -4);
   }
 });
 

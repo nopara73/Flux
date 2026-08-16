@@ -163,7 +163,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webIndex, /id="silence-modifier"/);
   assert.match(mainActivity, /WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence/);
   assert.match(webApp, /WORKOUT_MODIFIERS\.Insect[\s\S]*WORKOUT_MODIFIERS\.Silence/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*42/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*43/);
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(exerciseDatabase, /max_space_meters > 0 AND max_space_meters <= 2/);
 });

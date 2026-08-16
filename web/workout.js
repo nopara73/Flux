@@ -50,7 +50,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 24;
+export const CURRENT_CATALOG_REVISION = 25;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -89,6 +89,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [24, new Set([
     420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
+  ])],
+  [25, new Set([
+    31, 219, 248, 282, 390, 394, 395,
+    397, 508, 576, 577, 618, 816, 834,
   ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([

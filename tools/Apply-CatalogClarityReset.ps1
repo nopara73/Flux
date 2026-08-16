@@ -59,7 +59,7 @@ $rows = @(
     New-ClarityReplacement 17 'Standing Toe-Touch Windmill' 'Standing mobility' 'ToeTouchWindmill' 'Continuous' 'FGB_9YVUmfY.mp4' $standingUrl 135 25
     New-ClarityReplacement 19 'Wide Plie Squat Pulses' 'Ballet conditioning' 'PliePulse' 'Continuous' '2_lCvBvHRFI.mp4' $eleniUrl 45 20
     New-ClarityReplacement 20 'Standing Rear-Leg Pulses' 'Standing lower-body conditioning' 'RearLegPulse' 'ScreenLeftThenRight' '2_lCvBvHRFI.mp4' $eleniUrl 285 20
-    New-ClarityReplacement 31 'High-Knee Overhead-Reach March' 'Low-impact conditioning' 'HighKneeOverheadReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 134 12
+    New-ClarityReplacement 31 'High-Knee Overhead-Reach March' 'Low-impact conditioning' 'HighKneeOverheadReach' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 134 12
     New-ClarityReplacement 47 'Tandem-Stance Head Turns' 'Balance and vestibular training' 'TandemHeadTurn' 'ScreenRightThenLeft' 'qH4_IVoWptU.mp4' 'https://www.youtube.com/watch?v=qH4_IVoWptU' 12 10
     New-ClarityReplacement 97 'Standing Side-Kick Reach' 'Balance training' 'SideKickReach' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 873 12
     New-ClarityReplacement 107 'Wide Plie Squats' 'Ballet conditioning' 'PlieSquat' 'Continuous' '2_lCvBvHRFI.mp4' $eleniUrl 15 20
@@ -69,14 +69,14 @@ $rows = @(
     New-ClarityReplacement 179 'Hip-Hinge Rear-Leg Raises' 'Standing posterior-chain conditioning' 'HipHingeRearLegRaise' 'ScreenLeftThenRight' '2_lCvBvHRFI.mp4' $eleniUrl 315 20
     New-ClarityReplacement 180 'Standing Front Snap Kicks' 'Karate' 'FrontSnapKick' 'ScreenRightThenLeft' 'chuck-norris-private-lesson.mp4' 'https://www.youtube.com/watch?v=TIo6D2CO6uI' 1050.4 10.4 8
     New-ClarityReplacement 193 'Wide-Squat Floor-to-Overhead Reach' 'Standing mobility' 'SquatOverheadReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 248 12
-    New-ClarityReplacement 219 'High-Knee Cross-Body Pull' 'Low-impact conditioning' 'HighKneeCrossBodyPull' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 759 12
+    New-ClarityReplacement 219 'High-Knee Cross-Body Pull' 'Low-impact conditioning' 'HighKneeCrossBodyPull' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 759 12
     New-ClarityReplacement 220 'Karate Rising Block' 'Karate' 'RisingBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 15 24
     New-ClarityReplacement 229 'Standing Elbow-Squeeze Chest Press' 'Standing upper-body conditioning' 'ElbowSqueezePress' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 92 24
     New-ClarityReplacement 230 'Prayer Press Raise' 'Standing upper-body conditioning' 'PrayerPressRaise' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 226 22
     New-ClarityReplacement 239 'Tabletop Tendon Glide' 'Hand therapy' 'TabletopTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 124 9 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 241 'Hook-Fist Tendon Glide' 'Hand therapy' 'HookFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 136 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 242 'Full-Fist Tendon Glide' 'Hand therapy' 'FullFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 166 9 10 'crop=ih:ih:(iw-ih)/2:0' $true
-    New-ClarityReplacement 248 'Side-Tap Palm Pushes' 'Low-impact conditioning' 'SideTapPalmPush' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 1043 12
+    New-ClarityReplacement 248 'Side-Tap Palm Pushes' 'Low-impact conditioning' 'SideTapPalmPush' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 1043 12
     New-ClarityReplacement 251 'Standing Swan-Dive Hinge' 'Standing yoga' 'SwanDiveHinge' 'Continuous' 'HnJw_EHvpvY.mp4' 'https://www.youtube.com/watch?v=HnJw_EHvpvY' 18 20
     New-ClarityReplacement 256 'Bent-Over Straight-Arm Lat Sweeps' 'Standing strength and mobility' 'LatSweep' 'Continuous' 'oRRKLd8dGUQ.mp4' 'https://www.youtube.com/watch?v=oRRKLd8dGUQ' 6 8 10
     New-ClarityReplacement 257 'Karate Knife-Hand Block' 'Karate' 'KnifeHandBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 150 20
@@ -89,7 +89,7 @@ $rows = @(
     New-ClarityReplacement 275 'Backward Arm Circles' 'Shoulder endurance' 'ArmCircle' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 190 24
     New-ClarityReplacement 278 'Staggered-Stance Straight Punch' 'Boxing conditioning' 'StraightPunch' 'ScreenRightThenLeft' 'tTkZ9oNMwXs.mp4' 'https://www.youtube.com/watch?v=tTkZ9oNMwXs' 5 10 10
     New-ClarityReplacement 279 'Staggered-Stance Jab-Cross' 'Karate conditioning' 'JabCross' 'ScreenRightThenLeft' 'chuck-norris-private-lesson.mp4' 'https://www.youtube.com/watch?v=TIo6D2CO6uI' 544.45 13.8 8
-    New-ClarityReplacement 282 'High-Knee Horizontal Punches' 'Low-impact boxing conditioning' 'HighKneePunch' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 702 12
+    New-ClarityReplacement 282 'High-Knee Horizontal Punches' 'Low-impact boxing conditioning' 'HighKneePunch' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 702 12
     New-ClarityReplacement 283 'Straight-Fist Tendon Glide' 'Hand therapy' 'StraightFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 178 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 285 'Karate Inside Block' 'Karate' 'InsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 82 24
     New-ClarityReplacement 286 'Karate Outside Block' 'Karate' 'OutsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 47 24
@@ -100,28 +100,28 @@ $rows = @(
     New-ClarityReplacement 321 'Side-Tap Alternating Arm Raises' 'Low-impact conditioning' 'SideTapArmRaise' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 191 12
     New-ClarityReplacement 326 'Rear-Hand Straight Punch' 'Boxing conditioning' 'RearHandStraightPunch' 'ScreenRightThenLeft' 'tTkZ9oNMwXs.mp4' 'https://www.youtube.com/watch?v=tTkZ9oNMwXs' 18 10 10
     New-ClarityReplacement 329 'Standing Shoulder CAR' 'Shoulder mobility' 'ShoulderCAR' 'ScreenRightThenLeft' 'GRHohA9PX_U.mp4' 'https://www.youtube.com/watch?v=GRHohA9PX_U' 1 12 10
-    New-ClarityReplacement 390 'Inhale Arms Up, Exhale Step-Touch' 'Breath-led mobility' 'StepTouchArmArc' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 21 12
+    New-ClarityReplacement 390 'Inhale Arms Up, Exhale Step-Touch' 'Breath-led mobility' 'StepTouchArmArc' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 21 12
     New-ClarityReplacement 391 'Inhale Arms Open, Exhale High-Knee' 'Breath-led conditioning' 'HighKneeOpenArmMarch' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 475 12
-    New-ClarityReplacement 394 'Inhale Open, Exhale Cross-Body Knee' 'Breath-led conditioning' 'HighKneeCrossBodySweep' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 645 12
-    New-ClarityReplacement 395 'Inhale Reach Up, Exhale Knee Lift' 'Breath-led mobility' 'KneeLiftOverheadReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 361 12
+    New-ClarityReplacement 394 'Inhale Open, Exhale Cross-Body Knee' 'Breath-led conditioning' 'HighKneeCrossBodySweep' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 645 12
+    New-ClarityReplacement 395 'Inhale Reach Up, Exhale Knee Lift' 'Breath-led mobility' 'KneeLiftOverheadReach' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 361 12
     New-ClarityReplacement 396 'Single-Leg Knee-Lift Balance Hold' 'Standing balance' 'KneeLiftBalance' 'ScreenLeftThenRight' '2_lCvBvHRFI.mp4' $eleniUrl 135 20 8 'crop=ih:ih:(iw-ih)/2:0' $false 'Hold' 'Still' 50
-    New-ClarityReplacement 397 'Inhale Open, Exhale Cross-Body Side Tap' 'Breath-led mobility' 'SideTapCrossBodySweep' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 78 12
+    New-ClarityReplacement 397 'Inhale Open, Exhale Cross-Body Side Tap' 'Breath-led mobility' 'SideTapCrossBodySweep' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 78 12
     New-ClarityReplacement 425 'Feet-Together Head Turns' 'Balance and vestibular training' 'FeetTogetherHeadTurn' 'Continuous' 'candidate-narrow-head-turns-tilts.mp4' 'https://www.youtube.com/watch?v=81sfTXQ6zjc' 0 9 10
     New-ClarityReplacement 507 'Hamstring Curl with Elbow Pull' 'Standing upper-back conditioning' 'HamstringCurlElbowPull' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 532 12
-    New-ClarityReplacement 508 'Wide-Step Elbow Pull' 'Standing upper-body conditioning' 'WideStepElbowPull' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 816 12
+    New-ClarityReplacement 508 'Wide-Step Elbow Pull' 'Standing upper-body conditioning' 'WideStepElbowPull' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 816 12
     New-ClarityReplacement 513 'Single-Leg Thumb-Focus Head Nods' 'Vestibular rehabilitation' 'GazeStabilityHeadNod' 'ScreenLeftThenRight' 'candidate-single-leg-thumb-nods.mp4' 'https://www.youtube.com/watch?v=pz-Igky5st8' 0 23 8
     New-ClarityReplacement 516 'Bent-Elbow Shoulder Circles' 'Shoulder mobility' 'BentElbowShoulderCircle' 'Continuous' 'OJs2AfEUzaA.mp4' 'https://www.youtube.com/watch?v=OJs2AfEUzaA' 4 13.5 10
     New-ClarityReplacement 572 'Cossack Side-to-Side Shifts' 'Standing adductor mobility' 'CossackShift' 'Continuous' '2_lCvBvHRFI.mp4' $eleniUrl 435 20
-    New-ClarityReplacement 576 'Side-Step Rainbow Reach' 'Low-impact conditioning' 'SideStepRainbowReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 419 12
-    New-ClarityReplacement 577 'High-Knee Goalpost Pull' 'Low-impact conditioning' 'HighKneeGoalpostPull' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 929 12
+    New-ClarityReplacement 576 'Side-Step Rainbow Reach' 'Low-impact conditioning' 'SideStepRainbowReach' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 419 12
+    New-ClarityReplacement 577 'High-Knee Goalpost Pull' 'Low-impact conditioning' 'HighKneeGoalpostPull' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 929 12
     New-ClarityReplacement 615 'Hamstring Curl with Prayer Hands' 'Standing pelvic mobility' 'HamstringCurlPrayer' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 1100 12
-    New-ClarityReplacement 618 'High-Knee Side Reach' 'Standing pelvic mobility' 'HighKneeSideReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 986 12
+    New-ClarityReplacement 618 'High-Knee Side Reach' 'Standing pelvic mobility' 'HighKneeSideReach' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 986 12
     New-ClarityReplacement 677 'T-Arm Side-to-Side Sweep' 'Standing upper-back conditioning' 'TArmSideSweep' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 128 22
     New-ClarityReplacement 683 'Alternating Palm-Up T-Arm Flips' 'Shoulder mobility' 'AlternatingPalmFlip' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 286 24
     New-ClarityReplacement 685 'Static-Stance Karate Reverse Punch' 'Karate' 'ReversePunch' 'ScreenRightThenLeft' 'chuck-norris-private-lesson.mp4' 'https://www.youtube.com/watch?v=TIo6D2CO6uI' 449.7 5.5 8
     New-ClarityReplacement 745 'Standing Overhead Presses' 'Standing upper-body conditioning' 'OverheadPress' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 318 24
-    New-ClarityReplacement 816 'Side-Step Overhead Reach' 'Standing core conditioning' 'SideStepOverheadReach' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 589 12
-    New-ClarityReplacement 834 'Diagonal Knee Drive with Overhead Pull' 'Standing upper-body conditioning' 'DiagonalKneeOverheadPull' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 305 12
+    New-ClarityReplacement 816 'Side-Step Overhead Reach' 'Standing core conditioning' 'SideStepOverheadReach' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 589 12
+    New-ClarityReplacement 834 'Diagonal Knee Drive with Overhead Pull' 'Standing upper-body conditioning' 'DiagonalKneeOverheadPull' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 305 12
 )
 
 if ($rows.Count -lt 67) {

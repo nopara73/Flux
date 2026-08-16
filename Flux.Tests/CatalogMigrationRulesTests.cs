@@ -955,6 +955,48 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
+    [InlineData(31)]
+    [InlineData(219)]
+    [InlineData(248)]
+    [InlineData(282)]
+    [InlineData(390)]
+    [InlineData(394)]
+    [InlineData(395)]
+    [InlineData(397)]
+    [InlineData(508)]
+    [InlineData(576)]
+    [InlineData(577)]
+    [InlineData(618)]
+    [InlineData(816)]
+    [InlineData(834)]
+    public void UnilateralTimingRevisionRebuildsWorkoutButPreservesScore(
+        int exerciseId)
+    {
+        const string groupId = "changed.group";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 24,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groupId] = exerciseId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groupId] = ExerciseOutcome.Tick,
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(groupId, state.SelectedExerciseIds);
+        Assert.DoesNotContain(groupId, state.Outcomes);
+        Assert.DoesNotContain(
+            CatalogMigrationRules.ScoreInvalidationsByRevision,
+            revision => revision.Key == 25);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
     [InlineData(229, "Overhead Palm-Press Hold", "Alternating Boxing Uppercut")]
     [InlineData(239, "Straight-Finger Knuckle Bends", "Ninja Fireball Hand-Seal Sequence")]
     [InlineData(326, "Staggered-Stance Jab-Cross", "Wide-Stance Alternating Straight Punches")]
