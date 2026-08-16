@@ -12,7 +12,7 @@
 
 - Select real, established, worthwhile exercises first; never invent movements, filler, or artificial variations.
 - Accept an exercise only when an ordinary person can immediately copy it for 45 seconds from its plain name and final silent demonstration. Any uncertainty means rejection.
-- Require feet-only ground contact, zero equipment, ordinary-shoe compatibility, quiet execution, and a 2 m × 2 m maximum area.
+- Require feet-only ground contact, zero equipment, ordinary-shoe compatibility, and a 2 m × 2 m maximum area. Quiet execution is required whenever the default-on Silence modifier is enabled; established naturally noisy movements may be admitted only when their sound is the ordinary result of execution and they remain excluded by Silence.
 - Require exact human media showing the complete natural movement at normal speed. Reject approximate, composited, obscured, mismatched, or misleading demonstrations.
 - Allow similar exercises.
 - Derive timing, sides, directions, name, and muscle associations from the demonstrated movement—never force the demonstration to fit predetermined metadata.

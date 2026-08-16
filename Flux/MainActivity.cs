@@ -49,7 +49,8 @@ public class MainActivity : Activity
     private WorkoutGroup _currentWorkoutGroup = null!;
     private Exercise? _currentExercise;
     private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
-    private WorkoutModifiers _selectedWorkoutModifiers = WorkoutModifiers.None;
+    private WorkoutModifiers _selectedWorkoutModifiers =
+        ExerciseSessionService.DefaultWorkoutModifiers;
 
     private View _durationScreen = null!;
     private LinearLayout _durationInsetContent = null!;
@@ -63,6 +64,7 @@ public class MainActivity : Activity
     private FrameLayout _durationOptionLabels = null!;
     private GridLayout _durationModifierGrid = null!;
     private CheckBox _insectModifierButton = null!;
+    private CheckBox _silenceModifierButton = null!;
     private FrameLayout _durationActionBar = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
@@ -271,6 +273,8 @@ public class MainActivity : Activity
             Resource.Id.duration_modifier_grid);
         _insectModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.insect_modifier_button);
+        _silenceModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.silence_modifier_button);
         _durationActionBar = FindRequiredView<FrameLayout>(
             Resource.Id.duration_action_bar);
         _durationMinutesValue = FindRequiredView<TextView>(
@@ -353,8 +357,22 @@ public class MainActivity : Activity
             }
         };
         _insectModifierButton.Click += (_, _) =>
-            SetSelectedInsectModifier(
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Insect,
                 _insectModifierButton.Checked,
+                _insectModifierButton,
+                Resource.String.insect_modifier_description,
+                Resource.String.insect_modifier_on,
+                Resource.String.insect_modifier_off,
+                userInitiated: true);
+        _silenceModifierButton.Click += (_, _) =>
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Silence,
+                _silenceModifierButton.Checked,
+                _silenceModifierButton,
+                Resource.String.silence_modifier_description,
+                Resource.String.silence_modifier_on,
+                Resource.String.silence_modifier_off,
                 userInitiated: true);
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
@@ -545,10 +563,15 @@ public class MainActivity : Activity
     {
         int matchParent = ViewGroup.LayoutParams.MatchParent;
         int wrapContent = ViewGroup.LayoutParams.WrapContent;
-        int iconSize = Resources!.GetDimensionPixelSize(
-            Resource.Dimension.duration_icon_size);
-        int dialSize = Resources.GetDimensionPixelSize(
-            Resource.Dimension.duration_dial_size);
+        var resources = Resources!;
+        bool compactLandscape = landscape &&
+            resources.Configuration!.ScreenWidthDp < 640;
+        int iconSize = compactLandscape
+            ? DpInt(32)
+            : resources.GetDimensionPixelSize(Resource.Dimension.duration_icon_size);
+        int dialSize = compactLandscape
+            ? DpInt(140)
+            : resources.GetDimensionPixelSize(Resource.Dimension.duration_dial_size);
 
         _durationInsetContent.Orientation = landscape
             ? Orientation.Horizontal
@@ -566,7 +589,8 @@ public class MainActivity : Activity
             iconSize,
             iconSize);
         var dialLayout = new LinearLayout.LayoutParams(dialSize, dialSize);
-        dialLayout.TopMargin = DpInt(landscape ? 8 : 22);
+        dialLayout.TopMargin = DpInt(
+            compactLandscape ? 4 : landscape ? 8 : 22);
         _durationDial.LayoutParameters = dialLayout;
 
         if (landscape)
@@ -576,24 +600,26 @@ public class MainActivity : Activity
                 matchParent,
                 1f);
             _durationActionBar.LayoutParameters = new LinearLayout.LayoutParams(
-                Resources.GetDimensionPixelSize(
-                    Resource.Dimension.duration_landscape_action_width),
+                compactLandscape
+                    ? DpInt(80)
+                    : resources.GetDimensionPixelSize(
+                        Resource.Dimension.duration_landscape_action_width),
                 matchParent);
             _durationActionBar.SetBackgroundResource(
                 Resource.Drawable.duration_action_rail_background);
             _durationActionBar.SetPadding(
-                DpInt(16),
-                DpInt(16),
-                DpInt(16),
-                DpInt(16));
+                DpInt(compactLandscape ? 10 : 16),
+                DpInt(compactLandscape ? 10 : 16),
+                DpInt(compactLandscape ? 10 : 16),
+                DpInt(compactLandscape ? 10 : 16));
             _durationContent.SetPadding(
-                DpInt(16),
-                DpInt(10),
-                DpInt(16),
-                DpInt(10));
+                DpInt(compactLandscape ? 8 : 16),
+                DpInt(compactLandscape ? 6 : 10),
+                DpInt(compactLandscape ? 8 : 16),
+                DpInt(compactLandscape ? 6 : 10));
 
             var identityLayout = new LinearLayout.LayoutParams(
-                dialSize + DpInt(28),
+                dialSize + DpInt(compactLandscape ? 20 : 28),
                 wrapContent)
             {
                 Gravity = GravityFlags.CenterVertical,
@@ -607,36 +633,39 @@ public class MainActivity : Activity
             {
                 Gravity = GravityFlags.CenterVertical,
             };
-            controlsLayout.SetMargins(DpInt(12), 0, 0, 0);
+            controlsLayout.SetMargins(DpInt(compactLandscape ? 8 : 12), 0, 0, 0);
             _durationControls.LayoutParameters = controlsLayout;
 
             var stepRowLayout = new LinearLayout.LayoutParams(
                 matchParent,
-                DpInt(56));
+                DpInt(compactLandscape ? 48 : 56));
             _durationStepRow.LayoutParameters = stepRowLayout;
             _durationDecreaseButton.LayoutParameters =
-                new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
+                new LinearLayout.LayoutParams(
+                    DpInt(compactLandscape ? 48 : 56),
+                    DpInt(compactLandscape ? 48 : 56));
             _durationIncreaseButton.LayoutParameters =
-                new LinearLayout.LayoutParams(DpInt(56), DpInt(56));
+                new LinearLayout.LayoutParams(
+                    DpInt(compactLandscape ? 48 : 56),
+                    DpInt(compactLandscape ? 48 : 56));
             _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
             var modifierGridLayout = new LinearLayout.LayoutParams(
                 matchParent,
                 wrapContent);
-            modifierGridLayout.TopMargin = DpInt(16);
+            modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGrid.LayoutParameters = modifierGridLayout;
             _durationModifierGrid.ColumnCount = 5;
-            _insectModifierButton.LayoutParameters =
-                CreateModifierTileLayout(DpInt(56));
+            SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
                 matchParent,
                 DpInt(24));
-            segmentLayout.TopMargin = DpInt(20);
+            segmentLayout.TopMargin = DpInt(compactLandscape ? 12 : 20);
             _durationOptionSegments.LayoutParameters = segmentLayout;
             _beginWorkoutButton.LayoutParameters = new FrameLayout.LayoutParams(
-                DpInt(68),
-                DpInt(68),
+                DpInt(compactLandscape ? 60 : 68),
+                DpInt(compactLandscape ? 60 : 68),
                 GravityFlags.Center);
             _durationOptionLabels.Post(AlignDurationOptionLabels);
             return;
@@ -685,8 +714,7 @@ public class MainActivity : Activity
         portraitModifierGridLayout.TopMargin = DpInt(32);
         _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
         _durationModifierGrid.ColumnCount = 4;
-        _insectModifierButton.LayoutParameters =
-            CreateModifierTileLayout(DpInt(64));
+        SetModifierTileSizes(DpInt(64));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
             matchParent,
@@ -1095,6 +1123,23 @@ public class MainActivity : Activity
         return layout;
     }
 
+    private void SetModifierTileSizes(int size)
+    {
+        int padding = size <= DpInt(48)
+            ? DpInt(10)
+            : size <= DpInt(56)
+                ? DpInt(12)
+                : DpInt(16);
+        for (int index = 0; index < _durationModifierGrid.ChildCount; index++)
+        {
+            View tile = _durationModifierGrid.GetChildAt(index)
+                ?? throw new InvalidOperationException(
+                    "A duration modifier tile is missing.");
+            tile.LayoutParameters = CreateModifierTileLayout(size);
+            tile.SetPadding(padding, padding, padding, padding);
+        }
+    }
+
     private void ResizeMediaCard()
     {
         int size = Math.Min(_exerciseMediaArea.Width, _exerciseMediaArea.Height);
@@ -1152,27 +1197,43 @@ public class MainActivity : Activity
 
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
-        SetSelectedInsectModifier(
-            (_state.LastWorkoutModifiers & WorkoutModifiers.Insect) != 0);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Insect,
+            (_state.LastWorkoutModifiers & WorkoutModifiers.Insect) != 0,
+            _insectModifierButton,
+            Resource.String.insect_modifier_description,
+            Resource.String.insect_modifier_on,
+            Resource.String.insect_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Silence,
+            (_state.LastWorkoutModifiers & WorkoutModifiers.Silence) != 0,
+            _silenceModifierButton,
+            Resource.String.silence_modifier_description,
+            Resource.String.silence_modifier_on,
+            Resource.String.silence_modifier_off);
     }
 
-    private void SetSelectedInsectModifier(
+    private void SetSelectedWorkoutModifier(
+        WorkoutModifiers modifier,
         bool enabled,
+        CheckBox button,
+        int descriptionResourceId,
+        int enabledStateResourceId,
+        int disabledStateResourceId,
         bool userInitiated = false)
     {
         _selectedWorkoutModifiers = enabled
-            ? _selectedWorkoutModifiers | WorkoutModifiers.Insect
-            : _selectedWorkoutModifiers & ~WorkoutModifiers.Insect;
+            ? _selectedWorkoutModifiers | modifier
+            : _selectedWorkoutModifiers & ~modifier;
         _selectedWorkoutModifiers =
             WorkoutModifierPolicy.Normalize(_selectedWorkoutModifiers);
-        _insectModifierButton.Checked = enabled;
-        _insectModifierButton.ContentDescription =
-            GetString(Resource.String.insect_modifier_description);
+        button.Checked = enabled;
+        button.ContentDescription = GetString(descriptionResourceId);
         if (OperatingSystem.IsAndroidVersionAtLeast(30))
         {
-            _insectModifierButton.StateDescription = GetString(enabled
-                ? Resource.String.insect_modifier_on
-                : Resource.String.insect_modifier_off);
+            button.StateDescription = GetString(enabled
+                ? enabledStateResourceId
+                : disabledStateResourceId);
         }
 
         if (!userInitiated)
@@ -1180,12 +1241,11 @@ public class MainActivity : Activity
             return;
         }
 
-        _insectModifierButton.PerformHapticFeedback(
-            FeedbackConstants.ClockTick);
-        _insectModifierButton.Animate()?.Cancel();
-        _insectModifierButton.ScaleX = 0.92f;
-        _insectModifierButton.ScaleY = 0.92f;
-        if (_insectModifierButton.Animate() is { } animator)
+        button.PerformHapticFeedback(FeedbackConstants.ClockTick);
+        button.Animate()?.Cancel();
+        button.ScaleX = 0.92f;
+        button.ScaleY = 0.92f;
+        if (button.Animate() is { } animator)
         {
             animator
                 .ScaleX(1f)

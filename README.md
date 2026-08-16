@@ -5,7 +5,7 @@ Android. It targets Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-The app ships with a local SQLite database seeded from 328 reviewed exercises.
+The app ships with a local SQLite database seeded from 357 reviewed exercises.
 Movements are selected for their value first, then assigned on a best-effort
 basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
 scheduling group plus every secondary group it meaningfully trains. Full-body
@@ -13,9 +13,10 @@ exercises remain eligible wherever their hardest work fits. Every workout
 bucket has at least 10 choices that meaningfully cover at least half of its
 canonical leaves for every supported modifier profile. Primary ownership is
 preferred after score/keep priority; truthful secondary associations remain
-eligible. Each primitive modifier also requires at least five normal-profile
-choices per bucket that it explicitly excludes, so enabling a modifier cannot
-silently erase the catalog's contrasting movement class. Every supported
+eligible. The Insect modifier also requires at least five normal-profile choices
+per bucket that it explicitly excludes, in every context formed by the other
+modifiers. This preserves a meaningful non-Insect catalog without forcing
+artificial noisy variants into anatomy they do not train. Every supported
 duration/profile combination must admit a distinct exercise for every scheduled
 group.
 
@@ -40,29 +41,35 @@ Every retained movement:
 - works in ordinary shoes or barefoot;
 - fits inside 2 m × 2 m;
 - needs no wall, chair, floor work, prop, partner, or equipment;
-- avoids jumping, stomping, clapping, and vocalization.
+- is naturally quiet when the default-on Silence modifier is enabled; established
+  impact movements are eligible only when Silence is explicitly disabled.
 
-All 328 MP4 demonstrations are bundled for offline use. Holds loop as previews,
+All 357 MP4 demonstrations are bundled for offline use and contain no audio.
+The catalog's `silent` field describes the sound naturally produced by performing
+the exercise, not the demonstration file's audio track. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
 timer. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 19 stores canonical assignments, assignment roles,
-side-sequence metadata, and every resolution roll-up in normalized tables. Its
-additive v14–v18 migrations keep every existing exercise ID, demonstration
-path, and score while adding new catalog records, applying the current schedule
-order, and applying two narrow reviewed label corrections: timed-side
-“Alternating” normalization and the stable-ID 268 external-rotation name
-correction. See
+Database schema version 42 stores canonical assignments, modifier metadata,
+assignment roles, side-sequence metadata, and every resolution roll-up in
+normalized tables. The v42 migration relaxes the historical all-quiet schema
+constraint while preserving scores for unchanged exercise identities. See
 [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
 
 ## Workout flow
 
-The opening screen selects 3, 5, 7, 10, 15, 20, or 30 minutes. It defaults to
-the last choice, or 10 minutes on first use; unsupported legacy values migrate
-to the nearest choice. Each minute is one smallest-to-largest mass-ordered
-rolled-up group: 45 seconds of exercise and a 15-second rest/decision window.
+The opening screen selects 3, 5, 7, 10, 15, 20, 30, 45, 60, or 90 minutes and
+has Insect and Silence modifier tiles. Silence defaults on; turning it off
+relaxes only the natural-noise requirement and never forces a noisy exercise.
+It does not mute
+Flux's start, side-change, rest, or completion whistles. Modifier choices,
+duration, keeps, scores, and muscle coverage form one selection context. The
+screen defaults to the last choices, or 10 minutes with Silence on at first use;
+unsupported legacy values migrate safely. Each minute is one
+smallest-to-largest mass-ordered rolled-up group: 45 seconds of exercise and a
+15-second rest/decision window.
 
 Press **Start** to begin a round. The quiet **Skip** action records the current
 exercise as not kept and advances immediately, bypassing both its remaining

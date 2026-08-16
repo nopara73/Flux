@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 7;
+    public int Version { get; set; } = 8;
 
     public int CatalogRevision { get; set; }
 
@@ -29,7 +29,7 @@ public sealed class WorkoutState
     public int LastWorkoutMinutes { get; set; } = 10;
 
     public WorkoutModifiers LastWorkoutModifiers { get; set; } =
-        WorkoutModifiers.None;
+        WorkoutModifiers.Silence;
 
     public int ActiveWorkoutMinutes { get; set; }
 

@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(7, state.Version);
+        Assert.Equal(8, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -102,7 +102,7 @@ public sealed class WorkoutStateInvariantTests
             [rejected, replacement, torso, lower],
             new Random(1));
         var state = new WorkoutState();
-        service.StartWorkout(state, 3);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
         WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
         WorkoutGroup target = MassGroupingTaxonomy.GetGroup(
             3,
@@ -156,7 +156,7 @@ public sealed class WorkoutStateInvariantTests
             unrelated.PrimaryCanonicalGroup).Id;
         state.SelectedExerciseIds[unrelatedGroupId] = unrelated.Id;
 
-        service.StartWorkout(state, 3);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
         WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
         WorkoutGroup target = MassGroupingTaxonomy.GetGroup(
             3,
@@ -218,13 +218,13 @@ public sealed class WorkoutStateInvariantTests
             CatalogMigrationRules.CurrentCatalogRevision,
             restored.CatalogRevision);
 
-        service.StartWorkout(restored, 3);
+        service.StartWorkout(restored, 3, WorkoutModifiers.None);
 
         Assert.Equal(present.Id, restored.SelectedExerciseIds[savedGroupId]);
     }
 
     [Fact]
-    public void MissingModifierFieldsDefaultToOff()
+    public void PreSilenceStateMigratesToQuietByDefault()
     {
         const string json =
             """
@@ -238,8 +238,81 @@ public sealed class WorkoutStateInvariantTests
         WorkoutState state = JsonSerializer.Deserialize<WorkoutState>(json, JsonOptions)
             ?? throw new InvalidOperationException("Workout state did not deserialize.");
 
-        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
+    }
+
+    [Fact]
+    public void FreshWorkoutUsesSilenceUnlessCallerExplicitlyRelaxesIt()
+    {
+        Exercise[] exercises =
+        [
+            Exercise(1, CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Exercise(2, CanonicalMuscleGroup.SpinalExtensors),
+            Exercise(3, CanonicalMuscleGroup.ScapularGirdle),
+        ];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3);
+
+        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.Silence, state.ActiveWorkoutModifiers);
+        Assert.All(service.GetActiveGroups(state), group =>
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p2|{group.SelectionKey}")));
+    }
+
+    [Fact]
+    public void VersionSevenActiveWorkoutMigratesWithoutLosingProgress()
+    {
+        Exercise[] exercises =
+        [
+            Exercise(1, CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Exercise(2, CanonicalMuscleGroup.SpinalExtensors),
+            Exercise(3, CanonicalMuscleGroup.ScapularGirdle),
+        ];
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        var state = new WorkoutState
+        {
+            Version = 7,
+            LastWorkoutModifiers = WorkoutModifiers.Insect,
+            ActiveWorkoutMinutes = 3,
+            ActiveWorkoutModifiers = WorkoutModifiers.Insect,
+            SelectedExerciseIds = groups.ToDictionary(
+                group => $"p1|{group.SelectionKey}",
+                group => exercises.Single(exercise =>
+                    WorkoutCoveragePolicy.IsSelectable(exercise, group)).Id),
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groups[0].Id] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = groups[1].Id,
+            PendingRestEndsAtUnixMilliseconds =
+                DateTimeOffset.UtcNow.AddMinutes(1).ToUnixTimeMilliseconds(),
+            PendingRestKept = true,
+        };
+        var service = new ExerciseSessionService(exercises, new Random(1));
+
+        service.Initialize(state);
+
+        Assert.Equal(8, state.Version);
+        Assert.Equal(
+            WorkoutModifiers.Insect | WorkoutModifiers.Silence,
+            state.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.Insect | WorkoutModifiers.Silence,
+            state.ActiveWorkoutModifiers);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[groups[0].Id]);
+        Assert.Equal(groups[1].Id, state.PendingRestGroupId);
+        Assert.True(state.PendingRestKept);
+        Assert.All(groups, group =>
+        {
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p1|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p3|{group.SelectionKey}"));
+        });
     }
 
     [Fact]

@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(210, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(222, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -772,6 +772,80 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
+    [Fact]
+    public void CatalogRevisionClearsProfiledRepeatedRoundProgressForReplacement()
+    {
+        const int replacedId = 420;
+        const string storageKey = "p2|r30.hip-abductors";
+        const string firstRound = "r30.hip-abductors.set1";
+        const string repeatedRound = "r30.hip-abductors.set2";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 23,
+            ActiveWorkoutMinutes = 60,
+            ActiveWorkoutModifiers = WorkoutModifiers.Silence,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [storageKey] = replacedId,
+                ["p2|r30.chest"] = 280,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [firstRound] = ExerciseOutcome.Tick,
+                [repeatedRound] = ExerciseOutcome.X,
+                ["r30.chest"] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = firstRound,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(storageKey, state.SelectedExerciseIds);
+        Assert.DoesNotContain(firstRound, state.Outcomes);
+        Assert.DoesNotContain(repeatedRound, state.Outcomes);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes["r30.chest"]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.False(state.PendingRestKept);
+    }
+
+    [Fact]
+    public void CatalogRevisionPreservesActiveProgressWhenOnlyInactiveProfileIsRetired()
+    {
+        const string activeStorageKey = "p1|r30.hip-abductors";
+        const string inactiveStorageKey = "p2|r30.hip-abductors";
+        const string activeRound = "r30.hip-abductors.set1";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 23,
+            ActiveWorkoutMinutes = 45,
+            ActiveWorkoutModifiers = WorkoutModifiers.Insect,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [activeStorageKey] = 280,
+                [inactiveStorageKey] = 420,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [activeRound] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = activeRound,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.Equal(280, state.SelectedExerciseIds[activeStorageKey]);
+        Assert.DoesNotContain(inactiveStorageKey, state.SelectedExerciseIds);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[activeRound]);
+        Assert.Equal(activeRound, state.PendingRestGroupId);
+        Assert.Equal(123456, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.True(state.PendingRestKept);
+    }
+
     [Theory]
     [InlineData(115)]
     [InlineData(119)]
@@ -867,6 +941,17 @@ public sealed class CatalogMigrationRulesTests
                 407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
             },
             CatalogMigrationRules.ScoreInvalidationsByRevision[23]);
+    }
+
+    [Fact]
+    public void SilenceCatalogRevisionResetsEveryNoisyReplacementScore()
+    {
+        Assert.Equal(
+            new HashSet<int>
+            {
+                420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
+            },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[24]);
     }
 
     [Theory]

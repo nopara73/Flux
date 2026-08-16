@@ -1,4 +1,5 @@
 import {
+  DEFAULT_WORKOUT_MODIFIERS,
   REST_DURATION_MS,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
@@ -30,6 +31,7 @@ const elements = {
   durationLabels: [...byId("duration-labels").children],
   beginWorkout: byId("begin-workout"),
   insectModifier: byId("insect-modifier"),
+  silenceModifier: byId("silence-modifier"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
   phaseLeft: byId("phase-left"),
@@ -72,7 +74,7 @@ const sounds = Object.fromEntries(
 
 let session = null;
 let selectedMinutes = 10;
-let selectedModifiers = WORKOUT_MODIFIERS.None;
+let selectedModifiers = DEFAULT_WORKOUT_MODIFIERS;
 let currentGroup = null;
 let currentExercise = null;
 let mediaGeneration = 0;
@@ -119,7 +121,7 @@ async function bootstrap() {
     selectedMinutes = session.state.lastWorkoutMinutes;
     selectedModifiers = session.state.lastWorkoutModifiers;
     renderDuration(selectedMinutes, false);
-    renderInsectModifier();
+    renderWorkoutModifiers();
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       showCompletion(false);
@@ -140,7 +142,9 @@ function bindEvents() {
     selectDurationByIndex(Number(elements.durationRange.value), true);
   });
   elements.beginWorkout.addEventListener("click", startWorkout);
-  elements.insectModifier.addEventListener("click", toggleInsectModifier);
+  for (const { element, flag } of workoutModifierTiles()) {
+    element.addEventListener("click", () => toggleWorkoutModifier(flag));
+  }
   elements.startMovement.addEventListener("click", startMovement);
   elements.skipExercise.addEventListener("click", skipExercise);
   elements.keepExercise.addEventListener("click", keepExercise);
@@ -220,14 +224,32 @@ function renderDuration(minutes, userInitiated) {
   }
 }
 
-function toggleInsectModifier() {
-  selectedModifiers ^= WORKOUT_MODIFIERS.Insect;
-  renderInsectModifier();
+function workoutModifierTiles() {
+  return [
+    { element: elements.insectModifier, flag: WORKOUT_MODIFIERS.Insect },
+    {
+      element: elements.silenceModifier,
+      flag: WORKOUT_MODIFIERS.Silence,
+      enabledLabel: "Silence modifier: quiet exercises only",
+      disabledLabel: "Silence modifier: noisy exercises allowed",
+    },
+  ];
 }
 
-function renderInsectModifier() {
-  const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Insect) !== 0;
-  elements.insectModifier.setAttribute("aria-pressed", String(enabled));
+function toggleWorkoutModifier(flag) {
+  selectedModifiers ^= flag;
+  renderWorkoutModifiers();
+}
+
+function renderWorkoutModifiers() {
+  for (const { element, flag, enabledLabel, disabledLabel } of
+    workoutModifierTiles()) {
+    const enabled = (selectedModifiers & flag) !== 0;
+    element.setAttribute("aria-pressed", String(enabled));
+    if (enabledLabel && disabledLabel) {
+      element.setAttribute("aria-label", enabled ? enabledLabel : disabledLabel);
+    }
+  }
 }
 
 function showScreen(screen) {
@@ -246,7 +268,7 @@ function showDuration() {
   selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
   selectedModifiers = session?.state.lastWorkoutModifiers ?? selectedModifiers;
   renderDuration(selectedMinutes, false);
-  renderInsectModifier();
+  renderWorkoutModifiers();
   elements.beginWorkout.disabled = !session;
   showScreen("duration");
 }

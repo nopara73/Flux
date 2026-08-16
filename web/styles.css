@@ -345,7 +345,7 @@ button.modifier-tile:not(:disabled):active {
   outline-offset: 3px;
 }
 
-.insect-icon {
+.modifier-icon {
   width: 32px;
   height: 32px;
   fill: currentColor;
@@ -1076,6 +1076,76 @@ input:focus-visible {
   }
 }
 
+@media (orientation: landscape) and (max-width: 639px) {
+  .duration-content {
+    padding:
+      calc(6px + env(safe-area-inset-top))
+      8px
+      calc(6px + env(safe-area-inset-bottom))
+      calc(8px + env(safe-area-inset-left));
+  }
+
+  .duration-identity {
+    width: 160px;
+    flex-basis: 160px;
+  }
+
+  .flux-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .duration-dial {
+    width: 140px;
+    height: 140px;
+    margin-top: 4px;
+  }
+
+  .duration-controls {
+    margin-left: 8px;
+  }
+
+  .duration-step-row,
+  .step-button {
+    height: 48px;
+  }
+
+  .step-button {
+    width: 48px;
+  }
+
+  .duration-labels {
+    margin-right: 58px;
+    margin-left: 58px;
+    font-size: 8px;
+  }
+
+  .duration-modifiers {
+    min-height: 48px;
+    margin-top: 10px;
+  }
+
+  .modifier-tile {
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+  }
+
+  .duration-action-bar {
+    width: calc(80px + env(safe-area-inset-right));
+    padding:
+      calc(10px + env(safe-area-inset-top))
+      calc(10px + env(safe-area-inset-right))
+      calc(10px + env(safe-area-inset-bottom))
+      10px;
+  }
+
+  .begin-workout {
+    width: 60px;
+    height: 60px;
+  }
+}
+
 @media (min-width: 1000px) {
   .duration-screen {
     padding: clamp(32px, 4vw, 72px);
@@ -1197,7 +1267,7 @@ input:focus-visible {
     border-radius: 20px;
   }
 
-  .insect-icon {
+  .modifier-icon {
     width: 100%;
     height: 100%;
   }

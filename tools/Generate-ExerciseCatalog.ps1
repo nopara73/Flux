@@ -68,6 +68,12 @@ $insectCompatibleExerciseIds = @(
     $insectCompatibilityReview.Compatible | ForEach-Object { [int]$_ })
 $insectIncompatibleExerciseIds = @(
     $insectCompatibilityReview.Incompatible | ForEach-Object { [int]$_ })
+$silenceCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSilenceCompatibility.psd1') -SkipLimitCheck
+$silentExerciseIds = @(
+    $silenceCompatibilityReview.Silent | ForEach-Object { [int]$_ })
+$nonSilentExerciseIds = @(
+    $silenceCompatibilityReview.NonSilent | ForEach-Object { [int]$_ })
 $exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionSequences.psd1') -SkipLimitCheck
 $retiredDirectionOnlyExerciseIds = @(816)
@@ -409,6 +415,18 @@ if ($insectCompatibleExerciseIds.Count -ne
             $_ -in $insectIncompatibleExerciseIds }).Count -gt 0 -or
     @(Compare-Object $retainedExerciseIds $reviewedInsectExerciseIds).Count -gt 0) {
     throw 'Every retained exercise must have exactly one insect-compatibility review.'
+}
+
+$reviewedSilenceExerciseIds = @(
+    $silentExerciseIds + $nonSilentExerciseIds | Sort-Object -Unique)
+if ($silentExerciseIds.Count -ne
+        @($silentExerciseIds | Sort-Object -Unique).Count -or
+    $nonSilentExerciseIds.Count -ne
+        @($nonSilentExerciseIds | Sort-Object -Unique).Count -or
+    @($silentExerciseIds | Where-Object {
+            $_ -in $nonSilentExerciseIds }).Count -gt 0 -or
+    @(Compare-Object $retainedExerciseIds $reviewedSilenceExerciseIds).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one silence review.'
 }
 
 if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
@@ -2764,7 +2782,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             shoeAgnostic = $true
             maxSpaceMeters = 2
             equipment = 'None'
-            silent = $true
+            silent = $exerciseId -in $silentExerciseIds
         })
 
         $isSelected = if ($ExerciseIds.Count -gt 0) {
@@ -3042,7 +3060,7 @@ $constraintViolations = $records | Where-Object {
     $_['maxSpaceMeters'] -le 0 -or
     $_['maxSpaceMeters'] -gt 2 -or
     $_['equipment'] -ne 'None' -or
-    -not $_['silent'] -or
+    -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
     @($_['secondaryCanonicalGroups'] | Sort-Object -Unique).Count -ne

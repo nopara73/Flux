@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 328 human-demonstrated standing movements. Exercises are chosen
+Flux contains 357 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -29,8 +29,9 @@ Every entry must:
 - remain practical in ordinary shoes or barefoot;
 - fit inside a 2 m × 2 m space;
 - require no wall, chair, floor exercise, prop, partner, or equipment;
-- avoid jumping, stomping, clapping, vocalization, and other
-  neighbor-disturbing actions;
+- be naturally quiet whenever the default-on Silence modifier is enabled;
+  established impact movements may be eligible only after Silence is explicitly
+  disabled;
 - be bilateral/symmetric, naturally alternate in one uninterrupted loop, or use
   an explicit reviewed screen-side order for the 20 / 5 / 20 timed-side flow;
 - have one or more muscle-group assignments and its own bundled H.264 MP4.
@@ -48,15 +49,18 @@ source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.
 The runtime catalog emits those assignments directly. The historical ten source
 families remain generator-only so stable exercise IDs and reviewed media paths
 do not change. The generator rejects missing, duplicate, or unknown assignments;
-canonical leaves with fewer than 10 primaries; duplicate names; synthetic
-modifier suffixes; missing motion profiles; non-human media; and constraint
-violations. It also requires an explicit reviewed timed-side or continuous
+modifier-profile coverage or distinct-lineup deficits; duplicate names;
+synthetic modifier suffixes; missing motion profiles; non-human media; and
+constraint violations. It also requires an explicit reviewed timed-side or continuous
 decision for every retained movement, so new entries cannot silently default
 to the wrong playback behavior.
 
 ## Media quality
 
-Every entry has an offline 256 × 256 silent H.264 MP4. All 328 included
+Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
+`silent` catalog field separately records whether performing the movement is
+naturally quiet, allowing the default-on Silence modifier to exclude impact
+movements. All 357 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

@@ -3,7 +3,5 @@
     android:shape="rectangle">
     <solid android:color="@color/brand_graphite" />
     <corners android:radius="16dp" />
-    <stroke
-        android:width="3dp"
-        android:color="@color/brand_chartreuse" />
+    <stroke android:width="3dp" android:color="@color/brand_chartreuse" />
 </shape>

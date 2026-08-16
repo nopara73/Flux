@@ -3553,6 +3553,58 @@
             MirrorForAlternation = $false
         }
     }
+    420 = @{
+        RetiredName = 'Atlas Nod'
+        Name = 'Jumping Jacks'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'JumpingJack'
+        Primary = 'HipAbductors'
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'jumping-jacks-cult.mp4'
+            Url = 'https://www.youtube.com/watch?v=CWpmIW6l-YA'
+            SourcePage = 'https://www.youtube.com/watch?v=CWpmIW6l-YA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 26.2
+            DurationSeconds = 2.76
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    421 = @{
+        RetiredName = 'Neck Flexion-Extension Flow'
+        Name = 'Seal Jacks'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'SealJack'
+        Primary = 'HipAbductors'
+        Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'seal-jacks-live-lean.mp4'
+            Url = 'https://www.youtube.com/watch?v=vEVkrYd1XbQ'
+            SourcePage = 'https://www.youtube.com/watch?v=vEVkrYd1XbQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 6.006
+            DurationSeconds = 20.287
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     422 = @{
         RetiredName = 'Cervical Flexion Isometric'
         Name = 'Turn Head Left and Right'
@@ -3605,6 +3657,32 @@
             MirrorForAlternation = $false
         }
     }
+    424 = @{
+        RetiredName = 'Neck Side-Bend Flow'
+        Name = 'Squat Jacks'
+        Practice = 'Cardio and bodyweight conditioning'
+        MotionProfile = 'SquatJack'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'AbdominalWall', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'squat-jacks-live-lean.mp4'
+            Url = 'https://www.youtube.com/watch?v=a3fuGM-SyUw'
+            SourcePage = 'https://www.youtube.com/watch?v=a3fuGM-SyUw'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 14.715
+            DurationSeconds = 7.941
+            FramesPerSecond = 10
+            Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     425 = @{
         RetiredName = 'Chin-Tuck Hold'
         Name = 'Feet-Together Head Turns'
@@ -3625,6 +3703,240 @@
             Video = $true
             StartSeconds = 0
             DurationSeconds = 9
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    426 = @{
+        RetiredName = 'Neck Elongation Hold'
+        Name = 'Cross Jacks'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'CrossJack'
+        Primary = 'HipAbductors'
+        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'Chest', 'ScapularGirdle', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'cross-jacks-ucla.mp4'
+            Url = 'https://www.youtube.com/watch?v=zuwyz8p61BI'
+            SourcePage = 'https://www.youtube.com/watch?v=zuwyz8p61BI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 18.268
+            DurationSeconds = 17.685
+            FramesPerSecond = 10
+            Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    427 = @{
+        RetiredName = 'Horizontal Smooth Pursuit'
+        Name = 'Split Jacks'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'SplitJack'
+        Primary = 'HipFlexors'
+        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'split-jacks-origym.mp4'
+            Url = 'https://www.youtube.com/watch?v=jO5J4KNhJLU'
+            SourcePage = 'https://www.youtube.com/watch?v=jO5J4KNhJLU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1.56
+            DurationSeconds = 6.2
+            FramesPerSecond = 10
+            Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    428 = @{
+        RetiredName = 'Vertical Smooth Pursuit'
+        Name = 'Pogo Jumps with Arm Swing'
+        Practice = 'Plyometric conditioning'
+        MotionProfile = 'PogoJumpArmSwing'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'ScapularGirdle', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pogo-jumps-arm-swing-strathclyde.mp4'
+            Url = 'https://www.youtube.com/watch?v=N9bFLlrglFA'
+            SourcePage = 'https://www.youtube.com/watch?v=N9bFLlrglFA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 2.933
+            DurationSeconds = 3.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:iw*0.0625:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    429 = @{
+        RetiredName = 'Cross-Pattern Smooth Pursuit'
+        Name = 'High-Knee Run in Place'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'HighKneeRun'
+        Primary = 'HipFlexors'
+        Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'high-knee-run-experience-life.mp4'
+            Url = 'https://www.youtube.com/watch?v=VGb_fJ81yWc'
+            SourcePage = 'https://www.youtube.com/watch?v=VGb_fJ81yWc'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1.668
+            DurationSeconds = 3.921
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    430 = @{
+        RetiredName = 'Bidirectional Circular Smooth Pursuit'
+        Name = 'Butt-Kick Run in Place'
+        Practice = 'Cardio conditioning'
+        MotionProfile = 'ButtKickRun'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'butt-kick-run-get-healthy-u.mp4'
+            Url = 'https://www.youtube.com/watch?v=oMW59TKZvaI'
+            SourcePage = 'https://www.youtube.com/watch?v=oMW59TKZvaI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 33.951
+            DurationSeconds = 4.546
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    431 = @{
+        RetiredName = 'Figure-Eight Smooth Pursuit'
+        Name = 'Bodyweight Jump Squats'
+        Practice = 'Plyometric conditioning'
+        MotionProfile = 'JumpSquat'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'bodyweight-jump-squat-onnit.mp4'
+            Url = 'https://www.youtube.com/watch?v=JwCaCql7VpQ'
+            SourcePage = 'https://www.youtube.com/watch?v=JwCaCql7VpQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 3.462
+            DurationSeconds = 8.759
+            FramesPerSecond = 10
+            Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    432 = @{
+        RetiredName = 'Near-Far Focus Shift'
+        Name = '180-Degree Squat Jumps'
+        Practice = 'Plyometric conditioning'
+        MotionProfile = 'RotationalJumpSquat'
+        Primary = 'DeepHipRotators'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = '180-degree-squat-jumps-made-possible.mp4'
+            Url = 'https://www.youtube.com/watch?v=ALu62-8XTJI'
+            SourcePage = 'https://www.youtube.com/watch?v=ALu62-8XTJI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 7.257
+            DurationSeconds = 6.382
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    433 = @{
+        RetiredName = 'Thumb Convergence Tracking'
+        Name = 'Alternating Jumping Lunges'
+        Practice = 'Plyometric conditioning'
+        MotionProfile = 'JumpingLunge'
+        Primary = 'GlutealExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-jumping-lunges-onnit.mp4'
+            Url = 'https://www.youtube.com/watch?v=WfPJ8jaw4Fc'
+            SourcePage = 'https://www.youtube.com/watch?v=WfPJ8jaw4Fc'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1.668
+            DurationSeconds = 4.838
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    434 = @{
+        RetiredName = 'Horizontal Saccades'
+        Name = 'Lateral Line Hops'
+        Practice = 'Plyometric conditioning'
+        MotionProfile = 'LateralLineHop'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'lateral-line-hops-crossfit310.mp4'
+            Url = 'https://www.youtube.com/watch?v=RyGSaj4i7Xo'
+            SourcePage = 'https://www.youtube.com/watch?v=RyGSaj4i7Xo'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4.104
+            DurationSeconds = 5.439
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false

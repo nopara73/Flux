@@ -10,6 +10,18 @@ $review = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1') -SkipLimitCheck
 $externalMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
+$catalogExerciseReplacements = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'CatalogExerciseReplacements.psd1') -SkipLimitCheck
+foreach ($entry in $catalogExerciseReplacements.GetEnumerator()) {
+    $exerciseId = [int]$entry.Key
+    $replacement = $entry.Value
+    if ($replacement -isnot [System.Collections.IDictionary] -or
+        -not $replacement.ContainsKey('Media') -or
+        $replacement.Media -isnot [System.Collections.IDictionary]) {
+        throw "Replacement $exerciseId has no valid reviewed media definition."
+    }
+    $externalMedia[$exerciseId] = $replacement.Media
+}
 $posecodeMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactMediaCopies = Import-PowerShellDataFile -LiteralPath (

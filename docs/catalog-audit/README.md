@@ -6,18 +6,17 @@ what the user would infer from the plain exercise name, what the silent human
 demonstration visibly shows, and whether those two signals make the action
 immediately copyable.
 
-- Catalog entries reviewed: 333
-- Entries retained: 180
-- Entries retired: 153
-- Reviewed replacements added: 153
-- Retained still endpoints: 25
-- Replacement still endpoints: 37
-- Final presentation mix: 271 motion demonstrations, 62 still endpoints
+- Catalog entries reviewed: 357
+- Entries retained: 135
+- Entries retired: 222
+- Reviewed replacements added: 222
+- Final presentation mix: 304 motion demonstrations, 53 still endpoints
 - Final canonical-leaf coverage: at least 10 meaningfully associated exercises in every leaf
 - Final workout coverage: at least 10 selectable exercises in every supported roll-up
 - Modifier coverage: at least 10 selectable exercises for every enabled profile in
-  every roll-up, plus at least 5 normal-selectable exercises explicitly excluded by
-  each primitive modifier. Both floors apply automatically to future modifiers.
+  every roll-up. Modifiers whose product contract requires a contrasting class
+  (currently Insect) additionally require at least 5 normal-selectable excluded
+  exercises in every context formed by the other modifiers.
 - Distinct-lineup feasibility: every duration and enabled profile must admit one
   different exercise per scheduled group.
 

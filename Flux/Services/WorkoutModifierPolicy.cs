@@ -20,6 +20,7 @@ public sealed record WorkoutModifierExclusionDeficiency(
     string GroupId,
     string GroupName,
     WorkoutModifiers Modifier,
+    WorkoutModifiers ContextProfile,
     int ExcludedExerciseCount,
     int RequiredExcludedExerciseCount);
 
@@ -30,7 +31,8 @@ public static class WorkoutModifierPolicy
     private sealed record ModifierRule(
         WorkoutModifiers Flag,
         Func<Exercise, bool> IsReviewed,
-        Func<Exercise, bool> IsCompatible);
+        Func<Exercise, bool> IsCompatible,
+        bool RequiresExclusionFloor);
 
     private static readonly ModifierRule[] Rules =
     [
@@ -39,7 +41,13 @@ public static class WorkoutModifierPolicy
             exercise => exercise.InsectCompatibility !=
                 ExerciseInsectCompatibility.Unreviewed,
             exercise => exercise.InsectCompatibility ==
-                ExerciseInsectCompatibility.Compatible),
+                ExerciseInsectCompatibility.Compatible,
+            RequiresExclusionFloor: true),
+        new(
+            WorkoutModifiers.Silence,
+            _ => true,
+            exercise => exercise.Silent,
+            RequiresExclusionFloor: false),
     ];
 
     private static readonly WorkoutModifiers SupportedModifierMask =
@@ -153,20 +161,26 @@ public static class WorkoutModifierPolicy
         return MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes =>
                 MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
-                    Rules.Select(rule => new
-                    {
-                        Minutes = minutes,
-                        Group = group,
-                        Rule = rule,
-                        Count = exercises
-                            .Where(exercise =>
-                                WorkoutCoveragePolicy.IsSelectable(exercise, group) &&
-                                rule.IsReviewed(exercise) &&
-                                !rule.IsCompatible(exercise))
-                            .Select(exercise => exercise.Id)
-                            .Distinct()
-                            .Count(),
-                    })))
+                    Rules.Where(rule => rule.RequiresExclusionFloor)
+                        .SelectMany(rule => SupportedProfiles
+                        .Select(profile => profile & ~rule.Flag)
+                        .Distinct()
+                        .Select(contextProfile => new
+                        {
+                            Minutes = minutes,
+                            Group = group,
+                            Rule = rule,
+                            ContextProfile = contextProfile,
+                            Count = exercises
+                                .Where(exercise =>
+                                    WorkoutCoveragePolicy.IsSelectable(exercise, group) &&
+                                    IsCompatible(exercise, contextProfile) &&
+                                    rule.IsReviewed(exercise) &&
+                                    !rule.IsCompatible(exercise))
+                                .Select(exercise => exercise.Id)
+                                .Distinct()
+                                .Count(),
+                        }))))
             .Where(result =>
                 result.Count < MinimumExcludedExercisesPerGroup)
             .Select(result => new WorkoutModifierExclusionDeficiency(
@@ -174,6 +188,7 @@ public static class WorkoutModifierPolicy
                 result.Group.Id,
                 result.Group.DisplayName,
                 result.Rule.Flag,
+                result.ContextProfile,
                 result.Count,
                 MinimumExcludedExercisesPerGroup))
             .ToArray();

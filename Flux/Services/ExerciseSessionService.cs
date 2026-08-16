@@ -7,8 +7,11 @@ public sealed class ExerciseSessionService
     public const int MinimumWorkoutMinutes = 3;
     public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
+    public const WorkoutModifiers DefaultWorkoutModifiers =
+        WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 7;
+    private const int CurrentStateVersion = 8;
+    private const int LegacyLineupStateVersion = 7;
     private const string SelectionProfilePrefix = "p";
     private const char SelectionProfileSeparator = '|';
     private static readonly IReadOnlyList<int> WorkoutMinutes =
@@ -40,11 +43,16 @@ public sealed class ExerciseSessionService
 
         NormalizeCollections(state);
         CatalogMigrationRules.ReconcileWorkoutState(state);
-        bool migratedLegacyState = state.Version < CurrentStateVersion ||
+        bool migratedLegacyState = state.Version < LegacyLineupStateVersion ||
             state.LegacySelectedExerciseNames.Count > 0;
         if (migratedLegacyState)
         {
             MigrateLegacyLineups(state);
+        }
+
+        if (state.Version < CurrentStateVersion)
+        {
+            MigrateImplicitSilenceModifier(state);
         }
 
         state.Version = CurrentStateVersion;
@@ -97,7 +105,7 @@ public sealed class ExerciseSessionService
     public void StartWorkout(
         WorkoutState state,
         int minutes,
-        WorkoutModifiers modifiers = WorkoutModifiers.None)
+        WorkoutModifiers modifiers = DefaultWorkoutModifiers)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -948,6 +956,35 @@ public sealed class ExerciseSessionService
     {
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
+    }
+
+    private void MigrateImplicitSilenceModifier(WorkoutState state)
+    {
+        foreach ((string selectionStorageKey, int exerciseId) in
+                 state.SelectedExerciseIds.ToArray())
+        {
+            if (!TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out string selectionGroupId,
+                    out WorkoutModifiers modifiers))
+            {
+                continue;
+            }
+
+            WorkoutModifiers quietProfile = NormalizeWorkoutModifiers(
+                modifiers | WorkoutModifiers.Silence);
+            state.SelectedExerciseIds.TryAdd(
+                GetSelectionStorageKey(selectionGroupId, quietProfile),
+                exerciseId);
+        }
+
+        state.LastWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.LastWorkoutModifiers | WorkoutModifiers.Silence);
+        if (state.ActiveWorkoutMinutes > 0)
+        {
+            state.ActiveWorkoutModifiers = NormalizeWorkoutModifiers(
+                state.ActiveWorkoutModifiers | WorkoutModifiers.Silence);
+        }
     }
 
     private void NormalizeSavedLineups(WorkoutState state)

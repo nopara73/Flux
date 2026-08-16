@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/insect_modifier_on_focused_background"
+        android:drawable="@drawable/duration_modifier_on_focused_background"
         android:state_checked="true"
         android:state_focused="true" />
     <item
-        android:drawable="@drawable/insect_modifier_on_background"
+        android:drawable="@drawable/duration_modifier_on_background"
         android:state_checked="true" />
     <item
-        android:drawable="@drawable/insect_modifier_off_focused_background"
+        android:drawable="@drawable/duration_modifier_off_focused_background"
         android:state_focused="true" />
-    <item android:drawable="@drawable/insect_modifier_off_background" />
+    <item android:drawable="@drawable/duration_modifier_off_background" />
 </selector>

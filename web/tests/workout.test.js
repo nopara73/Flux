@@ -57,14 +57,79 @@ test("duration inventory and legacy normalization match Flux", () => {
   assert.equal(normalizeMinutes(undefined), 10);
 });
 
-test("missing modifier state defaults off", () => {
+test("pre-silence modifier state migrates to quiet by default", () => {
   const state = parseStoredState(JSON.stringify({
     version: 4,
     lastWorkoutMinutes: 10,
     activeWorkoutMinutes: 0,
   }));
-  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
   assert.equal(state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
+});
+
+test("versionless stored state also migrates to quiet without losing its lineup", () => {
+  const state = parseStoredState(JSON.stringify({
+    lastWorkoutMinutes: 3,
+    activeWorkoutMinutes: 0,
+    selectedExerciseIds: { "r3.lower-limbs": 101 },
+  }));
+
+  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
+  assert.equal(state.selectedExerciseIds["p2|r3.lower-limbs"], 101);
+});
+
+test("fresh workouts use silence unless the caller explicitly relaxes it", () => {
+  const session = new WorkoutSession(reviewedInsectCatalog(), createDefaultState(), () => 0);
+
+  session.startWorkout(3);
+
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  for (const group of session.getActiveGroups()) {
+    assert.ok(session.state.selectedExerciseIds[`p2|${getSelectionKey(group)}`]);
+  }
+});
+
+test("version four active workout migrates to silence without losing progress", () => {
+  const exercises = reviewedInsectCatalog();
+  const groups = RESOLUTIONS.get(3).groups;
+  const selectedExerciseIds = {};
+  for (const group of groups) {
+    const selected = exercises.find((item) =>
+      isSelectableForWorkoutProfile(item, group, WORKOUT_MODIFIERS.Insect));
+    selectedExerciseIds[`p1|${getSelectionKey(group)}`] = selected.id;
+  }
+  const pendingEnd = Date.now() + 60_000;
+  const state = parseStoredState(JSON.stringify({
+    version: 4,
+    lastWorkoutMinutes: 3,
+    lastWorkoutModifiers: WORKOUT_MODIFIERS.Insect,
+    activeWorkoutMinutes: 3,
+    activeWorkoutModifiers: WORKOUT_MODIFIERS.Insect,
+    selectedExerciseIds,
+    outcomes: { [groups[0].id]: "tick" },
+    pendingRestGroupId: groups[1].id,
+    pendingRestEndsAtUnixMilliseconds: pendingEnd,
+    pendingRestKept: true,
+  }));
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  assert.equal(
+    session.state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence,
+  );
+  assert.equal(
+    session.state.activeWorkoutModifiers,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence,
+  );
+  assert.equal(session.state.outcomes[groups[0].id], "tick");
+  assert.equal(session.state.pendingRestGroupId, groups[1].id);
+  assert.equal(session.state.pendingRestKept, true);
+  for (const group of groups) {
+    assert.ok(session.state.selectedExerciseIds[`p1|${getSelectionKey(group)}`]);
+    assert.ok(session.state.selectedExerciseIds[`p3|${getSelectionKey(group)}`]);
+  }
 });
 
 test("unreviewed catalog cannot silently treat an enabled modifier as off", () => {
@@ -113,6 +178,36 @@ test("neutral profile includes both compatible and explicitly excluded exercises
   );
 });
 
+test("silence and insect compose as independent positive requirements", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const quietBug = exercise(
+    1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+  const noisyBug = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    silent: false,
+  };
+  const quietNoBug = exercise(
+    3, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Incompatible,
+  );
+  const noisyNoBug = {
+    ...exercise(4, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Incompatible),
+    silent: false,
+  };
+  const candidates = [quietBug, noisyBug, quietNoBug, noisyNoBug];
+  const idsFor = (profile) => candidates
+    .filter((item) => isCompatibleWithWorkoutModifiers(item, profile))
+    .map((item) => item.id);
+
+  assert.deepEqual(idsFor(WORKOUT_MODIFIERS.None), [1, 2, 3, 4]);
+  assert.deepEqual(idsFor(WORKOUT_MODIFIERS.Insect), [1, 2]);
+  assert.deepEqual(idsFor(WORKOUT_MODIFIERS.Silence), [1, 3]);
+  assert.deepEqual(
+    idsFor(WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence),
+    [1],
+  );
+});
+
 test("supported modifier profiles are the registered primitive power set", () => {
   const primitiveModifierCount = SUPPORTED_WORKOUT_MODIFIER_MASK
     .toString(2)
@@ -123,6 +218,7 @@ test("supported modifier profiles are the registered primitive power set", () =>
     SUPPORTED_WORKOUT_MODIFIER_PROFILES.length,
     2 ** primitiveModifierCount,
   );
+  assert.equal(SUPPORTED_WORKOUT_MODIFIER_PROFILES.length, 4);
   assert.equal(
     new Set(SUPPORTED_WORKOUT_MODIFIER_PROFILES).size,
     SUPPORTED_WORKOUT_MODIFIER_PROFILES.length,
@@ -139,7 +235,7 @@ test("insect selection is composed with score and coverage instead of post-filte
     createDefaultState(),
     () => 0,
   );
-  normal.startWorkout(3);
+  normal.startWorkout(3, WORKOUT_MODIFIERS.None);
   assert.ok(normal.getActiveGroups().every((group) =>
     normal.getSelectedExercise(group).insectCompatibility ===
       EXERCISE_INSECT_COMPATIBILITY.Incompatible));
@@ -190,7 +286,7 @@ test("modifier profiles share keeps without forgetting excluded exercises", () =
     () => 0,
   );
 
-  session.startWorkout(3);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const keptIds = session.getActiveGroups().map((group) =>
     session.getSelectedExercise(group).id);
   for (const group of session.getActiveGroups()) {
@@ -423,7 +519,7 @@ test("carrying keeps maximizes kept count across the whole lineup", () => {
     () => 0,
   );
 
-  session.startWorkout(3);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
 
   const selectedIds = groups.map((group) =>
     session.state.selectedExerciseIds[group.id]);
@@ -523,9 +619,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 345);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 345);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 345);
+  assert.equal(catalog.length, 357);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 357);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 357);
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -558,7 +654,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     }
 
     const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-    session.startWorkout(minutes);
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
     const selected = session
       .getActiveGroups()
       .map((group) => session.getSelectedExercise(group));
@@ -568,7 +664,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
 
   for (const minutes of [45, 60, 90]) {
     const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-    session.startWorkout(minutes);
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
     const selected = session
       .getActiveGroups()
       .map((group) => session.getSelectedExercise(group));
@@ -619,7 +715,7 @@ test("long workouts spend extra minutes on full sides before repeated sets", () 
   }));
   const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
 
-  session.startWorkout(45);
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
 
   const rounds = session.getActiveGroups();
   assert.equal(rounds.length, 33);
@@ -634,7 +730,7 @@ test("long workouts spend extra minutes on full sides before repeated sets", () 
 
 test("a rejected repeated round replaces its shared exercise once", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(90);
+  session.startWorkout(90, WORKOUT_MODIFIERS.None);
   const rounds = session.getActiveGroups();
   const target = rounds.find((round) => round.id.endsWith(".set2"));
   const selectionKey = getSelectionKey(target);
@@ -654,7 +750,7 @@ test("a rejected repeated round replaces its shared exercise once", () => {
 test("interrupted long workout settles a pending repeated round exactly once", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
-  started.startWorkout(90);
+  started.startWorkout(90, WORKOUT_MODIFIERS.None);
   const rounds = started.getActiveGroups();
   const pendingRound = rounds.find((round) => round.id.endsWith(".set2"));
   const performed = started.getSelectedExercise(pendingRound);
@@ -820,7 +916,7 @@ test("reviewed sided movements always receive a timed side swap", () => {
 
 test("forty-five-minute full sides prefer previous keeps then muscle mass", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(30);
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
   const previousRounds = session.getActiveGroups();
   for (const round of previousRounds) {
     session.recordOutcome(round, round.order <= 10);
@@ -834,7 +930,7 @@ test("forty-five-minute full sides prefer previous keeps then muscle mass", () =
     [...expectedKeptExerciseIds].sort((left, right) => left - right),
   );
 
-  session.startWorkout(45);
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
   const selectionGroups = RESOLUTIONS.get(30).groups;
   const rounds = session.getActiveGroups();
   const expectedFullSideGroupIds = [...selectionGroups]
@@ -905,7 +1001,7 @@ test("kept exercises fill compatible slots after workout duration changes", () =
       () => 0,
     );
 
-    session.startWorkout(previousMinutes);
+    session.startWorkout(previousMinutes, WORKOUT_MODIFIERS.None);
     for (const round of session.getActiveGroups()) {
       session.recordOutcome(round, true);
     }
@@ -914,7 +1010,7 @@ test("kept exercises fill compatible slots after workout duration changes", () =
     for (const [index, group] of nextGroups.entries()) {
       session.state.selectedExerciseIds[group.id] = nextDurationAlternatives[index].id;
     }
-    session.startWorkout(nextMinutes);
+    session.startWorkout(nextMinutes, WORKOUT_MODIFIERS.None);
 
     const keptExerciseIds = new Set(keptExercises.map((item) => item.id));
     const selectedExerciseIds = nextGroups.map(
@@ -931,7 +1027,7 @@ test("kept exercises fill compatible slots after workout duration changes", () =
 
 test("an interrupted workout preserves unreviewed keeps until explicit rejection", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(3);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const kept = session.getSelectedExercise(session.getActiveGroups().at(-1));
   session.state.lastKeptExerciseIds = [kept.id];
 
@@ -939,7 +1035,7 @@ test("an interrupted workout preserves unreviewed keeps until explicit rejection
 
   assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), true);
 
-  session.startWorkout(3);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
   for (const round of session.getActiveGroups()) {
     session.recordOutcome(round, session.getSelectedExercise(round).id !== kept.id);
   }
@@ -950,7 +1046,7 @@ test("an interrupted workout preserves unreviewed keeps until explicit rejection
 
 test("rejection decrements once, purges saved copies, and replaces only rejected slots", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(3);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const groups = session.getActiveGroups();
   const rejectedGroup = groups[0];
   const rejected = session.getSelectedExercise(rejectedGroup);
@@ -978,7 +1074,7 @@ test("rejection decrements once, purges saved copies, and replaces only rejected
 
 test("interrupted movement is neutral while an unkept pending rest is settled once", () => {
   const neutral = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  neutral.startWorkout(3);
+  neutral.startWorkout(3, WORKOUT_MODIFIERS.None);
   const neutralGroup = neutral.getNextGroup();
   const neutralExercise = neutral.getSelectedExercise(neutralGroup);
   neutral.finishInterruptedWorkout();
@@ -986,7 +1082,7 @@ test("interrupted movement is neutral while an unkept pending rest is settled on
   assert.equal(neutral.state.activeWorkoutMinutes, 0);
 
   const rejected = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  rejected.startWorkout(3);
+  rejected.startWorkout(3, WORKOUT_MODIFIERS.None);
   const rejectedGroup = rejected.getNextGroup();
   const rejectedExercise = rejected.getSelectedExercise(rejectedGroup);
   rejected.beginRest(rejectedGroup, Date.now() + 15_000);
@@ -1009,7 +1105,7 @@ test("interrupted movement is neutral while an unkept pending rest is settled on
 test("pending rest survives schedule order and coverage changes for the performed exercise", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
-  started.startWorkout(3);
+  started.startWorkout(3, WORKOUT_MODIFIERS.None);
   const pendingGroup = started.getActiveGroups().at(-1);
   const performed = started.getSelectedExercise(pendingGroup);
   started.beginRest(pendingGroup, Date.now() + 15_000);
@@ -1035,7 +1131,7 @@ test("pending rest survives schedule order and coverage changes for the performe
 test("catalog identity replacement clears inherited score and workout references", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
-  started.startWorkout(3);
+  started.startWorkout(3, WORKOUT_MODIFIERS.None);
   const group = started.getNextGroup();
   const retired = started.getSelectedExercise(group);
   started.setScore(retired, -4);
@@ -1291,7 +1387,7 @@ test("deployment migration preserves present keeps and drops missing exercises",
   assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 
-  restored.startWorkout(30);
+  restored.startWorkout(30, WORKOUT_MODIFIERS.None);
 
   assert.equal(restored.state.selectedExerciseIds[group.id], present.id);
 });
@@ -1405,6 +1501,7 @@ function exercise(
     secondaryCanonicalGroups,
     score,
     insectCompatibility,
+    silent: true,
     sideSequence: "Continuous",
     directionSequence: "None",
     mode: "Repetition",

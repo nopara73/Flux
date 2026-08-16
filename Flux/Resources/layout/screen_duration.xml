@@ -233,7 +233,21 @@
                         android:contentDescription="@string/insect_modifier_description"
                         android:foreground="@drawable/ic_insect"
                         android:foregroundGravity="center"
-                        android:foregroundTint="@color/insect_modifier_icon_tint"
+                        android:foregroundTint="@color/duration_modifier_icon_tint"
+                        android:text="" />
+
+                    <CheckBox
+                        android:id="@+id/silence_modifier_button"
+                        style="@style/DurationModifierTile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_margin="6dp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:contentDescription="@string/silence_modifier_description"
+                        android:foreground="@drawable/ic_volume_off"
+                        android:foregroundGravity="center"
+                        android:foregroundTint="@color/duration_modifier_icon_tint"
                         android:text="" />
                 </GridLayout>
 

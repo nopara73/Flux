@@ -48,8 +48,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 345) {
-  throw new Error(`Expected 345 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 357) {
+  throw new Error(`Expected 357 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 for (const exercise of catalog) {

@@ -44,7 +44,7 @@
     </style>
 
     <style name="DurationModifierTile" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
-        <item name="android:background">@drawable/insect_modifier_background</item>
+        <item name="android:background">@drawable/duration_modifier_background</item>
         <item name="android:elevation">1dp</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:minWidth">48dp</item>

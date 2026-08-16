@@ -7,6 +7,8 @@ import test from "node:test";
 import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  CURRENT_WORKOUT_STATE_VERSION,
+  DEFAULT_WORKOUT_MODIFIERS,
   EXERCISE_INSECT_COMPATIBILITY,
   FULL_SIDE_MOVEMENT_DURATION_MS,
   LAST_CUMULATIVE_CATALOG_REVISION,
@@ -36,6 +38,8 @@ const [
   exerciseModel,
   modifierPolicy,
   exerciseDatabase,
+  durationLayout,
+  webIndex,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -50,6 +54,8 @@ const [
   source("Flux", "Models", "Exercise.cs"),
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
+  source("Flux", "Resources", "layout", "screen_duration.xml"),
+  source("web", "index.html"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -91,7 +97,14 @@ test("web and mobile carry kept exercises across workout durations", () => {
 
 test("web and mobile persist one combined duration and modifier selection context", () => {
   assert.equal(WORKOUT_MODIFIERS.Insect, 1);
+  assert.equal(WORKOUT_MODIFIERS.Silence, 2);
+  assert.equal(DEFAULT_WORKOUT_MODIFIERS, WORKOUT_MODIFIERS.Silence);
   assert.match(workoutModifiers, /Insect\s*=\s*1/);
+  assert.match(workoutModifiers, /Silence\s*=\s*2/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 5);
+  assert.match(workoutState, /public int Version[^=]*=\s*8/);
+  assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
+  assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
   assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
   assert.match(
@@ -139,10 +152,20 @@ test("web and mobile persist one combined duration and modifier selection contex
     /FindCoverageDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*FindModifierExclusionDeficiencies[\s\S]*hasUndersizedModifierExclusionPool/,
   );
   assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
+  assert.ok(catalog.every((exercise) => typeof exercise.silent === "boolean"));
   assert.ok(catalog.every((exercise) =>
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible));
   assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
+  assert.match(durationLayout, /@\+id\/insect_modifier_button/);
+  assert.match(durationLayout, /@\+id\/silence_modifier_button/);
+  assert.match(webIndex, /id="insect-modifier"/);
+  assert.match(webIndex, /id="silence-modifier"/);
+  assert.match(mainActivity, /WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence/);
+  assert.match(webApp, /WORKOUT_MODIFIERS\.Insect[\s\S]*WORKOUT_MODIFIERS\.Silence/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*42/);
+  assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
+  assert.match(exerciseDatabase, /max_space_meters > 0 AND max_space_meters <= 2/);
 });
 
 test("web and mobile preserve deployed keeps by catalog membership", () => {
@@ -219,6 +242,25 @@ test("web and mobile separate the exercise whistle from the final completion cue
     webApp,
     /function completeRest\(\)[\s\S]*session\.state\.workoutCompleted\)[\s\S]*showCompletion\(true\);/,
   );
+  const mobileCueBodies = [
+    methodBody(mainActivity, "private void CueSideChange()", "private void CueMovementRestart()"),
+    methodBody(mainActivity, "private void CueMovementRestart()", "private void RenderCountdownPhase("),
+    methodBody(mainActivity, "private void CompleteCountdown()", "private void CancelCountdown("),
+    methodBody(mainActivity, "private void FinalizeCurrentRound(bool keep)", "private void ShowCongratulations()"),
+    methodBody(mainActivity, "private void PlayWhistleCue(int soundId)", "[SuppressMessage("),
+  ];
+  const webCueBodies = [
+    methodBody(webApp, "function applyMovementPhase(phase)", "function restartMediaForPhase("),
+    methodBody(webApp, "function completeMovement()", "function startRestTimer()"),
+    methodBody(webApp, "function showCompletion(playCue)", "function closeCompletion()"),
+    methodBody(webApp, "function playSound(name)", "function handleVisibilityChange()"),
+  ];
+  for (const body of mobileCueBodies) {
+    assert.doesNotMatch(body, /WorkoutModifiers\.Silence|_selectedWorkoutModifiers/);
+  }
+  for (const body of webCueBodies) {
+    assert.doesNotMatch(body, /WORKOUT_MODIFIERS\.Silence|selectedModifiers/);
+  }
 });
 
 test("web catalog migration matches the mobile workout contract", () => {

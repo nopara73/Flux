@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 41;
+    private const int DatabaseVersion = 42;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -71,7 +71,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -124,6 +124,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
+            RebuildExerciseTableForVariableQuietness(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
             InsertTaxonomy(database);
             SynchronizeCatalog(database, catalog, preservedExercises);
@@ -172,12 +173,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     CHECK (only_feet_touch_ground = 1),
                 shoe_agnostic INTEGER NOT NULL DEFAULT 1
                     CHECK (shoe_agnostic = 1),
-                max_space_meters INTEGER NOT NULL DEFAULT 3
-                    CHECK (max_space_meters > 0 AND max_space_meters <= 3),
+                max_space_meters INTEGER NOT NULL DEFAULT 2
+                    CHECK (max_space_meters > 0 AND max_space_meters <= 2),
                 equipment TEXT NOT NULL DEFAULT 'None'
                     CHECK (equipment = 'None'),
                 silent INTEGER NOT NULL DEFAULT 1
-                    CHECK (silent = 1),
+                    CHECK (silent IN (0, 1)),
                 exercise_mode TEXT NOT NULL DEFAULT 'Repetition'
                     CHECK (exercise_mode IN ('Repetition', 'Hold')),
                 presentation TEXT NOT NULL DEFAULT 'Motion'
@@ -208,6 +209,83 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
             )
             """);
+        database.ExecSQL(
+            "CREATE INDEX index_exercises_score ON exercises (score DESC)");
+    }
+
+    private static void RebuildExerciseTableForVariableQuietness(
+        SQLiteDatabase database)
+    {
+        database.ExecSQL(
+            """
+            CREATE TABLE exercises_v42 (
+                id INTEGER NOT NULL PRIMARY KEY,
+                name TEXT NOT NULL UNIQUE,
+                video TEXT NOT NULL UNIQUE,
+                practice TEXT NOT NULL,
+                motion_profile TEXT NOT NULL,
+                score INTEGER NOT NULL DEFAULT 0,
+                only_feet_touch_ground INTEGER NOT NULL DEFAULT 1
+                    CHECK (only_feet_touch_ground = 1),
+                shoe_agnostic INTEGER NOT NULL DEFAULT 1
+                    CHECK (shoe_agnostic = 1),
+                max_space_meters INTEGER NOT NULL DEFAULT 2
+                    CHECK (max_space_meters > 0 AND max_space_meters <= 2),
+                equipment TEXT NOT NULL DEFAULT 'None'
+                    CHECK (equipment = 'None'),
+                silent INTEGER NOT NULL DEFAULT 1
+                    CHECK (silent IN (0, 1)),
+                exercise_mode TEXT NOT NULL DEFAULT 'Repetition'
+                    CHECK (exercise_mode IN ('Repetition', 'Hold')),
+                presentation TEXT NOT NULL DEFAULT 'Motion'
+                    CHECK (presentation IN ('Motion', 'Still')),
+                hold_frame_percent INTEGER NOT NULL DEFAULT 0
+                    CHECK (hold_frame_percent >= 0 AND hold_frame_percent <= 99),
+                side_sequence TEXT NOT NULL DEFAULT 'Continuous'
+                    CHECK (side_sequence IN (
+                        'Continuous',
+                        'ScreenLeftThenRight',
+                        'ScreenRightThenLeft')),
+                direction_sequence TEXT NOT NULL DEFAULT 'None'
+                    CHECK (direction_sequence IN (
+                        'None',
+                        'ForwardThenBackward',
+                        'BackwardThenForward',
+                        'ClockwiseThenCounterclockwise',
+                        'CounterclockwiseThenClockwise',
+                        'InwardThenOutward',
+                        'OutwardThenInward')),
+                insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (insect_compatibility IN (
+                        'Unreviewed',
+                        'Compatible',
+                        'Incompatible')),
+                CHECK (
+                    (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
+                    (exercise_mode = 'Hold' AND hold_frame_percent > 0))
+            )
+            """);
+        database.ExecSQL(
+            """
+            INSERT INTO exercises_v42 (
+                id, name, video, practice, motion_profile, score,
+                only_feet_touch_ground, shoe_agnostic, max_space_meters,
+                equipment, silent, exercise_mode, presentation,
+                hold_frame_percent, side_sequence, direction_sequence,
+                insect_compatibility)
+            SELECT
+                id, name, video, practice, motion_profile, score,
+                only_feet_touch_ground, shoe_agnostic,
+                CASE WHEN max_space_meters BETWEEN 1 AND 2
+                    THEN max_space_meters ELSE 2 END,
+                equipment, silent, exercise_mode, presentation,
+                hold_frame_percent, side_sequence, direction_sequence,
+                insect_compatibility
+            FROM exercises
+            """);
+        database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
+        database.ExecSQL("DROP TABLE exercises");
+        database.ExecSQL("ALTER TABLE exercises_v42 RENAME TO exercises");
         database.ExecSQL(
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
@@ -681,7 +759,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !exercise.ShoeAgnostic ||
             exercise.MaxSpaceMeters is <= 0 or > 2 ||
             exercise.Equipment != "None" ||
-            !exercise.Silent ||
             string.IsNullOrWhiteSpace(exercise.Practice) ||
             string.IsNullOrWhiteSpace(exercise.MotionProfile) ||
             !Enum.IsDefined(exercise.Mode) ||

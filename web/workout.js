@@ -2,6 +2,7 @@ export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60,
 export const WORKOUT_MODIFIERS = Object.freeze({
   None: 0,
   Insect: 1,
+  Silence: 2,
 });
 export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
@@ -16,6 +17,13 @@ const MODIFIER_RULES = Object.freeze([
       exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible,
     isCompatible: (exercise) =>
       exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    requiresExclusionFloor: true,
+  }),
+  Object.freeze({
+    flag: WORKOUT_MODIFIERS.Silence,
+    isReviewed: (exercise) => typeof exercise.silent === "boolean",
+    isCompatible: (exercise) => exercise.silent === true,
+    requiresExclusionFloor: false,
   }),
 ]);
 export const SUPPORTED_WORKOUT_MODIFIER_MASK = MODIFIER_RULES.reduce(
@@ -36,11 +44,13 @@ const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
 const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const MINIMUM_EXCLUDED_EXERCISES_PER_GROUP = 5;
+export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
+export const CURRENT_WORKOUT_STATE_VERSION = 5;
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 23;
+export const CURRENT_CATALOG_REVISION = 24;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -77,6 +87,9 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [23, new Set([
     407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
   ])],
+  [24, new Set([
+    420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -112,6 +125,9 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [23, new Set([
     407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
+  ])],
+  [24, new Set([
+    420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
   ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
@@ -603,20 +619,27 @@ export function findWorkoutProfileLineupDeficiencies(exercises) {
 export function findWorkoutModifierExclusionDeficiencies(exercises) {
   return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
     resolution.groups.flatMap((group) =>
-      MODIFIER_RULES.map((rule) => ({
-        minutes,
-        groupId: group.id,
-        groupName: group.displayName,
-        modifier: rule.flag,
-        excludedExerciseCount: new Set(exercises
-          .filter((exercise) =>
-            isSelectable(exercise, group) &&
-            rule.isReviewed(exercise) &&
-            !rule.isCompatible(exercise))
-          .map((exercise) => exercise.id)).size,
-        requiredExcludedExerciseCount: MINIMUM_EXCLUDED_EXERCISES_PER_GROUP,
-      })).filter((result) =>
-        result.excludedExerciseCount < result.requiredExcludedExerciseCount)));
+      MODIFIER_RULES.filter((rule) => rule.requiresExclusionFloor)
+        .flatMap((rule) =>
+        [...new Set(SUPPORTED_WORKOUT_MODIFIER_PROFILES.map((profile) =>
+          profile & ~rule.flag))]
+          .map((contextProfile) => ({
+            minutes,
+            groupId: group.id,
+            groupName: group.displayName,
+            modifier: rule.flag,
+            contextProfile,
+            excludedExerciseCount: new Set(exercises
+              .filter((exercise) =>
+                isSelectable(exercise, group) &&
+                isCompatibleWithWorkoutModifiers(exercise, contextProfile) &&
+                rule.isReviewed(exercise) &&
+                !rule.isCompatible(exercise))
+              .map((exercise) => exercise.id)).size,
+            requiredExcludedExerciseCount: MINIMUM_EXCLUDED_EXERCISES_PER_GROUP,
+          }))
+          .filter((result) =>
+            result.excludedExerciseCount < result.requiredExcludedExerciseCount))));
 }
 
 function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
@@ -838,7 +861,7 @@ export function formatExerciseId(exerciseId) {
 
 export function createDefaultState() {
   return {
-    version: 4,
+    version: CURRENT_WORKOUT_STATE_VERSION,
     catalogRevision: CURRENT_CATALOG_REVISION,
     catalogIdentities: {},
     selectedExerciseIds: {},
@@ -851,7 +874,7 @@ export function createDefaultState() {
     pendingRestEndsAtUnixMilliseconds: 0,
     pendingRestKept: false,
     lastWorkoutMinutes: 10,
-    lastWorkoutModifiers: WORKOUT_MODIFIERS.None,
+    lastWorkoutModifiers: DEFAULT_WORKOUT_MODIFIERS,
     activeWorkoutMinutes: 0,
     activeWorkoutModifiers: WORKOUT_MODIFIERS.None,
     workoutCompleted: false,
@@ -876,16 +899,22 @@ function normalizeStateShape(raw) {
     return state;
   }
 
-  state.version = Number.isInteger(raw.version) ? raw.version : state.version;
+  // A stored object without a version predates the modifier-profile schema.
+  // Treat it as legacy instead of mistaking it for a brand-new state.
+  state.version = Number.isInteger(raw.version) ? raw.version : 0;
   state.catalogRevision = Number.isInteger(raw.catalogRevision)
     ? raw.catalogRevision
     : 0;
   state.lastWorkoutMinutes = normalizeMinutes(raw.lastWorkoutMinutes);
-  state.lastWorkoutModifiers = normalizeWorkoutModifiers(raw.lastWorkoutModifiers);
+  state.lastWorkoutModifiers = raw.lastWorkoutModifiers === undefined
+    ? state.lastWorkoutModifiers
+    : normalizeWorkoutModifiers(raw.lastWorkoutModifiers);
   state.activeWorkoutMinutes = Number.isInteger(raw.activeWorkoutMinutes)
     ? raw.activeWorkoutMinutes
     : 0;
-  state.activeWorkoutModifiers = normalizeWorkoutModifiers(raw.activeWorkoutModifiers);
+  state.activeWorkoutModifiers = raw.activeWorkoutModifiers === undefined
+    ? state.activeWorkoutModifiers
+    : normalizeWorkoutModifiers(raw.activeWorkoutModifiers);
   state.workoutCompleted = raw.workoutCompleted === true;
   state.completionAcknowledged = raw.completionAcknowledged === true;
   state.pendingRestGroupId =
@@ -924,7 +953,41 @@ function normalizeStateShape(raw) {
     ? [...new Set(raw.activeFullSideSelectionGroupIds.filter((groupId) =>
         typeof groupId === "string"))]
     : [];
+  if (state.version < CURRENT_WORKOUT_STATE_VERSION) {
+    migrateImplicitSilenceModifier(state);
+  }
   return state;
+}
+
+function migrateImplicitSilenceModifier(state) {
+  for (const [selectionStorageKey, exerciseId] of
+    Object.entries(state.selectedExerciseIds)) {
+    const match = /^p(\d+)\|(.+)$/.exec(selectionStorageKey);
+    const modifierValue = match ? Number(match[1]) : WORKOUT_MODIFIERS.None;
+    const selectionGroupId = match ? match[2] : selectionStorageKey;
+    if (!selectionGroupId || normalizeWorkoutModifiers(modifierValue) !== modifierValue) {
+      continue;
+    }
+    const quietProfile = normalizeWorkoutModifiers(
+      modifierValue | WORKOUT_MODIFIERS.Silence,
+    );
+    const quietKey = quietProfile === WORKOUT_MODIFIERS.None
+      ? selectionGroupId
+      : `${SELECTION_PROFILE_PREFIX}${quietProfile}` +
+        `${SELECTION_PROFILE_SEPARATOR}${selectionGroupId}`;
+    if (state.selectedExerciseIds[quietKey] === undefined) {
+      state.selectedExerciseIds[quietKey] = exerciseId;
+    }
+  }
+  state.lastWorkoutModifiers = normalizeWorkoutModifiers(
+    state.lastWorkoutModifiers | WORKOUT_MODIFIERS.Silence,
+  );
+  if (state.activeWorkoutMinutes > 0) {
+    state.activeWorkoutModifiers = normalizeWorkoutModifiers(
+      state.activeWorkoutModifiers | WORKOUT_MODIFIERS.Silence,
+    );
+  }
+  state.version = CURRENT_WORKOUT_STATE_VERSION;
 }
 
 function uniquePositiveIntegers(value) {
@@ -991,7 +1054,7 @@ export class WorkoutSession {
     this.finishInterruptedWorkout();
   }
 
-  startWorkout(minutes, modifiers = WORKOUT_MODIFIERS.None) {
+  startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
     if (!SUPPORTED_MINUTES.includes(minutes)) {
       throw new RangeError("Unsupported workout duration.");
     }
@@ -1739,7 +1802,7 @@ export class WorkoutSession {
       this.state.catalogRevision,
       CURRENT_CATALOG_REVISION,
     );
-    this.state.version = 4;
+    this.state.version = CURRENT_WORKOUT_STATE_VERSION;
   }
 
   resetTransientState() {

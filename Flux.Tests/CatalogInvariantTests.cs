@@ -60,7 +60,8 @@ public sealed class CatalogInvariantTests
         Assert.True(
             exclusionDeficiencies.Length == 0,
             string.Join(Environment.NewLine, exclusionDeficiencies.Select(deficiency =>
-                $"{deficiency.GroupId} excluding {deficiency.Modifier}: " +
+                $"{deficiency.GroupId} in {deficiency.ContextProfile} excluding " +
+                $"{deficiency.Modifier}: " +
                 $"{deficiency.ExcludedExerciseCount}/" +
                 $"{deficiency.RequiredExcludedExerciseCount}")));
         var profileService = new ExerciseSessionService(exercises, new Random(1));
@@ -437,6 +438,9 @@ public sealed class CatalogInvariantTests
             deficientWorkoutGroups.Length == 0,
             string.Join(Environment.NewLine, deficientWorkoutGroups));
 
+        Assert.Contains(exercises, exercise => exercise.Silent);
+        Assert.Contains(exercises, exercise => !exercise.Silent);
+
         Assert.All(exercises, exercise =>
         {
             Assert.InRange(exercise.Id, 1, 1000);
@@ -453,7 +457,6 @@ public sealed class CatalogInvariantTests
             Assert.True(exercise.ShoeAgnostic);
             Assert.InRange(exercise.MaxSpaceMeters, 1, 2);
             Assert.Equal("None", exercise.Equipment);
-            Assert.True(exercise.Silent);
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));
             Assert.False(string.IsNullOrWhiteSpace(exercise.MotionProfile));
             Assert.True(Enum.IsDefined(exercise.SideSequence));

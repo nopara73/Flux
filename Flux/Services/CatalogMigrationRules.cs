@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 23;
+    public const int CurrentCatalogRevision = 24;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -615,7 +615,8 @@ public static class CatalogMigrationRules
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
         289, 291, 292, 293, 294, 295, 296, 301, 314, 321, 326, 327, 329, 338, 367, 390, 391,
         392, 393, 394, 395, 396, 397, 407, 408, 410, 411, 412, 413, 414, 415, 416, 417,
-        418, 419, 422, 423, 425, 467, 474, 475, 477, 481, 482, 483,
+        418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430,
+        431, 432, 433, 434, 467, 474, 475, 477, 481, 482, 483,
         490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
         509, 510, 512, 513, 516, 572, 573, 576, 577, 591, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
@@ -668,6 +669,10 @@ public static class CatalogMigrationRules
                 {
                     407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
                 },
+                [24] = new HashSet<int>
+                {
+                    420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -712,6 +717,10 @@ public static class CatalogMigrationRules
                 [23] = new HashSet<int>
                 {
                     407, 408, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
+                },
+                [24] = new HashSet<int>
+                {
+                    420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
                 },
             };
 
@@ -985,21 +994,38 @@ public static class CatalogMigrationRules
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
 
-        string[] groupsWithRetiredSelections = state.SelectedExerciseIds
+        var selectionsWithRetiredExercises = state.SelectedExerciseIds
             .Where(selection => invalidatedExerciseIds.Contains(selection.Value))
-            .Select(selection => selection.Key)
+            .Select(selection => new
+            {
+                StorageKey = selection.Key,
+                Parsed = ParseSelectionStorageKey(selection.Key),
+            })
             .ToArray();
+        WorkoutModifiers activeModifiers = WorkoutModifierPolicy.Normalize(
+            state.ActiveWorkoutModifiers);
+        HashSet<string> selectionGroupsWithRetiredSelections =
+            selectionsWithRetiredExercises
+                .Where(selection =>
+                    WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) ==
+                        activeModifiers)
+                .Select(selection => selection.Parsed.SelectionGroupId)
+                .ToHashSet(StringComparer.Ordinal);
 
-        foreach (string groupId in groupsWithRetiredSelections)
+        foreach (var selection in selectionsWithRetiredExercises)
         {
-            state.SelectedExerciseIds.Remove(groupId);
-            state.Outcomes.Remove(groupId);
+            state.SelectedExerciseIds.Remove(selection.StorageKey);
+        }
+        foreach (string roundId in state.Outcomes.Keys.Where(roundId =>
+                     selectionGroupsWithRetiredSelections.Contains(
+                         GetSelectionGroupIdFromRoundId(roundId))).ToArray())
+        {
+            state.Outcomes.Remove(roundId);
         }
 
         if (state.PendingRestGroupId is not null &&
-            groupsWithRetiredSelections.Contains(
-                state.PendingRestGroupId,
-                StringComparer.Ordinal))
+            selectionGroupsWithRetiredSelections.Contains(
+                GetSelectionGroupIdFromRoundId(state.PendingRestGroupId)))
         {
             state.PendingRestGroupId = null;
             state.PendingRestEndsAtUnixMilliseconds = 0;
@@ -1014,5 +1040,32 @@ public static class CatalogMigrationRules
 
         state.CatalogRevision = CurrentCatalogRevision;
         return true;
+    }
+
+    private static (string SelectionGroupId, WorkoutModifiers Modifiers)
+        ParseSelectionStorageKey(string storageKey)
+    {
+        int separatorIndex = storageKey.IndexOf('|');
+        if (storageKey.StartsWith('p') && separatorIndex > 1 &&
+            int.TryParse(
+                storageKey.AsSpan(1, separatorIndex - 1),
+                out int modifierValue))
+        {
+            return (
+                storageKey[(separatorIndex + 1)..],
+                (WorkoutModifiers)modifierValue);
+        }
+
+        return (storageKey, WorkoutModifiers.None);
+    }
+
+    private static string GetSelectionGroupIdFromRoundId(string roundId)
+    {
+        int suffixIndex = roundId.LastIndexOf(".set", StringComparison.Ordinal);
+        return suffixIndex > 0 &&
+            int.TryParse(roundId.AsSpan(suffixIndex + 4), out int setNumber) &&
+            setNumber >= 1
+                ? roundId[..suffixIndex]
+                : roundId;
     }
 }

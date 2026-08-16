@@ -32,6 +32,55 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void SilenceAndInsectComposeAsIndependentPositiveRequirements()
+    {
+        Exercise quietBug = Exercise(
+            1,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            insectCompatibility: ExerciseInsectCompatibility.Compatible);
+        Exercise noisyBug = Exercise(
+            2,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            insectCompatibility: ExerciseInsectCompatibility.Compatible,
+            silent: false);
+        Exercise quietNoBug = Exercise(
+            3,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            insectCompatibility: ExerciseInsectCompatibility.Incompatible);
+        Exercise noisyNoBug = Exercise(
+            4,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            insectCompatibility: ExerciseInsectCompatibility.Incompatible,
+            silent: false);
+
+        Assert.All([quietBug, noisyBug, quietNoBug, noisyNoBug], exercise =>
+            Assert.True(WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                WorkoutModifiers.None)));
+        Assert.Equal(
+            [quietBug.Id, noisyBug.Id],
+            new[] { quietBug, noisyBug, quietNoBug, noisyNoBug }
+                .Where(exercise => WorkoutModifierPolicy.IsCompatible(
+                    exercise,
+                    WorkoutModifiers.Insect))
+                .Select(exercise => exercise.Id));
+        Assert.Equal(
+            [quietBug.Id, quietNoBug.Id],
+            new[] { quietBug, noisyBug, quietNoBug, noisyNoBug }
+                .Where(exercise => WorkoutModifierPolicy.IsCompatible(
+                    exercise,
+                    WorkoutModifiers.Silence))
+                .Select(exercise => exercise.Id));
+        Assert.Equal(
+            [quietBug.Id],
+            new[] { quietBug, noisyBug, quietNoBug, noisyNoBug }
+                .Where(exercise => WorkoutModifierPolicy.IsCompatible(
+                    exercise,
+                    WorkoutModifiers.Insect | WorkoutModifiers.Silence))
+                .Select(exercise => exercise.Id));
+    }
+
+    [Fact]
     public void SupportedProfilesAreThePowerSetOfRegisteredPrimitiveModifiers()
     {
         int primitiveModifierCount = System.Numerics.BitOperations.PopCount(
@@ -46,6 +95,11 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(WorkoutModifierPolicy.SupportedProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.SupportedProfiles);
+        Assert.Equal(4, WorkoutModifierPolicy.SupportedProfiles.Count);
+        Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.SupportedProfiles);
+        Assert.Contains(
+            WorkoutModifiers.Insect | WorkoutModifiers.Silence,
+            WorkoutModifierPolicy.SupportedProfiles);
         Assert.Contains(WorkoutModifierPolicy.SupportedMask, WorkoutModifierPolicy.SupportedProfiles);
     }
 
@@ -84,9 +138,11 @@ public sealed class WorkoutModifierPolicyTests
                 .Single(result =>
                     result.Minutes == 30 &&
                     result.GroupId == group.Id &&
-                    result.Modifier == WorkoutModifiers.Insect);
+                    result.Modifier == WorkoutModifiers.Insect &&
+                    result.ContextProfile == WorkoutModifiers.None);
 
         Assert.Equal(WorkoutModifiers.Insect, deficiency.Modifier);
+        Assert.Equal(WorkoutModifiers.None, deficiency.ContextProfile);
         Assert.Equal(2, deficiency.ExcludedExerciseCount);
         Assert.Equal(
             WorkoutModifierPolicy.MinimumExcludedExercisesPerGroup,
@@ -179,7 +235,8 @@ public sealed class WorkoutModifierPolicyTests
         CanonicalMuscleGroup secondaryCanonicalGroup = default,
         CanonicalMuscleGroup tertiaryCanonicalGroup = default,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Compatible)
+            ExerciseInsectCompatibility.Compatible,
+        bool silent = true)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -203,7 +260,7 @@ public sealed class WorkoutModifierPolicyTests
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,
             Equipment = "None",
-            Silent = true,
+            Silent = silent,
         };
     }
 }
