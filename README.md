@@ -5,20 +5,24 @@ Android. It targets Android 7.0 (API 24) and newer.
 
 ## Exercise database
 
-The app ships with a local SQLite database seeded from 357 reviewed exercises.
+The app ships with a local SQLite database seeded from 418 reviewed exercises.
 Movements are selected for their value first, then assigned on a best-effort
 basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
 scheduling group plus every secondary group it meaningfully trains. Full-body
-exercises remain eligible wherever their hardest work fits. Every workout
-bucket has at least 10 choices that meaningfully cover at least half of its
-canonical leaves for every supported modifier profile. Primary ownership is
-preferred after score/keep priority; truthful secondary associations remain
-eligible. The Insect modifier also requires at least five normal-profile choices
-per bucket that it explicitly excludes, in every context formed by the other
-modifiers. This preserves a meaningful non-Insect catalog without forcing
-artificial noisy variants into anatomy they do not train. Every supported
-duration/profile combination must admit a distinct exercise for every scheduled
-group.
+exercises remain eligible wherever their hardest work fits. For every unordered
+pair of modifiers and every workout bucket, all four real UI states (on/on,
+on/off, off/on, and off/off) must contain at least five exercises that
+meaningfully cover at least half of the bucket's canonical leaves. Off always
+means that the corresponding requirement is relaxed. A separate materiality
+check requires each modifier to remove at least five exercises or 5% of the
+prior candidate pool, whichever is larger, across at least 10% of the canonical
+buckets, both alone and when either member of a pair is already enabled. These
+checks grow quadratically as modifiers are added instead of requiring a full
+higher-order power-set quota. They do not claim that an untested three-or-more-
+modifier intersection is feasible. Primary ownership is preferred after
+score/keep priority; truthful
+secondary associations remain eligible. Every supported duration/profile
+combination must still admit a distinct exercise for every scheduled group.
 
 The canonical leaves roll up explicitly into seven mass-ordered workout
 resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. Every workout schedules those
@@ -29,8 +33,10 @@ targets, not claims that every indivisible muscle has an exact percentage.
 
 An exercise contains a stable numeric ID, unique name and MP4, primary and
 secondary canonical groups, practice and movement metadata,
-repetition-or-hold mode, continuous-or-timed-side playback, score, and explicit
-movement-constraint metadata.
+repetition-or-hold mode, continuous, alternating, or timed-unilateral playback,
+score, and explicit movement-constraint metadata. Opposite movement directions are separately named,
+demonstrated, scored exercises joined by a reciprocal catalog link; direction
+never adds another timer phase inside an exercise.
 
 Every retained movement:
 
@@ -44,16 +50,19 @@ Every retained movement:
 - is naturally quiet when the default-on Silence modifier is enabled; established
   impact movements are eligible only when Silence is explicitly disabled.
 
-All 357 MP4 demonstrations are bundled for offline use and contain no audio.
+All 418 MP4 demonstrations are bundled for offline use and contain no audio.
 The catalog's `silent` field describes the sound naturally produced by performing
 the exercise, not the demonstration file's audio track. Holds loop as previews,
 then play once and remain on a reviewed final-pose image during the exercise
-timer. Reproducible GIF intermediates are excluded from the APK.
+timer. Android cache filenames and web media URLs use the packaged file's SHA-256
+fingerprint, so an updated demonstration cannot be mistaken for an older cached
+file. Reproducible GIF intermediates are excluded from the APK.
 
-Database schema version 42 stores canonical assignments, modifier metadata,
-assignment roles, side-sequence metadata, and every resolution roll-up in
+Database schema version 55 stores canonical assignments, modifier metadata,
+assignment roles, side-sequence and direction-partner metadata, and every resolution roll-up in
 normalized tables. The v42 migration relaxes the historical all-quiet schema
-constraint while preserving scores for unchanged exercise identities. See
+constraint; subsequent metadata migrations preserve scores for unchanged
+exercise identities. See
 [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 [DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
 verified counts.
@@ -74,10 +83,15 @@ smallest-to-largest mass-ordered rolled-up group: 45 seconds of exercise and a
 Press **Start** to begin a round. The quiet **Skip** action records the current
 exercise as not kept and advances immediately, bypassing both its remaining
 movement time and rest. Naturally alternating and bilateral movements use a
-continuous 45-second timer. Side-specific movements use 20 seconds on the
+continuous 45-second timer. Unilateral movements use 20 seconds on the
 demonstrated side, a wordless 5-second blue change phase, then 20 seconds on the
 mirrored side. Red tint always means movement and blue tint means change/rest;
 the tint fills the workout canvas while the human demonstration stays untinted.
+Before Start, a strong `ALTERNATING` label identifies movements that switch sides
+inside that uninterrupted phase, while `UNILATERAL` identifies movements that use
+the timed side protocol. In workouts longer than 30 minutes, an available linked
+opposite-direction exercise is added before either side timer is extended; only
+then does Flux use full 45 / 15 / 45 side timing, followed by repeated sets.
 There is no separate rest skip. During a normally reached rest, tap
 **Tap to keep** to retain the current exercise and advance immediately. If rest
 expires without a tap, its integer score drops by one and it is replaced for the

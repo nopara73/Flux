@@ -378,7 +378,13 @@ Catalog validation must require:
 - nonempty unique capacities and primary membership;
 - exactly one primary capacity;
 - valid Strength facets, with at least one when Strength is assigned and none otherwise;
-- at least 10 **selectable primary** exercises for every category;
+- at least five selectable exercises under every real on/on, on/off, off/on,
+  and off/off UI state for each pair of workout modifiers and every scheduling
+  category, with off relaxing that modifier's requirement and without an
+  additional fixed ten-exercise rule;
+- for each modifier alone and on both conditional edges of every modifier pair,
+  enabling it excludes at least five exercises or 5% of the prior candidate
+  pool, whichever is larger, and affects at least 10% of canonical buckets;
 - referenced media present and decodable; and
 - a manual release gate confirming an accurate moving human demonstration and correct final freeze frame for holds.
 
@@ -413,7 +419,13 @@ For each slot in order:
 4. find the highest score among remaining candidates; and
 5. choose uniformly at random from that highest-score bucket.
 
-Because the longest schedule uses four slots per category and validation requires at least ten primary choices, strict uniqueness must succeed. Treat failure as invalid catalog/state, not as permission to duplicate silently. Inject a deterministic random source in tests.
+The catalog's pairwise modifier floor, quadratic materiality check, and separate
+whole-lineup matching check must make strict uniqueness succeed for every
+validated profile containing at most two enabled modifiers. Pairwise validation
+does not prove an arbitrary three-or-more-modifier intersection. Treat failure
+for a validated profile as invalid catalog/state, not as permission to duplicate
+silently.
+Inject a deterministic random source in tests.
 
 Multi-category tags remain scientifically and analytically useful, but the required primary assignment prevents one exercise from competing in several scheduling pools and keeps coverage auditable.
 

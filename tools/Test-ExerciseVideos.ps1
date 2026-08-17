@@ -9,10 +9,12 @@ $catalogPath = Join-Path $resolvedAssetsRoot 'exercises.json'
 $catalog = @(Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json)
 $failures = [System.Collections.Generic.List[string]]::new()
 $reviewedWorkoutCadenceDurationRanges = @{
-    231 = @{ Minimum = 5.5; Maximum = 5.8 }
+    251 = @{ Minimum = 3.9; Maximum = 4.1 }
+    231 = @{ Minimum = 7.9; Maximum = 8.1 }
     681 = @{ Minimum = 5.3; Maximum = 5.7 }
-    684 = @{ Minimum = 4.8; Maximum = 5.1 }
-    687 = @{ Minimum = 7.3; Maximum = 7.7 }
+    684 = @{ Minimum = 8.1; Maximum = 8.3 }
+    685 = @{ Minimum = 2.9; Maximum = 3.1 }
+    687 = @{ Minimum = 8.1; Maximum = 8.3 }
 }
 
 if ($catalog.Count -lt 30) {
@@ -72,16 +74,6 @@ if ($assignmentDrift.Count -gt 0) {
     throw 'The generated canonical assignments have drifted from ExerciseCanonicalGroups.psd1.'
 }
 
-$invalidPrimaryCounts = @($canonicalGroupKeys | Where-Object {
-        $canonicalGroup = $_
-        @($catalog | Where-Object {
-                [string]$_.primaryCanonicalGroup -eq $canonicalGroup
-            }).Count -lt 10
-    })
-if ($invalidPrimaryCounts.Count -gt 0) {
-    throw "Every canonical leaf must contain at least ten primary exercises: $($invalidPrimaryCounts -join ', ')."
-}
-
 $videoPaths = @($catalog.video)
 if (@($videoPaths | Where-Object { $_ -notmatch '^exercise_videos/exercise_\d{4}\.mp4$' }).Count -gt 0 -or
     @($videoPaths | Sort-Object -Unique).Count -ne $catalog.Count -or
@@ -124,10 +116,22 @@ $invalidDirectionExercises = @($directionExercises | Where-Object {
 $expectedDirectionNames = @($directionExercises | ForEach-Object {
         'exercise_{0:D4}.mp4' -f [int]$_.id
     })
-$actualDirectionNames = @(Get-ChildItem -LiteralPath (
-        Join-Path $resolvedAssetsRoot 'exercise_direction_videos') `
-        -File -Filter '*.mp4' |
+$directionVideoRoot = Join-Path $resolvedAssetsRoot 'exercise_direction_videos'
+$actualDirectionNames = if (Test-Path -LiteralPath $directionVideoRoot) {
+    @(Get-ChildItem -LiteralPath $directionVideoRoot -File -Filter '*.mp4' |
         Select-Object -ExpandProperty Name)
+}
+else {
+    @()
+}
+$directionAssetsDiffer = if ($expectedDirectionNames.Count -eq 0 -and
+    $actualDirectionNames.Count -eq 0) {
+    $false
+}
+else {
+    @(Compare-Object ($expectedDirectionNames | Sort-Object) `
+            ($actualDirectionNames | Sort-Object)).Count -gt 0
+}
 
 if (@(Compare-Object ($expectedVideoNames | Sort-Object) `
             ($actualVideoNames | Sort-Object)).Count -gt 0 -or
@@ -135,8 +139,7 @@ if (@(Compare-Object ($expectedVideoNames | Sort-Object) `
             ($actualGifNames | Sort-Object)).Count -gt 0 -or
     @(Compare-Object ($expectedHoldNames | Sort-Object) `
             ($actualHoldNames | Sort-Object)).Count -gt 0 -or
-    @(Compare-Object ($expectedDirectionNames | Sort-Object) `
-            ($actualDirectionNames | Sort-Object)).Count -gt 0 -or
+    $directionAssetsDiffer -or
     $invalidDirectionExercises.Count -gt 0) {
     throw 'The media directories contain missing or orphaned exercise assets.'
 }

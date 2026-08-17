@@ -4,8 +4,8 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
-  findWorkoutModifierExclusionDeficiencies,
-  findWorkoutProfileCoverageDeficiencies,
+  findWorkoutModifierMaterialityDeficiencies,
+  findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
@@ -15,11 +15,13 @@ import {
   isModifierMetadataComplete,
   parseStoredState,
   usesTimedPair,
+  usesTimedSides,
 } from "./workout.js";
 
 const STORAGE_KEY = "flux.workout.state.v1";
 const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
+const DIRECTION_SEGMENT_SECONDS = 20;
 
 const elements = {
   durationScreen: byId("duration-screen"),
@@ -45,6 +47,8 @@ const elements = {
   video: byId("exercise-video"),
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
+  sidePhasePreview: byId("side-phase-preview"),
+  sidePhaseLabel: byId("side-phase-label"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
@@ -73,6 +77,7 @@ const sounds = Object.fromEntries(
 );
 
 let session = null;
+let assetVersions = Object.freeze({});
 let selectedMinutes = 10;
 let selectedModifiers = DEFAULT_WORKOUT_MODIFIERS;
 let currentGroup = null;
@@ -98,21 +103,37 @@ bootstrap();
 
 async function bootstrap() {
   try {
-    const response = await fetch(new URL("data/exercises.json", document.baseURI));
-    if (!response.ok) {
-      throw new Error(`Catalog request failed with ${response.status}.`);
+    const [catalogResponse, assetVersionsResponse] = await Promise.all([
+      fetch(new URL("data/exercises.json", document.baseURI), { cache: "no-store" }),
+      fetch(new URL("data/asset-versions.json", document.baseURI), { cache: "no-store" }),
+    ]);
+    if (!catalogResponse.ok) {
+      throw new Error(`Catalog request failed with ${catalogResponse.status}.`);
     }
-    const exercises = await response.json();
-    const coverageDeficiencies =
-      findWorkoutProfileCoverageDeficiencies(exercises);
+    if (!assetVersionsResponse.ok) {
+      throw new Error(
+        `Asset-version request failed with ${assetVersionsResponse.status}.`,
+      );
+    }
+    const [exercises, loadedAssetVersions] = await Promise.all([
+      catalogResponse.json(),
+      assetVersionsResponse.json(),
+    ]);
+    if (!loadedAssetVersions || Array.isArray(loadedAssetVersions) ||
+        typeof loadedAssetVersions !== "object") {
+      throw new Error("Asset-version manifest is invalid.");
+    }
+    assetVersions = Object.freeze({ ...loadedAssetVersions });
+    const pairwiseCoverageDeficiencies =
+      findWorkoutModifierPairCoverageDeficiencies(exercises);
+    const modifierMaterialityDeficiencies =
+      findWorkoutModifierMaterialityDeficiencies(exercises);
     const lineupDeficiencies =
       findWorkoutProfileLineupDeficiencies(exercises);
-    const exclusionDeficiencies =
-      findWorkoutModifierExclusionDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
-        coverageDeficiencies.length > 0 ||
-        lineupDeficiencies.length > 0 ||
-        exclusionDeficiencies.length > 0) {
+        pairwiseCoverageDeficiencies.length > 0 ||
+        modifierMaterialityDeficiencies.length > 0 ||
+        lineupDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout modifier coverage.");
     }
     session = new WorkoutSession(exercises, loadState());
@@ -230,8 +251,8 @@ function workoutModifierTiles() {
     {
       element: elements.silenceModifier,
       flag: WORKOUT_MODIFIERS.Silence,
-      enabledLabel: "Silence modifier: quiet exercises only",
-      disabledLabel: "Silence modifier: noisy exercises allowed",
+      enabledLabel: "Quiet exercise filter: quiet exercises only",
+      disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
   ];
 }
@@ -309,6 +330,7 @@ function showNextExercise() {
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
   elements.workoutGroupName.textContent = nextGroup.displayName;
   elements.exerciseName.textContent = currentExercise.name;
+  renderSidePhasePreview(currentExercise);
   elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
     `Round ${position} of ${total}. ${nextGroup.displayName}. ${currentExercise.name}.`;
@@ -319,6 +341,32 @@ function showNextExercise() {
   showScreen("workout");
   requestWakeLock();
   loadExerciseMedia();
+}
+
+function renderSidePhasePreview(exercise) {
+  const isAlternating = exercise.sideSequence === "Alternating";
+  const label = isAlternating
+    ? "ALTERNATING"
+    : usesTimedSides(exercise)
+      ? "UNILATERAL"
+      : "";
+  if (!label) {
+    elements.sidePhasePreview.hidden = true;
+    elements.sidePhasePreview.setAttribute("aria-label", "");
+    elements.sidePhaseLabel.classList.remove("alternating", "unilateral");
+    return;
+  }
+
+  elements.sidePhaseLabel.textContent = label;
+  elements.sidePhaseLabel.classList.toggle("alternating", isAlternating);
+  elements.sidePhaseLabel.classList.toggle("unilateral", !isAlternating);
+  elements.sidePhasePreview.setAttribute(
+    "aria-label",
+    isAlternating
+      ? "Alternating exercise. Switch sides continuously."
+      : "Unilateral exercise. Work one side, change, then the other.",
+  );
+  elements.sidePhasePreview.hidden = false;
 }
 
 function showReadyPanel() {
@@ -341,7 +389,12 @@ function showRestPanel() {
 }
 
 function assetUrl(path) {
-  return new URL(`assets/${path}`, document.baseURI).href;
+  const url = new URL(`assets/${path}`, document.baseURI);
+  const fingerprint = assetVersions[path];
+  if (fingerprint) {
+    url.searchParams.set("v", fingerprint);
+  }
+  return url.href;
 }
 
 function loadExerciseMedia() {
@@ -388,6 +441,7 @@ function loadExerciseMedia() {
   };
   elements.video.onerror = () => showMediaError(generation);
   elements.video.onended = handleVideoEnded;
+  elements.video.ontimeupdate = () => enforceDirectionMediaSegment(lastMovementPhase);
   elements.video.src = assetUrl(getExerciseVideoPath(currentExercise));
   elements.video.load();
 }
@@ -400,6 +454,7 @@ function resetVideoElement() {
   elements.video.onprogress = null;
   elements.video.onerror = null;
   elements.video.onended = null;
+  elements.video.ontimeupdate = null;
   elements.video.pause();
   elements.video.removeAttribute("src");
   elements.video.load();
@@ -541,6 +596,7 @@ function updateMovement() {
   if (state.phase !== lastMovementPhase && state.phase !== "Complete") {
     applyMovementPhase(state.phase);
   }
+  enforceDirectionMediaSegment(state.phase);
   if (movementRemaining <= 0) {
     completeMovement();
   }
@@ -613,17 +669,55 @@ function restartMediaForPhase(phase) {
 
   elements.holdFrame.hidden = true;
   elements.video.hidden = false;
-  elements.video.loop = currentExercise.mode !== "Hold";
+  elements.video.loop =
+    currentExercise.mode !== "Hold" && currentExercise.directionSequence === "None";
   try {
     elements.video.currentTime =
-      currentExercise.directionSequence !== "None" && phase === "SecondSide" ? 20 : 0;
+      currentExercise.directionSequence !== "None" && phase === "SecondSide"
+        ? DIRECTION_SEGMENT_SECONDS
+        : 0;
   } catch {
     // The loaded media will seek once its metadata is available.
   }
   playVideo();
 }
 
+function enforceDirectionMediaSegment(phase) {
+  if (
+    currentExercise?.directionSequence === "None" ||
+    !["FirstSide", "SecondSide"].includes(phase) ||
+    !Number.isFinite(elements.video.currentTime)
+  ) {
+    return;
+  }
+
+  const segmentStart = phase === "SecondSide" ? DIRECTION_SEGMENT_SECONDS : 0;
+  const segmentEnd = segmentStart + DIRECTION_SEGMENT_SECONDS;
+  if (
+    elements.video.currentTime >= segmentStart &&
+    elements.video.currentTime < segmentEnd
+  ) {
+    return;
+  }
+
+  try {
+    elements.video.currentTime = segmentStart;
+  } catch {
+    return;
+  }
+  playVideo();
+}
+
 function handleVideoEnded() {
+  if (
+    currentExercise?.directionSequence !== "None" &&
+    ["FirstSide", "SecondSide"].includes(lastMovementPhase) &&
+    !elements.movePanel.hidden
+  ) {
+    enforceDirectionMediaSegment(lastMovementPhase);
+    return;
+  }
+
   if (currentExercise?.mode === "Hold" && !elements.movePanel.hidden) {
     showReviewedHoldFrame();
   }
@@ -847,6 +941,7 @@ function resetMovementVisuals() {
   elements.phaseSurface.classList.remove("visible");
   elements.phaseLeft.style.backgroundColor = "";
   elements.phaseRight.style.backgroundColor = "";
+  setWorkoutPhaseClass(null);
   elements.movePanel.classList.remove("change");
   elements.mediaCard.classList.remove("resting");
   elements.movementCountdown.value = "45";
@@ -862,6 +957,7 @@ function setFullPhaseSurface(kind) {
   const color = kind === "move" ? "var(--move-surface)" : "var(--rest-surface)";
   elements.phaseLeft.style.backgroundColor = color;
   elements.phaseRight.style.backgroundColor = color;
+  setWorkoutPhaseClass(kind);
   elements.phaseSurface.classList.add("visible");
 }
 
@@ -870,7 +966,13 @@ function setSplitPhaseSurface(activeScreenSide) {
     activeScreenSide === "Left" ? "var(--move-surface)" : "var(--rest-surface)";
   elements.phaseRight.style.backgroundColor =
     activeScreenSide === "Right" ? "var(--move-surface)" : "var(--rest-surface)";
+  setWorkoutPhaseClass("move");
   elements.phaseSurface.classList.add("visible");
+}
+
+function setWorkoutPhaseClass(kind) {
+  elements.workoutScreen.classList.toggle("phase-move", kind === "move");
+  elements.workoutScreen.classList.toggle("phase-rest", kind === "rest");
 }
 
 function setMediaMirrored(mirrored) {

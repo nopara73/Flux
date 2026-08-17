@@ -66,15 +66,32 @@ $retiredById = @{}
 foreach ($row in $retiredRows) {
     $retiredById[[int]$row.id] = $row
 }
+$auditById = @{}
+foreach ($row in $audit) {
+    $auditById[[int]$row.id] = $row
+}
+$permanentlyRetiredIds = @(229, 497)
 $existingMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExternalExerciseMedia.psd1') -SkipLimitCheck
 
 $rowIds = @($rows | ForEach-Object { [int]$_.id })
-if ($rows.Count -ne $retiredRows.Count -or
-    $rowIds.Count -ne @($rowIds | Sort-Object -Unique).Count -or
-    @(Compare-Object ($retiredById.Keys | Sort-Object) ($rowIds | Sort-Object)).Count -gt 0 -or
+$unreplacedRetiredIds = @(
+    $retiredById.Keys | Where-Object { $_ -notin $rowIds } | Sort-Object)
+$replacementIdsStillMarkedKeep = @(
+    $rowIds | Where-Object {
+        $auditById.ContainsKey($_) -and
+        [string]$auditById[$_].decision -ne 'REMOVE'
+    })
+$replacementIdsWithInvalidRetiredNames = @(
+    $rows | Where-Object {
+        [string]::IsNullOrWhiteSpace([string]$_.retired_name)
+    } | ForEach-Object { [int]$_.id })
+if ($rowIds.Count -ne @($rowIds | Sort-Object -Unique).Count -or
+    @(Compare-Object $permanentlyRetiredIds $unreplacedRetiredIds).Count -gt 0 -or
+    $replacementIdsStillMarkedKeep.Count -gt 0 -or
+    $replacementIdsWithInvalidRetiredNames.Count -gt 0 -or
     @($rows.name | Sort-Object -Unique).Count -ne $rows.Count) {
-    throw 'The replacement catalog must replace every audited removal exactly once with unique names.'
+    throw 'The replacement catalog must replace every non-permanent audited removal, may reactivate only identities absent from the original audit, and must use unique IDs and names.'
 }
 
 $mediaKeys = @(
@@ -119,7 +136,13 @@ foreach ($row in @($rows | Sort-Object { [int]$_.id })) {
         @{
             File = [string]$row.file
             Url = [string]$row.url
-            SourcePage = [string]$row.url
+            SourcePage = if ([string]::IsNullOrWhiteSpace(
+                    [string]$row.source_page)) {
+                [string]$row.url
+            }
+            else {
+                [string]$row.source_page
+            }
             Human = $true
             Youtube = [string]$row.url -match
                 '(?i)(youtube\.com|youtu\.be)'
@@ -148,7 +171,7 @@ foreach ($row in @($rows | Sort-Object { [int]$_.id })) {
 
     $lines.Add("    $exerciseId = @{")
     $lines.Add('        RetiredName = ' + (
-        ConvertTo-Psd1String ([string]$retiredById[$exerciseId].name)))
+        ConvertTo-Psd1String ([string]$row.retired_name)))
     $lines.Add('        Name = ' + (ConvertTo-Psd1String ([string]$row.name)) + '')
     $lines.Add('        Practice = ' + (ConvertTo-Psd1String ([string]$row.practice)) + '')
     $lines.Add('        MotionProfile = ' + (

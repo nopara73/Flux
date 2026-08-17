@@ -5,7 +5,6 @@ namespace Flux.Services;
 public static class WorkoutCoveragePolicy
 {
     public const int MinimumCoveragePercent = 50;
-    public const int MinimumSelectableExercisesPerGroup = 10;
 
     public static int GetCanonicalCoverage(
         Exercise exercise,

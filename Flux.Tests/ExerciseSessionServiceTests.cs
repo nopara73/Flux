@@ -67,6 +67,22 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void CurrentPreDirectionStateKeepsExplicitlyRelaxedSilenceModifier()
+    {
+        var service = new ExerciseSessionService(ReviewedInsectCatalog(), new Random(1));
+        var state = new WorkoutState
+        {
+            Version = 8,
+            LastWorkoutModifiers = WorkoutModifiers.None,
+        };
+
+        service.Initialize(state);
+
+        Assert.Equal(9, state.Version);
+        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+    }
+
+    [Fact]
     public void ModifierProfilesShareKeepsWithoutForgettingExcludedExercises()
     {
         var service = new ExerciseSessionService(
@@ -284,8 +300,160 @@ public sealed class ExerciseSessionServiceTests
                 ExerciseSideSequence.Continuous,
                 service.GetSelectedExercise(state, round).SideSequence));
         Assert.Equal(3, state.ActiveExtraSetSelectionGroupIds.Count);
-        Assert.Equal(12, state.ActiveFullSideSelectionGroupIds.Count);
+        Assert.Equal(12, state.ActiveFullSideRoundIds.Count);
         Assert.Equal(45, rounds.Sum(round => round.UsesFullSideTiming ? 2 : 1));
+    }
+
+    [Fact]
+    public void FortyFiveMinutesAddLinkedDirectionsBeforeLengtheningSidedTimers()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseExercises = groups
+            .Select((group, index) => QualifiedForGroup(
+                index + 1,
+                group,
+                score: 10,
+                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
+            .ToArray();
+        Exercise[] partners = groups
+            .Take(15)
+            .Select((group, index) => CloneWithDirectionPartner(
+                QualifiedForGroup(
+                    1001 + index,
+                    group,
+                    sideSequence: ExerciseSideSequence.ScreenLeftThenRight),
+                baseExercises[index].Id))
+            .ToArray();
+        for (int index = 0; index < partners.Length; index++)
+        {
+            baseExercises[index] = CloneWithDirectionPartner(
+                baseExercises[index],
+                partners[index].Id);
+        }
+        Exercise[] exercises = [.. baseExercises, .. partners];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        WorkoutGroup[] directionRounds = rounds
+            .Where(round => round.Id.EndsWith(".direction", StringComparison.Ordinal))
+            .ToArray();
+        Assert.Equal(15, directionRounds.Length);
+        Assert.Equal(45, rounds.Length);
+        Assert.Empty(state.ActiveFullSideRoundIds);
+        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
+        Assert.All(directionRounds, round =>
+        {
+            int baseId = state.SelectedExerciseIds[round.SelectionKey];
+            Exercise selected = exercises.Single(exercise => exercise.Id == baseId);
+            Assert.Equal(
+                selected.DirectionPartnerExerciseId,
+                service.GetSelectedExercise(state, round).Id);
+        });
+    }
+
+    [Fact]
+    public void LinkedDirectionAlreadyInBaseLineupIsNotDuplicated()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise first = CloneWithDirectionPartner(
+            FullyCoveredExercise(1, groups[0].CanonicalGroups.Order().First(), 10),
+            2);
+        Exercise second = CloneWithDirectionPartner(
+            FullyCoveredExercise(2, groups[1].CanonicalGroups.Order().First(), 10),
+            1);
+        Exercise[] remaining = groups
+            .Skip(2)
+            .Select((group, index) => QualifiedForGroup(3 + index, group, 10))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [first, second, .. remaining],
+            new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
+        Assert.DoesNotContain(
+            service.GetActiveGroups(state),
+            round => round.Id.EndsWith(".direction", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void RejectingLinkedDirectionScoresOnlyThatDirection()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseExercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise partner = CloneWithDirectionPartner(
+            QualifiedForGroup(1001, groups[0]),
+            baseExercises[0].Id);
+        baseExercises[0] = CloneWithDirectionPartner(baseExercises[0], partner.Id);
+        var service = new ExerciseSessionService(
+            [.. baseExercises, partner],
+            new Random(1));
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+        WorkoutGroup directionRound = service.GetActiveGroups(state).Single(round =>
+            round.Id.EndsWith(".direction", StringComparison.Ordinal));
+        int baseExerciseId = state.SelectedExerciseIds[directionRound.SelectionKey];
+        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
+                     .Take(directionRound.Order - 1))
+        {
+            service.RecordOutcome(state, priorRound, keep: true);
+        }
+        service.RecordOutcome(state, directionRound, keep: false);
+
+        Assert.Equal(-1, partner.Score);
+        Assert.Equal(baseExerciseId, state.SelectedExerciseIds[directionRound.SelectionKey]);
+        Assert.NotEqual(baseExerciseId, partner.Id);
+    }
+
+    [Fact]
+    public void VersionEightLongWorkoutRecomputesDirectionAllocationWithoutEnablingSilence()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseExercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise partner = CloneWithDirectionPartner(
+            QualifiedForGroup(1001, groups[0]),
+            baseExercises[0].Id);
+        baseExercises[0] = CloneWithDirectionPartner(baseExercises[0], partner.Id);
+        var service = new ExerciseSessionService(
+            [.. baseExercises, partner],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+        state.Version = 8;
+        state.ActiveDirectionPartnerExerciseIds.Clear();
+        state.ActiveFullSideRoundIds.Clear();
+        state.ActiveExtraSetSelectionGroupIds.Clear();
+
+        service.Initialize(state);
+
+        Assert.Equal(9, state.Version);
+        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
+        Assert.Single(state.ActiveDirectionPartnerExerciseIds);
+        Assert.Equal(45, service.GetActiveGroups(state).Sum(round =>
+            round.UsesFullSideTiming ? 2 : 1));
     }
 
     [Fact]
@@ -309,15 +477,15 @@ public sealed class ExerciseSessionServiceTests
 
         string[] expected = groups.Take(4)
             .Concat(groups.TakeLast(11))
-            .Select(group => group.Id)
+            .Select(group => $"{group.Id}.set1")
             .ToArray();
-        Assert.Equal(expected.Order(), state.ActiveFullSideSelectionGroupIds.Order());
+        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
         Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
         Assert.Equal(30, service.GetActiveGroups(state).Count);
 
         state.LastKeptExerciseIds.Clear();
         service.Initialize(state);
-        Assert.Equal(expected.Order(), state.ActiveFullSideSelectionGroupIds.Order());
+        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
     }
 
     [Fact]
@@ -1443,7 +1611,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(8, state.Version);
+        Assert.Equal(9, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -1716,6 +1884,36 @@ public sealed class ExerciseSessionServiceTests
             Enum.GetValues<CanonicalMuscleGroup>()
                 .Where(group => group != primary)
                 .ToArray());
+    }
+
+    private static Exercise CloneWithDirectionPartner(
+        Exercise source,
+        int directionPartnerExerciseId)
+    {
+        return new Exercise
+        {
+            Id = source.Id,
+            Name = source.Name,
+            RetiredName = source.RetiredName,
+            Video = source.Video,
+            PrimaryCanonicalGroup = source.PrimaryCanonicalGroup,
+            SecondaryCanonicalGroups = source.SecondaryCanonicalGroups,
+            Practice = source.Practice,
+            MotionProfile = source.MotionProfile,
+            Mode = source.Mode,
+            Presentation = source.Presentation,
+            HoldFramePercent = source.HoldFramePercent,
+            SideSequence = source.SideSequence,
+            DirectionSequence = source.DirectionSequence,
+            DirectionPartnerExerciseId = directionPartnerExerciseId,
+            InsectCompatibility = source.InsectCompatibility,
+            Score = source.Score,
+            OnlyFeetTouchGround = source.OnlyFeetTouchGround,
+            ShoeAgnostic = source.ShoeAgnostic,
+            MaxSpaceMeters = source.MaxSpaceMeters,
+            Equipment = source.Equipment,
+            Silent = source.Silent,
+        };
     }
 
     private static Exercise Exercise(

@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 25;
+    public const int CurrentCatalogRevision = 36;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -26,6 +26,9 @@ public static class CatalogMigrationRules
         ApprovedExerciseCorrections =
             new Dictionary<int, ApprovedExerciseCorrection>
             {
+                [31] = new(
+                    "High-Knee Overhead-Reach March",
+                    "Knee Raise with Overhead Reach"),
                 [21] = new(
                     "Standing-Scale Balance",
                     "Standing-Scale Balance Hold"),
@@ -71,6 +74,15 @@ public static class CatalogMigrationRules
                 [270] = new(
                     "Bodyweight Svend Press",
                     "Palm-Squeeze Forward Press"),
+                [282] = new(
+                    "High-Knee Horizontal Punches",
+                    "Side-Step Knee Drive with Alternating Side Punches"),
+                [219] = new(
+                    "Single-Side High-Knee Cross-Body Pull",
+                    "Alternating High-Knee Cross-Body Pull"),
+                [684] = new(
+                    "Karate Step-Through Cross-Elbow Strike",
+                    "Knee Strike to Horizontal Elbow Strike"),
                 [290] = new(
                     "Universe-in-Motion Qigong",
                     "Low Palm Scoop to Side Opening"),
@@ -125,9 +137,21 @@ public static class CatalogMigrationRules
                 [510] = new(
                     "Clasped-Hands Chest-Opening Forward Fold",
                     "Clasped-Hands Chest-Opening Forward-Fold Hold"),
+                [507] = new(
+                    "Hamstring Curl with Elbow Pull",
+                    "Knee Raise with Elbow Pull"),
+                [508] = new(
+                    "Wide-Step Elbow Pull",
+                    "Side-Step with Two-Arm Overhead Reach"),
                 [588] = new(
                     "Belly-Dance Alternating Shoulder Roll",
                     "Belly-Dance Alternating Shoulder Rolls"),
+                [577] = new(
+                    "High-Knee Goalpost Pull",
+                    "Standing Side-Leg Raise with Side Reach"),
+                [915] = new(
+                    "Split-Stance Knee Drive with Overhead Reach",
+                    "Single-Side Split-Stance Knee Drive with Overhead Reach"),
                 [617] = new(
                     "Standing Side-Leg Circles",
                     "Standing Forward Side-Leg Circles"),
@@ -155,9 +179,6 @@ public static class CatalogMigrationRules
                 [242] = new(
                     "Full-Fist Tendon Glide",
                     "Open Hand to Full Fist"),
-                [251] = new(
-                    "Standing Swan-Dive Hinge",
-                    "Arm Sweep to Forward Hinge"),
                 [283] = new(
                     "Straight-Fist Tendon Glide",
                     "Open Hand to Straight Fist"),
@@ -236,6 +257,30 @@ public static class CatalogMigrationRules
         PriorReviewedReplacementIdentities =
             new Dictionary<int, PriorReviewedReplacementIdentity>
             {
+                [31] = new(
+                    "Knee Raise with Overhead Reach",
+                    "Tai Chi Golden-Rooster Balance Drill"),
+                [219] = new(
+                    "High-Knee Cross-Body Pull",
+                    "Four-Way Self-Resisted Wrist Sequence"),
+                [395] = new(
+                    "Inhale Reach Up, Exhale Knee Lift",
+                    "Overhead Hold with Deep Ribcage Breaths"),
+                [507] = new(
+                    "Knee Raise with Elbow Pull",
+                    "Firm Eye Close and Full Open"),
+                [577] = new(
+                    "Standing Side-Leg Raise with Side Reach",
+                    "Qigong Swimming-Dragon Shoulder Roll"),
+                [618] = new(
+                    "High-Knee Side Reach",
+                    "Pelvic-Floor Windmill"),
+                [654] = new(
+                    "Side Leg Lift to Overhead Knee Drive",
+                    "Sideward-and-Backward Kick"),
+                [834] = new(
+                    "Diagonal Knee Drive with Overhead Pull",
+                    "Alternating Cross-Step Lat Pulldown"),
                 [135] = new(
                     "Standing Snow Angels",
                     "Mountain Pose to Upward Salute"),
@@ -308,6 +353,9 @@ public static class CatalogMigrationRules
                 [245] = new(
                     "Opposite-Hand-Resisted Elbow-Flexion Hold",
                     "Alternating Karate Rising Block (Age-Uke)"),
+                [251] = new(
+                    "Arm Sweep to Forward Hinge",
+                    "Waiter's Bow"),
                 [256] = new(
                     "Bent-Over Straight-Arm Lat Sweeps",
                     "Self-Resisted Overhead Pull Hold"),
@@ -356,6 +404,21 @@ public static class CatalogMigrationRules
                 [294] = new(
                     "Ninja Rat Hand-Seal Hold",
                     "Tiger-Claw Grip Flow"),
+                [414] = new(
+                    "Heel Raises with Fixed-Thumb Head Turns",
+                    "Ear-to-Shoulder Glide"),
+                [415] = new(
+                    "Heel Raises with Fixed-Thumb Head Nods",
+                    "Chin-to-Collarbone Turn"),
+                [416] = new(
+                    "Heel Raises with Fixed-Thumb Head Tilts",
+                    "Diagonal Head Tilt"),
+                [418] = new(
+                    "Heel-Bounce Horizontal Thumb Tracking",
+                    "Forward-and-Back Head Translation"),
+                [419] = new(
+                    "Heel-Bounce Vertical Thumb Tracking",
+                    "Occipital Nod"),
                 [482] = new(
                     "Front Half Neck Circles",
                     "Continuous Spot-Turn Drill"),
@@ -425,6 +488,9 @@ public static class CatalogMigrationRules
                 [681] = new(
                     "Rear-Arm Sweep to Front Squeeze",
                     "Belly-Dance Horizontal Figure Eight"),
+                [687] = new(
+                    "Karate Middle Side Punch",
+                    "Belly-Dance Hip Shimmy"),
                 [743] = new(
                     "Standing Backward Arm Circles",
                     "Clasped-Hands-Behind-Back Chest Opener"),
@@ -508,6 +574,10 @@ public static class CatalogMigrationRules
                 {
                     "Self-Resisted Thumb Flexion Hold",
                 },
+                [251] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Swan-Dive Hinge",
+                },
                 [294] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Self-Resisted Little-Finger Abduction Hold",
@@ -519,6 +589,11 @@ public static class CatalogMigrationRules
                 [501] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Counterclockwise-First Full Neck Circles",
+                    "Single-Leg Thumb-Focus Head Turns",
+                },
+                [513] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Leg Thumb-Focus Head Nods",
                 },
                 [843] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -528,6 +603,36 @@ public static class CatalogMigrationRules
                 {
                     "Cossack Side-to-Side Shifts",
                 },
+            };
+
+    private static readonly IReadOnlyDictionary<int, ApprovedExerciseCorrection>
+        DirectionSplitPreviousIdentities =
+            new Dictionary<int, ApprovedExerciseCorrection>
+            {
+                [214] = new("Wrist Circles", "Forward Wrist Circles"),
+                [223] = new(
+                    "Controlled Wrist Circles",
+                    "Forward Controlled Wrist Circles"),
+                [264] = new(
+                    "Standing Arm Circles",
+                    "Backward Standing Arm Circles"),
+                [288] = new(
+                    "Knee-and-Ankle Circles",
+                    "Forward Knee-and-Ankle Circles"),
+                [406] = new(
+                    "Standing Wheel Arm Circles",
+                    "Clockwise Standing Wheel Arm Circles"),
+                [409] = new("Full Neck Circles", "Clockwise Full Neck Circles"),
+                [588] = new(
+                    "Belly-Dance Alternating Shoulder Rolls",
+                    "Backward Belly-Dance Alternating Shoulder Rolls"),
+                [608] = new("Hip Circle", "Counterclockwise Hip Circles"),
+                [611] = new(
+                    "Wide-Stance Hip Circles",
+                    "Counterclockwise Wide-Stance Hip Circles"),
+                [743] = new(
+                    "Standing Large Arm Circles",
+                    "Backward Standing Large Arm Circles"),
             };
 
     private static readonly IReadOnlyDictionary<int, string>
@@ -587,6 +692,7 @@ public static class CatalogMigrationRules
                 [396] = "Unsupported Single-Leg Balance Hold",
                 [397] = "Exhale Forward, Inhale Back Weight Shift",
                 [425] = "Chin-Tuck Hold",
+                [504] = "Hands-Behind-Head Splenius-Capitis Stretch",
                 [507] = "First-Position Plié Elbow-Pull Pulse",
                 [508] = "Curl Raised Leg with One Arm",
                 [513] = "Collarbone-Anchored Diagonal Neck Stretch",
@@ -611,16 +717,26 @@ public static class CatalogMigrationRules
         185, 186, 187,
         191, 192, 193, 194, 195, 196, 199, 201, 203, 211, 212, 213, 214, 215, 216, 217,
         218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 231, 232, 233, 234, 236, 237, 239,
-        240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 265, 266, 267, 268, 269,
+        240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 264, 265, 266, 267, 268, 269,
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
         289, 291, 292, 293, 294, 295, 296, 301, 314, 321, 326, 327, 329, 338, 367, 390, 391,
-        392, 393, 394, 395, 396, 397, 407, 408, 410, 411, 412, 413, 414, 415, 416, 417,
+        392, 393, 394, 395, 396, 397, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417,
         418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430,
         431, 432, 433, 434, 467, 474, 475, 477, 481, 482, 483,
+        435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448,
+        449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462,
+        463, 464, 465, 466, 468, 469, 470, 471, 472, 473, 476, 478, 479, 480,
+        484, 485, 486, 487, 488, 489, 494, 496, 517, 518, 519,
         490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
-        509, 510, 512, 513, 516, 572, 573, 576, 577, 591, 609, 610, 611, 612, 613, 614,
+        509, 510, 512, 513, 516, 572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
-        687, 712, 743, 745, 816, 834, 843, 845, 971, 986, 987, 996, 997, 998, 999,
+        687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
+        816, 834, 843, 845, 971, 986, 987, 996, 997, 998, 999,
+    ];
+
+    private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
+    [
+        229, 497,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -678,6 +794,35 @@ public static class CatalogMigrationRules
                     31, 219, 248, 282, 390, 394, 395,
                     397, 508, 576, 577, 618, 816, 834,
                 },
+                [26] = new HashSet<int> { 31, 282, 391, 507, 508, 577 },
+                [27] = new HashSet<int> { 231, 685, 687 },
+                [28] = new HashSet<int> { 251 },
+                [29] = new HashSet<int>
+                {
+                    435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445,
+                    446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456,
+                    457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 468,
+                    469, 470, 471, 472, 473, 476, 478, 479, 480, 484, 485,
+                    486, 487, 488, 489, 494, 496, 517, 518, 519,
+                },
+                [30] = new HashSet<int>
+                {
+                    229, 467, 474, 481, 483, 491, 493, 495, 497, 499,
+                    501, 504, 513, 516,
+                },
+                [31] = new HashSet<int> { 414, 415, 416, 418, 419 },
+                [32] = new HashSet<int>
+                {
+                    31, 219, 395, 507, 577, 618, 654, 834,
+                },
+                [33] = new HashSet<int>
+                {
+                    214, 223, 264, 288, 406, 409, 588, 608, 611, 743,
+                    755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
+                },
+                [34] = new HashSet<int> { 98, 390, 508, 576, 816 },
+                [35] = new HashSet<int> { 219 },
+                [36] = new HashSet<int> { 684 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -727,6 +872,28 @@ public static class CatalogMigrationRules
                 {
                     420, 421, 424, 426, 427, 428, 429, 430, 431, 432, 433, 434,
                 },
+                [27] = new HashSet<int> { 687 },
+                [28] = new HashSet<int> { 251 },
+                [29] = new HashSet<int>
+                {
+                    435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445,
+                    446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456,
+                    457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 468,
+                    469, 470, 471, 472, 473, 476, 478, 479, 480, 484, 485,
+                    486, 487, 488, 489, 494, 496, 517, 518, 519,
+                },
+                [30] = new HashSet<int> { 229, 497, 501, 504, 513 },
+                [31] = new HashSet<int> { 414, 415, 416, 418, 419 },
+                [32] = new HashSet<int>
+                {
+                    31, 219, 395, 507, 577, 618, 654, 834,
+                },
+                [33] = new HashSet<int>
+                {
+                    214, 223, 264, 288, 406, 409, 588, 608, 611, 743,
+                    755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
+                },
+                [36] = new HashSet<int> { 684 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -734,6 +901,13 @@ public static class CatalogMigrationRules
     ];
 
     public static IReadOnlySet<int> ReplacedExerciseIds => ReplacedExerciseIdSet;
+
+    public static IReadOnlySet<int> PermanentlyRetiredExerciseIds =>
+        PermanentlyRetiredExerciseIdSet;
+
+    public static IReadOnlyDictionary<int, IReadOnlySet<int>>
+        WorkoutStateInvalidationsByRevision =>
+            ScopedWorkoutStateInvalidationsByRevision;
 
     public static IReadOnlyDictionary<int, IReadOnlySet<int>>
         ScoreInvalidationsByRevision => ScopedScoreInvalidationsByRevision;
@@ -757,6 +931,17 @@ public static class CatalogMigrationRules
                 exception);
         }
 
+        int[] bundledRetiredIds = PermanentlyRetiredExerciseIdSet
+            .Where(bundledById.ContainsKey)
+            .Order()
+            .ToArray();
+        if (bundledRetiredIds.Length > 0)
+        {
+            throw new InvalidOperationException(
+                $"The bundled catalog restores permanently retired exercises: " +
+                $"{string.Join(", ", bundledRetiredIds)}.");
+        }
+
         var alreadyReviewedReplacementIds = new HashSet<int>();
         var restoredReviewedExerciseIds = new HashSet<int>();
 
@@ -766,6 +951,11 @@ public static class CatalogMigrationRules
             {
                 if (!bundledById.TryGetValue(exerciseId, out Exercise? replacement))
                 {
+                    if (PermanentlyRetiredExerciseIdSet.Contains(exerciseId))
+                    {
+                        continue;
+                    }
+
                     throw new InvalidOperationException(
                         $"The bundled catalog is missing reviewed replacement {exerciseId}.");
                 }
@@ -830,6 +1020,17 @@ public static class CatalogMigrationRules
                     NameMatchesWithOptionalAlternatingPrefix(
                         stored.Name,
                         clarityResetPreviousName);
+                bool directionSplitPreviousIdentityMatches =
+                    DirectionSplitPreviousIdentities.TryGetValue(
+                        exerciseId,
+                        out ApprovedExerciseCorrection? directionSplitIdentity) &&
+                    string.Equals(
+                        replacement.Name,
+                        directionSplitIdentity.CurrentName,
+                        StringComparison.Ordinal) &&
+                    NameMatchesWithOptionalAlternatingPrefix(
+                        stored.Name,
+                        directionSplitIdentity.PreviousName);
                 bool reviewedRestorationPreviousIdentityMatches =
                     RestoredReviewedExerciseIdentities.TryGetValue(
                         exerciseId,
@@ -845,6 +1046,7 @@ public static class CatalogMigrationRules
                         !priorReviewedIdentityMatches &&
                         !additionalPriorReviewedIdentityMatches &&
                         !catalogClarityResetIdentityMatches &&
+                        !directionSplitPreviousIdentityMatches &&
                         !reviewedRestorationPreviousIdentityMatches) ||
                     !string.Equals(
                         stored.Video,
@@ -870,7 +1072,7 @@ public static class CatalogMigrationRules
                 bundled.Name,
                 StringComparison.Ordinal);
             bool nameIsApprovedTimedSideNormalization =
-                bundled.SideSequence != ExerciseSideSequence.Continuous &&
+                bundled.SideSequence.UsesTimedSides() &&
                 stored.Name.StartsWith(AlternatingPrefix, StringComparison.Ordinal) &&
                 string.Equals(
                     stored.Name[AlternatingPrefix.Length..],
@@ -878,7 +1080,7 @@ public static class CatalogMigrationRules
                     StringComparison.Ordinal);
             bool nameIsApprovedContinuousAlternationNormalization =
                 ContinuousAlternationNormalizationIdSet.Contains(exerciseId) &&
-                bundled.SideSequence == ExerciseSideSequence.Continuous &&
+                !bundled.SideSequence.UsesTimedSides() &&
                 bundled.Name.StartsWith(AlternatingPrefix, StringComparison.Ordinal) &&
                 string.Equals(
                     stored.Name,
@@ -982,6 +1184,26 @@ public static class CatalogMigrationRules
         return invalidatedExerciseIds;
     }
 
+    private static IReadOnlySet<int> GetScoreInvalidationExerciseIds(
+        int priorCatalogRevision)
+    {
+        var invalidatedExerciseIds = priorCatalogRevision <
+            LastCumulativeWorkoutStateRevision
+                ? new HashSet<int>(ReplacedExerciseIdSet)
+                : [];
+
+        foreach ((int revision, IReadOnlySet<int> exerciseIds) in
+            ScopedScoreInvalidationsByRevision)
+        {
+            if (revision > priorCatalogRevision)
+            {
+                invalidatedExerciseIds.UnionWith(exerciseIds);
+            }
+        }
+
+        return invalidatedExerciseIds;
+    }
+
     public static bool ReconcileWorkoutState(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
@@ -995,9 +1217,12 @@ public static class CatalogMigrationRules
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
-        state.ActiveFullSideSelectionGroupIds ??= [];
+        state.ActiveDirectionPartnerExerciseIds ??= [];
+        state.ActiveFullSideRoundIds ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
+        IReadOnlySet<int> scoreInvalidatedExerciseIds =
+            GetScoreInvalidationExerciseIds(state.CatalogRevision);
 
         var selectionsWithRetiredExercises = state.SelectedExerciseIds
             .Where(selection => invalidatedExerciseIds.Contains(selection.Value))
@@ -1037,7 +1262,7 @@ public static class CatalogMigrationRules
             state.PendingRestKept = false;
         }
 
-        if (invalidatedExerciseIds.Contains(state.PendingScoreExerciseId))
+        if (scoreInvalidatedExerciseIds.Contains(state.PendingScoreExerciseId))
         {
             state.PendingScoreExerciseId = 0;
             state.PendingScoreValue = 0;
@@ -1066,6 +1291,13 @@ public static class CatalogMigrationRules
 
     private static string GetSelectionGroupIdFromRoundId(string roundId)
     {
+        const string directionSuffix = ".direction";
+        if (roundId.EndsWith(directionSuffix, StringComparison.Ordinal) &&
+            roundId.Length > directionSuffix.Length)
+        {
+            return roundId[..^directionSuffix.Length];
+        }
+
         int suffixIndex = roundId.LastIndexOf(".set", StringComparison.Ordinal);
         return suffixIndex > 0 &&
             int.TryParse(roundId.AsSpan(suffixIndex + 4), out int setNumber) &&

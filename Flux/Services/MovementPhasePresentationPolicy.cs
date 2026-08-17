@@ -35,7 +35,7 @@ public static class MovementPhasePresentationPolicy
         ExerciseDirectionSequence directionSequence)
     {
         ValidateSequenceCombination(sideSequence, directionSequence);
-        return sideSequence != ExerciseSideSequence.Continuous ||
+        return sideSequence.UsesTimedSides() ||
             directionSequence != ExerciseDirectionSequence.None;
     }
 
@@ -54,7 +54,7 @@ public static class MovementPhasePresentationPolicy
                 ActiveScreenSide: null);
         }
 
-        bool continuous = sideSequence == ExerciseSideSequence.Continuous &&
+        bool continuous = !sideSequence.UsesTimedSides() &&
             directionSequence == ExerciseDirectionSequence.None;
         if (continuous)
         {
@@ -109,7 +109,7 @@ public static class MovementPhasePresentationPolicy
             ExerciseSideSequence sideSequence,
             ExerciseDirectionSequence directionSequence)
     {
-        if (sideSequence != ExerciseSideSequence.Continuous)
+        if (sideSequence.UsesTimedSides())
         {
             return sideSequence switch
             {
@@ -163,7 +163,7 @@ public static class MovementPhasePresentationPolicy
                 directionSequence,
                 null);
         }
-        if (sideSequence != ExerciseSideSequence.Continuous &&
+        if (sideSequence.UsesTimedSides() &&
             directionSequence != ExerciseDirectionSequence.None)
         {
             throw new ArgumentException(

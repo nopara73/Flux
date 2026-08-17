@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,9 +15,35 @@ if (!outputRoot.startsWith(`${webRoot}${path.sep}`)) {
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 
-for (const file of ["index.html", "styles.css", "app.js", "workout.js"]) {
-  await cp(path.join(webRoot, file), path.join(outputRoot, file));
+const workoutSource = await readFile(path.join(webRoot, "workout.js"), "utf8");
+const workoutOutputName = fingerprintedName("workout", "js", workoutSource);
+await writeFile(path.join(outputRoot, workoutOutputName), workoutSource, "utf8");
+
+const appSource = await readFile(path.join(webRoot, "app.js"), "utf8");
+const fingerprintedAppSource = appSource.replace(
+  'from "./workout.js";',
+  `from "./${workoutOutputName}";`,
+);
+if (fingerprintedAppSource === appSource) {
+  throw new Error("Could not fingerprint the workout module import.");
 }
+const appOutputName = fingerprintedName("app", "js", fingerprintedAppSource);
+await writeFile(path.join(outputRoot, appOutputName), fingerprintedAppSource, "utf8");
+
+const stylesSource = await readFile(path.join(webRoot, "styles.css"), "utf8");
+const stylesOutputName = fingerprintedName("styles", "css", stylesSource);
+await writeFile(path.join(outputRoot, stylesOutputName), stylesSource, "utf8");
+
+const indexSource = await readFile(path.join(webRoot, "index.html"), "utf8");
+const fingerprintedIndex = indexSource
+  .replace('./styles.css', `./${stylesOutputName}`)
+  .replace('./app.js', `./${appOutputName}`);
+if (fingerprintedIndex === indexSource ||
+    !fingerprintedIndex.includes(stylesOutputName) ||
+    !fingerprintedIndex.includes(appOutputName)) {
+  throw new Error("Could not fingerprint the web shell references.");
+}
+await writeFile(path.join(outputRoot, "index.html"), fingerprintedIndex, "utf8");
 
 await copyInto(
   path.join(repositoryRoot, "Flux", "Assets", "exercises.json"),
@@ -30,7 +57,7 @@ await copyDirectory(
   path.join(repositoryRoot, "Flux", "Assets", "exercise_videos"),
   path.join(outputRoot, "assets", "exercise_videos"),
 );
-await copyDirectory(
+await copyOptionalDirectory(
   path.join(repositoryRoot, "Flux", "Assets", "exercise_direction_videos"),
   path.join(outputRoot, "assets", "exercise_direction_videos"),
 );
@@ -48,8 +75,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 357) {
-  throw new Error(`Expected 357 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 418) {
+  throw new Error(`Expected 418 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 for (const exercise of catalog) {
@@ -78,6 +105,22 @@ for (const exercise of catalog) {
   }
 }
 
+const assetVersions = {};
+for (const file of await walk(path.join(outputRoot, "assets"))) {
+  const relativePath = path
+    .relative(path.join(outputRoot, "assets"), file)
+    .split(path.sep)
+    .join("/");
+  assetVersions[relativePath] = createHash("sha256")
+    .update(await readFile(file))
+    .digest("hex");
+}
+await writeFile(
+  path.join(outputRoot, "data", "asset-versions.json"),
+  `${JSON.stringify(assetVersions, null, 2)}\n`,
+  "utf8",
+);
+
 const outputFiles = await walk(outputRoot);
 const forbiddenGifs = outputFiles.filter((file) => file.toLowerCase().endsWith(".gif"));
 if (forbiddenGifs.length > 0) {
@@ -103,11 +146,27 @@ async function copyDirectory(source, destination) {
   await cp(source, destination, { recursive: true });
 }
 
+async function copyOptionalDirectory(source, destination) {
+  try {
+    await copyDirectory(source, destination);
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      throw error;
+    }
+    await mkdir(destination, { recursive: true });
+  }
+}
+
 async function requireFile(file) {
   const information = await stat(file);
   if (!information.isFile() || information.size === 0) {
     throw new Error(`Missing runtime asset: ${file}`);
   }
+}
+
+function fingerprintedName(stem, extension, content) {
+  const fingerprint = createHash("sha256").update(content).digest("hex").slice(0, 12);
+  return `${stem}.${fingerprint}.${extension}`;
 }
 
 async function walk(directory) {

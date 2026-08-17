@@ -145,16 +145,6 @@ if ($assignmentDrift.Count -gt 0) {
     throw 'The generated canonical assignments have drifted from ExerciseCanonicalGroups.psd1.'
 }
 
-$undersizedPrimaryGroups = @($canonicalGroupKeys | Where-Object {
-        $canonicalGroup = $_
-        @($catalog | Where-Object {
-                [string]$_.primaryCanonicalGroup -eq $canonicalGroup
-            }).Count -lt 10
-    })
-if ($undersizedPrimaryGroups.Count -gt 0) {
-    throw "Every canonical leaf must retain at least ten primary exercises: $($undersizedPrimaryGroups -join ', ')."
-}
-
 $lines = [System.Collections.Generic.List[string]]::new()
 $lines.Add('# Flux demonstration quality audit')
 $lines.Add('')

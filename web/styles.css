@@ -14,14 +14,14 @@
   --ready: #1b1e21;
   --ready-highlight: #262a2d;
   --ready-outline: #3c4144;
-  --move-surface: #f8e8ea;
-  --move-text: #7e2a32;
-  --move-accent: #b7444c;
-  --move-track: #e7c7ca;
-  --rest-surface: #e7f0f8;
-  --rest-text: #285679;
-  --rest-accent: #3d719b;
-  --rest-track: #c6daea;
+  --move-surface: #f0c7cc;
+  --move-text: #681e27;
+  --move-accent: #a42e3a;
+  --move-track: #d9959e;
+  --rest-surface: #cbe1f2;
+  --rest-text: #194f77;
+  --rest-accent: #2d6f9f;
+  --rest-track: #98c5e3;
   --completion-top: #202427;
   --completion-bottom: #121416;
   --range-progress: 50%;
@@ -346,9 +346,38 @@ button.modifier-tile:not(:disabled):active {
 }
 
 .modifier-icon {
+  display: block;
   width: 32px;
   height: 32px;
   fill: currentColor;
+}
+
+.no-clap-slash-cutout,
+.no-clap-slash {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.no-clap-slash-cutout {
+  stroke: var(--surface);
+  stroke-width: 34;
+}
+
+.modifier-tile[aria-pressed="true"] .no-clap-slash-cutout {
+  stroke: var(--graphite);
+}
+
+.no-clap-slash {
+  stroke: currentColor;
+  stroke-width: 18;
+}
+
+.modifier-icon-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .duration-action-bar {
@@ -531,6 +560,42 @@ button.modifier-tile:not(:disabled):active {
   text-overflow: ellipsis;
 }
 
+.side-phase-preview {
+  width: 100%;
+  min-height: 34px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.side-phase-label {
+  min-width: 132px;
+  min-height: 34px;
+  padding: 0 16px;
+  display: grid;
+  place-items: center;
+  color: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 11px;
+  background: var(--graphite);
+  box-shadow: 0 3px 8px rgb(18 20 22 / 18%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.side-phase-label.unilateral {
+  border-color: var(--move-text);
+  background: var(--move-accent);
+}
+
+.side-phase-label.alternating {
+  border-color: var(--rest-text);
+  background: var(--rest-accent);
+}
+
 .exercise-media-area {
   min-height: 72px;
   margin: 12px 0;
@@ -546,11 +611,32 @@ button.modifier-tile:not(:disabled):active {
   padding: 4px;
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--outline-soft);
+  border: 4px solid var(--outline-soft);
   border-radius: 24px;
   background: var(--media);
   box-shadow: 0 5px 14px rgb(18 20 22 / 16%);
-  transition: opacity 120ms ease, transform 120ms ease;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.workout-screen.phase-move .exercise-media-card {
+  border-color: var(--move-accent);
+  background: var(--move-surface);
+  box-shadow:
+    0 5px 14px rgb(18 20 22 / 18%),
+    0 0 0 4px rgb(164 46 58 / 18%);
+}
+
+.workout-screen.phase-rest .exercise-media-card {
+  border-color: var(--rest-accent);
+  background: var(--rest-surface);
+  box-shadow:
+    0 5px 14px rgb(18 20 22 / 18%),
+    0 0 0 4px rgb(45 111 159 / 18%);
 }
 
 .exercise-media-card.resting {
@@ -701,7 +787,9 @@ button.modifier-tile:not(:disabled):active {
   min-height: 48px;
   padding: 0 10px;
   color: currentColor;
-  background: transparent;
+  border: 1px solid var(--move-accent);
+  border-radius: 14px;
+  background: var(--move-track);
   font-size: 14px;
   font-weight: 600;
 }
@@ -727,6 +815,11 @@ button.modifier-tile:not(:disabled):active {
 
 .move-panel.change {
   color: var(--rest-text);
+}
+
+.move-panel.change .skip-action {
+  border-color: var(--rest-accent);
+  background: var(--rest-track);
 }
 
 .move-panel.change .movement-track {
@@ -784,6 +877,9 @@ button.modifier-tile:not(:disabled):active {
   min-height: 60px;
   margin-top: 10px;
   border-radius: 18px;
+  border-color: var(--rest-text);
+  color: white;
+  background: var(--rest-accent);
 }
 
 .completion-screen {
@@ -1026,6 +1122,14 @@ input:focus-visible {
   .exercise-name {
     max-height: 3.6em;
     font-size: clamp(11px, 2.4vw, 19px);
+  }
+
+  .side-phase-preview {
+    min-height: 34px;
+  }
+
+  .side-phase-label {
+    min-height: 34px;
   }
 
   .exercise-media-area {
@@ -1346,6 +1450,16 @@ input:focus-visible {
     margin-top: 16px;
     font-size: clamp(32px, 2.5vw, 46px);
     line-height: 1.12;
+  }
+
+  .side-phase-preview {
+    min-height: 42px;
+    margin-top: 16px;
+  }
+
+  .side-phase-label {
+    min-height: 42px;
+    font-size: 12px;
   }
 
   .exercise-media-area {

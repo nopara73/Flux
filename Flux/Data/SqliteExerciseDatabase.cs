@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 43;
+    private const int DatabaseVersion = 55;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -36,6 +36,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "hold_frame_percent",
         "side_sequence",
         "direction_sequence",
+        "direction_partner_exercise_id",
         "insect_compatibility",
     ];
 
@@ -71,7 +72,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -96,7 +97,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 database.ExecSQL(
                     "ALTER TABLE exercises ADD COLUMN side_sequence TEXT NOT NULL " +
                     "DEFAULT 'Continuous' CHECK (side_sequence IN " +
-                    "('Continuous', 'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
+                    "('Continuous', 'Alternating', " +
+                    "'ScreenLeftThenRight', 'ScreenRightThenLeft'))");
             }
             if (oldVersion < 20)
             {
@@ -188,6 +190,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 side_sequence TEXT NOT NULL DEFAULT 'Continuous'
                     CHECK (side_sequence IN (
                         'Continuous',
+                        'Alternating',
                         'ScreenLeftThenRight',
                         'ScreenRightThenLeft')),
                 direction_sequence TEXT NOT NULL DEFAULT 'None'
@@ -199,6 +202,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'CounterclockwiseThenClockwise',
                         'InwardThenOutward',
                         'OutwardThenInward')),
+                direction_partner_exercise_id INTEGER NOT NULL DEFAULT 0
+                    CHECK (direction_partner_exercise_id >= 0),
                 insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (insect_compatibility IN (
                         'Unreviewed',
@@ -244,6 +249,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 side_sequence TEXT NOT NULL DEFAULT 'Continuous'
                     CHECK (side_sequence IN (
                         'Continuous',
+                        'Alternating',
                         'ScreenLeftThenRight',
                         'ScreenRightThenLeft')),
                 direction_sequence TEXT NOT NULL DEFAULT 'None'
@@ -255,6 +261,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'CounterclockwiseThenClockwise',
                         'InwardThenOutward',
                         'OutwardThenInward')),
+                direction_partner_exercise_id INTEGER NOT NULL DEFAULT 0
+                    CHECK (direction_partner_exercise_id >= 0),
                 insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (insect_compatibility IN (
                         'Unreviewed',
@@ -272,6 +280,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 only_feet_touch_ground, shoe_agnostic, max_space_meters,
                 equipment, silent, exercise_mode, presentation,
                 hold_frame_percent, side_sequence, direction_sequence,
+                direction_partner_exercise_id,
                 insect_compatibility)
             SELECT
                 id, name, video, practice, motion_profile, score,
@@ -279,7 +288,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 CASE WHEN max_space_meters BETWEEN 1 AND 2
                     THEN max_space_meters ELSE 2 END,
                 equipment, silent, exercise_mode, presentation,
-                hold_frame_percent, side_sequence, direction_sequence,
+                hold_frame_percent, side_sequence, direction_sequence, 0,
                 insect_compatibility
             FROM exercises
             """);
@@ -518,6 +527,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
         values.Put("side_sequence", exercise.SideSequence.ToString());
         values.Put("direction_sequence", exercise.DirectionSequence.ToString());
+        values.Put("direction_partner_exercise_id", exercise.DirectionPartnerExerciseId);
         values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
         return values;
     }
@@ -677,8 +687,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(15)
                         ?? throw new InvalidOperationException(
                             "An exercise has no direction sequence.")),
+                DirectionPartnerExerciseId = cursor.GetInt(16),
                 InsectCompatibility = Enum.Parse<ExerciseInsectCompatibility>(
-                    cursor.GetString(16)
+                    cursor.GetString(17)
                         ?? throw new InvalidOperationException(
                             "An exercise has no insect compatibility review.")),
             });
@@ -743,12 +754,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasUndersizedWorkoutProfile =
-            WorkoutModifierPolicy.FindCoverageDeficiencies(exercises).Count > 0;
+        bool hasUndersizedModifierPairState =
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).Count > 0;
+        bool hasImmaterialModifier =
+            WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).Count > 0;
         bool hasInfeasibleWorkoutProfileLineup =
             WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).Count > 0;
-        bool hasUndersizedModifierExclusionPool =
-            WorkoutModifierPolicy.FindModifierExclusionDeficiencies(exercises).Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -766,7 +777,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.SideSequence) ||
             !Enum.IsDefined(exercise.DirectionSequence) ||
             !Enum.IsDefined(exercise.InsectCompatibility) ||
-            (exercise.SideSequence != ExerciseSideSequence.Continuous &&
+            (exercise.SideSequence.UsesTimedSides() &&
                 exercise.DirectionSequence != ExerciseDirectionSequence.None) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&
                 (exercise.Mode != ExerciseMode.Repetition ||
@@ -778,9 +789,31 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 exercise.HoldFramePercent is <= 0 or > 99));
         bool hasInvalidInitialScore =
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
+        bool hasInvalidDirectionPartner = exercises.Any(exercise =>
+            exercise.DirectionPartnerExerciseId < 0 ||
+            (exercise.DirectionPartnerExerciseId > 0 &&
+                (!exercisesById.TryGetValue(
+                    exercise.DirectionPartnerExerciseId,
+                    out Exercise? partner) ||
+                partner.Id == exercise.Id ||
+                partner.DirectionPartnerExerciseId != exercise.Id ||
+                exercise.DirectionSequence != ExerciseDirectionSequence.None ||
+                partner.DirectionSequence != ExerciseDirectionSequence.None ||
+                exercise.SideSequence != partner.SideSequence ||
+                exercise.PrimaryCanonicalGroup != partner.PrimaryCanonicalGroup ||
+                !exercise.SecondaryCanonicalGroups.SequenceEqual(
+                    partner.SecondaryCanonicalGroups) ||
+                exercise.InsectCompatibility != partner.InsectCompatibility ||
+                exercise.Silent != partner.Silent)));
         bool hasInvalidReplacementMetadata = false;
         if (requireInitialScores)
         {
+            HashSet<int> activeReplacementIds = CatalogMigrationRules
+                .ReplacedExerciseIds
+                .Except(CatalogMigrationRules.PermanentlyRetiredExerciseIds)
+                .ToHashSet();
             int[] declaredReplacementIds = exercises
                 .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
                 .Select(exercise => exercise.Id)
@@ -788,9 +821,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 .ToArray();
             hasInvalidReplacementMetadata =
                 !declaredReplacementIds.SequenceEqual(
-                    CatalogMigrationRules.ReplacedExerciseIds.Order()) ||
+                    activeReplacementIds.Order()) ||
                 exercises.Any(exercise =>
-                    CatalogMigrationRules.ReplacedExerciseIds.Contains(exercise.Id) !=
+                    activeReplacementIds.Contains(exercise.Id) !=
                         !string.IsNullOrWhiteSpace(exercise.RetiredName) ||
                     (!string.IsNullOrWhiteSpace(exercise.RetiredName) &&
                         string.Equals(
@@ -799,15 +832,16 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                             StringComparison.Ordinal)));
         }
 
-        if (hasUndersizedWorkoutProfile ||
+        if (hasUndersizedModifierPairState ||
+            hasImmaterialModifier ||
             hasInfeasibleWorkoutProfileLineup ||
-            hasUndersizedModifierExclusionPool ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||
             violatesRequirements ||
             hasInvalidInitialScore ||
+            hasInvalidDirectionPartner ||
             hasInvalidReplacementMetadata)
         {
             throw new InvalidOperationException(

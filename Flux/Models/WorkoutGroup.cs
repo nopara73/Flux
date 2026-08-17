@@ -6,7 +6,8 @@ public sealed record WorkoutGroup(
     int Order,
     IReadOnlySet<CanonicalMuscleGroup> CanonicalGroups,
     string? SelectionGroupId = null,
-    bool UsesFullSideTiming = false)
+    bool UsesFullSideTiming = false,
+    int ExerciseOverrideId = 0)
 {
     public string SelectionKey => SelectionGroupId ?? Id;
 }

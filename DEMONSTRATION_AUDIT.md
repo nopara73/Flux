@@ -1,48 +1,48 @@
 # Flux demonstration quality audit
 
 Flux now ships a strictly human-demonstrated exercise catalog.
-All **357** bundled exercises show an actual person performing the movement.
+All **418** bundled exercises show an actual person performing the movement.
 Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
 both the runtime catalog and the application package.
 
 | Canonical muscle group | Primary exercises | All meaningful assignments |
 | --- | ---: | ---: |
-| Medial and deep knee extensors | 16 | 117 |
-| Posterior thigh and knee flexors | 14 | 41 |
-| Major hip adductors | 12 | 44 |
-| Lateral knee extensors | 18 | 119 |
-| Gluteal extensors | 12 | 138 |
-| Spinal extensors | 10 | 32 |
-| Calf, deep posterior leg and plantar foot | 14 | 82 |
-| Soleus | 10 | 47 |
-| Scapular girdle | 10 | 99 |
-| Shoulder adductors and extensors | 10 | 36 |
-| Abdominal wall | 10 | 143 |
-| Hip abductors | 18 | 73 |
-| Chest | 10 | 39 |
-| Elbow extensors | 10 | 28 |
-| Hip flexors | 17 | 65 |
-| Anterior/lateral lower leg and dorsal foot | 10 | 43 |
-| Deep hip rotators | 11 | 36 |
-| Shoulder abductors | 10 | 86 |
-| Forearm flexors and pronators | 10 | 48 |
-| Deep and intersegmental back | 14 | 66 |
-| Elbow flexors | 10 | 21 |
-| Breathing muscles | 11 | 27 |
-| Forearm extensors and supinators | 10 | 36 |
-| Rotator cuff | 10 | 54 |
-| Accessory hip adductors | 10 | 39 |
-| Posterior neck and suboccipital muscles | 10 | 31 |
-| Cranial muscles | 20 | 22 |
-| Anterior/lateral neck and hyoid muscles | 10 | 30 |
-| Intrinsic hand | 10 | 36 |
+| Medial and deep knee extensors | 21 | 141 |
+| Posterior thigh and knee flexors | 14 | 60 |
+| Major hip adductors | 13 | 54 |
+| Lateral knee extensors | 18 | 143 |
+| Gluteal extensors | 13 | 158 |
+| Spinal extensors | 12 | 39 |
+| Calf, deep posterior leg and plantar foot | 20 | 116 |
+| Soleus | 9 | 79 |
+| Scapular girdle | 12 | 125 |
+| Shoulder adductors and extensors | 13 | 45 |
+| Abdominal wall | 11 | 166 |
+| Hip abductors | 21 | 90 |
+| Chest | 11 | 53 |
+| Elbow extensors | 13 | 32 |
+| Hip flexors | 25 | 82 |
+| Anterior/lateral lower leg and dorsal foot | 11 | 61 |
+| Deep hip rotators | 15 | 45 |
+| Shoulder abductors | 16 | 112 |
+| Forearm flexors and pronators | 10 | 58 |
+| Deep and intersegmental back | 16 | 76 |
+| Elbow flexors | 11 | 27 |
+| Breathing muscles | 15 | 62 |
+| Forearm extensors and supinators | 11 | 42 |
+| Rotator cuff | 13 | 65 |
+| Accessory hip adductors | 10 | 47 |
+| Posterior neck and suboccipital muscles | 12 | 36 |
+| Cranial muscles | 21 | 27 |
+| Anterior/lateral neck and hyoid muscles | 11 | 35 |
+| Intrinsic hand | 10 | 42 |
 | Pelvic floor and perineum | 10 | 16 |
 
 ## Retained source quality
 
-- Direct human-footage demonstrations: **356**
+- Direct human-footage demonstrations: **407**
 - Exact copies of human footage: **0**
-- Exact deterministic transforms of human footage: **1**
+- Exact deterministic transforms of human footage: **11**
 
 Copy and transform targets are retained only when their reviewed source is
 human footage and the target movement has identical mechanics. This rule is

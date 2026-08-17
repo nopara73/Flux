@@ -2041,18 +2041,6 @@
         FramesPerSecond = 12
         MirrorForAlternation = $false
     }
-    497 = @{
-        File = 'sadhana-griva-bheda.mp4'
-        Url = 'https://www.youtube.com/watch?v=sO1j2SRTbAo'
-        SourcePage = 'https://www.youtube.com/watch?v=sO1j2SRTbAo'
-        Human = $true
-        Youtube = $true
-        Video = $true
-        StartSeconds = 8.5
-        DurationSeconds = 7.0
-        FramesPerSecond = 12
-        MirrorForAlternation = $false
-    }
     498 = @{
         File = 'sadhana-griva-bheda.mp4'
         Url = 'https://www.youtube.com/watch?v=sO1j2SRTbAo'
@@ -3562,19 +3550,6 @@
         Video = $true
         StartSeconds = 11
         DurationSeconds = 11.5
-        FramesPerSecond = 8
-        Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
-        MirrorForAlternation = $true
-    }
-    229 = @{
-        File = 'boxing-five-punches.mp4'
-        Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
-        SourcePage = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
-        Human = $true
-        Youtube = $true
-        Video = $true
-        StartSeconds = 42.5
-        DurationSeconds = 8
         FramesPerSecond = 8
         Crop = 'crop=360:430:0:185,scale=214:256,pad=256:256:21:0,drawbox=x=0:y=0:w=256:h=18:color=black:t=fill'
         MirrorForAlternation = $true

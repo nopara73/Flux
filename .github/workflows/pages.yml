@@ -16,6 +16,7 @@ on:
       - "Flux/Data/**"
       - "Flux/Models/**"
       - "Flux/Services/**"
+      - "Flux/Resources/color/**"
       - "Flux/Resources/drawable/**"
       - "Flux/Resources/layout/**"
       - "Flux/Resources/values/**"
@@ -53,6 +54,7 @@ jobs:
             /Flux/Data/**
             /Flux/Models/**
             /Flux/Services/**
+            /Flux/Resources/color/**
             /Flux/Resources/drawable/**
             /Flux/Resources/layout/**
             /Flux/Resources/values/**

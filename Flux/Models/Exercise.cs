@@ -29,6 +29,8 @@ public sealed class Exercise
     public ExerciseDirectionSequence DirectionSequence { get; init; } =
         ExerciseDirectionSequence.None;
 
+    public int DirectionPartnerExerciseId { get; init; }
+
     public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
         ExerciseInsectCompatibility.Unreviewed;
 

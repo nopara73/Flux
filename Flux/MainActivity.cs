@@ -1,5 +1,6 @@
 using Android.Views;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using Flux.Data;
 using Flux.Models;
 using Flux.Services;
@@ -22,6 +23,7 @@ public class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
     private const int DirectionSecondPhaseOffsetMilliseconds = 20_000;
+    private const int DirectionSegmentDurationMilliseconds = 20_000;
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
@@ -88,6 +90,8 @@ public class MainActivity : Activity
     private TextView _workoutGroupName = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
+    private LinearLayout _sidePhasePreview = null!;
+    private TextView _sidePhaseLabel = null!;
     private FrameLayout _exerciseMediaArea = null!;
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
@@ -307,6 +311,9 @@ public class MainActivity : Activity
         _workoutGroupName = FindRequiredView<TextView>(Resource.Id.workout_group_name);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
+        _sidePhasePreview = FindRequiredView<LinearLayout>(
+            Resource.Id.side_phase_preview);
+        _sidePhaseLabel = FindRequiredView<TextView>(Resource.Id.side_phase_label);
         _exerciseMediaArea = FindRequiredView<FrameLayout>(
             Resource.Id.exercise_media_area);
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
@@ -830,6 +837,12 @@ public class MainActivity : Activity
                 Resources.GetDimensionPixelSize(
                     Resource.Dimension.workout_action_height));
         }
+
+        var sidePreviewLayout = new LinearLayout.LayoutParams(
+            matchParent,
+            DpInt(34));
+        sidePreviewLayout.TopMargin = DpInt(8);
+        _sidePhasePreview.LayoutParameters = sidePreviewLayout;
 
         foreach (LinearLayout panel in new[]
                  {
@@ -1517,6 +1530,25 @@ public class MainActivity : Activity
         _exerciseVideo.SetOnInfoListener(_videoInfoListener);
         _exerciseVideo.Completion += (_, _) =>
         {
+            if (_currentExercise?.DirectionSequence !=
+                ExerciseDirectionSequence.None)
+            {
+                if (_workoutPhase == WorkoutPhase.Ready)
+                {
+                    _exerciseVideo.SeekTo(0);
+                    ApplyCurrentMediaPlaybackState();
+                    return;
+                }
+
+                if (_workoutPhase == WorkoutPhase.Move &&
+                    _lastMovementPhase is MovementPhase.FirstSide or
+                        MovementPhase.SecondSide)
+                {
+                    RestartExerciseMediaForPhase(_lastMovementPhase.Value);
+                    return;
+                }
+            }
+
             if (_freezeHoldAtEnd)
             {
                 FreezeHoldOnFinalFrame();
@@ -1533,7 +1565,10 @@ public class MainActivity : Activity
             exercise.Mode == ExerciseMode.Hold && _workoutPhase == WorkoutPhase.Rest;
         _mediaLoadGeneration++;
         _mediaReady = false;
-        _loopExerciseVideo = !holdDuringMove && !holdDuringRest;
+        _loopExerciseVideo =
+            !holdDuringMove &&
+            !holdDuringRest &&
+            exercise.DirectionSequence == ExerciseDirectionSequence.None;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
 
@@ -1605,13 +1640,21 @@ public class MainActivity : Activity
             StringComparison.Ordinal)
             ? "directions-"
             : "standard-";
+        long expectedLength;
+        string assetFingerprint;
+        using (Stream fingerprintSource = Assets!.Open(assetPath))
+        {
+            expectedLength = fingerprintSource.CanSeek ? fingerprintSource.Length : -1;
+            assetFingerprint = Convert.ToHexString(
+                SHA256.HashData(fingerprintSource)).ToLowerInvariant();
+        }
+
+        string assetFileName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
+        string assetExtension = System.IO.Path.GetExtension(assetPath);
         string cachedPath = System.IO.Path.Combine(
             cacheRoot,
-            assetKind + System.IO.Path.GetFileName(assetPath));
+            $"{assetKind}{assetFileName}-{assetFingerprint}{assetExtension}");
         string temporaryPath = cachedPath + ".tmp";
-
-        using Stream source = Assets!.Open(assetPath);
-        long expectedLength = source.CanSeek ? source.Length : -1;
 
         if (!forceRefresh &&
             File.Exists(cachedPath) &&
@@ -1623,6 +1666,7 @@ public class MainActivity : Activity
 
         try
         {
+            using Stream source = Assets!.Open(assetPath);
             using (FileStream destination = File.Create(temporaryPath))
             {
                 source.CopyTo(destination);
@@ -1922,13 +1966,10 @@ public class MainActivity : Activity
         _exerciseName.Text = exercise.Name;
         _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}. Hold."
-            : !MovementPhasePresentationPolicy.UsesTimedPair(
-                exercise.SideSequence,
-                exercise.DirectionSequence)
-                ? $"{exercise.Name}. Repetition."
-                : exercise.DirectionSequence == ExerciseDirectionSequence.None
-                    ? $"{exercise.Name}. First side, change, then second side."
-                    : $"{exercise.Name}. First direction, change, then opposite direction.";
+            : exercise.DirectionSequence != ExerciseDirectionSequence.None
+                ? $"{exercise.Name}. First direction, change, then opposite direction."
+                : $"{exercise.Name}. Repetition.";
+        RenderSidePhasePreview(exercise);
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
@@ -1945,6 +1986,34 @@ public class MainActivity : Activity
             $"Round {position} of {totalRounds}. " +
             $"{groupName}. {exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
+    }
+
+    private void RenderSidePhasePreview(Exercise exercise)
+    {
+        string? label = exercise.SideSequence switch
+        {
+            ExerciseSideSequence.Alternating => "ALTERNATING",
+            ExerciseSideSequence.ScreenLeftThenRight or
+                ExerciseSideSequence.ScreenRightThenLeft => "UNILATERAL",
+            _ => null,
+        };
+        if (label is null)
+        {
+            _sidePhasePreview.Visibility = ViewStates.Gone;
+            _sidePhasePreview.ContentDescription = null;
+            return;
+        }
+
+        _sidePhaseLabel.Text = label;
+        _sidePhaseLabel.SetBackgroundResource(
+            exercise.SideSequence == ExerciseSideSequence.Alternating
+                ? Resource.Drawable.exercise_execution_label_alternating_background
+                : Resource.Drawable.exercise_execution_label_unilateral_background);
+        _sidePhasePreview.ContentDescription = exercise.SideSequence ==
+            ExerciseSideSequence.Alternating
+                ? "Alternating exercise. Switch sides continuously."
+                : "Unilateral exercise. Work one side, change, then the other.";
+        _sidePhasePreview.Visibility = ViewStates.Visible;
     }
 
     private void AnimateExerciseChange()
@@ -2129,6 +2198,7 @@ public class MainActivity : Activity
         }
         _countdownProgress.Progress = (int)boundedMilliseconds;
         ApplyMovementPhase(state);
+        EnforceDirectionMediaSegment(state.Phase);
     }
 
     private bool UsesTimedPair()
@@ -2296,6 +2366,34 @@ public class MainActivity : Activity
         RestartHoldOrResumeRepetition();
     }
 
+    private void EnforceDirectionMediaSegment(MovementPhase phase)
+    {
+        if (_currentExercise?.DirectionSequence ==
+                ExerciseDirectionSequence.None ||
+            _activeMediaPlayer is null ||
+            !_mediaReady ||
+            phase is not (MovementPhase.FirstSide or MovementPhase.SecondSide))
+        {
+            return;
+        }
+
+        int segmentStartMilliseconds = phase == MovementPhase.SecondSide
+            ? DirectionSecondPhaseOffsetMilliseconds
+            : 0;
+        int segmentEndMilliseconds =
+            segmentStartMilliseconds + DirectionSegmentDurationMilliseconds;
+        int positionMilliseconds = _activeMediaPlayer.CurrentPosition;
+        if (positionMilliseconds >= segmentStartMilliseconds &&
+            positionMilliseconds < segmentEndMilliseconds)
+        {
+            return;
+        }
+
+        _exerciseVideo.Pause();
+        _exerciseVideo.SeekTo(segmentStartMilliseconds);
+        ApplyCurrentMediaPlaybackState();
+    }
+
     private void CueSideChange()
     {
         PlayWhistleCue(_sideChangeWhistleId);
@@ -2318,6 +2416,9 @@ public class MainActivity : Activity
         int progressResource = changingPair
             ? Resource.Drawable.rest_progress_track
             : Resource.Drawable.move_progress_track;
+        int actionBackgroundResource = changingPair
+            ? Resource.Drawable.phase_rest_chip_background
+            : Resource.Drawable.phase_move_chip_background;
         string description = changingPair
             ? GetPairChangeDescription()
             : GetMovementCueDescription(cue);
@@ -2329,6 +2430,7 @@ public class MainActivity : Activity
         _countdownPhaseIcon.ContentDescription = description;
         _countdownText.SetTextColor(textColor);
         _skipAction.SetTextColor(textColor);
+        _skipAction.SetBackgroundResource(actionBackgroundResource);
         _countdownProgress.ProgressDrawable = GetDrawable(progressResource);
     }
 
@@ -2342,6 +2444,8 @@ public class MainActivity : Activity
         _countdownPhaseIcon.ContentDescription = "Prepare";
         _countdownText.SetTextColor(textColor);
         _skipAction.SetTextColor(textColor);
+        _skipAction.SetBackgroundResource(
+            Resource.Drawable.phase_rest_chip_background);
         _countdownProgress.ProgressDrawable =
             GetDrawable(Resource.Drawable.rest_progress_track);
     }
@@ -2456,6 +2560,7 @@ public class MainActivity : Activity
         _workoutPhaseSurface.Visibility = ViewStates.Visible;
         SetWorkoutPhaseHalf(_workoutPhaseLeft, active: activeLeft);
         SetWorkoutPhaseHalf(_workoutPhaseRight, active: !activeLeft);
+        SetExerciseMediaPhase(resting: false);
         AnimatePhaseSurface();
     }
 
@@ -2473,7 +2578,27 @@ public class MainActivity : Activity
         _workoutPhaseSurface.Visibility = ViewStates.Visible;
         _workoutPhaseLeft.SetBackgroundColor(color);
         _workoutPhaseRight.SetBackgroundColor(color);
+        SetExerciseMediaPhase(
+            resting: colorResource == Resource.Color.rest_surface);
         AnimatePhaseSurface();
+    }
+
+    private void SetExerciseMediaPhase(bool resting)
+    {
+        SetExerciseMediaBackground(resting
+            ? Resource.Drawable.media_card_rest_background
+            : Resource.Drawable.media_card_move_background);
+    }
+
+    private void SetExerciseMediaBackground(int drawableResource)
+    {
+        _exerciseMediaCard.SetBackgroundResource(drawableResource);
+        int mediaPadding = DpInt(4f);
+        _exerciseMediaCard.SetPadding(
+            mediaPadding,
+            mediaPadding,
+            mediaPadding,
+            mediaPadding);
     }
 
     private void AnimatePhaseSurface()
@@ -2521,6 +2646,7 @@ public class MainActivity : Activity
         _exerciseMediaCard.Alpha = 1f;
         _exerciseMediaCard.ScaleX = 1f;
         _exerciseMediaCard.ScaleY = 1f;
+        SetExerciseMediaBackground(Resource.Drawable.media_card_background);
         _workoutPhaseSurface.Animate()?.Cancel();
         _workoutPhaseSurface.Alpha = 1f;
         _workoutPhaseSurface.Visibility = ViewStates.Gone;
@@ -2564,11 +2690,11 @@ public class MainActivity : Activity
             : GetString(Resource.String.tap_to_keep);
         _keepButton.SetBackgroundResource(_state.PendingRestKept
             ? Resource.Drawable.kept_button_background
-            : Resource.Drawable.keep_button_background);
+            : Resource.Drawable.rest_button_background);
         _keepButton.SetTextColor(new Android.Graphics.Color(GetColor(
             _state.PendingRestKept
                 ? Resource.Color.accent_text
-                : Resource.Color.primary_text)));
+                : Resource.Color.white)));
         _keepButton.ContentDescription = _state.PendingRestKept
             ? "Exercise kept for the next session"
             : GetString(Resource.String.tap_to_keep_description);

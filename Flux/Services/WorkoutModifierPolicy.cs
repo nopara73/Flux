@@ -2,12 +2,16 @@ using Flux.Models;
 
 namespace Flux.Services;
 
-public sealed record WorkoutProfileCoverageDeficiency(
+public sealed record WorkoutModifierPairCoverageDeficiency(
     int Minutes,
     string GroupId,
     string GroupName,
-    WorkoutModifiers Profile,
-    int SelectableExerciseCount);
+    WorkoutModifiers FirstModifier,
+    bool FirstModifierEnabled,
+    WorkoutModifiers SecondModifier,
+    bool SecondModifierEnabled,
+    int MatchingExerciseCount,
+    int RequiredExerciseCount);
 
 public sealed record WorkoutProfileLineupDeficiency(
     int Minutes,
@@ -15,24 +19,29 @@ public sealed record WorkoutProfileLineupDeficiency(
     int MaximumDistinctExerciseCount,
     int RequiredDistinctExerciseCount);
 
-public sealed record WorkoutModifierExclusionDeficiency(
-    int Minutes,
-    string GroupId,
-    string GroupName,
+public sealed record WorkoutModifierMaterialityDeficiency(
     WorkoutModifiers Modifier,
     WorkoutModifiers ContextProfile,
-    int ExcludedExerciseCount,
-    int RequiredExcludedExerciseCount);
+    int RelaxedExerciseCount,
+    int ConstrainedExerciseCount,
+    int ReleasedExerciseCount,
+    int RequiredReleasedExerciseCount,
+    int AffectedBucketCount,
+    int RequiredAffectedBucketCount);
 
 public static class WorkoutModifierPolicy
 {
-    public const int MinimumExcludedExercisesPerGroup = 5;
+    public const int MinimumExercisesPerPairStatePerGroup = 5;
+    public const int MinimumReleasedExercises = 5;
+    public const int MinimumReleasedExercisePercent = 5;
+    public const int MinimumAffectedBucketPercent = 10;
+
+    private const int MaterialityResolutionMinutes = 30;
 
     private sealed record ModifierRule(
         WorkoutModifiers Flag,
         Func<Exercise, bool> IsReviewed,
-        Func<Exercise, bool> IsCompatible,
-        bool RequiresExclusionFloor);
+        Func<Exercise, bool> IsCompatible);
 
     private static readonly ModifierRule[] Rules =
     [
@@ -41,13 +50,11 @@ public static class WorkoutModifierPolicy
             exercise => exercise.InsectCompatibility !=
                 ExerciseInsectCompatibility.Unreviewed,
             exercise => exercise.InsectCompatibility ==
-                ExerciseInsectCompatibility.Compatible,
-            RequiresExclusionFloor: true),
+                ExerciseInsectCompatibility.Compatible),
         new(
             WorkoutModifiers.Silence,
             _ => true,
-            exercise => exercise.Silent,
-            RequiresExclusionFloor: false),
+            exercise => exercise.Silent),
     ];
 
     private static readonly WorkoutModifiers SupportedModifierMask =
@@ -55,12 +62,13 @@ public static class WorkoutModifierPolicy
             WorkoutModifiers.None,
             (mask, rule) => mask | rule.Flag);
 
-    private static readonly IReadOnlyList<WorkoutModifiers> Profiles =
-        Array.AsReadOnly(CreateSupportedProfiles());
+    private static readonly IReadOnlyList<WorkoutModifiers> ProfilesForValidation =
+        Array.AsReadOnly(CreatePairwiseValidationProfiles());
 
     public static WorkoutModifiers SupportedMask => SupportedModifierMask;
 
-    public static IReadOnlyList<WorkoutModifiers> SupportedProfiles => Profiles;
+    public static IReadOnlyList<WorkoutModifiers> ValidationProfiles =>
+        ProfilesForValidation;
 
     public static WorkoutModifiers Normalize(WorkoutModifiers modifiers)
     {
@@ -95,29 +103,117 @@ public static class WorkoutModifierPolicy
             IsCompatible(exercise, profile);
     }
 
-    public static IReadOnlyList<WorkoutProfileCoverageDeficiency>
-        FindCoverageDeficiencies(IReadOnlyCollection<Exercise> exercises)
+    public static IReadOnlyList<WorkoutModifierPairCoverageDeficiency>
+        FindPairwiseCoverageDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         return MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes =>
                 MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
-                    SupportedProfiles.Select(profile => new
-                    {
-                        Minutes = minutes,
-                        Group = group,
-                        Profile = profile,
-                        Count = exercises.Count(exercise =>
-                            IsSelectable(exercise, group, profile)),
-                    })))
-            .Where(result =>
-                result.Count < WorkoutCoveragePolicy.MinimumSelectableExercisesPerGroup)
-            .Select(result => new WorkoutProfileCoverageDeficiency(
+                    GetModifierRulePairs().SelectMany(pair =>
+                        GetBooleanStates().SelectMany(firstEnabled =>
+                            GetBooleanStates().Select(secondEnabled =>
+                            {
+                                WorkoutModifiers profile =
+                                    (firstEnabled
+                                        ? pair.First.Flag
+                                        : WorkoutModifiers.None) |
+                                    (secondEnabled
+                                        ? pair.Second.Flag
+                                        : WorkoutModifiers.None);
+                                return new
+                                {
+                                    Minutes = minutes,
+                                    Group = group,
+                                    FirstRule = pair.First,
+                                    FirstEnabled = firstEnabled,
+                                    SecondRule = pair.Second,
+                                    SecondEnabled = secondEnabled,
+                                    Count = exercises
+                                        .Where(exercise =>
+                                            Rules.All(rule =>
+                                                rule.IsReviewed(exercise)) &&
+                                            IsSelectable(
+                                                exercise,
+                                                group,
+                                                profile))
+                                        .Select(exercise => exercise.Id)
+                                        .Distinct()
+                                        .Count(),
+                                };
+                            })))))
+            .Where(result => result.Count < MinimumExercisesPerPairStatePerGroup)
+            .Select(result => new WorkoutModifierPairCoverageDeficiency(
                 result.Minutes,
                 result.Group.Id,
                 result.Group.DisplayName,
-                result.Profile,
-                result.Count))
+                result.FirstRule.Flag,
+                result.FirstEnabled,
+                result.SecondRule.Flag,
+                result.SecondEnabled,
+                result.Count,
+                MinimumExercisesPerPairStatePerGroup))
+            .ToArray();
+    }
+
+    public static IReadOnlyList<WorkoutModifierMaterialityDeficiency>
+        FindMaterialityDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        IReadOnlyList<WorkoutGroup> buckets = MassGroupingTaxonomy
+            .GetResolution(MaterialityResolutionMinutes)
+            .Groups;
+        Exercise[] reviewedExercises = exercises
+            .Where(exercise => Rules.All(rule => rule.IsReviewed(exercise)))
+            .ToArray();
+
+        return GetMaterialityEdges()
+            .Select(edge =>
+            {
+                WorkoutModifiers contextProfile = Normalize(edge.ContextProfile);
+                WorkoutModifiers constrainedProfile =
+                    contextProfile | edge.Rule.Flag;
+                HashSet<int> relaxedExerciseIds = GetSelectableExerciseIds(
+                    reviewedExercises,
+                    buckets,
+                    contextProfile);
+                HashSet<int> constrainedExerciseIds = GetSelectableExerciseIds(
+                    reviewedExercises,
+                    buckets,
+                    constrainedProfile);
+                int releasedExerciseCount = relaxedExerciseIds
+                    .Except(constrainedExerciseIds)
+                    .Count();
+                int requiredReleasedExerciseCount = Math.Max(
+                    MinimumReleasedExercises,
+                    GetPercentageFloor(
+                        relaxedExerciseIds.Count,
+                        MinimumReleasedExercisePercent));
+                int affectedBucketCount = buckets.Count(bucket =>
+                    reviewedExercises.Any(exercise =>
+                        IsSelectable(exercise, bucket, contextProfile) &&
+                        !IsSelectable(exercise, bucket, constrainedProfile)));
+                int requiredAffectedBucketCount = GetPercentageFloor(
+                    buckets.Count,
+                    MinimumAffectedBucketPercent);
+
+                return new WorkoutModifierMaterialityDeficiency(
+                    edge.Rule.Flag,
+                    contextProfile,
+                    relaxedExerciseIds.Count,
+                    constrainedExerciseIds.Count,
+                    releasedExerciseCount,
+                    requiredReleasedExerciseCount,
+                    affectedBucketCount,
+                    requiredAffectedBucketCount);
+            })
+            .Where(deficiency =>
+                deficiency.ReleasedExerciseCount <
+                    deficiency.RequiredReleasedExerciseCount ||
+                deficiency.AffectedBucketCount <
+                    deficiency.RequiredAffectedBucketCount)
             .ToArray();
     }
 
@@ -131,7 +227,7 @@ public static class WorkoutModifierPolicy
                 IReadOnlyList<WorkoutGroup> groups = MassGroupingTaxonomy
                     .GetResolution(minutes > 30 ? 30 : minutes)
                     .Groups;
-                return SupportedProfiles.Select(profile => new
+                return ValidationProfiles.Select(profile => new
                 {
                     Minutes = minutes,
                     Profile = profile,
@@ -150,47 +246,6 @@ public static class WorkoutModifierPolicy
                 result.Profile,
                 result.MaximumDistinctExerciseCount,
                 result.RequiredDistinctExerciseCount))
-            .ToArray();
-    }
-
-    public static IReadOnlyList<WorkoutModifierExclusionDeficiency>
-        FindModifierExclusionDeficiencies(
-            IReadOnlyCollection<Exercise> exercises)
-    {
-        ArgumentNullException.ThrowIfNull(exercises);
-        return MassGroupingTaxonomy.SupportedMinutes
-            .SelectMany(minutes =>
-                MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
-                    Rules.Where(rule => rule.RequiresExclusionFloor)
-                        .SelectMany(rule => SupportedProfiles
-                        .Select(profile => profile & ~rule.Flag)
-                        .Distinct()
-                        .Select(contextProfile => new
-                        {
-                            Minutes = minutes,
-                            Group = group,
-                            Rule = rule,
-                            ContextProfile = contextProfile,
-                            Count = exercises
-                                .Where(exercise =>
-                                    WorkoutCoveragePolicy.IsSelectable(exercise, group) &&
-                                    IsCompatible(exercise, contextProfile) &&
-                                    rule.IsReviewed(exercise) &&
-                                    !rule.IsCompatible(exercise))
-                                .Select(exercise => exercise.Id)
-                                .Distinct()
-                                .Count(),
-                        }))))
-            .Where(result =>
-                result.Count < MinimumExcludedExercisesPerGroup)
-            .Select(result => new WorkoutModifierExclusionDeficiency(
-                result.Minutes,
-                result.Group.Id,
-                result.Group.DisplayName,
-                result.Rule.Flag,
-                result.ContextProfile,
-                result.Count,
-                MinimumExcludedExercisesPerGroup))
             .ToArray();
     }
 
@@ -260,24 +315,65 @@ public static class WorkoutModifierPolicy
         return false;
     }
 
-    private static WorkoutModifiers[] CreateSupportedProfiles()
+    private static WorkoutModifiers[] CreatePairwiseValidationProfiles()
     {
-        int profileCount = 1 << Rules.Length;
-        var profiles = new WorkoutModifiers[profileCount];
-        for (int profileIndex = 0; profileIndex < profileCount; profileIndex++)
-        {
-            WorkoutModifiers profile = WorkoutModifiers.None;
-            for (int ruleIndex = 0; ruleIndex < Rules.Length; ruleIndex++)
-            {
-                if ((profileIndex & (1 << ruleIndex)) != 0)
-                {
-                    profile |= Rules[ruleIndex].Flag;
-                }
-            }
+        var profiles = new List<WorkoutModifiers> { WorkoutModifiers.None };
+        profiles.AddRange(Rules.Select(rule => rule.Flag));
+        profiles.AddRange(GetModifierRulePairs().Select(pair =>
+            pair.First.Flag | pair.Second.Flag));
+        return profiles.Distinct().ToArray();
+    }
 
-            profiles[profileIndex] = profile;
+    private static IEnumerable<(ModifierRule First, ModifierRule Second)>
+        GetModifierRulePairs()
+    {
+        for (int firstIndex = 0; firstIndex < Rules.Length - 1; firstIndex++)
+        {
+            for (int secondIndex = firstIndex + 1;
+                 secondIndex < Rules.Length;
+                 secondIndex++)
+            {
+                yield return (Rules[firstIndex], Rules[secondIndex]);
+            }
+        }
+    }
+
+    private static IEnumerable<(ModifierRule Rule, WorkoutModifiers ContextProfile)>
+        GetMaterialityEdges()
+    {
+        foreach (ModifierRule rule in Rules)
+        {
+            yield return (rule, WorkoutModifiers.None);
         }
 
-        return profiles;
+        foreach ((ModifierRule First, ModifierRule Second) pair in
+                 GetModifierRulePairs())
+        {
+            yield return (pair.First, pair.Second.Flag);
+            yield return (pair.Second, pair.First.Flag);
+        }
+    }
+
+    private static HashSet<int> GetSelectableExerciseIds(
+        IReadOnlyCollection<Exercise> exercises,
+        IReadOnlyList<WorkoutGroup> buckets,
+        WorkoutModifiers profile)
+    {
+        return exercises
+            .Where(exercise => buckets.Any(bucket =>
+                IsSelectable(exercise, bucket, profile)))
+            .Select(exercise => exercise.Id)
+            .ToHashSet();
+    }
+
+    private static int GetPercentageFloor(int count, int percent)
+    {
+        return (int)Math.Ceiling(count * percent / 100d);
+    }
+
+    private static IEnumerable<bool> GetBooleanStates()
+    {
+        yield return false;
+        yield return true;
     }
 }

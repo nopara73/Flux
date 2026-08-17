@@ -59,7 +59,6 @@
     225 = 'HANDS'
     227 = 'HANDS'
     228 = 'HANDS'
-    229 = 'HANDS'
     230 = 'HANDS'
     231 = 'HANDS'
     232 = 'HANDS'

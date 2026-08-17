@@ -11,6 +11,9 @@ public sealed class MovementPhasePresentationPolicyTests
         Assert.False(MovementPhasePresentationPolicy.UsesTimedPair(
             ExerciseSideSequence.Continuous,
             ExerciseDirectionSequence.None));
+        Assert.False(MovementPhasePresentationPolicy.UsesTimedPair(
+            ExerciseSideSequence.Alternating,
+            ExerciseDirectionSequence.None));
 
         foreach (ExerciseSideSequence sideSequence in TimedSideSequences)
         {
@@ -144,6 +147,14 @@ public sealed class MovementPhasePresentationPolicyTests
         Assert.Equal(MovementDirectionCue.Move, continuous.Cue);
         Assert.False(continuous.MirrorMedia);
         Assert.Null(continuous.ActiveScreenSide);
+        MovementPhasePresentation alternating =
+            MovementPhasePresentationPolicy.GetPresentation(
+                ExerciseSideSequence.Alternating,
+                ExerciseDirectionSequence.None,
+                MovementPhase.Continuous);
+        Assert.Equal(MovementDirectionCue.Move, alternating.Cue);
+        Assert.False(alternating.MirrorMedia);
+        Assert.Null(alternating.ActiveScreenSide);
         Assert.Equal(MovementDirectionCue.None, complete.Cue);
         Assert.False(complete.MirrorMedia);
         Assert.Null(complete.ActiveScreenSide);

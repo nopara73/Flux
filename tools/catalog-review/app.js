@@ -36,7 +36,10 @@ elements.video.addEventListener("error", () => {
 });
 elements.video.addEventListener("ended", () => {
   const exercise = exercises[index];
-  if (exercise.directionSequence === "None" && exercise.sideSequence !== "Continuous") {
+  if (
+    exercise.directionSequence === "None" &&
+    ["ScreenLeftThenRight", "ScreenRightThenLeft"].includes(exercise.sideSequence)
+  ) {
     mirrorNextLoop = !mirrorNextLoop;
     elements.video.style.transform = mirrorNextLoop ? "scaleX(-1)" : "none";
   }

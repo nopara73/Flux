@@ -245,9 +245,8 @@
                         android:button="@null"
                         android:checked="true"
                         android:contentDescription="@string/silence_modifier_description"
-                        android:foreground="@drawable/ic_volume_off"
+                        android:foreground="@drawable/ic_no_clap"
                         android:foregroundGravity="center"
-                        android:foregroundTint="@color/duration_modifier_icon_tint"
                         android:text="" />
                 </GridLayout>
 

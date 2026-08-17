@@ -12,6 +12,10 @@ import {
   EXERCISE_INSECT_COMPATIBILITY,
   FULL_SIDE_MOVEMENT_DURATION_MS,
   LAST_CUMULATIVE_CATALOG_REVISION,
+  MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
+  MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
+  MINIMUM_MODIFIER_MATERIALITY_PERCENT,
   MOVEMENT_DURATION_MS,
   PREPARATION_DURATION_MS,
   RESOLUTIONS,
@@ -39,7 +43,12 @@ const [
   modifierPolicy,
   exerciseDatabase,
   durationLayout,
+  androidColors,
+  androidStyles,
+  strings,
   webIndex,
+  webStyles,
+  webBuild,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -55,7 +64,12 @@ const [
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
+  source("Flux", "Resources", "values", "colors.xml"),
+  source("Flux", "Resources", "values", "styles.xml"),
+  source("Flux", "Resources", "values", "strings.xml"),
   source("web", "index.html"),
+  source("web", "styles.css"),
+  source("web", "scripts", "build.mjs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -73,7 +87,8 @@ test("web duration choices match the mobile workout contract", () => {
 test("web and mobile persist keep-first long-workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
-  assert.match(workoutState, /HashSet<string> ActiveFullSideSelectionGroupIds/);
+  assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
+  assert.match(workoutState, /HashSet<string> ActiveFullSideRoundIds/);
   assert.match(
     sessionService,
     /OrderByDescending\(group\s*=>[\s\S]*LastKeptExerciseIds\.Contains\(exerciseId\)\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
@@ -101,8 +116,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.equal(DEFAULT_WORKOUT_MODIFIERS, WORKOUT_MODIFIERS.Silence);
   assert.match(workoutModifiers, /Insect\s*=\s*1/);
   assert.match(workoutModifiers, /Silence\s*=\s*2/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 5);
-  assert.match(workoutState, /public int Version[^=]*=\s*8/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 6);
+  assert.match(workoutState, /public int Version[^=]*=\s*9/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -125,31 +140,49 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
-    /SupportedProfiles[\s\S]*FindCoverageDeficiencies/,
+    /MinimumExercisesPerPairStatePerGroup\s*=\s*5[\s\S]*FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies/,
+  );
+  assert.equal(
+    MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+    integerConstant(modifierPolicy, "MinimumExercisesPerPairStatePerGroup"),
+  );
+  assert.equal(
+    MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
+    integerConstant(modifierPolicy, "MinimumReleasedExercises"),
+  );
+  assert.equal(
+    MINIMUM_MODIFIER_MATERIALITY_PERCENT,
+    integerConstant(modifierPolicy, "MinimumReleasedExercisePercent"),
+  );
+  assert.equal(
+    MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
+    integerConstant(modifierPolicy, "MinimumAffectedBucketPercent"),
   );
   assert.match(
     modifierPolicy,
     /FindDistinctLineupDeficiencies[\s\S]*GetMaximumDistinctLineupSize/,
   );
   assert.match(
-    modifierPolicy,
-    /MinimumExcludedExercisesPerGroup\s*=\s*5[\s\S]*FindModifierExclusionDeficiencies/,
+    workoutModule,
+    /MODIFIER_RULES[\s\S]*MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP\s*=\s*5[\s\S]*findWorkoutModifierPairCoverageDeficiencies[\s\S]*findWorkoutModifierMaterialityDeficiencies/,
   );
   assert.match(
     workoutModule,
-    /MODIFIER_RULES[\s\S]*MINIMUM_EXCLUDED_EXERCISES_PER_GROUP\s*=\s*5[\s\S]*findWorkoutModifierExclusionDeficiencies/,
+    /matchingExerciseCount:[\s\S]*MODIFIER_RULES\.every\(\(rule\)\s*=>\s*rule\.isReviewed\(exercise\)\)/,
   );
+  assert.doesNotMatch(modifierPolicy, /1\s*<<\s*Rules\.Length/);
+  assert.doesNotMatch(workoutModule, /1\s*<<\s*MODIFIER_RULES\.length/);
   assert.match(
     workoutModule,
     /findWorkoutProfileLineupDeficiencies[\s\S]*getMaximumDistinctLineupSize/,
   );
   assert.match(
     webApp,
-    /findWorkoutProfileCoverageDeficiencies[\s\S]*findWorkoutProfileLineupDeficiencies[\s\S]*findWorkoutModifierExclusionDeficiencies/,
+    /findWorkoutModifierPairCoverageDeficiencies[\s\S]*findWorkoutModifierMaterialityDeficiencies[\s\S]*findWorkoutProfileLineupDeficiencies/,
   );
   assert.match(
     exerciseDatabase,
-    /FindCoverageDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*FindModifierExclusionDeficiencies[\s\S]*hasUndersizedModifierExclusionPool/,
+    /FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*hasUndersizedModifierPairState/,
   );
   assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
   assert.ok(catalog.every((exercise) => typeof exercise.silent === "boolean"));
@@ -159,13 +192,146 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);
+  assert.match(durationLayout, /@drawable\/ic_no_clap/);
+  assert.doesNotMatch(durationLayout, /silence_modifier_button[\s\S]*?foregroundTint=/);
+  assert.match(webIndex, /class="modifier-icon no-clap-icon"/);
+  assert.match(webIndex, /viewBox="0 0 256 256"/);
+  assert.match(webIndex, /Hands-clapping silhouette adapted from Phosphor Icons/);
+  assert.match(webIndex, /class="no-clap-slash-cutout"/);
+  assert.match(webIndex, /class="no-clap-slash"/);
+  assert.match(webStyles, /\.no-clap-slash-cutout[\s\S]*stroke-width: 34/);
+  assert.match(webStyles, /\.no-clap-slash[\s\S]*stroke-width: 18/);
+  assert.doesNotMatch(webIndex, /class="modifier-icon shhh-icon"/);
+  assert.doesNotMatch(durationLayout, /@drawable\/ic_volume_off/);
+  assert.doesNotMatch(durationLayout, /@drawable\/ic_quiet_movement/);
+  assert.match(strings, /<string name="silence_modifier_description">Quiet exercise filter<\/string>/);
   assert.match(webIndex, /id="insect-modifier"/);
   assert.match(webIndex, /id="silence-modifier"/);
+  assert.match(webIndex, /Quiet exercise filter: quiet exercises only/);
+  assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
+  assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(mainActivity, /WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence/);
   assert.match(webApp, /WORKOUT_MODIFIERS\.Insect[\s\S]*WORKOUT_MODIFIERS\.Silence/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*43/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*55/);
+  assert.match(
+    exerciseDatabase,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+54\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+  );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(exerciseDatabase, /max_space_meters > 0 AND max_space_meters <= 2/);
+});
+
+test("runtime media and the deployable web shell are content-addressed", () => {
+  assert.match(mainActivity, /SHA256\.HashData/);
+  assert.match(mainActivity, /assetFingerprint/);
+  assert.match(webApp, /data\/asset-versions\.json[\s\S]*cache:\s*"no-store"/);
+  assert.match(webApp, /assetVersions\[path\][\s\S]*searchParams\.set\("v", fingerprint\)/);
+  assert.match(webBuild, /createHash\("sha256"\)/);
+  assert.match(webBuild, /asset-versions\.json/);
+  assert.match(webBuild, /fingerprintedName\("workout", "js"/);
+  assert.match(webBuild, /fingerprintedName\("app", "js"/);
+  assert.match(webBuild, /fingerprintedName\("styles", "css"/);
+  assert.match(webBuild, /from \"\.\/\$\{workoutOutputName\}\"/);
+  assert.match(webBuild, /replace\('\.\/styles\.css'/);
+  assert.match(webBuild, /replace\('\.\/app\.js'/);
+});
+
+test("movement and rest phases use pronounced accents across the surface, media, and actions", () => {
+  for (const [name, value] of [
+    ["move_surface", "#F0C7CC"],
+    ["move_text", "#681E27"],
+    ["move_accent", "#A42E3A"],
+    ["move_track", "#D9959E"],
+    ["rest_surface", "#CBE1F2"],
+    ["rest_text", "#194F77"],
+    ["rest_accent", "#2D6F9F"],
+    ["rest_track", "#98C5E3"],
+  ]) {
+    assert.match(androidColors, new RegExp(`<color name="${name}">${value}<\\/color>`));
+    assert.match(webStyles, new RegExp(`--${name.replaceAll("_", "-")}: ${value.toLowerCase()}`));
+  }
+
+  assert.match(
+    mainActivity,
+    /RenderSplitWorkoutPhase[\s\S]*SetExerciseMediaPhase\(resting: false\)/,
+  );
+  assert.match(
+    mainActivity,
+    /SetExerciseMediaPhase[\s\S]*media_card_rest_background[\s\S]*media_card_move_background/,
+  );
+  assert.match(
+    mainActivity,
+    /phase_rest_chip_background[\s\S]*phase_move_chip_background/,
+  );
+  assert.match(
+    androidStyles,
+    /FluxKeepButton[\s\S]*@drawable\/rest_button_background[\s\S]*@color\/white/,
+  );
+  assert.match(
+    mainActivity,
+    /PendingRestKept[\s\S]*rest_button_background[\s\S]*Resource\.Color\.white/,
+  );
+  assert.match(
+    webApp,
+    /setFullPhaseSurface[\s\S]*setWorkoutPhaseClass\(kind\)[\s\S]*classList\.toggle\("phase-move"[\s\S]*classList\.toggle\("phase-rest"/,
+  );
+  assert.match(
+    webStyles,
+    /\.workout-screen\.phase-move \.exercise-media-card[\s\S]*\.workout-screen\.phase-rest \.exercise-media-card[\s\S]*\.move-panel\.change \.skip-action[\s\S]*\.keep-button/,
+  );
+});
+
+test("exercise previews distinguish unilateral and alternating execution", async () => {
+  const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
+  assert.match(workoutLayout, /@\+id\/side_phase_preview/);
+  assert.match(workoutLayout, /@\+id\/side_phase_label/);
+  assert.match(workoutLayout, /@drawable\/exercise_execution_label_unilateral_background/);
+  assert.match(workoutLayout, /android:textColor="@color\/white"/);
+  assert.match(webIndex, /id="exercise-name"[\s\S]*id="side-phase-preview"[\s\S]*id="exercise-media-card"/);
+  assert.match(webIndex, /id="side-phase-label"/);
+  assert.match(
+    mainActivity,
+    /RenderSidePhasePreview\(exercise\)/,
+  );
+  assert.match(
+    methodBody(
+      mainActivity,
+      "private void RenderSidePhasePreview(",
+      "private void AnimateExerciseChange(",
+    ),
+    /ExerciseSideSequence\.Alternating => "ALTERNATING"[\s\S]*"UNILATERAL"/,
+  );
+  assert.match(
+    methodBody(
+      mainActivity,
+      "private void RenderSidePhasePreview(",
+      "private void AnimateExerciseChange(",
+    ),
+    /exercise_execution_label_alternating_background[\s\S]*exercise_execution_label_unilateral_background/,
+  );
+  assert.match(
+    methodBody(
+      webApp,
+      "function renderSidePhasePreview(",
+      "function showReadyPanel()",
+    ),
+    /sideSequence === "Alternating"[\s\S]*"ALTERNATING"[\s\S]*"UNILATERAL"[\s\S]*classList\.toggle\("alternating", isAlternating\)[\s\S]*classList\.toggle\("unilateral", !isAlternating\)/,
+  );
+  assert.match(
+    webStyles,
+    /\.side-phase-label\.unilateral[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
+  );
+  assert.match(
+    webStyles,
+    /\.side-phase-label\.alternating[\s\S]*border-color: var\(--rest-text\)[\s\S]*background: var\(--rest-accent\)/,
+  );
+  assert.doesNotMatch(workoutLayout, /side_phase_(?:first|change|second)/);
+  assert.doesNotMatch(webIndex, /side-phase-(?:first|change|second)/);
+  assert.doesNotMatch(workoutLayout, /two_sided_badge|ic_two_sides/);
+  assert.doesNotMatch(mainActivity, /_twoSidedBadge/);
+  assert.doesNotMatch(webIndex, /two-sided-badge|BOTH SIDES/);
+  assert.doesNotMatch(webApp, /twoSidedBadge/);
+  assert.doesNotMatch(webStyles, /\.two-sided-(?:badge|icon)/);
 });
 
 test("web and mobile preserve deployed keeps by catalog membership", () => {
@@ -263,6 +429,26 @@ test("web and mobile separate the exercise whistle from the final completion cue
   }
 });
 
+test("directions are linked exercises and precede longer side timers", () => {
+  assert.match(exerciseModel, /int DirectionPartnerExerciseId/);
+  assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
+  assert.match(
+    sessionService,
+    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/,
+  );
+  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partnerId\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/);
+  assert.equal(catalog.filter((exercise) => exercise.directionSequence !== "None").length, 0);
+  const linkedDirections = catalog.filter((exercise) =>
+    exercise.directionPartnerExerciseId > 0);
+  assert.equal(linkedDirections.length, 20);
+  for (const exercise of linkedDirections) {
+    const partner = catalog.find((candidate) =>
+      candidate.id === exercise.directionPartnerExerciseId);
+    assert.ok(partner);
+    assert.equal(partner.directionPartnerExerciseId, exercise.id);
+  }
+});
+
 test("web catalog migration matches the mobile workout contract", () => {
   assert.equal(
     CURRENT_CATALOG_REVISION,
@@ -299,6 +485,13 @@ test("web catalog migration matches the mobile workout contract", () => {
       .map((exercise) => exercise.id)
       .sort((left, right) => left - right),
     integerCollection(catalogMigrationRules, "ReplacedExerciseIdSet")
+      .filter(
+        (exerciseId) =>
+          !integerCollection(
+            catalogMigrationRules,
+            "PermanentlyRetiredExerciseIdSet",
+          ).includes(exerciseId),
+      )
       .sort((left, right) => left - right),
   );
 });

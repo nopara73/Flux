@@ -1,7 +1,7 @@
 # Flux movement-practice coverage audit
 
 > Historical snapshot: this report was generated for the earlier 246-exercise
-> capacity catalog. Flux now ships the 357-exercise canonical muscle-group
+> capacity catalog. Flux now ships the 418-exercise canonical muscle-group
 > catalog described in the root README; the practice DAG remains supplementary
 > discovery/provenance material rather than the scheduling taxonomy.
 
