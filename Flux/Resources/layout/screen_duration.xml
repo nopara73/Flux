@@ -308,4 +308,25 @@
                 android:tint="@color/primary_text" />
         </FrameLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/duration_modifier_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:accessibilityLiveRegion="polite"
+        android:background="@drawable/duration_modifier_feedback_background"
+        android:elevation="18dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:importantForAccessibility="yes"
+        android:letterSpacing="0.04"
+        android:maxLines="1"
+        android:paddingStart="24dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="15dp"
+        android:textColor="@color/brand_chartreuse"
+        android:textSize="19sp"
+        android:visibility="gone" />
 </FrameLayout>

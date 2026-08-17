@@ -22,6 +22,12 @@ const STORAGE_KEY = "flux.workout.state.v1";
 const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
 const DIRECTION_SEGMENT_SECONDS = 20;
+const MODIFIER_FEEDBACK_LABELS = Object.freeze({
+  insectEnabled: "insect mode ON",
+  insectDisabled: "insect mode OFF",
+  noisyEnabled: "noisy exercises ENABLED",
+  noisyDisabled: "noisy exercises DISABLED",
+});
 
 const elements = {
   durationScreen: byId("duration-screen"),
@@ -34,6 +40,7 @@ const elements = {
   beginWorkout: byId("begin-workout"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
+  modifierFeedback: byId("modifier-feedback"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
   phaseLeft: byId("phase-left"),
@@ -96,6 +103,7 @@ let restActive = false;
 let wakeLock = null;
 let wakeLockRequestPending = false;
 let wakeLockGeneration = 0;
+let modifierFeedbackTimer = null;
 
 bindEvents();
 renderDuration(selectedMinutes, false);
@@ -260,6 +268,26 @@ function workoutModifierTiles() {
 function toggleWorkoutModifier(flag) {
   selectedModifiers ^= flag;
   renderWorkoutModifiers();
+  const enabled = (selectedModifiers & flag) !== 0;
+  showWorkoutModifierFeedback(
+    flag === WORKOUT_MODIFIERS.Insect
+      ? MODIFIER_FEEDBACK_LABELS[enabled ? "insectEnabled" : "insectDisabled"]
+      : MODIFIER_FEEDBACK_LABELS[enabled ? "noisyDisabled" : "noisyEnabled"],
+  );
+}
+
+function showWorkoutModifierFeedback(message) {
+  clearTimeout(modifierFeedbackTimer);
+  elements.modifierFeedback.classList.remove("show");
+  elements.modifierFeedback.hidden = false;
+  elements.modifierFeedback.textContent = message;
+  void elements.modifierFeedback.offsetWidth;
+  elements.modifierFeedback.classList.add("show");
+  modifierFeedbackTimer = setTimeout(() => {
+    elements.modifierFeedback.classList.remove("show");
+    elements.modifierFeedback.hidden = true;
+    modifierFeedbackTimer = null;
+  }, 900);
 }
 
 function renderWorkoutModifiers() {

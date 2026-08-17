@@ -380,6 +380,55 @@ button.modifier-tile:not(:disabled):active {
   stroke-width: 1.8;
 }
 
+.modifier-feedback {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  max-width: calc(100% - 32px);
+  padding: 15px 24px;
+  border: 2px solid var(--chartreuse);
+  border-radius: 18px;
+  color: var(--chartreuse);
+  background: var(--graphite);
+  box-shadow: 0 10px 28px rgb(18 20 22 / 32%);
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.modifier-feedback.show {
+  animation: modifier-feedback-blink 900ms ease-out both;
+}
+
+@keyframes modifier-feedback-blink {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.82);
+  }
+
+  14% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+
+  24%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
 .duration-action-bar {
   flex: 0 0 auto;
   padding: 12px 24px calc(16px + env(safe-area-inset-bottom));
@@ -1665,6 +1714,11 @@ input:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .modifier-feedback.show {
+    opacity: 1;
+    animation: none !important;
+  }
+
   *,
   *::before,
   *::after {

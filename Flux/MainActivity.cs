@@ -27,6 +27,7 @@ public class MainActivity : Activity
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
+    private const long ModifierFeedbackHoldMilliseconds = 560L;
     private const float SkipActionEnabledAlpha = 1f;
     private const float SkipActionDisabledAlpha = 0.35f;
 
@@ -67,6 +68,8 @@ public class MainActivity : Activity
     private GridLayout _durationModifierGrid = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private TextView _durationModifierFeedback = null!;
+    private int _modifierFeedbackGeneration;
     private FrameLayout _durationActionBar = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
@@ -279,6 +282,8 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _durationModifierFeedback = FindRequiredView<TextView>(
+            Resource.Id.duration_modifier_feedback);
         _durationActionBar = FindRequiredView<FrameLayout>(
             Resource.Id.duration_action_bar);
         _durationMinutesValue = FindRequiredView<TextView>(
@@ -364,23 +369,35 @@ public class MainActivity : Activity
             }
         };
         _insectModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _insectModifierButton.Checked;
             SetSelectedWorkoutModifier(
                 WorkoutModifiers.Insect,
-                _insectModifierButton.Checked,
+                enabled,
                 _insectModifierButton,
                 Resource.String.insect_modifier_description,
                 Resource.String.insect_modifier_on,
                 Resource.String.insect_modifier_off,
                 userInitiated: true);
+            ShowModifierFeedback(enabled
+                ? Resource.String.insect_mode_enabled_feedback
+                : Resource.String.insect_mode_disabled_feedback);
+        };
         _silenceModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _silenceModifierButton.Checked;
             SetSelectedWorkoutModifier(
                 WorkoutModifiers.Silence,
-                _silenceModifierButton.Checked,
+                enabled,
                 _silenceModifierButton,
                 Resource.String.silence_modifier_description,
                 Resource.String.silence_modifier_on,
                 Resource.String.silence_modifier_off,
                 userInitiated: true);
+            ShowModifierFeedback(enabled
+                ? Resource.String.noisy_exercises_disabled_feedback
+                : Resource.String.noisy_exercises_enabled_feedback);
+        };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
         _skipAction.Click += (_, _) => SkipExercise();
@@ -1266,6 +1283,49 @@ public class MainActivity : Activity
                 .SetDuration(PhaseMotionDurationMilliseconds)
                 .Start();
         }
+    }
+
+    private void ShowModifierFeedback(int messageResourceId)
+    {
+        int generation = ++_modifierFeedbackGeneration;
+        TextView feedback = _durationModifierFeedback;
+        feedback.Animate()?.Cancel();
+        feedback.Text = GetString(messageResourceId);
+        feedback.Visibility = ViewStates.Visible;
+        feedback.Alpha = 0f;
+        feedback.ScaleX = 0.82f;
+        feedback.ScaleY = 0.82f;
+
+        feedback.Animate()?
+            .Alpha(1f)
+            .ScaleX(1f)
+            .ScaleY(1f)
+            .SetDuration(140L)
+            .WithEndAction(new Java.Lang.Runnable(() =>
+                _ = feedback.PostDelayed(
+                    new Java.Lang.Runnable(() =>
+                    {
+                        if (generation != _modifierFeedbackGeneration)
+                        {
+                            return;
+                        }
+
+                        feedback.Animate()?
+                            .Alpha(0f)
+                            .ScaleX(1.08f)
+                            .ScaleY(1.08f)
+                            .SetDuration(180L)
+                            .WithEndAction(new Java.Lang.Runnable(() =>
+                            {
+                                if (generation == _modifierFeedbackGeneration)
+                                {
+                                    feedback.Visibility = ViewStates.Gone;
+                                }
+                            }))
+                            .Start();
+                    }),
+                    ModifierFeedbackHoldMilliseconds)))
+            .Start();
     }
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
