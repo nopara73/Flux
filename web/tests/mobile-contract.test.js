@@ -231,10 +231,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(mainActivity, /WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence/);
   assert.match(webApp, /WORKOUT_MODIFIERS\.Insect[\s\S]*WORKOUT_MODIFIERS\.Silence/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*55/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*56/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+54\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+55\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(exerciseDatabase, /max_space_meters > 0 AND max_space_meters <= 2/);

@@ -49,7 +49,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 36;
+export const CURRENT_CATALOG_REVISION = 37;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -116,6 +116,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [34, new Set([98, 390, 508, 576, 816])],
   [35, new Set([219])],
   [36, new Set([684])],
+  [37, new Set([31, 176, 195, 391, 413, 884, 885])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -176,7 +177,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
-  [31, ["High-Knee Overhead-Reach March", "Knee Raise with Overhead Reach"]],
+  [31, ["High-Knee Overhead-Reach March", "Alternating Knee Raises with Two-Arm Pull-Down"]],
   [21, ["Standing-Scale Balance", "Standing-Scale Balance Hold"]],
   [105, ["Plie Squat", "Wide Turned-Out Squat"]],
   [119, ["Squat to Calf Raise", "Tiptoe Walk"]],
@@ -234,6 +235,10 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
+  [31, new Set([
+    "Knee Raise with Overhead Reach",
+    "Single-Side Knee Raise with Two-Arm Pull-Down",
+  ])],
   [21, new Set(["Alternating Standing-Scale Balance"])],
   [145, new Set(["Alternating Standing Knee Extension"])],
   [231, new Set(["Alternating Karate Reverse Punch"])],

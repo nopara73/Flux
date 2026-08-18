@@ -1521,6 +1521,50 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void AlternatingLoopCorrectionsRebuildWorkoutWithoutResettingScore()
+    {
+        int[] correctedIds = [31, 176, 195, 391, 413, 884, 885];
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        string changedGroup = groups[0].Id;
+        string retainedGroup = groups[1].Id;
+        var state = new WorkoutState
+        {
+            CatalogRevision = 36,
+            ActiveWorkoutMinutes = 3,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 884,
+                [retainedGroup] = 22,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 884,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(22, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(884, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(
+            correctedIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[37]);
+        Assert.False(CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(37));
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(

@@ -794,7 +794,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(backwardSideLegCircles.primaryCanonicalGroup, "HipAbductors");
   assert.notEqual(forwardSideLegCircles.video, backwardSideLegCircles.video);
 
-  for (const exerciseId of [31, 395, 507, 577, 618, 654, 834, 915]) {
+  for (const exerciseId of [395, 507, 577, 618, 654, 834, 915]) {
     const exercise = catalog.find((candidate) => candidate.id === exerciseId);
     assert.match(exercise.name, /^Single-Side /);
     assert.equal(usesTimedSides(exercise), true);
@@ -1188,10 +1188,10 @@ test("full-side rounds use exact 45/15/45 boundaries", () => {
 
 test("reviewed sided movements always receive a timed side swap", () => {
   const sidedIds = [
-    16, 20, 31, 47, 97, 117, 179, 180, 184, 186, 211,
+    16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
     213, 220, 225, 234, 239, 241, 242, 248, 256, 258, 269,
     278, 279, 282, 283, 285, 286, 291, 294, 326, 329,
-    391, 394, 395, 396, 397, 507, 513, 572, 577, 618, 636,
+    394, 395, 396, 397, 507, 513, 572, 577, 618, 636,
     685, 745, 834,
   ];
   for (const exerciseId of sidedIds) {
@@ -1203,10 +1203,8 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const correctedOneSideMedia = new Map([
-    [31, "ScreenRightThenLeft"],
     [248, "ScreenRightThenLeft"],
     [282, "ScreenLeftThenRight"],
-    [391, "ScreenLeftThenRight"],
     [394, "ScreenLeftThenRight"],
     [395, "ScreenLeftThenRight"],
     [397, "ScreenRightThenLeft"],
@@ -1221,10 +1219,10 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const continuousIds = [
-    15, 17, 19, 107, 135, 150, 169, 193,
+    15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
     201, 230, 251, 257, 262, 263, 265, 266,
     267, 268, 270, 275, 287, 289, 301, 314, 321,
-    425, 516, 615, 677, 683, 687,
+    391, 413, 425, 516, 615, 677, 683, 687, 884, 885,
   ];
   for (const exerciseId of continuousIds) {
     assert.equal(
@@ -1235,8 +1233,8 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const alternating = catalog.filter((item) => item.sideSequence === "Alternating");
-  assert.equal(alternating.length, 122);
-  for (const exerciseId of [98, 219, 390, 508, 576, 816]) {
+  assert.equal(alternating.length, 129);
+  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 413, 508, 576, 816, 884, 885]) {
     assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, "Alternating");
   }
   assert.equal(catalog.find((item) => item.id === 15).sideSequence, "Alternating");
@@ -2069,6 +2067,40 @@ test("vague elbow-strike replacement rebuilds workout and resets its score", () 
   assert.equal(restored.state.outcomes[retainedGroup], "tick");
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.scores["684"], undefined);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("alternating loop corrections rebuild workouts without resetting scores", () => {
+  const correctedIds = [31, 176, 195, 391, 413, 884, 885];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(37)],
+    correctedIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(37), false);
+  const state = createDefaultState();
+  const groups = RESOLUTIONS.get(3).groups;
+  const changedGroup = groups[0].id;
+  const retainedGroup = groups[1].id;
+  state.catalogRevision = 36;
+  state.activeWorkoutMinutes = 3;
+  state.selectedExerciseIds[changedGroup] = 884;
+  state.selectedExerciseIds[retainedGroup] = 22;
+  state.outcomes[changedGroup] = "x";
+  state.outcomes[retainedGroup] = "tick";
+  state.pendingRestGroupId = changedGroup;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+  state.scores["884"] = -4;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup], undefined);
+  assert.equal(restored.state.outcomes[changedGroup], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup], 22);
+  assert.equal(restored.state.outcomes[retainedGroup], "tick");
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.scores["884"], -4);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

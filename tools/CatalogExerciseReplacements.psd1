@@ -133,12 +133,12 @@
     }
     31 = @{
         RetiredName = 'Tai Chi Golden-Rooster Balance Drill'
-        Name = 'Single-Side Knee Raise with Two-Arm Pull-Down'
+        Name = 'Alternating Knee Raises with Two-Arm Pull-Down'
         Practice = 'Low-impact conditioning'
         MotionProfile = 'KneeRaiseTwoArmPulldown'
         Primary = 'HipFlexors'
         Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall')
-        SideSequence = 'ScreenRightThenLeft'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -652,7 +652,7 @@
         MotionProfile = 'TorsoRotation'
         Primary = 'DeepHipRotators'
         Secondary = @('DeepAndIntersegmentalBack', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -1016,7 +1016,7 @@
         MotionProfile = 'LateralLungeKneeUpBalance'
         Primary = 'HipAbductors'
         Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
-        SideSequence = 'ScreenRightThenLeft'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3065,7 +3065,7 @@
         MotionProfile = 'HighKneeOpenArmMarch'
         Primary = 'BreathingMuscles'
         Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3428,7 +3428,7 @@
         MotionProfile = 'MarchingEyeShift'
         Primary = 'CranialMuscles'
         Secondary = @('HipFlexors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff')
-        SideSequence = 'ScreenRightThenLeft'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
