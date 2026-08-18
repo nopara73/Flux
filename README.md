@@ -1,149 +1,269 @@
 # Flux
 
-Flux is a private, offline Android workout app written in C# with .NET for
-Android. It targets Android 7.0 (API 24) and newer.
+**A whole-body workout for exactly the time you have.**
 
-## Exercise database
+Flux is a zero-admin workout app. Choose a duration, receive one standing,
+equipment-free exercise at a time, then keep or discard each movement. Flux
+uses those decisions to shape later sessions without allowing preference,
+randomness, or filters to destroy anatomical coverage.
 
-The app ships with a local SQLite database seeded from 418 reviewed exercises.
-Movements are selected for their value first, then assigned on a best-effort
-basis to a 30-leaf canonical muscle taxonomy. Each exercise has one primary
-scheduling group plus every secondary group it meaningfully trains. Full-body
-exercises remain eligible wherever their hardest work fits. For every unordered
-pair of modifiers and every workout bucket, all four real UI states (on/on,
-on/off, off/on, and off/off) must contain at least five exercises that
-meaningfully cover at least half of the bucket's canonical leaves. Off always
-means that the corresponding requirement is relaxed. A separate materiality
-check requires each modifier to remove at least five exercises or 5% of the
-prior candidate pool, whichever is larger, across at least 10% of the canonical
-buckets, both alone and when either member of a pair is already enabled. These
-checks grow quadratically as modifiers are added instead of requiring a full
-higher-order power-set quota. They do not claim that an untested three-or-more-
-modifier intersection is feasible. Primary ownership is preferred after
-score/keep priority; truthful
-secondary associations remain eligible. Every supported duration/profile
-combination must still admit a distinct exercise for every scheduled group.
+Try the web app: [nopara73.github.io/Flux](https://nopara73.github.io/Flux/)
 
-The canonical leaves roll up explicitly into seven mass-ordered workout
-resolutions: 3, 5, 7, 10, 15, 20, or 30 groups. Every workout schedules those
-groups from the smallest to the largest estimated bilateral skeletal-muscle
-mass, using the fixed hierarchy in
-`Flux/Services/MassGroupingTaxonomy.cs`; the buckets are practical nominal
-targets, not claims that every indivisible muscle has an exact percentage.
+Flux is also a private, offline Android app written in C# with .NET for Android.
+It supports Android 7.0 (API 24) and newer. No account is required.
 
-An exercise contains a stable numeric ID, unique name and MP4, primary and
-secondary canonical groups, practice and movement metadata,
-repetition-or-hold mode, continuous, alternating, or timed-unilateral playback,
-score, and explicit movement-constraint metadata. Opposite movement directions are separately named,
-demonstrated, scored exercises joined by a reciprocal catalog link; direction
-never adds another timer phase inside an exercise.
+## The Flux method
 
-Every retained movement:
+Flux randomizes exercises, not workout structure.
 
-- is demonstrated by an actual person;
-- is bilateral/symmetric, naturally alternates, or completes both sides through
-  the reviewed 20-second / 5-second change / 20-second protocol;
-- keeps all ground contact at the feet;
-- works in ordinary shoes or barefoot;
-- fits inside 2 m × 2 m;
-- needs no wall, chair, floor work, prop, partner, or equipment;
-- is naturally quiet when the default-on Silence modifier is enabled; established
-  impact movements are eligible only when Silence is explicitly disabled.
+### Duration changes anatomical resolution
 
-All 418 MP4 demonstrations are bundled for offline use and contain no audio.
-The catalog's `silent` field describes the sound naturally produced by performing
-the exercise, not the demonstration file's audio track. Holds loop as previews,
-then play once and remain on a reviewed final-pose image during the exercise
-timer. Android cache filenames and web media URLs use the packaged file's SHA-256
-fingerprint, so an updated demonstration cannot be mistaken for an older cached
-file. Reproducible GIF intermediates are excluded from the APK.
+The catalog uses 30 canonical muscle groups. Flux explicitly rolls those leaves
+up into seven complete anatomical partitions containing 3, 5, 7, 10, 15, 20,
+or 30 workout groups. Every canonical leaf belongs to exactly one group at each
+resolution.
 
-Database schema version 55 stores canonical assignments, modifier metadata,
-assignment roles, side-sequence and direction-partner metadata, and every resolution roll-up in
-normalized tables. The v42 migration relaxes the historical all-quiet schema
-constraint; subsequent metadata migrations preserve scores for unchanged
-exercise identities. See
-[EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
-[DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md) for the catalog rules and
-verified counts.
+Choosing a shorter session therefore coarsens the body map instead of cutting
+the end off a longer routine. A 5-minute workout has five broad targets; a
+30-minute workout addresses all 30 leaves individually. Groups are scheduled
+from smaller to larger estimated bilateral skeletal-muscle mass.
 
-## Workout flow
+The supported workout durations are 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90
+minutes. Durations above 30 begin with the 30-group resolution and spend the
+remaining time according to the expansion rules below.
 
-The opening screen selects 3, 5, 7, 10, 15, 20, 30, 45, 60, or 90 minutes and
-has Insect and Silence modifier tiles. Silence defaults on; turning it off
-relaxes only the natural-noise requirement and never forces a noisy exercise.
-It does not mute
-Flux's start, side-change, rest, or completion whistles. Modifier choices,
-duration, keeps, scores, and muscle coverage form one selection context. The
-screen defaults to the last choices, or 10 minutes with Silence on at first use;
-unsupported legacy values migrate safely. Each minute is one
-smallest-to-largest mass-ordered rolled-up group: 45 seconds of exercise and a
-15-second rest/decision window.
+### An exercise must meaningfully cover its target
 
-Press **Start** to begin a round. The quiet **Skip** action records the current
-exercise as not kept and advances immediately, bypassing both its remaining
-movement time and rest. Naturally alternating and bilateral movements use a
-continuous 45-second timer. Unilateral movements use 20 seconds on the
-demonstrated side, a wordless 5-second blue change phase, then 20 seconds on the
-mirrored side. Red tint always means movement and blue tint means change/rest;
-the tint fills the workout canvas while the human demonstration stays untinted.
-Before Start, a strong `ALTERNATING` label identifies movements that switch sides
-inside that uninterrupted phase, while `UNILATERAL` identifies movements that use
-the timed side protocol. In workouts longer than 30 minutes, an available linked
-opposite-direction exercise is added before either side timer is extended; only
-then does Flux use full 45 / 15 / 45 side timing, followed by repeated sets.
-There is no separate rest skip. During a normally reached rest, tap
-**Tap to keep** to retain the current exercise and advance immediately. If rest
-expires without a tap, its integer score drops by one and it is replaced for the
-next workout by an exercise from the same active rolled-up group. A candidate
-must train at least half of that bucket's canonical leaves. Flux then chooses
-the highest score, prefers primary ownership, prefers the widest in-bucket
-coverage, and randomizes exact ties. Every workout uses one
-distinct exercise per group.
-Progress, rest state, last-used resolution, and scores persist locally.
+Each exercise has one primary canonical group and every secondary group it
+meaningfully trains. An exercise may represent a rolled-up workout group only
+when it trains at least half of that group's canonical leaves. Primary ownership
+is preferred, but a truthful secondary association remains valid.
 
-If Flux is closed or killed during a workout, the next cold launch applies all
-completed keep/not-keep results (including a pending rest choice), performs the
-required replacements, and returns to the duration selector. An exercise that
-never reached its rest phase is left unchanged. Briefly backgrounding the same
-live activity continues its current workout normally.
+This prevents a broad target such as a body region from being satisfied by a
+movement with only a token association to one small part of it.
 
-## Catalog tools
+### The lineup is solved as one constrained assignment
 
-Regenerate the catalog and runtime MP4s from reviewed source media:
+Flux does not select each round independently. It solves the complete lineup as
+a maximum-weight one-to-one assignment between workout groups and eligible
+exercises. The result must contain one distinct exercise per base group.
 
-```powershell
-.\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
-```
+The optimizer applies these priorities lexicographically:
 
-Verify catalog assignments, MP4 codec/dimensions/silence, and every hold target:
+1. retain explicitly kept exercises where they remain valid;
+2. preserve valid existing selections;
+3. prefer exercises with better keep/discard history;
+4. prefer primary ownership of the target group;
+5. prefer wider coverage inside the target group;
+6. randomize only otherwise equivalent choices.
 
-```powershell
-.\tools\Test-ExerciseVideos.ps1
-```
+The priority weights are constructed so that all lower priorities combined
+cannot outweigh a higher one. Global assignment also prevents an early greedy
+choice from consuming the only exercise capable of filling a later group.
 
-Regenerate the human-media and muscle-group report:
+### Personalization stays inside anatomical guardrails
 
-```powershell
-.\tools\Write-DemonstrationAudit.ps1
-```
+Tap **Tap to keep** during rest to retain an exercise. Let rest expire, or press
+**Skip**, to reject it. Rejection decreases that exercise's local score once and
+removes saved copies of it; keeping creates a durable preference.
 
-## Build and run
+When duration or modifiers change, Flux remaps the whole lineup and maximizes
+the number of kept exercises that can occupy legitimate slots. A kept exercise
+is preserved across Android and web deployments as long as that exercise still
+exists in the catalog. Explicit rejection or semantic removal from the catalog
+is what releases it.
+
+### Modifiers are not allowed to break the workout
+
+Flux currently provides two composable modifiers:
+
+- **Silence**, enabled by default, admits only naturally quiet movements;
+- **Insect** favors demonstrations that keep most of the body visibly and
+  continuously moving at a useful pace.
+
+Turning a modifier off relaxes its requirement; it never demands an incompatible
+exercise. For every modifier pair, duration, workout group, and all four real
+on/off states, the catalog must provide at least five selectable exercises.
+Every supported duration and profile must also admit a completely distinct
+lineup.
+
+A separate materiality test prevents placebo modifiers. Enabling a modifier
+must remove at least five exercises or 5% of the previous candidate pool,
+whichever is larger, and must affect at least 10% of the canonical buckets. The
+same condition is checked when the paired modifier is already enabled.
+
+These guarantees grow quadratically with the number of modifiers. They prove
+single and pairwise behavior, not arbitrary intersections of three or more
+future modifiers.
+
+### Extra time buys completeness before repetition
+
+For workouts longer than 30 minutes, Flux allocates each additional minute in
+this order:
+
+1. add an eligible linked opposite-direction exercise;
+2. expand eligible unilateral rounds from 20 / 5 / 20 to 45 / 15 / 45;
+3. add repeated sets only after direction and side opportunities are exhausted.
+
+Kept exercises receive priority, followed by later groups in the mass-ordered
+schedule. The allocation is persisted when the workout starts, so reopening the
+app cannot silently change the remaining session.
+
+Opposite directions are separate, plainly named, demonstrated, and scored
+exercise identities connected by reciprocal links. Direction is never hidden
+as another timer phase inside an exercise, avoiding ambiguous four-part drills.
+
+## What a workout looks like
+
+Every round begins with five seconds of quiet preparation.
+
+- Bilateral and continuous movements run for 45 seconds.
+- Naturally alternating movements switch sides inside the same 45-second phase.
+- Unilateral movements run for 20 seconds on the demonstrated side, pause for a
+  five-second change, then run for 20 seconds on the mirrored side.
+- Expanded unilateral rounds use 45 seconds, a 15-second change, and 45 seconds.
+- Each normal round ends with a 15-second rest and keep/discard decision.
+
+Red means movement. Blue means change or rest. A `UNILATERAL` label appears
+before movements that use the timed-side protocol.
+
+Repetition demonstrations run at normal speed. Hold demonstrations loop during
+the preview, play once when work begins, and then remain on a reviewed target
+frame for the rest of the hold. Start, side-change, rest, and completion use
+distinct whistle cues; the Silence modifier controls exercise selection, not
+those cues.
+
+If movement media buffers or the app is backgrounded, movement time pauses.
+Rest uses an absolute deadline. Closing or killing Flux applies completed
+decisions and a pending rest choice exactly once, while an exercise interrupted
+before rest remains neutral.
+
+## Exercise catalog
+
+Flux ships with 418 reviewed movements spanning compound strength and
+conditioning, mobility, dynamic balance, active range of motion,
+rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
+martial arts, breathing, and isometrics.
+
+Every retained exercise must:
+
+- be an established, plainly named movement or posture;
+- be immediately copyable from its name and silent demonstration;
+- show an actual person performing the complete natural movement;
+- keep all ground contact at the feet;
+- work in ordinary shoes or barefoot;
+- fit inside 2 m x 2 m;
+- require no wall, chair, floor work, equipment, prop, partner, or travel unless
+  travel is intrinsic to the named exercise;
+- declare repetition or hold behavior and its exact side protocol;
+- derive its name, timing, direction, muscle associations, crop, and hold target
+  from the reviewed demonstration.
+
+All runtime demonstrations are offline 256 x 256 H.264 MP4s with audio removed.
+The catalog's `silent` field describes the sound of performing the exercise, not
+the media track. Placeholder, schematic, anatomical, synthetic, and 3D
+demonstrations are excluded.
+
+Catalog generation rejects missing or duplicate identities, unknown anatomical
+assignments, fake variation suffixes, incomplete modifier reviews, impossible
+lineups, constraint violations, non-human media, and movements without an
+explicit side decision. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
+[DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md).
+
+## Persistence and upgrades
+
+Duration, modifier profile, lineups, keeps, scores, active progress, and pending
+rest are stored locally. Modifier combinations retain separate stable lineups
+while sharing durable keeps.
+
+The Android catalog uses SQLite schema version 56. Catalog migrations distinguish
+semantic exercise replacements from approved name, timing, and media repairs.
+Unchanged identities retain their scores and valid keeps; changed identities
+invalidate only affected workout state. Score changes use a small recovery
+journal so an interruption between workout-state and SQLite writes cannot lose
+or double-apply a rejection.
+
+Packaged media is content-addressed with SHA-256 fingerprints. Android copies
+videos atomically into a versioned cache, and the web build fingerprints both
+runtime media and its JavaScript/CSS shell so a corrected demonstration cannot
+be mistaken for an older cached file.
+
+## Android and web parity
+
+The Android implementation in `Flux/` is the canonical product contract. The web
+build copies its catalog, exercise videos, hold frames, and audio directly from
+the Android runtime assets.
+
+Cross-platform contract tests compare duration choices, selection behavior,
+keeps, migrations, timing, long-workout allocation, modifiers, media behavior,
+and controls. A source hash additionally fails validation whenever relevant
+Android code or resources change without a reviewed web parity update.
+
+## Build and verify
+
+Build the Android solution:
 
 ```powershell
 dotnet build .\Flux.slnx
+```
+
+Run the Android-independent test suite:
+
+```powershell
+dotnet test .\Flux.Tests\Flux.Tests.csproj
+```
+
+Run and build the web app:
+
+```powershell
+Set-Location .\web
+npm test
+npm run build
+```
+
+Run the Android app on an authorized USB-debugging device:
+
+```powershell
 adb devices
 dotnet build .\Flux\Flux.csproj -t:Run -f net10.0-android
 ```
 
-USB debugging must be enabled and authorized on the connected phone. The debug
-build uses the automatically generated development signing key, which is
-appropriate for this private installation.
-
-To create a release APK:
+Create a release APK:
 
 ```powershell
 dotnet publish .\Flux\Flux.csproj -c Release -f net10.0-android
 ```
 
-The signed APK is written below `Flux/bin/Release/net10.0-android/publish/`.
+The APK is written below `Flux/bin/Release/net10.0-android/publish/`.
+
+## Catalog maintenance
+
+Regenerate the catalog and runtime media from reviewed sources:
+
+```powershell
+.\tools\Generate-ExerciseCatalog.ps1 -OutputRoot .\Flux\Assets -Force
+```
+
+Verify assignments, media encoding, silence, duplicate renders, and hold targets:
+
+```powershell
+.\tools\Test-ExerciseVideos.ps1
+```
+
+Regenerate the human-media and muscle-group audit:
+
+```powershell
+.\tools\Write-DemonstrationAudit.ps1
+```
+
+## Scope
+
+Flux is designed for broad, frequent, low-friction movement—not for maximizing
+one specialized adaptation. It does not replace progressive resistance training
+for maximal strength or hypertrophy, sport-specific practice, measured endurance
+programming, diagnosis, rehabilitation, or individualized medical guidance.
+
+Its narrower promise is concrete: for the exact time and constraints selected,
+Flux constructs a varied workout while preserving anatomical targets, meaningful
+exercise-to-target assignments, bilateral execution, and the user's durable
+preferences.
