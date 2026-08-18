@@ -640,11 +640,6 @@ button.modifier-tile:not(:disabled):active {
   background: var(--move-accent);
 }
 
-.side-phase-label.alternating {
-  border-color: var(--rest-text);
-  background: var(--rest-accent);
-}
-
 .exercise-media-area {
   min-height: 72px;
   margin: 12px 0;

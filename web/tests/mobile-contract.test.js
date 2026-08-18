@@ -300,7 +300,7 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("exercise previews distinguish unilateral and alternating execution", async () => {
+test("exercise previews label only timed unilateral execution", async () => {
   const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
   assert.match(workoutLayout, /@\+id\/side_phase_preview/);
   assert.match(workoutLayout, /@\+id\/side_phase_label/);
@@ -318,15 +318,15 @@ test("exercise previews distinguish unilateral and alternating execution", async
       "private void RenderSidePhasePreview(",
       "private void AnimateExerciseChange(",
     ),
-    /ExerciseSideSequence\.Alternating => "ALTERNATING"[\s\S]*"UNILATERAL"/,
+    /ScreenLeftThenRight[\s\S]*ScreenRightThenLeft[\s\S]*if \(!isUnilateral\)[\s\S]*"UNILATERAL"/,
   );
-  assert.match(
+  assert.doesNotMatch(
     methodBody(
       mainActivity,
       "private void RenderSidePhasePreview(",
       "private void AnimateExerciseChange(",
     ),
-    /exercise_execution_label_alternating_background[\s\S]*exercise_execution_label_unilateral_background/,
+    /ALTERNATING|exercise_execution_label_alternating_background/,
   );
   assert.match(
     methodBody(
@@ -334,16 +334,21 @@ test("exercise previews distinguish unilateral and alternating execution", async
       "function renderSidePhasePreview(",
       "function showReadyPanel()",
     ),
-    /sideSequence === "Alternating"[\s\S]*"ALTERNATING"[\s\S]*"UNILATERAL"[\s\S]*classList\.toggle\("alternating", isAlternating\)[\s\S]*classList\.toggle\("unilateral", !isAlternating\)/,
+    /if \(!usesTimedSides\(exercise\)\)[\s\S]*textContent = "UNILATERAL"[\s\S]*classList\.add\("unilateral"\)/,
+  );
+  assert.doesNotMatch(
+    methodBody(
+      webApp,
+      "function renderSidePhasePreview(",
+      "function showReadyPanel()",
+    ),
+    /ALTERNATING|classList\.(?:add|toggle)\("alternating"/,
   );
   assert.match(
     webStyles,
     /\.side-phase-label\.unilateral[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
   );
-  assert.match(
-    webStyles,
-    /\.side-phase-label\.alternating[\s\S]*border-color: var\(--rest-text\)[\s\S]*background: var\(--rest-accent\)/,
-  );
+  assert.doesNotMatch(webStyles, /\.side-phase-label\.alternating/);
   assert.doesNotMatch(workoutLayout, /side_phase_(?:first|change|second)/);
   assert.doesNotMatch(webIndex, /side-phase-(?:first|change|second)/);
   assert.doesNotMatch(workoutLayout, /two_sided_badge|ic_two_sides/);

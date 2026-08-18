@@ -2050,29 +2050,21 @@ public class MainActivity : Activity
 
     private void RenderSidePhasePreview(Exercise exercise)
     {
-        string? label = exercise.SideSequence switch
-        {
-            ExerciseSideSequence.Alternating => "ALTERNATING",
+        bool isUnilateral = exercise.SideSequence is
             ExerciseSideSequence.ScreenLeftThenRight or
-                ExerciseSideSequence.ScreenRightThenLeft => "UNILATERAL",
-            _ => null,
-        };
-        if (label is null)
+            ExerciseSideSequence.ScreenRightThenLeft;
+        if (!isUnilateral)
         {
             _sidePhasePreview.Visibility = ViewStates.Gone;
             _sidePhasePreview.ContentDescription = null;
             return;
         }
 
-        _sidePhaseLabel.Text = label;
+        _sidePhaseLabel.Text = "UNILATERAL";
         _sidePhaseLabel.SetBackgroundResource(
-            exercise.SideSequence == ExerciseSideSequence.Alternating
-                ? Resource.Drawable.exercise_execution_label_alternating_background
-                : Resource.Drawable.exercise_execution_label_unilateral_background);
-        _sidePhasePreview.ContentDescription = exercise.SideSequence ==
-            ExerciseSideSequence.Alternating
-                ? "Alternating exercise. Switch sides continuously."
-                : "Unilateral exercise. Work one side, change, then the other.";
+            Resource.Drawable.exercise_execution_label_unilateral_background);
+        _sidePhasePreview.ContentDescription =
+            "Unilateral exercise. Work one side, change, then the other.";
         _sidePhasePreview.Visibility = ViewStates.Visible;
     }
 

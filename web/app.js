@@ -372,27 +372,18 @@ function showNextExercise() {
 }
 
 function renderSidePhasePreview(exercise) {
-  const isAlternating = exercise.sideSequence === "Alternating";
-  const label = isAlternating
-    ? "ALTERNATING"
-    : usesTimedSides(exercise)
-      ? "UNILATERAL"
-      : "";
-  if (!label) {
+  if (!usesTimedSides(exercise)) {
     elements.sidePhasePreview.hidden = true;
     elements.sidePhasePreview.setAttribute("aria-label", "");
-    elements.sidePhaseLabel.classList.remove("alternating", "unilateral");
+    elements.sidePhaseLabel.classList.remove("unilateral");
     return;
   }
 
-  elements.sidePhaseLabel.textContent = label;
-  elements.sidePhaseLabel.classList.toggle("alternating", isAlternating);
-  elements.sidePhaseLabel.classList.toggle("unilateral", !isAlternating);
+  elements.sidePhaseLabel.textContent = "UNILATERAL";
+  elements.sidePhaseLabel.classList.add("unilateral");
   elements.sidePhasePreview.setAttribute(
     "aria-label",
-    isAlternating
-      ? "Alternating exercise. Switch sides continuously."
-      : "Unilateral exercise. Work one side, change, then the other.",
+    "Unilateral exercise. Work one side, change, then the other.",
   );
   elements.sidePhasePreview.hidden = false;
 }
