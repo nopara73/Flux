@@ -16,12 +16,17 @@ import {
   MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
   MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
   MINIMUM_MODIFIER_MATERIALITY_PERCENT,
+  MUSCLE_BUDGET_MAX_REBALANCE_PASSES,
+  MUSCLE_SESSION_BUDGET_HALF_UNITS,
   MOVEMENT_DURATION_MS,
   PREPARATION_DURATION_MS,
+  PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  SCORE_HALF_UNITS_PER_VOTE,
   RESOLUTIONS,
   REST_DURATION_MS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
+  SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
 } from "../workout.js";
@@ -41,6 +46,7 @@ const [
   workoutModifiers,
   exerciseModel,
   modifierPolicy,
+  muscleBudgetPolicy,
   exerciseDatabase,
   durationLayout,
   androidColors,
@@ -62,6 +68,7 @@ const [
   source("Flux", "Models", "WorkoutModifiers.cs"),
   source("Flux", "Models", "Exercise.cs"),
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
+  source("Flux", "Services", "WorkoutMuscleBudgetPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
   source("Flux", "Resources", "values", "colors.xml"),
@@ -108,6 +115,50 @@ test("web and mobile carry kept exercises across workout durations", () => {
     sessionService,
     /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*IsSelectable\(/,
   );
+});
+
+test("web and mobile apply the same temporary muscle workload budget", () => {
+  assert.equal(
+    MUSCLE_SESSION_BUDGET_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "MaximumLoadHalfUnits"),
+  );
+  assert.equal(
+    PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "PrimaryLoadHalfUnits"),
+  );
+  assert.equal(
+    SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "SecondaryLoadHalfUnits"),
+  );
+  assert.equal(
+    SCORE_HALF_UNITS_PER_VOTE,
+    integerConstant(muscleBudgetPolicy, "ScoreHalfUnitsPerVote"),
+  );
+  assert.equal(
+    MUSCLE_BUDGET_MAX_REBALANCE_PASSES,
+    integerConstant(muscleBudgetPolicy, "MaximumRebalancePasses"),
+  );
+  assert.match(
+    sessionService,
+    /RepairActiveLineup\(state\);[\s\S]*RebalanceNewExercisesByMuscleBudget\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
+  );
+  assert.match(
+    workoutModule,
+    /this\.repairActiveLineup\(\);[\s\S]*this\.rebalanceNewExercisesByMuscleBudget\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
+  );
+  assert.match(
+    muscleBudgetPolicy,
+    /SecondaryCanonicalGroups\.Distinct\(\)[\s\S]*GetTemporaryDownvoteHalfUnits[\s\S]*MaximumLoadHalfUnits/,
+  );
+  assert.match(
+    sessionService,
+    /LastKeptExerciseIds\.Contains\(currentExerciseId\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
+  );
+  assert.match(
+    workoutModule,
+    /keptExerciseIds\.has\(currentExerciseId\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
+  );
+  assert.match(workoutState, /HashSet<int> NextWorkoutExcludedExerciseIds/);
 });
 
 test("web and mobile persist one combined duration and modifier selection context", () => {

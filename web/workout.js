@@ -42,6 +42,11 @@ export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
+export const MUSCLE_SESSION_BUDGET_HALF_UNITS = 10;
+export const PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
+export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
+export const SCORE_HALF_UNITS_PER_VOTE = 2;
+export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
 export const CURRENT_WORKOUT_STATE_VERSION = 6;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
@@ -604,6 +609,64 @@ export function isPrimaryForGroup(exercise, group) {
   return group.canonicalGroups.includes(exercise.primaryCanonicalGroup);
 }
 
+export function calculateMuscleLoadHalfUnits(scheduledExercises) {
+  const result = new Map();
+  for (const exercise of scheduledExercises) {
+    result.set(
+      exercise.primaryCanonicalGroup,
+      (result.get(exercise.primaryCanonicalGroup) ?? 0) +
+        PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+    );
+    for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+      result.set(
+        secondary,
+        (result.get(secondary) ?? 0) + SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+      );
+    }
+  }
+  return result;
+}
+
+export function getMuscleBudgetTemporaryDownvoteHalfUnits(
+  loadHalfUnits,
+  candidateMuscleGroups,
+) {
+  return [...new Set(candidateMuscleGroups)].reduce(
+    (total, group) => total + Math.max(
+      0,
+      (loadHalfUnits.get(group) ?? 0) - MUSCLE_SESSION_BUDGET_HALF_UNITS,
+    ),
+    0,
+  );
+}
+
+export function getTemporaryDownvoteHalfUnitsAfterAddingExercise(
+  existingLoadHalfUnits,
+  exercise,
+) {
+  const addedLoad = new Map([
+    [exercise.primaryCanonicalGroup, PRIMARY_MUSCLE_LOAD_HALF_UNITS],
+  ]);
+  for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+    addedLoad.set(
+      secondary,
+      (addedLoad.get(secondary) ?? 0) + SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+    );
+  }
+  return [...addedLoad].reduce(
+    (total, [group, addedHalfUnits]) => total + Math.max(
+      0,
+      (existingLoadHalfUnits.get(group) ?? 0) + addedHalfUnits -
+        MUSCLE_SESSION_BUDGET_HALF_UNITS,
+    ),
+    0,
+  );
+}
+
+export function getAdjustedScoreHalfUnits(realScore, temporaryDownvoteHalfUnits) {
+  return realScore * SCORE_HALF_UNITS_PER_VOTE - temporaryDownvoteHalfUnits;
+}
+
 export function usesTimedPair(exercise) {
   return usesTimedSides(exercise) || exercise.directionSequence !== "None";
 }
@@ -1017,6 +1080,7 @@ export function createDefaultState() {
     scores: {},
     outcomes: {},
     lastKeptExerciseIds: [],
+    nextWorkoutExcludedExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
     activeDirectionPartnerExerciseIds: {},
     activeFullSideRoundIds: [],
@@ -1095,6 +1159,9 @@ function normalizeStateShape(raw) {
     }
   }
   state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
+  state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
+    raw.nextWorkoutExcludedExerciseIds,
+  );
   state.activeExtraSetSelectionGroupIds = Array.isArray(raw.activeExtraSetSelectionGroupIds)
     ? [...new Set(raw.activeExtraSetSelectionGroupIds.filter((groupId) =>
         typeof groupId === "string"))]
@@ -1235,7 +1302,9 @@ export class WorkoutSession {
     this.clearPendingRest();
     this.carryKeptExercisesForward(previousWorkoutMinutes, previousWorkoutModifiers);
     this.repairActiveLineup();
+    this.rebalanceNewExercisesByMuscleBudget();
     this.setActiveLongWorkoutAllocation();
+    this.state.nextWorkoutExcludedExerciseIds = [];
   }
 
   getActiveGroups() {
@@ -1390,6 +1459,7 @@ export class WorkoutSession {
         .filter(({ group }) => this.state.outcomes[group.id] === "x")
         .map(({ exercise }) => exercise.id),
     );
+    this.state.nextWorkoutExcludedExerciseIds = [...rejectedExerciseIds];
     this.state.lastKeptExerciseIds = [...new Set([
       ...this.state.lastKeptExerciseIds.filter(
         (exerciseId) => !rejectedExerciseIds.has(exerciseId),
@@ -1748,6 +1818,9 @@ export class WorkoutSession {
   normalizeKeptExerciseIds() {
     this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter((exerciseId) =>
       this.exercisesById.has(exerciseId));
+    this.state.nextWorkoutExcludedExerciseIds =
+      this.state.nextWorkoutExcludedExerciseIds.filter((exerciseId) =>
+        this.exercisesById.has(exerciseId));
   }
 
   normalizeActiveLongWorkoutAllocation() {
@@ -1909,6 +1982,165 @@ export class WorkoutSession {
       extraSetSelectionGroupIds: rankedGroups
         .slice(0, partialExtraSets)
         .map((group) => group.id),
+    };
+  }
+
+  rebalanceNewExercisesByMuscleBudget() {
+    const groups = this.getSelectionGroups();
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    if (groups.length === 0) {
+      return;
+    }
+
+    const seenLineups = new Set();
+    for (let pass = 0; pass < MUSCLE_BUDGET_MAX_REBALANCE_PASSES; pass += 1) {
+      const signature = groups.map((group) => this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
+      ] ?? 0).join(",");
+      if (seenLineups.has(signature)) {
+        break;
+      }
+      seenLineups.add(signature);
+
+      let changed = false;
+      for (const group of groups) {
+        const selectionStorageKey = this.getSelectionStorageKey(
+          group.id,
+          this.state.activeWorkoutModifiers,
+        );
+        const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+        const currentExercise = this.exercisesById.get(currentExerciseId);
+        if (!currentExercise || keptExerciseIds.has(currentExerciseId)) {
+          continue;
+        }
+
+        const unavailableExerciseIds = new Set([
+          ...groups
+            .filter((candidateGroup) => candidateGroup.id !== group.id)
+            .map((candidateGroup) => this.state.selectedExerciseIds[
+              this.getSelectionStorageKey(
+                candidateGroup.id,
+                this.state.activeWorkoutModifiers,
+              )
+            ])
+            .filter(Boolean),
+          ...keptExerciseIds,
+        ]);
+        const loadWithoutCurrent = this.state.activeWorkoutMinutes <= 30
+          ? calculateMuscleLoadHalfUnits(groups
+              .filter((candidateGroup) => candidateGroup.id !== group.id)
+              .map((candidateGroup) => this.getSelectedExercise(candidateGroup)))
+          : null;
+        const current = loadWithoutCurrent
+          ? this.evaluateSingleRoundMuscleBudgetCandidate(
+              group,
+              currentExercise,
+              loadWithoutCurrent,
+            )
+          : this.evaluateMuscleBudgetCandidate(group, currentExercise);
+        const alternatives = this.exercises
+          .filter((exercise) =>
+            exercise.id !== currentExerciseId &&
+            getAdjustedScoreHalfUnits(this.getScore(exercise), 0) >
+              current.adjustedScoreHalfUnits &&
+            !unavailableExerciseIds.has(exercise.id) &&
+            !this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id) &&
+            this.isSelectable(
+              exercise,
+              group,
+              this.state.activeWorkoutModifiers,
+            ))
+          .map((exercise) => loadWithoutCurrent
+            ? this.evaluateSingleRoundMuscleBudgetCandidate(
+                group,
+                exercise,
+                loadWithoutCurrent,
+              )
+            : this.evaluateMuscleBudgetCandidate(group, exercise))
+          .sort((left, right) =>
+            right.adjustedScoreHalfUnits - left.adjustedScoreHalfUnits ||
+            right.realScore - left.realScore ||
+            Number(right.isPrimary) - Number(left.isPrimary) ||
+            right.canonicalCoverage - left.canonicalCoverage ||
+            left.exerciseId - right.exerciseId);
+        const bestAlternative = alternatives[0];
+        if (!bestAlternative ||
+            bestAlternative.adjustedScoreHalfUnits <= current.adjustedScoreHalfUnits) {
+          continue;
+        }
+
+        this.state.selectedExerciseIds[selectionStorageKey] = bestAlternative.exerciseId;
+        changed = true;
+      }
+
+      if (!changed) {
+        break;
+      }
+    }
+  }
+
+  evaluateMuscleBudgetCandidate(group, candidate) {
+    const selectionStorageKey = this.getSelectionStorageKey(
+      group.id,
+      this.state.activeWorkoutModifiers,
+    );
+    const previousExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+    this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+    try {
+      const allocation = this.chooseLongWorkoutAllocation();
+      const rounds = createWorkoutSchedule(
+        this.state.activeWorkoutMinutes,
+        allocation.directionPartnerExerciseIds,
+        new Set(allocation.fullSideRoundIds),
+        new Set(allocation.extraSetSelectionGroupIds),
+      );
+      const scheduledExercises = rounds.map((round) => this.getSelectedExercise(round));
+      const loadHalfUnits = calculateMuscleLoadHalfUnits(scheduledExercises);
+      const candidateMuscleGroups = [...new Set(rounds
+        .filter((round) => getSelectionKey(round) === group.id)
+        .flatMap((round) => {
+          const exercise = this.getSelectedExercise(round);
+          return [
+            exercise.primaryCanonicalGroup,
+            ...(exercise.secondaryCanonicalGroups ?? []),
+          ];
+        }))];
+      const temporaryDownvoteHalfUnits = getMuscleBudgetTemporaryDownvoteHalfUnits(
+        loadHalfUnits,
+        candidateMuscleGroups,
+      );
+      const realScore = this.getScore(candidate);
+      return {
+        exerciseId: candidate.id,
+        realScore,
+        adjustedScoreHalfUnits: getAdjustedScoreHalfUnits(
+          realScore,
+          temporaryDownvoteHalfUnits,
+        ),
+        isPrimary: isPrimaryForGroup(candidate, group),
+        canonicalCoverage: getCanonicalCoverage(candidate, group),
+      };
+    } finally {
+      this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
+    }
+  }
+
+  evaluateSingleRoundMuscleBudgetCandidate(group, candidate, loadWithoutCandidate) {
+    const realScore = this.getScore(candidate);
+    const temporaryDownvoteHalfUnits =
+      getTemporaryDownvoteHalfUnitsAfterAddingExercise(
+        loadWithoutCandidate,
+        candidate,
+      );
+    return {
+      exerciseId: candidate.id,
+      realScore,
+      adjustedScoreHalfUnits: getAdjustedScoreHalfUnits(
+        realScore,
+        temporaryDownvoteHalfUnits,
+      ),
+      isPrimary: isPrimaryForGroup(candidate, group),
+      canonicalCoverage: getCanonicalCoverage(candidate, group),
     };
   }
 

@@ -12,6 +12,8 @@ public sealed class WorkoutState
 
     public HashSet<int> LastKeptExerciseIds { get; set; } = [];
 
+    public HashSet<int> NextWorkoutExcludedExerciseIds { get; set; } = [];
+
     public HashSet<string> ActiveExtraSetSelectionGroupIds { get; set; } = [];
 
     public Dictionary<string, int> ActiveDirectionPartnerExerciseIds { get; set; } = [];

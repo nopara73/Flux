@@ -6,6 +6,85 @@ namespace Flux.Tests;
 public sealed class ExerciseSessionServiceTests
 {
     [Fact]
+    public void MuscleBudgetTemporarilyDownvotesOnlyNewOverloadedChoices()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
+        WorkoutGroup targetGroup = groups[10];
+        var selectedByGroup = new Dictionary<string, int>(StringComparer.Ordinal);
+        var exercises = new List<Exercise>();
+        for (int index = 0; index < groups.Length; index++)
+        {
+            CanonicalMuscleGroup primary = groups[index].CanonicalGroups.Single();
+            CanonicalMuscleGroup[] secondary = index is >= 1 and <= 9 or 11
+                ? [overloadedMuscle]
+                : [];
+            Exercise selected = Exercise(1 + index, primary, 0, secondary);
+            exercises.Add(selected);
+            selectedByGroup[groups[index].Id] = selected.Id;
+        }
+
+        Exercise overloadedZero = Exercise(
+            selectedByGroup[targetGroup.Id],
+            targetGroup.CanonicalGroups.Single(),
+            0,
+            overloadedMuscle);
+        exercises.RemoveAll(exercise => exercise.Id == overloadedZero.Id);
+        exercises.Add(overloadedZero);
+        Exercise downvotedOnce = Exercise(
+            1_001,
+            targetGroup.CanonicalGroups.Single(),
+            -1);
+        Exercise downvotedTwice = Exercise(
+            1_002,
+            targetGroup.CanonicalGroups.Single(),
+            -2);
+        exercises.Add(downvotedOnce);
+        exercises.Add(downvotedTwice);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 30,
+            SelectedExerciseIds = selectedByGroup,
+        };
+        var service = new ExerciseSessionService(exercises, new Random(1));
+
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+
+        Assert.Equal(downvotedOnce.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(0, overloadedZero.Score);
+        Assert.Equal(-1, downvotedOnce.Score);
+        Assert.Equal(-2, downvotedTwice.Score);
+
+        var tieSelectedExerciseIds = new Dictionary<string, int>(
+            selectedByGroup,
+            StringComparer.Ordinal)
+        {
+            [targetGroup.Id] = overloadedZero.Id,
+        };
+        var tieState = new WorkoutState
+        {
+            LastWorkoutMinutes = 30,
+            SelectedExerciseIds = tieSelectedExerciseIds,
+        };
+        Exercise reducedLoadExercise = Exercise(
+            selectedByGroup[groups[11].Id],
+            groups[11].CanonicalGroups.Single(),
+            0);
+        var tieService = new ExerciseSessionService(
+            exercises
+                .Where(exercise =>
+                    exercise.Id != reducedLoadExercise.Id &&
+                    exercise.Id != downvotedTwice.Id)
+                .Append(reducedLoadExercise)
+                .ToArray(),
+            new Random(1));
+
+        tieService.StartWorkout(tieState, 30, WorkoutModifiers.None);
+
+        Assert.Equal(overloadedZero.Id, tieState.SelectedExerciseIds[targetGroup.Id]);
+    }
+
+    [Fact]
     public void UnreviewedCatalogCannotSilentlyTreatEnabledModifierAsOff()
     {
         Exercise[] exercises = ThreeGroupCatalog();
@@ -136,8 +215,10 @@ public sealed class ExerciseSessionServiceTests
         service.AcknowledgeCompletion(state);
 
         Assert.DoesNotContain(rejectedExerciseId, state.SelectedExerciseIds.Values);
+        Assert.Contains(rejectedExerciseId, state.NextWorkoutExcludedExerciseIds);
         service.StartWorkout(state, 3, WorkoutModifiers.Insect);
 
+        Assert.Empty(state.NextWorkoutExcludedExerciseIds);
         Assert.NotEqual(
             rejectedExerciseId,
             service.GetSelectedExercise(state, service.GetActiveGroups(state)[0]).Id);
@@ -580,6 +661,9 @@ public sealed class ExerciseSessionServiceTests
             SelectedExerciseIds = previousGroups
                 .Zip(keptExercises)
                 .ToDictionary(pair => pair.First.Id, pair => pair.Second.Id),
+            LastKeptExerciseIds = keptExercises
+                .Select(exercise => exercise.Id)
+                .ToHashSet(),
         };
 
         service.StartWorkout(state, previousMinutes, WorkoutModifiers.None);

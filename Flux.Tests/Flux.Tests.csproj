@@ -44,6 +44,7 @@
     <Compile Include="..\Flux\Services\MovementPhasePresentationPolicy.cs" Link="Production\Services\MovementPhasePresentationPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutCoveragePolicy.cs" Link="Production\Services\WorkoutCoveragePolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutModifierPolicy.cs" Link="Production\Services\WorkoutModifierPolicy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutMuscleBudgetPolicy.cs" Link="Production\Services\WorkoutMuscleBudgetPolicy.cs" />
   </ItemGroup>
 
   <ItemGroup>

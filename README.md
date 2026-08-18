@@ -73,6 +73,15 @@ is preserved across Android and web deployments as long as that exercise still
 exists in the catalog. Explicit rejection or semantic removal from the catalog
 is what releases it.
 
+At the start of every session, kept exercises remain fixed while a soft
+per-muscle workload budget helps choose the remaining exercises. Each scheduled
+primary association counts as 1 unit and each secondary association as 0.5.
+Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
+affected muscle; these adjustments are used only while completing that lineup
+and never alter saved scores. A
+unilateral exercise's two timed sides count once, linked opposite directions
+count separately, and genuinely repeated rounds count again.
+
 ### Modifiers are not allowed to break the workout
 
 Flux currently provides two composable modifiers:

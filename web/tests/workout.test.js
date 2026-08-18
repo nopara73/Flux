@@ -10,6 +10,10 @@ import {
   CURRENT_CATALOG_REVISION,
   EXERCISE_INSECT_COMPATIBILITY,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MUSCLE_SESSION_BUDGET_HALF_UNITS,
+  PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  SCORE_HALF_UNITS_PER_VOTE,
+  SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
@@ -18,6 +22,7 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
+  calculateMuscleLoadHalfUnits,
   createWorkoutSchedule,
   createDefaultState,
   findWorkoutModifierMaterialityDeficiencies,
@@ -31,6 +36,8 @@ import {
   getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
+  getAdjustedScoreHalfUnits,
+  getMuscleBudgetTemporaryDownvoteHalfUnits,
   getSelectionKey,
   isSelectable,
   isSelectableForWorkoutProfile,
@@ -40,6 +47,109 @@ import {
   parseStoredState,
   usesTimedSides,
 } from "../workout.js";
+
+test("muscle budget counts unilateral phases once and repeated rounds again", () => {
+  const unilateral = exercise(
+    1,
+    "HipAbductors",
+    ["GlutealExtensors"],
+    0,
+  );
+  unilateral.sideSequence = "ScreenLeftThenRight";
+
+  const oneRound = calculateMuscleLoadHalfUnits([unilateral]);
+  const twoRounds = calculateMuscleLoadHalfUnits([unilateral, unilateral]);
+
+  assert.equal(MUSCLE_SESSION_BUDGET_HALF_UNITS, 10);
+  assert.equal(PRIMARY_MUSCLE_LOAD_HALF_UNITS, 2);
+  assert.equal(SECONDARY_MUSCLE_LOAD_HALF_UNITS, 1);
+  assert.equal(oneRound.get("HipAbductors"), 2);
+  assert.equal(oneRound.get("GlutealExtensors"), 1);
+  assert.equal(twoRounds.get("HipAbductors"), 4);
+  assert.equal(twoRounds.get("GlutealExtensors"), 2);
+});
+
+test("every overloaded half unit adds one temporary downvote half unit", () => {
+  const loadHalfUnits = new Map([
+    ["AbdominalWall", 13],
+    ["GlutealExtensors", 11],
+    ["HipFlexors", 10],
+  ]);
+
+  const temporaryDownvoteHalfUnits = getMuscleBudgetTemporaryDownvoteHalfUnits(
+    loadHalfUnits,
+    ["AbdominalWall", "GlutealExtensors", "HipFlexors", "AbdominalWall"],
+  );
+
+  assert.equal(SCORE_HALF_UNITS_PER_VOTE, 2);
+  assert.equal(temporaryDownvoteHalfUnits, 4);
+  assert.equal(getAdjustedScoreHalfUnits(0, 1), -1);
+  assert.equal(getAdjustedScoreHalfUnits(-1, 0), -2);
+  assert.equal(getAdjustedScoreHalfUnits(0, temporaryDownvoteHalfUnits), -4);
+  assert.equal(getAdjustedScoreHalfUnits(-1, temporaryDownvoteHalfUnits), -6);
+});
+
+test("muscle budget prefers a once-downvoted alternative to an overloaded zero", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const overloadedMuscle = groups[0].canonicalGroups[0];
+  const targetGroup = groups[10];
+  const exercises = groups.map((group, index) => exercise(
+    1 + index,
+    group.canonicalGroups[0],
+    (index >= 1 && index <= 9) || index === 11 ? [overloadedMuscle] : [],
+    0,
+  ));
+  const overloadedZero = exercises[10];
+  overloadedZero.secondaryCanonicalGroups = [overloadedMuscle];
+  const downvotedOnce = exercise(
+    1_001,
+    targetGroup.canonicalGroups[0],
+    [],
+    -1,
+  );
+  const downvotedTwice = exercise(
+    1_002,
+    targetGroup.canonicalGroups[0],
+    [],
+    -2,
+  );
+  exercises.push(downvotedOnce, downvotedTwice);
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 30;
+  for (let index = 0; index < groups.length; index += 1) {
+    state.selectedExerciseIds[groups[index].id] = exercises[index].id;
+  }
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], downvotedOnce.id);
+  assert.deepEqual(session.state.scores, {});
+
+  const tieState = createDefaultState();
+  tieState.lastWorkoutMinutes = 30;
+  for (let index = 0; index < groups.length; index += 1) {
+    tieState.selectedExerciseIds[groups[index].id] = exercises[index].id;
+  }
+  const reducedLoadExercise = exercise(
+    exercises[11].id,
+    groups[11].canonicalGroups[0],
+    [],
+    0,
+  );
+  const tieSession = new WorkoutSession(
+    exercises
+      .filter((item) =>
+        item.id !== reducedLoadExercise.id && item.id !== downvotedTwice.id)
+      .concat(reducedLoadExercise),
+    tieState,
+    () => 0,
+  );
+
+  tieSession.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.equal(tieSession.state.selectedExerciseIds[targetGroup.id], overloadedZero.id);
+});
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(testDirectory, "..", "..");
@@ -347,7 +457,9 @@ test("neutral modifier profile does not reselect a rejected exercise", () => {
     Object.values(session.state.selectedExerciseIds).includes(rejectedId),
     false,
   );
+  assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, [rejectedId]);
   session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
+  assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, []);
   assert.notEqual(session.getSelectedExercise(session.getActiveGroups()[0]).id, rejectedId);
 });
 
@@ -1321,6 +1433,7 @@ test("kept exercises fill compatible slots after workout duration changes", () =
     for (const [index, group] of previousGroups.entries()) {
       state.selectedExerciseIds[group.id] = keptExercises[index].id;
     }
+    state.lastKeptExerciseIds = keptExercises.map((item) => item.id);
     const session = new WorkoutSession(
       [...keptExercises, ...nextDurationAlternatives],
       state,
