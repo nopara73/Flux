@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 56;
+    private const int DatabaseVersion = 58;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -26,6 +26,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "practice",
         "motion_profile",
         "score",
+        "muscular_demand",
         "only_feet_touch_ground",
         "shoe_agnostic",
         "max_space_meters",
@@ -72,7 +73,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -171,6 +172,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 practice TEXT NOT NULL,
                 motion_profile TEXT NOT NULL,
                 score INTEGER NOT NULL DEFAULT 0,
+                muscular_demand INTEGER NOT NULL
+                    CHECK (muscular_demand BETWEEN 0 AND 2),
                 only_feet_touch_ground INTEGER NOT NULL DEFAULT 1
                     CHECK (only_feet_touch_ground = 1),
                 shoe_agnostic INTEGER NOT NULL DEFAULT 1
@@ -230,6 +233,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 practice TEXT NOT NULL,
                 motion_profile TEXT NOT NULL,
                 score INTEGER NOT NULL DEFAULT 0,
+                muscular_demand INTEGER NOT NULL
+                    CHECK (muscular_demand BETWEEN 0 AND 2),
                 only_feet_touch_ground INTEGER NOT NULL DEFAULT 1
                     CHECK (only_feet_touch_ground = 1),
                 shoe_agnostic INTEGER NOT NULL DEFAULT 1
@@ -277,13 +282,14 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             """
             INSERT INTO exercises_v42 (
                 id, name, video, practice, motion_profile, score,
-                only_feet_touch_ground, shoe_agnostic, max_space_meters,
+                muscular_demand, only_feet_touch_ground, shoe_agnostic,
+                max_space_meters,
                 equipment, silent, exercise_mode, presentation,
                 hold_frame_percent, side_sequence, direction_sequence,
                 direction_partner_exercise_id,
                 insect_compatibility)
             SELECT
-                id, name, video, practice, motion_profile, score,
+                id, name, video, practice, motion_profile, score, 0,
                 only_feet_touch_ground, shoe_agnostic,
                 CASE WHEN max_space_meters BETWEEN 1 AND 2
                     THEN max_space_meters ELSE 2 END,
@@ -517,6 +523,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         }
         values.Put("practice", exercise.Practice);
         values.Put("motion_profile", exercise.MotionProfile);
+        values.Put("muscular_demand", exercise.MuscularDemand);
         values.Put("only_feet_touch_ground", exercise.OnlyFeetTouchGround ? 1 : 0);
         values.Put("shoe_agnostic", exercise.ShoeAgnostic ? 1 : 0);
         values.Put("max_space_meters", exercise.MaxSpaceMeters);
@@ -668,28 +675,29 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 MotionProfile = cursor.GetString(4)
                     ?? throw new InvalidOperationException("An exercise has no motion profile."),
                 Score = cursor.GetInt(5),
-                OnlyFeetTouchGround = cursor.GetInt(6) == 1,
-                ShoeAgnostic = cursor.GetInt(7) == 1,
-                MaxSpaceMeters = cursor.GetInt(8),
-                Equipment = cursor.GetString(9)
+                MuscularDemand = cursor.GetInt(6),
+                OnlyFeetTouchGround = cursor.GetInt(7) == 1,
+                ShoeAgnostic = cursor.GetInt(8) == 1,
+                MaxSpaceMeters = cursor.GetInt(9),
+                Equipment = cursor.GetString(10)
                     ?? throw new InvalidOperationException("An exercise has no equipment value."),
-                Silent = cursor.GetInt(10) == 1,
-                Mode = Enum.Parse<ExerciseMode>(cursor.GetString(11)
+                Silent = cursor.GetInt(11) == 1,
+                Mode = Enum.Parse<ExerciseMode>(cursor.GetString(12)
                     ?? throw new InvalidOperationException("An exercise has no mode.")),
-                Presentation = Enum.Parse<ExercisePresentation>(cursor.GetString(12)
+                Presentation = Enum.Parse<ExercisePresentation>(cursor.GetString(13)
                     ?? throw new InvalidOperationException(
                         "An exercise has no presentation.")),
-                HoldFramePercent = cursor.GetInt(13),
-                SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(14)
+                HoldFramePercent = cursor.GetInt(14),
+                SideSequence = Enum.Parse<ExerciseSideSequence>(cursor.GetString(15)
                     ?? throw new InvalidOperationException(
                         "An exercise has no side sequence.")),
                 DirectionSequence = Enum.Parse<ExerciseDirectionSequence>(
-                    cursor.GetString(15)
+                    cursor.GetString(16)
                         ?? throw new InvalidOperationException(
                             "An exercise has no direction sequence.")),
-                DirectionPartnerExerciseId = cursor.GetInt(16),
+                DirectionPartnerExerciseId = cursor.GetInt(17),
                 InsectCompatibility = Enum.Parse<ExerciseInsectCompatibility>(
-                    cursor.GetString(17)
+                    cursor.GetString(18)
                         ?? throw new InvalidOperationException(
                             "An exercise has no insect compatibility review.")),
             });
@@ -770,6 +778,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !exercise.ShoeAgnostic ||
             exercise.MaxSpaceMeters is <= 0 or > 2 ||
             exercise.Equipment != "None" ||
+            exercise.MuscularDemand < Exercise.MinimumMuscularDemand ||
+            exercise.MuscularDemand > Exercise.MaximumMuscularDemand ||
             string.IsNullOrWhiteSpace(exercise.Practice) ||
             string.IsNullOrWhiteSpace(exercise.MotionProfile) ||
             !Enum.IsDefined(exercise.Mode) ||
@@ -806,6 +816,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 !exercise.SecondaryCanonicalGroups.SequenceEqual(
                     partner.SecondaryCanonicalGroups) ||
                 exercise.InsectCompatibility != partner.InsectCompatibility ||
+                exercise.MuscularDemand != partner.MuscularDemand ||
                 exercise.Silent != partner.Silent)));
         bool hasInvalidReplacementMetadata = false;
         if (requireInitialScores)

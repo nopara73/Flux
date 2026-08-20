@@ -57,6 +57,12 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 state.Outcomes,
                 StringComparer.Ordinal),
             LastKeptExerciseIds = new HashSet<int>(state.LastKeptExerciseIds),
+            LastKeptLocalDateByExerciseId = new Dictionary<int, string>(
+                state.LastKeptLocalDateByExerciseId),
+            NextWorkoutExcludedExerciseIds = new HashSet<int>(
+                state.NextWorkoutExcludedExerciseIds),
+            ActiveRecoveryExcludedExerciseIds = new HashSet<int>(
+                state.ActiveRecoveryExcludedExerciseIds),
             ActiveExtraSetSelectionGroupIds = new HashSet<string>(
                 state.ActiveExtraSetSelectionGroupIds,
                 StringComparer.Ordinal),

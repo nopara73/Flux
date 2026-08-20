@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 37;
+    public const int CurrentCatalogRevision = 39;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -191,6 +191,21 @@ public static class CatalogMigrationRules
                 [683] = new(
                     "Alternating Palm-Up T-Arm Flips",
                     "Alternating Palm-Up Shoulder Rotations"),
+                [214] = new(
+                    "Forward Wrist Circles",
+                    "Inward Wrist Circles"),
+                [223] = new(
+                    "Forward Controlled Wrist Circles",
+                    "Inward Controlled Wrist Circles"),
+                [755] = new(
+                    "Reverse Wrist Circles",
+                    "Outward Wrist Circles"),
+                [756] = new(
+                    "Reverse Controlled Wrist Circles",
+                    "Outward Controlled Wrist Circles"),
+                [758] = new(
+                    "Reverse Knee-and-Ankle Circles",
+                    "Backward Knee-and-Ankle Circles"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -614,10 +629,10 @@ public static class CatalogMigrationRules
         DirectionSplitPreviousIdentities =
             new Dictionary<int, ApprovedExerciseCorrection>
             {
-                [214] = new("Wrist Circles", "Forward Wrist Circles"),
+                [214] = new("Wrist Circles", "Inward Wrist Circles"),
                 [223] = new(
                     "Controlled Wrist Circles",
-                    "Forward Controlled Wrist Circles"),
+                    "Inward Controlled Wrist Circles"),
                 [264] = new(
                     "Standing Arm Circles",
                     "Backward Standing Arm Circles"),

@@ -157,7 +157,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(9, state.Version);
+        Assert.Equal(10, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -529,7 +529,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(9, state.Version);
+        Assert.Equal(10, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Single(state.ActiveDirectionPartnerExerciseIds);
@@ -1565,6 +1565,124 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void EligibleHardKeepOutranksLowerDemandKeepForTheSameSlot()
+    {
+        DateOnly today = new(2026, 8, 20);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise hardKeep = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0], score: -10),
+            muscularDemand: 2);
+        Exercise lowerDemandKeep = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0], score: 100),
+            muscularDemand: 1);
+        Exercise middle = QualifiedForGroup(3, groups[1]);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [hardKeep, lowerDemandKeep, middle, last],
+            new AlwaysZeroRandom(),
+            () => today);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 3,
+            LastKeptExerciseIds = [hardKeep.Id, lowerDemandKeep.Id],
+            LastKeptLocalDateByExerciseId = new Dictionary<int, string>
+            {
+                [hardKeep.Id] = "2026-08-20",
+                [lowerDemandKeep.Id] = "2026-08-20",
+            },
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = lowerDemandKeep.Id,
+            },
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal(hardKeep.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Empty(state.ActiveRecoveryExcludedExerciseIds);
+    }
+
+    [Fact]
+    public void OnlyPreviousDayHardKeepsAreTemporarilyExcluded()
+    {
+        DateOnly today = new(2026, 8, 20);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise yesterdayHard = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0], score: 100),
+            muscularDemand: 2);
+        Exercise yesterdayModerate = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0]),
+            muscularDemand: 1);
+        Exercise olderHard = CloneWithMuscularDemand(
+            QualifiedForGroup(3, groups[1]),
+            muscularDemand: 2);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [yesterdayHard, yesterdayModerate, olderHard, last],
+            new AlwaysZeroRandom(),
+            () => today);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 3,
+            LastKeptExerciseIds =
+                [yesterdayHard.Id, yesterdayModerate.Id, olderHard.Id],
+            LastKeptLocalDateByExerciseId = new Dictionary<int, string>
+            {
+                [yesterdayHard.Id] = "2026-08-19",
+                [yesterdayModerate.Id] = "2026-08-19",
+                [olderHard.Id] = "2026-08-18",
+            },
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = yesterdayHard.Id,
+                [groups[1].Id] = olderHard.Id,
+            },
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal([yesterdayHard.Id], state.ActiveRecoveryExcludedExerciseIds);
+        Assert.Equal(yesterdayModerate.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Equal(olderHard.Id, state.SelectedExerciseIds[groups[1].Id]);
+    }
+
+    [Fact]
+    public void CompletingKeepsRecordsTheirLocalDateForTomorrowRecovery()
+    {
+        DateOnly localDate = new(2026, 8, 20);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise hardKeep = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0]),
+            muscularDemand: 2);
+        Exercise alternative = QualifiedForGroup(2, groups[0]);
+        Exercise middle = QualifiedForGroup(3, groups[1]);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [hardKeep, alternative, middle, last],
+            new AlwaysZeroRandom(),
+            () => localDate);
+        var state = new WorkoutState
+        {
+            LastKeptExerciseIds = [hardKeep.Id],
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        foreach (WorkoutGroup round in service.GetActiveGroups(state))
+        {
+            service.RecordOutcome(state, round, keep: true);
+        }
+        service.AcknowledgeCompletion(state);
+
+        Assert.Equal("2026-08-20", state.LastKeptLocalDateByExerciseId[hardKeep.Id]);
+
+        localDate = localDate.AddDays(1);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Contains(hardKeep.Id, state.ActiveRecoveryExcludedExerciseIds);
+        Assert.Equal(alternative.Id, state.SelectedExerciseIds[groups[0].Id]);
+    }
+
+    [Fact]
     public void PreparingRejectedReplacementsUsesGlobalMatchingInsteadOfGreedyOrder()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -1695,7 +1813,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(9, state.Version);
+        Assert.Equal(10, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -1991,6 +2109,38 @@ public sealed class ExerciseSessionServiceTests
             DirectionSequence = source.DirectionSequence,
             DirectionPartnerExerciseId = directionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
+            MuscularDemand = source.MuscularDemand,
+            Score = source.Score,
+            OnlyFeetTouchGround = source.OnlyFeetTouchGround,
+            ShoeAgnostic = source.ShoeAgnostic,
+            MaxSpaceMeters = source.MaxSpaceMeters,
+            Equipment = source.Equipment,
+            Silent = source.Silent,
+        };
+    }
+
+    private static Exercise CloneWithMuscularDemand(
+        Exercise source,
+        int muscularDemand)
+    {
+        return new Exercise
+        {
+            Id = source.Id,
+            Name = source.Name,
+            RetiredName = source.RetiredName,
+            Video = source.Video,
+            PrimaryCanonicalGroup = source.PrimaryCanonicalGroup,
+            SecondaryCanonicalGroups = source.SecondaryCanonicalGroups,
+            Practice = source.Practice,
+            MotionProfile = source.MotionProfile,
+            Mode = source.Mode,
+            Presentation = source.Presentation,
+            HoldFramePercent = source.HoldFramePercent,
+            SideSequence = source.SideSequence,
+            DirectionSequence = source.DirectionSequence,
+            DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
+            InsectCompatibility = source.InsectCompatibility,
+            MuscularDemand = muscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
             ShoeAgnostic = source.ShoeAgnostic,

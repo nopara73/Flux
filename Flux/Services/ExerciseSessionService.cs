@@ -10,7 +10,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 9;
+    private const int CurrentStateVersion = 10;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
     private const string SelectionProfilePrefix = "p";
@@ -26,13 +26,19 @@ public sealed class ExerciseSessionService
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly IReadOnlyDictionary<int, Exercise> _exercisesById;
     private readonly Random _random;
+    private readonly Func<DateOnly> _localDateProvider;
 
-    public ExerciseSessionService(IReadOnlyList<Exercise> exercises, Random? random = null)
+    public ExerciseSessionService(
+        IReadOnlyList<Exercise> exercises,
+        Random? random = null,
+        Func<DateOnly>? localDateProvider = null)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         _exercises = exercises;
         _exercisesById = exercises.ToDictionary(exercise => exercise.Id);
         _random = random ?? Random.Shared;
+        _localDateProvider = localDateProvider ??
+            (() => DateOnly.FromDateTime(DateTime.Now));
     }
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
@@ -124,6 +130,7 @@ public sealed class ExerciseSessionService
         }
 
         NormalizeCollections(state);
+        NormalizeKeptExerciseIds(state);
         state.Version = CurrentStateVersion;
         modifiers = NormalizeWorkoutModifiers(modifiers);
         int previousWorkoutMinutes = NormalizeLastWorkoutMinutes(
@@ -134,6 +141,12 @@ public sealed class ExerciseSessionService
         state.LastWorkoutModifiers = modifiers;
         state.ActiveWorkoutMinutes = minutes;
         state.ActiveWorkoutModifiers = modifiers;
+        state.ActiveRecoveryExcludedExerciseIds =
+            WorkoutRecoveryPolicy.GetPreviousDayHardKeptExerciseIds(
+                state.LastKeptExerciseIds,
+                state.LastKeptLocalDateByExerciseId,
+                _exercisesById,
+                _localDateProvider());
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
@@ -375,6 +388,16 @@ public sealed class ExerciseSessionService
         state.NextWorkoutExcludedExerciseIds = rejectedExerciseIds;
         state.LastKeptExerciseIds.ExceptWith(rejectedExerciseIds);
         state.LastKeptExerciseIds.UnionWith(newlyKeptExerciseIds);
+        foreach (int exerciseId in rejectedExerciseIds)
+        {
+            state.LastKeptLocalDateByExerciseId.Remove(exerciseId);
+        }
+        string currentLocalDateKey = WorkoutRecoveryPolicy.ToLocalDateKey(
+            _localDateProvider());
+        foreach (int exerciseId in newlyKeptExerciseIds)
+        {
+            state.LastKeptLocalDateByExerciseId[exerciseId] = currentLocalDateKey;
+        }
         var currentExerciseIds = selectionGroups
             .Where(group => !rejectedSelectionKeys.Contains(group.Id))
             .Select(group => new
@@ -464,6 +487,11 @@ public sealed class ExerciseSessionService
 
         bool IsAllowed(Exercise exercise, WorkoutGroup group)
         {
+            if (state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id))
+            {
+                return false;
+            }
+
             if (excludedExerciseIdsByGroup.TryGetValue(
                     group.Id,
                     out IReadOnlySet<int>? excludedExerciseIds) &&
@@ -526,7 +554,12 @@ public sealed class ExerciseSessionService
         long currentSelectionWeight = checked(totalScoreRange + 1L);
         long totalCurrentSelectionRange = checked(
             groups.Count * currentSelectionWeight + totalScoreRange);
-        long preferredExerciseWeight = checked(totalCurrentSelectionRange + 1L);
+        long hardPreferredExerciseWeight = checked(
+            totalCurrentSelectionRange + 1L);
+        long totalHardPreferredRange = checked(
+            groups.Count * hardPreferredExerciseWeight +
+            totalCurrentSelectionRange);
+        long preferredExerciseWeight = checked(totalHardPreferredRange + 1L);
 
         var allowed = new bool[groups.Count, candidates.Count];
         var utilities = new long[groups.Count, candidates.Count];
@@ -548,6 +581,11 @@ public sealed class ExerciseSessionService
                 long utility = checked(
                     (preferredExerciseIds.Contains(exercise.Id)
                         ? preferredExerciseWeight
+                        : 0L) +
+                    (preferredExerciseIds.Contains(exercise.Id) &&
+                     exercise.MuscularDemand ==
+                         WorkoutRecoveryPolicy.HardMuscularDemand
+                        ? hardPreferredExerciseWeight
                         : 0L) +
                     (currentExerciseIds.GetValueOrDefault(group.Id) == exercise.Id
                         ? currentSelectionWeight
@@ -845,6 +883,11 @@ public sealed class ExerciseSessionService
         WorkoutGroup group,
         WorkoutModifiers modifiers)
     {
+        if (state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id))
+        {
+            return false;
+        }
+
         return IsSelectable(exercise, group, modifiers) ||
             (PendingRestMatchesSelectionGroup(state, group.SelectionKey) &&
              IsCompatibleWithModifiers(exercise, modifiers) &&
@@ -947,7 +990,9 @@ public sealed class ExerciseSessionService
         state.SelectedExerciseIds ??= [];
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
+        state.LastKeptLocalDateByExerciseId ??= [];
         state.NextWorkoutExcludedExerciseIds ??= [];
+        state.ActiveRecoveryExcludedExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
         state.ActiveDirectionPartnerExerciseIds ??= [];
         state.ActiveFullSideRoundIds ??= [];
@@ -1050,8 +1095,21 @@ public sealed class ExerciseSessionService
     {
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
+        foreach (int exerciseId in state.LastKeptLocalDateByExerciseId.Keys
+                     .Where(exerciseId =>
+                         !state.LastKeptExerciseIds.Contains(exerciseId) ||
+                         !_exercisesById.ContainsKey(exerciseId) ||
+                         !WorkoutRecoveryPolicy.IsValidLocalDateKey(
+                             state.LastKeptLocalDateByExerciseId[exerciseId]))
+                     .ToArray())
+        {
+            state.LastKeptLocalDateByExerciseId.Remove(exerciseId);
+        }
         state.NextWorkoutExcludedExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
+        state.ActiveRecoveryExcludedExerciseIds.RemoveWhere(exerciseId =>
+            !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
+            exercise.MuscularDemand != WorkoutRecoveryPolicy.HardMuscularDemand);
     }
 
     private void MigrateImplicitSilenceModifier(WorkoutState state)
@@ -1188,6 +1246,7 @@ public sealed class ExerciseSessionService
         state.ActiveExtraSetSelectionGroupIds.Clear();
         state.ActiveDirectionPartnerExerciseIds.Clear();
         state.ActiveFullSideRoundIds.Clear();
+        state.ActiveRecoveryExcludedExerciseIds.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
         state.PendingRestGroupId = null;
@@ -1295,6 +1354,16 @@ public sealed class ExerciseSessionService
                         state.ActiveWorkoutModifiers),
                     out int exerciseId) &&
                 state.LastKeptExerciseIds.Contains(exerciseId))
+            .ThenByDescending(group =>
+                state.SelectedExerciseIds.TryGetValue(
+                    GetSelectionStorageKey(
+                        group.Id,
+                        state.ActiveWorkoutModifiers),
+                    out int exerciseId) &&
+                state.LastKeptExerciseIds.Contains(exerciseId) &&
+                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+                exercise.MuscularDemand ==
+                    WorkoutRecoveryPolicy.HardMuscularDemand)
             .ThenByDescending(group => group.Order)
             .ToArray();
         HashSet<int> selectedExerciseIds = rankedGroups
@@ -1435,6 +1504,7 @@ public sealed class ExerciseSessionService
                             current.AdjustedScoreHalfUnits &&
                         !unavailableExerciseIds.Contains(exercise.Id) &&
                         !state.NextWorkoutExcludedExerciseIds.Contains(exercise.Id) &&
+                        !state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id) &&
                         IsSelectable(
                             exercise,
                             group,

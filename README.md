@@ -82,6 +82,21 @@ and never alter saved scores. A
 unilateral exercise's two timed sides count once, linked opposite directions
 count separately, and genuinely repeated rounds count again.
 
+The catalog also carries a separate reviewed `muscularDemand` value for every
+exercise. `0` means muscular loading is incidental, `1` means meaningful but
+not locally limiting work, and `2` means hard muscular work whose force or
+fatigue is expected to limit a continuously performed 45-second round. This
+metadata never overwrites or masquerades as the user's persisted preference
+`score`.
+
+Kept exercises also carry their most recent local keep date. At workout start,
+Flux temporarily excludes only exercises that were kept on the previous local
+calendar day and have `muscularDemand` `2`; demand `0` and `1` keeps remain
+eligible on consecutive days. This is an exact exercise-level recovery rule,
+not a blanket exclusion of other exercises for the same muscle. When eligible
+keeps compete for limited lineup space, demand `2` takes priority over demand
+`0` or `1`, after first maximizing the total number of keeps retained.
+
 ### Modifiers are not allowed to break the workout
 
 Flux currently provides two composable modifiers:
@@ -185,7 +200,7 @@ Duration, modifier profile, lineups, keeps, scores, active progress, and pending
 rest are stored locally. Modifier combinations retain separate stable lineups
 while sharing durable keeps.
 
-The Android catalog uses SQLite schema version 56. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 58. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

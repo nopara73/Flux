@@ -710,6 +710,11 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(291, "Open-to-Claw Tendon Glide", "Open Hand to Claw Fist")]
     [InlineData(293, "Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches")]
     [InlineData(683, "Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations")]
+    [InlineData(214, "Forward Wrist Circles", "Inward Wrist Circles")]
+    [InlineData(223, "Forward Controlled Wrist Circles", "Inward Controlled Wrist Circles")]
+    [InlineData(755, "Reverse Wrist Circles", "Outward Wrist Circles")]
+    [InlineData(756, "Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles")]
+    [InlineData(758, "Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -1565,6 +1570,49 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void DirectionNameCorrectionPreservesActiveWorkoutState()
+    {
+        const string groupId = "direction.group";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 37,
+            ActiveWorkoutMinutes = 3,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groupId] = 223,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groupId] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = groupId,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 223,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.Equal(223, state.SelectedExerciseIds[groupId]);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[groupId]);
+        Assert.Equal(groupId, state.PendingRestGroupId);
+        Assert.Equal(123456, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.True(state.PendingRestKept);
+        Assert.Equal(223, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.False(
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(38));
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(38));
+        Assert.False(
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(39));
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(39));
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(
@@ -1700,8 +1748,8 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
-    [InlineData(214, "Wrist Circles", "Forward Wrist Circles")]
-    [InlineData(223, "Controlled Wrist Circles", "Forward Controlled Wrist Circles")]
+    [InlineData(214, "Wrist Circles", "Inward Wrist Circles")]
+    [InlineData(223, "Controlled Wrist Circles", "Inward Controlled Wrist Circles")]
     [InlineData(264, "Standing Arm Circles", "Backward Standing Arm Circles")]
     [InlineData(288, "Knee-and-Ankle Circles", "Forward Knee-and-Ankle Circles")]
     [InlineData(406, "Standing Wheel Arm Circles", "Clockwise Standing Wheel Arm Circles")]

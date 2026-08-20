@@ -11,11 +11,14 @@ import {
   DEFAULT_WORKOUT_MODIFIERS,
   EXERCISE_INSECT_COMPATIBILITY,
   FULL_SIDE_MOVEMENT_DURATION_MS,
+  HARD_MUSCULAR_DEMAND,
   LAST_CUMULATIVE_CATALOG_REVISION,
+  MAXIMUM_MUSCULAR_DEMAND,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
   MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
   MINIMUM_MODIFIER_MATERIALITY_PERCENT,
+  MINIMUM_MUSCULAR_DEMAND,
   MUSCLE_BUDGET_MAX_REBALANCE_PASSES,
   MUSCLE_SESSION_BUDGET_HALF_UNITS,
   MOVEMENT_DURATION_MS,
@@ -47,6 +50,7 @@ const [
   exerciseModel,
   modifierPolicy,
   muscleBudgetPolicy,
+  recoveryPolicy,
   exerciseDatabase,
   durationLayout,
   androidColors,
@@ -69,6 +73,7 @@ const [
   source("Flux", "Models", "Exercise.cs"),
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
   source("Flux", "Services", "WorkoutMuscleBudgetPolicy.cs"),
+  source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
   source("Flux", "Resources", "values", "colors.xml"),
@@ -167,8 +172,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.equal(DEFAULT_WORKOUT_MODIFIERS, WORKOUT_MODIFIERS.Silence);
   assert.match(workoutModifiers, /Insect\s*=\s*1/);
   assert.match(workoutModifiers, /Silence\s*=\s*2/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 6);
-  assert.match(workoutState, /public int Version[^=]*=\s*9/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 7);
+  assert.match(workoutState, /public int Version[^=]*=\s*10/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -282,13 +287,60 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(mainActivity, /WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence/);
   assert.match(webApp, /WORKOUT_MODIFIERS\.Insect[\s\S]*WORKOUT_MODIFIERS\.Silence/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*56/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*58/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+55\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+57\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
+  assert.match(
+    exerciseDatabase,
+    /muscular_demand INTEGER NOT NULL[\s\S]*CHECK \(muscular_demand BETWEEN 0 AND 2\)/,
+  );
   assert.match(exerciseDatabase, /max_space_meters > 0 AND max_space_meters <= 2/);
+});
+
+test("muscular demand is a separate reviewed catalog score on both platforms", () => {
+  assert.equal(MINIMUM_MUSCULAR_DEMAND, 0);
+  assert.equal(MAXIMUM_MUSCULAR_DEMAND, 2);
+  assert.match(exerciseModel, /MinimumMuscularDemand\s*=\s*0/);
+  assert.match(exerciseModel, /MaximumMuscularDemand\s*=\s*2/);
+  assert.match(exerciseModel, /int MuscularDemand/);
+  assert.match(exerciseModel, /int Score/);
+  assert.match(workoutModule, /hasReviewedMuscularDemand/);
+  assert.ok(catalog.every((exercise) =>
+    Number.isInteger(exercise.muscularDemand) &&
+    exercise.muscularDemand >= MINIMUM_MUSCULAR_DEMAND &&
+    exercise.muscularDemand <= MAXIMUM_MUSCULAR_DEMAND));
+  assert.ok(catalog.every((exercise) => exercise.score === 0));
+});
+
+test("web and mobile rest exactly yesterday's kept hardness-two exercises", () => {
+  assert.equal(HARD_MUSCULAR_DEMAND, MAXIMUM_MUSCULAR_DEMAND);
+  assert.match(
+    recoveryPolicy,
+    /HardMuscularDemand\s*=\s*Exercise\.MaximumMuscularDemand/,
+  );
+  assert.match(workoutState, /Dictionary<int, string> LastKeptLocalDateByExerciseId/);
+  assert.match(workoutState, /HashSet<int> ActiveRecoveryExcludedExerciseIds/);
+  assert.match(
+    recoveryPolicy,
+    /previousLocalDateKey[\s\S]*keptExerciseIds[\s\S]*lastKeptLocalDateByExerciseId[\s\S]*MuscularDemand\s*==\s*HardMuscularDemand/,
+  );
+  assert.match(
+    workoutModule,
+    /previousLocalDateKey[\s\S]*keptExerciseIds[\s\S]*lastKeptLocalDateByExerciseId[\s\S]*muscularDemand\s*===\s*HARD_MUSCULAR_DEMAND/,
+  );
+  assert.match(
+    sessionService,
+    /StartWorkout\([\s\S]*ActiveRecoveryExcludedExerciseIds\s*=\s*[\s\S]*GetPreviousDayHardKeptExerciseIds/,
+  );
+  assert.match(
+    workoutModule,
+    /startWorkout\([\s\S]*activeRecoveryExcludedExerciseIds\s*=\s*\[[\s\S]*getPreviousDayHardKeptExerciseIds/,
+  );
+  assert.match(sessionService, /hardPreferredExerciseWeight[\s\S]*preferredExerciseWeight/);
+  assert.match(workoutModule, /hardPreferredExerciseWeight[\s\S]*preferredExerciseWeight/);
 });
 
 test("runtime media and the deployable web shell are content-addressed", () => {

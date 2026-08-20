@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(9, state.Version);
+        Assert.Equal(10, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -296,7 +296,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(9, state.Version);
+        Assert.Equal(10, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -340,6 +340,31 @@ public sealed class WorkoutStateInvariantTests
         Assert.Equal(WorkoutModifiers.Insect, restored.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, restored.ActiveWorkoutModifiers);
         Assert.Equal(0, restored.ActiveWorkoutMinutes);
+    }
+
+    [Fact]
+    public void RecoveryDatesAndActiveExclusionsRoundTripWithWorkoutState()
+    {
+        var state = new WorkoutState
+        {
+            LastKeptExerciseIds = [101, 202],
+            LastKeptLocalDateByExerciseId = new Dictionary<int, string>
+            {
+                [101] = "2026-08-19",
+                [202] = "2026-08-20",
+            },
+            ActiveRecoveryExcludedExerciseIds = [101],
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal("2026-08-19", restored.LastKeptLocalDateByExerciseId[101]);
+        Assert.Equal("2026-08-20", restored.LastKeptLocalDateByExerciseId[202]);
+        Assert.Equal([101], restored.ActiveRecoveryExcludedExerciseIds);
     }
 
     private static Exercise Exercise(

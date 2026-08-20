@@ -43,18 +43,21 @@ export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
 export const MUSCLE_SESSION_BUDGET_HALF_UNITS = 10;
+export const MINIMUM_MUSCULAR_DEMAND = 0;
+export const MAXIMUM_MUSCULAR_DEMAND = 2;
+export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
 export const PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
 export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 6;
+export const CURRENT_WORKOUT_STATE_VERSION = 7;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 37;
+export const CURRENT_CATALOG_REVISION = 39;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -237,6 +240,11 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [291, ["Open-to-Claw Tendon Glide", "Open Hand to Claw Fist"]],
   [293, ["Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches"]],
   [683, ["Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations"]],
+  [214, ["Forward Wrist Circles", "Inward Wrist Circles"]],
+  [223, ["Forward Controlled Wrist Circles", "Inward Controlled Wrist Circles"]],
+  [755, ["Reverse Wrist Circles", "Outward Wrist Circles"]],
+  [756, ["Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles"]],
+  [758, ["Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
@@ -508,6 +516,56 @@ export function getResolution(minutes) {
 
 export function getSelectionKey(group) {
   return group.selectionGroupId ?? group.id;
+}
+
+export function hasReviewedMuscularDemand(exercise) {
+  return Number.isInteger(exercise?.muscularDemand) &&
+    exercise.muscularDemand >= MINIMUM_MUSCULAR_DEMAND &&
+    exercise.muscularDemand <= MAXIMUM_MUSCULAR_DEMAND;
+}
+
+const LOCAL_DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+export function toLocalDateKey(value = new Date()) {
+  if (typeof value === "string" && isValidLocalDateKey(value)) {
+    return value;
+  }
+  if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
+    throw new TypeError("Local date provider must return a valid Date or YYYY-MM-DD string.");
+  }
+  return [
+    String(value.getFullYear()).padStart(4, "0"),
+    String(value.getMonth() + 1).padStart(2, "0"),
+    String(value.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
+export function isValidLocalDateKey(value) {
+  if (typeof value !== "string" || !LOCAL_DATE_KEY_PATTERN.test(value)) {
+    return false;
+  }
+  const [year, month, day] = value.split("-").map(Number);
+  const parsed = new Date(year, month - 1, day);
+  return parsed.getFullYear() === year &&
+    parsed.getMonth() === month - 1 &&
+    parsed.getDate() === day;
+}
+
+export function getPreviousDayHardKeptExerciseIds(
+  exercises,
+  keptExerciseIds,
+  lastKeptLocalDateByExerciseId,
+  currentLocalDate = new Date(),
+) {
+  const currentDateKey = toLocalDateKey(currentLocalDate);
+  const [year, month, day] = currentDateKey.split("-").map(Number);
+  const previousLocalDate = new Date(year, month - 1, day);
+  previousLocalDate.setDate(previousLocalDate.getDate() - 1);
+  const previousLocalDateKey = toLocalDateKey(previousLocalDate);
+  const exercisesById = new Map(exercises.map((exercise) => [exercise.id, exercise]));
+  return new Set([...keptExerciseIds].filter((exerciseId) =>
+    lastKeptLocalDateByExerciseId[String(exerciseId)] === previousLocalDateKey &&
+    exercisesById.get(exerciseId)?.muscularDemand === HARD_MUSCULAR_DEMAND));
 }
 
 export function createWorkoutSchedule(
@@ -1080,7 +1138,9 @@ export function createDefaultState() {
     scores: {},
     outcomes: {},
     lastKeptExerciseIds: [],
+    lastKeptLocalDateByExerciseId: {},
     nextWorkoutExcludedExerciseIds: [],
+    activeRecoveryExcludedExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
     activeDirectionPartnerExerciseIds: {},
     activeFullSideRoundIds: [],
@@ -1159,8 +1219,19 @@ function normalizeStateShape(raw) {
     }
   }
   state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
+  for (const [exerciseId, localDateKey] of Object.entries(
+    objectOrEmpty(raw.lastKeptLocalDateByExerciseId),
+  )) {
+    if (/^\d+$/.test(exerciseId) && Number(exerciseId) > 0 &&
+        isValidLocalDateKey(localDateKey)) {
+      state.lastKeptLocalDateByExerciseId[exerciseId] = localDateKey;
+    }
+  }
   state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
     raw.nextWorkoutExcludedExerciseIds,
+  );
+  state.activeRecoveryExcludedExerciseIds = uniquePositiveIntegers(
+    raw.activeRecoveryExcludedExerciseIds,
   );
   state.activeExtraSetSelectionGroupIds = Array.isArray(raw.activeExtraSetSelectionGroupIds)
     ? [...new Set(raw.activeExtraSetSelectionGroupIds.filter((groupId) =>
@@ -1226,7 +1297,12 @@ function objectOrEmpty(value) {
 }
 
 export class WorkoutSession {
-  constructor(exercises, storedState = createDefaultState(), random = Math.random) {
+  constructor(
+    exercises,
+    storedState = createDefaultState(),
+    random = Math.random,
+    localDateProvider = () => new Date(),
+  ) {
     if (!Array.isArray(exercises)) {
       throw new TypeError("Exercise catalog must be an array.");
     }
@@ -1237,6 +1313,11 @@ export class WorkoutSession {
     }
     this.state = normalizeStateShape(storedState);
     this.random = random;
+    this.localDateProvider = localDateProvider;
+  }
+
+  getCurrentLocalDateKey() {
+    return toLocalDateKey(this.localDateProvider());
   }
 
   initialize() {
@@ -1287,6 +1368,7 @@ export class WorkoutSession {
       throw new Error("A workout is already active.");
     }
 
+    this.normalizeKeptExerciseIds();
     modifiers = normalizeWorkoutModifiers(modifiers);
     const previousWorkoutMinutes = normalizeMinutes(this.state.lastWorkoutMinutes);
     const previousWorkoutModifiers = normalizeWorkoutModifiers(
@@ -1296,6 +1378,14 @@ export class WorkoutSession {
     this.state.lastWorkoutModifiers = modifiers;
     this.state.activeWorkoutMinutes = minutes;
     this.state.activeWorkoutModifiers = modifiers;
+    this.state.activeRecoveryExcludedExerciseIds = [
+      ...getPreviousDayHardKeptExerciseIds(
+        this.exercises,
+        new Set(this.state.lastKeptExerciseIds),
+        this.state.lastKeptLocalDateByExerciseId,
+        this.getCurrentLocalDateKey(),
+      ),
+    ];
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
@@ -1466,6 +1556,14 @@ export class WorkoutSession {
       ),
       ...newlyKeptExerciseIds,
     ])];
+    for (const exerciseId of rejectedExerciseIds) {
+      delete this.state.lastKeptLocalDateByExerciseId[String(exerciseId)];
+    }
+    const currentLocalDateKey = this.getCurrentLocalDateKey();
+    for (const exerciseId of newlyKeptExerciseIds) {
+      this.state.lastKeptLocalDateByExerciseId[String(exerciseId)] =
+        currentLocalDateKey;
+    }
     const currentExerciseIds = new Map(
       selectionGroups
         .filter((group) => !rejectedSelectionKeys.has(group.id))
@@ -1589,6 +1687,9 @@ export class WorkoutSession {
     }
 
     const isAllowed = (exercise, group) => {
+      if (this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id)) {
+        return false;
+      }
       if (excludedExerciseIdsByGroup.get(group.id)?.has(exercise.id)) {
         return false;
       }
@@ -1633,7 +1734,10 @@ export class WorkoutSession {
     const currentSelectionWeight = totalScoreRange + 1;
     const totalCurrentSelectionRange = groups.length * currentSelectionWeight +
       totalScoreRange;
-    const preferredExerciseWeight = totalCurrentSelectionRange + 1;
+    const hardPreferredExerciseWeight = totalCurrentSelectionRange + 1;
+    const totalHardPreferredRange = groups.length * hardPreferredExerciseWeight +
+      totalCurrentSelectionRange;
+    const preferredExerciseWeight = totalHardPreferredRange + 1;
 
     const allowed = groups.map(() => candidates.map(() => false));
     const utilities = groups.map(() => candidates.map(() => 0));
@@ -1648,6 +1752,10 @@ export class WorkoutSession {
         allowed[groupIndex][exerciseIndex] = true;
         const utility =
           (preferredExerciseIds.has(exercise.id) ? preferredExerciseWeight : 0) +
+          (preferredExerciseIds.has(exercise.id) &&
+            exercise.muscularDemand === HARD_MUSCULAR_DEMAND
+            ? hardPreferredExerciseWeight
+            : 0) +
           (currentExerciseIds.get(group.id) === exercise.id ? currentSelectionWeight : 0) +
           scoreRanks.get(this.getScore(exercise)) * scoreWeight +
           (isPrimaryForGroup(exercise, group) ? primaryWeight : 0) +
@@ -1680,6 +1788,7 @@ export class WorkoutSession {
   ) {
     const candidates = this.exercises.filter((exercise) =>
       this.isSelectable(exercise, group, modifiers) &&
+      !this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) &&
       !excludedExerciseIds.has(exercise.id));
     if (candidates.length === 0) {
       throw new Error(`No eligible exercise exists for ${group.displayName}.`);
@@ -1818,9 +1927,20 @@ export class WorkoutSession {
   normalizeKeptExerciseIds() {
     this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter((exerciseId) =>
       this.exercisesById.has(exerciseId));
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    this.state.lastKeptLocalDateByExerciseId = Object.fromEntries(
+      Object.entries(this.state.lastKeptLocalDateByExerciseId)
+        .filter(([exerciseId, localDateKey]) =>
+          keptExerciseIds.has(Number(exerciseId)) &&
+          this.exercisesById.has(Number(exerciseId)) &&
+          isValidLocalDateKey(localDateKey)),
+    );
     this.state.nextWorkoutExcludedExerciseIds =
       this.state.nextWorkoutExcludedExerciseIds.filter((exerciseId) =>
         this.exercisesById.has(exerciseId));
+    this.state.activeRecoveryExcludedExerciseIds =
+      this.state.activeRecoveryExcludedExerciseIds.filter((exerciseId) =>
+        this.exercisesById.get(exerciseId)?.muscularDemand === HARD_MUSCULAR_DEMAND);
   }
 
   normalizeActiveLongWorkoutAllocation() {
@@ -1930,7 +2050,19 @@ export class WorkoutSession {
         const rightKept = keptExerciseIds.has(this.state.selectedExerciseIds[
           this.getSelectionStorageKey(right.id, this.state.activeWorkoutModifiers)
         ]) ? 1 : 0;
-        return rightKept - leftKept || right.order - left.order;
+        const leftExercise = this.exercisesById.get(this.state.selectedExerciseIds[
+          this.getSelectionStorageKey(left.id, this.state.activeWorkoutModifiers)
+        ]);
+        const rightExercise = this.exercisesById.get(this.state.selectedExerciseIds[
+          this.getSelectionStorageKey(right.id, this.state.activeWorkoutModifiers)
+        ]);
+        const leftHardKept = leftKept &&
+          leftExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
+        const rightHardKept = rightKept &&
+          rightExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
+        return rightKept - leftKept ||
+          rightHardKept - leftHardKept ||
+          right.order - left.order;
       });
     const selectedExerciseIds = new Set(rankedGroups
       .map((group) => this.state.selectedExerciseIds[this.getSelectionStorageKey(
@@ -2045,6 +2177,7 @@ export class WorkoutSession {
               current.adjustedScoreHalfUnits &&
             !unavailableExerciseIds.has(exercise.id) &&
             !this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id) &&
+            !this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) &&
             this.isSelectable(
               exercise,
               group,
@@ -2204,6 +2337,9 @@ export class WorkoutSession {
   }
 
   isSavedSelectionValid(exercise, group, modifiers) {
+    if (this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id)) {
+      return false;
+    }
     return (
       this.isSelectable(exercise, group, modifiers) ||
       (this.pendingRestMatchesSelectionGroup(getSelectionKey(group)) &&
@@ -2314,6 +2450,7 @@ export class WorkoutSession {
     this.state.activeExtraSetSelectionGroupIds = [];
     this.state.activeDirectionPartnerExerciseIds = {};
     this.state.activeFullSideRoundIds = [];
+    this.state.activeRecoveryExcludedExerciseIds = [];
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
     this.clearPendingRest();

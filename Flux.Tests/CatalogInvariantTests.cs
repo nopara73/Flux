@@ -31,6 +31,22 @@ public sealed class CatalogInvariantTests
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Id).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Name).Distinct().Count());
         Assert.Equal(exercises.Length, exercises.Select(exercise => exercise.Video).Distinct().Count());
+        Assert.All(document.RootElement.EnumerateArray(), element =>
+        {
+            Assert.True(element.TryGetProperty("muscularDemand", out JsonElement value));
+            Assert.Equal(JsonValueKind.Number, value.ValueKind);
+            Assert.InRange(
+                value.GetInt32(),
+                Exercise.MinimumMuscularDemand,
+                Exercise.MaximumMuscularDemand);
+        });
+        Assert.Equal(111, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(184, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(123, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.All(exercises, exercise => Assert.Equal(0, exercise.Score));
+        Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
+        Assert.Equal(1, exercises.Single(exercise => exercise.Id == 264).MuscularDemand);
+        Assert.Equal(2, exercises.Single(exercise => exercise.Id == 101).MuscularDemand);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises));
@@ -147,6 +163,7 @@ public sealed class CatalogInvariantTests
             Assert.Equal(first.Id, second.DirectionPartnerExerciseId);
             Assert.Equal(first.PrimaryCanonicalGroup, second.PrimaryCanonicalGroup);
             Assert.Equal(first.SecondaryCanonicalGroups.Order(), second.SecondaryCanonicalGroups.Order());
+            Assert.Equal(first.MuscularDemand, second.MuscularDemand);
         });
         int[] declaredReplacementIds = exercises
             .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
@@ -347,12 +364,12 @@ public sealed class CatalogInvariantTests
             [211] = "Bent-Elbow Wrist-Flexion Stretch",
             [212] = "Unsupported Sissy Squat",
             [213] = "Bent-Elbow Wrist-Extension Stretch",
-            [214] = "Forward Wrist Circles",
+            [214] = "Inward Wrist Circles",
             [215] = "Forearm Pronation-Supination Flow",
             [216] = "Interlaced-Finger Palm-Out Stretch",
             [217] = "Tree Pose Hold",
             [218] = "Sequential Finger Waves",
-            [223] = "Forward Controlled Wrist Circles",
+            [223] = "Inward Controlled Wrist Circles",
             [224] = "Qigong Interlaced Wrist Rolls",
             [225] = "Opposite-Hand Fist-Down Wrist Stretch",
             [231] = "Karate Reverse Punch",
@@ -375,6 +392,7 @@ public sealed class CatalogInvariantTests
             [270] = "Goalpost Chest-Opener Hold",
             [282] = "Side-Step Knee Drive with Alternating Side Punches",
             [283] = "Open Hand to Straight Fist",
+            [288] = "Forward Knee-and-Ankle Circles",
             [289] = "Fingertip Spider Presses",
             [290] = "Low Palm Scoop to Side Opening",
             [326] = "Rear-Hand Straight Punch",
@@ -415,6 +433,9 @@ public sealed class CatalogInvariantTests
             [686] = "Standing Knee-to-Chest Glute Stretch",
             [687] = "Horse-Stance Alternating Straight Punches",
             [712] = "Standing Arms-Back Chest-Opener Hold",
+            [755] = "Outward Wrist Circles",
+            [756] = "Outward Controlled Wrist Circles",
+            [758] = "Backward Knee-and-Ankle Circles",
             [843] = "Arm-Behind-Back Assisted Side Neck Stretch",
             [969] = "Chair-Pose Hold",
             [1000] = "Standing Forward-Fold Hold",

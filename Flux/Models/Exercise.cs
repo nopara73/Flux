@@ -2,6 +2,10 @@ namespace Flux.Models;
 
 public sealed class Exercise
 {
+    public const int MinimumMuscularDemand = 0;
+
+    public const int MaximumMuscularDemand = 2;
+
     public required int Id { get; init; }
 
     public required string Name { get; init; }
@@ -33,6 +37,8 @@ public sealed class Exercise
 
     public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
         ExerciseInsectCompatibility.Unreviewed;
+
+    public int MuscularDemand { get; init; }
 
     public int Score { get; set; } = 0;
 

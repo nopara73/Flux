@@ -1217,7 +1217,7 @@
     }
     214 = @{
         RetiredName = 'Wing Chun Biu-Sau Palm Strike'
-        Name = 'Forward Wrist Circles'
+        Name = 'Inward Wrist Circles'
         Practice = 'Hand mobility'
         MotionProfile = 'WristCircle'
         Primary = 'ForearmFlexorsAndPronators'
@@ -1399,7 +1399,7 @@
     }
     223 = @{
         RetiredName = 'Alternating Karate Inside Block (Uchi-Uke)'
-        Name = 'Forward Controlled Wrist Circles'
+        Name = 'Inward Controlled Wrist Circles'
         Practice = 'Wrist mobility'
         MotionProfile = 'WristCAR'
         Primary = 'ForearmExtensorsAndSupinators'
@@ -6925,7 +6925,7 @@
     }
     755 = @{
         RetiredName = 'Wing Chun Double-Palm Press'
-        Name = 'Reverse Wrist Circles'
+        Name = 'Outward Wrist Circles'
         Practice = 'Hand mobility'
         MotionProfile = 'WristCircle'
         Primary = 'ForearmFlexorsAndPronators'
@@ -6943,7 +6943,7 @@
     }
     756 = @{
         RetiredName = 'Wing Chun Chain-Punch Chest Rhythm'
-        Name = 'Reverse Controlled Wrist Circles'
+        Name = 'Outward Controlled Wrist Circles'
         Practice = 'Wrist mobility'
         MotionProfile = 'WristCAR'
         Primary = 'ForearmExtensorsAndSupinators'
@@ -6979,7 +6979,7 @@
     }
     758 = @{
         RetiredName = 'Alternating Tai Chi Embrace Tiger and Return to Mountain'
-        Name = 'Reverse Knee-and-Ankle Circles'
+        Name = 'Backward Knee-and-Ankle Circles'
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'KneeAnkleCircle'
         Primary = 'AnteriorLateralLowerLegAndDorsalFoot'

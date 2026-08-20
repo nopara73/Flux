@@ -78,6 +78,19 @@ $silentExerciseIds = @(
     $silenceCompatibilityReview.Silent | ForEach-Object { [int]$_ })
 $nonSilentExerciseIds = @(
     $silenceCompatibilityReview.NonSilent | ForEach-Object { [int]$_ })
+$muscularDemandReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseMuscularDemand.psd1') -SkipLimitCheck
+$muscularDemandByExerciseId = @{}
+foreach ($score in 0..2) {
+    foreach ($exerciseId in @(
+            $muscularDemandReview["Score$score"] |
+                ForEach-Object { [int]$_ })) {
+        if ($muscularDemandByExerciseId.ContainsKey($exerciseId)) {
+            throw "Exercise $exerciseId has more than one muscular-demand score."
+        }
+        $muscularDemandByExerciseId[$exerciseId] = $score
+    }
+}
 $exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionSequences.psd1') -SkipLimitCheck
 $retiredDirectionOnlyExerciseIds = @(816)
@@ -102,6 +115,13 @@ $retainedExerciseIds = @(
         ForEach-Object { [int]$_ } |
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
+
+if ([int]$muscularDemandReview.RubricVersion -ne 1 -or
+    $muscularDemandByExerciseId.Count -ne $expectedExerciseCount -or
+    @(Compare-Object @($muscularDemandByExerciseId.Keys | Sort-Object) `
+            @($retainedExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one reviewed muscular-demand score.'
+}
 
 $invalidDirectionPartners = @(
     $exerciseDirectionPartners.GetEnumerator() | Where-Object {
@@ -2980,6 +3000,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 'Incompatible'
             }
             score = 0
+            muscularDemand = [int]$muscularDemandByExerciseId[$exerciseId]
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
             maxSpaceMeters = 2
@@ -3304,7 +3325,10 @@ $constraintViolations = $records | Where-Object {
         $_['holdFramePercent'] -lt 1 -or $_['holdFramePercent'] -gt 99)) -or
     ($_['presentation'] -eq 'Still' -and $_['mode'] -ne 'Hold') -or
     $_['presentation'] -notin @('Motion', 'Still') -or
-    $_['score'] -ne 0
+    $_['score'] -ne 0 -or
+    $_['muscularDemand'] -isnot [int] -or
+    $_['muscularDemand'] -lt 0 -or
+    $_['muscularDemand'] -gt 2
 }
 $recordsById = @{}
 foreach ($record in $records) {
@@ -3327,7 +3351,8 @@ $directionPartnerViolations = @($records | Where-Object {
         (@($_['secondaryCanonicalGroups']) -join "`n") -ne
             (@($partner['secondaryCanonicalGroups']) -join "`n") -or
         $_['insectCompatibility'] -ne $partner['insectCompatibility'] -or
-        $_['silent'] -ne $partner['silent']
+        $_['silent'] -ne $partner['silent'] -or
+        $_['muscularDemand'] -ne $partner['muscularDemand']
 })
 $syntheticNames = $records | Where-Object {
     $_['name'] -match ' — ' -or

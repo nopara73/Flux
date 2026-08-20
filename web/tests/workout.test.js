@@ -9,7 +9,10 @@ import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
   EXERCISE_INSECT_COMPATIBILITY,
+  HARD_MUSCULAR_DEMAND,
+  MAXIMUM_MUSCULAR_DEMAND,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_MUSCULAR_DEMAND,
   MUSCLE_SESSION_BUDGET_HALF_UNITS,
   PRIMARY_MUSCLE_LOAD_HALF_UNITS,
   SCORE_HALF_UNITS_PER_VOTE,
@@ -38,7 +41,10 @@ import {
   getMovementPresentation,
   getAdjustedScoreHalfUnits,
   getMuscleBudgetTemporaryDownvoteHalfUnits,
+  getPreviousDayHardKeptExerciseIds,
   getSelectionKey,
+  hasReviewedMuscularDemand,
+  isValidLocalDateKey,
   isSelectable,
   isSelectableForWorkoutProfile,
   isCompatibleWithWorkoutModifiers,
@@ -157,6 +163,67 @@ const catalog = JSON.parse(
   await readFile(path.join(repositoryRoot, "Flux", "Assets", "exercises.json"), "utf8"),
 );
 
+test("muscular demand is fully reviewed and independent of user scores", () => {
+  assert.equal(MINIMUM_MUSCULAR_DEMAND, 0);
+  assert.equal(MAXIMUM_MUSCULAR_DEMAND, 2);
+  assert.deepEqual(
+    [0, 1, 2].map((rating) =>
+      catalog.filter((exercise) => exercise.muscularDemand === rating).length),
+    [111, 184, 123],
+  );
+  assert.ok(catalog.every(hasReviewedMuscularDemand));
+  assert.ok(catalog.every((exercise) => exercise.score === 0));
+  assert.equal(catalog.find((exercise) => exercise.id === 211).muscularDemand, 0);
+  assert.equal(catalog.find((exercise) => exercise.id === 264).muscularDemand, 1);
+  assert.equal(catalog.find((exercise) => exercise.id === 101).muscularDemand, 2);
+  assert.equal(hasReviewedMuscularDemand({ muscularDemand: -1 }), false);
+  assert.equal(hasReviewedMuscularDemand({ muscularDemand: 3 }), false);
+  assert.equal(hasReviewedMuscularDemand({}), false);
+
+  for (const exercise of catalog.filter((item) => item.directionPartnerExerciseId > 0)) {
+    const partner = catalog.find((item) => item.id === exercise.directionPartnerExerciseId);
+    assert.equal(exercise.muscularDemand, partner?.muscularDemand);
+  }
+});
+
+test("previous-day recovery requires keep date and hardness two together", () => {
+  const yesterdayHard = exercise(1, "GlutealExtensors", [], 0, undefined, true, 2);
+  const yesterdayModerate = exercise(2, "GlutealExtensors", [], 0, undefined, true, 1);
+  const hardButNotKept = exercise(3, "GlutealExtensors", [], 0, undefined, true, 2);
+  const olderHard = exercise(4, "GlutealExtensors", [], 0, undefined, true, 2);
+  const todayHard = exercise(5, "GlutealExtensors", [], 0, undefined, true, 2);
+
+  const excluded = getPreviousDayHardKeptExerciseIds(
+    [yesterdayHard, yesterdayModerate, hardButNotKept, olderHard, todayHard],
+    new Set([yesterdayHard.id, yesterdayModerate.id, olderHard.id, todayHard.id]),
+    {
+      [yesterdayHard.id]: "2026-08-19",
+      [yesterdayModerate.id]: "2026-08-19",
+      [hardButNotKept.id]: "2026-08-19",
+      [olderHard.id]: "2026-08-18",
+      [todayHard.id]: "2026-08-20",
+    },
+    "2026-08-20",
+  );
+
+  assert.deepEqual([...excluded], [yesterdayHard.id]);
+  assert.equal(HARD_MUSCULAR_DEMAND, 2);
+  assert.equal(isValidLocalDateKey("2024-02-29"), true);
+  assert.equal(isValidLocalDateKey("2026-02-29"), false);
+  assert.equal(isValidLocalDateKey("2026-8-20"), false);
+
+  const restored = parseStoredState(JSON.stringify({
+    lastKeptExerciseIds: [1, 2],
+    lastKeptLocalDateByExerciseId: {
+      1: "2026-08-19",
+      2: "invalid",
+    },
+    activeRecoveryExcludedExerciseIds: [1],
+  }));
+  assert.deepEqual(restored.lastKeptLocalDateByExerciseId, { 1: "2026-08-19" });
+  assert.deepEqual(restored.activeRecoveryExcludedExerciseIds, [1]);
+});
+
 test("duration inventory and legacy normalization match Flux", () => {
   assert.deepEqual(SUPPORTED_MINUTES, [3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
   assert.equal(normalizeMinutes(6), 7);
@@ -252,7 +319,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 6);
+  assert.equal(state.version, 7);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -785,6 +852,181 @@ test("carrying keeps maximizes kept count across the whole lineup", () => {
   assert.equal(session.state.selectedExerciseIds[groups[1].id], sharedKept.id);
 });
 
+test("eligible hardness-two keep outranks a lower-demand keep for one slot", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const hardKeep = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    -10,
+    undefined,
+    true,
+    2,
+  );
+  const lowerDemandKeep = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    100,
+    undefined,
+    true,
+    1,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 3;
+  state.lastKeptExerciseIds = [hardKeep.id, lowerDemandKeep.id];
+  state.lastKeptLocalDateByExerciseId = {
+    [hardKeep.id]: "2026-08-20",
+    [lowerDemandKeep.id]: "2026-08-20",
+  };
+  state.selectedExerciseIds = { [groups[0].id]: lowerDemandKeep.id };
+  const session = new WorkoutSession(
+    [hardKeep, lowerDemandKeep, middle, last],
+    state,
+    () => 0,
+    () => "2026-08-20",
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], hardKeep.id);
+  assert.deepEqual(session.state.activeRecoveryExcludedExerciseIds, []);
+});
+
+test("only previous-day hardness-two keeps are excluded from the lineup", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const yesterdayHard = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    100,
+    undefined,
+    true,
+    2,
+  );
+  const yesterdayModerate = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    1,
+  );
+  const olderHard = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 3;
+  state.lastKeptExerciseIds = [
+    yesterdayHard.id,
+    yesterdayModerate.id,
+    olderHard.id,
+  ];
+  state.lastKeptLocalDateByExerciseId = {
+    [yesterdayHard.id]: "2026-08-19",
+    [yesterdayModerate.id]: "2026-08-19",
+    [olderHard.id]: "2026-08-18",
+  };
+  state.selectedExerciseIds = {
+    [groups[0].id]: yesterdayHard.id,
+    [groups[1].id]: olderHard.id,
+  };
+  const session = new WorkoutSession(
+    [yesterdayHard, yesterdayModerate, olderHard, last],
+    state,
+    () => 0,
+    () => "2026-08-20",
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.deepEqual(session.state.activeRecoveryExcludedExerciseIds, [yesterdayHard.id]);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], yesterdayModerate.id);
+  assert.equal(session.state.selectedExerciseIds[groups[1].id], olderHard.id);
+});
+
+test("completed keeps persist their local date and rest the next day", () => {
+  let localDate = "2026-08-20";
+  const groups = RESOLUTIONS.get(3).groups;
+  const hardKeep = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const alternative = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastKeptExerciseIds = [hardKeep.id];
+  const session = new WorkoutSession(
+    [hardKeep, alternative, middle, last],
+    state,
+    () => 0,
+    () => localDate,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  for (const round of session.getActiveGroups()) {
+    session.recordOutcome(round, true);
+  }
+  session.acknowledgeCompletion();
+
+  assert.equal(
+    session.state.lastKeptLocalDateByExerciseId[String(hardKeep.id)],
+    "2026-08-20",
+  );
+
+  localDate = "2026-08-21";
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.ok(session.state.activeRecoveryExcludedExerciseIds.includes(hardKeep.id));
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], alternative.id);
+});
+
 test("rejected replacements use global matching instead of greedy group order", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const allCanonicalGroups = RESOLUTIONS.get(30).groups
@@ -1130,7 +1372,7 @@ test("version five long workout recomputes direction allocation without enabling
   );
   restored.normalizeActiveLongWorkoutAllocation();
 
-  assert.equal(restored.state.version, 6);
+  assert.equal(restored.state.version, 7);
   assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
@@ -2217,6 +2459,51 @@ test("alternating loop corrections rebuild workouts without resetting scores", (
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
+test("direction name correction preserves workout state and scores", () => {
+  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(38), false);
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(38), false);
+  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(39), false);
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(39), false);
+  const state = createDefaultState();
+  const groupId = RESOLUTIONS.get(3).groups[0].id;
+  state.catalogRevision = 37;
+  state.activeWorkoutMinutes = 3;
+  state.selectedExerciseIds[groupId] = 223;
+  state.outcomes[groupId] = "tick";
+  state.pendingRestGroupId = groupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+  state.scores["223"] = -4;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[groupId], 223);
+  assert.equal(restored.state.outcomes[groupId], "tick");
+  assert.equal(restored.state.pendingRestGroupId, groupId);
+  assert.equal(restored.state.pendingRestKept, true);
+  assert.equal(restored.state.scores["223"], -4);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("direction-specific circle names match their demonstrated axes", () => {
+  const expectedNames = new Map([
+    [214, "Inward Wrist Circles"],
+    [223, "Inward Controlled Wrist Circles"],
+    [288, "Forward Knee-and-Ankle Circles"],
+    [755, "Outward Wrist Circles"],
+    [756, "Outward Controlled Wrist Circles"],
+    [758, "Backward Knee-and-Ankle Circles"],
+  ]);
+
+  for (const [exerciseId, expectedName] of expectedNames) {
+    assert.equal(
+      catalog.find((exercise) => exercise.id === exerciseId)?.name,
+      expectedName,
+    );
+  }
+});
+
 test("unclear exercise replacement revision resets every changed score", () => {
   const changedIds = [
     211, 213, 214, 215, 218, 223, 224,
@@ -2390,6 +2677,7 @@ function exercise(
   score,
   insectCompatibility = EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
   silent = true,
+  muscularDemand = 0,
 ) {
   return {
     id,
@@ -2398,6 +2686,7 @@ function exercise(
     primaryCanonicalGroup,
     secondaryCanonicalGroups,
     score,
+    muscularDemand,
     insectCompatibility,
     silent,
     sideSequence: "Continuous",
