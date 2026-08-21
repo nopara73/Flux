@@ -921,10 +921,35 @@ public sealed class ExerciseSessionService
         WorkoutState state,
         string selectionGroupId)
     {
-        return state.PendingRestGroupId is string pendingRoundId &&
-            GetActiveGroups(state).Any(round =>
-                round.Id == pendingRoundId &&
-                round.SelectionKey == selectionGroupId);
+        if (state.PendingRestGroupId is not string pendingRoundId)
+        {
+            return false;
+        }
+
+        int suffixIndex = pendingRoundId.LastIndexOf('.');
+        if (suffixIndex < 0)
+        {
+            return string.Equals(
+                pendingRoundId,
+                selectionGroupId,
+                StringComparison.Ordinal);
+        }
+
+        string suffix = pendingRoundId[(suffixIndex + 1)..];
+        bool isDirectionRound = string.Equals(
+            suffix,
+            "direction",
+            StringComparison.Ordinal);
+        bool isSetRound = suffix.StartsWith("set", StringComparison.Ordinal) &&
+            int.TryParse(suffix.AsSpan(3), out int setNumber) &&
+            setNumber > 0;
+        string pendingSelectionGroupId = isDirectionRound || isSetRound
+            ? pendingRoundId[..suffixIndex]
+            : pendingRoundId;
+        return string.Equals(
+            pendingSelectionGroupId,
+            selectionGroupId,
+            StringComparison.Ordinal);
     }
 
     private static bool IsAssignedToGroup(Exercise exercise, WorkoutGroup group)

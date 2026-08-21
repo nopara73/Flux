@@ -2418,11 +2418,10 @@ export class WorkoutSession {
     if (!this.state.pendingRestGroupId) {
       return false;
     }
-    return this.getActiveGroups().some(
-      (round) =>
-        round.id === this.state.pendingRestGroupId &&
-        getSelectionKey(round) === selectionGroupId,
+    const roundMatch = /^(.*)\.(?:direction|set[1-9]\d*)$/.exec(
+      this.state.pendingRestGroupId,
     );
+    return (roundMatch?.[1] ?? this.state.pendingRestGroupId) === selectionGroupId;
   }
 
   isAssignedToGroup(exercise, group) {

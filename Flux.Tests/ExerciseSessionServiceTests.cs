@@ -882,6 +882,43 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void PersistedPendingDirectionRestCannotRecurseThroughAllocationValidation()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseExercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise partner = CloneWithDirectionPartner(
+            QualifiedForGroup(1001, groups[0]),
+            baseExercises[0].Id,
+            silent: false);
+        baseExercises[0] = CloneWithDirectionPartner(
+            baseExercises[0],
+            partner.Id);
+        var service = new ExerciseSessionService(
+            [.. baseExercises, partner],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 45, WorkoutModifiers.Silence);
+        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
+        state.ActiveDirectionPartnerExerciseIds[groups[0].Id] = partner.Id;
+        state.PendingRestGroupId = $"{groups[0].Id}.direction";
+        state.PendingRestEndsAtUnixMilliseconds = 123456;
+
+        service.Initialize(state);
+
+        Assert.Equal(45, state.ActiveWorkoutMinutes);
+        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, partner.Score);
+        Assert.Null(service.FinishInterruptedWorkout(state));
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+    }
+
+    [Fact]
     public void FinalPendingRoundInLongWorkoutIsTheLastSet()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
@@ -2128,7 +2165,8 @@ public sealed class ExerciseSessionServiceTests
 
     private static Exercise CloneWithDirectionPartner(
         Exercise source,
-        int directionPartnerExerciseId)
+        int directionPartnerExerciseId,
+        bool? silent = null)
     {
         return new Exercise
         {
@@ -2154,7 +2192,7 @@ public sealed class ExerciseSessionServiceTests
             ShoeAgnostic = source.ShoeAgnostic,
             MaxSpaceMeters = source.MaxSpaceMeters,
             Equipment = source.Equipment,
-            Silent = source.Silent,
+            Silent = silent ?? source.Silent,
         };
     }
 

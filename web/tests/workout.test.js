@@ -1578,6 +1578,46 @@ test("interrupted long workout settles a pending repeated round exactly once", (
   assert.equal(restoredAgain.getScore(performed), -1);
 });
 
+test("persisted pending direction rest cannot recurse through allocation validation", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const baseExercises = groups.map((group, index) =>
+    exercise(
+      index + 1,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      10,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ));
+  const partner = {
+    ...exercise(
+      1001,
+      groups[0].canonicalGroups[0],
+      groups[0].canonicalGroups.slice(1),
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      false,
+    ),
+    directionPartnerExerciseId: baseExercises[0].id,
+  };
+  baseExercises[0].directionPartnerExerciseId = partner.id;
+  const session = new WorkoutSession(
+    [...baseExercises, partner],
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(45, WORKOUT_MODIFIERS.Silence);
+  assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, {});
+  session.state.activeDirectionPartnerExerciseIds[groups[0].id] = partner.id;
+  session.state.pendingRestGroupId = `${groups[0].id}.direction`;
+  session.state.pendingRestEndsAtUnixMilliseconds = 123456;
+
+  session.initialize();
+
+  assert.equal(session.state.activeWorkoutMinutes, 0);
+  assert.equal(session.state.pendingRestGroupId, null);
+  assert.equal(session.getScore(partner), 0);
+});
+
 test("selection uses truthful associations and ranks score, primary, then coverage", () => {
   const group = {
     id: "test",
