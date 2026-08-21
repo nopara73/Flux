@@ -234,7 +234,8 @@
                         android:foreground="@drawable/ic_insect"
                         android:foregroundGravity="center"
                         android:foregroundTint="@color/duration_modifier_icon_tint"
-                        android:text="" />
+                        android:text=""
+                        android:tooltipText="@string/insect_mode_disabled_feedback" />
 
                     <CheckBox
                         android:id="@+id/silence_modifier_button"
@@ -247,7 +248,8 @@
                         android:contentDescription="@string/silence_modifier_description"
                         android:foreground="@drawable/ic_no_clap"
                         android:foregroundGravity="center"
-                        android:text="" />
+                        android:text=""
+                        android:tooltipText="@string/noisy_exercises_disabled_feedback" />
 
                     <CheckBox
                         android:id="@+id/mirror_modifier_button"
@@ -261,7 +263,8 @@
                         android:foreground="@drawable/ic_mirror"
                         android:foregroundGravity="center"
                         android:foregroundTint="@color/duration_modifier_icon_tint"
-                        android:text="" />
+                        android:text=""
+                        android:tooltipText="@string/mirror_equipment_disabled_feedback" />
                 </GridLayout>
 
                 <LinearLayout

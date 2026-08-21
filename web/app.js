@@ -27,8 +27,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
-  mirrorEnabled: "equipment on: mirror",
-  mirrorDisabled: "equipment off: mirror",
+  mirrorEnabled: "equipment ON: mirror",
+  mirrorDisabled: "equipment OFF: mirror",
 });
 
 const elements = {
@@ -110,6 +110,7 @@ let modifierFeedbackTimer = null;
 
 bindEvents();
 renderDuration(selectedMinutes, false);
+renderWorkoutModifiers();
 bootstrap();
 
 async function bootstrap() {
@@ -278,12 +279,26 @@ function toggleWorkoutModifier(flag) {
   selectedModifiers ^= flag;
   renderWorkoutModifiers();
   const enabled = (selectedModifiers & flag) !== 0;
-  const feedbackKey = flag === WORKOUT_MODIFIERS.Insect
-    ? (enabled ? "insectEnabled" : "insectDisabled")
-    : flag === WORKOUT_MODIFIERS.Silence
-      ? (enabled ? "noisyDisabled" : "noisyEnabled")
-      : (enabled ? "mirrorEnabled" : "mirrorDisabled");
-  showWorkoutModifierFeedback(MODIFIER_FEEDBACK_LABELS[feedbackKey]);
+  showWorkoutModifierFeedback(workoutModifierFeedbackLabel(flag, enabled));
+}
+
+function workoutModifierFeedbackLabel(flag, enabled) {
+  if (flag === WORKOUT_MODIFIERS.Insect) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "insectEnabled" : "insectDisabled"
+    ];
+  }
+  if (flag === WORKOUT_MODIFIERS.Silence) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "noisyDisabled" : "noisyEnabled"
+    ];
+  }
+  if (flag === WORKOUT_MODIFIERS.Mirror) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "mirrorEnabled" : "mirrorDisabled"
+    ];
+  }
+  throw new RangeError(`Unknown workout modifier: ${flag}`);
 }
 
 function showWorkoutModifierFeedback(message) {
@@ -305,6 +320,7 @@ function renderWorkoutModifiers() {
     workoutModifierTiles()) {
     const enabled = (selectedModifiers & flag) !== 0;
     element.setAttribute("aria-pressed", String(enabled));
+    element.setAttribute("title", workoutModifierFeedbackLabel(flag, enabled));
     if (enabledLabel && disabledLabel) {
       element.setAttribute("aria-label", enabled ? enabledLabel : disabledLabel);
     }

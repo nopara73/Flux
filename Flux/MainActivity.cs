@@ -382,9 +382,9 @@ public class MainActivity : Activity
                 Resource.String.insect_modifier_on,
                 Resource.String.insect_modifier_off,
                 userInitiated: true);
-            ShowModifierFeedback(enabled
-                ? Resource.String.insect_mode_enabled_feedback
-                : Resource.String.insect_mode_disabled_feedback);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Insect,
+                enabled));
         };
         _silenceModifierButton.Click += (_, _) =>
         {
@@ -397,9 +397,9 @@ public class MainActivity : Activity
                 Resource.String.silence_modifier_on,
                 Resource.String.silence_modifier_off,
                 userInitiated: true);
-            ShowModifierFeedback(enabled
-                ? Resource.String.noisy_exercises_disabled_feedback
-                : Resource.String.noisy_exercises_enabled_feedback);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Silence,
+                enabled));
         };
         _mirrorModifierButton.Click += (_, _) =>
         {
@@ -412,9 +412,9 @@ public class MainActivity : Activity
                 Resource.String.mirror_modifier_on,
                 Resource.String.mirror_modifier_off,
                 userInitiated: true);
-            ShowModifierFeedback(enabled
-                ? Resource.String.mirror_equipment_enabled_feedback
-                : Resource.String.mirror_equipment_disabled_feedback);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Mirror,
+                enabled));
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
@@ -1284,6 +1284,11 @@ public class MainActivity : Activity
             WorkoutModifierPolicy.Normalize(_selectedWorkoutModifiers);
         button.Checked = enabled;
         button.ContentDescription = GetString(descriptionResourceId);
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            button.TooltipText = GetString(
+                GetModifierFeedbackResourceId(modifier, enabled));
+        }
         if (OperatingSystem.IsAndroidVersionAtLeast(30))
         {
             button.StateDescription = GetString(enabled
@@ -1309,6 +1314,22 @@ public class MainActivity : Activity
                 .Start();
         }
     }
+
+    private static int GetModifierFeedbackResourceId(
+        WorkoutModifiers modifier,
+        bool enabled) => modifier switch
+    {
+        WorkoutModifiers.Insect => enabled
+            ? Resource.String.insect_mode_enabled_feedback
+            : Resource.String.insect_mode_disabled_feedback,
+        WorkoutModifiers.Silence => enabled
+            ? Resource.String.noisy_exercises_disabled_feedback
+            : Resource.String.noisy_exercises_enabled_feedback,
+        WorkoutModifiers.Mirror => enabled
+            ? Resource.String.mirror_equipment_enabled_feedback
+            : Resource.String.mirror_equipment_disabled_feedback,
+        _ => throw new ArgumentOutOfRangeException(nameof(modifier), modifier, null),
+    };
 
     private void ShowModifierFeedback(int messageResourceId)
     {

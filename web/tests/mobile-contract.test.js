@@ -296,21 +296,27 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="insect_mode_disabled_feedback">insect mode OFF<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
-  assert.match(strings, /<string name="mirror_equipment_enabled_feedback">equipment on: mirror<\/string>/);
-  assert.match(strings, /<string name="mirror_equipment_disabled_feedback">equipment off: mirror<\/string>/);
+  assert.match(strings, /<string name="mirror_equipment_enabled_feedback">equipment ON: mirror<\/string>/);
+  assert.match(strings, /<string name="mirror_equipment_disabled_feedback">equipment OFF: mirror<\/string>/);
   for (const label of [
     "insect mode ON",
     "insect mode OFF",
     "noisy exercises ENABLED",
     "noisy exercises DISABLED",
-    "equipment on: mirror",
-    "equipment off: mirror",
+    "equipment ON: mirror",
+    "equipment OFF: mirror",
   ]) {
     assert.match(webApp, new RegExp(label));
   }
-  assert.match(mainActivity, /ShowModifierFeedback\(enabled[\s\S]*insect_mode_enabled_feedback[\s\S]*insect_mode_disabled_feedback/);
-  assert.match(mainActivity, /ShowModifierFeedback\(enabled[\s\S]*noisy_exercises_disabled_feedback[\s\S]*noisy_exercises_enabled_feedback/);
-  assert.match(webApp, /flag === WORKOUT_MODIFIERS\.Insect[\s\S]*insectEnabled[\s\S]*insectDisabled[\s\S]*noisyDisabled[\s\S]*noisyEnabled/);
+  assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
+  assert.match(mainActivity, /GetModifierFeedbackResourceId[\s\S]*WorkoutModifiers\.Insect[\s\S]*insect_mode_enabled_feedback[\s\S]*insect_mode_disabled_feedback[\s\S]*WorkoutModifiers\.Silence[\s\S]*noisy_exercises_disabled_feedback[\s\S]*noisy_exercises_enabled_feedback[\s\S]*WorkoutModifiers\.Mirror[\s\S]*mirror_equipment_enabled_feedback[\s\S]*mirror_equipment_disabled_feedback/);
+  assert.match(mainActivity, /ShowModifierFeedback\(GetModifierFeedbackResourceId\([\s\S]*WorkoutModifiers\.Insect[\s\S]*WorkoutModifiers\.Silence[\s\S]*WorkoutModifiers\.Mirror/);
+  assert.match(durationLayout, /insect_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/insect_mode_disabled_feedback"/);
+  assert.match(durationLayout, /silence_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/noisy_exercises_disabled_feedback"/);
+  assert.match(durationLayout, /mirror_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/mirror_equipment_disabled_feedback"/);
+  assert.match(webApp, /showWorkoutModifierFeedback\(workoutModifierFeedbackLabel\(flag, enabled\)\)/);
+  assert.match(webApp, /setAttribute\("title", workoutModifierFeedbackLabel\(flag, enabled\)\)/);
+  assert.match(webApp, /flag === WORKOUT_MODIFIERS\.Insect[\s\S]*insectEnabled[\s\S]*insectDisabled[\s\S]*flag === WORKOUT_MODIFIERS\.Silence[\s\S]*noisyDisabled[\s\S]*noisyEnabled[\s\S]*flag === WORKOUT_MODIFIERS\.Mirror[\s\S]*mirrorEnabled[\s\S]*mirrorDisabled/);
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
