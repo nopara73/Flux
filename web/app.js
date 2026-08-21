@@ -1,21 +1,25 @@
 import {
   DEFAULT_WORKOUT_MODIFIERS,
+  MIRROR_EQUIPMENT,
   REST_DURATION_MS,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
+  findMirrorCategoryDeficiencies,
   findWorkoutProfileLineupDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
+  getMirrorEquipment,
   isModifierMetadataComplete,
   parseStoredState,
   usesTimedPair,
   usesTimedSides,
+  withMirrorEquipment,
 } from "./workout.js";
 
 const STORAGE_KEY = "flux.workout.state.v1";
@@ -27,7 +31,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
-  mirrorEnabled: "equipment ON: mirror",
+  compactMirrorEnabled: "equipment ON: compact mirror",
+  tallMirrorEnabled: "equipment ON: tall mirror",
   mirrorDisabled: "equipment OFF: mirror",
 });
 
@@ -43,6 +48,7 @@ const elements = {
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
   mirrorModifier: byId("mirror-modifier"),
+  mirrorModeLabel: byId("mirror-mode-label"),
   modifierFeedback: byId("modifier-feedback"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
@@ -140,11 +146,13 @@ async function bootstrap() {
       findWorkoutModifierPairCoverageDeficiencies(exercises);
     const modifierMaterialityDeficiencies =
       findWorkoutModifierMaterialityDeficiencies(exercises);
+    const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
     const lineupDeficiencies =
       findWorkoutProfileLineupDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
         pairwiseCoverageDeficiencies.length > 0 ||
         modifierMaterialityDeficiencies.length > 0 ||
+        mirrorCategoryDeficiencies.length > 0 ||
         lineupDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout modifier coverage.");
     }
@@ -178,6 +186,7 @@ function bindEvents() {
   for (const { element, flag } of workoutModifierTiles()) {
     element.addEventListener("click", () => toggleWorkoutModifier(flag));
   }
+  elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
   elements.startMovement.addEventListener("click", startMovement);
   elements.skipExercise.addEventListener("click", skipExercise);
   elements.keepExercise.addEventListener("click", keepExercise);
@@ -266,12 +275,6 @@ function workoutModifierTiles() {
       enabledLabel: "Quiet exercise filter: quiet exercises only",
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
-    {
-      element: elements.mirrorModifier,
-      flag: WORKOUT_MODIFIERS.Mirror,
-      enabledLabel: "Mirror equipment: mirror available",
-      disabledLabel: "Mirror equipment: no mirror available",
-    },
   ];
 }
 
@@ -293,12 +296,28 @@ function workoutModifierFeedbackLabel(flag, enabled) {
       enabled ? "noisyDisabled" : "noisyEnabled"
     ];
   }
-  if (flag === WORKOUT_MODIFIERS.Mirror) {
-    return MODIFIER_FEEDBACK_LABELS[
-      enabled ? "mirrorEnabled" : "mirrorDisabled"
-    ];
-  }
   throw new RangeError(`Unknown workout modifier: ${flag}`);
+}
+
+function cycleMirrorEquipment() {
+  const nextEquipment = getMirrorEquipment(selectedModifiers) === MIRROR_EQUIPMENT.None
+    ? MIRROR_EQUIPMENT.Compact
+    : getMirrorEquipment(selectedModifiers) === MIRROR_EQUIPMENT.Compact
+      ? MIRROR_EQUIPMENT.Tall
+      : MIRROR_EQUIPMENT.None;
+  selectedModifiers = withMirrorEquipment(selectedModifiers, nextEquipment);
+  renderWorkoutModifiers();
+  showWorkoutModifierFeedback(mirrorEquipmentFeedbackLabel(nextEquipment));
+}
+
+function mirrorEquipmentFeedbackLabel(equipment) {
+  if (equipment === MIRROR_EQUIPMENT.Compact) {
+    return MODIFIER_FEEDBACK_LABELS.compactMirrorEnabled;
+  }
+  if (equipment === MIRROR_EQUIPMENT.Tall) {
+    return MODIFIER_FEEDBACK_LABELS.tallMirrorEnabled;
+  }
+  return MODIFIER_FEEDBACK_LABELS.mirrorDisabled;
 }
 
 function showWorkoutModifierFeedback(message) {
@@ -325,6 +344,24 @@ function renderWorkoutModifiers() {
       element.setAttribute("aria-label", enabled ? enabledLabel : disabledLabel);
     }
   }
+
+  const mirrorEquipment = getMirrorEquipment(selectedModifiers);
+  const mirrorEnabled = mirrorEquipment !== MIRROR_EQUIPMENT.None;
+  elements.mirrorModifier.setAttribute("aria-pressed", String(mirrorEnabled));
+  elements.mirrorModifier.setAttribute(
+    "title",
+    mirrorEquipmentFeedbackLabel(mirrorEquipment),
+  );
+  elements.mirrorModifier.setAttribute(
+    "aria-label",
+    mirrorEquipment === MIRROR_EQUIPMENT.None
+      ? "Mirror equipment: no mirror available"
+      : `Mirror equipment: ${mirrorEquipment.toLowerCase()} mirror available`,
+  );
+  elements.mirrorModifier.dataset.mirrorEquipment = mirrorEquipment.toLowerCase();
+  elements.mirrorModeLabel.textContent = mirrorEquipment === MIRROR_EQUIPMENT.None
+    ? ""
+    : mirrorEquipment.toUpperCase();
 }
 
 function showScreen(screen) {

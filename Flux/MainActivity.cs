@@ -403,18 +403,18 @@ public class MainActivity : Activity
         };
         _mirrorModifierButton.Click += (_, _) =>
         {
-            bool enabled = _mirrorModifierButton.Checked;
-            SetSelectedWorkoutModifier(
-                WorkoutModifiers.Mirror,
-                enabled,
-                _mirrorModifierButton,
-                Resource.String.mirror_modifier_description,
-                Resource.String.mirror_modifier_on,
-                Resource.String.mirror_modifier_off,
-                userInitiated: true);
-            ShowModifierFeedback(GetModifierFeedbackResourceId(
-                WorkoutModifiers.Mirror,
-                enabled));
+            MirrorEquipment nextEquipment = WorkoutModifierPolicy
+                .GetMirrorEquipment(_selectedWorkoutModifiers) switch
+            {
+                MirrorEquipment.None => MirrorEquipment.Compact,
+                MirrorEquipment.Compact => MirrorEquipment.Tall,
+                MirrorEquipment.Tall => MirrorEquipment.None,
+                _ => throw new InvalidOperationException(
+                    "Unknown mirror equipment state."),
+            };
+            SetSelectedMirrorEquipment(nextEquipment, userInitiated: true);
+            ShowModifierFeedback(
+                GetMirrorFeedbackResourceId(nextEquipment));
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
@@ -693,8 +693,11 @@ public class MainActivity : Activity
             _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
             var modifierGridLayout = new LinearLayout.LayoutParams(
-                matchParent,
-                wrapContent);
+                wrapContent,
+                wrapContent)
+            {
+                Gravity = GravityFlags.CenterHorizontal,
+            };
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGrid.LayoutParameters = modifierGridLayout;
             _durationModifierGrid.ColumnCount = 3;
@@ -751,8 +754,11 @@ public class MainActivity : Activity
         _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
         var portraitModifierGridLayout = new LinearLayout.LayoutParams(
-            matchParent,
-            wrapContent);
+            wrapContent,
+            wrapContent)
+        {
+            Gravity = GravityFlags.CenterHorizontal,
+        };
         portraitModifierGridLayout.TopMargin = DpInt(32);
         _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
         _durationModifierGrid.ColumnCount = 3;
@@ -1166,6 +1172,7 @@ public class MainActivity : Activity
             Width = size,
             Height = size,
         };
+        layout.SetGravity(GravityFlags.Center);
         int margin = DpInt(6);
         layout.SetMargins(margin, margin, margin, margin);
         return layout;
@@ -1186,6 +1193,12 @@ public class MainActivity : Activity
             tile.LayoutParameters = CreateModifierTileLayout(size);
             tile.SetPadding(padding, padding, padding, padding);
         }
+
+        _mirrorModifierButton.SetPadding(
+            DpInt(4),
+            DpInt(4),
+            DpInt(4),
+            DpInt(4));
     }
 
     private void ResizeMediaCard()
@@ -1259,13 +1272,9 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
-        SetSelectedWorkoutModifier(
-            WorkoutModifiers.Mirror,
-            (_state.LastWorkoutModifiers & WorkoutModifiers.Mirror) != 0,
-            _mirrorModifierButton,
-            Resource.String.mirror_modifier_description,
-            Resource.String.mirror_modifier_on,
-            Resource.String.mirror_modifier_off);
+        SetSelectedMirrorEquipment(
+            WorkoutModifierPolicy.GetMirrorEquipment(
+                _state.LastWorkoutModifiers));
     }
 
     private void SetSelectedWorkoutModifier(
@@ -1301,6 +1310,63 @@ public class MainActivity : Activity
             return;
         }
 
+        AnimateModifierTile(button);
+    }
+
+    private void SetSelectedMirrorEquipment(
+        MirrorEquipment equipment,
+        bool userInitiated = false)
+    {
+        _selectedWorkoutModifiers = WorkoutModifierPolicy.WithMirrorEquipment(
+            _selectedWorkoutModifiers,
+            equipment);
+        _mirrorModifierButton.Checked = equipment != MirrorEquipment.None;
+        _mirrorModifierButton.Text = equipment switch
+        {
+            MirrorEquipment.Compact => "COMPACT",
+            MirrorEquipment.Tall => "TALL",
+            _ => string.Empty,
+        };
+        int stateResourceId = equipment switch
+        {
+            MirrorEquipment.Compact => Resource.String.mirror_modifier_compact,
+            MirrorEquipment.Tall => Resource.String.mirror_modifier_tall,
+            _ => Resource.String.mirror_modifier_off,
+        };
+        _mirrorModifierButton.ContentDescription =
+            $"{GetString(Resource.String.mirror_modifier_description)}: " +
+            GetString(stateResourceId);
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _mirrorModifierButton.TooltipText = GetString(
+                GetMirrorFeedbackResourceId(equipment));
+        }
+        if (OperatingSystem.IsAndroidVersionAtLeast(30))
+        {
+            _mirrorModifierButton.StateDescription = GetString(stateResourceId);
+        }
+
+        if (userInitiated)
+        {
+            AnimateModifierTile(_mirrorModifierButton);
+        }
+    }
+
+    private static int GetMirrorFeedbackResourceId(MirrorEquipment equipment) =>
+        equipment switch
+        {
+            MirrorEquipment.None =>
+                Resource.String.mirror_equipment_disabled_feedback,
+            MirrorEquipment.Compact =>
+                Resource.String.compact_mirror_equipment_enabled_feedback,
+            MirrorEquipment.Tall =>
+                Resource.String.tall_mirror_equipment_enabled_feedback,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null),
+        };
+
+    private static void AnimateModifierTile(CheckBox button)
+    {
         button.PerformHapticFeedback(FeedbackConstants.ClockTick);
         button.Animate()?.Cancel();
         button.ScaleX = 0.92f;
@@ -1325,9 +1391,6 @@ public class MainActivity : Activity
         WorkoutModifiers.Silence => enabled
             ? Resource.String.noisy_exercises_disabled_feedback
             : Resource.String.noisy_exercises_enabled_feedback,
-        WorkoutModifiers.Mirror => enabled
-            ? Resource.String.mirror_equipment_enabled_feedback
-            : Resource.String.mirror_equipment_disabled_feedback,
         _ => throw new ArgumentOutOfRangeException(nameof(modifier), modifier, null),
     };
 

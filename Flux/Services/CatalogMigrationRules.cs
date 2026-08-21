@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 42;
+    public const int CurrentCatalogRevision = 43;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -21,6 +21,10 @@ public static class CatalogMigrationRules
     private sealed record RestoredReviewedExerciseIdentity(
         string PreviousReplacementName,
         string RestoredName);
+
+    private sealed record DiscardedStoredExerciseIdentity(
+        string Name,
+        string Video);
 
     private static readonly IReadOnlyDictionary<int, ApprovedExerciseCorrection>
         ApprovedExerciseCorrections =
@@ -274,6 +278,30 @@ public static class CatalogMigrationRules
                 [266] = new(
                     "Zyzz Diagonal-Reach Pose Hold",
                     "Standing Palms-Up Arm Raise"),
+            };
+
+    // ID 497 was permanently retired at revision 30 and is intentionally
+    // reused at revision 43 for a different, reviewed movement. Devices that
+    // jump directly from an older database can still contain one of these
+    // exact obsolete identities. They are accepted only so the old row and
+    // score can be discarded before the new exercise is inserted.
+    private static readonly IReadOnlyDictionary<int,
+        IReadOnlySet<DiscardedStoredExerciseIdentity>>
+        DiscardedStoredExerciseIdentities =
+            new Dictionary<int, IReadOnlySet<DiscardedStoredExerciseIdentity>>
+            {
+                [497] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Forehead Finger Sweep",
+                        "exercise_videos/exercise_0497.mp4"),
+                    new(
+                        "Odissi Sundari Griva",
+                        "exercise_direction_videos/exercise_0497.mp4"),
+                    new(
+                        "Track Finger in Circles",
+                        "exercise_direction_videos/exercise_0497.mp4"),
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, PriorReviewedReplacementIdentity>
@@ -735,7 +763,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> ReplacedExerciseIdSet =
     [
-        15, 16, 17, 19, 20, 31, 41, 47, 56, 59, 97, 98, 102, 107, 115, 116,
+        15, 16, 17, 19, 20, 31, 41, 47, 56, 59, 90, 94, 95, 97, 98, 99, 100, 102, 107, 115, 116,
         117, 120, 126, 133, 135, 146, 150, 159, 169, 176, 177, 179, 180, 182, 183, 184,
         185, 186, 187,
         191, 192, 193, 194, 195, 196, 199, 201, 203, 211, 212, 213, 214, 215, 216, 217,
@@ -750,8 +778,8 @@ public static class CatalogMigrationRules
         449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462,
         463, 464, 465, 466, 468, 469, 470, 471, 472, 473, 476, 478, 479, 480,
         484, 485, 486, 487, 488, 489, 494, 496, 517, 518, 519,
-        490, 491, 492, 493, 495, 497, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
-        509, 510, 512, 513, 516, 572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
+        490, 491, 492, 493, 495, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
+        509, 510, 511, 512, 513, 514, 516, 572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
         816, 834, 843, 845, 886, 887, 971, 986, 987, 996, 997, 998, 999,
@@ -759,7 +787,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
     [
-        229, 497,
+        229,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -852,6 +880,7 @@ public static class CatalogMigrationRules
                 },
                 [41] = new HashSet<int> { 500 },
                 [42] = new HashSet<int> { 105, 107, 108, 245, 280, 591, 884, 885, 905 },
+                [43] = new HashSet<int> { 90, 94, 95, 99, 100, 497, 498, 511, 514 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -923,6 +952,7 @@ public static class CatalogMigrationRules
                     755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
                 },
                 [36] = new HashSet<int> { 684 },
+                [43] = new HashSet<int> { 90, 94, 95, 99, 100, 497, 498, 511, 514 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -1010,6 +1040,19 @@ public static class CatalogMigrationRules
                 if (currentReviewedIdentityMatches || approvedCorrectionMatches)
                 {
                     alreadyReviewedReplacementIds.Add(exerciseId);
+                    continue;
+                }
+
+                bool discardedStoredIdentityMatches =
+                    DiscardedStoredExerciseIdentities.TryGetValue(
+                        exerciseId,
+                        out IReadOnlySet<DiscardedStoredExerciseIdentity>?
+                            discardedIdentities) &&
+                    discardedIdentities.Contains(new(
+                        stored.Name,
+                        stored.Video));
+                if (discardedStoredIdentityMatches)
+                {
                     continue;
                 }
 

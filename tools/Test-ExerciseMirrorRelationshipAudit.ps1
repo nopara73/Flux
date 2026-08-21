@@ -18,6 +18,8 @@ $requiredBenefitsGreatlyCriteria = @(
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
 )
+$requiredCoverageCategories = @('UpperBody', 'FullBody')
+$minimumExercisesPerMirrorCategory = 5
 
 $review = Import-PowerShellDataFile -LiteralPath $ReviewPath -SkipLimitCheck
 $benefitsGreatlyByCriterion = $review.BenefitsGreatlyByCriterion
@@ -39,8 +41,47 @@ $benefitsGreatlyIds = @(
         $criterionIds
     })
 
+$mirrorOnlyByCoverage = $review.MirrorOnlyByCoverage
+$benefitsGreatlyByCoverage = $review.BenefitsGreatlyByCoverage
+foreach ($coverageReview in @(
+        $mirrorOnlyByCoverage,
+        $benefitsGreatlyByCoverage)) {
+    if ($coverageReview -isnot [System.Collections.IDictionary] -or
+        @(Compare-Object `
+                $requiredCoverageCategories `
+                @($coverageReview.Keys)).Count -gt 0) {
+        throw 'Mirror coverage reviews must use exactly UpperBody and FullBody.'
+    }
+}
+
+$mirrorOnlyIds = @(
+    foreach ($coverage in $requiredCoverageCategories) {
+        $coverageIds = @(
+            $mirrorOnlyByCoverage[$coverage] |
+                ForEach-Object { [int]$_ })
+        if ($coverageIds.Count -lt $minimumExercisesPerMirrorCategory) {
+            throw "MirrorOnly + $coverage must contain at least $minimumExercisesPerMirrorCategory exercises."
+        }
+        $coverageIds
+    })
+$benefitsGreatlyCoverageIds = @(
+    foreach ($coverage in $requiredCoverageCategories) {
+        $coverageIds = @(
+            $benefitsGreatlyByCoverage[$coverage] |
+                ForEach-Object { [int]$_ })
+        if ($coverageIds.Count -lt $minimumExercisesPerMirrorCategory) {
+            throw "BenefitsGreatly + $coverage must contain at least $minimumExercisesPerMirrorCategory exercises."
+        }
+        $coverageIds
+    })
+if (@(Compare-Object `
+        @($benefitsGreatlyIds | Sort-Object) `
+        @($benefitsGreatlyCoverageIds | Sort-Object)).Count -gt 0) {
+    throw 'BenefitsGreatly coverage must exactly partition the criterion audit.'
+}
+
 $reviewedIdsByRelationship = [ordered]@{
-    MirrorOnly = @($review.MirrorOnly | ForEach-Object { [int]$_ })
+    MirrorOnly = $mirrorOnlyIds
     BenefitsGreatly = $benefitsGreatlyIds
     Agnostic = @($review.Agnostic | ForEach-Object { [int]$_ })
 }
@@ -74,6 +115,45 @@ foreach ($relationship in $reviewedIdsByRelationship.Keys) {
     }
 }
 
+foreach ($relationshipReview in @(
+        [pscustomobject]@{
+            Relationship = 'MirrorOnly'
+            ByCoverage = $mirrorOnlyByCoverage
+        },
+        [pscustomobject]@{
+            Relationship = 'BenefitsGreatly'
+            ByCoverage = $benefitsGreatlyByCoverage
+        })) {
+    foreach ($coverage in $requiredCoverageCategories) {
+        $reviewedCoverageIds = @(
+            $relationshipReview.ByCoverage[$coverage] |
+                ForEach-Object { [int]$_ } |
+                Sort-Object)
+        $catalogCoverageIds = @(
+            $catalog |
+                Where-Object {
+                    $_.mirrorRelationship -eq $relationshipReview.Relationship -and
+                    $_.minimumMirrorCoverage -eq $coverage
+                } |
+                ForEach-Object { [int]$_.id } |
+                Sort-Object)
+        if (@(Compare-Object `
+                $reviewedCoverageIds `
+                $catalogCoverageIds).Count -gt 0) {
+            throw "$($relationshipReview.Relationship) + $coverage does not match the packaged catalog."
+        }
+    }
+}
+
+$agnosticWithCoverage = @(
+    $catalog | Where-Object {
+        $_.mirrorRelationship -eq 'Agnostic' -and
+        $_.minimumMirrorCoverage -ne 'None'
+    })
+if ($agnosticWithCoverage.Count -gt 0) {
+    throw 'Agnostic exercises must not declare mirror coverage.'
+}
+
 $invalidEquipment = @(
     $catalog | Where-Object {
         ($_.mirrorRelationship -eq 'MirrorOnly' -and $_.equipment -ne 'Mirror') -or
@@ -84,7 +164,10 @@ if ($invalidEquipment.Count -gt 0) {
 }
 
 Write-Output (
-    'Mirror audit valid: {0} MirrorOnly, {1} BenefitsGreatly, {2} Agnostic.' -f
-        $reviewedIdsByRelationship.MirrorOnly.Count,
-        $reviewedIdsByRelationship.BenefitsGreatly.Count,
+    ('Mirror audit valid: MirrorOnly {0} upper-body + {1} full-body; ' +
+    'BenefitsGreatly {2} upper-body + {3} full-body; {4} Agnostic.') -f
+        @($mirrorOnlyByCoverage.UpperBody).Count,
+        @($mirrorOnlyByCoverage.FullBody).Count,
+        @($benefitsGreatlyByCoverage.UpperBody).Count,
+        @($benefitsGreatlyByCoverage.FullBody).Count,
         $reviewedIdsByRelationship.Agnostic.Count)

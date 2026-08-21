@@ -309,6 +309,7 @@ button:disabled {
 }
 
 .modifier-tile {
+  position: relative;
   width: 64px;
   height: 64px;
   padding: 16px;
@@ -382,6 +383,33 @@ button.modifier-tile:not(:disabled):active {
 
 .mirror-detail {
   stroke-width: 1.7;
+}
+
+.mirror-mode-label {
+  position: absolute;
+  right: 4px;
+  bottom: 5px;
+  left: 4px;
+  overflow: hidden;
+  color: currentColor;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  text-align: center;
+  text-overflow: clip;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modifier-tile[data-mirror-equipment="compact"] .mirror-mode-label,
+.modifier-tile[data-mirror-equipment="tall"] .mirror-mode-label {
+  opacity: 1;
+}
+
+.modifier-tile[data-mirror-equipment="compact"] .modifier-icon,
+.modifier-tile[data-mirror-equipment="tall"] .modifier-icon {
+  transform: translateY(-4px) scale(0.88);
 }
 
 .modifier-feedback {

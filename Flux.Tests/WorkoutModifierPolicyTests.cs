@@ -81,19 +81,31 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void MirrorOffExcludesMirrorOnlyWhileMirrorOnAdmitsAllThreeRelationships()
+    public void MirrorEquipmentAppliesCoverageWithoutFilteringOrdinaryExercises()
     {
         CanonicalMuscleGroup group =
             CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
         Exercise mirrorOnly = Exercise(
             1,
             group,
-            mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly);
-        Exercise benefitsGreatly = Exercise(
+            mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
+            minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody);
+        Exercise fullBodyMirrorOnly = Exercise(
             2,
             group,
-            mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly);
-        Exercise agnostic = Exercise(3, group);
+            mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
+            minimumMirrorCoverage: ExerciseMirrorCoverage.FullBody);
+        Exercise benefitsGreatly = Exercise(
+            3,
+            group,
+            mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+            minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody);
+        Exercise fullBodyBenefitsGreatly = Exercise(
+            4,
+            group,
+            mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+            minimumMirrorCoverage: ExerciseMirrorCoverage.FullBody);
+        Exercise agnostic = Exercise(5, group);
 
         Assert.False(WorkoutModifierPolicy.IsCompatible(
             mirrorOnly,
@@ -104,16 +116,34 @@ public sealed class WorkoutModifierPolicyTests
         Assert.True(WorkoutModifierPolicy.IsCompatible(
             agnostic,
             WorkoutModifiers.None));
-        Assert.All([mirrorOnly, benefitsGreatly, agnostic], exercise =>
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            fullBodyMirrorOnly,
+            WorkoutModifiers.Mirror));
+        Assert.All([mirrorOnly, benefitsGreatly, fullBodyBenefitsGreatly, agnostic], exercise =>
             Assert.True(WorkoutModifierPolicy.IsCompatible(
                 exercise,
                 WorkoutModifiers.Mirror)));
+        WorkoutModifiers tallMirror = WorkoutModifierPolicy.WithMirrorEquipment(
+            WorkoutModifiers.None,
+            MirrorEquipment.Tall);
+        Assert.All(
+            [mirrorOnly, fullBodyMirrorOnly, benefitsGreatly,
+                fullBodyBenefitsGreatly, agnostic],
+            exercise => Assert.True(WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                tallMirror)));
         Assert.True(WorkoutModifierPolicy.IsMirrorPreferred(
             mirrorOnly,
             WorkoutModifiers.Mirror));
         Assert.True(WorkoutModifierPolicy.IsMirrorPreferred(
             benefitsGreatly,
             WorkoutModifiers.Mirror));
+        Assert.False(WorkoutModifierPolicy.IsMirrorPreferred(
+            fullBodyBenefitsGreatly,
+            WorkoutModifiers.Mirror));
+        Assert.True(WorkoutModifierPolicy.IsMirrorPreferred(
+            fullBodyBenefitsGreatly,
+            tallMirror));
         Assert.False(WorkoutModifierPolicy.IsMirrorPreferred(
             agnostic,
             WorkoutModifiers.Mirror));
@@ -132,11 +162,13 @@ public sealed class WorkoutModifierPolicyTests
             Exercise(
                 1,
                 group,
-                mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly),
+                mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody),
             Exercise(
                 2,
                 group,
-                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly),
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.FullBody),
             Exercise(3, group),
         ];
 
@@ -154,7 +186,8 @@ public sealed class WorkoutModifierPolicyTests
                 5,
                 group,
                 mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
-                equipment: "None"),
+                equipment: "None",
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody),
         ]));
         Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(
         [
@@ -162,8 +195,106 @@ public sealed class WorkoutModifierPolicyTests
                 6,
                 group,
                 mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
-                equipment: "Mirror"),
+                equipment: "Mirror",
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody),
         ]));
+        Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(
+        [
+            Exercise(
+                7,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.None),
+        ]));
+    }
+
+    [Fact]
+    public void MirrorEquipmentRoundTripsAndOrphanTallQualifierIsDiscarded()
+    {
+        WorkoutModifiers context = WorkoutModifiers.Insect |
+            WorkoutModifiers.Silence;
+
+        Assert.Equal(
+            MirrorEquipment.None,
+            WorkoutModifierPolicy.GetMirrorEquipment(
+                WorkoutModifiers.TallMirror));
+        Assert.Equal(
+            WorkoutModifiers.None,
+            WorkoutModifierPolicy.Normalize(WorkoutModifiers.TallMirror));
+
+        WorkoutModifiers compact = WorkoutModifierPolicy.WithMirrorEquipment(
+            context,
+            MirrorEquipment.Compact);
+        Assert.Equal(MirrorEquipment.Compact,
+            WorkoutModifierPolicy.GetMirrorEquipment(compact));
+        Assert.Equal(context | WorkoutModifiers.Mirror, compact);
+
+        WorkoutModifiers tall = WorkoutModifierPolicy.WithMirrorEquipment(
+            compact,
+            MirrorEquipment.Tall);
+        Assert.Equal(MirrorEquipment.Tall,
+            WorkoutModifierPolicy.GetMirrorEquipment(tall));
+        Assert.Equal(
+            context | WorkoutModifiers.Mirror | WorkoutModifiers.TallMirror,
+            tall);
+
+        Assert.Equal(
+            context,
+            WorkoutModifierPolicy.WithMirrorEquipment(
+                tall,
+                MirrorEquipment.None));
+    }
+
+    [Fact]
+    public void MirrorCategoryFloorRequiresFiveInEveryRelationshipCoverageCell()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        var exercises = new List<Exercise>();
+        int id = 1;
+        foreach ((ExerciseMirrorRelationship relationship,
+                 ExerciseMirrorCoverage coverage) in new[]
+        {
+            (ExerciseMirrorRelationship.MirrorOnly,
+                ExerciseMirrorCoverage.UpperBody),
+            (ExerciseMirrorRelationship.MirrorOnly,
+                ExerciseMirrorCoverage.FullBody),
+            (ExerciseMirrorRelationship.BenefitsGreatly,
+                ExerciseMirrorCoverage.UpperBody),
+            (ExerciseMirrorRelationship.BenefitsGreatly,
+                ExerciseMirrorCoverage.FullBody),
+            (ExerciseMirrorRelationship.Agnostic,
+                ExerciseMirrorCoverage.None),
+        })
+        {
+            for (int index = 0;
+                 index < WorkoutModifierPolicy.MinimumExercisesPerMirrorCategory;
+                 index++)
+            {
+                exercises.Add(Exercise(
+                    id++,
+                    group,
+                    mirrorRelationship: relationship,
+                    minimumMirrorCoverage: coverage));
+            }
+        }
+
+        Assert.Empty(
+            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises));
+
+        exercises.Remove(exercises.First(exercise =>
+            exercise.MirrorRelationship ==
+                ExerciseMirrorRelationship.MirrorOnly &&
+            exercise.MinimumMirrorCoverage ==
+                ExerciseMirrorCoverage.FullBody));
+        WorkoutMirrorCategoryDeficiency deficiency = Assert.Single(
+            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises));
+        Assert.Equal(ExerciseMirrorRelationship.MirrorOnly,
+            deficiency.Relationship);
+        Assert.Equal(ExerciseMirrorCoverage.FullBody,
+            deficiency.MinimumCoverage);
+        Assert.Equal(4, deficiency.MatchingExerciseCount);
+        Assert.Equal(5, deficiency.RequiredExerciseCount);
     }
 
     [Fact]
@@ -188,7 +319,7 @@ public sealed class WorkoutModifierPolicyTests
                     result.SecondModifierEnabled)
                 .ToArray();
 
-        Assert.Equal(2, deficiencies.Length);
+        Assert.Equal(4, deficiencies.Length);
         Assert.All(deficiencies, deficiency =>
             Assert.Equal(0, deficiency.MatchingExerciseCount));
 
@@ -206,7 +337,8 @@ public sealed class WorkoutModifierPolicyTests
                 id,
                 primary,
                 mirrorRelationship:
-                    ExerciseMirrorRelationship.BenefitsGreatly))
+                    ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody))
             .ToArray();
         Assert.DoesNotContain(
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
@@ -232,7 +364,8 @@ public sealed class WorkoutModifierPolicyTests
                 groups[index % groups.Length],
                 mirrorRelationship: id == 1
                     ? ExerciseMirrorRelationship.MirrorOnly
-                    : ExerciseMirrorRelationship.BenefitsGreatly))
+                    : ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody))
             .ToArray();
         Exercise[] agnostic = Enumerable.Range(6, 15)
             .Select((id, index) => Exercise(id, groups[index % groups.Length]))
@@ -248,20 +381,13 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void ValidationProfilesGrowOnlyWithSinglesAndModifierPairs()
     {
-        int primitiveModifierCount = System.Numerics.BitOperations.PopCount(
-            (uint)WorkoutModifierPolicy.SupportedMask);
-
-        Assert.Equal(
-            1 + primitiveModifierCount +
-                primitiveModifierCount * (primitiveModifierCount - 1) / 2,
-            WorkoutModifierPolicy.ValidationProfiles.Count);
         Assert.Equal(
             WorkoutModifierPolicy.ValidationProfiles.Count,
             WorkoutModifierPolicy.ValidationProfiles.Distinct().Count());
         Assert.All(WorkoutModifierPolicy.ValidationProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.ValidationProfiles);
-        Assert.Equal(7, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Equal(10, WorkoutModifierPolicy.ValidationProfiles.Count);
         Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
@@ -269,6 +395,10 @@ public sealed class WorkoutModifierPolicyTests
         Assert.Contains(WorkoutModifiers.Mirror, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
             WorkoutModifiers.Silence | WorkoutModifiers.Mirror,
+            WorkoutModifierPolicy.ValidationProfiles);
+        Assert.Contains(
+            WorkoutModifiers.Silence | WorkoutModifiers.Mirror |
+                WorkoutModifiers.TallMirror,
             WorkoutModifierPolicy.ValidationProfiles);
     }
 
@@ -388,11 +518,11 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void MaterialityChecksGrowQuadratically()
     {
-        int primitiveModifierCount = System.Numerics.BitOperations.PopCount(
-            (uint)WorkoutModifierPolicy.SupportedMask);
-
+        // Four single-state checks (Insect, Silence, compact Mirror, tall
+        // Mirror), two binary/binary pair edges, and four edges for each of
+        // the two binary/Mirror pairs.
         Assert.Equal(
-            primitiveModifierCount * primitiveModifierCount,
+            14,
             WorkoutModifierPolicy.FindMaterialityDeficiencies([]).Count);
     }
 
@@ -626,7 +756,8 @@ public sealed class WorkoutModifierPolicyTests
         bool silent = true,
         ExerciseMirrorRelationship mirrorRelationship =
             ExerciseMirrorRelationship.Agnostic,
-        string? equipment = null)
+        string? equipment = null,
+        ExerciseMirrorCoverage? minimumMirrorCoverage = null)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -647,6 +778,11 @@ public sealed class WorkoutModifierPolicyTests
             SideSequence = ExerciseSideSequence.Continuous,
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = mirrorRelationship,
+            MinimumMirrorCoverage = minimumMirrorCoverage ??
+                (mirrorRelationship is ExerciseMirrorRelationship.MirrorOnly or
+                    ExerciseMirrorRelationship.BenefitsGreatly
+                    ? ExerciseMirrorCoverage.UpperBody
+                    : ExerciseMirrorCoverage.None),
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,

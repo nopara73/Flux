@@ -27,6 +27,7 @@
     <Compile Include="..\Flux\Models\CanonicalMuscleGroup.cs" Link="Production\Models\CanonicalMuscleGroup.cs" />
     <Compile Include="..\Flux\Models\Exercise.cs" Link="Production\Models\Exercise.cs" />
     <Compile Include="..\Flux\Models\ExerciseInsectCompatibility.cs" Link="Production\Models\ExerciseInsectCompatibility.cs" />
+    <Compile Include="..\Flux\Models\ExerciseMirrorCoverage.cs" Link="Production\Models\ExerciseMirrorCoverage.cs" />
     <Compile Include="..\Flux\Models\ExerciseMirrorRelationship.cs" Link="Production\Models\ExerciseMirrorRelationship.cs" />
     <Compile Include="..\Flux\Models\ExerciseMode.cs" Link="Production\Models\ExerciseMode.cs" />
     <Compile Include="..\Flux\Models\ExercisePresentation.cs" Link="Production\Models\ExercisePresentation.cs" />
@@ -36,6 +37,7 @@
     <Compile Include="..\Flux\Models\LegacyWorkoutState.cs" Link="Production\Models\LegacyWorkoutState.cs" />
     <Compile Include="..\Flux\Models\WorkoutGroup.cs" Link="Production\Models\WorkoutGroup.cs" />
     <Compile Include="..\Flux\Models\WorkoutModifiers.cs" Link="Production\Models\WorkoutModifiers.cs" />
+    <Compile Include="..\Flux\Models\MirrorEquipment.cs" Link="Production\Models\MirrorEquipment.cs" />
     <Compile Include="..\Flux\Models\WorkoutState.cs" Link="Production\Models\WorkoutState.cs" />
     <Compile Include="..\Flux\Services\ExerciseSessionService.cs" Link="Production\Services\ExerciseSessionService.cs" />
     <Compile Include="..\Flux\Services\LegacyWorkoutStateMigration.cs" Link="Production\Services\LegacyWorkoutStateMigration.cs" />

@@ -10,7 +10,8 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 11;
+    private const int CurrentStateVersion = 12;
+    private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
     private const string SelectionProfilePrefix = "p";
@@ -60,6 +61,11 @@ public sealed class ExerciseSessionService
         if (state.Version < ImplicitSilenceStateVersion)
         {
             MigrateImplicitSilenceModifier(state);
+        }
+
+        if (state.Version < ExplicitMirrorEquipmentStateVersion)
+        {
+            MigrateExplicitMirrorEquipment(state);
         }
 
         state.Version = CurrentStateVersion;
@@ -1172,6 +1178,31 @@ public sealed class ExerciseSessionService
             state.ActiveWorkoutModifiers = NormalizeWorkoutModifiers(
                 state.ActiveWorkoutModifiers | WorkoutModifiers.Silence);
         }
+    }
+
+    private void MigrateExplicitMirrorEquipment(WorkoutState state)
+    {
+        foreach (string selectionStorageKey in
+                 state.SelectedExerciseIds.Keys.ToArray())
+        {
+            if (TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out _,
+                    out WorkoutModifiers modifiers) &&
+                modifiers.HasFlag(WorkoutModifiers.Mirror))
+            {
+                state.SelectedExerciseIds.Remove(selectionStorageKey);
+            }
+        }
+
+        // The former binary state did not record mirror height. Treating it as
+        // compact or tall would silently claim equipment the user never chose.
+        state.LastWorkoutModifiers = WorkoutModifierPolicy.WithMirrorEquipment(
+            state.LastWorkoutModifiers,
+            MirrorEquipment.None);
+        state.ActiveWorkoutModifiers = WorkoutModifierPolicy.WithMirrorEquipment(
+            state.ActiveWorkoutModifiers,
+            MirrorEquipment.None);
     }
 
     private void NormalizeSavedLineups(WorkoutState state)

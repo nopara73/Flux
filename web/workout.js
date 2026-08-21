@@ -4,6 +4,12 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   Insect: 1,
   Silence: 2,
   Mirror: 4,
+  TallMirror: 8,
+});
+export const MIRROR_EQUIPMENT = Object.freeze({
+  None: "None",
+  Compact: "Compact",
+  Tall: "Tall",
 });
 export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
@@ -16,55 +22,108 @@ export const EXERCISE_MIRROR_RELATIONSHIP = Object.freeze({
   BenefitsGreatly: "BenefitsGreatly",
   Agnostic: "Agnostic",
 });
+export const EXERCISE_MIRROR_COVERAGE = Object.freeze({
+  None: "None",
+  UpperBody: "UpperBody",
+  FullBody: "FullBody",
+});
 const MODIFIER_RULES = Object.freeze([
   Object.freeze({
     flag: WORKOUT_MODIFIERS.Insect,
     isReviewed: (exercise) =>
       exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
       exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible,
-    isCompatibleForState: (exercise, enabled) => !enabled ||
+    isCompatibleForProfile: (exercise, profile) =>
+      (profile & WORKOUT_MODIFIERS.Insect) === 0 ||
       exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible,
   }),
   Object.freeze({
     flag: WORKOUT_MODIFIERS.Silence,
     isReviewed: (exercise) => typeof exercise.silent === "boolean",
-    isCompatibleForState: (exercise, enabled) => !enabled || exercise.silent === true,
+    isCompatibleForProfile: (exercise, profile) =>
+      (profile & WORKOUT_MODIFIERS.Silence) === 0 || exercise.silent === true,
   }),
   Object.freeze({
     flag: WORKOUT_MODIFIERS.Mirror,
     isReviewed: isMirrorMetadataReviewed,
-    isCompatibleForState: (exercise, enabled) => enabled ||
-      exercise.mirrorRelationship !== EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+    isCompatibleForProfile: isMirrorCompatible,
   }),
 ]);
 
 function isMirrorMetadataReviewed(exercise) {
   if (exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly) {
-    return exercise.equipment === "Mirror";
+    return exercise.equipment === "Mirror" &&
+      (exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody ||
+       exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody);
   }
 
-  if (exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly ||
-      exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic) {
-    return exercise.equipment === "None";
+  if (exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly) {
+    return exercise.equipment === "None" &&
+      (exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody ||
+       exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody);
+  }
+
+  if (exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic) {
+    return exercise.equipment === "None" &&
+      exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.None;
   }
 
   return false;
 }
+
+function isMirrorCompatible(exercise, profile) {
+  if (exercise.mirrorRelationship !== EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly) {
+    return true;
+  }
+
+  const equipment = getMirrorEquipment(profile);
+  if (equipment === MIRROR_EQUIPMENT.None) {
+    return false;
+  }
+  return equipment === MIRROR_EQUIPMENT.Tall ||
+    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody;
+}
+
+function getModifierRuleStateProfiles(rule) {
+  return rule.flag === WORKOUT_MODIFIERS.Mirror
+    ? [
+        WORKOUT_MODIFIERS.None,
+        WORKOUT_MODIFIERS.Mirror,
+        WORKOUT_MODIFIERS.Mirror | WORKOUT_MODIFIERS.TallMirror,
+      ]
+    : [WORKOUT_MODIFIERS.None, rule.flag];
+}
+
+function createWorkoutModifierValidationProfiles() {
+  const profiles = [WORKOUT_MODIFIERS.None];
+  for (const rule of MODIFIER_RULES) {
+    profiles.push(...getModifierRuleStateProfiles(rule));
+  }
+  for (let firstIndex = 0; firstIndex < MODIFIER_RULES.length - 1; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1;
+      secondIndex < MODIFIER_RULES.length;
+      secondIndex += 1) {
+      for (const firstState of getModifierRuleStateProfiles(MODIFIER_RULES[firstIndex])) {
+        for (const secondState of getModifierRuleStateProfiles(MODIFIER_RULES[secondIndex])) {
+          profiles.push(normalizeWorkoutModifiers(firstState | secondState));
+        }
+      }
+    }
+  }
+  return profiles.filter((profile, index) => profiles.indexOf(profile) === index);
+}
 export const SUPPORTED_WORKOUT_MODIFIER_MASK = MODIFIER_RULES.reduce(
   (mask, rule) => mask | rule.flag,
-  WORKOUT_MODIFIERS.None,
+  WORKOUT_MODIFIERS.TallMirror,
 );
-export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze([
-  WORKOUT_MODIFIERS.None,
-  ...MODIFIER_RULES.map((rule) => rule.flag),
-  ...MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
-    MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
-      firstRule.flag | secondRule.flag)),
-].filter((profile, index, profiles) => profiles.indexOf(profile) === index));
+export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
+  createWorkoutModifierValidationProfiles(),
+);
 const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
 const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
+export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
@@ -77,13 +136,14 @@ export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 8;
+export const CURRENT_WORKOUT_STATE_VERSION = 9;
+const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 42;
+export const CURRENT_CATALOG_REVISION = 43;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -153,6 +213,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [37, new Set([31, 176, 195, 391, 413, 884, 885])],
   [41, new Set([500])],
   [42, new Set([105, 107, 108, 245, 280, 591, 884, 885, 905])],
+  [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -209,6 +270,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
   ])],
   [36, new Set([684])],
+  [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -775,7 +837,7 @@ export function isModifierMetadataComplete(exercises) {
 export function isCompatibleWithWorkoutModifiers(exercise, modifiers) {
   const normalized = normalizeWorkoutModifiers(modifiers);
   return MODIFIER_RULES.every((rule) =>
-    rule.isCompatibleForState(exercise, (normalized & rule.flag) !== 0));
+    rule.isCompatibleForProfile(exercise, normalized));
 }
 
 export function isMirrorRelevant(exercise) {
@@ -784,8 +846,18 @@ export function isMirrorRelevant(exercise) {
 }
 
 export function isMirrorPreferred(exercise, modifiers) {
-  return (normalizeWorkoutModifiers(modifiers) & WORKOUT_MODIFIERS.Mirror) !== 0 &&
-    isMirrorRelevant(exercise);
+  const equipment = getMirrorEquipment(modifiers);
+  if (equipment === MIRROR_EQUIPMENT.None) {
+    return false;
+  }
+
+  if (exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly) {
+    return isMirrorCompatible(exercise, normalizeWorkoutModifiers(modifiers));
+  }
+  return exercise.mirrorRelationship ===
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
+    (exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody ||
+      equipment === MIRROR_EQUIPMENT.Tall);
 }
 
 export function isSelectableForWorkoutProfile(exercise, group, modifiers) {
@@ -797,30 +869,24 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
   const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
     MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
       ({ firstRule, secondRule })));
-  const states = [false, true];
   return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
     resolution.groups.flatMap((group) =>
       rulePairs.flatMap(({ firstRule, secondRule }) =>
-        states.flatMap((firstModifierEnabled) =>
-          states.map((secondModifierEnabled) => {
-            const profile =
-              (firstModifierEnabled ? firstRule.flag : WORKOUT_MODIFIERS.None) |
-              (secondModifierEnabled ? secondRule.flag : WORKOUT_MODIFIERS.None);
+        getModifierRuleStateProfiles(firstRule).flatMap((firstState) =>
+          getModifierRuleStateProfiles(secondRule).map((secondState) => {
+            const profile = normalizeWorkoutModifiers(firstState | secondState);
+            const mirrorEquipment = getMirrorEquipment(profile);
             const requiresMirrorRelevance =
-              requiresMirrorRelevanceForPairState(
-                firstRule.flag,
-                firstModifierEnabled,
-                secondRule.flag,
-                secondModifierEnabled,
-              );
+              mirrorEquipment !== MIRROR_EQUIPMENT.None;
             return {
               minutes,
               groupId: group.id,
               groupName: group.displayName,
               firstModifier: firstRule.flag,
-              firstModifierEnabled,
+              firstModifierEnabled: firstState !== WORKOUT_MODIFIERS.None,
               secondModifier: secondRule.flag,
-              secondModifierEnabled,
+              secondModifierEnabled: secondState !== WORKOUT_MODIFIERS.None,
+              mirrorEquipment,
               matchingExerciseCount: new Set(exercises
                 .filter((exercise) =>
                   MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
@@ -835,14 +901,30 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
           result.matchingExerciseCount < result.requiredExerciseCount)));
 }
 
-function requiresMirrorRelevanceForPairState(
-  firstModifier,
-  firstModifierEnabled,
-  secondModifier,
-  secondModifierEnabled,
-) {
-  return (firstModifierEnabled && firstModifier === WORKOUT_MODIFIERS.Mirror) ||
-    (secondModifierEnabled && secondModifier === WORKOUT_MODIFIERS.Mirror);
+export function findMirrorCategoryDeficiencies(exercises) {
+  const categories = [
+    [EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+      EXERCISE_MIRROR_COVERAGE.UpperBody],
+    [EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+      EXERCISE_MIRROR_COVERAGE.FullBody],
+    [EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+      EXERCISE_MIRROR_COVERAGE.UpperBody],
+    [EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+      EXERCISE_MIRROR_COVERAGE.FullBody],
+    [EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
+      EXERCISE_MIRROR_COVERAGE.None],
+  ];
+  return categories.map(([mirrorRelationship, minimumMirrorCoverage]) => ({
+    mirrorRelationship,
+    minimumMirrorCoverage,
+    matchingExerciseCount: new Set(exercises
+      .filter((exercise) => isMirrorMetadataReviewed(exercise) &&
+        exercise.mirrorRelationship === mirrorRelationship &&
+        exercise.minimumMirrorCoverage === minimumMirrorCoverage)
+      .map((exercise) => exercise.id)).size,
+    requiredExerciseCount: MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
+  })).filter((result) =>
+    result.matchingExerciseCount < result.requiredExerciseCount);
 }
 
 export function findWorkoutModifierMaterialityDeficiencies(exercises) {
@@ -852,26 +934,36 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
   const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
     MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
       ({ firstRule, secondRule })));
-  const edges = [
-    ...MODIFIER_RULES.map((rule) => ({
+  const enabledStates = (rule) =>
+    getModifierRuleStateProfiles(rule).filter((state) =>
+      state !== WORKOUT_MODIFIERS.None);
+  const edges = MODIFIER_RULES.flatMap((rule) =>
+    enabledStates(rule).map((enabledStateProfile) => ({
+      rule,
       baseProfile: WORKOUT_MODIFIERS.None,
-      enabledModifier: rule.flag,
-    })),
-    ...rulePairs.flatMap(({ firstRule, secondRule }) => [
-      {
-        baseProfile: secondRule.flag,
-        enabledModifier: firstRule.flag,
-      },
-      {
-        baseProfile: firstRule.flag,
-        enabledModifier: secondRule.flag,
-      },
-    ]),
-  ];
+      enabledStateProfile,
+    })));
+  for (const { firstRule, secondRule } of rulePairs) {
+    for (const firstState of enabledStates(firstRule)) {
+      for (const secondState of enabledStates(secondRule)) {
+        edges.push({
+          rule: firstRule,
+          baseProfile: secondState,
+          enabledStateProfile: firstState,
+        });
+        edges.push({
+          rule: secondRule,
+          baseProfile: firstState,
+          enabledStateProfile: secondState,
+        });
+      }
+    }
+  }
 
-  return edges.map(({ baseProfile, enabledModifier }) => {
+  return edges.map(({ rule, baseProfile, enabledStateProfile }) => {
+    const enabledModifier = rule.flag;
     const enabledProfile = normalizeWorkoutModifiers(
-      baseProfile | enabledModifier,
+      baseProfile | enabledStateProfile,
     );
     const beforeExerciseIds = new Set(reviewedExercises
       .filter((exercise) => canonicalGroups.some((group) =>
@@ -885,7 +977,8 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     const materialExerciseIds = isMirror
       ? new Set(reviewedExercises
           .filter((exercise) =>
-            isMirrorRelevant(exercise) && canonicalGroups.some((group) =>
+            isMirrorPreferred(exercise, enabledProfile) &&
+              canonicalGroups.some((group) =>
               isSelectableForWorkoutProfile(exercise, group, enabledProfile)))
           .map((exercise) => exercise.id))
       : new Set([...beforeExerciseIds].filter((exerciseId) =>
@@ -899,7 +992,7 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     );
     const affectedGroupCount = canonicalGroups.filter((group) =>
       reviewedExercises.some((exercise) => isMirror
-        ? isMirrorRelevant(exercise) &&
+        ? isMirrorPreferred(exercise, enabledProfile) &&
           isSelectableForWorkoutProfile(exercise, group, enabledProfile)
         : materialExerciseIds.has(exercise.id) &&
           isSelectableForWorkoutProfile(exercise, group, baseProfile))).length;
@@ -910,6 +1003,7 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     return {
       baseProfile,
       enabledModifier,
+      modifiedProfile: enabledProfile,
       baselineExerciseCount: beforeExerciseIds.size,
       modifiedExerciseCount: afterExerciseIds.size,
       materialExerciseCount: materialExerciseIds.size,
@@ -1059,9 +1153,40 @@ function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
 }
 
 export function normalizeWorkoutModifiers(modifiers) {
-  return Number.isInteger(modifiers)
-    ? modifiers & SUPPORTED_WORKOUT_MODIFIER_MASK
-    : WORKOUT_MODIFIERS.None;
+  if (!Number.isInteger(modifiers)) {
+    return WORKOUT_MODIFIERS.None;
+  }
+  let normalized = modifiers & SUPPORTED_WORKOUT_MODIFIER_MASK;
+  if ((normalized & WORKOUT_MODIFIERS.Mirror) === 0) {
+    normalized &= ~WORKOUT_MODIFIERS.TallMirror;
+  }
+  return normalized;
+}
+
+export function getMirrorEquipment(modifiers) {
+  const normalized = normalizeWorkoutModifiers(modifiers);
+  if ((normalized & WORKOUT_MODIFIERS.Mirror) === 0) {
+    return MIRROR_EQUIPMENT.None;
+  }
+  return (normalized & WORKOUT_MODIFIERS.TallMirror) !== 0
+    ? MIRROR_EQUIPMENT.Tall
+    : MIRROR_EQUIPMENT.Compact;
+}
+
+export function withMirrorEquipment(modifiers, equipment) {
+  const withoutMirror = normalizeWorkoutModifiers(modifiers) &
+    ~(WORKOUT_MODIFIERS.Mirror | WORKOUT_MODIFIERS.TallMirror);
+  if (equipment === MIRROR_EQUIPMENT.None) {
+    return withoutMirror;
+  }
+  if (equipment === MIRROR_EQUIPMENT.Compact) {
+    return withoutMirror | WORKOUT_MODIFIERS.Mirror;
+  }
+  if (equipment === MIRROR_EQUIPMENT.Tall) {
+    return withoutMirror | WORKOUT_MODIFIERS.Mirror |
+      WORKOUT_MODIFIERS.TallMirror;
+  }
+  throw new RangeError(`Unknown mirror equipment: ${equipment}`);
 }
 
 export function getMovementCountdownDurationMs(group) {
@@ -1318,6 +1443,9 @@ function normalizeStateShape(raw) {
   if (state.version < IMPLICIT_SILENCE_STATE_VERSION) {
     migrateImplicitSilenceModifier(state);
   }
+  if (state.version < EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION) {
+    migrateExplicitMirrorEquipment(state);
+  }
   state.version = CURRENT_WORKOUT_STATE_VERSION;
   return state;
 }
@@ -1350,7 +1478,27 @@ function migrateImplicitSilenceModifier(state) {
       state.activeWorkoutModifiers | WORKOUT_MODIFIERS.Silence,
     );
   }
-  state.version = CURRENT_WORKOUT_STATE_VERSION;
+}
+
+function migrateExplicitMirrorEquipment(state) {
+  for (const selectionStorageKey of Object.keys(state.selectedExerciseIds)) {
+    const match = /^p(\d+)\|(.+)$/.exec(selectionStorageKey);
+    if (match &&
+        (normalizeWorkoutModifiers(Number(match[1])) &
+          WORKOUT_MODIFIERS.Mirror) !== 0) {
+      delete state.selectedExerciseIds[selectionStorageKey];
+    }
+  }
+  // The old binary value did not say whether the available mirror was compact
+  // or tall, so do not silently claim either piece of equipment after upgrade.
+  state.lastWorkoutModifiers = withMirrorEquipment(
+    state.lastWorkoutModifiers,
+    MIRROR_EQUIPMENT.None,
+  );
+  state.activeWorkoutModifiers = withMirrorEquipment(
+    state.activeWorkoutModifiers,
+    MIRROR_EQUIPMENT.None,
+  );
 }
 
 function uniquePositiveIntegers(value) {

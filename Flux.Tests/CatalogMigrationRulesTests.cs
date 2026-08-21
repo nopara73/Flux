@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(292, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(300, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -1704,7 +1704,7 @@ public sealed class CatalogMigrationRulesTests
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(
-            new HashSet<int> { 229, 497 },
+            new HashSet<int> { 229 },
             CatalogMigrationRules.PermanentlyRetiredExerciseIds);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
@@ -1712,10 +1712,6 @@ public sealed class CatalogMigrationRulesTests
                 "Alternating Boxing Jabs",
                 "exercise_videos/exercise_0229.mp4",
                 -4),
-            [497] = new(
-                "Track Finger in Circles",
-                "exercise_direction_videos/exercise_0497.mp4",
-                -3),
             [22] = new(
                 "Retained movement",
                 "exercise_videos/exercise_0022.mp4",
@@ -1738,6 +1734,58 @@ public sealed class CatalogMigrationRulesTests
         Assert.Throws<InvalidOperationException>(() =>
             CatalogMigrationRules.ValidatePreservedCatalog(
                 [retained, restoredRetired],
+                stored));
+    }
+
+    [Theory]
+    [InlineData("Forehead Finger Sweep", "exercise_videos/exercise_0497.mp4")]
+    [InlineData("Odissi Sundari Griva", "exercise_direction_videos/exercise_0497.mp4")]
+    [InlineData("Track Finger in Circles", "exercise_direction_videos/exercise_0497.mp4")]
+    public void RestoredIdDiscardsExactHistoricalIdentityAndScore(
+        string oldName,
+        string oldVideo)
+    {
+        const int restoredId = 497;
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [restoredId] = new(oldName, oldVideo, -7),
+        };
+        Exercise replacement = Exercise(
+            restoredId,
+            "Mirror-Guided Eyebrow Raise",
+            "exercise_videos/exercise_0497.mp4",
+            retiredName: "Odissi Sundari Griva");
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.DoesNotContain(restoredId, preserved);
+        Assert.Equal(-7, stored[restoredId].Score);
+        Assert.Equal(0, replacement.Score);
+    }
+
+    [Fact]
+    public void RestoredIdRejectsUnknownHistoricalIdentity()
+    {
+        const int restoredId = 497;
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [restoredId] = new(
+                "Unverified old movement",
+                "exercise_direction_videos/exercise_0497.mp4",
+                -7),
+        };
+        Exercise replacement = Exercise(
+            restoredId,
+            "Mirror-Guided Eyebrow Raise",
+            "exercise_videos/exercise_0497.mp4",
+            retiredName: "Odissi Sundari Griva");
+
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
                 stored));
     }
 

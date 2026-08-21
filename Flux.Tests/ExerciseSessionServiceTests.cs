@@ -195,8 +195,39 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(11, state.Version);
+        Assert.Equal(12, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+    }
+
+    [Fact]
+    public void BinaryMirrorStateDoesNotGuessMirrorHeightDuringMigration()
+    {
+        Exercise[] exercises = ReviewedInsectCatalog();
+        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(3).Groups[0];
+        Exercise selected = exercises.First(exercise =>
+            WorkoutCoveragePolicy.IsSelectable(exercise, group));
+        var state = new WorkoutState
+        {
+            Version = 11,
+            LastWorkoutModifiers = WorkoutModifiers.Insect |
+                WorkoutModifiers.Mirror,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [group.Id] = selected.Id,
+                [$"p4|{group.Id}"] = selected.Id,
+            },
+        };
+        var service = new ExerciseSessionService(exercises, new Random(1));
+
+        service.Initialize(state);
+
+        Assert.Equal(12, state.Version);
+        Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
+        Assert.Equal(MirrorEquipment.None,
+            WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
+        Assert.DoesNotContain(state.SelectedExerciseIds.Keys,
+            key => key.StartsWith("p4|", StringComparison.Ordinal));
+        Assert.Equal(selected.Id, state.SelectedExerciseIds[group.Id]);
     }
 
     [Fact]
@@ -567,7 +598,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(11, state.Version);
+        Assert.Equal(12, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Single(state.ActiveDirectionPartnerExerciseIds);
@@ -1888,7 +1919,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(11, state.Version);
+        Assert.Equal(12, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -2186,6 +2217,7 @@ public sealed class ExerciseSessionServiceTests
             DirectionPartnerExerciseId = directionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
+            MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -2218,6 +2250,7 @@ public sealed class ExerciseSessionServiceTests
             DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
+            MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             MuscularDemand = muscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -2251,6 +2284,11 @@ public sealed class ExerciseSessionServiceTests
             DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = mirrorRelationship,
+            MinimumMirrorCoverage = mirrorRelationship is
+                ExerciseMirrorRelationship.MirrorOnly or
+                ExerciseMirrorRelationship.BenefitsGreatly
+                ? ExerciseMirrorCoverage.UpperBody
+                : ExerciseMirrorCoverage.None,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,

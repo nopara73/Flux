@@ -10,6 +10,13 @@ public sealed record WorkoutModifierPairCoverageDeficiency(
     bool FirstModifierEnabled,
     WorkoutModifiers SecondModifier,
     bool SecondModifierEnabled,
+    MirrorEquipment MirrorEquipment,
+    int MatchingExerciseCount,
+    int RequiredExerciseCount);
+
+public sealed record WorkoutMirrorCategoryDeficiency(
+    ExerciseMirrorRelationship Relationship,
+    ExerciseMirrorCoverage MinimumCoverage,
     int MatchingExerciseCount,
     int RequiredExerciseCount);
 
@@ -22,6 +29,7 @@ public sealed record WorkoutProfileLineupDeficiency(
 public sealed record WorkoutModifierMaterialityDeficiency(
     WorkoutModifiers Modifier,
     WorkoutModifiers ContextProfile,
+    WorkoutModifiers ModifiedProfile,
     int BaselineExerciseCount,
     int ModifiedExerciseCount,
     int MaterialExerciseCount,
@@ -32,6 +40,7 @@ public sealed record WorkoutModifierMaterialityDeficiency(
 public static class WorkoutModifierPolicy
 {
     public const int MinimumExercisesPerPairStatePerGroup = 5;
+    public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumMaterialExercises = 5;
     public const int MinimumMaterialExercisePercent = 5;
     public const int MinimumAffectedBucketPercent = 10;
@@ -41,7 +50,7 @@ public static class WorkoutModifierPolicy
     private sealed record ModifierRule(
         WorkoutModifiers Flag,
         Func<Exercise, bool> IsReviewed,
-        Func<Exercise, bool, bool> IsCompatibleForState);
+        Func<Exercise, WorkoutModifiers, bool> IsCompatibleForProfile);
 
     private static readonly ModifierRule[] Rules =
     [
@@ -49,24 +58,24 @@ public static class WorkoutModifierPolicy
             WorkoutModifiers.Insect,
             exercise => exercise.InsectCompatibility !=
                 ExerciseInsectCompatibility.Unreviewed,
-            (exercise, enabled) => !enabled ||
+            (exercise, profile) =>
+                !profile.HasFlag(WorkoutModifiers.Insect) ||
                 exercise.InsectCompatibility ==
                     ExerciseInsectCompatibility.Compatible),
         new(
             WorkoutModifiers.Silence,
             _ => true,
-            (exercise, enabled) => !enabled || exercise.Silent),
+            (exercise, profile) =>
+                !profile.HasFlag(WorkoutModifiers.Silence) || exercise.Silent),
         new(
             WorkoutModifiers.Mirror,
             IsMirrorMetadataReviewed,
-            (exercise, enabled) => enabled ||
-                exercise.MirrorRelationship !=
-                    ExerciseMirrorRelationship.MirrorOnly),
+            IsMirrorCompatible),
     ];
 
     private static readonly WorkoutModifiers SupportedModifierMask =
         Rules.Aggregate(
-            WorkoutModifiers.None,
+            WorkoutModifiers.TallMirror,
             (mask, rule) => mask | rule.Flag);
 
     private static readonly IReadOnlyList<WorkoutModifiers> ProfilesForValidation =
@@ -79,7 +88,49 @@ public static class WorkoutModifierPolicy
 
     public static WorkoutModifiers Normalize(WorkoutModifiers modifiers)
     {
-        return modifiers & SupportedModifierMask;
+        WorkoutModifiers normalized = modifiers & SupportedModifierMask;
+        if (!normalized.HasFlag(WorkoutModifiers.Mirror))
+        {
+            normalized &= ~WorkoutModifiers.TallMirror;
+        }
+
+        return normalized;
+    }
+
+    public static MirrorEquipment GetMirrorEquipment(WorkoutModifiers profile)
+    {
+        WorkoutModifiers normalized = Normalize(profile);
+        if (!normalized.HasFlag(WorkoutModifiers.Mirror))
+        {
+            return MirrorEquipment.None;
+        }
+
+        return normalized.HasFlag(WorkoutModifiers.TallMirror)
+            ? MirrorEquipment.Tall
+            : MirrorEquipment.Compact;
+    }
+
+    public static WorkoutModifiers WithMirrorEquipment(
+        WorkoutModifiers profile,
+        MirrorEquipment equipment)
+    {
+        if (!Enum.IsDefined(equipment))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null);
+        }
+
+        WorkoutModifiers withoutMirror = Normalize(profile) &
+            ~(WorkoutModifiers.Mirror | WorkoutModifiers.TallMirror);
+        return equipment switch
+        {
+            MirrorEquipment.None => withoutMirror,
+            MirrorEquipment.Compact => withoutMirror | WorkoutModifiers.Mirror,
+            MirrorEquipment.Tall => withoutMirror |
+                WorkoutModifiers.Mirror | WorkoutModifiers.TallMirror,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null),
+        };
     }
 
     public static bool IsCatalogMetadataComplete(
@@ -96,9 +147,7 @@ public static class WorkoutModifierPolicy
         ArgumentNullException.ThrowIfNull(exercise);
         WorkoutModifiers normalized = Normalize(profile);
         return Rules.All(rule =>
-            rule.IsCompatibleForState(
-                exercise,
-                normalized.HasFlag(rule.Flag)));
+            rule.IsCompatibleForProfile(exercise, normalized));
     }
 
     public static bool IsMirrorRelevant(Exercise exercise)
@@ -114,8 +163,22 @@ public static class WorkoutModifierPolicy
         WorkoutModifiers profile)
     {
         ArgumentNullException.ThrowIfNull(exercise);
-        return Normalize(profile).HasFlag(WorkoutModifiers.Mirror) &&
-            IsMirrorRelevant(exercise);
+        MirrorEquipment equipment = GetMirrorEquipment(profile);
+        if (equipment == MirrorEquipment.None)
+        {
+            return false;
+        }
+
+        return exercise.MirrorRelationship switch
+        {
+            ExerciseMirrorRelationship.MirrorOnly =>
+                IsMirrorCompatible(exercise, Normalize(profile)),
+            ExerciseMirrorRelationship.BenefitsGreatly =>
+                exercise.MinimumMirrorCoverage ==
+                    ExerciseMirrorCoverage.UpperBody ||
+                equipment == MirrorEquipment.Tall,
+            _ => false,
+        };
     }
 
     public static bool IsSelectable(
@@ -138,30 +201,25 @@ public static class WorkoutModifierPolicy
             .SelectMany(minutes =>
                 MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
                     GetModifierRulePairs().SelectMany(pair =>
-                        GetBooleanStates().SelectMany(firstEnabled =>
-                            GetBooleanStates().Select(secondEnabled =>
+                        GetRuleStateProfiles(pair.First).SelectMany(firstState =>
+                            GetRuleStateProfiles(pair.Second).Select(secondState =>
                             {
-                                WorkoutModifiers profile =
-                                    (firstEnabled
-                                        ? pair.First.Flag
-                                        : WorkoutModifiers.None) |
-                                    (secondEnabled
-                                        ? pair.Second.Flag
-                                        : WorkoutModifiers.None);
+                                WorkoutModifiers profile = Normalize(
+                                    firstState | secondState);
                                 bool requiresMirrorRelevance =
-                                    RequiresMirrorRelevanceForPairState(
-                                        pair.First.Flag,
-                                        firstEnabled,
-                                        pair.Second.Flag,
-                                        secondEnabled);
+                                    GetMirrorEquipment(profile) !=
+                                        MirrorEquipment.None;
                                 return new
                                 {
                                     Minutes = minutes,
                                     Group = group,
                                     FirstRule = pair.First,
-                                    FirstEnabled = firstEnabled,
+                                    FirstEnabled = firstState !=
+                                        WorkoutModifiers.None,
                                     SecondRule = pair.Second,
-                                    SecondEnabled = secondEnabled,
+                                    SecondEnabled = secondState !=
+                                        WorkoutModifiers.None,
+                                    MirrorEquipment = GetMirrorEquipment(profile),
                                     Count = exercises
                                         .Where(exercise =>
                                             Rules.All(rule =>
@@ -186,19 +244,49 @@ public static class WorkoutModifierPolicy
                 result.FirstEnabled,
                 result.SecondRule.Flag,
                 result.SecondEnabled,
+                result.MirrorEquipment,
                 result.Count,
                 MinimumExercisesPerPairStatePerGroup))
             .ToArray();
     }
 
-    private static bool RequiresMirrorRelevanceForPairState(
-        WorkoutModifiers firstModifier,
-        bool firstEnabled,
-        WorkoutModifiers secondModifier,
-        bool secondEnabled)
+    public static IReadOnlyList<WorkoutMirrorCategoryDeficiency>
+        FindMirrorCategoryDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
     {
-        return (firstEnabled && firstModifier == WorkoutModifiers.Mirror) ||
-            (secondEnabled && secondModifier == WorkoutModifiers.Mirror);
+        ArgumentNullException.ThrowIfNull(exercises);
+        (ExerciseMirrorRelationship Relationship,
+            ExerciseMirrorCoverage Coverage)[] requiredCategories =
+        [
+            (ExerciseMirrorRelationship.MirrorOnly,
+                ExerciseMirrorCoverage.UpperBody),
+            (ExerciseMirrorRelationship.MirrorOnly,
+                ExerciseMirrorCoverage.FullBody),
+            (ExerciseMirrorRelationship.BenefitsGreatly,
+                ExerciseMirrorCoverage.UpperBody),
+            (ExerciseMirrorRelationship.BenefitsGreatly,
+                ExerciseMirrorCoverage.FullBody),
+            (ExerciseMirrorRelationship.Agnostic,
+                ExerciseMirrorCoverage.None),
+        ];
+
+        return requiredCategories
+            .Select(category => new WorkoutMirrorCategoryDeficiency(
+                category.Relationship,
+                category.Coverage,
+                exercises
+                    .Where(exercise =>
+                        IsMirrorMetadataReviewed(exercise) &&
+                        exercise.MirrorRelationship == category.Relationship &&
+                        exercise.MinimumMirrorCoverage == category.Coverage)
+                    .Select(exercise => exercise.Id)
+                    .Distinct()
+                    .Count(),
+                MinimumExercisesPerMirrorCategory))
+            .Where(deficiency =>
+                deficiency.MatchingExerciseCount <
+                    deficiency.RequiredExerciseCount)
+            .ToArray();
     }
 
     public static IReadOnlyList<WorkoutModifierMaterialityDeficiency>
@@ -217,8 +305,8 @@ public static class WorkoutModifierPolicy
             .Select(edge =>
             {
                 WorkoutModifiers contextProfile = Normalize(edge.ContextProfile);
-                WorkoutModifiers modifiedProfile =
-                    contextProfile | edge.Rule.Flag;
+                WorkoutModifiers modifiedProfile = Normalize(
+                    contextProfile | edge.EnabledStateProfile);
                 HashSet<int> baselineExerciseIds = GetSelectableExerciseIds(
                     reviewedExercises,
                     buckets,
@@ -231,7 +319,7 @@ public static class WorkoutModifierPolicy
                 HashSet<int> materialExerciseIds = isMirror
                     ? reviewedExercises
                         .Where(exercise =>
-                            IsMirrorRelevant(exercise) &&
+                            IsMirrorPreferred(exercise, modifiedProfile) &&
                             buckets.Any(bucket => IsSelectable(
                                 exercise,
                                 bucket,
@@ -250,7 +338,7 @@ public static class WorkoutModifierPolicy
                         MinimumMaterialExercisePercent));
                 int affectedBucketCount = buckets.Count(bucket =>
                     reviewedExercises.Any(exercise => isMirror
-                        ? IsMirrorRelevant(exercise) &&
+                        ? IsMirrorPreferred(exercise, modifiedProfile) &&
                             IsSelectable(exercise, bucket, modifiedProfile)
                         : IsSelectable(exercise, bucket, contextProfile) &&
                             !IsSelectable(exercise, bucket, modifiedProfile)));
@@ -261,6 +349,7 @@ public static class WorkoutModifierPolicy
                 return new WorkoutModifierMaterialityDeficiency(
                     edge.Rule.Flag,
                     contextProfile,
+                    modifiedProfile,
                     baselineExerciseIds.Count,
                     modifiedExerciseIds.Count,
                     materialExerciseIds.Count,
@@ -377,9 +466,11 @@ public static class WorkoutModifierPolicy
     private static WorkoutModifiers[] CreatePairwiseValidationProfiles()
     {
         var profiles = new List<WorkoutModifiers> { WorkoutModifiers.None };
-        profiles.AddRange(Rules.Select(rule => rule.Flag));
-        profiles.AddRange(GetModifierRulePairs().Select(pair =>
-            pair.First.Flag | pair.Second.Flag));
+        profiles.AddRange(Rules.SelectMany(GetRuleStateProfiles));
+        profiles.AddRange(GetModifierRulePairs().SelectMany(pair =>
+            GetRuleStateProfiles(pair.First)
+                .SelectMany(firstState => GetRuleStateProfiles(pair.Second)
+                    .Select(secondState => Normalize(firstState | secondState)))));
         return profiles.Distinct().ToArray();
     }
 
@@ -402,27 +493,99 @@ public static class WorkoutModifierPolicy
         return exercise.MirrorRelationship switch
         {
             ExerciseMirrorRelationship.MirrorOnly =>
-                string.Equals(exercise.Equipment, "Mirror", StringComparison.Ordinal),
-            ExerciseMirrorRelationship.BenefitsGreatly or
-                ExerciseMirrorRelationship.Agnostic =>
-                    string.Equals(exercise.Equipment, "None", StringComparison.Ordinal),
+                string.Equals(
+                    exercise.Equipment,
+                    "Mirror",
+                    StringComparison.Ordinal) &&
+                exercise.MinimumMirrorCoverage is
+                    ExerciseMirrorCoverage.UpperBody or
+                    ExerciseMirrorCoverage.FullBody,
+            ExerciseMirrorRelationship.BenefitsGreatly =>
+                string.Equals(
+                    exercise.Equipment,
+                    "None",
+                    StringComparison.Ordinal) &&
+                exercise.MinimumMirrorCoverage is
+                    ExerciseMirrorCoverage.UpperBody or
+                    ExerciseMirrorCoverage.FullBody,
+            ExerciseMirrorRelationship.Agnostic =>
+                string.Equals(
+                    exercise.Equipment,
+                    "None",
+                    StringComparison.Ordinal) &&
+                exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.None,
             _ => false,
         };
     }
 
-    private static IEnumerable<(ModifierRule Rule, WorkoutModifiers ContextProfile)>
+    private static bool IsMirrorCompatible(
+        Exercise exercise,
+        WorkoutModifiers profile)
+    {
+        if (exercise.MirrorRelationship != ExerciseMirrorRelationship.MirrorOnly)
+        {
+            return true;
+        }
+
+        return GetMirrorEquipment(profile) switch
+        {
+            MirrorEquipment.None => false,
+            MirrorEquipment.Compact =>
+                exercise.MinimumMirrorCoverage ==
+                    ExerciseMirrorCoverage.UpperBody,
+            MirrorEquipment.Tall => true,
+            _ => false,
+        };
+    }
+
+    private static IEnumerable<WorkoutModifiers> GetRuleStateProfiles(
+        ModifierRule rule)
+    {
+        yield return WorkoutModifiers.None;
+        yield return rule.Flag;
+        if (rule.Flag == WorkoutModifiers.Mirror)
+        {
+            yield return WorkoutModifiers.Mirror | WorkoutModifiers.TallMirror;
+        }
+    }
+
+    private static IEnumerable<(
+        ModifierRule Rule,
+        WorkoutModifiers ContextProfile,
+        WorkoutModifiers EnabledStateProfile)>
         GetMaterialityEdges()
     {
         foreach (ModifierRule rule in Rules)
         {
-            yield return (rule, WorkoutModifiers.None);
+            foreach (WorkoutModifiers enabledState in
+                     GetRuleStateProfiles(rule).Where(state =>
+                         state != WorkoutModifiers.None))
+            {
+                yield return (rule, WorkoutModifiers.None, enabledState);
+            }
         }
 
         foreach ((ModifierRule First, ModifierRule Second) pair in
                  GetModifierRulePairs())
         {
-            yield return (pair.First, pair.Second.Flag);
-            yield return (pair.Second, pair.First.Flag);
+            foreach (WorkoutModifiers firstEnabledState in
+                     GetRuleStateProfiles(pair.First).Where(state =>
+                         state != WorkoutModifiers.None))
+            {
+                foreach (WorkoutModifiers secondEnabledState in
+                         GetRuleStateProfiles(pair.Second).Where(state =>
+                             state != WorkoutModifiers.None))
+                {
+                    yield return (
+                        pair.First,
+                        secondEnabledState,
+                        firstEnabledState);
+                    yield return (
+                        pair.Second,
+                        firstEnabledState,
+                        secondEnabledState);
+                }
+            }
         }
     }
 
@@ -443,9 +606,4 @@ public static class WorkoutModifierPolicy
         return (int)Math.Ceiling(count * percent / 100d);
     }
 
-    private static IEnumerable<bool> GetBooleanStates()
-    {
-        yield return false;
-        yield return true;
-    }
 }

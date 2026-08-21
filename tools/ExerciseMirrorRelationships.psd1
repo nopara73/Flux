@@ -1,9 +1,17 @@
 @{
     # The reflection is part of the exercise, not merely an optional form aid.
-    # Straight jaw opening requires live midline feedback to detect deviation.
-    MirrorOnly = @(
-        500
-    )
+    # Coverage is the minimum mirror height needed to perform the exercise.
+    MirrorOnlyByCoverage = @{
+        # A compact mirror that shows roughly the upper body is sufficient.
+        UpperBody = @(
+            497, 498, 500, 511, 514
+        )
+
+        # The whole body must be visible, so these require a tall mirror.
+        FullBody = @(
+            90, 94, 95, 99, 100
+        )
+    }
 
     # Continuous live self-view must substantially change execution under one
     # of these narrow criteria. Ordinary optional form checking is deliberately
@@ -35,6 +43,22 @@
         # left-right symmetry error while it is happening.
         LivePlaneOrSymmetryCorrection = @(
             246, 268, 329, 481
+        )
+    }
+
+    # This second axis records how much of the body must be visible for the
+    # substantial benefit above. It must exactly partition the criterion list.
+    BenefitsGreatlyByCoverage = @{
+        UpperBody = @(
+            220, 231, 245, 246, 258, 268, 274, 276, 278, 279, 280,
+            285, 286, 287, 326, 327, 329, 481, 591, 681, 884, 887
+        )
+
+        FullBody = @(
+            21, 58, 92, 93, 96, 97, 105, 107, 108, 115, 177, 178,
+            180, 181, 182, 183, 186, 190, 217, 232, 260, 292, 367,
+            393, 404, 609, 610, 666, 684, 685, 687, 885, 886, 905,
+            996, 997
         )
     }
 

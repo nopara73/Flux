@@ -7441,4 +7441,233 @@
             MirrorForAlternation = $false
         }
     }
+    90 = @{
+        RetiredName = 'Alternating Step Pivot'
+        Name = 'Mirror-Guided Bodyweight Squat'
+        Practice = 'Visual-feedback bodyweight training'
+        MotionProfile = 'Squat'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'AbdominalWall', 'SpinalExtensors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pmc-virtual-mirror-squat.mp4'
+            Url = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC7805859.1/Video_1.MP4'
+            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7805859/'
+            Human = $true
+            Video = $true
+            StartSeconds = 15.5
+            DurationSeconds = 9.5
+            FramesPerSecond = 10
+            Crop = 'crop=448:448:250:0,eq=brightness=0.15:contrast=1.3:gamma=1.35'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    94 = @{
+        RetiredName = 'Kalaripayattu Horse Step'
+        Name = 'Mirror-Guided Lateral Weight Shift'
+        Practice = 'Visual-feedback balance training'
+        MotionProfile = 'LateralWeightShift'
+        Primary = 'HipAbductors'
+        Secondary = @('GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'mirror-lateral-weight-shift.mp4'
+            Url = 'https://media.physitrack.com/exercises/1e94e1dc-d64e-4dc4-ba7a-16d71e9af866/en/video_1280x720.mp4'
+            SourcePage = 'https://na.physitrack.com/home-exercise-video/weight-transfer-to-side'
+            Human = $true
+            Video = $true
+            StartSeconds = 15
+            DurationSeconds = 10
+            FramesPerSecond = 10
+            Crop = 'crop=720:720:280:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    95 = @{
+        RetiredName = 'Controlled March'
+        Name = 'Mirror-Guided Single-Leg Pelvic Control'
+        Practice = 'Visual-feedback balance training'
+        MotionProfile = 'SingleLegPelvicControl'
+        Primary = 'HipAbductors'
+        Secondary = @('GlutealExtensors', 'DeepHipRotators', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'mirror-single-leg-pelvic-control.mp4'
+            Url = 'https://media.physitrack.com/exercises/f0151a5d-503a-4562-8930-3fa93d16651a/en/video_1280x720.mp4'
+            SourcePage = 'https://uk.physitrack.com/home-exercise-video/single-leg-stand---pelvic-control-with-visual-feedback'
+            Human = $true
+            Video = $true
+            StartSeconds = 14
+            DurationSeconds = 11
+            FramesPerSecond = 10
+            Crop = 'crop=900:720:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    99 = @{
+        RetiredName = 'Figure-Eight Weight Shift'
+        Name = 'Mirror-Guided Bent-Knee Front-to-Back Leg Swing'
+        Practice = 'Visual-feedback dynamic mobility'
+        MotionProfile = 'BentKneeFrontBackLegSwing'
+        Primary = 'HipFlexors'
+        Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'mirror-front-back-leg-swing.mp4'
+            Url = 'https://media.physitrack.com/exercises/69c8f7b4-1267-4a99-9f20-8c800c182e9a/en/video_1280x720.mp4'
+            SourcePage = 'https://na.physitrack.com/home-exercise-video/dynamic-leg-swing---with-shoes'
+            Human = $true
+            Video = $true
+            StartSeconds = 14
+            DurationSeconds = 16
+            FramesPerSecond = 10
+            Crop = 'crop=900:720:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    100 = @{
+        RetiredName = 'Four-Corner Weight Shift'
+        Name = 'Mirror-Guided Bent-Knee Leg Swing with Pause'
+        Practice = 'Visual-feedback dynamic balance'
+        MotionProfile = 'PausedBentKneeFrontBackLegSwing'
+        Primary = 'HipFlexors'
+        Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'mirror-leg-swing-pause.mp4'
+            Url = 'https://media.physitrack.com/exercises/50a3260a-e8cb-4b19-bd8a-7c837dd13096/en/video_1280x720.mp4'
+            SourcePage = 'https://us.physitrack.com/home-exercise-video/dynamic-leg-swing---with-pause'
+            Human = $true
+            Video = $true
+            StartSeconds = 15
+            DurationSeconds = 22
+            FramesPerSecond = 10
+            Crop = 'crop=900:720:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    497 = @{
+        RetiredName = 'Odissi Sundari Griva'
+        Name = 'Mirror-Guided Eyebrow Raise'
+        Practice = 'Facial neuromuscular exercise'
+        MotionProfile = 'EyebrowRaise'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pmc-facial-telerehabilitation.mp4'
+            ArchiveUrl = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC8949994.1/jpm-12-00497-s001.zip'
+            ArchiveEntry = 'jpm-1621473-supplementary.mp4'
+            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8949994/'
+            Human = $true
+            Video = $true
+            StartSeconds = 50
+            DurationSeconds = 4.8
+            FramesPerSecond = 10
+            Crop = 'crop=568:568:154:0'
+            PingPong = $true
+            MirrorForAlternation = $false
+        }
+    }
+    498 = @{
+        RetiredName = 'Bharatanatyam Sundari Griva'
+        Name = 'Mirror-Guided Firm Eye Closure'
+        Practice = 'Facial neuromuscular exercise'
+        MotionProfile = 'FirmEyeClosure'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pmc-facial-telerehabilitation.mp4'
+            ArchiveUrl = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC8949994.1/jpm-12-00497-s001.zip'
+            ArchiveEntry = 'jpm-1621473-supplementary.mp4'
+            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8949994/'
+            Human = $true
+            Video = $true
+            StartSeconds = 59.5
+            DurationSeconds = 5.5
+            FramesPerSecond = 10
+            Crop = 'crop=568:568:154:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    511 = @{
+        RetiredName = 'Scapular Depression'
+        Name = 'Mirror-Guided Lip Pucker'
+        Practice = 'Facial neuromuscular exercise'
+        MotionProfile = 'LipPucker'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pmc-facial-telerehabilitation.mp4'
+            ArchiveUrl = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC8949994.1/jpm-12-00497-s001.zip'
+            ArchiveEntry = 'jpm-1621473-supplementary.mp4'
+            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8949994/'
+            Human = $true
+            Video = $true
+            StartSeconds = 106
+            DurationSeconds = 5
+            FramesPerSecond = 10
+            Crop = 'crop=568:568:154:0'
+            PingPong = $true
+            MirrorForAlternation = $false
+        }
+    }
+    514 = @{
+        RetiredName = 'Scapular Upward Rotation'
+        Name = 'Mirror-Guided Symmetric Smile'
+        Practice = 'Facial neuromuscular exercise'
+        MotionProfile = 'SymmetricSmile'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pmc-facial-telerehabilitation.mp4'
+            ArchiveUrl = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC8949994.1/jpm-12-00497-s001.zip'
+            ArchiveEntry = 'jpm-1621473-supplementary.mp4'
+            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8949994/'
+            Human = $true
+            Video = $true
+            StartSeconds = 126
+            DurationSeconds = 5
+            FramesPerSecond = 10
+            Crop = 'crop=568:568:154:0'
+            PingPong = $true
+            MirrorForAlternation = $false
+        }
+    }
 }

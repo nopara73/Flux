@@ -41,6 +41,9 @@ public sealed class Exercise
     public ExerciseMirrorRelationship MirrorRelationship { get; init; } =
         ExerciseMirrorRelationship.Unreviewed;
 
+    public ExerciseMirrorCoverage MinimumMirrorCoverage { get; init; } =
+        ExerciseMirrorCoverage.None;
+
     public int MuscularDemand { get; init; }
 
     public int Score { get; set; } = 0;

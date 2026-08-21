@@ -80,12 +80,29 @@ $nonSilentExerciseIds = @(
     $silenceCompatibilityReview.NonSilent | ForEach-Object { [int]$_ })
 $mirrorRelationshipReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMirrorRelationships.psd1') -SkipLimitCheck
+$requiredMirrorCoverages = @('UpperBody', 'FullBody')
 $requiredMirrorBenefitsGreatlyCriteria = @(
     'TechnicalMartialArts'
     'DanceAndAlignmentSensitivePoses'
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
 )
+$mirrorOnlyByCoverage = $mirrorRelationshipReview.MirrorOnlyByCoverage
+if ($mirrorOnlyByCoverage -isnot [System.Collections.IDictionary] -or
+    @(Compare-Object `
+            $requiredMirrorCoverages `
+            @($mirrorOnlyByCoverage.Keys)).Count -gt 0) {
+    throw 'MirrorOnly exercises must use exactly the UpperBody and FullBody coverage groups.'
+}
+$mirrorOnlyExerciseIds = @(
+    foreach ($coverage in $requiredMirrorCoverages) {
+        $coverageExerciseIds = @(
+            $mirrorOnlyByCoverage[$coverage] | ForEach-Object { [int]$_ })
+        if ($coverageExerciseIds.Count -lt 5) {
+            throw "MirrorOnly + $coverage requires at least five reviewed exercises."
+        }
+        $coverageExerciseIds
+    })
 $mirrorBenefitsGreatlyByCriterion =
     $mirrorRelationshipReview.BenefitsGreatlyByCriterion
 if ($mirrorBenefitsGreatlyByCriterion -isnot
@@ -95,8 +112,6 @@ if ($mirrorBenefitsGreatlyByCriterion -isnot
             @($mirrorBenefitsGreatlyByCriterion.Keys)).Count -gt 0) {
     throw 'BenefitsGreatly exercises must use exactly the approved narrow audit criteria.'
 }
-$mirrorOnlyExerciseIds = @(
-    $mirrorRelationshipReview.MirrorOnly | ForEach-Object { [int]$_ })
 $mirrorBenefitsGreatlyExerciseIds = @(
     foreach ($criterion in $requiredMirrorBenefitsGreatlyCriteria) {
         $criterionExerciseIds = @(
@@ -107,8 +122,47 @@ $mirrorBenefitsGreatlyExerciseIds = @(
         }
         $criterionExerciseIds
     })
+$mirrorBenefitsGreatlyByCoverage =
+    $mirrorRelationshipReview.BenefitsGreatlyByCoverage
+if ($mirrorBenefitsGreatlyByCoverage -isnot
+        [System.Collections.IDictionary] -or
+    @(Compare-Object `
+            $requiredMirrorCoverages `
+            @($mirrorBenefitsGreatlyByCoverage.Keys)).Count -gt 0) {
+    throw 'BenefitsGreatly exercises must use exactly the UpperBody and FullBody coverage groups.'
+}
+$mirrorBenefitsGreatlyCoverageExerciseIds = @(
+    foreach ($coverage in $requiredMirrorCoverages) {
+        $coverageExerciseIds = @(
+            $mirrorBenefitsGreatlyByCoverage[$coverage] |
+                ForEach-Object { [int]$_ })
+        if ($coverageExerciseIds.Count -lt 5) {
+            throw "BenefitsGreatly + $coverage requires at least five reviewed exercises."
+        }
+        $coverageExerciseIds
+    })
+if (@(Compare-Object `
+        @($mirrorBenefitsGreatlyExerciseIds | Sort-Object) `
+        @($mirrorBenefitsGreatlyCoverageExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'BenefitsGreatly criterion and coverage reviews must identify the same exercises.'
+}
+$mirrorCoverageByExerciseId = @{}
+foreach ($coverage in $requiredMirrorCoverages) {
+    foreach ($exerciseId in @(
+            $mirrorOnlyByCoverage[$coverage] +
+            $mirrorBenefitsGreatlyByCoverage[$coverage] |
+                ForEach-Object { [int]$_ })) {
+        if ($mirrorCoverageByExerciseId.ContainsKey($exerciseId)) {
+            throw "Exercise $exerciseId has more than one mirror coverage review."
+        }
+        $mirrorCoverageByExerciseId[$exerciseId] = $coverage
+    }
+}
 $mirrorAgnosticExerciseIds = @(
     $mirrorRelationshipReview.Agnostic | ForEach-Object { [int]$_ })
+if ($mirrorAgnosticExerciseIds.Count -lt 5) {
+    throw 'The mirror-agnostic category requires at least five reviewed exercises.'
+}
 $muscularDemandReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMuscularDemand.psd1') -SkipLimitCheck
 $muscularDemandByExerciseId = @{}
@@ -383,6 +437,12 @@ $invalidExternalMedia = @(
         [string]::IsNullOrWhiteSpace([string]$media.File) -or
         ($media.ContainsKey('Url') -and
             [string]::IsNullOrWhiteSpace([string]$media.Url)) -or
+        ($media.ContainsKey('ArchiveUrl') -xor
+            $media.ContainsKey('ArchiveEntry')) -or
+        ($media.ContainsKey('ArchiveUrl') -and
+            [string]::IsNullOrWhiteSpace([string]$media.ArchiveUrl)) -or
+        ($media.ContainsKey('ArchiveEntry') -and
+            [string]::IsNullOrWhiteSpace([string]$media.ArchiveEntry)) -or
         ($media.ContainsKey('StartSeconds') -and
             [double]$media.StartSeconds -lt 0) -or
         ($media.ContainsKey('DurationSeconds') -and
@@ -1447,7 +1507,10 @@ function New-ExternalExerciseGif {
     New-Item -ItemType Directory -Force -Path $sourceRoot, $frameRoot | Out-Null
 
     $sourcePath = Join-Path $sourceRoot ([string]$Media.File)
-    $sourceUrl = if ($Media.ContainsKey('Url')) {
+    $sourceUrl = if ($Media.ContainsKey('ArchiveUrl')) {
+        [string]$Media.ArchiveUrl
+    }
+    elseif ($Media.ContainsKey('Url')) {
         [string]$Media.Url
     }
     else {
@@ -1455,7 +1518,34 @@ function New-ExternalExerciseGif {
             'exercises-dataset/main/videos/' + $Media.File
     }
     if (-not (Test-Path -LiteralPath $sourcePath)) {
-        if ($Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
+        if ($Media.ContainsKey('ArchiveUrl')) {
+            $archivePath = $sourcePath + '.zip'
+            if (-not (Test-Path -LiteralPath $archivePath)) {
+                Invoke-WebRequest `
+                    -Uri $sourceUrl `
+                    -Headers @{ 'User-Agent' = 'Flux private exercise catalog/1.0' } `
+                    -OutFile $archivePath
+            }
+
+            $archiveEntry = [string]$Media.ArchiveEntry
+            $archive = [IO.Compression.ZipFile]::OpenRead($archivePath)
+            try {
+                $entry = $archive.Entries | Where-Object {
+                    $_.FullName -eq $archiveEntry
+                } | Select-Object -First 1
+                if ($null -eq $entry) {
+                    throw "Archive entry '$archiveEntry' is missing for $ExerciseName."
+                }
+                [IO.Compression.ZipFileExtensions]::ExtractToFile(
+                    $entry,
+                    $sourcePath,
+                    $true)
+            }
+            finally {
+                $archive.Dispose()
+            }
+        }
+        elseif ($Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
             $ytDlpPath = Get-YtDlpPath
             & $ytDlpPath `
                 --no-playlist `
@@ -3055,6 +3145,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             else {
                 'Agnostic'
             }
+            minimumMirrorCoverage = if (
+                $mirrorCoverageByExerciseId.ContainsKey($exerciseId)) {
+                [string]$mirrorCoverageByExerciseId[$exerciseId]
+            }
+            else {
+                'None'
+            }
             score = 0
             muscularDemand = [int]$muscularDemandByExerciseId[$exerciseId]
             onlyFeetTouchGround = $true
@@ -3354,6 +3451,10 @@ $constraintViolations = $records | Where-Object {
         $_['equipment'] -ne 'None') -or
     $_['mirrorRelationship'] -notin @(
         'MirrorOnly', 'BenefitsGreatly', 'Agnostic') -or
+    ($_['mirrorRelationship'] -in @('MirrorOnly', 'BenefitsGreatly') -and
+        $_['minimumMirrorCoverage'] -notin @('UpperBody', 'FullBody')) -or
+    ($_['mirrorRelationship'] -eq 'Agnostic' -and
+        $_['minimumMirrorCoverage'] -ne 'None') -or
     -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
@@ -3418,6 +3519,7 @@ $directionPartnerViolations = @($records | Where-Object {
             (@($partner['secondaryCanonicalGroups']) -join "`n") -or
         $_['insectCompatibility'] -ne $partner['insectCompatibility'] -or
         $_['mirrorRelationship'] -ne $partner['mirrorRelationship'] -or
+        $_['minimumMirrorCoverage'] -ne $partner['minimumMirrorCoverage'] -or
         $_['silent'] -ne $partner['silent'] -or
         $_['muscularDemand'] -ne $partner['muscularDemand']
 })

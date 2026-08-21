@@ -4,7 +4,8 @@
 
 Flux is a zero-admin workout app. Choose a duration, receive one standing
 exercise at a time, then keep or discard each movement. Exercises require no
-equipment by default; a mirror can be declared available as an optional modifier. Flux
+equipment by default; a compact or tall mirror can be declared available as an
+optional modifier. Flux
 uses those decisions to shape later sessions without allowing preference,
 randomness, or filters to destroy anatomical coverage.
 
@@ -105,32 +106,45 @@ Flux currently provides three composable modifiers:
 - **Silence**, enabled by default, admits only naturally quiet movements;
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
-- **Mirror**, disabled by default, declares that physical mirror equipment is
-  available. It admits mirror-only exercises and, after keeps, recovery, real
-  scores, and the muscle budget, uses mirror relevance to break remaining ties.
+- **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
+  tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
+  show the full body. Mirror relevance breaks only otherwise remaining ties,
+  after keeps, recovery, real scores, and the muscle budget.
 
 Mirror availability affects exercise eligibility and selection only. It never
 horizontally flips demonstration media; timed second-side playback remains the
 separate side-sequence behavior.
 
-Turning Insect or Silence off relaxes its requirement; turning Mirror off makes
-mirror-only exercises unavailable while leaving mirror-benefited and agnostic
-exercises eligible. For every modifier pair, duration, workout group, and all
-four real on/off states, the catalog must provide at least five selectable
-exercises. In Mirror-on states, all three relationships remain selectable, but
-only `MirrorOnly` and `BenefitsGreatly` count toward Mirror's five-exercise
-coverage floor. Relationship labels are never promoted to hide a genuine gap.
-Every supported duration and profile must also admit a completely distinct
-lineup.
+Turning Insect or Silence off relaxes its requirement. Mirror behavior is
+coverage-aware:
+
+- upper-body `MirrorOnly` exercises accept compact or tall mirrors;
+- full-body `MirrorOnly` exercises require a tall mirror;
+- upper-body `BenefitsGreatly` exercises are preferred with either mirror;
+- full-body `BenefitsGreatly` exercises remain selectable with a compact
+  mirror but receive mirror preference only with a tall mirror;
+- `Agnostic` exercises are unaffected.
+
+For every modifier pair, duration, and workout group, the catalog must provide
+at least five exercises under every real state. Two binary modifiers have four
+states; a pair involving Mirror has six because Mirror has off, compact, and
+tall states. In a mirror-equipped state, only `MirrorOnly` and
+`BenefitsGreatly` count toward that five-exercise relevance floor, after actual
+equipment compatibility is applied. Separately, each of the five global mirror
+classification cells—`MirrorOnly` upper/full body, `BenefitsGreatly`
+upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
+Relationship labels are never promoted to hide a genuine gap. Every supported
+duration and profile must also admit a completely distinct lineup.
 
 A separate materiality test prevents placebo modifiers. Insect and Silence must
 remove at least five exercises or 5% of the previous candidate pool, whichever
-is larger. Mirror must have at least that many jointly reviewed `MirrorOnly` and
-`BenefitsGreatly` exercises. Each modifier must affect at least 10% of the
-canonical buckets, both alone and with its paired modifier enabled.
-The current 58 `BenefitsGreatly` assignments are an audited result, not a target
-or ceiling. Ordinary form checking never qualifies, and relationship labels
-cannot be promoted to satisfy coverage or materiality checks.
+is larger. Mirror must actually prefer at least that many compatible exercises
+for compact and tall equipment independently. Each modifier must affect at
+least 10% of the canonical buckets, both alone and with its paired modifier
+enabled. The current 58 `BenefitsGreatly` assignments are an audited result,
+not a target or ceiling. Ordinary form checking never qualifies, and
+relationship labels cannot be promoted to satisfy coverage or materiality
+checks.
 
 These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
@@ -180,7 +194,7 @@ before rest remains neutral.
 
 ## Exercise catalog
 
-Flux ships with 420 reviewed movements spanning compound strength and
+Flux ships with 429 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.
@@ -217,7 +231,7 @@ Duration, modifier profile, lineups, keeps, scores, active progress, and pending
 rest are stored locally. Modifier combinations retain separate stable lineups
 while sharing durable keeps.
 
-The Android catalog uses SQLite schema version 59. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 60. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

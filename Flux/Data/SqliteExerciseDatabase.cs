@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 59;
+    private const int DatabaseVersion = 60;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -40,6 +40,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "direction_partner_exercise_id",
         "insect_compatibility",
         "mirror_relationship",
+        "mirror_coverage",
     ];
 
     private readonly Context _context;
@@ -74,7 +75,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58 or 59) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -128,7 +129,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
-            RebuildExerciseTableForMirrorEquipment(database);
+            RebuildExerciseTableForMirrorCoverage(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
             InsertTaxonomy(database);
             SynchronizeCatalog(database, catalog, preservedExercises);
@@ -219,11 +220,21 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'MirrorOnly',
                         'BenefitsGreatly',
                         'Agnostic')),
+                mirror_coverage TEXT NOT NULL DEFAULT 'None'
+                    CHECK (mirror_coverage IN (
+                        'None',
+                        'UpperBody',
+                        'FullBody')),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
-                        equipment = 'Mirror') OR
-                    (mirror_relationship != 'MirrorOnly' AND
-                        equipment = 'None')),
+                        equipment = 'Mirror' AND
+                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
+                    (mirror_relationship = 'BenefitsGreatly' AND
+                        equipment = 'None' AND
+                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
+                    (mirror_relationship IN ('Unreviewed', 'Agnostic') AND
+                        equipment = 'None' AND
+                        mirror_coverage = 'None')),
                 CHECK (
                     (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
@@ -233,12 +244,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
 
-    private static void RebuildExerciseTableForMirrorEquipment(
+    private static void RebuildExerciseTableForMirrorCoverage(
         SQLiteDatabase database)
     {
         database.ExecSQL(
             """
-            CREATE TABLE exercises_v59 (
+            CREATE TABLE exercises_v60 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -291,11 +302,21 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'MirrorOnly',
                         'BenefitsGreatly',
                         'Agnostic')),
+                mirror_coverage TEXT NOT NULL DEFAULT 'None'
+                    CHECK (mirror_coverage IN (
+                        'None',
+                        'UpperBody',
+                        'FullBody')),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
-                        equipment = 'Mirror') OR
-                    (mirror_relationship != 'MirrorOnly' AND
-                        equipment = 'None')),
+                        equipment = 'Mirror' AND
+                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
+                    (mirror_relationship = 'BenefitsGreatly' AND
+                        equipment = 'None' AND
+                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
+                    (mirror_relationship IN ('Unreviewed', 'Agnostic') AND
+                        equipment = 'None' AND
+                        mirror_coverage = 'None')),
                 CHECK (
                     (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
                     (exercise_mode = 'Hold' AND hold_frame_percent > 0))
@@ -303,14 +324,14 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             """);
         database.ExecSQL(
             """
-            INSERT INTO exercises_v59 (
+            INSERT INTO exercises_v60 (
                 id, name, video, practice, motion_profile, score,
                 muscular_demand, only_feet_touch_ground, shoe_agnostic,
                 max_space_meters,
                 equipment, silent, exercise_mode, presentation,
                 hold_frame_percent, side_sequence, direction_sequence,
                 direction_partner_exercise_id,
-                insect_compatibility, mirror_relationship)
+                insect_compatibility, mirror_relationship, mirror_coverage)
             SELECT
                 id, name, video, practice, motion_profile, score, 0,
                 only_feet_touch_ground, shoe_agnostic,
@@ -318,12 +339,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     THEN max_space_meters ELSE 2 END,
                 equipment, silent, exercise_mode, presentation,
                 hold_frame_percent, side_sequence, direction_sequence, 0,
-                insect_compatibility, 'Unreviewed'
+                insect_compatibility, 'Unreviewed', 'None'
             FROM exercises
             """);
         database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
         database.ExecSQL("DROP TABLE exercises");
-        database.ExecSQL("ALTER TABLE exercises_v59 RENAME TO exercises");
+        database.ExecSQL("ALTER TABLE exercises_v60 RENAME TO exercises");
         database.ExecSQL(
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
@@ -560,6 +581,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("direction_partner_exercise_id", exercise.DirectionPartnerExerciseId);
         values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
+        values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
         return values;
     }
 
@@ -728,6 +750,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(19)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror relationship review.")),
+                MinimumMirrorCoverage = Enum.Parse<ExerciseMirrorCoverage>(
+                    cursor.GetString(20)
+                        ?? throw new InvalidOperationException(
+                            "An exercise has no mirror coverage review.")),
             });
         }
 
@@ -794,6 +820,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).Count > 0;
         bool hasImmaterialModifier =
             WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).Count > 0;
+        bool hasUndersizedMirrorCategory =
+            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises).Count > 0;
         bool hasInfeasibleWorkoutProfileLineup =
             WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
@@ -819,6 +847,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.DirectionSequence) ||
             !Enum.IsDefined(exercise.InsectCompatibility) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
+            !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
             (exercise.SideSequence.UsesTimedSides() &&
                 exercise.DirectionSequence != ExerciseDirectionSequence.None) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&
@@ -849,6 +878,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     partner.SecondaryCanonicalGroups) ||
                 exercise.InsectCompatibility != partner.InsectCompatibility ||
                 exercise.MirrorRelationship != partner.MirrorRelationship ||
+                exercise.MinimumMirrorCoverage != partner.MinimumMirrorCoverage ||
                 exercise.MuscularDemand != partner.MuscularDemand ||
                 exercise.Silent != partner.Silent)));
         bool hasInvalidReplacementMetadata = false;
@@ -878,6 +908,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
         if (hasUndersizedModifierPairState ||
             hasImmaterialModifier ||
+            hasUndersizedMirrorCategory ||
             hasInfeasibleWorkoutProfileLineup ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||

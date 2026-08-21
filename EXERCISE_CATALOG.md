@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 420 human-demonstrated standing movements. Exercises are chosen
+Flux contains 429 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -11,14 +11,16 @@ The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
 and 30-group resolutions. Every resolution covers every leaf exactly once and
 schedules its declared mass hierarchy from smallest to largest. A selectable
 exercise must train at least half of that bucket's canonical leaves. For every
-modifier pair, every bucket has at least five choices under each real UI state:
-on/on, on/off, off/on, and off/off. Restrictive modifiers relax when off; the
-Mirror equipment modifier instead excludes mirror-only movements when off and
-admits them when on. In a Mirror-on state, only `MirrorOnly` and
-`BenefitsGreatly` exercises count toward the five-exercise pairwise floor;
-`Agnostic` exercises remain selectable but cannot make Mirror coverage appear
-complete. In a Mirror-off state, every normally selectable exercise except
-`MirrorOnly` counts. Separate
+modifier pair, every bucket has at least five choices under each real UI state.
+A binary/binary pair has four states; a pair involving Mirror has six because
+Mirror has off, compact, and tall equipment states. Restrictive modifiers relax
+when off. With a compact mirror, upper-body `MirrorOnly` movements are admitted
+but full-body `MirrorOnly` movements remain excluded; a tall mirror admits both.
+In either mirror-equipped state, only compatible `MirrorOnly` and
+`BenefitsGreatly` exercises count toward the five-exercise pairwise relevance
+floor. `Agnostic` exercises remain selectable but cannot make Mirror coverage
+appear complete. In a Mirror-off state, every normally selectable exercise
+except `MirrorOnly` counts. Separate
 quadratic materiality checks ensure restrictive modifiers remove, and Mirror
 categories 1-2 supply, a meaningful, anatomically broad candidate set alone and
 with each paired modifier. Primary ownership is a preference after
@@ -88,9 +90,13 @@ to the wrong playback behavior.
 `tools/ExerciseMirrorRelationships.psd1` is the exhaustive mirror audit. Each
 exercise is exactly one of `MirrorOnly`, `BenefitsGreatly`, or `Agnostic`.
 `MirrorOnly` requires `equipment: "Mirror"`; the other two require
-`equipment: "None"`. `Mirror-Guided Straight Jaw Opening` is mirror-only because
-the exercise uses live midline feedback to detect lateral deviation. This
-equipment classification never controls
+`equipment: "None"`. Every category 1–2 exercise also declares the minimum
+useful coverage: `UpperBody` or `FullBody`; `Agnostic` requires `None`. The
+catalog independently requires at least five exercises in each of the five
+relationship/coverage cells. A compact mirror provides preference to
+upper-body `BenefitsGreatly` movements, while full-body `BenefitsGreatly`
+movements stay selectable without preference until a tall mirror is selected.
+This equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 
@@ -103,14 +109,15 @@ For pairwise catalog validation, a Mirror-on muscle bucket must have five
 qualifying category 1–2 exercises after applying the paired modifier state.
 `Agnostic` exercises remain runtime candidates but do not satisfy this Mirror
 coverage floor. Mirror-off states count every normally selectable exercise
-except `MirrorOnly`.
+except `MirrorOnly`. This pairwise floor is separate from the global five-cell
+mirror-category floor.
 
 ## Media quality
 
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 420 included
+movements. All 429 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the
