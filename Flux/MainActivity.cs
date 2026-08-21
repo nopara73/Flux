@@ -68,6 +68,7 @@ public class MainActivity : Activity
     private GridLayout _durationModifierGrid = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private CheckBox _mirrorModifierButton = null!;
     private TextView _durationModifierFeedback = null!;
     private int _modifierFeedbackGeneration;
     private FrameLayout _durationActionBar = null!;
@@ -282,6 +283,8 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _mirrorModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.mirror_modifier_button);
         _durationModifierFeedback = FindRequiredView<TextView>(
             Resource.Id.duration_modifier_feedback);
         _durationActionBar = FindRequiredView<FrameLayout>(
@@ -397,6 +400,21 @@ public class MainActivity : Activity
             ShowModifierFeedback(enabled
                 ? Resource.String.noisy_exercises_disabled_feedback
                 : Resource.String.noisy_exercises_enabled_feedback);
+        };
+        _mirrorModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _mirrorModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Mirror,
+                enabled,
+                _mirrorModifierButton,
+                Resource.String.mirror_modifier_description,
+                Resource.String.mirror_modifier_on,
+                Resource.String.mirror_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(enabled
+                ? Resource.String.mirror_equipment_enabled_feedback
+                : Resource.String.mirror_equipment_disabled_feedback);
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _startButton.Click += (_, _) => StartCountdown();
@@ -679,7 +697,7 @@ public class MainActivity : Activity
                 wrapContent);
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGrid.LayoutParameters = modifierGridLayout;
-            _durationModifierGrid.ColumnCount = 5;
+            _durationModifierGrid.ColumnCount = 3;
             SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
@@ -737,7 +755,7 @@ public class MainActivity : Activity
             wrapContent);
         portraitModifierGridLayout.TopMargin = DpInt(32);
         _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
-        _durationModifierGrid.ColumnCount = 4;
+        _durationModifierGrid.ColumnCount = 3;
         SetModifierTileSizes(DpInt(64));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
@@ -1241,6 +1259,13 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Mirror,
+            (_state.LastWorkoutModifiers & WorkoutModifiers.Mirror) != 0,
+            _mirrorModifierButton,
+            Resource.String.mirror_modifier_description,
+            Resource.String.mirror_modifier_on,
+            Resource.String.mirror_modifier_off);
     }
 
     private void SetSelectedWorkoutModifier(

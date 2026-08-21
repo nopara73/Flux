@@ -81,6 +81,148 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void MirrorOffExcludesMirrorOnlyWhileMirrorOnAdmitsAllThreeRelationships()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise mirrorOnly = Exercise(
+            1,
+            group,
+            mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly);
+        Exercise benefitsGreatly = Exercise(
+            2,
+            group,
+            mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly);
+        Exercise agnostic = Exercise(3, group);
+
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            mirrorOnly,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            benefitsGreatly,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            agnostic,
+            WorkoutModifiers.None));
+        Assert.All([mirrorOnly, benefitsGreatly, agnostic], exercise =>
+            Assert.True(WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                WorkoutModifiers.Mirror)));
+        Assert.True(WorkoutModifierPolicy.IsMirrorPreferred(
+            mirrorOnly,
+            WorkoutModifiers.Mirror));
+        Assert.True(WorkoutModifierPolicy.IsMirrorPreferred(
+            benefitsGreatly,
+            WorkoutModifiers.Mirror));
+        Assert.False(WorkoutModifierPolicy.IsMirrorPreferred(
+            agnostic,
+            WorkoutModifiers.Mirror));
+        Assert.False(WorkoutModifierPolicy.IsMirrorPreferred(
+            benefitsGreatly,
+            WorkoutModifiers.None));
+    }
+
+    [Fact]
+    public void MirrorMetadataIsCompleteOnlyWhenRelationshipMatchesEquipment()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise[] valid =
+        [
+            Exercise(
+                1,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly),
+            Exercise(
+                2,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly),
+            Exercise(3, group),
+        ];
+
+        Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete(valid));
+        Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(
+        [
+            Exercise(
+                4,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.Unreviewed),
+        ]));
+        Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(
+        [
+            Exercise(
+                5,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.MirrorOnly,
+                equipment: "None"),
+        ]));
+        Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(
+        [
+            Exercise(
+                6,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+                equipment: "Mirror"),
+        ]));
+    }
+
+    [Fact]
+    public void MirrorOnPairwiseFloorCountsOnlyMirrorRelevantRelationships()
+    {
+        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
+        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        Exercise[] exercises = Enumerable.Range(1, 9)
+            .Select(id => Exercise(
+                id,
+                primary,
+                mirrorRelationship: id <= 4
+                    ? ExerciseMirrorRelationship.BenefitsGreatly
+                    : ExerciseMirrorRelationship.Agnostic))
+            .ToArray();
+
+        WorkoutModifierPairCoverageDeficiency[] deficiencies =
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
+                .Where(result => result.Minutes == 30 &&
+                    result.GroupId == group.Id &&
+                    result.FirstModifier == WorkoutModifiers.Insect &&
+                    result.SecondModifier == WorkoutModifiers.Mirror &&
+                    result.SecondModifierEnabled)
+                .ToArray();
+
+        Assert.Equal(2, deficiencies.Length);
+        Assert.All(deficiencies, deficiency =>
+            Assert.Equal(4, deficiency.MatchingExerciseCount));
+    }
+
+    [Fact]
+    public void MirrorMaterialityIsJointlySuppliedByOnlyAndGreatlyBenefitedExercises()
+    {
+        CanonicalMuscleGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .Take(3)
+            .Select(group => group.CanonicalGroups.Single())
+            .ToArray();
+        Exercise[] mirrorRelevant = Enumerable.Range(1, 5)
+            .Select((id, index) => Exercise(
+                id,
+                groups[index % groups.Length],
+                mirrorRelationship: id == 1
+                    ? ExerciseMirrorRelationship.MirrorOnly
+                    : ExerciseMirrorRelationship.BenefitsGreatly))
+            .ToArray();
+        Exercise[] agnostic = Enumerable.Range(6, 15)
+            .Select((id, index) => Exercise(id, groups[index % groups.Length]))
+            .ToArray();
+
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindMaterialityDeficiencies(
+                mirrorRelevant.Concat(agnostic).ToArray()),
+            result => result.Modifier == WorkoutModifiers.Mirror &&
+                result.ContextProfile == WorkoutModifiers.None);
+    }
+
+    [Fact]
     public void ValidationProfilesGrowOnlyWithSinglesAndModifierPairs()
     {
         int primitiveModifierCount = System.Numerics.BitOperations.PopCount(
@@ -96,10 +238,14 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(WorkoutModifierPolicy.ValidationProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.ValidationProfiles);
-        Assert.Equal(4, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Equal(7, WorkoutModifierPolicy.ValidationProfiles.Count);
         Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
+            WorkoutModifierPolicy.ValidationProfiles);
+        Assert.Contains(WorkoutModifiers.Mirror, WorkoutModifierPolicy.ValidationProfiles);
+        Assert.Contains(
+            WorkoutModifiers.Silence | WorkoutModifiers.Mirror,
             WorkoutModifierPolicy.ValidationProfiles);
     }
 
@@ -119,7 +265,9 @@ public sealed class WorkoutModifierPolicyTests
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
                 .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id)
+                    result.Minutes == 30 && result.GroupId == group.Id &&
+                    result.FirstModifier == WorkoutModifiers.Insect &&
+                    result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
 
         Assert.Empty(deficiencies);
@@ -128,7 +276,9 @@ public sealed class WorkoutModifierPolicyTests
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
                     exercises.Take(4).ToArray())
                 .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id)
+                    result.Minutes == 30 && result.GroupId == group.Id &&
+                    result.FirstModifier == WorkoutModifiers.Insect &&
+                    result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
 
         Assert.Equal(4, fourExerciseDeficiencies.Length);
@@ -167,8 +317,10 @@ public sealed class WorkoutModifierPolicyTests
 
         Dictionary<(bool Insect, bool Silence), int> counts =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
-                .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id)
+                .Where(result => result.Minutes == 30 &&
+                    result.GroupId == group.Id &&
+                    result.FirstModifier == WorkoutModifiers.Insect &&
+                    result.SecondModifier == WorkoutModifiers.Silence)
                 .ToDictionary(
                     result => (
                         result.FirstModifierEnabled,
@@ -199,8 +351,10 @@ public sealed class WorkoutModifierPolicyTests
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
-                .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id)
+                .Where(result => result.Minutes == 30 &&
+                    result.GroupId == group.Id &&
+                    result.FirstModifier == WorkoutModifiers.Insect &&
+                    result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
 
         Assert.Equal(4, deficiencies.Length);
@@ -248,10 +402,10 @@ public sealed class WorkoutModifierPolicyTests
                     result.Modifier == WorkoutModifiers.Insect &&
                     result.ContextProfile == WorkoutModifiers.None);
 
-        Assert.Equal(120, deficiency.RelaxedExerciseCount);
-        Assert.Equal(115, deficiency.ConstrainedExerciseCount);
-        Assert.Equal(5, deficiency.ReleasedExerciseCount);
-        Assert.Equal(6, deficiency.RequiredReleasedExerciseCount);
+        Assert.Equal(120, deficiency.BaselineExerciseCount);
+        Assert.Equal(115, deficiency.ModifiedExerciseCount);
+        Assert.Equal(5, deficiency.MaterialExerciseCount);
+        Assert.Equal(6, deficiency.RequiredMaterialExerciseCount);
         Assert.Equal(3, deficiency.AffectedBucketCount);
         Assert.Equal(3, deficiency.RequiredAffectedBucketCount);
     }
@@ -279,8 +433,8 @@ public sealed class WorkoutModifierPolicyTests
                     result.Modifier == WorkoutModifiers.Insect &&
                     result.ContextProfile == WorkoutModifiers.None);
 
-        Assert.Equal(5, deficiency.ReleasedExerciseCount);
-        Assert.Equal(5, deficiency.RequiredReleasedExerciseCount);
+        Assert.Equal(5, deficiency.MaterialExerciseCount);
+        Assert.Equal(5, deficiency.RequiredMaterialExerciseCount);
         Assert.Equal(1, deficiency.AffectedBucketCount);
         Assert.Equal(3, deficiency.RequiredAffectedBucketCount);
     }
@@ -323,9 +477,9 @@ public sealed class WorkoutModifierPolicyTests
             Assert.Single(deficiencies, result =>
                 result.Modifier == WorkoutModifiers.Insect &&
                 result.ContextProfile == WorkoutModifiers.Silence);
-        Assert.Equal(0, conditionalDeficiency.ReleasedExerciseCount);
-        Assert.Equal(WorkoutModifierPolicy.MinimumReleasedExercises,
-            conditionalDeficiency.RequiredReleasedExerciseCount);
+        Assert.Equal(0, conditionalDeficiency.MaterialExerciseCount);
+        Assert.Equal(WorkoutModifierPolicy.MinimumMaterialExercises,
+            conditionalDeficiency.RequiredMaterialExerciseCount);
         Assert.Equal(0, conditionalDeficiency.AffectedBucketCount);
     }
 
@@ -355,7 +509,7 @@ public sealed class WorkoutModifierPolicyTests
                     result.Modifier == WorkoutModifiers.Insect &&
                     result.ContextProfile == WorkoutModifiers.None);
 
-        Assert.Equal(0, deficiency.ReleasedExerciseCount);
+        Assert.Equal(0, deficiency.MaterialExerciseCount);
         Assert.Equal(0, deficiency.AffectedBucketCount);
     }
 
@@ -446,7 +600,10 @@ public sealed class WorkoutModifierPolicyTests
         CanonicalMuscleGroup tertiaryCanonicalGroup = default,
         ExerciseInsectCompatibility insectCompatibility =
             ExerciseInsectCompatibility.Compatible,
-        bool silent = true)
+        bool silent = true,
+        ExerciseMirrorRelationship mirrorRelationship =
+            ExerciseMirrorRelationship.Agnostic,
+        string? equipment = null)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -466,10 +623,14 @@ public sealed class WorkoutModifierPolicyTests
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
             InsectCompatibility = insectCompatibility,
+            MirrorRelationship = mirrorRelationship,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,
-            Equipment = "None",
+            Equipment = equipment ??
+                (mirrorRelationship == ExerciseMirrorRelationship.MirrorOnly
+                    ? "Mirror"
+                    : "None"),
             Silent = silent,
         };
     }

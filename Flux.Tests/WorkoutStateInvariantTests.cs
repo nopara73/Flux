@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(10, state.Version);
+        Assert.Equal(11, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -254,6 +254,9 @@ public sealed class WorkoutStateInvariantTests
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
 
+        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
+        Assert.False(state.LastWorkoutModifiers.HasFlag(WorkoutModifiers.Mirror));
+
         service.StartWorkout(state, 3);
 
         Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
@@ -296,7 +299,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(10, state.Version);
+        Assert.Equal(11, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -389,6 +392,7 @@ public sealed class WorkoutStateInvariantTests
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
+            MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

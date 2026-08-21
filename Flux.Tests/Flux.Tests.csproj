@@ -27,6 +27,7 @@
     <Compile Include="..\Flux\Models\CanonicalMuscleGroup.cs" Link="Production\Models\CanonicalMuscleGroup.cs" />
     <Compile Include="..\Flux\Models\Exercise.cs" Link="Production\Models\Exercise.cs" />
     <Compile Include="..\Flux\Models\ExerciseInsectCompatibility.cs" Link="Production\Models\ExerciseInsectCompatibility.cs" />
+    <Compile Include="..\Flux\Models\ExerciseMirrorRelationship.cs" Link="Production\Models\ExerciseMirrorRelationship.cs" />
     <Compile Include="..\Flux\Models\ExerciseMode.cs" Link="Production\Models\ExerciseMode.cs" />
     <Compile Include="..\Flux\Models\ExercisePresentation.cs" Link="Production\Models\ExercisePresentation.cs" />
     <Compile Include="..\Flux\Models\ExerciseDirectionSequence.cs" Link="Production\Models\ExerciseDirectionSequence.cs" />

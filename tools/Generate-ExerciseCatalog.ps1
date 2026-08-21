@@ -78,6 +78,14 @@ $silentExerciseIds = @(
     $silenceCompatibilityReview.Silent | ForEach-Object { [int]$_ })
 $nonSilentExerciseIds = @(
     $silenceCompatibilityReview.NonSilent | ForEach-Object { [int]$_ })
+$mirrorRelationshipReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseMirrorRelationships.psd1') -SkipLimitCheck
+$mirrorOnlyExerciseIds = @(
+    $mirrorRelationshipReview.MirrorOnly | ForEach-Object { [int]$_ })
+$mirrorBenefitsGreatlyExerciseIds = @(
+    $mirrorRelationshipReview.BenefitsGreatly | ForEach-Object { [int]$_ })
+$mirrorAgnosticExerciseIds = @(
+    $mirrorRelationshipReview.Agnostic | ForEach-Object { [int]$_ })
 $muscularDemandReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMuscularDemand.psd1') -SkipLimitCheck
 $muscularDemandByExerciseId = @{}
@@ -518,6 +526,21 @@ if ($silentExerciseIds.Count -ne
             $_ -in $nonSilentExerciseIds }).Count -gt 0 -or
     @(Compare-Object $retainedExerciseIds $reviewedSilenceExerciseIds).Count -gt 0) {
     throw 'Every retained exercise must have exactly one silence review.'
+}
+
+$reviewedMirrorExerciseIds = @(
+    $mirrorOnlyExerciseIds +
+    $mirrorBenefitsGreatlyExerciseIds +
+    $mirrorAgnosticExerciseIds |
+        Sort-Object -Unique)
+$allMirrorReviewEntries = @(
+    $mirrorOnlyExerciseIds +
+    $mirrorBenefitsGreatlyExerciseIds +
+    $mirrorAgnosticExerciseIds)
+if ($allMirrorReviewEntries.Count -ne
+        @($allMirrorReviewEntries | Sort-Object -Unique).Count -or
+    @(Compare-Object $retainedExerciseIds $reviewedMirrorExerciseIds).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one mirror-relationship review.'
 }
 
 if ($reviewedPosecodeIds.Count -ne 0 -or $reviewedSvgIds.Count -ne 0) {
@@ -2999,12 +3022,27 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             else {
                 'Incompatible'
             }
+            mirrorRelationship = if (
+                $exerciseId -in $mirrorOnlyExerciseIds) {
+                'MirrorOnly'
+            }
+            elseif ($exerciseId -in $mirrorBenefitsGreatlyExerciseIds) {
+                'BenefitsGreatly'
+            }
+            else {
+                'Agnostic'
+            }
             score = 0
             muscularDemand = [int]$muscularDemandByExerciseId[$exerciseId]
             onlyFeetTouchGround = $true
             shoeAgnostic = $true
             maxSpaceMeters = 2
-            equipment = 'None'
+            equipment = if ($exerciseId -in $mirrorOnlyExerciseIds) {
+                'Mirror'
+            }
+            else {
+                'None'
+            }
             silent = $exerciseId -in $silentExerciseIds
         })
 
@@ -3287,7 +3325,12 @@ $constraintViolations = $records | Where-Object {
     -not $_['shoeAgnostic'] -or
     $_['maxSpaceMeters'] -le 0 -or
     $_['maxSpaceMeters'] -gt 2 -or
-    $_['equipment'] -ne 'None' -or
+    ($_['mirrorRelationship'] -eq 'MirrorOnly' -and
+        $_['equipment'] -ne 'Mirror') -or
+    ($_['mirrorRelationship'] -ne 'MirrorOnly' -and
+        $_['equipment'] -ne 'None') -or
+    $_['mirrorRelationship'] -notin @(
+        'MirrorOnly', 'BenefitsGreatly', 'Agnostic') -or
     -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
@@ -3351,6 +3394,7 @@ $directionPartnerViolations = @($records | Where-Object {
         (@($_['secondaryCanonicalGroups']) -join "`n") -ne
             (@($partner['secondaryCanonicalGroups']) -join "`n") -or
         $_['insectCompatibility'] -ne $partner['insectCompatibility'] -or
+        $_['mirrorRelationship'] -ne $partner['mirrorRelationship'] -or
         $_['silent'] -ne $partner['silent'] -or
         $_['muscularDemand'] -ne $partner['muscularDemand']
 })

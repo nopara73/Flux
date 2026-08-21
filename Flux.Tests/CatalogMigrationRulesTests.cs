@@ -1609,6 +1609,10 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(39));
         Assert.False(
             CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(39));
+        Assert.False(
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(40));
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(40));
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 

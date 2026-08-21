@@ -2,8 +2,9 @@
 
 **A whole-body workout for exactly the time you have.**
 
-Flux is a zero-admin workout app. Choose a duration, receive one standing,
-equipment-free exercise at a time, then keep or discard each movement. Flux
+Flux is a zero-admin workout app. Choose a duration, receive one standing
+exercise at a time, then keep or discard each movement. Exercises require no
+equipment by default; a mirror can be declared available as an optional modifier. Flux
 uses those decisions to shape later sessions without allowing preference,
 randomness, or filters to destroy anatomical coverage.
 
@@ -99,22 +100,34 @@ keeps compete for limited lineup space, demand `2` takes priority over demand
 
 ### Modifiers are not allowed to break the workout
 
-Flux currently provides two composable modifiers:
+Flux currently provides three composable modifiers:
 
 - **Silence**, enabled by default, admits only naturally quiet movements;
 - **Insect** favors demonstrations that keep most of the body visibly and
-  continuously moving at a useful pace.
+  continuously moving at a useful pace;
+- **Mirror**, disabled by default, declares that physical mirror equipment is
+  available. It admits mirror-only exercises and, after keeps, recovery, real
+  scores, and the muscle budget, uses mirror relevance to break remaining ties.
 
-Turning a modifier off relaxes its requirement; it never demands an incompatible
-exercise. For every modifier pair, duration, workout group, and all four real
-on/off states, the catalog must provide at least five selectable exercises.
+Mirror availability affects exercise eligibility and selection only. It never
+horizontally flips demonstration media; timed second-side playback remains the
+separate side-sequence behavior.
+
+Turning Insect or Silence off relaxes its requirement; turning Mirror off makes
+mirror-only exercises unavailable while leaving mirror-benefited and agnostic
+exercises eligible. For every modifier pair, duration, workout group, and all
+four real on/off states, the catalog must provide at least five selectable exercises.
+When Mirror is on, only `MirrorOnly` and `BenefitsGreatly` exercises count toward
+that five-exercise mirror-relevance floor; `Agnostic` exercises remain eligible
+but cannot make the modifier look substantive.
 Every supported duration and profile must also admit a completely distinct
 lineup.
 
-A separate materiality test prevents placebo modifiers. Enabling a modifier
-must remove at least five exercises or 5% of the previous candidate pool,
-whichever is larger, and must affect at least 10% of the canonical buckets. The
-same condition is checked when the paired modifier is already enabled.
+A separate materiality test prevents placebo modifiers. Insect and Silence must
+remove at least five exercises or 5% of the previous candidate pool, whichever
+is larger. Mirror must have at least that many jointly reviewed `MirrorOnly` and
+`BenefitsGreatly` exercises. Each modifier must affect at least 10% of the
+canonical buckets, both alone and with its paired modifier enabled.
 
 These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
@@ -177,8 +190,9 @@ Every retained exercise must:
 - keep all ground contact at the feet;
 - work in ordinary shoes or barefoot;
 - fit inside 2 m x 2 m;
-- require no wall, chair, floor work, equipment, prop, partner, or travel unless
-  travel is intrinsic to the named exercise;
+- require no wall, chair, floor work, prop, partner, or equipment other than a
+  physical mirror explicitly gated by the Mirror modifier; travel is permitted
+  only when intrinsic to the named exercise;
 - declare repetition or hold behavior and its exact side protocol;
 - derive its name, timing, direction, muscle associations, crop, and hold target
   from the reviewed demonstration.
@@ -200,7 +214,7 @@ Duration, modifier profile, lineups, keeps, scores, active progress, and pending
 rest are stored locally. Modifier combinations retain separate stable lineups
 while sharing durable keeps.
 
-The Android catalog uses SQLite schema version 58. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 59. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

@@ -217,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:alignmentMode="alignMargins"
-                    android:columnCount="4"
+                    android:columnCount="3"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:useDefaultMargins="false">
@@ -247,6 +247,20 @@
                         android:contentDescription="@string/silence_modifier_description"
                         android:foreground="@drawable/ic_no_clap"
                         android:foregroundGravity="center"
+                        android:text="" />
+
+                    <CheckBox
+                        android:id="@+id/mirror_modifier_button"
+                        style="@style/DurationModifierTile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_margin="6dp"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/mirror_modifier_description"
+                        android:foreground="@drawable/ic_mirror"
+                        android:foregroundGravity="center"
+                        android:foregroundTint="@color/duration_modifier_icon_tint"
                         android:text="" />
                 </GridLayout>
 

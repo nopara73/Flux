@@ -10,7 +10,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 10;
+    private const int CurrentStateVersion = 11;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
     private const string SelectionProfilePrefix = "p";
@@ -545,7 +545,12 @@ public sealed class ExerciseSessionService
         long primaryWeight = checked(totalCoverageRange + 1L);
         long totalPrimaryAndCoverageRange = checked(
             groups.Count * (primaryWeight + maximumCoverage));
-        long scoreWeight = checked(totalPrimaryAndCoverageRange + 1L);
+        long mirrorPreferenceWeight = checked(
+            totalPrimaryAndCoverageRange + 1L);
+        long totalMirrorPreferenceRange = checked(
+            groups.Count * mirrorPreferenceWeight +
+            totalPrimaryAndCoverageRange);
+        long scoreWeight = checked(totalMirrorPreferenceRange + 1L);
         long totalScoreRange = checked(
             groups.Count *
             ((long)(orderedScores.Length - 1) * scoreWeight +
@@ -591,6 +596,9 @@ public sealed class ExerciseSessionService
                         ? currentSelectionWeight
                         : 0L) +
                     (long)scoreRanks[exercise.Score] * scoreWeight +
+                    (WorkoutModifierPolicy.IsMirrorPreferred(exercise, modifiers)
+                        ? mirrorPreferenceWeight
+                        : 0L) +
                     (WorkoutCoveragePolicy.IsPrimaryForGroup(exercise, group)
                         ? primaryWeight
                         : 0L) +
@@ -1494,7 +1502,8 @@ public sealed class ExerciseSessionService
                     : EvaluateSingleRoundMuscleBudgetCandidate(
                         group,
                         currentExercise,
-                        loadWithoutCurrent);
+                        loadWithoutCurrent,
+                        state.ActiveWorkoutModifiers);
                 MuscleBudgetCandidate? bestAlternative = _exercises
                     .Where(exercise =>
                         exercise.Id != currentExerciseId &&
@@ -1514,9 +1523,11 @@ public sealed class ExerciseSessionService
                         : EvaluateSingleRoundMuscleBudgetCandidate(
                             group,
                             exercise,
-                            loadWithoutCurrent))
+                            loadWithoutCurrent,
+                            state.ActiveWorkoutModifiers))
                     .OrderByDescending(candidate => candidate.AdjustedScoreHalfUnits)
                     .ThenByDescending(candidate => candidate.RealScore)
+                    .ThenByDescending(candidate => candidate.IsMirrorPreferred)
                     .ThenByDescending(candidate => candidate.IsPrimary)
                     .ThenByDescending(candidate => candidate.CanonicalCoverage)
                     .ThenBy(candidate => candidate.ExerciseId)
@@ -1582,6 +1593,9 @@ public sealed class ExerciseSessionService
                 WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
                     candidate.Score,
                     temporaryDownvoteHalfUnits),
+                WorkoutModifierPolicy.IsMirrorPreferred(
+                    candidate,
+                    state.ActiveWorkoutModifiers),
                 WorkoutCoveragePolicy.IsPrimaryForGroup(candidate, group),
                 WorkoutCoveragePolicy.GetCanonicalCoverage(candidate, group));
         }
@@ -1594,7 +1608,8 @@ public sealed class ExerciseSessionService
     private static MuscleBudgetCandidate EvaluateSingleRoundMuscleBudgetCandidate(
         WorkoutGroup group,
         Exercise candidate,
-        IReadOnlyDictionary<CanonicalMuscleGroup, int> loadWithoutCandidate)
+        IReadOnlyDictionary<CanonicalMuscleGroup, int> loadWithoutCandidate,
+        WorkoutModifiers modifiers)
     {
         int temporaryDownvoteHalfUnits =
             WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
@@ -1606,6 +1621,7 @@ public sealed class ExerciseSessionService
             WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
                 candidate.Score,
                 temporaryDownvoteHalfUnits),
+            WorkoutModifierPolicy.IsMirrorPreferred(candidate, modifiers),
             WorkoutCoveragePolicy.IsPrimaryForGroup(candidate, group),
             WorkoutCoveragePolicy.GetCanonicalCoverage(candidate, group));
     }
@@ -1719,6 +1735,7 @@ public sealed class ExerciseSessionService
         int ExerciseId,
         int RealScore,
         long AdjustedScoreHalfUnits,
+        bool IsMirrorPreferred,
         bool IsPrimary,
         int CanonicalCoverage);
 }

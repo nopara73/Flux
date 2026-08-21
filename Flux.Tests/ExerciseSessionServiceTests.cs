@@ -119,6 +119,44 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void MirrorPreferenceBreaksTiesButNeverOverridesARealVote()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] agnostic = groups
+            .Select((group, index) => QualifiedForGroup(
+                20_000 + index * 2,
+                group,
+                insectCompatibility: ExerciseInsectCompatibility.Compatible))
+            .ToArray();
+        Exercise[] benefitsGreatly = agnostic
+            .Select(exercise => CloneWithMirrorRelationship(
+                exercise,
+                exercise.Id + 1,
+                ExerciseMirrorRelationship.BenefitsGreatly))
+            .ToArray();
+        Exercise[] exercises = agnostic.Concat(benefitsGreatly).ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var tiedState = new WorkoutState();
+
+        service.StartWorkout(tiedState, 3, WorkoutModifiers.Mirror);
+
+        Assert.All(service.GetActiveGroups(tiedState), group => Assert.Equal(
+            ExerciseMirrorRelationship.BenefitsGreatly,
+            service.GetSelectedExercise(tiedState, group).MirrorRelationship));
+
+        foreach (Exercise exercise in agnostic)
+        {
+            exercise.Score = 1;
+        }
+        var votedState = new WorkoutState();
+        service.StartWorkout(votedState, 3, WorkoutModifiers.Mirror);
+
+        Assert.All(service.GetActiveGroups(votedState), group => Assert.Equal(
+            ExerciseMirrorRelationship.Agnostic,
+            service.GetSelectedExercise(votedState, group).MirrorRelationship));
+    }
+
+    [Fact]
     public void FullyReviewedCatalogAlwaysHonorsEnabledModifier()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -157,7 +195,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(10, state.Version);
+        Assert.Equal(11, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -529,7 +567,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(10, state.Version);
+        Assert.Equal(11, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Single(state.ActiveDirectionPartnerExerciseIds);
@@ -1813,7 +1851,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(10, state.Version);
+        Assert.Equal(11, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -2109,6 +2147,7 @@ public sealed class ExerciseSessionServiceTests
             DirectionSequence = source.DirectionSequence,
             DirectionPartnerExerciseId = directionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
+            MirrorRelationship = source.MirrorRelationship,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -2140,12 +2179,48 @@ public sealed class ExerciseSessionServiceTests
             DirectionSequence = source.DirectionSequence,
             DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
             InsectCompatibility = source.InsectCompatibility,
+            MirrorRelationship = source.MirrorRelationship,
             MuscularDemand = muscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
             ShoeAgnostic = source.ShoeAgnostic,
             MaxSpaceMeters = source.MaxSpaceMeters,
             Equipment = source.Equipment,
+            Silent = source.Silent,
+        };
+    }
+
+    private static Exercise CloneWithMirrorRelationship(
+        Exercise source,
+        int id,
+        ExerciseMirrorRelationship mirrorRelationship)
+    {
+        return new Exercise
+        {
+            Id = id,
+            Name = $"Exercise {id}",
+            RetiredName = source.RetiredName,
+            Video = $"exercise_{id:D4}.mp4",
+            PrimaryCanonicalGroup = source.PrimaryCanonicalGroup,
+            SecondaryCanonicalGroups = source.SecondaryCanonicalGroups,
+            Practice = source.Practice,
+            MotionProfile = source.MotionProfile,
+            Mode = source.Mode,
+            Presentation = source.Presentation,
+            HoldFramePercent = source.HoldFramePercent,
+            SideSequence = source.SideSequence,
+            DirectionSequence = source.DirectionSequence,
+            DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
+            InsectCompatibility = source.InsectCompatibility,
+            MirrorRelationship = mirrorRelationship,
+            MuscularDemand = source.MuscularDemand,
+            Score = source.Score,
+            OnlyFeetTouchGround = source.OnlyFeetTouchGround,
+            ShoeAgnostic = source.ShoeAgnostic,
+            MaxSpaceMeters = source.MaxSpaceMeters,
+            Equipment = mirrorRelationship == ExerciseMirrorRelationship.MirrorOnly
+                ? "Mirror"
+                : "None",
             Silent = source.Silent,
         };
     }
@@ -2193,6 +2268,7 @@ public sealed class ExerciseSessionServiceTests
             HoldFramePercent = 0,
             SideSequence = sideSequence,
             InsectCompatibility = insectCompatibility,
+            MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

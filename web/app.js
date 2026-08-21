@@ -27,6 +27,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
+  mirrorEnabled: "equipment on: mirror",
+  mirrorDisabled: "equipment off: mirror",
 });
 
 const elements = {
@@ -40,6 +42,7 @@ const elements = {
   beginWorkout: byId("begin-workout"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
+  mirrorModifier: byId("mirror-modifier"),
   modifierFeedback: byId("modifier-feedback"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
@@ -262,6 +265,12 @@ function workoutModifierTiles() {
       enabledLabel: "Quiet exercise filter: quiet exercises only",
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
+    {
+      element: elements.mirrorModifier,
+      flag: WORKOUT_MODIFIERS.Mirror,
+      enabledLabel: "Mirror equipment: mirror available",
+      disabledLabel: "Mirror equipment: no mirror available",
+    },
   ];
 }
 
@@ -269,11 +278,12 @@ function toggleWorkoutModifier(flag) {
   selectedModifiers ^= flag;
   renderWorkoutModifiers();
   const enabled = (selectedModifiers & flag) !== 0;
-  showWorkoutModifierFeedback(
-    flag === WORKOUT_MODIFIERS.Insect
-      ? MODIFIER_FEEDBACK_LABELS[enabled ? "insectEnabled" : "insectDisabled"]
-      : MODIFIER_FEEDBACK_LABELS[enabled ? "noisyDisabled" : "noisyEnabled"],
-  );
+  const feedbackKey = flag === WORKOUT_MODIFIERS.Insect
+    ? (enabled ? "insectEnabled" : "insectDisabled")
+    : flag === WORKOUT_MODIFIERS.Silence
+      ? (enabled ? "noisyDisabled" : "noisyEnabled")
+      : (enabled ? "mirrorEnabled" : "mirrorDisabled");
+  showWorkoutModifierFeedback(MODIFIER_FEEDBACK_LABELS[feedbackKey]);
 }
 
 function showWorkoutModifierFeedback(message) {

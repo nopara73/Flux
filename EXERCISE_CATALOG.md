@@ -12,10 +12,13 @@ and 30-group resolutions. Every resolution covers every leaf exactly once and
 schedules its declared mass hierarchy from smallest to largest. A selectable
 exercise must train at least half of that bucket's canonical leaves. For every
 modifier pair, every bucket has at least five choices under each real UI state:
-on/on, on/off, off/on, and off/off. OFF relaxes a predicate rather than requiring
-an incompatible exercise. Separate quadratic materiality checks ensure each
-modifier removes a meaningful, anatomically broad candidate set both alone and
-with its paired modifier enabled. Primary ownership is a preference after
+on/on, on/off, off/on, and off/off. Restrictive modifiers relax when off; the
+Mirror equipment modifier instead excludes mirror-only movements when off and
+admits them when on. In Mirror-on pair states, only `MirrorOnly` and
+`BenefitsGreatly` exercises count toward the five-exercise relevance floor even
+though `Agnostic` exercises remain eligible. Separate quadratic materiality
+checks ensure restrictive modifiers remove, and Mirror supplies, a meaningful,
+anatomically broad candidate set alone and with each paired modifier. Primary ownership is a preference after
 score/keep priority, never a reason to discard a truthful secondary association
 or admit a weak quota-filler.
 
@@ -40,7 +43,8 @@ Every entry must:
 - keep all ground contact at the feet;
 - remain practical in ordinary shoes or barefoot;
 - fit inside a 2 m × 2 m space;
-- require no wall, chair, floor exercise, prop, partner, or equipment;
+- require no wall, chair, floor exercise, prop, partner, or equipment except a
+  physical mirror when explicitly categorized and gated by the Mirror modifier;
 - be naturally quiet whenever the default-on Silence modifier is enabled;
   established impact movements may be eligible only after Silence is explicitly
   disabled;
@@ -52,7 +56,7 @@ Each entry is explicitly a repetition or hold and a continuous, alternating, or
 timed-unilateral sequence. Naturally alternating sides, breath cycles,
 raise-and-lower actions, flows, and repeated contractions remain repetitions.
 An alternating sequence switches its working side inside one uninterrupted
-45-second phase and is labeled `ALTERNATING` before Start. A unilateral movement
+45-second phase. A unilateral movement
 runs for 20 seconds on its demonstrated side, pauses for a 5-second side
 change, then replays the same human demonstration mirrored for 20 seconds; it is
 labeled `UNILATERAL` before Start.
@@ -77,6 +81,16 @@ synthetic modifier suffixes; missing motion profiles; non-human media; and
 constraint violations. It also requires an explicit reviewed timed-side or continuous
 decision for every retained movement, so new entries cannot silently default
 to the wrong playback behavior.
+
+`tools/ExerciseMirrorRelationships.psd1` is the exhaustive mirror audit. Each
+exercise is exactly one of `MirrorOnly`, `BenefitsGreatly`, or `Agnostic`.
+`MirrorOnly` requires `equipment: "Mirror"`; the other two require
+`equipment: "None"`. The current retained inventory contains no mirror-only
+exercise because none of its exact demonstrations makes a reflection essential.
+The runtime path remains implemented and tested for a future exact
+mirror-dependent demonstration. This equipment classification never controls
+media mirroring; only the established timed-side presentation protocol may flip
+the second playback phase.
 
 ## Media quality
 

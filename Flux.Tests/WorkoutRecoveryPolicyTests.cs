@@ -68,6 +68,7 @@ public sealed class WorkoutRecoveryPolicyTests
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
+            MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             MuscularDemand = muscularDemand,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

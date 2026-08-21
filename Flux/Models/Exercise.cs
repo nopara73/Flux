@@ -38,6 +38,9 @@ public sealed class Exercise
     public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
         ExerciseInsectCompatibility.Unreviewed;
 
+    public ExerciseMirrorRelationship MirrorRelationship { get; init; } =
+        ExerciseMirrorRelationship.Unreviewed;
+
     public int MuscularDemand { get; init; }
 
     public int Score { get; set; } = 0;

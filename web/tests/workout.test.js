@@ -9,6 +9,7 @@ import {
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
   EXERCISE_INSECT_COMPATIBILITY,
+  EXERCISE_MIRROR_RELATIONSHIP,
   HARD_MUSCULAR_DEMAND,
   MAXIMUM_MUSCULAR_DEMAND,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
@@ -49,6 +50,7 @@ import {
   isSelectableForWorkoutProfile,
   isCompatibleWithWorkoutModifiers,
   isModifierMetadataComplete,
+  isMirrorPreferred,
   normalizeMinutes,
   parseStoredState,
   usesTimedSides,
@@ -319,7 +321,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 7);
+  assert.equal(state.version, 8);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -399,6 +401,92 @@ test("silence and insect compose as independent positive requirements", () => {
   );
 });
 
+test("mirror is equipment availability and not a restrictive form filter", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const mirrorOnly = {
+    ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+    equipment: "Mirror",
+  };
+  const benefitsGreatly = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+  };
+  const agnostic = exercise(
+    3,
+    primary,
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+
+  assert.equal(isCompatibleWithWorkoutModifiers(mirrorOnly, WORKOUT_MODIFIERS.None), false);
+  assert.equal(isCompatibleWithWorkoutModifiers(benefitsGreatly, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(agnostic, WORKOUT_MODIFIERS.None), true);
+  assert.ok([mirrorOnly, benefitsGreatly, agnostic].every((item) =>
+    isCompatibleWithWorkoutModifiers(item, WORKOUT_MODIFIERS.Mirror)));
+  assert.equal(isMirrorPreferred(mirrorOnly, WORKOUT_MODIFIERS.Mirror), true);
+  assert.equal(isMirrorPreferred(benefitsGreatly, WORKOUT_MODIFIERS.Mirror), true);
+  assert.equal(isMirrorPreferred(agnostic, WORKOUT_MODIFIERS.Mirror), false);
+});
+
+test("mirror metadata is complete only when relationship matches equipment", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const agnostic = exercise(
+    1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+  const benefitsGreatly = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+  };
+  const mirrorOnly = {
+    ...exercise(3, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+    equipment: "Mirror",
+  };
+
+  assert.equal(isModifierMetadataComplete([agnostic, benefitsGreatly, mirrorOnly]), true);
+  assert.equal(isModifierMetadataComplete([{
+    ...mirrorOnly,
+    equipment: "None",
+  }]), false);
+  assert.equal(isModifierMetadataComplete([{
+    ...benefitsGreatly,
+    equipment: "Mirror",
+  }]), false);
+  assert.equal(isModifierMetadataComplete([{
+    ...agnostic,
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.Unreviewed,
+  }]), false);
+});
+
+test("mirror relevance breaks score ties but never overrides a real vote", () => {
+  const group = RESOLUTIONS.get(30).groups[0];
+  const agnostic = exercise(
+    1,
+    group.canonicalGroups[0],
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+  const benefitsGreatly = {
+    ...exercise(
+      2,
+      group.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+  };
+  const tied = new WorkoutSession([agnostic, benefitsGreatly], createDefaultState(), () => 0);
+  assert.equal(tied.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Mirror).id, 2);
+
+  agnostic.score = 1;
+  const voted = new WorkoutSession([agnostic, benefitsGreatly], createDefaultState(), () => 0);
+  assert.equal(voted.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Mirror).id, 1);
+});
+
 test("validation profiles grow only with singles and modifier pairs", () => {
   const primitiveModifierCount = SUPPORTED_WORKOUT_MODIFIER_MASK
     .toString(2)
@@ -410,13 +498,14 @@ test("validation profiles grow only with singles and modifier pairs", () => {
     1 + primitiveModifierCount +
       primitiveModifierCount * (primitiveModifierCount - 1) / 2,
   );
-  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 4);
+  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 7);
   assert.equal(
     new Set(WORKOUT_MODIFIER_VALIDATION_PROFILES).size,
     WORKOUT_MODIFIER_VALIDATION_PROFILES.length,
   );
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.None));
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.Insect));
+  assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.Mirror));
 });
 
 test("insect selection is composed with score and coverage instead of post-filtered", () => {
@@ -554,6 +643,13 @@ test("insect profile carries keeps into a long workout", () => {
 });
 
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
+  assert.equal(catalog.filter((exercise) =>
+    exercise.mirrorRelationship ===
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 300);
+  assert.equal(catalog.filter((exercise) =>
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 118);
+  assert.equal(catalog.some((exercise) =>
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly), false);
   assert.equal(isModifierMetadataComplete(catalog), true);
   assert.deepEqual(findWorkoutModifierPairCoverageDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
@@ -569,6 +665,20 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
           profile,
         )));
     }
+  }
+  const allModifiers = WORKOUT_MODIFIERS.Insect |
+    WORKOUT_MODIFIERS.Silence |
+    WORKOUT_MODIFIERS.Mirror;
+  for (const minutes of SUPPORTED_MINUTES) {
+    const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+    session.startWorkout(minutes, allModifiers);
+    assert.equal(session.state.activeWorkoutModifiers, allModifiers);
+    assert.ok(session.getActiveGroups().every((group) =>
+      isSelectableForWorkoutProfile(
+        session.getSelectedExercise(group),
+        group,
+        allModifiers,
+      )));
   }
 });
 
@@ -595,7 +705,9 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
   const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
     .filter((result) =>
       result.minutes === 30 &&
-      result.groupId === targetGroup.id);
+      result.groupId === targetGroup.id &&
+      result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+      result.secondModifier === WORKOUT_MODIFIERS.Silence);
 
   assert.equal(deficiencies.length, 1);
   assert.equal(deficiencies[0].firstModifier, WORKOUT_MODIFIERS.Insect);
@@ -618,9 +730,39 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
   ));
   assert.deepEqual(
     findWorkoutModifierPairCoverageDeficiencies(exercises).filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id),
+      result.minutes === 30 && result.groupId === targetGroup.id &&
+      result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+      result.secondModifier === WORKOUT_MODIFIERS.Silence),
     [],
   );
+});
+
+test("mirror-on pairwise floors count only mirror-relevant relationships", () => {
+  const targetGroup = RESOLUTIONS.get(30).groups[0];
+  const exercises = Array.from({ length: 9 }, (_, index) => ({
+    ...exercise(
+      index + 1,
+      targetGroup.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ),
+    mirrorRelationship: index < 4
+      ? EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly
+      : EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
+  }));
+
+  const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
+    .filter((result) =>
+      result.minutes === 30 &&
+      result.groupId === targetGroup.id &&
+      result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+      result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
+      result.secondModifierEnabled);
+
+  assert.equal(deficiencies.length, 2);
+  assert.ok(deficiencies.every((deficiency) =>
+    deficiency.matchingExerciseCount === 4));
 });
 
 test("pairwise floor never counts unreviewed modifier metadata", () => {
@@ -646,7 +788,9 @@ test("pairwise floor never counts unreviewed modifier metadata", () => {
 
   const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
     .filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id);
+      result.minutes === 30 && result.groupId === targetGroup.id &&
+      result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+      result.secondModifier === WORKOUT_MODIFIERS.Silence);
 
   assert.equal(deficiencies.length, 4);
   assert.ok(deficiencies.every((deficiency) =>
@@ -672,9 +816,9 @@ test("modifier materiality rejects token and pairwise-redundant filters", () => 
       true,
     ));
   const tokenDeficiencies = findWorkoutModifierMaterialityDeficiencies(tokenCatalog);
-  assert.equal(tokenDeficiencies.length, 4);
+  assert.equal(tokenDeficiencies.length, 9);
   assert.ok(tokenDeficiencies.every((deficiency) =>
-    deficiency.excludedExerciseCount === 0));
+    deficiency.materialExerciseCount === 0));
 
   const pairwiseRedundantCatalog = [
     ...Array.from({ length: 20 }, (_, index) => coversEveryGroup(
@@ -694,11 +838,11 @@ test("modifier materiality rejects token and pairwise-redundant filters", () => 
   assert.ok(pairwiseDeficiencies.some((deficiency) =>
     deficiency.baseProfile === WORKOUT_MODIFIERS.Silence &&
     deficiency.enabledModifier === WORKOUT_MODIFIERS.Insect &&
-    deficiency.excludedExerciseCount === 0));
+    deficiency.materialExerciseCount === 0));
   assert.ok(pairwiseDeficiencies.some((deficiency) =>
     deficiency.baseProfile === WORKOUT_MODIFIERS.Insect &&
     deficiency.enabledModifier === WORKOUT_MODIFIERS.Silence &&
-    deficiency.excludedExerciseCount === 0));
+    deficiency.materialExerciseCount === 0));
 });
 
 test("modifier materiality never credits unreviewed metadata", () => {
@@ -729,7 +873,7 @@ test("modifier materiality never credits unreviewed metadata", () => {
       result.baseProfile === WORKOUT_MODIFIERS.None &&
       result.enabledModifier === WORKOUT_MODIFIERS.Insect);
 
-  assert.equal(deficiency.excludedExerciseCount, 0);
+  assert.equal(deficiency.materialExerciseCount, 0);
   assert.equal(deficiency.affectedGroupCount, 0);
 });
 
@@ -1372,7 +1516,7 @@ test("version five long workout recomputes direction allocation without enabling
   );
   restored.normalizeActiveLongWorkoutAllocation();
 
-  assert.equal(restored.state.version, 7);
+  assert.equal(restored.state.version, 8);
   assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
@@ -2462,8 +2606,8 @@ test("alternating loop corrections rebuild workouts without resetting scores", (
 test("direction name correction preserves workout state and scores", () => {
   assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(38), false);
   assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(38), false);
-  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(39), false);
-  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(39), false);
+  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(40), false);
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(40), false);
   const state = createDefaultState();
   const groupId = RESOLUTIONS.get(3).groups[0].id;
   state.catalogRevision = 37;
@@ -2678,6 +2822,7 @@ function exercise(
   insectCompatibility = EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
   silent = true,
   muscularDemand = 0,
+  mirrorRelationship = EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
 ) {
   return {
     id,
@@ -2688,6 +2833,10 @@ function exercise(
     score,
     muscularDemand,
     insectCompatibility,
+    mirrorRelationship,
+    equipment: mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly
+      ? "Mirror"
+      : "None",
     silent,
     sideSequence: "Continuous",
     directionSequence: "None",

@@ -89,6 +89,7 @@ public sealed class WorkoutMuscleBudgetPolicyTests
             HoldFramePercent = 0,
             SideSequence = sideSequence,
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
+            MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,

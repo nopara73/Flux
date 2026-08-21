@@ -49,6 +49,20 @@ public sealed class CatalogInvariantTests
         Assert.Equal(2, exercises.Single(exercise => exercise.Id == 101).MuscularDemand);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
+        Assert.DoesNotContain(exercises, exercise =>
+            exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
+        Assert.Equal(
+            300,
+            exercises.Count(exercise =>
+                exercise.MirrorRelationship ==
+                    ExerciseMirrorRelationship.BenefitsGreatly));
+        Assert.Equal(
+            118,
+            exercises.Count(exercise =>
+                exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
+        Assert.DoesNotContain(exercises, exercise =>
+            exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly);
+        Assert.All(exercises, exercise => Assert.Equal("None", exercise.Equipment));
         Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises));
         Assert.All(
             exercises.Where(exercise => exercise.Mode == ExerciseMode.Hold),
@@ -71,8 +85,8 @@ public sealed class CatalogInvariantTests
             materialityDeficiencies.Length == 0,
             string.Join(Environment.NewLine, materialityDeficiencies.Select(deficiency =>
                 $"{deficiency.Modifier} in {deficiency.ContextProfile}: " +
-                $"released {deficiency.ReleasedExerciseCount}/" +
-                $"{deficiency.RequiredReleasedExerciseCount} exercises and affected " +
+                $"material {deficiency.MaterialExerciseCount}/" +
+                $"{deficiency.RequiredMaterialExerciseCount} exercises and affected " +
                 $"{deficiency.AffectedBucketCount}/" +
                 $"{deficiency.RequiredAffectedBucketCount} buckets")));
         WorkoutProfileLineupDeficiency[] lineupDeficiencies =
@@ -96,6 +110,20 @@ public sealed class CatalogInvariantTests
                         group,
                         profile)));
             }
+        }
+        WorkoutModifiers allModifiers = WorkoutModifiers.Insect |
+            WorkoutModifiers.Silence |
+            WorkoutModifiers.Mirror;
+        foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+        {
+            var profileState = new WorkoutState();
+            profileService.StartWorkout(profileState, minutes, allModifiers);
+            Assert.Equal(allModifiers, profileState.ActiveWorkoutModifiers);
+            Assert.All(profileService.GetActiveGroups(profileState), group =>
+                Assert.True(WorkoutModifierPolicy.IsSelectable(
+                    profileService.GetSelectedExercise(profileState, group),
+                    group,
+                    allModifiers)));
         }
         Exercise[] breathingExercises = exercises
             .Where(exercise =>

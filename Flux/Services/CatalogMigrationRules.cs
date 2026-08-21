@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 39;
+    public const int CurrentCatalogRevision = 40;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
