@@ -167,11 +167,11 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void MirrorOnPairwiseFloorCountsEveryEligibleRelationship()
+    public void MirrorOnPairwiseFloorRequiresMirrorRelevantRelationships()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
         CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
-        Exercise[] exercises = Enumerable.Range(1, 5)
+        Exercise[] agnosticExercises = Enumerable.Range(1, 5)
             .Select(id => Exercise(
                 id,
                 primary,
@@ -179,7 +179,8 @@ public sealed class WorkoutModifierPolicyTests
             .ToArray();
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
-            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
+                    agnosticExercises)
                 .Where(result => result.Minutes == 30 &&
                     result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
@@ -187,7 +188,33 @@ public sealed class WorkoutModifierPolicyTests
                     result.SecondModifierEnabled)
                 .ToArray();
 
-        Assert.Empty(deficiencies);
+        Assert.Equal(2, deficiencies.Length);
+        Assert.All(deficiencies, deficiency =>
+            Assert.Equal(0, deficiency.MatchingExerciseCount));
+
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
+                agnosticExercises),
+            result => result.Minutes == 30 &&
+                result.GroupId == group.Id &&
+                result.FirstModifier == WorkoutModifiers.Insect &&
+                result.SecondModifier == WorkoutModifiers.Mirror &&
+                !result.SecondModifierEnabled);
+
+        Exercise[] greatlyBenefitedExercises = Enumerable.Range(6, 5)
+            .Select(id => Exercise(
+                id,
+                primary,
+                mirrorRelationship:
+                    ExerciseMirrorRelationship.BenefitsGreatly))
+            .ToArray();
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
+                agnosticExercises.Concat(greatlyBenefitedExercises).ToArray()),
+            result => result.Minutes == 30 &&
+                result.GroupId == group.Id &&
+                result.FirstModifier == WorkoutModifiers.Insect &&
+                result.SecondModifier == WorkoutModifiers.Mirror);
     }
 
     [Fact]

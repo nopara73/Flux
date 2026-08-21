@@ -1286,6 +1286,32 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
+    886 = @{
+        File = 'boxing-slip-roll.mp4'
+        Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 191.0
+        DurationSeconds = 7.0
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    887 = @{
+        File = 'boxing-slip-roll.mp4'
+        Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 168.5
+        DurationSeconds = 5.7
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
     145 = @{
         File = 'alternating-standing-knee-extension.mp4'
         Url = 'https://www.youtube.com/watch?v=EKyfDtlhKuE'

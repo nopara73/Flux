@@ -1,14 +1,14 @@
 # Mirror relationship audit
 
-The 418 retained exercises were re-reviewed against the physical-mirror
+The 420 retained exercises were re-reviewed against the physical-mirror
 equipment contract, not against whether their demonstration video may be
 horizontally mirrored for a timed second side.
 
 - `MirrorOnly`: the reflection is part of the defined exercise. Count: 1.
 - `BenefitsGreatly`: continuous live self-view substantially changes technique,
-  alignment, or symmetry. Count: 52.
+  alignment, or symmetry. Count: 58.
 - `Agnostic`: the mirror offers no more than ordinary optional form checking.
-  Count: 365.
+  Count: 361.
 
 Merely being able to see oneself does not qualify as `BenefitsGreatly`. Basic
 squats, lunges, stretches, reaches, marches, circles, and simple mobility are
@@ -17,6 +17,15 @@ dependency. The retained greatly-benefited set is concentrated in technical
 martial-arts movements, dance and alignment-sensitive poses, difficult
 single-leg balance work, and a small number of movements where live feedback
 reveals otherwise hidden plane or symmetry errors.
+
+The current technical set includes the exact planted shadow-boxing head-defense
+family: `Shadow Boxing`, `Boxing Slip`, `Boxing Roll`, `Boxing Duck`, and
+`Boxing Pullback`. A live reflection provides the visual target and exposes
+guard position, head path, and whether the boxer actually clears the centerline.
+The alignment-sensitive set also includes the four retained wide-plié movements,
+where live frontal feedback materially exposes knee tracking, stance symmetry,
+and torso drift. These are movement-specific reasons, not generic claims that
+all boxing or squat movements benefit greatly from seeing oneself.
 
 Exercise 500 is `Mirror-Guided Straight Jaw Opening`. Its packaged front-view
 demonstration includes a midline guide, and the exercise requires watching that
@@ -29,16 +38,19 @@ This requirement follows the established straight-opening protocol published
 by [Newcastle Hospitals NHS Foundation Trust](https://www.newcastle-hospitals.nhs.uk/resources/temporomandibular-disorders-tmd/),
 which prescribes live mirror feedback to detect sideways jaw movement.
 
-The five-exercise pairwise floor is a workout-viability guarantee. Every
-selectable exercise counts toward it, including `Agnostic` exercises when Mirror
-is on. It is intentionally not a five-per-muscle mirror-relevance quota. Mirror
-materiality is checked separately: `MirrorOnly` and `BenefitsGreatly` must
-jointly meet the global materiality and anatomical-breadth thresholds alone and
-with either paired modifier enabled.
+The five-exercise pairwise floor is both a workout-viability and modifier-
+coverage guarantee. In Mirror-on states, only `MirrorOnly` and
+`BenefitsGreatly` exercises count toward the floor for each workout muscle
+bucket and paired-modifier state. `Agnostic` exercises remain selectable but
+cannot make Mirror coverage appear complete. In Mirror-off states, every
+normally selectable exercise except `MirrorOnly` counts. Genuine deficiencies
+must remain visible rather than being hidden by inflated relationship labels.
+Mirror materiality is checked separately across the whole relevant set and its
+anatomical breadth.
 
 ## Classification guardrails
 
-The current 52 `BenefitsGreatly` assignments are the result of this audit, not a
+The current 58 `BenefitsGreatly` assignments are the result of this audit, not a
 quota, target, or ceiling. The count may move in either direction as the catalog
 changes, but only because individual exercises genuinely meet or cease to meet
 the semantic standard—not to satisfy modifier coverage or materiality checks.

@@ -41,8 +41,8 @@ public sealed class CatalogInvariantTests
                 Exercise.MaximumMuscularDemand);
         });
         Assert.Equal(111, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(184, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(123, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(185, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(124, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Assert.All(exercises, exercise => Assert.Equal(0, exercise.Score));
         Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
         Assert.Equal(1, exercises.Single(exercise => exercise.Id == 264).MuscularDemand);
@@ -52,12 +52,12 @@ public sealed class CatalogInvariantTests
         Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
-            52,
+            58,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            365,
+            361,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
         Assert.Equal(

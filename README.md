@@ -117,8 +117,9 @@ Turning Insect or Silence off relaxes its requirement; turning Mirror off makes
 mirror-only exercises unavailable while leaving mirror-benefited and agnostic
 exercises eligible. For every modifier pair, duration, workout group, and all
 four real on/off states, the catalog must provide at least five selectable
-exercises. Every selectable exercise counts toward that viability floor;
-relationship labels are never promoted to satisfy a per-muscle quota.
+exercises. In Mirror-on states, all three relationships remain selectable, but
+only `MirrorOnly` and `BenefitsGreatly` count toward Mirror's five-exercise
+coverage floor. Relationship labels are never promoted to hide a genuine gap.
 Every supported duration and profile must also admit a completely distinct
 lineup.
 
@@ -127,7 +128,7 @@ remove at least five exercises or 5% of the previous candidate pool, whichever
 is larger. Mirror must have at least that many jointly reviewed `MirrorOnly` and
 `BenefitsGreatly` exercises. Each modifier must affect at least 10% of the
 canonical buckets, both alone and with its paired modifier enabled.
-The current 52 `BenefitsGreatly` assignments are an audited result, not a target
+The current 58 `BenefitsGreatly` assignments are an audited result, not a target
 or ceiling. Ordinary form checking never qualifies, and relationship labels
 cannot be promoted to satisfy coverage or materiality checks.
 
@@ -179,7 +180,7 @@ before rest remains neutral.
 
 ## Exercise catalog
 
-Flux ships with 418 reviewed movements spanning compound strength and
+Flux ships with 420 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.

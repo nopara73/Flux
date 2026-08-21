@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 418 human-demonstrated standing movements. Exercises are chosen
+Flux contains 420 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -14,9 +14,11 @@ exercise must train at least half of that bucket's canonical leaves. For every
 modifier pair, every bucket has at least five choices under each real UI state:
 on/on, on/off, off/on, and off/off. Restrictive modifiers relax when off; the
 Mirror equipment modifier instead excludes mirror-only movements when off and
-admits them when on. The five-exercise pairwise floor is a viability rule, so
-every selectable exercise counts; an `Agnostic` movement does not become
-mirror-benefited merely because a muscle bucket needs more choices. Separate
+admits them when on. In a Mirror-on state, only `MirrorOnly` and
+`BenefitsGreatly` exercises count toward the five-exercise pairwise floor;
+`Agnostic` exercises remain selectable but cannot make Mirror coverage appear
+complete. In a Mirror-off state, every normally selectable exercise except
+`MirrorOnly` counts. Separate
 quadratic materiality checks ensure restrictive modifiers remove, and Mirror
 categories 1-2 supply, a meaningful, anatomically broad candidate set alone and
 with each paired modifier. Primary ownership is a preference after
@@ -92,17 +94,23 @@ equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 
-The current 52 `BenefitsGreatly` assignments are an audited result, not a quota,
+The current 58 `BenefitsGreatly` assignments are an audited result, not a quota,
 target, or ceiling. Each entry must belong to one of the manifest's narrow
 audited criteria, and ordinary optional form checking does not qualify. Changes
 to the count must follow the exercise semantics, never a coverage requirement.
+
+For pairwise catalog validation, a Mirror-on muscle bucket must have five
+qualifying category 1–2 exercises after applying the paired modifier state.
+`Agnostic` exercises remain runtime candidates but do not satisfy this Mirror
+coverage floor. Mirror-off states count every normally selectable exercise
+except `MirrorOnly`.
 
 ## Media quality
 
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 418 included
+movements. All 420 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

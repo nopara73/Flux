@@ -83,7 +83,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 41;
+export const CURRENT_CATALOG_REVISION = 42;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -152,6 +152,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [36, new Set([684])],
   [37, new Set([31, 176, 195, 391, 413, 884, 885])],
   [41, new Set([500])],
+  [42, new Set([105, 107, 108, 245, 280, 591, 884, 885, 905])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -805,6 +806,13 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
             const profile =
               (firstModifierEnabled ? firstRule.flag : WORKOUT_MODIFIERS.None) |
               (secondModifierEnabled ? secondRule.flag : WORKOUT_MODIFIERS.None);
+            const requiresMirrorRelevance =
+              requiresMirrorRelevanceForPairState(
+                firstRule.flag,
+                firstModifierEnabled,
+                secondRule.flag,
+                secondModifierEnabled,
+              );
             return {
               minutes,
               groupId: group.id,
@@ -816,7 +824,8 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
               matchingExerciseCount: new Set(exercises
                 .filter((exercise) =>
                   MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
-                  isSelectableForWorkoutProfile(exercise, group, profile))
+                  isSelectableForWorkoutProfile(exercise, group, profile) &&
+                  (!requiresMirrorRelevance || isMirrorRelevant(exercise)))
                 .map((exercise) => exercise.id)).size,
               requiredExerciseCount:
                 MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
@@ -824,6 +833,16 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
           })))
         .filter((result) =>
           result.matchingExerciseCount < result.requiredExerciseCount)));
+}
+
+function requiresMirrorRelevanceForPairState(
+  firstModifier,
+  firstModifierEnabled,
+  secondModifier,
+  secondModifierEnabled,
+) {
+  return (firstModifierEnabled && firstModifier === WORKOUT_MODIFIERS.Mirror) ||
+    (secondModifierEnabled && secondModifier === WORKOUT_MODIFIERS.Mirror);
 }
 
 export function findWorkoutModifierMaterialityDeficiencies(exercises) {

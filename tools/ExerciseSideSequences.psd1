@@ -115,6 +115,7 @@
     750 = 'ScreenLeftThenRight'
     751 = 'ScreenLeftThenRight'
     752 = 'ScreenLeftThenRight'
+    887 = 'Alternating'
     910 = 'ScreenLeftThenRight'
     915 = 'ScreenLeftThenRight'
     939 = 'ScreenLeftThenRight'

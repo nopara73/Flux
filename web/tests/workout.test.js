@@ -171,7 +171,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [111, 184, 123],
+    [111, 185, 124],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -645,9 +645,9 @@ test("insect profile carries keeps into a long workout", () => {
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
-      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 52);
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 58);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 365);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 361);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 1);
@@ -739,9 +739,9 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
   );
 });
 
-test("mirror-on pairwise floors count every eligible relationship", () => {
+test("mirror-on pairwise floors require mirror-relevant relationships", () => {
   const targetGroup = RESOLUTIONS.get(30).groups[0];
-  const exercises = Array.from({ length: 5 }, (_, index) => ({
+  const agnosticExercises = Array.from({ length: 5 }, (_, index) => ({
     ...exercise(
       index + 1,
       targetGroup.canonicalGroups[0],
@@ -752,7 +752,9 @@ test("mirror-on pairwise floors count every eligible relationship", () => {
     mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
   }));
 
-  const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
+  const deficiencies = findWorkoutModifierPairCoverageDeficiencies(
+    agnosticExercises,
+  )
     .filter((result) =>
       result.minutes === 30 &&
       result.groupId === targetGroup.id &&
@@ -760,7 +762,41 @@ test("mirror-on pairwise floors count every eligible relationship", () => {
       result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
       result.secondModifierEnabled);
 
-  assert.deepEqual(deficiencies, []);
+  assert.equal(deficiencies.length, 2);
+  assert.ok(deficiencies.every((result) => result.matchingExerciseCount === 0));
+
+  assert.deepEqual(
+    findWorkoutModifierPairCoverageDeficiencies(agnosticExercises)
+      .filter((result) =>
+        result.minutes === 30 &&
+        result.groupId === targetGroup.id &&
+        result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+        result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
+        !result.secondModifierEnabled),
+    [],
+  );
+
+  const greatlyBenefitedExercises = Array.from({ length: 5 }, (_, index) => ({
+    ...exercise(
+      6 + index,
+      targetGroup.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+  }));
+  assert.deepEqual(
+    findWorkoutModifierPairCoverageDeficiencies([
+      ...agnosticExercises,
+      ...greatlyBenefitedExercises,
+    ]).filter((result) =>
+      result.minutes === 30 &&
+      result.groupId === targetGroup.id &&
+      result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+      result.secondModifier === WORKOUT_MODIFIERS.Mirror),
+    [],
+  );
 });
 
 test("pairwise floor never counts unreviewed modifier metadata", () => {
@@ -1259,9 +1295,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 418);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 418);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 418);
+  assert.equal(catalog.length, 420);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 420);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 420);
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -2692,6 +2728,39 @@ test("mirror-only correction drops stale selection but preserves score", () => {
   assert.equal(restored.state.outcomes[groupId], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.scores["500"], -4);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("mirror relationship and muscle corrections rebuild workout without resetting scores", () => {
+  const correctedIds = [105, 107, 108, 245, 280, 591, 884, 885, 905];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(42)],
+    correctedIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(42), false);
+  const state = createDefaultState();
+  const changedGroup = RESOLUTIONS.get(3).groups[0].id;
+  const retainedGroup = RESOLUTIONS.get(3).groups[1].id;
+  state.catalogRevision = 41;
+  state.activeWorkoutMinutes = 3;
+  state.selectedExerciseIds[changedGroup] = 884;
+  state.selectedExerciseIds[retainedGroup] = 22;
+  state.outcomes[changedGroup] = "x";
+  state.outcomes[retainedGroup] = "tick";
+  state.pendingRestGroupId = changedGroup;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+  state.scores["884"] = -4;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup], undefined);
+  assert.equal(restored.state.outcomes[changedGroup], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup], 22);
+  assert.equal(restored.state.outcomes[retainedGroup], "tick");
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.scores["884"], -4);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

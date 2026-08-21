@@ -200,6 +200,10 @@ test("web and mobile persist one combined duration and modifier selection contex
     modifierPolicy,
     /MinimumExercisesPerPairStatePerGroup\s*=\s*5[\s\S]*FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies/,
   );
+  assert.match(
+    modifierPolicy,
+    /RequiresMirrorRelevanceForPairState[\s\S]*requiresMirrorRelevance[\s\S]*IsMirrorRelevant\(exercise\)/,
+  );
   assert.equal(
     MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
     integerConstant(modifierPolicy, "MinimumExercisesPerPairStatePerGroup"),
@@ -227,6 +231,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(
     workoutModule,
     /matchingExerciseCount:[\s\S]*MODIFIER_RULES\.every\(\(rule\)\s*=>\s*rule\.isReviewed\(exercise\)\)/,
+  );
+  assert.match(
+    workoutModule,
+    /requiresMirrorRelevanceForPairState[\s\S]*requiresMirrorRelevance[\s\S]*isMirrorRelevant\(exercise\)/,
   );
   assert.doesNotMatch(modifierPolicy, /1\s*<<\s*Rules\.Length/);
   assert.doesNotMatch(workoutModule, /1\s*<<\s*MODIFIER_RULES\.length/);

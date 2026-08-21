@@ -1819,7 +1819,7 @@
         Practice = 'Boxing'
         MotionProfile = 'ShovelHookCombo'
         Primary = 'Chest'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors')
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors', 'ScapularGirdle')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2414,7 +2414,7 @@
         Practice = 'Boxing'
         MotionProfile = 'MartialHand'
         Primary = 'Chest'
-        Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors', 'ForearmExtensorsAndSupinators')
+        Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors', 'ForearmExtensorsAndSupinators', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6182,7 +6182,7 @@
         Practice = 'Boxing'
         MotionProfile = 'MartialHand'
         Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot')
+        Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -7228,6 +7228,58 @@
             StartSeconds = 0
             DurationSeconds = 32
             FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    886 = @{
+        RetiredName = 'Boxing Weave'
+        Name = 'Boxing Duck'
+        Practice = 'Boxing'
+        MotionProfile = 'BoxingHeadMovement'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'boxing-slip-roll.mp4'
+            Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+            SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 191.0
+            DurationSeconds = 7.0
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    887 = @{
+        RetiredName = 'Boxing Pull-Counter Lean'
+        Name = 'Boxing Pullback'
+        Practice = 'Boxing'
+        MotionProfile = 'BoxingHeadMovement'
+        Primary = 'SpinalExtensors'
+        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'boxing-slip-roll.mp4'
+            Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+            SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 168.5
+            DurationSeconds = 5.7
+            FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false

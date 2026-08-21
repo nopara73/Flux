@@ -148,6 +148,12 @@ public static class WorkoutModifierPolicy
                                     (secondEnabled
                                         ? pair.Second.Flag
                                         : WorkoutModifiers.None);
+                                bool requiresMirrorRelevance =
+                                    RequiresMirrorRelevanceForPairState(
+                                        pair.First.Flag,
+                                        firstEnabled,
+                                        pair.Second.Flag,
+                                        secondEnabled);
                                 return new
                                 {
                                     Minutes = minutes,
@@ -163,7 +169,9 @@ public static class WorkoutModifierPolicy
                                             IsSelectable(
                                                 exercise,
                                                 group,
-                                                profile))
+                                                profile) &&
+                                            (!requiresMirrorRelevance ||
+                                                IsMirrorRelevant(exercise)))
                                         .Select(exercise => exercise.Id)
                                         .Distinct()
                                         .Count(),
@@ -181,6 +189,16 @@ public static class WorkoutModifierPolicy
                 result.Count,
                 MinimumExercisesPerPairStatePerGroup))
             .ToArray();
+    }
+
+    private static bool RequiresMirrorRelevanceForPairState(
+        WorkoutModifiers firstModifier,
+        bool firstEnabled,
+        WorkoutModifiers secondModifier,
+        bool secondEnabled)
+    {
+        return (firstEnabled && firstModifier == WorkoutModifiers.Mirror) ||
+            (secondEnabled && secondModifier == WorkoutModifiers.Mirror);
     }
 
     public static IReadOnlyList<WorkoutModifierMaterialityDeficiency>
