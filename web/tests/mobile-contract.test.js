@@ -374,10 +374,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*60/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*61/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+59\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+60\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(

@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 429 retained exercises are reviewed against physical mirror equipment, not
+The 438 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -17,7 +17,7 @@ Each exercise has both a relationship and a minimum useful coverage:
 | `MirrorOnly` | `FullBody` | Requires tall | 5 |
 | `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 22 |
 | `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 36 |
-| `Agnostic` | `None` | Unaffected | 361 |
+| `Agnostic` | `None` | Unaffected | 370 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
@@ -27,27 +27,28 @@ require `equipment: "None"`.
 
 The upper-body set is:
 
-- `Mirror-Guided Eyebrow Raise`
-- `Mirror-Guided Firm Eye Closure`
-- `Mirror-Guided Straight Jaw Opening`
-- `Mirror-Guided Lip Pucker`
-- `Mirror-Guided Symmetric Smile`
+- `One-Eyebrow Isolation Practice`
+- `Silent Vowel-Shape Sequence`
+- `Smile-to-Neutral Transitions`
+- `Tutting Box Sequence`
+- `Arm-Wave Isolation Practice`
 
 The full-body set is:
 
-- `Mirror-Guided Bodyweight Squat`
-- `Mirror-Guided Lateral Weight Shift`
-- `Mirror-Guided Single-Leg Pelvic Control`
-- `Mirror-Guided Bent-Knee Front-to-Back Leg Swing`
-- `Mirror-Guided Bent-Knee Leg Swing with Pause`
+- `Front Double-Biceps Pose Hold`
+- `Front Lat-Spread Pose Hold`
+- `Side-Chest Pose Hold`
+- `Side-Triceps Pose Hold`
+- `Abdominals-and-Thighs Pose Hold`
 
-These are established visual-feedback exercises with exact human
-demonstrations. The facial movements come from a facial-neuromuscular
-telerehabilitation protocol with mirror feedback. Straight jaw opening follows
-the established live-midline protocol used to detect lateral deviation. The
-full-body set uses published or clinical visual-feedback squat, weight-shift,
-pelvic-control, and dynamic-leg-control demonstrations. A generic movement was
-not renamed merely because a mirror could provide ordinary form checking.
+These are established reflection practices with exact human demonstrations.
+The compact-mirror set uses live self-view to isolate an eyebrow, silently form
+vowels, control a smile-to-neutral transition, and correct the visual geometry
+of tutting and arm-wave illusions. The tall-mirror set contains five standard
+bodybuilding poses whose intended whole-body line and contraction are judged
+through live full-body view. The reflection is part of each practice; ordinary
+movements do not become `MirrorOnly` merely because a mirror could offer
+optional form checking.
 
 ## Benefits-greatly guardrails
 

@@ -40,9 +40,9 @@ public sealed class CatalogInvariantTests
                 Exercise.MinimumMuscularDemand,
                 Exercise.MaximumMuscularDemand);
         });
-        Assert.Equal(116, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(188, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(125, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(119, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(190, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(129, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Assert.All(exercises, exercise => Assert.Equal(0, exercise.Score));
         Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
         Assert.Equal(1, exercises.Single(exercise => exercise.Id == 264).MuscularDemand);
@@ -57,7 +57,7 @@ public sealed class CatalogInvariantTests
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            361,
+            370,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
         Assert.Equal(
@@ -76,9 +76,35 @@ public sealed class CatalogInvariantTests
         Assert.Equal(36, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(361, exercises.Count(exercise =>
+        Assert.Equal(370, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.None));
+        Assert.DoesNotContain(exercises, exercise => exercise.Id == 90);
+        Assert.DoesNotContain(exercises, exercise =>
+            exercise.Name.StartsWith("Mirror-Guided ", StringComparison.Ordinal));
+        Assert.Equal(
+            new HashSet<int> { 515, 520, 521, 522, 523 },
+            exercises.Where(exercise =>
+                    exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly &&
+                    exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.UpperBody)
+                .Select(exercise => exercise.Id)
+                .ToHashSet());
+        Assert.Equal(
+            new HashSet<int> { 524, 525, 526, 527, 528 },
+            exercises.Where(exercise =>
+                    exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly &&
+                    exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody)
+                .Select(exercise => exercise.Id)
+                .ToHashSet());
+        Assert.All(
+            exercises.Where(exercise =>
+                new HashSet<int> { 94, 95, 99, 100, 497, 498, 500, 511, 514 }
+                    .Contains(exercise.Id)),
+            exercise =>
+            {
+                Assert.Equal(ExerciseMirrorRelationship.Agnostic, exercise.MirrorRelationship);
+                Assert.Equal("None", exercise.Equipment);
+            });
         Assert.All(
             exercises.Where(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly),
@@ -177,7 +203,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(135, timedSideExercises.Length);
+        Assert.Equal(137, timedSideExercises.Length);
         Assert.DoesNotContain(timedSideExercises, exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] alternatingExercises = exercises

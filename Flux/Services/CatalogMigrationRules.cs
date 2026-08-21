@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 43;
+    public const int CurrentCatalogRevision = 44;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -210,9 +210,33 @@ public static class CatalogMigrationRules
                 [758] = new(
                     "Reverse Knee-and-Ankle Circles",
                     "Backward Knee-and-Ankle Circles"),
+                [94] = new(
+                    "Mirror-Guided Lateral Weight Shift",
+                    "Lateral Weight Shift"),
+                [95] = new(
+                    "Mirror-Guided Single-Leg Pelvic Control",
+                    "Single-Leg Pelvic Control"),
+                [99] = new(
+                    "Mirror-Guided Bent-Knee Front-to-Back Leg Swing",
+                    "Bent-Knee Front-to-Back Leg Swing"),
+                [100] = new(
+                    "Mirror-Guided Bent-Knee Leg Swing with Pause",
+                    "Bent-Knee Leg Swing with Pause"),
+                [497] = new(
+                    "Mirror-Guided Eyebrow Raise",
+                    "Eyebrow Raise"),
+                [498] = new(
+                    "Mirror-Guided Firm Eye Closure",
+                    "Firm Eye Closure"),
                 [500] = new(
-                    "Controlled Jaw Open and Close",
-                    "Mirror-Guided Straight Jaw Opening"),
+                    "Mirror-Guided Straight Jaw Opening",
+                    "Straight Jaw Opening"),
+                [511] = new(
+                    "Mirror-Guided Lip Pucker",
+                    "Lip Pucker"),
+                [514] = new(
+                    "Mirror-Guided Symmetric Smile",
+                    "Symmetric Smile"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -248,6 +272,10 @@ public static class CatalogMigrationRules
                 {
                     "Breath-Integrated Weight Shift",
                     "Alternating Breath-Integrated Weight Shift",
+                },
+                [500] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Controlled Jaw Open and Close",
                 },
                 [398] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -779,7 +807,8 @@ public static class CatalogMigrationRules
         463, 464, 465, 466, 468, 469, 470, 471, 472, 473, 476, 478, 479, 480,
         484, 485, 486, 487, 488, 489, 494, 496, 517, 518, 519,
         490, 491, 492, 493, 495, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
-        509, 510, 511, 512, 513, 514, 516, 572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
+        509, 510, 511, 512, 513, 514, 515, 516, 520, 521, 522, 523, 524, 525, 526, 527, 528,
+        572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
         816, 834, 843, 845, 886, 887, 971, 986, 987, 996, 997, 998, 999,
@@ -787,7 +816,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
     [
-        229,
+        90, 229,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -881,6 +910,7 @@ public static class CatalogMigrationRules
                 [41] = new HashSet<int> { 500 },
                 [42] = new HashSet<int> { 105, 107, 108, 245, 280, 591, 884, 885, 905 },
                 [43] = new HashSet<int> { 90, 94, 95, 99, 100, 497, 498, 511, 514 },
+                [44] = new HashSet<int> { 90, 94, 95, 99, 100, 497, 498, 500, 511, 514 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -953,6 +983,7 @@ public static class CatalogMigrationRules
                 },
                 [36] = new HashSet<int> { 684 },
                 [43] = new HashSet<int> { 90, 94, 95, 99, 100, 497, 498, 511, 514 },
+                [44] = new HashSet<int> { 90 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

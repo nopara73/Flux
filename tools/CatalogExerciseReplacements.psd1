@@ -5632,7 +5632,7 @@
     }
     500 = @{
         RetiredName = 'Bharatanatyam Parivartita Griva'
-        Name = 'Mirror-Guided Straight Jaw Opening'
+        Name = 'Straight Jaw Opening'
         Practice = 'Jaw mobility'
         MotionProfile = 'JawMotion'
         Primary = 'CranialMuscles'
@@ -7441,35 +7441,10 @@
             MirrorForAlternation = $false
         }
     }
-    90 = @{
-        RetiredName = 'Alternating Step Pivot'
-        Name = 'Mirror-Guided Bodyweight Squat'
-        Practice = 'Visual-feedback bodyweight training'
-        MotionProfile = 'Squat'
-        Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'AbdominalWall', 'SpinalExtensors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'pmc-virtual-mirror-squat.mp4'
-            Url = 'https://pmc-oa-opendata.s3.amazonaws.com/PMC7805859.1/Video_1.MP4'
-            SourcePage = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7805859/'
-            Human = $true
-            Video = $true
-            StartSeconds = 15.5
-            DurationSeconds = 9.5
-            FramesPerSecond = 10
-            Crop = 'crop=448:448:250:0,eq=brightness=0.15:contrast=1.3:gamma=1.35'
-            PingPong = $false
-            MirrorForAlternation = $false
-        }
-    }
     94 = @{
         RetiredName = 'Kalaripayattu Horse Step'
-        Name = 'Mirror-Guided Lateral Weight Shift'
-        Practice = 'Visual-feedback balance training'
+        Name = 'Lateral Weight Shift'
+        Practice = 'Standing balance training'
         MotionProfile = 'LateralWeightShift'
         Primary = 'HipAbductors'
         Secondary = @('GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall')
@@ -7493,8 +7468,8 @@
     }
     95 = @{
         RetiredName = 'Controlled March'
-        Name = 'Mirror-Guided Single-Leg Pelvic Control'
-        Practice = 'Visual-feedback balance training'
+        Name = 'Single-Leg Pelvic Control'
+        Practice = 'Single-leg balance training'
         MotionProfile = 'SingleLegPelvicControl'
         Primary = 'HipAbductors'
         Secondary = @('GlutealExtensors', 'DeepHipRotators', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
@@ -7518,8 +7493,8 @@
     }
     99 = @{
         RetiredName = 'Figure-Eight Weight Shift'
-        Name = 'Mirror-Guided Bent-Knee Front-to-Back Leg Swing'
-        Practice = 'Visual-feedback dynamic mobility'
+        Name = 'Bent-Knee Front-to-Back Leg Swing'
+        Practice = 'Dynamic leg mobility'
         MotionProfile = 'BentKneeFrontBackLegSwing'
         Primary = 'HipFlexors'
         Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
@@ -7543,8 +7518,8 @@
     }
     100 = @{
         RetiredName = 'Four-Corner Weight Shift'
-        Name = 'Mirror-Guided Bent-Knee Leg Swing with Pause'
-        Practice = 'Visual-feedback dynamic balance'
+        Name = 'Bent-Knee Leg Swing with Pause'
+        Practice = 'Dynamic balance training'
         MotionProfile = 'PausedBentKneeFrontBackLegSwing'
         Primary = 'HipFlexors'
         Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
@@ -7568,8 +7543,8 @@
     }
     497 = @{
         RetiredName = 'Odissi Sundari Griva'
-        Name = 'Mirror-Guided Eyebrow Raise'
-        Practice = 'Facial neuromuscular exercise'
+        Name = 'Eyebrow Raise'
+        Practice = 'Facial movement exercise'
         MotionProfile = 'EyebrowRaise'
         Primary = 'CranialMuscles'
         Secondary = @()
@@ -7594,8 +7569,8 @@
     }
     498 = @{
         RetiredName = 'Bharatanatyam Sundari Griva'
-        Name = 'Mirror-Guided Firm Eye Closure'
-        Practice = 'Facial neuromuscular exercise'
+        Name = 'Firm Eye Closure'
+        Practice = 'Facial movement exercise'
         MotionProfile = 'FirmEyeClosure'
         Primary = 'CranialMuscles'
         Secondary = @()
@@ -7620,8 +7595,8 @@
     }
     511 = @{
         RetiredName = 'Scapular Depression'
-        Name = 'Mirror-Guided Lip Pucker'
-        Practice = 'Facial neuromuscular exercise'
+        Name = 'Lip Pucker'
+        Practice = 'Facial movement exercise'
         MotionProfile = 'LipPucker'
         Primary = 'CranialMuscles'
         Secondary = @()
@@ -7646,8 +7621,8 @@
     }
     514 = @{
         RetiredName = 'Scapular Upward Rotation'
-        Name = 'Mirror-Guided Symmetric Smile'
-        Practice = 'Facial neuromuscular exercise'
+        Name = 'Symmetric Smile'
+        Practice = 'Facial movement exercise'
         MotionProfile = 'SymmetricSmile'
         Primary = 'CranialMuscles'
         Secondary = @()
@@ -7667,6 +7642,264 @@
             FramesPerSecond = 10
             Crop = 'crop=568:568:154:0'
             PingPong = $true
+            MirrorForAlternation = $false
+        }
+    }
+    515 = @{
+        RetiredName = 'Scapular Downward Rotation'
+        Name = 'One-Eyebrow Isolation Practice'
+        Practice = 'Facial action isolation'
+        MotionProfile = 'OneEyebrowIsolation'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'one-eyebrow-picklefox.mp4'
+            Url = 'https://www.youtube.com/watch?v=Fcw-R-jm02M'
+            SourcePage = 'https://www.youtube.com/watch?v=Fcw-R-jm02M'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 70
+            DurationSeconds = 26
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    520 = @{
+        RetiredName = 'Scapular Clock'
+        Name = 'Silent Vowel-Shape Sequence'
+        Practice = 'Speech articulation practice'
+        MotionProfile = 'VowelShapeSequence'
+        Primary = 'CranialMuscles'
+        Secondary = @('AnteriorLateralNeckAndHyoidMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'vowel-shapes.mp4'
+            Url = 'https://www.youtube.com/watch?v=JFaLrfm2rlY'
+            SourcePage = 'https://www.youtube.com/watch?v=JFaLrfm2rlY'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1
+            DurationSeconds = 48
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    521 = @{
+        RetiredName = 'Scapular Figure Eight'
+        Name = 'Smile-to-Neutral Transitions'
+        Practice = 'Acting facial-expression control'
+        MotionProfile = 'SmileNeutralTransition'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'seven-emotions.mp4'
+            Url = 'https://www.youtube.com/watch?v=embYkODkzcs'
+            SourcePage = 'https://www.youtube.com/watch?v=embYkODkzcs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 47.7
+            DurationSeconds = 3.1
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    522 = @{
+        RetiredName = 'Shoulder-Blade Squeeze'
+        Name = 'Tutting Box Sequence'
+        Practice = 'Tutting'
+        MotionProfile = 'TuttingBox'
+        Primary = 'IntrinsicHand'
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'ElbowFlexors', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tutting-box.mp4'
+            Url = 'https://www.youtube.com/watch?v=K_iCdbQ3TMg'
+            SourcePage = 'https://www.youtube.com/watch?v=K_iCdbQ3TMg'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 14
+            DurationSeconds = 45
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    523 = @{
+        RetiredName = 'Serratus Reach'
+        Name = 'Arm-Wave Isolation Practice'
+        Practice = 'Popping and waving'
+        MotionProfile = 'ArmWaveIsolation'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowFlexors', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'arm-wave.mp4'
+            Url = 'https://www.youtube.com/watch?v=0cxkL0-xy0A'
+            SourcePage = 'https://www.youtube.com/watch?v=0cxkL0-xy0A'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 182.8
+            DurationSeconds = 6.2
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    524 = @{
+        RetiredName = 'Standing W Raise'
+        Name = 'Front Double-Biceps Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'FrontDoubleBicepsPose'
+        Primary = 'ElbowFlexors'
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 33
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 47
+            DurationSeconds = 3
+            Crop = 'crop=ih:ih:iw-ih:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    525 = @{
+        RetiredName = 'Standing Y Raise'
+        Name = 'Front Lat-Spread Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'FrontLatSpreadPose'
+        Primary = 'ShoulderAdductorsAndExtensors'
+        Secondary = @('ScapularGirdle', 'Chest', 'ShoulderAbductors', 'RotatorCuff', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 96
+            DurationSeconds = 5
+            Crop = 'crop=ih:ih:iw-ih:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    526 = @{
+        RetiredName = 'Standing T Raise'
+        Name = 'Side-Chest Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'SideChestPose'
+        Primary = 'Chest'
+        Secondary = @('ElbowFlexors', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 132
+            DurationSeconds = 4
+            Crop = 'crop=ih:ih:iw-ih:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    527 = @{
+        RetiredName = 'Standing I Raise'
+        Name = 'Side-Triceps Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'SideTricepsPose'
+        Primary = 'ElbowExtensors'
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'Chest', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 179
+            DurationSeconds = 5
+            Crop = 'crop=ih:ih:iw-ih:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    528 = @{
+        RetiredName = 'Goalpost Open-and-Close'
+        Name = 'Abdominals-and-Thighs Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'AbdominalsAndThighsPose'
+        Primary = 'AbdominalWall'
+        Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'Chest', 'ShoulderAbductors', 'ElbowFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 25
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 277
+            DurationSeconds = 4
+            Crop = 'crop=ih:ih:iw-ih:0'
+            FramesPerSecond = 10
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }

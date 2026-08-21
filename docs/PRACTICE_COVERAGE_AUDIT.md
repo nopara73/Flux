@@ -1,20 +1,13 @@
 # Flux movement-practice coverage audit
 
-> Historical snapshot: this report was generated for the earlier 246-exercise
-> capacity catalog. Flux now ships the 418-exercise canonical muscle-group
-> catalog described in the root README; the practice DAG remains supplementary
-> discovery/provenance material rather than the scheduling taxonomy.
-
-Generated from the then-current catalog and the supplementary movement-practices
-DAG. The DAG remains useful for provenance, discovery, and diversity review;
-capacities were the scheduling taxonomy when this snapshot was produced.
+Generated from the runtime catalog and the supplementary movement-practices DAG. The DAG is used for provenance, discovery, and diversity review; Flux capacities remain the scheduling taxonomy.
 
 ## Outcome
 
-- Runtime catalog: **246** exercises (**10** added in this pass).
-- Exact practice-node provenance: **151**; family-only: **15**; domain-only: **76**; intentionally unmapped: **4**.
-- Primary DAG coverage: **7/18** domains. Including honest cross-links: **11/18** domains and **23/71** families.
-- Newly represented families: **3** — Bipedal locomotion cultures, Endurance & conditioning methods, Pacific dance traditions.
+- Runtime catalog: **438** exercises (**5** added in this pass).
+- Exact practice-node provenance: **238**; family-only: **101**; domain-only: **99**; intentionally unmapped: **0**.
+- Primary DAG coverage: **8/18** domains. Including honest cross-links: **11/18** domains and **23/71** families.
+- Newly represented families: **2** — Bipedal locomotion cultures, South Asian dance traditions.
 - All additions passed the standing, feet-only, zero-equipment, shoe-agnostic, 3 m × 3 m, quiet, non-jumping, bilateral/alternating, and exact-human-media rules.
 
 ## Added from weak places
@@ -23,14 +16,9 @@ capacities were the scheduling taxonomy when this snapshot was produced.
 |---|---|---|---|
 | Tandem Walk | Balance | `gait_retraining` | Traveling heel-to-toe gait materially narrows the base of support and demands precise foot placement. |
 | Side Shuffle | Stamina | `aerobics` | Continuous lateral acceleration and deceleration in an athletic stance add quiet frontal-plane conditioning. |
-| Backward Walking | Stepping | `backward_walking` | Backward initiation, clearance, and weight acceptance add a genuinely absent direction of gait. |
-| Walking with Horizontal Head Turns | Balance | `vestibular_rehabilitation` | Head turns create a meaningful self-generated visual and vestibular disturbance while gait continues. |
-| Hula Kāholo | Stepping | `hula` | Side-close-side-tap weight transfer in a sustained bent-knee stance adds lateral gait skill and leg endurance. |
 | Bhangra Chaal | Stamina | `bhangra` | Large alternating knee and heel actions with overhead arm coordination make a vigorous whole-body round. |
-| Samba no Pé Basic | Stamina | `samba` | Continuous syncopated triple-foot action and weight transfer provide compact whole-body conditioning. |
 | Low-Impact Skater Step | Stamina | `aerobics` | Wide alternating lateral steps and a low stance create systemic effort without a jump or flight phase. |
 | High-Knee March | Stamina | `running` | Reciprocal knee drive and contralateral arm action provide a quiet running-mechanics and endurance drill. |
-| Wing Chun Juen Ma Turning Stance | Balance | `wing_chun` | Repeated left-centre-right weight shifts and stance pivots train controlled turning and lower-body endurance. |
 
 ## Strong primary-capacity pools
 
@@ -38,69 +26,162 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 
 | Capacity | Frozen baseline | Added primary exercises | Current strong pool | Minimum met |
 |---|---:|---:|---:|:---:|
-| Balance | 34 | 3 | 37 | Yes |
+| Balance | 34 | 1 | 35 | Yes |
 | Strength | 61 | 0 | 61 | Yes |
-| Stamina | 8 | 5 | 13 | Yes |
-| Stepping | 12 | 2 | 14 | Yes |
+| Stamina | 8 | 4 | 12 | Yes |
+| Stepping | 12 | 0 | 12 | Yes |
 | Mobility | 31 | 0 | 31 | Yes |
 
 ## Practice-label concentration
 
 | Catalog practice | Exercises |
 |---|---:|
-| Bodyweight conditioning | 61 |
-| Standing mobility and movement practice | 51 |
-| Karate | 17 |
-| Ballet | 16 |
-| Stretching | 16 |
-| Balance training | 9 |
-| Belly dance | 9 |
-| Bharatanatyam | 8 |
-| Self-resistance | 8 |
-| Boxing | 7 |
-| Tai Chi | 7 |
-| Qigong | 6 |
+| Bodyweight conditioning | 67 |
+| Standing mobility and movement practice | 34 |
+| Stretching | 15 |
+| Qigong | 13 |
+| Vestibular rehabilitation | 12 |
+| Standing bodyweight conditioning | 11 |
+| Bodyweight cardio conditioning | 9 |
+| Boxing | 8 |
+| Plyometric conditioning | 8 |
+| Ballet | 7 |
+| Karate | 7 |
+| Low-impact conditioning | 7 |
+| Active neck mobility | 6 |
+| Balance training | 6 |
+| Cardio conditioning | 6 |
+| Hand therapy | 6 |
+| Shoulder mobility | 6 |
+| Standing mobility | 6 |
+| Taiji Qigong Shibashi | 6 |
 | Yoga | 6 |
-| Ninja hand-seal coordination | 4 |
-| Capoeira | 2 |
+| Bodybuilding posing | 5 |
+| Boxing conditioning | 5 |
+| Oculomotor rehabilitation | 5 |
+| Plyometric landing mechanics | 5 |
+| Rope-free cardio conditioning | 5 |
+| Wrist mobility | 5 |
+| Ballet conditioning | 4 |
+| Bodyweight isometrics | 4 |
+| Boxing cardio conditioning | 4 |
+| Breath-led mobility | 4 |
+| Capoeira | 4 |
+| Clinical stretching | 4 |
+| Facial movement exercise | 4 |
+| Balance and neck mobility | 3 |
+| Bodyweight strength | 3 |
+| Calisthenics | 3 |
+| Hand mobility | 3 |
+| Jaw mobility | 3 |
+| Karate conditioning | 3 |
+| Muay Thai | 3 |
+| Standing strength and balance | 3 |
+| Standing stretching | 3 |
+| Standing upper-body conditioning | 3 |
+| Vestibular and neck conditioning | 3 |
+| Balance and vestibular training | 2 |
+| Belly dance | 2 |
+| Bodyweight cardio boxing | 2 |
+| Boxing and plyometric conditioning | 2 |
+| Breath-led conditioning | 2 |
+| Breathwork | 2 |
+| Calf isometrics | 2 |
+| Eight Nests qigong | 2 |
+| Functional Range Conditioning | 2 |
+| Gait retraining | 2 |
+| Hand coordination | 2 |
+| Hip stability training | 2 |
+| Laughter yoga | 2 |
 | Low-impact aerobics | 2 |
-| Taekwondo | 2 |
-| Wing Chun | 2 |
-| Backward walking | 1 |
+| Martial-arts conditioning | 2 |
+| Shoulder endurance | 2 |
+| Standing core conditioning | 2 |
+| Standing hand and wrist stretching | 2 |
+| Standing mobility and stretching | 2 |
+| Wrist stretching | 2 |
+| Yoga breathing | 2 |
+| Acting facial-expression control | 1 |
+| Active isolated stretching | 1 |
+| Balance and gaze-control mobility | 1 |
 | Bhangra | 1 |
-| Functional Range Conditioning | 1 |
+| Bodyweight upper-body warm-up | 1 |
+| Boxing and cardio conditioning | 1 |
+| Brain-calibration training | 1 |
+| Breath-led yoga | 1 |
+| Calf and ankle strengthening | 1 |
+| Calf strengthening | 1 |
+| Cardio and bodyweight conditioning | 1 |
+| Cardio coordination | 1 |
+| Chest and shoulder mobility | 1 |
+| Deep-squat locomotion | 1 |
+| Deep-squat mobility | 1 |
+| Dynamic balance training | 1 |
+| Dynamic leg mobility | 1 |
+| Facial action isolation | 1 |
+| Foot and ankle strengthening | 1 |
+| Forearm mobility | 1 |
 | Fundamental movement skills | 1 |
-| Gait retraining | 1 |
-| Hula | 1 |
-| Jazz dance | 1 |
-| Odissi | 1 |
+| Hand and forearm mobility | 1 |
+| Hand conditioning | 1 |
+| Hand therapy and mobility | 1 |
+| Hand therapy tendon gliding | 1 |
+| Low-impact boxing conditioning | 1 |
 | Pilates | 1 |
+| Plyometric balance conditioning | 1 |
+| Plyometric posterior-chain conditioning | 1 |
+| Popping and waving | 1 |
+| Qigong body tapping | 1 |
+| Qigong shoulder mobility | 1 |
 | Running drills | 1 |
-| Samba | 1 |
+| Self-resistance | 1 |
+| Shoulder isometrics | 1 |
+| Shoulder mobility and conditioning | 1 |
+| Shoulder rehabilitation | 1 |
+| Single-leg balance training | 1 |
+| Speech articulation practice | 1 |
+| Standing ankle strengthening | 1 |
+| Standing balance | 1 |
+| Standing balance and mobility | 1 |
+| Standing balance training | 1 |
+| Standing conditioning | 1 |
+| Standing isometrics | 1 |
+| Standing lower-body conditioning | 1 |
+| Standing pelvic mobility | 1 |
+| Standing pelvic-floor movement | 1 |
+| Standing Pilates | 1 |
+| Standing posterior-chain conditioning | 1 |
+| Standing shoulder mobility | 1 |
+| Standing strength and mobility | 1 |
+| Standing upper-back conditioning | 1 |
+| Standing yoga | 1 |
 | Sumo | 1 |
-| Vestibular rehabilitation | 1 |
+| Tutting | 1 |
+| Upper-back isometrics | 1 |
+| Upper-body warm-up | 1 |
+| Vestibular and visual-motor conditioning | 1 |
 
 ## Domain coverage
 
 | DAG domain | Baseline primary | Current primary | Current all paths |
 |---|---:|---:|---:|
-| Acrobatics, circus & object manipulation | 0 | 0 | 2 |
+| Acrobatics, circus & object manipulation | 0 | 0 | 4 |
 | Animal-partnered movement | 0 | 0 | 0 |
 | Aquatic & underwater movement | 0 | 0 | 0 |
-| Combat, martial & weapon cultures | 37 | 38 | 38 |
-| Dance & rhythmic movement | 35 | 38 | 40 |
+| Combat, martial & weapon cultures | 41 | 41 | 41 |
+| Dance & rhythmic movement | 15 | 16 | 20 |
 | Digital, mediated & emerging movement cultures | 0 | 0 | 0 |
 | Games, sport & contest | 0 | 0 | 0 |
-| Locomotion, travel & terrain skills | 0 | 2 | 2 |
+| Locomotion, travel & terrain skills | 0 | 1 | 1 |
 | Military drill, tactical & service movement | 0 | 0 | 0 |
 | Movement education & pedagogy | 1 | 1 | 1 |
 | Outdoor, adventure & survival movement | 0 | 0 | 0 |
-| Physical culture, conditioning & exercise | 146 | 148 | 148 |
-| Play, improvisation & movement exploration | 0 | 0 | 2 |
-| Ritual, devotional & ceremonial movement | 0 | 0 | 16 |
-| Somatics, mind–body & internal arts | 13 | 13 | 20 |
-| Theatre, mime & movement performance | 0 | 0 | 8 |
-| Therapeutic, rehabilitative & adaptive movement | 0 | 2 | 15 |
+| Physical culture, conditioning & exercise | 278 | 280 | 280 |
+| Play, improvisation & movement exploration | 0 | 0 | 4 |
+| Ritual, devotional & ceremonial movement | 0 | 0 | 27 |
+| Somatics, mind–body & internal arts | 46 | 46 | 46 |
+| Theatre, mime & movement performance | 2 | 2 | 2 |
+| Therapeutic, rehabilitative & adaptive movement | 60 | 61 | 84 |
 | Work, craft & subsistence movement | 0 | 0 | 0 |
 
 ## Editorial conclusions

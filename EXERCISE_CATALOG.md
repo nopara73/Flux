@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 429 human-demonstrated standing movements. Exercises are chosen
+Flux contains 438 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -117,7 +117,7 @@ mirror-category floor.
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 429 included
+movements. All 438 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

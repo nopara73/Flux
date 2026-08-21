@@ -143,7 +143,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 43;
+export const CURRENT_CATALOG_REVISION = 44;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -214,6 +214,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [41, new Set([500])],
   [42, new Set([105, 107, 108, 245, 280, 591, 884, 885, 905])],
   [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
+  [44, new Set([90, 94, 95, 99, 100, 497, 498, 500, 511, 514])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -271,6 +272,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [36, new Set([684])],
   [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
+  [44, new Set([90])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -335,7 +337,15 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [755, ["Reverse Wrist Circles", "Outward Wrist Circles"]],
   [756, ["Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles"]],
   [758, ["Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles"]],
-  [500, ["Controlled Jaw Open and Close", "Mirror-Guided Straight Jaw Opening"]],
+  [94, ["Mirror-Guided Lateral Weight Shift", "Lateral Weight Shift"]],
+  [95, ["Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Pelvic Control"]],
+  [99, ["Mirror-Guided Bent-Knee Front-to-Back Leg Swing", "Bent-Knee Front-to-Back Leg Swing"]],
+  [100, ["Mirror-Guided Bent-Knee Leg Swing with Pause", "Bent-Knee Leg Swing with Pause"]],
+  [497, ["Mirror-Guided Eyebrow Raise", "Eyebrow Raise"]],
+  [498, ["Mirror-Guided Firm Eye Closure", "Firm Eye Closure"]],
+  [500, ["Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening"]],
+  [511, ["Mirror-Guided Lip Pucker", "Lip Pucker"]],
+  [514, ["Mirror-Guided Symmetric Smile", "Symmetric Smile"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
@@ -354,6 +364,7 @@ export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
     "Breath-Integrated Weight Shift",
     "Alternating Breath-Integrated Weight Shift",
   ])],
+  [500, new Set(["Controlled Jaw Open and Close"])],
   [398, new Set(["Standing Arm-Expansion Breathing"])],
   [399, new Set(["Shibashi Opening-the-Chest Breathing"])],
   [400, new Set(["Shibashi Separating-the-Clouds Breathing"])],

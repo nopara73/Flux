@@ -194,7 +194,7 @@ before rest remains neutral.
 
 ## Exercise catalog
 
-Flux ships with 429 reviewed movements spanning compound strength and
+Flux ships with 438 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.

@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(300, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(310, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -715,7 +715,16 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(755, "Reverse Wrist Circles", "Outward Wrist Circles")]
     [InlineData(756, "Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles")]
     [InlineData(758, "Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles")]
-    [InlineData(500, "Controlled Jaw Open and Close", "Mirror-Guided Straight Jaw Opening")]
+    [InlineData(94, "Mirror-Guided Lateral Weight Shift", "Lateral Weight Shift")]
+    [InlineData(95, "Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Pelvic Control")]
+    [InlineData(99, "Mirror-Guided Bent-Knee Front-to-Back Leg Swing", "Bent-Knee Front-to-Back Leg Swing")]
+    [InlineData(100, "Mirror-Guided Bent-Knee Leg Swing with Pause", "Bent-Knee Leg Swing with Pause")]
+    [InlineData(497, "Mirror-Guided Eyebrow Raise", "Eyebrow Raise")]
+    [InlineData(498, "Mirror-Guided Firm Eye Closure", "Firm Eye Closure")]
+    [InlineData(500, "Controlled Jaw Open and Close", "Straight Jaw Opening")]
+    [InlineData(500, "Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening")]
+    [InlineData(511, "Mirror-Guided Lip Pucker", "Lip Pucker")]
+    [InlineData(514, "Mirror-Guided Symmetric Smile", "Symmetric Smile")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -1701,13 +1710,70 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void GenuineMirrorPracticeRevisionRetiresDuplicateButPreservesCorrectedScores()
+    {
+        int[] changedIds = [90, 94, 95, 99, 100, 497, 498, 500, 511, 514];
+        Assert.Equal(
+            changedIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[44]);
+        Assert.Equal(
+            new HashSet<int> { 90 },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[44]);
+
+        const string correctedGroup = "mirror.corrected";
+        var correctedState = new WorkoutState
+        {
+            CatalogRevision = 43,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [correctedGroup] = 94,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [correctedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = correctedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 94,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(correctedState));
+
+        Assert.DoesNotContain(correctedGroup, correctedState.SelectedExerciseIds);
+        Assert.DoesNotContain(correctedGroup, correctedState.Outcomes);
+        Assert.Null(correctedState.PendingRestGroupId);
+        Assert.Equal(94, correctedState.PendingScoreExerciseId);
+        Assert.Equal(-4, correctedState.PendingScoreValue);
+        Assert.Equal(
+            CatalogMigrationRules.CurrentCatalogRevision,
+            correctedState.CatalogRevision);
+
+        var retiredState = new WorkoutState
+        {
+            CatalogRevision = 43,
+            PendingScoreExerciseId = 90,
+            PendingScoreValue = -6,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(retiredState));
+        Assert.Equal(0, retiredState.PendingScoreExerciseId);
+        Assert.Equal(0, retiredState.PendingScoreValue);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(
-            new HashSet<int> { 229 },
+            new HashSet<int> { 90, 229 },
             CatalogMigrationRules.PermanentlyRetiredExerciseIds);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
+            [90] = new(
+                "Mirror-Guided Bodyweight Squat",
+                "exercise_videos/exercise_0090.mp4",
+                -6),
             [229] = new(
                 "Alternating Boxing Jabs",
                 "exercise_videos/exercise_0229.mp4",
@@ -1735,6 +1801,15 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.ValidatePreservedCatalog(
                 [retained, restoredRetired],
                 stored));
+        Exercise restoredSquat = Exercise(
+            90,
+            "Invalid squat restoration",
+            "exercise_videos/exercise_0090.mp4",
+            retiredName: "Alternating Step Pivot");
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [retained, restoredSquat],
+                stored));
     }
 
     [Theory]
@@ -1752,7 +1827,7 @@ public sealed class CatalogMigrationRulesTests
         };
         Exercise replacement = Exercise(
             restoredId,
-            "Mirror-Guided Eyebrow Raise",
+            "Eyebrow Raise",
             "exercise_videos/exercise_0497.mp4",
             retiredName: "Odissi Sundari Griva");
 
@@ -1779,7 +1854,7 @@ public sealed class CatalogMigrationRulesTests
         };
         Exercise replacement = Exercise(
             restoredId,
-            "Mirror-Guided Eyebrow Raise",
+            "Eyebrow Raise",
             "exercise_videos/exercise_0497.mp4",
             retiredName: "Odissi Sundari Griva");
 
