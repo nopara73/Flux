@@ -645,11 +645,13 @@ test("insect profile carries keeps into a long workout", () => {
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
-      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 300);
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 52);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 118);
-  assert.equal(catalog.some((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly), false);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 365);
+  assert.equal(catalog.filter((exercise) =>
+    exercise.mirrorRelationship ===
+      EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 1);
+  assert.equal(catalog.find((exercise) => exercise.id === 500).equipment, "Mirror");
   assert.equal(isModifierMetadataComplete(catalog), true);
   assert.deepEqual(findWorkoutModifierPairCoverageDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
@@ -737,9 +739,9 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
   );
 });
 
-test("mirror-on pairwise floors count only mirror-relevant relationships", () => {
+test("mirror-on pairwise floors count every eligible relationship", () => {
   const targetGroup = RESOLUTIONS.get(30).groups[0];
-  const exercises = Array.from({ length: 9 }, (_, index) => ({
+  const exercises = Array.from({ length: 5 }, (_, index) => ({
     ...exercise(
       index + 1,
       targetGroup.canonicalGroups[0],
@@ -747,9 +749,7 @@ test("mirror-on pairwise floors count only mirror-relevant relationships", () =>
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
     ),
-    mirrorRelationship: index < 4
-      ? EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly
-      : EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
   }));
 
   const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
@@ -760,9 +760,7 @@ test("mirror-on pairwise floors count only mirror-relevant relationships", () =>
       result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
       result.secondModifierEnabled);
 
-  assert.equal(deficiencies.length, 2);
-  assert.ok(deficiencies.every((deficiency) =>
-    deficiency.matchingExerciseCount === 4));
+  assert.deepEqual(deficiencies, []);
 });
 
 test("pairwise floor never counts unreviewed modifier metadata", () => {
@@ -2053,6 +2051,9 @@ test("approved timed-side name cleanup preserves browser memory", () => {
 
 test("approved clarity corrections preserve browser memory", () => {
   for (const [exerciseId, [previousName, currentName]] of APPROVED_EXERCISE_CORRECTIONS) {
+    if (exerciseId === 500) {
+      continue;
+    }
     const currentCatalog = catalog.map((item) =>
       item.id === exerciseId ? { ...item, name: currentName } : item,
     );
@@ -2667,6 +2668,30 @@ test("direction name correction preserves workout state and scores", () => {
   assert.equal(restored.state.pendingRestGroupId, groupId);
   assert.equal(restored.state.pendingRestKept, true);
   assert.equal(restored.state.scores["223"], -4);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("mirror-only correction drops stale selection but preserves score", () => {
+  assert.deepEqual([...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(41)], [500]);
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(41), false);
+  const state = createDefaultState();
+  const groupId = RESOLUTIONS.get(3).groups[0].id;
+  state.catalogRevision = 40;
+  state.activeWorkoutMinutes = 3;
+  state.selectedExerciseIds[groupId] = 500;
+  state.outcomes[groupId] = "tick";
+  state.pendingRestGroupId = groupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+  state.scores["500"] = -4;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[groupId], undefined);
+  assert.equal(restored.state.outcomes[groupId], undefined);
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.scores["500"], -4);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

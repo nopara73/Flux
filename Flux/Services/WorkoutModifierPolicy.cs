@@ -163,13 +163,7 @@ public static class WorkoutModifierPolicy
                                             IsSelectable(
                                                 exercise,
                                                 group,
-                                                profile) &&
-                                            (!IsEnabledPairState(
-                                                    pair,
-                                                    firstEnabled,
-                                                    secondEnabled,
-                                                    WorkoutModifiers.Mirror) ||
-                                                IsMirrorRelevant(exercise)))
+                                                profile))
                                         .Select(exercise => exercise.Id)
                                         .Distinct()
                                         .Count(),
@@ -383,16 +377,6 @@ public static class WorkoutModifierPolicy
                 yield return (Rules[firstIndex], Rules[secondIndex]);
             }
         }
-    }
-
-    private static bool IsEnabledPairState(
-        (ModifierRule First, ModifierRule Second) pair,
-        bool firstEnabled,
-        bool secondEnabled,
-        WorkoutModifiers modifier)
-    {
-        return (pair.First.Flag == modifier && firstEnabled) ||
-            (pair.Second.Flag == modifier && secondEnabled);
     }
 
     private static bool IsMirrorMetadataReviewed(Exercise exercise)

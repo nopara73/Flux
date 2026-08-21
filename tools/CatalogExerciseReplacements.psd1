@@ -5632,7 +5632,7 @@
     }
     500 = @{
         RetiredName = 'Bharatanatyam Parivartita Griva'
-        Name = 'Controlled Jaw Open and Close'
+        Name = 'Mirror-Guided Straight Jaw Opening'
         Practice = 'Jaw mobility'
         MotionProfile = 'JawMotion'
         Primary = 'CranialMuscles'

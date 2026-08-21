@@ -14,11 +14,12 @@ exercise must train at least half of that bucket's canonical leaves. For every
 modifier pair, every bucket has at least five choices under each real UI state:
 on/on, on/off, off/on, and off/off. Restrictive modifiers relax when off; the
 Mirror equipment modifier instead excludes mirror-only movements when off and
-admits them when on. In Mirror-on pair states, only `MirrorOnly` and
-`BenefitsGreatly` exercises count toward the five-exercise relevance floor even
-though `Agnostic` exercises remain eligible. Separate quadratic materiality
-checks ensure restrictive modifiers remove, and Mirror supplies, a meaningful,
-anatomically broad candidate set alone and with each paired modifier. Primary ownership is a preference after
+admits them when on. The five-exercise pairwise floor is a viability rule, so
+every selectable exercise counts; an `Agnostic` movement does not become
+mirror-benefited merely because a muscle bucket needs more choices. Separate
+quadratic materiality checks ensure restrictive modifiers remove, and Mirror
+categories 1-2 supply, a meaningful, anatomically broad candidate set alone and
+with each paired modifier. Primary ownership is a preference after
 score/keep priority, never a reason to discard a truthful secondary association
 or admit a weak quota-filler.
 
@@ -85,10 +86,9 @@ to the wrong playback behavior.
 `tools/ExerciseMirrorRelationships.psd1` is the exhaustive mirror audit. Each
 exercise is exactly one of `MirrorOnly`, `BenefitsGreatly`, or `Agnostic`.
 `MirrorOnly` requires `equipment: "Mirror"`; the other two require
-`equipment: "None"`. The current retained inventory contains no mirror-only
-exercise because none of its exact demonstrations makes a reflection essential.
-The runtime path remains implemented and tested for a future exact
-mirror-dependent demonstration. This equipment classification never controls
+`equipment: "None"`. `Mirror-Guided Straight Jaw Opening` is mirror-only because
+the exercise uses live midline feedback to detect lateral deviation. This
+equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 

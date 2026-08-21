@@ -116,10 +116,9 @@ separate side-sequence behavior.
 Turning Insect or Silence off relaxes its requirement; turning Mirror off makes
 mirror-only exercises unavailable while leaving mirror-benefited and agnostic
 exercises eligible. For every modifier pair, duration, workout group, and all
-four real on/off states, the catalog must provide at least five selectable exercises.
-When Mirror is on, only `MirrorOnly` and `BenefitsGreatly` exercises count toward
-that five-exercise mirror-relevance floor; `Agnostic` exercises remain eligible
-but cannot make the modifier look substantive.
+four real on/off states, the catalog must provide at least five selectable
+exercises. Every selectable exercise counts toward that viability floor;
+relationship labels are never promoted to satisfy a per-muscle quota.
 Every supported duration and profile must also admit a completely distinct
 lineup.
 

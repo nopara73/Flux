@@ -715,6 +715,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(755, "Reverse Wrist Circles", "Outward Wrist Circles")]
     [InlineData(756, "Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles")]
     [InlineData(758, "Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles")]
+    [InlineData(500, "Controlled Jaw Open and Close", "Mirror-Guided Straight Jaw Opening")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -1613,6 +1614,44 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(40));
         Assert.False(
             CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(40));
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void MirrorOnlyCorrectionDropsStaleSelectionButPreservesPendingScore()
+    {
+        const string groupId = "mirror.group";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 40,
+            ActiveWorkoutMinutes = 3,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groupId] = 500,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [groupId] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = groupId,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 500,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(groupId, state.SelectedExerciseIds);
+        Assert.DoesNotContain(groupId, state.Outcomes);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(500, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(
+            new HashSet<int> { 500 },
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[41]);
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(41));
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 

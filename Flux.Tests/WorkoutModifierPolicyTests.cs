@@ -167,17 +167,15 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void MirrorOnPairwiseFloorCountsOnlyMirrorRelevantRelationships()
+    public void MirrorOnPairwiseFloorCountsEveryEligibleRelationship()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
         CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
-        Exercise[] exercises = Enumerable.Range(1, 9)
+        Exercise[] exercises = Enumerable.Range(1, 5)
             .Select(id => Exercise(
                 id,
                 primary,
-                mirrorRelationship: id <= 4
-                    ? ExerciseMirrorRelationship.BenefitsGreatly
-                    : ExerciseMirrorRelationship.Agnostic))
+                mirrorRelationship: ExerciseMirrorRelationship.Agnostic))
             .ToArray();
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
@@ -189,9 +187,7 @@ public sealed class WorkoutModifierPolicyTests
                     result.SecondModifierEnabled)
                 .ToArray();
 
-        Assert.Equal(2, deficiencies.Length);
-        Assert.All(deficiencies, deficiency =>
-            Assert.Equal(4, deficiency.MatchingExerciseCount));
+        Assert.Empty(deficiencies);
     }
 
     [Fact]

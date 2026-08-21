@@ -52,17 +52,24 @@ public sealed class CatalogInvariantTests
         Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
-            300,
+            52,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            118,
+            365,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
-        Assert.DoesNotContain(exercises, exercise =>
-            exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly);
-        Assert.All(exercises, exercise => Assert.Equal("None", exercise.Equipment));
+        Assert.Equal(
+            1,
+            exercises.Count(exercise =>
+                exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly));
+        Assert.Equal(
+            "Mirror",
+            exercises.Single(exercise => exercise.Id == 500).Equipment);
+        Assert.All(
+            exercises.Where(exercise => exercise.Id != 500),
+            exercise => Assert.Equal("None", exercise.Equipment));
         Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises));
         Assert.All(
             exercises.Where(exercise => exercise.Mode == ExerciseMode.Hold),
@@ -550,7 +557,11 @@ public sealed class CatalogInvariantTests
             Assert.True(exercise.OnlyFeetTouchGround);
             Assert.True(exercise.ShoeAgnostic);
             Assert.InRange(exercise.MaxSpaceMeters, 1, 2);
-            Assert.Equal("None", exercise.Equipment);
+            Assert.Equal(
+                exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly
+                    ? "Mirror"
+                    : "None",
+                exercise.Equipment);
             Assert.False(string.IsNullOrWhiteSpace(exercise.Practice));
             Assert.False(string.IsNullOrWhiteSpace(exercise.MotionProfile));
             Assert.True(Enum.IsDefined(exercise.SideSequence));

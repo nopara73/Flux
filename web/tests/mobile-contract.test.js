@@ -249,8 +249,13 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible));
   assert.ok(catalog.every((exercise) =>
+    exercise.mirrorRelationship === "MirrorOnly" ||
     exercise.mirrorRelationship === "BenefitsGreatly" ||
     exercise.mirrorRelationship === "Agnostic"));
+  assert.ok(catalog.every((exercise) =>
+    exercise.mirrorRelationship === "MirrorOnly"
+      ? exercise.equipment === "Mirror"
+      : exercise.equipment === "None"));
   assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);

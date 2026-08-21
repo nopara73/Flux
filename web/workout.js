@@ -83,7 +83,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 40;
+export const CURRENT_CATALOG_REVISION = 41;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -151,6 +151,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [35, new Set([219])],
   [36, new Set([684])],
   [37, new Set([31, 176, 195, 391, 413, 884, 885])],
+  [41, new Set([500])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -271,6 +272,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [755, ["Reverse Wrist Circles", "Outward Wrist Circles"]],
   [756, ["Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles"]],
   [758, ["Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles"]],
+  [500, ["Controlled Jaw Open and Close", "Mirror-Guided Straight Jaw Opening"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
@@ -803,9 +805,6 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
             const profile =
               (firstModifierEnabled ? firstRule.flag : WORKOUT_MODIFIERS.None) |
               (secondModifierEnabled ? secondRule.flag : WORKOUT_MODIFIERS.None);
-            const requiresMirrorRelevance =
-              (firstRule.flag === WORKOUT_MODIFIERS.Mirror && firstModifierEnabled) ||
-              (secondRule.flag === WORKOUT_MODIFIERS.Mirror && secondModifierEnabled);
             return {
               minutes,
               groupId: group.id,
@@ -817,8 +816,7 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
               matchingExerciseCount: new Set(exercises
                 .filter((exercise) =>
                   MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
-                  isSelectableForWorkoutProfile(exercise, group, profile) &&
-                  (!requiresMirrorRelevance || isMirrorRelevant(exercise)))
+                  isSelectableForWorkoutProfile(exercise, group, profile))
                 .map((exercise) => exercise.id)).size,
               requiredExerciseCount:
                 MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
