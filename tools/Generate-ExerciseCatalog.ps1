@@ -80,10 +80,33 @@ $nonSilentExerciseIds = @(
     $silenceCompatibilityReview.NonSilent | ForEach-Object { [int]$_ })
 $mirrorRelationshipReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMirrorRelationships.psd1') -SkipLimitCheck
+$requiredMirrorBenefitsGreatlyCriteria = @(
+    'TechnicalMartialArts'
+    'DanceAndAlignmentSensitivePoses'
+    'ComplexSingleLegAlignment'
+    'LivePlaneOrSymmetryCorrection'
+)
+$mirrorBenefitsGreatlyByCriterion =
+    $mirrorRelationshipReview.BenefitsGreatlyByCriterion
+if ($mirrorBenefitsGreatlyByCriterion -isnot
+        [System.Collections.IDictionary] -or
+    @(Compare-Object `
+            $requiredMirrorBenefitsGreatlyCriteria `
+            @($mirrorBenefitsGreatlyByCriterion.Keys)).Count -gt 0) {
+    throw 'BenefitsGreatly exercises must use exactly the approved narrow audit criteria.'
+}
 $mirrorOnlyExerciseIds = @(
     $mirrorRelationshipReview.MirrorOnly | ForEach-Object { [int]$_ })
 $mirrorBenefitsGreatlyExerciseIds = @(
-    $mirrorRelationshipReview.BenefitsGreatly | ForEach-Object { [int]$_ })
+    foreach ($criterion in $requiredMirrorBenefitsGreatlyCriteria) {
+        $criterionExerciseIds = @(
+            $mirrorBenefitsGreatlyByCriterion[$criterion] |
+                ForEach-Object { [int]$_ })
+        if ($criterionExerciseIds.Count -eq 0) {
+            throw "BenefitsGreatly criterion '$criterion' must not be empty."
+        }
+        $criterionExerciseIds
+    })
 $mirrorAgnosticExerciseIds = @(
     $mirrorRelationshipReview.Agnostic | ForEach-Object { [int]$_ })
 $muscularDemandReview = Import-PowerShellDataFile -LiteralPath (

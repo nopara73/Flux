@@ -21,6 +21,8 @@ on:
       - "Flux/Resources/layout/**"
       - "Flux/Resources/values/**"
       - "tools/flux_appicon.svg"
+      - "tools/ExerciseMirrorRelationships.psd1"
+      - "tools/Test-ExerciseMirrorRelationshipAudit.ps1"
   workflow_dispatch:
 
 permissions:
@@ -59,7 +61,13 @@ jobs:
             /Flux/Resources/layout/**
             /Flux/Resources/values/**
             /tools/flux_appicon.svg
+            /tools/ExerciseMirrorRelationships.psd1
+            /tools/Test-ExerciseMirrorRelationshipAudit.ps1
           sparse-checkout-cone-mode: false
+
+      - name: Validate mirror relationship audit
+        shell: pwsh
+        run: ./tools/Test-ExerciseMirrorRelationshipAudit.ps1
 
       - name: Set up Node.js
         uses: actions/setup-node@v6

@@ -36,6 +36,25 @@ materiality is checked separately: `MirrorOnly` and `BenefitsGreatly` must
 jointly meet the global materiality and anatomical-breadth thresholds alone and
 with either paired modifier enabled.
 
+## Classification guardrails
+
+The current 52 `BenefitsGreatly` assignments are the result of this audit, not a
+quota, target, or ceiling. The count may move in either direction as the catalog
+changes, but only because individual exercises genuinely meet or cease to meet
+the semantic standard—not to satisfy modifier coverage or materiality checks.
+
+The authoritative manifest groups every `BenefitsGreatly` exercise under
+exactly one narrow reason: technique-sensitive martial arts, dance or
+alignment-sensitive poses, complex single-leg alignment, or live plane/path/
+symmetry correction. Merely seeing the movement, comparing oneself with the
+demonstration, or receiving ordinary form feedback never qualifies. Catalog
+generation rejects unknown or missing criteria and duplicate assignments.
+Android and web catalog tests independently pin the current reviewed count, so
+changing the generated catalog also requires an explicit test review rather
+than silently drifting through regeneration. Deployment CI also compares every
+reviewed ID and relationship with the packaged shared catalog whenever the
+mirror audit changes.
+
 The Mirror modifier never transforms demonstration media. Horizontal playback
 mirroring remains confined to the existing timed second-side protocol.
 

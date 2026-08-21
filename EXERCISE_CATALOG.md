@@ -92,6 +92,11 @@ equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 
+The current 52 `BenefitsGreatly` assignments are an audited result, not a quota,
+target, or ceiling. Each entry must belong to one of the manifest's narrow
+audited criteria, and ordinary optional form checking does not qualify. Changes
+to the count must follow the exercise semantics, never a coverage requirement.
+
 ## Media quality
 
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The

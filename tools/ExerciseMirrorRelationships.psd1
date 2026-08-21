@@ -5,15 +5,37 @@
         500
     )
 
-    # Continuous live self-view substantially changes technique, alignment, or
-    # symmetry. Ordinary form checking is deliberately not enough.
-    BenefitsGreatly = @(
-        21, 58, 92, 93, 96, 97, 115, 177, 178, 180, 181, 182,
-        183, 186, 190, 217, 220, 231, 232, 245, 246, 258, 260, 268,
-        274, 276, 278, 279, 280, 285, 286, 287, 292, 326, 327, 329,
-        367, 393, 404, 481, 591, 609, 610, 666, 681, 684, 685, 687,
-        884, 885, 996, 997
-    )
+    # Continuous live self-view must substantially change execution under one
+    # of these narrow criteria. Ordinary optional form checking is deliberately
+    # insufficient. The current count is an audit result, never a target, quota,
+    # ceiling, or reason to promote or demote an otherwise valid exercise.
+    BenefitsGreatlyByCriterion = @{
+        # The reflection continuously exposes guard, chamber, stance, strike
+        # path, or defensive path in a technique-sensitive martial movement.
+        TechnicalMartialArts = @(
+            92, 93, 97, 178, 180, 181, 182, 183, 220, 231, 245, 258,
+            274, 276, 278, 279, 280, 285, 286, 287, 326, 327, 404, 591,
+            681, 684, 685, 687, 884, 885
+        )
+
+        # The reflection materially changes the intended whole-body line,
+        # placement, or pose rather than merely making the movement observable.
+        DanceAndAlignmentSensitivePoses = @(
+            58, 190, 217, 232, 260, 609, 610, 666
+        )
+
+        # Live feedback reveals knee, pelvis, trunk, or free-limb alignment in
+        # demanding single-leg work where the relevant drift is hard to feel.
+        ComplexSingleLegAlignment = @(
+            21, 96, 115, 177, 186, 292, 367, 393, 996, 997
+        )
+
+        # The movement's main quality depends on seeing a plane, path, or
+        # left-right symmetry error while it is happening.
+        LivePlaneOrSymmetryCorrection = @(
+            246, 268, 329, 481
+        )
+    }
 
     # A mirror supplies no more than optional, ordinary form checking. Seeing
     # oneself or being able to compare against the demo does not qualify by

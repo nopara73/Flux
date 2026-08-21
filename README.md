@@ -127,6 +127,9 @@ remove at least five exercises or 5% of the previous candidate pool, whichever
 is larger. Mirror must have at least that many jointly reviewed `MirrorOnly` and
 `BenefitsGreatly` exercises. Each modifier must affect at least 10% of the
 canonical buckets, both alone and with its paired modifier enabled.
+The current 52 `BenefitsGreatly` assignments are an audited result, not a target
+or ceiling. Ordinary form checking never qualifies, and relationship labels
+cannot be promoted to satisfy coverage or materiality checks.
 
 These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
