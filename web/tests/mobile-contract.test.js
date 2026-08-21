@@ -304,6 +304,22 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);
   assert.match(durationLayout, /@\+id\/mirror_modifier_button/);
   assert.match(durationLayout, /@drawable\/ic_mirror/);
+  assert.match(
+    durationLayout,
+    /mirror_modifier_button(?:(?!\/>)[\s\S])*drawableTop="@drawable\/ic_mirror"/,
+  );
+  assert.doesNotMatch(
+    durationLayout,
+    /mirror_modifier_button(?:(?!\/>)[\s\S])*foreground="@drawable\/ic_mirror"/,
+  );
+  assert.match(
+    mainActivity,
+    /UpdateMirrorModifierPresentation[\s\S]*SetCompoundDrawablesWithIntrinsicBounds\([\s\S]*Resource\.Drawable\.ic_mirror[\s\S]*MirrorEquipment\.None[\s\S]*ComplexUnitType\.Sp,[\s\S]*0f[\s\S]*ComplexUnitType\.Sp,[\s\S]*8f/,
+  );
+  assert.match(
+    webStyles,
+    /data-mirror-equipment="compact"[\s\S]*data-mirror-equipment="tall"[\s\S]*\.modifier-icon[\s\S]*scale\(0\.88\)/,
+  );
   assert.match(durationLayout, /@drawable\/ic_no_clap/);
   assert.doesNotMatch(
     durationLayout,

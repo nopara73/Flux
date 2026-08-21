@@ -1180,11 +1180,7 @@ public class MainActivity : Activity
 
     private void SetModifierTileSizes(int size)
     {
-        int padding = size <= DpInt(48)
-            ? DpInt(10)
-            : size <= DpInt(56)
-                ? DpInt(12)
-                : DpInt(16);
+        int padding = GetModifierTilePadding(size);
         for (int index = 0; index < _durationModifierGrid.ChildCount; index++)
         {
             View tile = _durationModifierGrid.GetChildAt(index)
@@ -1194,11 +1190,55 @@ public class MainActivity : Activity
             tile.SetPadding(padding, padding, padding, padding);
         }
 
+        UpdateMirrorModifierPresentation(
+            WorkoutModifierPolicy.GetMirrorEquipment(
+                _selectedWorkoutModifiers),
+            size);
+    }
+
+    private int GetModifierTilePadding(int size) =>
+        size <= DpInt(48)
+            ? DpInt(10)
+            : size <= DpInt(56)
+                ? DpInt(12)
+                : DpInt(16);
+
+    private void UpdateMirrorModifierPresentation(
+        MirrorEquipment equipment,
+        int? tileSize = null)
+    {
+        _mirrorModifierButton.SetCompoundDrawablesWithIntrinsicBounds(
+            0,
+            Resource.Drawable.ic_mirror,
+            0,
+            0);
+
+        if (equipment == MirrorEquipment.None)
+        {
+            _mirrorModifierButton.SetTextSize(
+                Android.Util.ComplexUnitType.Sp,
+                0f);
+
+            int size = tileSize ?? _mirrorModifierButton.LayoutParameters?.Width
+                ?? DpInt(64);
+            int padding = GetModifierTilePadding(size);
+            _mirrorModifierButton.SetPadding(
+                padding,
+                padding,
+                padding,
+                padding);
+            return;
+        }
+
+        _mirrorModifierButton.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            8f);
+        int compactPadding = DpInt(4);
         _mirrorModifierButton.SetPadding(
-            DpInt(4),
-            DpInt(4),
-            DpInt(4),
-            DpInt(4));
+            compactPadding,
+            compactPadding,
+            compactPadding,
+            compactPadding);
     }
 
     private void ResizeMediaCard()
@@ -1327,6 +1367,7 @@ public class MainActivity : Activity
             MirrorEquipment.Tall => "TALL",
             _ => string.Empty,
         };
+        UpdateMirrorModifierPresentation(equipment);
         int stateResourceId = equipment switch
         {
             MirrorEquipment.Compact => Resource.String.mirror_modifier_compact,
