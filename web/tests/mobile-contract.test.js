@@ -762,13 +762,16 @@ test("linked directions are adjacent indivisible units on mobile and web", () =>
   );
   assert.match(
     mainActivity,
-    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*tap_to_keep_both/,
+    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*Resource\.String\.tap_to_keep/,
   );
   assert.match(
     webApp,
-    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*Tap to keep both/,
+    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*keepExercise\.textContent = "Tap to keep"/,
   );
-  assert.match(strings, /name="tap_to_keep_both">Tap to keep both</);
+  assert.match(strings, /name="tap_to_keep">Tap to keep</);
+  assert.doesNotMatch(mainActivity, /Tap to keep both|keep both directions|tap_to_keep_both/);
+  assert.doesNotMatch(webApp, /Tap to keep both|keep both directions/);
+  assert.doesNotMatch(strings, /tap_to_keep_both|Tap to keep both/);
 });
 
 test("web catalog migration matches the mobile workout contract", () => {

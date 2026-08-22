@@ -479,9 +479,7 @@ function showRestPanel() {
     currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound,
   );
   elements.keepExercise.hidden = isDirectionPairLead;
-  elements.keepExercise.textContent = currentGroup?.isPairDecisionRound
-    ? "Tap to keep both"
-    : "Tap to keep";
+  elements.keepExercise.textContent = "Tap to keep";
 }
 
 function assetUrl(path) {
@@ -941,9 +939,7 @@ function completeMovement() {
   elements.status.textContent = currentGroup?.pairedRoundId &&
       !currentGroup.isPairDecisionRound
     ? "Rest, 15 seconds. The other direction is next."
-    : currentGroup?.isPairDecisionRound
-      ? "Rest, 15 seconds. Tap to keep both directions."
-      : "Rest, 15 seconds. Tap to keep this exercise.";
+    : "Rest, 15 seconds. Tap to keep this exercise.";
   startRestTimer();
 }
 

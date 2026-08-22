@@ -184,7 +184,7 @@ Every round begins with five seconds of quiet preparation.
   Linked opposite-direction exercises are available only in workouts longer
   than 30 minutes. They always run consecutively: the first rest advances to
   the other direction without a Keep action, and the second rest presents one
-  shared `Tap to keep both` decision. Rejecting either direction rejects and
+  shared `Tap to keep` decision. Rejecting either direction rejects and
   scores both records together.
 
 Red means movement. Blue means change or rest. A `UNILATERAL` label appears

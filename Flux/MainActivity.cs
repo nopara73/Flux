@@ -2907,9 +2907,7 @@ public class MainActivity : Activity
         ShowRestPanel();
         string restDescription = _currentWorkoutGroup.IsDirectionPairLead
             ? "Rest, 15 seconds. The other direction is next."
-            : _currentWorkoutGroup.IsPairDecisionRound
-                ? "Rest, 15 seconds. Tap to keep both directions."
-                : "Rest, 15 seconds. Tap to keep this exercise.";
+            : "Rest, 15 seconds. Tap to keep this exercise.";
         AnnouncePhaseForAccessibility(_restPanel, restDescription);
         ResumeRestCountdown();
     }
@@ -2932,14 +2930,11 @@ public class MainActivity : Activity
         }
 
         _keepButton.Visibility = ViewStates.Visible;
-        bool pairDecision = _currentWorkoutGroup.IsPairDecisionRound;
         _keepButton.Enabled = !_state.PendingRestKept;
         _keepButton.Alpha = 1f;
         _keepButton.Text = _state.PendingRestKept
             ? GetString(Resource.String.kept)
-            : GetString(pairDecision
-                ? Resource.String.tap_to_keep_both
-                : Resource.String.tap_to_keep);
+            : GetString(Resource.String.tap_to_keep);
         _keepButton.SetBackgroundResource(_state.PendingRestKept
             ? Resource.Drawable.kept_button_background
             : Resource.Drawable.rest_button_background);
@@ -2948,12 +2943,8 @@ public class MainActivity : Activity
                 ? Resource.Color.accent_text
                 : Resource.Color.white)));
         _keepButton.ContentDescription = _state.PendingRestKept
-            ? pairDecision
-                ? "Both directions kept for the next session"
-                : "Exercise kept for the next session"
-            : GetString(pairDecision
-                ? Resource.String.tap_to_keep_both_description
-                : Resource.String.tap_to_keep_description);
+            ? "Exercise kept for the next session"
+            : GetString(Resource.String.tap_to_keep_description);
     }
 
     private void ResumeRestCountdown()
