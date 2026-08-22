@@ -236,6 +236,78 @@ public sealed class ExerciseSessionService
             .FirstOrDefault(group => !state.Outcomes.ContainsKey(group.Id));
     }
 
+    public bool CanShuffleNextExercise(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        return GetNextGroup(state)?.Id == group.Id &&
+            GetCompatibleShuffleCandidates(state, group).Count > 0;
+    }
+
+    public Exercise? ShuffleNextExercise(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        if (GetNextGroup(state)?.Id != group.Id)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the next workout group.");
+        }
+
+        List<ShuffleCandidate> candidates =
+            GetCompatibleShuffleCandidates(state, group);
+        if (candidates.Count == 0)
+        {
+            return null;
+        }
+
+        Shuffle(candidates);
+        WorkoutGroup selectionGroup = GetSelectionGroups(state)
+            .Single(candidate => candidate.Id == group.SelectionKey);
+        IReadOnlyDictionary<CanonicalMuscleGroup, int>? loadWithoutCurrent =
+            state.ActiveWorkoutMinutes <= 30
+                ? WorkoutMuscleBudgetPolicy.CalculateLoadHalfUnits(
+                    GetSelectionGroups(state)
+                        .Where(candidate => candidate.Id != selectionGroup.Id)
+                        .Select(candidate => GetSelectedExercise(state, candidate)))
+                : null;
+        ShuffleCandidate selected = candidates
+            .Select(candidate => new
+            {
+                Candidate = candidate,
+                Ranking = loadWithoutCurrent is null
+                    ? EvaluateMuscleBudgetCandidate(
+                        state,
+                        selectionGroup,
+                        candidate.Exercise)
+                    : EvaluateSingleRoundMuscleBudgetCandidate(
+                        selectionGroup,
+                        candidate.Exercise,
+                        loadWithoutCurrent,
+                        state.ActiveWorkoutModifiers),
+            })
+            .OrderByDescending(candidate =>
+                candidate.Ranking.AdjustedScoreHalfUnits)
+            .ThenByDescending(candidate => candidate.Ranking.RealScore)
+            .ThenByDescending(candidate => candidate.Ranking.IsMirrorPreferred)
+            .ThenByDescending(candidate => candidate.Ranking.IsPrimary)
+            .ThenByDescending(candidate => candidate.Ranking.CanonicalCoverage)
+            .Select(candidate => candidate.Candidate)
+            .First();
+
+        state.SelectedExerciseIds[GetSelectionStorageKey(
+            selectionGroup.Id,
+            state.ActiveWorkoutModifiers)] = selected.Exercise.Id;
+        ApplyLongWorkoutAllocation(state, selected.Allocation);
+        return selected.Exercise;
+    }
+
     public bool IsFinalPendingGroup(WorkoutState state, WorkoutGroup group)
     {
         ArgumentNullException.ThrowIfNull(state);
@@ -592,6 +664,117 @@ public sealed class ExerciseSessionService
         catch (InvalidOperationException)
         {
             return null;
+        }
+    }
+
+    private List<ShuffleCandidate> GetCompatibleShuffleCandidates(
+        WorkoutState state,
+        WorkoutGroup currentRound)
+    {
+        IReadOnlyList<WorkoutGroup> activeRounds = GetActiveGroups(state);
+        if (activeRounds.Any(round =>
+                round.SelectionKey == currentRound.SelectionKey &&
+                state.Outcomes.ContainsKey(round.Id)) ||
+            !IsLongWorkoutAllocationValid(state))
+        {
+            return [];
+        }
+
+        WorkoutGroup? selectionGroup = GetSelectionGroups(state)
+            .SingleOrDefault(group => group.Id == currentRound.SelectionKey);
+        if (selectionGroup is null)
+        {
+            return [];
+        }
+
+        string selectionStorageKey = GetSelectionStorageKey(
+            selectionGroup.Id,
+            state.ActiveWorkoutModifiers);
+        int currentExerciseId =
+            state.SelectedExerciseIds.GetValueOrDefault(selectionStorageKey);
+        if (currentExerciseId <= 0)
+        {
+            return [];
+        }
+
+        HashSet<int> unavailableExerciseIds = GetSelectionGroups(state)
+            .Where(group => group.Id != selectionGroup.Id)
+            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
+                GetSelectionStorageKey(
+                    group.Id,
+                    state.ActiveWorkoutModifiers)))
+            .Where(exerciseId => exerciseId > 0)
+            .ToHashSet();
+        var candidates = new List<ShuffleCandidate>();
+        foreach (Exercise exercise in _exercises.Where(exercise =>
+                     exercise.Id != currentExerciseId &&
+                     !unavailableExerciseIds.Contains(exercise.Id) &&
+                     IsWorkoutSelectionCandidate(
+                         state,
+                         exercise,
+                         selectionGroup,
+                         state.ActiveWorkoutModifiers)))
+        {
+            if (TryGetCompatibleShuffleAllocation(
+                    state,
+                    selectionGroup.Id,
+                    selectionStorageKey,
+                    exercise,
+                    out LongWorkoutAllocation? allocation))
+            {
+                candidates.Add(new ShuffleCandidate(exercise, allocation));
+            }
+        }
+
+        return candidates;
+    }
+
+    private bool TryGetCompatibleShuffleAllocation(
+        WorkoutState state,
+        string selectionGroupId,
+        string selectionStorageKey,
+        Exercise candidate,
+        [NotNullWhen(true)] out LongWorkoutAllocation? allocation)
+    {
+        int previousExerciseId = state.SelectedExerciseIds[selectionStorageKey];
+        state.SelectedExerciseIds[selectionStorageKey] = candidate.Id;
+        try
+        {
+            LongWorkoutAllocation proposedAllocation =
+                ChooseLongWorkoutAllocation(state);
+            if (!state.ActiveExtraSetSelectionGroupIds.SetEquals(
+                    proposedAllocation.ExtraSetSelectionGroupIds) ||
+                !state.ActiveFullSideRoundIds.SetEquals(
+                    proposedAllocation.FullSideRoundIds) ||
+                state.ActiveSetCountsBySelectionGroupId.Count !=
+                    proposedAllocation.SetCountsBySelectionGroupId.Count ||
+                state.ActiveSetCountsBySelectionGroupId.Any(entry =>
+                    proposedAllocation.SetCountsBySelectionGroupId.GetValueOrDefault(
+                        entry.Key) != entry.Value) ||
+                state.ActiveDirectionPartnerExerciseIds.Count !=
+                    proposedAllocation.DirectionPartnerExerciseIds.Count ||
+                state.ActiveDirectionPartnerExerciseIds.Keys.Any(groupId =>
+                    !proposedAllocation.DirectionPartnerExerciseIds.ContainsKey(groupId)) ||
+                state.ActiveDirectionPartnerExerciseIds.Any(entry =>
+                    entry.Key != selectionGroupId &&
+                    proposedAllocation.DirectionPartnerExerciseIds.GetValueOrDefault(
+                        entry.Key) != entry.Value))
+            {
+                allocation = null;
+                return false;
+            }
+
+            allocation = proposedAllocation;
+            return true;
+        }
+        catch (InvalidOperationException)
+        {
+            allocation = null;
+            return false;
+        }
+        finally
+        {
+            state.SelectedExerciseIds[selectionStorageKey] = previousExerciseId;
         }
     }
 
@@ -2095,6 +2278,10 @@ public sealed class ExerciseSessionService
         HashSet<string> FullSideRoundIds,
         HashSet<string> ExtraSetSelectionGroupIds,
         Dictionary<string, int> SetCountsBySelectionGroupId);
+
+    private sealed record ShuffleCandidate(
+        Exercise Exercise,
+        LongWorkoutAllocation Allocation);
 
     private sealed record MuscleBudgetCandidate(
         int ExerciseId,

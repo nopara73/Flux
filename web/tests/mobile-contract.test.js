@@ -510,11 +510,11 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
   assert.match(
     webStyles,
-    /\.workout-screen\.phase-move \.exercise-media-card[\s\S]*\.workout-screen\.phase-rest \.exercise-media-card[\s\S]*\.move-panel\.change \.skip-action[\s\S]*\.keep-button/,
+    /\.workout-screen\.phase-move \.exercise-media-card[\s\S]*\.workout-screen\.phase-rest \.exercise-media-card[\s\S]*\.move-panel\.change \.media-control[\s\S]*\.keep-button/,
   );
 });
 
-test("exercise previews label every timed side or direction execution", async () => {
+test("exercise previews identify every timed side or direction execution", async () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");
   assert.equal(
@@ -522,12 +522,24 @@ test("exercise previews label every timed side or direction execution", async ()
     "ClockwiseThenCounterclockwise",
   );
   const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
+  const unilateralIcon = await source(
+    "Flux",
+    "Resources",
+    "drawable",
+    "ic_unilateral_asymmetry.xml",
+  );
   assert.match(workoutLayout, /@\+id\/side_phase_preview/);
+  assert.match(workoutLayout, /@\+id\/unilateral_execution_icon/);
   assert.match(workoutLayout, /@\+id\/side_phase_label/);
+  assert.match(workoutLayout, /@drawable\/ic_unilateral_asymmetry/);
   assert.match(workoutLayout, /@drawable\/exercise_execution_label_timed_pair_background/);
   assert.match(workoutLayout, /android:textColor="@color\/white"/);
-  assert.match(webIndex, /id="exercise-name"[\s\S]*id="side-phase-preview"[\s\S]*id="exercise-media-card"/);
+  assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="side-phase-preview"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
+  assert.match(webIndex, /id="unilateral-execution-icon"/);
   assert.match(webIndex, /id="side-phase-label"/);
+  assert.match(unilateralIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
+  assert.match(unilateralIcon, /@color\/rest_accent/);
+  assert.match(unilateralIcon, /@color\/move_accent/);
   assert.match(
     mainActivity,
     /RenderSidePhasePreview\(exercise\)/,
@@ -538,7 +550,7 @@ test("exercise previews label every timed side or direction execution", async ()
       "private void RenderSidePhasePreview(",
       "private void AnimateExerciseChange(",
     ),
-    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*"UNILATERAL"[\s\S]*"BIDIRECTIONAL"/,
+    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*_unilateralExecutionIcon\.Visibility = isUnilateral[\s\S]*_sidePhaseLabel\.Visibility = !isUnilateral && isBidirectional[\s\S]*"BIDIRECTIONAL"/,
   );
   assert.doesNotMatch(
     methodBody(
@@ -546,7 +558,7 @@ test("exercise previews label every timed side or direction execution", async ()
       "private void RenderSidePhasePreview(",
       "private void AnimateExerciseChange(",
     ),
-    /ALTERNATING|exercise_execution_label_alternating_background/,
+    /UNILATERAL|ALTERNATING|exercise_execution_label_alternating_background/,
   );
   assert.match(
     methodBody(
@@ -554,7 +566,7 @@ test("exercise previews label every timed side or direction execution", async ()
       "function renderSidePhasePreview(",
       "function showReadyPanel()",
     ),
-    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*"UNILATERAL"[\s\S]*"BIDIRECTIONAL"[\s\S]*classList\.add\("timed-pair"\)/,
+    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*unilateralExecutionIcon\.toggleAttribute\("hidden", !isUnilateral\)[\s\S]*sidePhaseLabel\.hidden = isUnilateral[\s\S]*"BIDIRECTIONAL"[\s\S]*classList\.add\("timed-pair"\)/,
   );
   assert.doesNotMatch(
     methodBody(
@@ -562,8 +574,11 @@ test("exercise previews label every timed side or direction execution", async ()
       "function renderSidePhasePreview(",
       "function showReadyPanel()",
     ),
-    /ALTERNATING|classList\.(?:add|toggle)\("alternating"/,
+    /UNILATERAL|ALTERNATING|classList\.(?:add|toggle)\("alternating"/,
   );
+  assert.match(webStyles, /\.unilateral-execution-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
+  assert.match(webStyles, /\.unilateral-blue[\s\S]*var\(--rest-accent\)/);
+  assert.match(webStyles, /\.unilateral-red[\s\S]*var\(--move-accent\)/);
   assert.match(
     webStyles,
     /\.side-phase-label\.timed-pair[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
@@ -576,6 +591,85 @@ test("exercise previews label every timed side or direction execution", async ()
   assert.doesNotMatch(webIndex, /two-sided-badge|BOTH SIDES/);
   assert.doesNotMatch(webApp, /twoSidedBadge/);
   assert.doesNotMatch(webStyles, /\.two-sided-(?:badge|icon)/);
+});
+
+test("workout transport controls are functional and muscle labels stay hidden", async () => {
+  const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
+  const startControl = workoutLayout.match(
+    /<ImageButton[\s\S]*?android:id="@\+id\/start_button"[\s\S]*?\/>/,
+  )?.[0] ?? "";
+  assert.match(startControl, /@drawable\/ic_phase_active/);
+  assert.doesNotMatch(startControl, /android:text=/);
+  assert.match(workoutLayout, /@\+id\/shuffle_button[\s\S]*@drawable\/ic_shuffle/);
+  assert.match(workoutLayout, /@\+id\/repeat_action[\s\S]*@drawable\/ic_repeat/);
+  assert.match(workoutLayout, /@\+id\/playback_action[\s\S]*@drawable\/ic_phase_pause/);
+  assert.match(workoutLayout, /@\+id\/next_action[\s\S]*@drawable\/ic_next/);
+  assert.doesNotMatch(workoutLayout, /workout_group_name|muscle_chip_background|skip_action/);
+  assert.doesNotMatch(webIndex, /workout-group-name|skip-exercise|>\s*Start\s*</);
+  assert.match(webIndex, /id="shuffle-exercise"[\s\S]*id="start-movement"/);
+  assert.match(webIndex, /id="start-movement"[\s\S]*start-playback-icon/);
+  assert.match(webIndex, /id="repeat-exercise"[\s\S]*id="toggle-playback"[\s\S]*id="next-exercise"/);
+
+  const mobilePause = methodBody(
+    mainActivity,
+    "private void TogglePlayback()",
+    "private void RepeatExercise()",
+  );
+  const mobileRepeat = methodBody(
+    mainActivity,
+    "private void RepeatExercise()",
+    "private void GoToNextExercise()",
+  );
+  const mobileNext = methodBody(
+    mainActivity,
+    "private void GoToNextExercise()",
+    "private void CompleteCountdown()",
+  );
+  assert.match(mobilePause, /ResumeCountdown\(\)/);
+  assert.match(mobilePause, /PauseCountdown\(\)[\s\S]*_countdownPausedByUser = true/);
+  assert.match(mobileRepeat, /StopCountdownTimer\(\)[\s\S]*StartCountdownTimer\(GetCurrentCountdownDurationMilliseconds\(\)\)/);
+  assert.doesNotMatch(mobileRepeat, /FinalizeCurrentRound|RecordOutcome/);
+  assert.match(mobileNext, /FinalizeCurrentRound\(keep: false\)/);
+  const mobileShuffle = methodBody(
+    mainActivity,
+    "private void ShuffleCurrentExercise()",
+    "private void StartCountdown()",
+  );
+  assert.match(mobileShuffle, /ShuffleNextExercise[\s\S]*_stateStore\.Save[\s\S]*ShowNextExercise/);
+  assert.doesNotMatch(mobileShuffle, /FinalizeCurrentRound|RecordOutcome/);
+  assert.match(mainActivity, /_repeatAction\.Click[\s\S]*_playbackAction\.Click[\s\S]*_nextAction\.Click/);
+
+  const webPause = methodBody(
+    webApp,
+    "function toggleMovementPlayback()",
+    "function repeatMovement()",
+  );
+  const webRepeat = methodBody(
+    webApp,
+    "function repeatMovement()",
+    "function goToNextExercise()",
+  );
+  const webNext = methodBody(
+    webApp,
+    "function goToNextExercise()",
+    "function completeMovement()",
+  );
+  assert.match(webPause, /resumeMovement\(\)/);
+  assert.match(webPause, /pauseMovement\("user"\)/);
+  assert.match(webRepeat, /getMovementCountdownDurationMs\(currentGroup\)[\s\S]*setMovementDeadline\(movementRemaining\)/);
+  assert.doesNotMatch(webRepeat, /recordOutcome|persistState/);
+  assert.match(webNext, /recordOutcome\(currentGroup, false\)/);
+  const webShuffle = methodBody(
+    webApp,
+    "function shuffleCurrentExercise()",
+    "function showMovePanel()",
+  );
+  assert.match(webShuffle, /shuffleNextExercise\(currentGroup\)[\s\S]*persistState\(\)[\s\S]*showNextExercise\(\)/);
+  assert.doesNotMatch(webShuffle, /recordOutcome|setScore/);
+  assert.match(webApp, /repeatExercise\.addEventListener[\s\S]*playbackToggle\.addEventListener[\s\S]*nextExercise\.addEventListener/);
+  assert.match(workoutModule, /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates/);
+  assert.doesNotMatch(mainActivity, /_workoutGroupName/);
+  assert.doesNotMatch(webApp, /workoutGroupName/);
 });
 
 test("lead-stance timing and cues are identical on mobile and web", () => {
@@ -666,7 +760,7 @@ test("web movement and rest timing match the mobile workout contract", () => {
 });
 
 test("web and mobile separate the exercise whistle from the final completion cue", () => {
-  const mobileStart = methodBody(mainActivity, "private void StartCountdown()", "private void SkipExercise()");
+  const mobileStart = methodBody(mainActivity, "private void StartCountdown()", "private void TogglePlayback()");
   const webStart = methodBody(webApp, "function startMovement()", "function setMovementDeadline(");
   assert.doesNotMatch(mobileStart, /PlayWhistleCue/);
   assert.doesNotMatch(webStart, /playSound/);

@@ -57,22 +57,25 @@ const elements = {
   workoutHeader: byId("workout-header"),
   workoutProgressText: byId("workout-progress-text"),
   workoutProgressFill: byId("workout-progress-fill"),
-  workoutGroupName: byId("workout-group-name"),
   exerciseName: byId("exercise-name"),
   mediaCard: byId("exercise-media-card"),
   video: byId("exercise-video"),
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
   sidePhasePreview: byId("side-phase-preview"),
+  unilateralExecutionIcon: byId("unilateral-execution-icon"),
   sidePhaseLabel: byId("side-phase-label"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
   readyPanel: byId("ready-panel"),
+  shuffleExercise: byId("shuffle-exercise"),
   startMovement: byId("start-movement"),
   movePanel: byId("move-panel"),
   movementCue: byId("movement-cue"),
-  skipExercise: byId("skip-exercise"),
+  repeatExercise: byId("repeat-exercise"),
+  playbackToggle: byId("toggle-playback"),
+  nextExercise: byId("next-exercise"),
   movementCountdown: byId("movement-countdown"),
   movementProgressFill: byId("movement-progress-fill"),
   restPanel: byId("rest-panel"),
@@ -187,8 +190,11 @@ function bindEvents() {
     element.addEventListener("click", () => toggleWorkoutModifier(flag));
   }
   elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
+  elements.shuffleExercise.addEventListener("click", shuffleCurrentExercise);
   elements.startMovement.addEventListener("click", startMovement);
-  elements.skipExercise.addEventListener("click", skipExercise);
+  elements.repeatExercise.addEventListener("click", repeatMovement);
+  elements.playbackToggle.addEventListener("click", toggleMovementPlayback);
+  elements.nextExercise.addEventListener("click", goToNextExercise);
   elements.keepExercise.addEventListener("click", keepExercise);
   elements.mediaRetry.addEventListener("click", retryMedia);
   elements.doneButton.addEventListener("click", closeCompletion);
@@ -416,12 +422,11 @@ function showNextExercise() {
     `${String(position).padStart(2, "0")}  /  ${String(total).padStart(2, "0")}`;
   elements.workoutProgressText.setAttribute("aria-label", `Round ${position} of ${total}`);
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
-  elements.workoutGroupName.textContent = nextGroup.displayName;
   elements.exerciseName.textContent = currentExercise.name;
   renderSidePhasePreview(currentExercise);
   elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
-    `Round ${position} of ${total}. ${nextGroup.displayName}. ${currentExercise.name}.`;
+    `Round ${position} of ${total}. ${currentExercise.name}.`;
 
   stopRuntimeTimers();
   resetMovementVisuals();
@@ -437,12 +442,20 @@ function renderSidePhasePreview(exercise) {
   if (!isUnilateral && !isBidirectional) {
     elements.sidePhasePreview.hidden = true;
     elements.sidePhasePreview.setAttribute("aria-label", "");
+    elements.unilateralExecutionIcon.toggleAttribute("hidden", true);
+    elements.sidePhaseLabel.hidden = true;
     elements.sidePhaseLabel.classList.remove("timed-pair");
     return;
   }
 
-  elements.sidePhaseLabel.textContent = isUnilateral ? "UNILATERAL" : "BIDIRECTIONAL";
-  elements.sidePhaseLabel.classList.add("timed-pair");
+  elements.unilateralExecutionIcon.toggleAttribute("hidden", !isUnilateral);
+  elements.sidePhaseLabel.hidden = isUnilateral;
+  if (!isUnilateral) {
+    elements.sidePhaseLabel.textContent = "BIDIRECTIONAL";
+    elements.sidePhaseLabel.classList.add("timed-pair");
+  } else {
+    elements.sidePhaseLabel.classList.remove("timed-pair");
+  }
   elements.sidePhasePreview.setAttribute(
     "aria-label",
     usesTimedLeadStances(exercise)
@@ -458,13 +471,49 @@ function showReadyPanel() {
   elements.readyPanel.hidden = false;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = true;
+  elements.shuffleExercise.hidden = !session || !currentGroup ||
+    !session.canShuffleNextExercise(currentGroup);
   elements.startMovement.disabled = !mediaReady;
+}
+
+function shuffleCurrentExercise() {
+  if (!session || !currentGroup || elements.readyPanel.hidden ||
+      elements.shuffleExercise.hidden) {
+    return;
+  }
+
+  elements.shuffleExercise.disabled = true;
+  const replacement = session.shuffleNextExercise(currentGroup);
+  if (!replacement) {
+    elements.shuffleExercise.hidden = true;
+    elements.shuffleExercise.disabled = false;
+    return;
+  }
+
+  persistState();
+  showNextExercise();
+  elements.status.textContent = `Changed to ${replacement.name}.`;
+  elements.shuffleExercise.disabled = false;
 }
 
 function showMovePanel() {
   elements.readyPanel.hidden = true;
   elements.movePanel.hidden = false;
   elements.restPanel.hidden = true;
+}
+
+function setPlaybackControlsEnabled(enabled) {
+  elements.repeatExercise.disabled = !enabled;
+  elements.playbackToggle.disabled = !enabled;
+  elements.nextExercise.disabled = !enabled;
+}
+
+function renderPlaybackToggle() {
+  const paused = movementPauseReason === "user";
+  const label = paused ? "Resume exercise" : "Pause exercise";
+  elements.playbackToggle.dataset.state = paused ? "paused" : "playing";
+  elements.playbackToggle.setAttribute("aria-label", label);
+  elements.playbackToggle.title = label;
 }
 
 function showRestPanel() {
@@ -496,7 +545,7 @@ function loadExerciseMedia() {
   clearMediaRecoveryTimer();
   mediaReady = false;
   elements.startMovement.disabled = true;
-  elements.skipExercise.disabled = true;
+  setPlaybackControlsEnabled(false);
   elements.mediaError.hidden = true;
   elements.mediaScrim.hidden = false;
   elements.mediaScrim.classList.remove("revealed");
@@ -561,10 +610,17 @@ function markMediaReady(generation, playbackConfirmed = false) {
   elements.mediaError.hidden = true;
   elements.mediaScrim.classList.add("revealed");
   elements.startMovement.disabled = false;
-  elements.skipExercise.disabled = !movementRunning;
+  const manuallyPaused = movementPauseReason === "user";
+  setPlaybackControlsEnabled(movementRunning || manuallyPaused);
 
-  if (playbackConfirmed || !movementPauseReason) {
+  if (playbackConfirmed || !movementPauseReason || manuallyPaused) {
     clearMediaRecoveryTimer();
+  }
+
+  if (manuallyPaused) {
+    elements.video.pause();
+    renderPlaybackToggle();
+    return;
   }
 
   if (movementPauseReason && !document.hidden) {
@@ -592,7 +648,7 @@ function handleVideoWaiting(generation) {
   }
   mediaReady = false;
   elements.startMovement.disabled = true;
-  elements.skipExercise.disabled = true;
+  setPlaybackControlsEnabled(false);
   elements.mediaError.hidden = true;
   elements.mediaScrim.hidden = false;
   elements.mediaScrim.classList.remove("revealed");
@@ -611,14 +667,14 @@ function showMediaError(generation = mediaGeneration) {
   elements.video.pause();
   if (movementRunning) {
     pauseMovement("media");
-  } else if (movementPauseReason) {
+  } else if (movementPauseReason && movementPauseReason !== "user") {
     movementPauseReason = "media";
   }
   if (movementPauseReason === "media") {
     lastMovementPhase = null;
   }
   elements.startMovement.disabled = true;
-  elements.skipExercise.disabled = true;
+  setPlaybackControlsEnabled(false);
   elements.mediaScrim.classList.remove("revealed");
   elements.mediaScrim.hidden = true;
   elements.mediaError.hidden = false;
@@ -645,7 +701,13 @@ function clearExerciseMedia() {
 }
 
 function startMovement() {
-  if (!currentExercise || !currentGroup || !mediaReady || movementRunning) {
+  if (
+    !currentExercise ||
+    !currentGroup ||
+    !mediaReady ||
+    movementRunning ||
+    movementPauseReason
+  ) {
     return;
   }
   requestWakeLock();
@@ -653,7 +715,6 @@ function startMovement() {
   movementPauseReason = null;
   lastMovementPhase = null;
   showMovePanel();
-  elements.skipExercise.disabled = false;
   setMovementDeadline(movementRemaining);
 }
 
@@ -663,6 +724,8 @@ function setMovementDeadline(remainingMilliseconds) {
   movementEndsAt = performance.now() + remainingMilliseconds;
   movementRunning = true;
   movementPauseReason = null;
+  setPlaybackControlsEnabled(true);
+  renderPlaybackToggle();
   updateMovement();
   movementTimer = setInterval(updateMovement, TIMER_INTERVAL_MS);
 }
@@ -704,7 +767,8 @@ function applyMovementPhase(phase) {
   );
 
   if (phase === "Preparation") {
-    elements.movementCue.textContent = cueSymbol("Move");
+    elements.movementCue.textContent = "";
+    elements.movementCue.hidden = true;
     setMediaMirrored(false);
     setFullPhaseSurface("rest");
     elements.mediaCard.classList.add("resting");
@@ -715,7 +779,9 @@ function applyMovementPhase(phase) {
 
   const presentation = getMovementPresentation(currentExercise, phase);
   const description = movementCueDescription(presentation.cue);
-  elements.movementCue.textContent = cueSymbol(presentation.cue);
+  const symbol = cueSymbol(presentation.cue);
+  elements.movementCue.textContent = symbol;
+  elements.movementCue.hidden = !symbol;
 
   if (phase === "ChangeSides") {
     setMediaMirrored(false);
@@ -846,19 +912,24 @@ function pauseMovement(reason) {
   movementRunning = false;
   movementPauseReason = reason;
   elements.video.pause();
-  elements.skipExercise.disabled = true;
+  setPlaybackControlsEnabled(reason === "user" && mediaReady);
+  renderPlaybackToggle();
 }
 
 function resumeMovement() {
   if (!movementPauseReason || movementRemaining <= 0 || !mediaReady || document.hidden) {
     return;
   }
-  elements.skipExercise.disabled = false;
   setMovementDeadline(movementRemaining);
 }
 
 function resumePausedMovementWhenVisible() {
-  if (!movementPauseReason || !currentExercise || document.hidden) {
+  if (
+    !movementPauseReason ||
+    movementPauseReason === "user" ||
+    !currentExercise ||
+    document.hidden
+  ) {
     return;
   }
 
@@ -887,6 +958,9 @@ function resumePausedMovementWhenVisible() {
 function restorePausedMovementMedia(phase) {
   const presentation = getMovementPresentation(currentExercise, phase);
   lastMovementPhase = phase;
+  const symbol = cueSymbol(presentation.cue);
+  elements.movementCue.textContent = symbol;
+  elements.movementCue.hidden = !symbol;
   elements.movePanel.classList.toggle("change", phase === "ChangeSides");
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
@@ -898,8 +972,60 @@ function restorePausedMovementMedia(phase) {
   restartMediaForPhase(phase);
 }
 
-function skipExercise() {
-  if (!movementRunning || !session || !currentGroup) {
+function toggleMovementPlayback() {
+  if (movementPauseReason === "user") {
+    if (!mediaReady) {
+      return;
+    }
+    resumeMovement();
+    elements.status.textContent = "Exercise resumed.";
+    return;
+  }
+  if (!movementRunning) {
+    return;
+  }
+  pauseMovement("user");
+  elements.status.textContent = "Exercise paused.";
+}
+
+function repeatMovement() {
+  if (
+    !currentExercise ||
+    !currentGroup ||
+    !mediaReady ||
+    (!movementRunning && movementPauseReason !== "user")
+  ) {
+    return;
+  }
+
+  clearInterval(movementTimer);
+  movementTimer = null;
+  movementRunning = false;
+  movementPauseReason = null;
+  movementRemaining = getMovementCountdownDurationMs(currentGroup);
+  movementEndsAt = 0;
+  lastMovementPhase = null;
+  elements.video.pause();
+  setMediaMirrored(false);
+  if (currentExercise.presentation !== "Still") {
+    elements.holdFrame.hidden = true;
+    elements.video.hidden = false;
+    try {
+      elements.video.currentTime = 0;
+    } catch {
+      // Metadata readiness is already guarded; the phase restart will seek again.
+    }
+  }
+  setMovementDeadline(movementRemaining);
+  elements.status.textContent = "Exercise restarted from the beginning.";
+}
+
+function goToNextExercise() {
+  if (
+    (!movementRunning && movementPauseReason !== "user") ||
+    !session ||
+    !currentGroup
+  ) {
     return;
   }
   stopMovementTimer();
@@ -1029,7 +1155,8 @@ function stopMovementTimer() {
   movementPauseReason = null;
   movementEndsAt = 0;
   movementRemaining = 0;
-  elements.skipExercise.disabled = true;
+  setPlaybackControlsEnabled(false);
+  renderPlaybackToggle();
 }
 
 function stopRuntimeTimers() {
@@ -1041,6 +1168,11 @@ function stopRuntimeTimers() {
 
 function resetMovementVisuals() {
   lastMovementPhase = null;
+  movementPauseReason = null;
+  elements.movementCue.textContent = "";
+  elements.movementCue.hidden = true;
+  setPlaybackControlsEnabled(false);
+  renderPlaybackToggle();
   elements.phaseSurface.classList.remove("visible");
   elements.phaseLeft.style.backgroundColor = "";
   elements.phaseRight.style.backgroundColor = "";
@@ -1086,19 +1218,19 @@ function setMediaMirrored(mirrored) {
 
 function cueSymbol(cue) {
   return {
-    Move: "▶",
+    Move: "",
     Switch: "⇄",
-    ScreenLeft: "▶",
-    ScreenRight: "▶",
-    ShownLeadStance: "▶",
-    OppositeLeadStance: "▶",
+    ScreenLeft: "",
+    ScreenRight: "",
+    ShownLeadStance: "",
+    OppositeLeadStance: "",
     Forward: "↓",
     Backward: "↑",
     Clockwise: "↻",
     Counterclockwise: "↺",
     Inward: "⇥",
     Outward: "⇤",
-  }[cue] ?? "▶";
+  }[cue] ?? "";
 }
 
 function movementCueDescription(cue) {
@@ -1162,7 +1294,7 @@ function handleVisibilityChange() {
 
   if (restActive) {
     startRestTimer();
-  } else if (movementPauseReason) {
+  } else if (movementPauseReason && movementPauseReason !== "user") {
     resumePausedMovementWhenVisible();
   } else if (!elements.readyPanel.hidden && mediaReady && currentExercise?.presentation !== "Still") {
     playVideo();

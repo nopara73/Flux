@@ -187,9 +187,16 @@ Every round begins with five seconds of quiet preparation.
   shared `Tap to keep` decision. Rejecting either direction rejects and
   scores both records together.
 
-Red means movement. Blue means change or rest. A `UNILATERAL` label appears
-before timed side or lead-stance pairs, while `BIDIRECTIONAL` appears before
-timed opposite-direction pairs.
+Red means movement. Blue means change or rest. A large asymmetric human icon
+marks timed side or lead-stance pairs, while `BIDIRECTIONAL` identifies timed
+opposite-direction pairs. The workout controls follow a media-player model:
+shuffle replaces an unstarted exercise without scoring it, play starts,
+pause/resume controls the active timer, repeat restarts the current exercise
+without scoring it, and next rejects it and advances. Shuffle preserves the
+session profile and any linked direction pair, and is unavailable after an
+earlier round from the same paired or repeated unit has begun. Anatomical
+group routing remains internal rather than appearing as a potentially
+misleading exercise label.
 
 Repetition demonstrations run at normal speed. Hold demonstrations loop during
 the preview, play once when work begins, and then remain on a reviewed target

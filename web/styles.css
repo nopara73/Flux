@@ -554,6 +554,7 @@ button.modifier-tile:not(:disabled):active {
 }
 
 .workout-meta {
+  min-height: 36px;
   display: flex;
   align-items: center;
 }
@@ -568,25 +569,6 @@ button.modifier-tile:not(:disabled):active {
   font-weight: 600;
   letter-spacing: 0.08em;
   white-space: nowrap;
-}
-
-.workout-group-name {
-  min-height: 36px;
-  min-width: 0;
-  margin-left: 10px;
-  padding: 5px 10px;
-  flex: 1;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--chartreuse);
-  border-radius: 12px;
-  background: var(--accent-soft);
-  font-size: clamp(10px, 2.8vw, 12px);
-  font-weight: 600;
-  line-height: 1.2;
-  text-align: center;
-  text-overflow: ellipsis;
 }
 
 .progress-track {
@@ -625,11 +607,49 @@ button.modifier-tile:not(:disabled):active {
 }
 
 .side-phase-preview {
-  width: 100%;
-  min-height: 34px;
-  margin-top: 8px;
+  min-height: 52px;
+  margin-left: auto;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.unilateral-execution-icon {
+  width: 72px;
+  height: 52px;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 3px 4px rgb(18 20 22 / 16%));
+}
+
+.unilateral-core {
+  fill: var(--graphite);
+}
+
+.unilateral-core-stroke,
+.unilateral-blue,
+.unilateral-red {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.unilateral-core-stroke {
+  stroke: var(--graphite);
+  stroke-width: 9;
+}
+
+.unilateral-blue,
+.unilateral-red {
+  stroke-width: 7;
+}
+
+.unilateral-blue {
+  stroke: var(--rest-accent);
+}
+
+.unilateral-red {
+  stroke: var(--move-accent);
 }
 
 .side-phase-label {
@@ -813,9 +833,49 @@ button.modifier-tile:not(:disabled):active {
   background: linear-gradient(135deg, var(--ready-highlight), var(--ready));
 }
 
-.action-button {
+.ready-controls {
   width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.action-button {
+  min-width: 0;
   min-height: 68px;
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+}
+
+.shuffle-button {
+  width: 68px;
+  min-height: 68px;
+  flex: 0 0 68px;
+  padding: 20px;
+  color: var(--chartreuse);
+  border: 1px solid var(--chartreuse);
+  border-radius: 20px;
+  background: var(--ready-highlight);
+  box-shadow: 0 2px 5px rgb(18 20 22 / 18%);
+}
+
+.shuffle-button svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.start-playback-icon {
+  width: 34px;
+  height: 34px;
+  display: block;
+  fill: currentColor;
 }
 
 .move-panel {
@@ -829,28 +889,62 @@ button.modifier-tile:not(:disabled):active {
   align-items: center;
 }
 
-.movement-cue {
-  min-width: 32px;
-  min-height: 32px;
-  flex: 1;
+.media-controls {
+  min-height: 48px;
   display: flex;
+  gap: 12px;
   align-items: center;
-  color: currentColor;
-  font-size: 29px;
-  font-weight: 700;
-  line-height: 1;
+  justify-content: center;
 }
 
-.skip-action {
-  min-width: 48px;
-  min-height: 48px;
-  padding: 0 10px;
+.media-control {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
   color: currentColor;
   border: 1px solid var(--move-accent);
   border-radius: 14px;
   background: var(--move-track);
-  font-size: 14px;
-  font-weight: 600;
+}
+
+.media-control-primary {
+  width: 56px;
+}
+
+.media-control svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+.media-control[data-state="playing"] .playback-play-icon,
+.media-control[data-state="paused"] .playback-pause-icon {
+  display: none;
+}
+
+.media-control:disabled {
+  opacity: 0.35;
+}
+
+.movement-time-row {
+  min-height: 60px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.movement-cue {
+  min-width: 32px;
+  min-height: 32px;
+  position: absolute;
+  left: 0;
+  display: grid;
+  place-items: center;
+  color: currentColor;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .movement-countdown {
@@ -876,7 +970,7 @@ button.modifier-tile:not(:disabled):active {
   color: var(--rest-text);
 }
 
-.move-panel.change .skip-action {
+.move-panel.change .media-control {
   border-color: var(--rest-accent);
   background: var(--rest-track);
 }
@@ -1181,10 +1275,6 @@ input:focus-visible {
   .exercise-name {
     max-height: 3.6em;
     font-size: clamp(11px, 2.4vw, 19px);
-  }
-
-  .side-phase-preview {
-    min-height: 34px;
   }
 
   .side-phase-label {
@@ -1492,13 +1582,6 @@ input:focus-visible {
     font-size: clamp(15px, 1vw, 18px);
   }
 
-  .workout-group-name {
-    min-height: 52px;
-    padding: 9px 16px;
-    border-radius: 14px;
-    font-size: clamp(14px, 1.1vw, 18px);
-  }
-
   .workout-progress {
     height: 7px;
     margin-top: 10px;
@@ -1512,8 +1595,12 @@ input:focus-visible {
   }
 
   .side-phase-preview {
-    min-height: 42px;
-    margin-top: 16px;
+    min-height: 60px;
+  }
+
+  .unilateral-execution-icon {
+    width: 88px;
+    height: 60px;
   }
 
   .side-phase-label {
@@ -1566,7 +1653,18 @@ input:focus-visible {
 
   .action-button {
     min-height: 88px;
-    font-size: 26px;
+  }
+
+  .shuffle-button {
+    width: 88px;
+    min-height: 88px;
+    flex-basis: 88px;
+    padding: 27px;
+  }
+
+  .start-playback-icon {
+    width: 44px;
+    height: 44px;
   }
 
   .phase-row {
@@ -1577,10 +1675,24 @@ input:focus-visible {
     font-size: 48px;
   }
 
-  .skip-action {
-    min-width: 64px;
+  .media-controls {
     min-height: 64px;
-    font-size: 18px;
+    gap: 18px;
+  }
+
+  .media-control {
+    width: 64px;
+    height: 64px;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .media-control-primary {
+    width: 72px;
+  }
+
+  .movement-time-row {
+    min-height: 132px;
   }
 
   .movement-countdown {

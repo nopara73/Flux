@@ -63,28 +63,42 @@
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/workout_group_name"
+                <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:accessibilityHeading="true"
-                    android:background="@drawable/muscle_chip_background"
-                    android:breakStrategy="balanced"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
+                    android:layout_weight="1" />
+
+                <FrameLayout
+                    android:id="@+id/side_phase_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:gravity="center"
-                    android:hyphenationFrequency="none"
-                    android:lineSpacingExtra="1dp"
-                    android:maxLines="2"
-                    android:minHeight="36dp"
-                    android:paddingStart="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="@color/accent_text"
-                    android:textSize="12sp" />
+                    android:importantForAccessibility="yes"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/unilateral_execution_icon"
+                        android:layout_width="72dp"
+                        android:layout_height="52dp"
+                        android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_unilateral_asymmetry"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/side_phase_label"
+                        android:layout_width="132dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/exercise_execution_label_timed_pair_background"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:importantForAccessibility="no"
+                        android:letterSpacing="0.08"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
 
             <ProgressBar
@@ -111,29 +125,6 @@
                 android:maxLines="4"
                 android:textColor="@color/primary_text"
                 android:textSize="23sp" />
-
-            <LinearLayout
-                android:id="@+id/side_phase_preview"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:importantForAccessibility="yes"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/side_phase_label"
-                    android:layout_width="132dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/exercise_execution_label_timed_pair_background"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-                    android:importantForAccessibility="no"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/white"
-                    android:textSize="11sp" />
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -254,14 +245,37 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <Button
-                    android:id="@+id/start_button"
-                    style="@style/FluxPrimaryButton"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="68dp"
-                    android:maxLines="2"
-                    android:text="@string/start" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/shuffle_button"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:background="@drawable/ready_secondary_button_background"
+                        android:contentDescription="@string/shuffle_exercise_description"
+                        android:elevation="2dp"
+                        android:padding="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_shuffle" />
+
+                    <ImageButton
+                        android:id="@+id/start_button"
+                        android:layout_width="0dp"
+                        android:layout_height="68dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/primary_button_background"
+                        android:contentDescription="@string/start"
+                        android:elevation="3dp"
+                        android:padding="18dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_phase_active"
+                        android:tint="@color/primary_text" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -280,50 +294,77 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/repeat_action"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/phase_move_chip_background"
+                        android:contentDescription="@string/repeat_exercise_description"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:padding="12dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_repeat"
+                        android:tint="@color/move_text" />
+
+                    <ImageButton
+                        android:id="@+id/playback_action"
+                        android:layout_width="56dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/phase_move_chip_background"
+                        android:contentDescription="@string/pause_exercise_description"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:padding="12dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_phase_pause"
+                        android:tint="@color/move_text" />
+
+                    <ImageButton
+                        android:id="@+id/next_action"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/phase_move_chip_background"
+                        android:contentDescription="@string/next_exercise_description"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:padding="12dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_next"
+                        android:tint="@color/move_text" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="60dp">
 
                     <ImageView
                         android:id="@+id/countdown_phase_icon"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/move_label"
+                        android:layout_gravity="start|center_vertical"
                         android:importantForAccessibility="no"
-                        android:scaleType="fitStart"
-                        android:src="@drawable/ic_phase_active"
-                        android:tint="@color/move_text" />
+                        android:scaleType="fitCenter"
+                        android:tint="@color/move_text"
+                        android:visibility="gone" />
 
                     <TextView
-                        android:id="@+id/skip_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:contentDescription="@string/skip_move_description"
-                        android:focusable="true"
+                        android:id="@+id/countdown_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:minWidth="48dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:text="@string/skip"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/countdown_initial"
                         android:textColor="@color/move_text"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/countdown_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="@string/countdown_initial"
-                    android:textColor="@color/move_text"
-                    android:textSize="60sp" />
+                        android:textSize="60sp" />
+                </FrameLayout>
 
                 <ProgressBar
                     android:id="@+id/countdown_progress"

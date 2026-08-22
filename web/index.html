@@ -138,20 +138,32 @@
           <header id="workout-header" class="workout-header">
             <div class="workout-meta">
               <span id="workout-progress-text" class="workout-progress-text">01&nbsp;&nbsp;/&nbsp;&nbsp;10</span>
-              <span id="workout-group-name" class="workout-group-name"></span>
+              <div
+                id="side-phase-preview"
+                class="side-phase-preview"
+                aria-label=""
+                hidden
+              >
+                <svg
+                  id="unilateral-execution-icon"
+                  class="unilateral-execution-icon"
+                  viewBox="0 0 72 52"
+                  aria-hidden="true"
+                  focusable="false"
+                  hidden
+                >
+                  <circle class="unilateral-core" cx="50" cy="8" r="6"></circle>
+                  <path class="unilateral-core-stroke" d="M44 18 34 31"></path>
+                  <path class="unilateral-blue" d="M42 19 20 5M34 31 11 44"></path>
+                  <path class="unilateral-red" d="M45 20 55 46M34 32 19 49"></path>
+                </svg>
+                <span id="side-phase-label" class="side-phase-label" hidden></span>
+              </div>
             </div>
             <div class="progress-track workout-progress" aria-hidden="true">
               <span id="workout-progress-fill"></span>
             </div>
             <h1 id="exercise-name" class="exercise-name"></h1>
-            <div
-              id="side-phase-preview"
-              class="side-phase-preview"
-              aria-label=""
-              hidden
-            >
-              <span id="side-phase-label" class="side-phase-label"></span>
-            </div>
           </header>
 
           <div class="exercise-media-area">
@@ -177,17 +189,79 @@
 
           <div class="workout-action-host">
             <div id="ready-panel" class="workout-panel ready-panel">
-              <button id="start-movement" class="primary-button action-button" type="button" disabled>
-                Start
-              </button>
+              <div class="ready-controls">
+                <button
+                  id="shuffle-exercise"
+                  class="shuffle-button"
+                  type="button"
+                  aria-label="Choose another exercise without voting this one down"
+                  title="Shuffle exercise (no downvote)"
+                  hidden
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 7.5h4.5c4.5 0 4.5 9 9 9H21M17 12.5l4 4-4 4M3 16.5h4.5c1.52 0 2.53-1.03 3.4-2.4M13.08 9.9c.87-1.37 1.88-2.4 3.42-2.4H21M17 3.5l4 4-4 4"></path>
+                  </svg>
+                </button>
+                <button
+                  id="start-movement"
+                  class="primary-button action-button start-playback"
+                  type="button"
+                  aria-label="Start exercise"
+                  title="Start exercise"
+                  disabled
+                >
+                  <svg class="start-playback-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 5v14l11-7Z"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <div id="move-panel" class="workout-panel move-panel" hidden>
-              <div class="phase-row">
-                <span id="movement-cue" class="movement-cue" aria-hidden="true">▶</span>
-                <button id="skip-exercise" class="skip-action" type="button">Skip</button>
+              <div class="media-controls" role="group" aria-label="Exercise playback controls">
+                <button
+                  id="repeat-exercise"
+                  class="media-control"
+                  type="button"
+                  aria-label="Repeat this exercise from the beginning"
+                  title="Repeat exercise"
+                  disabled
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17 2 21 6 17 10V7H7a4 4 0 0 0-4 4H1a6 6 0 0 1 6-6h10ZM7 22l-4-4 4-4v3h10a4 4 0 0 0 4-4h2a6 6 0 0 1-6 6H7Z"></path>
+                  </svg>
+                </button>
+                <button
+                  id="toggle-playback"
+                  class="media-control media-control-primary"
+                  type="button"
+                  data-state="playing"
+                  aria-label="Pause exercise"
+                  title="Pause exercise"
+                  disabled
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path class="playback-pause-icon" d="M6 5h4v14H6ZM14 5h4v14h-4Z"></path>
+                    <path class="playback-play-icon" d="M8 5v14l11-7Z"></path>
+                  </svg>
+                </button>
+                <button
+                  id="next-exercise"
+                  class="media-control"
+                  type="button"
+                  aria-label="Next exercise; reject this exercise for future sessions"
+                  title="Next exercise"
+                  disabled
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 5v14l10-7ZM17 5h2v14h-2Z"></path>
+                  </svg>
+                </button>
               </div>
-              <output id="movement-countdown" class="movement-countdown">45</output>
+              <div class="movement-time-row">
+                <span id="movement-cue" class="movement-cue" aria-hidden="true" hidden></span>
+                <output id="movement-countdown" class="movement-countdown">45</output>
+              </div>
               <div id="movement-track" class="progress-track movement-track" aria-hidden="true">
                 <span id="movement-progress-fill"></span>
               </div>

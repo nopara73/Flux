@@ -41,8 +41,11 @@
     <string name="ready_label">READY  ·  45 SECONDS</string>
     <string name="start">Start</string>
     <string name="move_label">MOVE</string>
-    <string name="skip">Skip</string>
-    <string name="skip_move_description">Skip this exercise and its rest</string>
+    <string name="repeat_exercise_description">Repeat this exercise from the beginning</string>
+    <string name="shuffle_exercise_description">Choose another exercise without voting this one down</string>
+    <string name="pause_exercise_description">Pause exercise</string>
+    <string name="resume_exercise_description">Resume exercise</string>
+    <string name="next_exercise_description">Next exercise; reject this exercise for future sessions</string>
     <string name="countdown_initial">45</string>
     <string name="rest_label">REST</string>
     <string name="rest_initial">15</string>

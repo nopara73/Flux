@@ -1762,6 +1762,61 @@ export class WorkoutSession {
     return this.getActiveGroups().find((group) => this.state.outcomes[group.id] === undefined) ?? null;
   }
 
+  canShuffleNextExercise(group) {
+    return this.getNextGroup()?.id === group.id &&
+      this.getCompatibleShuffleCandidates(group).length > 0;
+  }
+
+  shuffleNextExercise(group) {
+    if (this.getNextGroup()?.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+
+    const candidates = this.getCompatibleShuffleCandidates(group);
+    if (candidates.length === 0) {
+      return null;
+    }
+
+    this.shuffle(candidates);
+    const selectionGroup = this.getSelectionGroups().find((candidate) =>
+      candidate.id === getSelectionKey(group));
+    if (!selectionGroup) {
+      return null;
+    }
+    const loadWithoutCurrent = this.state.activeWorkoutMinutes <= 30
+      ? calculateMuscleLoadHalfUnits(this.getSelectionGroups()
+          .filter((candidate) => candidate.id !== selectionGroup.id)
+          .map((candidate) => this.getSelectedExercise(candidate)))
+      : null;
+    const selected = candidates
+      .map((candidate) => ({
+        candidate,
+        ranking: loadWithoutCurrent
+          ? this.evaluateSingleRoundMuscleBudgetCandidate(
+              selectionGroup,
+              candidate.exercise,
+              loadWithoutCurrent,
+            )
+          : this.evaluateMuscleBudgetCandidate(
+              selectionGroup,
+              candidate.exercise,
+            ),
+      }))
+      .sort((left, right) =>
+        right.ranking.adjustedScoreHalfUnits - left.ranking.adjustedScoreHalfUnits ||
+        right.ranking.realScore - left.ranking.realScore ||
+        Number(right.ranking.isMirrorPreferred) - Number(left.ranking.isMirrorPreferred) ||
+        Number(right.ranking.isPrimary) - Number(left.ranking.isPrimary) ||
+        right.ranking.canonicalCoverage - left.ranking.canonicalCoverage)[0].candidate;
+
+    this.state.selectedExerciseIds[this.getSelectionStorageKey(
+      selectionGroup.id,
+      this.state.activeWorkoutModifiers,
+    )] = selected.exercise.id;
+    this.applyLongWorkoutAllocation(selected.allocation);
+    return selected.exercise;
+  }
+
   getSelectedExercise(group) {
     if (Number.isInteger(group.exerciseOverrideId) && group.exerciseOverrideId > 0) {
       const overrideExercise = this.exercisesById.get(group.exerciseOverrideId);
@@ -1795,6 +1850,111 @@ export class WorkoutSession {
       return this.getSelectedExercise(group);
     } catch {
       return null;
+    }
+  }
+
+  getCompatibleShuffleCandidates(currentRound) {
+    const activeRounds = this.getActiveGroups();
+    const selectionGroupId = getSelectionKey(currentRound);
+    if (
+      activeRounds.some((round) =>
+        getSelectionKey(round) === selectionGroupId &&
+        this.state.outcomes[round.id] !== undefined) ||
+      !this.isLongWorkoutAllocationValid()
+    ) {
+      return [];
+    }
+
+    const selectionGroup = this.getSelectionGroups().find((group) =>
+      group.id === selectionGroupId);
+    if (!selectionGroup) {
+      return [];
+    }
+    const selectionStorageKey = this.getSelectionStorageKey(
+      selectionGroup.id,
+      this.state.activeWorkoutModifiers,
+    );
+    const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+    if (!Number.isInteger(currentExerciseId) || currentExerciseId <= 0) {
+      return [];
+    }
+
+    const unavailableExerciseIds = new Set(this.getSelectionGroups()
+      .filter((group) => group.id !== selectionGroup.id)
+      .map((group) => this.state.selectedExerciseIds[this.getSelectionStorageKey(
+        group.id,
+        this.state.activeWorkoutModifiers,
+      )])
+      .filter((exerciseId) => Number.isInteger(exerciseId) && exerciseId > 0));
+    const candidates = [];
+    for (const exercise of this.exercises) {
+      if (
+        exercise.id === currentExerciseId ||
+        unavailableExerciseIds.has(exercise.id) ||
+        !this.isWorkoutSelectionCandidate(
+          exercise,
+          selectionGroup,
+          this.state.activeWorkoutModifiers,
+        )
+      ) {
+        continue;
+      }
+      const allocation = this.tryGetCompatibleShuffleAllocation(
+        selectionGroup.id,
+        selectionStorageKey,
+        exercise,
+      );
+      if (allocation) {
+        candidates.push({ exercise, allocation });
+      }
+    }
+    return candidates;
+  }
+
+  tryGetCompatibleShuffleAllocation(
+    selectionGroupId,
+    selectionStorageKey,
+    candidate,
+  ) {
+    const previousExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+    this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+    try {
+      const allocation = this.chooseLongWorkoutAllocation();
+      const candidateSetCounts = Object.fromEntries(allocation.setCountsBySelectionGroupId);
+      const candidateDirections = Object.fromEntries(
+        allocation.directionPartnerExerciseIds,
+      );
+      const actualSetCounts = Object.entries(
+        this.state.activeSetCountsBySelectionGroupId,
+      );
+      const actualDirections = Object.entries(
+        this.state.activeDirectionPartnerExerciseIds,
+      );
+      if (
+        !sameStringSet(
+          this.state.activeExtraSetSelectionGroupIds,
+          allocation.extraSetSelectionGroupIds,
+        ) ||
+        !sameStringSet(
+          this.state.activeFullSideRoundIds,
+          allocation.fullSideRoundIds,
+        ) ||
+        actualSetCounts.length !== allocation.setCountsBySelectionGroupId.size ||
+        actualSetCounts.some(([groupId, setCount]) =>
+          candidateSetCounts[groupId] !== setCount) ||
+        actualDirections.length !== allocation.directionPartnerExerciseIds.size ||
+        actualDirections.some(([groupId]) =>
+          !allocation.directionPartnerExerciseIds.has(groupId)) ||
+        actualDirections.some(([groupId, partnerId]) =>
+          groupId !== selectionGroupId && candidateDirections[groupId] !== partnerId)
+      ) {
+        return null;
+      }
+      return allocation;
+    } catch {
+      return null;
+    } finally {
+      this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
     }
   }
 
