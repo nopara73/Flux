@@ -48,5 +48,5 @@
     ReviewedExactCopies = @()
 
     # Direction transforms likewise retain an actual person in every frame.
-    ReviewedExactTransforms = @(755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 949)
+    ReviewedExactTransforms = @(755, 756, 758, 949)
 }

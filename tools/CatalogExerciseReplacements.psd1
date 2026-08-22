@@ -2073,8 +2073,8 @@
         }
     }
     264 = @{
-        RetiredName = 'Standing Arm Circles'
-        Name = 'Backward Standing Arm Circles'
+        RetiredName = 'Backward Standing Arm Circles'
+        Name = 'Standing Arm Circles'
         Practice = 'Standing mobility and movement practice'
         MotionProfile = 'ArmCircle'
         Primary = 'ShoulderAbductors'
@@ -2305,8 +2305,8 @@
         }
     }
     275 = @{
-        RetiredName = 'Dynamic-Resistance Low Chest Press'
-        Name = 'Backward Arm Circles'
+        RetiredName = 'Backward Arm Circles'
+        Name = 'Small Arm Circles'
         Practice = 'Shoulder endurance'
         MotionProfile = 'ArmCircle'
         Primary = 'RotatorCuff'
@@ -3241,8 +3241,8 @@
         }
     }
     406 = @{
-        RetiredName = 'Standing Wheel Arm Circles'
-        Name = 'Clockwise Standing Wheel Arm Circles'
+        RetiredName = 'Clockwise Standing Wheel Arm Circles'
+        Name = 'Standing Wheel Arm Circles'
         Practice = 'Qigong'
         MotionProfile = 'ChestCircle'
         Primary = 'ScapularGirdle'
@@ -3267,8 +3267,8 @@
         }
     }
     409 = @{
-        RetiredName = 'Full Neck Circles'
-        Name = 'Clockwise Full Neck Circles'
+        RetiredName = 'Clockwise Full Neck Circles'
+        Name = 'Full Neck Circles'
         Practice = 'Functional Range Conditioning'
         MotionProfile = 'HeadCircle'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
@@ -4644,8 +4644,8 @@
         }
     }
     460 = @{
-        RetiredName = 'Slow Blink Cycle'
-        Name = 'Jogging in Place with Forward Arm Circles'
+        RetiredName = 'Jogging in Place with Forward Arm Circles'
+        Name = 'Jogging in Place with Arm Circles'
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'JogInPlaceForwardArmCircle'
         Primary = 'ShoulderAbductors'
@@ -6203,8 +6203,8 @@
         }
     }
     588 = @{
-        RetiredName = 'Belly-Dance Alternating Shoulder Rolls'
-        Name = 'Backward Belly-Dance Alternating Shoulder Rolls'
+        RetiredName = 'Backward Belly-Dance Alternating Shoulder Rolls'
+        Name = 'Belly-Dance Alternating Shoulder Rolls'
         Practice = 'Belly dance'
         MotionProfile = 'ShoulderCircle'
         Primary = 'ScapularGirdle'
@@ -6229,8 +6229,8 @@
         }
     }
     608 = @{
-        RetiredName = 'Hip Circle'
-        Name = 'Counterclockwise Hip Circles'
+        RetiredName = 'Counterclockwise Hip Circles'
+        Name = 'Hip Circles'
         Practice = 'Standing mobility and movement practice'
         MotionProfile = 'HipCircle'
         Primary = 'DeepHipRotators'
@@ -6306,8 +6306,8 @@
         }
     }
     611 = @{
-        RetiredName = 'Pelvic-Floor Heel-Raise Lift'
-        Name = 'Counterclockwise Wide-Stance Hip Circles'
+        RetiredName = 'Counterclockwise Wide-Stance Hip Circles'
+        Name = 'Wide-Stance Hip Circles'
         Practice = 'Standing mobility'
         MotionProfile = 'HipCircle'
         Primary = 'PelvicFloorAndPerineum'
@@ -6872,8 +6872,8 @@
         }
     }
     743 = @{
-        RetiredName = 'Clasped-Hands-Behind-Back Chest Opener'
-        Name = 'Backward Standing Large Arm Circles'
+        RetiredName = 'Backward Standing Large Arm Circles'
+        Name = 'Standing Large Arm Circles'
         Practice = 'Shoulder mobility'
         MotionProfile = 'ArmCircle'
         Primary = 'RotatorCuff'
@@ -6959,24 +6959,6 @@
             Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
         }
     }
-    757 = @{
-        RetiredName = 'Tai Chi Open and Close Hands'
-        Name = 'Forward Standing Arm Circles'
-        Practice = 'Standing mobility and movement practice'
-        MotionProfile = 'ArmCircle'
-        Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'RotatorCuff')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'PJO1hQSMPT4.mp4'; Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'; SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 28; DurationSeconds = 5.5; FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
     758 = @{
         RetiredName = 'Alternating Tai Chi Embrace Tiger and Return to Mountain'
         Name = 'Backward Knee-and-Ankle Circles'
@@ -6992,114 +6974,6 @@
             File = 'julia-balance-stability.mp4'; Url = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'; SourcePage = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
             Human = $true; Youtube = $true; Video = $true
             StartSeconds = 99; DurationSeconds = 27.5; FramesPerSecond = 8
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    759 = @{
-        RetiredName = 'Alternating Tai Chi Play the Lute'
-        Name = 'Counterclockwise Standing Wheel Arm Circles'
-        Practice = 'Qigong'
-        MotionProfile = 'ChestCircle'
-        Primary = 'ScapularGirdle'
-        Secondary = @('Chest', 'ShoulderAbductors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'shibashi-set1.mp4'; Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'; SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 610; DurationSeconds = 44; FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    760 = @{
-        RetiredName = 'Tai Chi Double-Palm Ward-Off Flow'
-        Name = 'Counterclockwise Full Neck Circles'
-        Practice = 'Functional Range Conditioning'
-        MotionProfile = 'HeadCircle'
-        Primary = 'PosteriorNeckAndSuboccipitalMuscles'
-        Secondary = @('AnteriorLateralNeckAndHyoidMuscles')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'cervical-car.mp4'; Url = 'https://www.youtube.com/watch?v=986FAogJRFw'; SourcePage = 'https://www.youtube.com/watch?v=986FAogJRFw'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 14.5; DurationSeconds = 14.25; FramesPerSecond = 10
-            PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    761 = @{
-        RetiredName = 'Alternating Tai Chi Ward Off'
-        Name = 'Forward Belly-Dance Alternating Shoulder Rolls'
-        Practice = 'Belly dance'
-        MotionProfile = 'ShoulderCircle'
-        Primary = 'ScapularGirdle'
-        Secondary = @('RotatorCuff', 'ShoulderAbductors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'belly-dance-shoulder-roll.mp4'; Url = 'https://www.youtube.com/watch?v=RC1_ObeeMyg'; SourcePage = 'https://www.youtube.com/watch?v=RC1_ObeeMyg'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 176; DurationSeconds = 12; FramesPerSecond = 12
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    762 = @{
-        RetiredName = 'Qigong Opening the Chest'
-        Name = 'Clockwise Hip Circles'
-        Practice = 'Standing mobility and movement practice'
-        MotionProfile = 'HipCircle'
-        Primary = 'DeepHipRotators'
-        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'belly-dance-hip-circle.mp4'; Url = 'https://www.youtube.com/watch?v=_jP4VwF7zys'; SourcePage = 'https://howcast.com/videos/460670-how-to-do-small-hip-circles-belly-dancing/'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 31; DurationSeconds = 10; FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    763 = @{
-        RetiredName = 'Qigong Separating the Clouds'
-        Name = 'Clockwise Wide-Stance Hip Circles'
-        Practice = 'Standing mobility'
-        MotionProfile = 'HipCircle'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'wide-stance-hip-circles.mp4'; Url = 'https://www.youtube.com/watch?v=HuP64oSoaLk'; SourcePage = 'https://www.youtube.com/watch?v=HuP64oSoaLk'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 20; DurationSeconds = 6.5; FramesPerSecond = 8
-            Crop = 'crop=ih*4/3:ih:iw-ih*4/3:0'; PingPong = $false; MirrorForAlternation = $false
-        }
-    }
-    764 = @{
-        RetiredName = 'Qigong Rotating-the-Ball Flow'
-        Name = 'Forward Standing Large Arm Circles'
-        Practice = 'Shoulder mobility'
-        MotionProfile = 'ArmCircle'
-        Primary = 'RotatorCuff'
-        Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'Chest')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'standing-backward-arm-circles.mp4'; Url = 'https://www.youtube.com/watch?v=X9qVOhj04fk'; SourcePage = 'https://www.youtube.com/watch?v=X9qVOhj04fk'
-            Human = $true; Youtube = $true; Video = $true
-            StartSeconds = 1.5; DurationSeconds = 23; FramesPerSecond = 8
             Crop = 'crop=ih:ih:(iw-ih)/2:0'; PingPong = $false; MirrorForAlternation = $false
         }
     }

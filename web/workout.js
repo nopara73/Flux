@@ -143,7 +143,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 44;
+export const CURRENT_CATALOG_REVISION = 45;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -215,6 +215,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [42, new Set([105, 107, 108, 245, 280, 591, 884, 885, 905])],
   [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
   [44, new Set([90, 94, 95, 99, 100, 497, 498, 500, 511, 514])],
+  [45, new Set([
+    264, 275, 406, 409, 460, 588, 608, 611, 617, 620, 743,
+    757, 759, 760, 761, 762, 763, 764,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -273,6 +277,10 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [36, new Set([684])],
   [43, new Set([90, 94, 95, 99, 100, 497, 498, 511, 514])],
   [44, new Set([90])],
+  [45, new Set([
+    264, 275, 406, 409, 460, 588, 608, 611, 743,
+    757, 759, 760, 761, 762, 763, 764,
+  ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();

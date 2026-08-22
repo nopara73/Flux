@@ -1763,10 +1763,51 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void CompleteDirectionRevisionRetiresDuplicatesAndPreservesRelinkedSideLegScore()
+    {
+        int[] workoutIds =
+        [
+            264, 275, 406, 409, 460, 588, 608, 611, 617, 620, 743,
+            757, 759, 760, 761, 762, 763, 764,
+        ];
+        int[] scoreIds =
+        [
+            264, 275, 406, 409, 460, 588, 608, 611, 743,
+            757, 759, 760, 761, 762, 763, 764,
+        ];
+        Assert.Equal(
+            workoutIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[45]);
+        Assert.Equal(
+            scoreIds.ToHashSet(),
+            CatalogMigrationRules.ScoreInvalidationsByRevision[45]);
+
+        var changedState = new WorkoutState
+        {
+            CatalogRevision = 44,
+            PendingScoreExerciseId = 409,
+            PendingScoreValue = -4,
+        };
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(changedState));
+        Assert.Equal(0, changedState.PendingScoreExerciseId);
+        Assert.Equal(0, changedState.PendingScoreValue);
+
+        var relinkedState = new WorkoutState
+        {
+            CatalogRevision = 44,
+            PendingScoreExerciseId = 617,
+            PendingScoreValue = -2,
+        };
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(relinkedState));
+        Assert.Equal(617, relinkedState.PendingScoreExerciseId);
+        Assert.Equal(-2, relinkedState.PendingScoreValue);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(
-            new HashSet<int> { 90, 229 },
+            new HashSet<int> { 90, 229, 757, 759, 760, 761, 762, 763, 764 },
             CatalogMigrationRules.PermanentlyRetiredExerciseIds);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {

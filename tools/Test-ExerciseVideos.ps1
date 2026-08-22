@@ -102,7 +102,7 @@ $actualHoldNames = @(Get-ChildItem -LiteralPath (
         Select-Object -ExpandProperty Name)
 $directionExercises = @($catalog | Where-Object directionSequence -ne 'None')
 $invalidDirectionExercises = @($directionExercises | Where-Object {
-        [string]$_.sideSequence -ne 'Continuous' -or
+        [string]$_.sideSequence -notin @('Continuous', 'Alternating') -or
         [string]$_.mode -ne 'Repetition' -or
         [string]$_.presentation -ne 'Motion' -or
         [string]$_.directionSequence -notin @(

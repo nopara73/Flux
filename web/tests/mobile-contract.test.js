@@ -374,10 +374,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*61/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*62/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+60\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+61\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(
@@ -646,7 +646,7 @@ test("web and mobile separate the exercise whistle from the final completion cue
   }
 });
 
-test("directions are linked exercises and precede longer side timers", () => {
+test("complete direction sequences coexist with linked side-direction exercises", () => {
   assert.match(exerciseModel, /int DirectionPartnerExerciseId/);
   assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
   assert.match(
@@ -654,10 +654,15 @@ test("directions are linked exercises and precede longer side timers", () => {
     /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/,
   );
   assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partnerId\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/);
-  assert.equal(catalog.filter((exercise) => exercise.directionSequence !== "None").length, 0);
+  assert.deepEqual(
+    catalog
+      .filter((exercise) => exercise.directionSequence !== "None")
+      .map((exercise) => exercise.id),
+    [264, 275, 406, 409, 460, 588, 608, 611, 743],
+  );
   const linkedDirections = catalog.filter((exercise) =>
     exercise.directionPartnerExerciseId > 0);
-  assert.equal(linkedDirections.length, 20);
+  assert.equal(linkedDirections.length, 8);
   for (const exercise of linkedDirections) {
     const partner = catalog.find((candidate) =>
       candidate.id === exercise.directionPartnerExerciseId);

@@ -4,8 +4,8 @@ Generated from the runtime catalog and the supplementary movement-practices DAG.
 
 ## Outcome
 
-- Runtime catalog: **438** exercises (**5** added in this pass).
-- Exact practice-node provenance: **238**; family-only: **101**; domain-only: **99**; intentionally unmapped: **0**.
+- Runtime catalog: **431** exercises (**5** added in this pass).
+- Exact practice-node provenance: **235**; family-only: **101**; domain-only: **95**; intentionally unmapped: **0**.
 - Primary DAG coverage: **8/18** domains. Including honest cross-links: **11/18** domains and **23/71** families.
 - Newly represented families: **2** — Bipedal locomotion cultures, South Asian dance traditions.
 - All additions passed the standing, feet-only, zero-equipment, shoe-agnostic, 3 m × 3 m, quiet, non-jumping, bilateral/alternating, and exact-human-media rules.
@@ -37,9 +37,9 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Catalog practice | Exercises |
 |---|---:|
 | Bodyweight conditioning | 67 |
-| Standing mobility and movement practice | 34 |
+| Standing mobility and movement practice | 32 |
 | Stretching | 15 |
-| Qigong | 13 |
+| Qigong | 12 |
 | Vestibular rehabilitation | 12 |
 | Standing bodyweight conditioning | 11 |
 | Bodyweight cardio conditioning | 9 |
@@ -52,8 +52,6 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Balance training | 6 |
 | Cardio conditioning | 6 |
 | Hand therapy | 6 |
-| Shoulder mobility | 6 |
-| Standing mobility | 6 |
 | Taiji Qigong Shibashi | 6 |
 | Yoga | 6 |
 | Bodybuilding posing | 5 |
@@ -61,6 +59,8 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Oculomotor rehabilitation | 5 |
 | Plyometric landing mechanics | 5 |
 | Rope-free cardio conditioning | 5 |
+| Shoulder mobility | 5 |
+| Standing mobility | 5 |
 | Wrist mobility | 5 |
 | Ballet conditioning | 4 |
 | Bodyweight isometrics | 4 |
@@ -81,14 +81,12 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Standing upper-body conditioning | 3 |
 | Vestibular and neck conditioning | 3 |
 | Balance and vestibular training | 2 |
-| Belly dance | 2 |
 | Bodyweight cardio boxing | 2 |
 | Boxing and plyometric conditioning | 2 |
 | Breath-led conditioning | 2 |
 | Breathwork | 2 |
 | Calf isometrics | 2 |
 | Eight Nests qigong | 2 |
-| Functional Range Conditioning | 2 |
 | Gait retraining | 2 |
 | Hand coordination | 2 |
 | Hip stability training | 2 |
@@ -104,6 +102,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Acting facial-expression control | 1 |
 | Active isolated stretching | 1 |
 | Balance and gaze-control mobility | 1 |
+| Belly dance | 1 |
 | Bhangra | 1 |
 | Bodyweight upper-body warm-up | 1 |
 | Boxing and cardio conditioning | 1 |
@@ -121,6 +120,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Facial action isolation | 1 |
 | Foot and ankle strengthening | 1 |
 | Forearm mobility | 1 |
+| Functional Range Conditioning | 1 |
 | Fundamental movement skills | 1 |
 | Hand and forearm mobility | 1 |
 | Hand conditioning | 1 |
@@ -169,19 +169,19 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Animal-partnered movement | 0 | 0 | 0 |
 | Aquatic & underwater movement | 0 | 0 | 0 |
 | Combat, martial & weapon cultures | 41 | 41 | 41 |
-| Dance & rhythmic movement | 15 | 16 | 20 |
+| Dance & rhythmic movement | 14 | 15 | 19 |
 | Digital, mediated & emerging movement cultures | 0 | 0 | 0 |
 | Games, sport & contest | 0 | 0 | 0 |
 | Locomotion, travel & terrain skills | 0 | 1 | 1 |
 | Military drill, tactical & service movement | 0 | 0 | 0 |
 | Movement education & pedagogy | 1 | 1 | 1 |
 | Outdoor, adventure & survival movement | 0 | 0 | 0 |
-| Physical culture, conditioning & exercise | 278 | 280 | 280 |
+| Physical culture, conditioning & exercise | 273 | 275 | 275 |
 | Play, improvisation & movement exploration | 0 | 0 | 4 |
-| Ritual, devotional & ceremonial movement | 0 | 0 | 27 |
-| Somatics, mind–body & internal arts | 46 | 46 | 46 |
+| Ritual, devotional & ceremonial movement | 0 | 0 | 26 |
+| Somatics, mind–body & internal arts | 45 | 45 | 45 |
 | Theatre, mime & movement performance | 2 | 2 | 2 |
-| Therapeutic, rehabilitative & adaptive movement | 60 | 61 | 84 |
+| Therapeutic, rehabilitative & adaptive movement | 60 | 61 | 83 |
 | Work, craft & subsistence movement | 0 | 0 | 0 |
 
 ## Editorial conclusions

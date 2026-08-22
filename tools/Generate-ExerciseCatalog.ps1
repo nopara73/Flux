@@ -314,7 +314,8 @@ foreach ($exerciseId in $replacementExerciseIds) {
 
 $reviewedContinuousExerciseIds = @(
     $reviewedContinuousExerciseIds | Where-Object {
-        -not $exerciseDirectionSequences.ContainsKey($_)
+        -not $exerciseDirectionSequences.ContainsKey($_) -or
+        $_ -in $alternatingExerciseIds
     })
 
 $canonicalIds = @($canonicalGroups | ForEach-Object { [int]$_.Id })
@@ -494,13 +495,13 @@ $invalidContinuousExerciseIds = @(
     $reviewedContinuousExerciseIds | Where-Object {
         $_ -notin $retainedExerciseIds -or
         $exerciseSideSequences.ContainsKey($_) -or
-        $exerciseDirectionSequences.ContainsKey($_)
+        ($exerciseDirectionSequences.ContainsKey($_) -and
+            $_ -notin $alternatingExerciseIds)
     })
 $invalidAlternatingExerciseIds = @(
     $alternatingExerciseIds | Where-Object {
         $_ -notin $retainedExerciseIds -or
-        $_ -notin $reviewedContinuousExerciseIds -or
-        $exerciseDirectionSequences.ContainsKey($_)
+        $_ -notin $reviewedContinuousExerciseIds
     })
 $invalidDirectionSequences = @(
     $exerciseDirectionSequences.GetEnumerator() | Where-Object {

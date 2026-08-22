@@ -40,8 +40,8 @@ public sealed class CatalogInvariantTests
                 Exercise.MinimumMuscularDemand,
                 Exercise.MaximumMuscularDemand);
         });
-        Assert.Equal(119, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(190, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(116, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(186, exercises.Count(exercise => exercise.MuscularDemand == 1));
         Assert.Equal(129, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Assert.All(exercises, exercise => Assert.Equal(0, exercise.Score));
         Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
@@ -57,7 +57,7 @@ public sealed class CatalogInvariantTests
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            370,
+            363,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
         Assert.Equal(
@@ -76,7 +76,7 @@ public sealed class CatalogInvariantTests
         Assert.Equal(36, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(370, exercises.Count(exercise =>
+        Assert.Equal(363, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.None));
         Assert.DoesNotContain(exercises, exercise => exercise.Id == 90);
@@ -210,7 +210,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(129, alternatingExercises.Length);
+        Assert.Equal(128, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -218,19 +218,32 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.DirectionSequence != ExerciseDirectionSequence.None)
             .ToArray();
-        Assert.Empty(timedDirectionExercises);
+        Dictionary<int, ExerciseDirectionSequence> auditedDirectionSequences = new()
+        {
+            [264] = ExerciseDirectionSequence.BackwardThenForward,
+            [275] = ExerciseDirectionSequence.BackwardThenForward,
+            [406] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [409] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
+            [460] = ExerciseDirectionSequence.ForwardThenBackward,
+            [588] = ExerciseDirectionSequence.BackwardThenForward,
+            [608] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [611] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
+            [743] = ExerciseDirectionSequence.BackwardThenForward,
+        };
+        Assert.Equal(
+            auditedDirectionSequences.Keys.ToHashSet(),
+            timedDirectionExercises.Select(exercise => exercise.Id).ToHashSet());
+        Assert.All(auditedDirectionSequences, expected =>
+            Assert.Equal(
+                expected.Value,
+                exercises.Single(exercise => exercise.Id == expected.Key)
+                    .DirectionSequence));
         Dictionary<int, int> auditedDirectionPartners = new()
         {
             [214] = 755,
             [223] = 756,
-            [264] = 757,
             [288] = 758,
-            [406] = 759,
-            [409] = 760,
-            [588] = 761,
-            [608] = 762,
-            [611] = 763,
-            [743] = 764,
+            [617] = 620,
         };
         Assert.Equal(
             auditedDirectionPartners.Count * 2,
@@ -245,6 +258,17 @@ public sealed class CatalogInvariantTests
             Assert.Equal(first.SecondaryCanonicalGroups.Order(), second.SecondaryCanonicalGroups.Order());
             Assert.Equal(first.MuscularDemand, second.MuscularDemand);
         });
+        string[] oneWayCircleTerms =
+        [
+            "Clockwise", "Counterclockwise", "Forward", "Backward",
+            "Inward", "Outward",
+        ];
+        Assert.DoesNotContain(exercises, exercise =>
+            exercise.Name.EndsWith("Circles", StringComparison.Ordinal) &&
+            oneWayCircleTerms.Any(term => exercise.Name.Contains(
+                term,
+                StringComparison.Ordinal)) &&
+            exercise.DirectionPartnerExerciseId == 0);
         int[] declaredReplacementIds = exercises
             .Where(exercise => !string.IsNullOrWhiteSpace(exercise.RetiredName))
             .Select(exercise => exercise.Id)
@@ -487,7 +511,11 @@ public sealed class CatalogInvariantTests
             [399] = "Inhale Chest Open, Exhale Arms Close with Shallow Squat",
             [400] = "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down",
             [401] = "Alternating Inhale-Twist, Exhale-Push",
-            [409] = "Clockwise Full Neck Circles",
+            [264] = "Standing Arm Circles",
+            [275] = "Small Arm Circles",
+            [406] = "Standing Wheel Arm Circles",
+            [409] = "Full Neck Circles",
+            [460] = "Jogging in Place with Arm Circles",
             [483] = "Standing Diagonal Head Turns",
             [490] = "Track One Thumb Side to Side",
             [501] = "Keep Eyes on Thumb While Turning Head",
@@ -505,9 +533,10 @@ public sealed class CatalogInvariantTests
             [654] = "Single-Side Leg Lift to Overhead Knee Drive",
             [834] = "Single-Side Diagonal Knee Drive with Overhead Pull",
             [915] = "Single-Side Split-Stance Knee Drive with Overhead Reach",
-            [588] = "Backward Belly-Dance Alternating Shoulder Rolls",
+            [588] = "Belly-Dance Alternating Shoulder Rolls",
             [591] = "Shadow Boxing",
-            [611] = "Counterclockwise Wide-Stance Hip Circles",
+            [608] = "Hip Circles",
+            [611] = "Wide-Stance Hip Circles",
             [626] = "Sumo Squat Hold",
             [649] = "Standing Bent-Knee Hip Abduction",
             [686] = "Standing Knee-to-Chest Glute Stretch",
@@ -516,6 +545,7 @@ public sealed class CatalogInvariantTests
             [755] = "Outward Wrist Circles",
             [756] = "Outward Controlled Wrist Circles",
             [758] = "Backward Knee-and-Ankle Circles",
+            [743] = "Standing Large Arm Circles",
             [843] = "Arm-Behind-Back Assisted Side Neck Stretch",
             [969] = "Chair-Pose Hold",
             [1000] = "Standing Forward-Fold Hold",

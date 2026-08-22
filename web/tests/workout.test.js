@@ -177,7 +177,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [119, 190, 129],
+    [116, 186, 129],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -752,7 +752,7 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 58);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 370);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 363);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 10);
@@ -1428,9 +1428,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 438);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 438);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 438);
+  assert.equal(catalog.length, 431);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 431);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 431);
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -1938,7 +1938,7 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const alternating = catalog.filter((item) => item.sideSequence === "Alternating");
-  assert.equal(alternating.length, 129);
+  assert.equal(alternating.length, 128);
   for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 413, 508, 576, 816, 884, 885]) {
     assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, "Alternating");
   }
@@ -2937,8 +2937,28 @@ test("genuine mirror practice revision retires duplicate and preserves corrected
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
-test("direction-specific circle names match their demonstrated axes", () => {
+test("directional circles are complete sequences or explicit side-direction partners", () => {
+  const expectedDirectionSequences = new Map([
+    [264, "BackwardThenForward"],
+    [275, "BackwardThenForward"],
+    [406, "ClockwiseThenCounterclockwise"],
+    [409, "ClockwiseThenCounterclockwise"],
+    [460, "ForwardThenBackward"],
+    [588, "BackwardThenForward"],
+    [608, "CounterclockwiseThenClockwise"],
+    [611, "CounterclockwiseThenClockwise"],
+    [743, "BackwardThenForward"],
+  ]);
   const expectedNames = new Map([
+    [264, "Standing Arm Circles"],
+    [275, "Small Arm Circles"],
+    [406, "Standing Wheel Arm Circles"],
+    [409, "Full Neck Circles"],
+    [460, "Jogging in Place with Arm Circles"],
+    [588, "Belly-Dance Alternating Shoulder Rolls"],
+    [608, "Hip Circles"],
+    [611, "Wide-Stance Hip Circles"],
+    [743, "Standing Large Arm Circles"],
     [214, "Inward Wrist Circles"],
     [223, "Inward Controlled Wrist Circles"],
     [288, "Forward Knee-and-Ankle Circles"],
@@ -2953,6 +2973,54 @@ test("direction-specific circle names match their demonstrated axes", () => {
       expectedName,
     );
   }
+  for (const [exerciseId, expectedSequence] of expectedDirectionSequences) {
+    assert.equal(
+      catalog.find((exercise) => exercise.id === exerciseId)?.directionSequence,
+      expectedSequence,
+    );
+  }
+  const oneWayCircleName = /\b(?:clockwise|counterclockwise|forward|backward|inward|outward)\b.*\bcircles\b/i;
+  assert.ok(catalog.every((exercise) =>
+    !oneWayCircleName.test(exercise.name) || exercise.directionPartnerExerciseId > 0));
+});
+
+test("complete-direction revision retires duplicates and preserves side-leg scores", () => {
+  const workoutIds = [
+    264, 275, 406, 409, 460, 588, 608, 611, 617, 620, 743,
+    757, 759, 760, 761, 762, 763, 764,
+  ];
+  const scoreIds = [
+    264, 275, 406, 409, 460, 588, 608, 611, 743,
+    757, 759, 760, 761, 762, 763, 764,
+  ];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(45)],
+    workoutIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(45)],
+    scoreIds,
+  );
+
+  const state = createDefaultState();
+  const changedGroup = RESOLUTIONS.get(3).groups[0].id;
+  const relinkedGroup = RESOLUTIONS.get(3).groups[1].id;
+  state.catalogRevision = 44;
+  state.selectedExerciseIds[changedGroup] = 409;
+  state.selectedExerciseIds[relinkedGroup] = 617;
+  state.outcomes[changedGroup] = "tick";
+  state.outcomes[relinkedGroup] = "tick";
+  state.scores["409"] = -4;
+  state.scores["617"] = -2;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup], undefined);
+  assert.equal(restored.state.selectedExerciseIds[relinkedGroup], undefined);
+  assert.equal(restored.state.scores["409"], undefined);
+  assert.equal(restored.state.scores["617"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
 test("unclear exercise replacement revision resets every changed score", () => {
@@ -3070,9 +3138,9 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
   }
 
-  assert.deepEqual(directionIds, []);
+  assert.deepEqual(directionIds, [264, 275, 406, 409, 460, 588, 608, 611, 743]);
   const linkedDirections = catalog.filter((item) => item.directionPartnerExerciseId > 0);
-  assert.equal(linkedDirections.length, 20);
+  assert.equal(linkedDirections.length, 8);
   for (const item of linkedDirections) {
     const partner = catalog.find((candidate) =>
       candidate.id === item.directionPartnerExerciseId);
