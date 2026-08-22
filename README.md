@@ -52,12 +52,18 @@ exercises. The result must contain one distinct exercise per base group.
 
 The optimizer applies these priorities lexicographically:
 
-1. retain explicitly kept exercises where they remain valid;
-2. preserve valid existing selections;
-3. prefer exercises with better keep/discard history;
-4. prefer primary ownership of the target group;
-5. prefer wider coverage inside the target group;
-6. randomize only otherwise equivalent choices.
+1. preserve a valid in-progress lineup while restoring an active workout;
+2. give a fresh hard keep, or a suitable highest-score fresh hard exercise, a
+   hard-work opportunity;
+3. retain contextual keeps, except hard keeps whose primary muscle is still
+   inside its recovery window;
+4. prefer exercises with better saved keep/discard scores;
+5. prefer non-recovering hard work, then the longest-rested fresh primary
+   muscle;
+6. preserve a valid existing selection when the higher priorities tie;
+7. apply the soft Mirror preference;
+8. prefer primary ownership and then wider coverage of the target group;
+9. randomize only otherwise equivalent choices.
 
 The priority weights are constructed so that all lower priorities combined
 cannot outweigh a higher one. Global assignment also prevents an early greedy
@@ -71,19 +77,25 @@ local score once and removes saved copies of it; keeping creates a durable
 preference.
 
 When duration or modifiers change, Flux remaps the whole lineup and maximizes
-the number of kept exercises that can occupy legitimate slots. A kept exercise
+the useful saved preferences that can occupy legitimate slots. A kept exercise
 is preserved across Android and web deployments as long as that exercise still
 exists in the catalog. Explicit rejection or semantic removal from the catalog
-is what releases it.
+is what releases it, but a keep is a contextual preference rather than a lock.
+It never changes the exercise's saved user score.
 
-At the start of every session, kept exercises remain fixed while a soft
-per-muscle workload budget helps choose the remaining exercises. Each scheduled
-primary association counts as 1 unit and each secondary association as 0.5.
+At the start of every session, the global assignment carries keeps
+contextually. A fresh hard keep, or a fresh suitable hard exercise already in
+the highest available score bucket for that slot, gets an opportunity ahead of
+a non-hard keep. During recovery, the hard keep loses only its current lineup
+preference and remains saved; ordinary score ordering continues to prevent a
+rejected lower-score hard exercise from returning. A separate soft per-muscle
+workload budget may rebalance unkept selections: each scheduled primary
+association counts as 1 unit and each secondary association as 0.5.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
-affected muscle; these adjustments are used only while completing that lineup
-and never alter saved scores. A timed side, stance, or direction pair counts
-once; linked opposite-direction exercises count separately, and genuinely
-repeated rounds count again.
+affected muscle; these adjustments exist only while completing that lineup and
+never alter saved scores. A timed side, stance, or direction pair counts once;
+linked opposite-direction exercises count separately, and genuinely repeated
+rounds count again.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -92,13 +104,18 @@ fatigue is expected to limit a continuously performed 45-second round. This
 metadata never overwrites or masquerades as the user's persisted preference
 `score`.
 
-Kept exercises also carry their most recent local keep date. At workout start,
-Flux temporarily excludes only exercises that were kept on the previous local
-calendar day and have `muscularDemand` `2`; demand `0` and `1` keeps remain
-eligible on consecutive days. This is an exact exercise-level recovery rule,
-not a blanket exclusion of other exercises for the same muscle. When eligible
-keeps compete for limited lineup space, demand `2` takes priority over demand
-`0` or `1`, after first maximizing the total number of keeps retained.
+Completing a `muscularDemand` `2` exercise records the completion time for that
+exercise's primary canonical muscle. For the next rolling 36 hours, every hard
+exercise with that same primary muscle is softly deprioritized—not excluded—and
+a same-score non-hard exercise is preferred. Once the muscle is fresh, a hard
+exercise whose primary muscle belongs to the current workout group outranks a
+same-score non-hard keep and the soft Mirror preference. Hard keeps remain
+saved during recovery, and a lower-score hard exercise is never promoted over a
+higher-score candidate. Among otherwise equivalent fresh hard choices, the
+primary muscle that has gone longest without completed hard work wins, allowing
+short workouts to rotate hard opportunities across their canonical muscles.
+Only a completed movement reaching rest records hard work; shuffle, skip, and
+repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
@@ -110,7 +127,8 @@ Flux currently provides three composable modifiers:
 - **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
   tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
   show the full body. Mirror relevance breaks only otherwise remaining ties,
-  after keeps, recovery, real scores, and the muscle budget.
+  after real scores, hard-work rotation, contextual keeps, and the muscle
+  budget.
 
 Mirror availability affects exercise eligibility and selection only. It never
 horizontally flips demonstration media; timed second-side playback remains the

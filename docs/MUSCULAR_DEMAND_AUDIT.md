@@ -26,8 +26,13 @@ fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
-`score`. It affects selection only for durable keeps: an exercise rated `2` and
-kept on the previous local calendar day rests for the current day, while an
-otherwise eligible `2` keep outranks a `0` or `1` keep when both compete for one
-lineup slot. The rule is exact-exercise based; it does not suppress different
-exercises merely because they share a primary muscle.
+`score`; it never creates hardness points or rewrites votes. A fresh rating-`2`
+keep, or a fresh rating-`2` exercise already in the highest available
+saved-score bucket, is preferred when its primary canonical muscle belongs to
+the current workout group. Completing it starts a rolling 36-hour soft recovery
+preference for that primary muscle:
+same-score rating-`0` or `1` work is preferred while every rating-`2` exercise
+with that primary muscle remains selectable and saved for later. Among
+otherwise equivalent fresh hard choices, the longest-rested primary muscle is
+preferred. Mirror relevance is a lower-order tie-break, and a rejected
+lower-score hard exercise is never pulled upward by this rotation.

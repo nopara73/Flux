@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(13, state.Version);
+        Assert.Equal(14, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -299,7 +299,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(13, state.Version);
+        Assert.Equal(14, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -346,17 +346,24 @@ public sealed class WorkoutStateInvariantTests
     }
 
     [Fact]
-    public void RecoveryDatesAndActiveExclusionsRoundTripWithWorkoutState()
+    public void PrimaryMuscleHardWorkHistoryRoundTripsWithWorkoutState()
     {
+        long completedAt = new DateTimeOffset(
+            2026,
+            8,
+            20,
+            12,
+            0,
+            0,
+            TimeSpan.Zero).ToUnixTimeMilliseconds();
         var state = new WorkoutState
         {
             LastKeptExerciseIds = [101, 202],
-            LastKeptLocalDateByExerciseId = new Dictionary<int, string>
+            LastHardWorkUnixMillisecondsByPrimaryMuscle =
+                new Dictionary<string, long>
             {
-                [101] = "2026-08-19",
-                [202] = "2026-08-20",
+                [CanonicalMuscleGroup.GlutealExtensors.ToString()] = completedAt,
             },
-            ActiveRecoveryExcludedExerciseIds = [101],
         };
 
         string json = JsonSerializer.Serialize(state, JsonOptions);
@@ -365,9 +372,11 @@ public sealed class WorkoutStateInvariantTests
                 JsonOptions)
             ?? throw new InvalidOperationException("Workout state did not deserialize.");
 
-        Assert.Equal("2026-08-19", restored.LastKeptLocalDateByExerciseId[101]);
-        Assert.Equal("2026-08-20", restored.LastKeptLocalDateByExerciseId[202]);
-        Assert.Equal([101], restored.ActiveRecoveryExcludedExerciseIds);
+        Assert.Equal(
+            completedAt,
+            restored.LastHardWorkUnixMillisecondsByPrimaryMuscle[
+                CanonicalMuscleGroup.GlutealExtensors.ToString()]);
+        Assert.Equal([101, 202], restored.LastKeptExerciseIds.Order());
     }
 
     private static Exercise Exercise(

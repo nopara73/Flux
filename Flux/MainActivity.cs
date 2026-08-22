@@ -3014,10 +3014,10 @@ public class MainActivity : Activity
 
     private void BeginRest()
     {
-        _state.PendingRestGroupId = _currentWorkoutGroup.Id;
-        _state.PendingRestEndsAtUnixMilliseconds =
-            DateTimeOffset.UtcNow.AddSeconds(RestSeconds).ToUnixTimeMilliseconds();
-        _state.PendingRestKept = false;
+        _sessionService.BeginRest(
+            _state,
+            _currentWorkoutGroup,
+            DateTimeOffset.UtcNow.AddSeconds(RestSeconds).ToUnixTimeMilliseconds());
         _stateStore.Save(_state);
 
         _restActive = true;

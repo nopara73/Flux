@@ -12,6 +12,8 @@ import {
   EXERCISE_MIRROR_COVERAGE,
   EXERCISE_MIRROR_RELATIONSHIP,
   HARD_MUSCULAR_DEMAND,
+  HARD_RECOVERY_WINDOW_MS,
+  HARD_ROTATION_STATUS,
   MAXIMUM_MUSCULAR_DEMAND,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
@@ -45,11 +47,12 @@ import {
   getMovementPhaseState,
   getMovementPresentation,
   getAdjustedScoreHalfUnits,
+  getHardRotationStatus,
+  getLastHardWorkUnixMilliseconds,
   getMuscleBudgetTemporaryDownvoteHalfUnits,
-  getPreviousDayHardKeptExerciseIds,
   getSelectionKey,
   hasReviewedMuscularDemand,
-  isValidLocalDateKey,
+  isPrimaryMuscleRecovering,
   isSelectable,
   isSelectableForWorkoutProfile,
   isCompatibleWithWorkoutModifiers,
@@ -195,42 +198,58 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   }
 });
 
-test("previous-day recovery requires keep date and hardness two together", () => {
-  const yesterdayHard = exercise(1, "GlutealExtensors", [], 0, undefined, true, 2);
-  const yesterdayModerate = exercise(2, "GlutealExtensors", [], 0, undefined, true, 1);
-  const hardButNotKept = exercise(3, "GlutealExtensors", [], 0, undefined, true, 2);
-  const olderHard = exercise(4, "GlutealExtensors", [], 0, undefined, true, 2);
-  const todayHard = exercise(5, "GlutealExtensors", [], 0, undefined, true, 2);
+test("hard recovery is a persisted rolling primary-muscle window", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const group = RESOLUTIONS.get(3).groups[0];
+  const primaryMuscle = group.canonicalGroups[0];
+  const hard = exercise(1, primaryMuscle, [], 0, undefined, true, 2);
+  const moderate = exercise(2, primaryMuscle, [], 0, undefined, true, 1);
+  const recovering = {
+    [primaryMuscle]: now - HARD_RECOVERY_WINDOW_MS + 1,
+  };
+  const fresh = {
+    [primaryMuscle]: now - HARD_RECOVERY_WINDOW_MS,
+  };
 
-  const excluded = getPreviousDayHardKeptExerciseIds(
-    [yesterdayHard, yesterdayModerate, hardButNotKept, olderHard, todayHard],
-    new Set([yesterdayHard.id, yesterdayModerate.id, olderHard.id, todayHard.id]),
-    {
-      [yesterdayHard.id]: "2026-08-19",
-      [yesterdayModerate.id]: "2026-08-19",
-      [hardButNotKept.id]: "2026-08-19",
-      [olderHard.id]: "2026-08-18",
-      [todayHard.id]: "2026-08-20",
-    },
-    "2026-08-20",
-  );
-
-  assert.deepEqual([...excluded], [yesterdayHard.id]);
   assert.equal(HARD_MUSCULAR_DEMAND, 2);
-  assert.equal(isValidLocalDateKey("2024-02-29"), true);
-  assert.equal(isValidLocalDateKey("2026-02-29"), false);
-  assert.equal(isValidLocalDateKey("2026-8-20"), false);
+  assert.equal(isPrimaryMuscleRecovering(recovering, primaryMuscle, now), true);
+  assert.equal(isPrimaryMuscleRecovering(fresh, primaryMuscle, now), false);
+  assert.equal(
+    getHardRotationStatus(hard, group, recovering, now),
+    HARD_ROTATION_STATUS.RecoveringHard,
+  );
+  assert.equal(
+    getHardRotationStatus(hard, group, fresh, now),
+    HARD_ROTATION_STATUS.FreshHard,
+  );
+  assert.equal(
+    getHardRotationStatus(moderate, group, recovering, now),
+    HARD_ROTATION_STATUS.Neutral,
+  );
 
   const restored = parseStoredState(JSON.stringify({
     lastKeptExerciseIds: [1, 2],
-    lastKeptLocalDateByExerciseId: {
-      1: "2026-08-19",
-      2: "invalid",
+    lastHardWorkUnixMillisecondsByPrimaryMuscle: {
+      [primaryMuscle]: now,
+      NotAMuscle: now,
+      Chest: "invalid",
     },
+    // These retired fields must not revive the old exact-exercise rule.
+    lastKeptLocalDateByExerciseId: { 1: "2026-08-21" },
     activeRecoveryExcludedExerciseIds: [1],
   }));
-  assert.deepEqual(restored.lastKeptLocalDateByExerciseId, { 1: "2026-08-19" });
-  assert.deepEqual(restored.activeRecoveryExcludedExerciseIds, [1]);
+  assert.deepEqual(restored.lastKeptExerciseIds, [1, 2]);
+  assert.deepEqual(restored.lastHardWorkUnixMillisecondsByPrimaryMuscle, {
+    [primaryMuscle]: now,
+  });
+  assert.equal(
+    getLastHardWorkUnixMilliseconds(
+      restored.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+      primaryMuscle,
+    ),
+    now,
+  );
+  assert.equal("activeRecoveryExcludedExerciseIds" in restored, false);
 });
 
 test("duration inventory and legacy normalization match Flux", () => {
@@ -328,7 +347,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 10);
+  assert.equal(state.version, 11);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -345,7 +364,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 10);
+  assert.equal(state.version, 11);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -1168,22 +1187,124 @@ test("carrying keeps maximizes kept count across the whole lineup", () => {
   assert.equal(session.state.selectedExerciseIds[groups[1].id], sharedKept.id);
 });
 
-test("eligible hardness-two keep outranks a lower-demand keep for one slot", () => {
+test("fresh hard work outranks a non-hard keep and soft mirror preference", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const hard = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const nonHardKeep = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    1,
+    EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 3;
+  state.lastKeptExerciseIds = [nonHardKeep.id];
+  state.selectedExerciseIds = { [groups[0].id]: nonHardKeep.id };
+  const session = new WorkoutSession(
+    [hard, nonHardKeep, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.Mirror);
+
+  assert.equal(
+    session.state.selectedExerciseIds[`p${WORKOUT_MODIFIERS.Mirror}|${groups[0].id}`],
+    hard.id,
+  );
+  assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
+});
+
+test("fresh hard keep gets an opportunity despite a lower saved score", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
   const hardKeep = exercise(
     1,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
-    -10,
+    -1,
     undefined,
     true,
     2,
   );
-  const lowerDemandKeep = exercise(
+  const nonHardKeep = exercise(
     2,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
-    100,
+    0,
+    undefined,
+    true,
+    1,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastKeptExerciseIds = [hardKeep.id, nonHardKeep.id];
+  const session = new WorkoutSession(
+    [hardKeep, nonHardKeep, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], hardKeep.id);
+});
+
+test("recovering hard keep yields to a non-hard keep without being forgotten", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const hardKeep = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const nonHardKeep = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
     undefined,
     true,
     1,
@@ -1202,37 +1323,38 @@ test("eligible hardness-two keep outranks a lower-demand keep for one slot", () 
   );
   const state = createDefaultState();
   state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [hardKeep.id, lowerDemandKeep.id];
-  state.lastKeptLocalDateByExerciseId = {
-    [hardKeep.id]: "2026-08-20",
-    [lowerDemandKeep.id]: "2026-08-20",
+  state.lastKeptExerciseIds = [hardKeep.id, nonHardKeep.id];
+  state.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
+    [hardKeep.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
   };
-  state.selectedExerciseIds = { [groups[0].id]: lowerDemandKeep.id };
+  state.selectedExerciseIds = { [groups[0].id]: hardKeep.id };
   const session = new WorkoutSession(
-    [hardKeep, lowerDemandKeep, middle, last],
+    [hardKeep, nonHardKeep, middle, last],
     state,
     () => 0,
-    () => "2026-08-20",
+    () => now,
   );
 
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
 
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], hardKeep.id);
-  assert.deepEqual(session.state.activeRecoveryExcludedExerciseIds, []);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], nonHardKeep.id);
+  assert.ok(session.state.lastKeptExerciseIds.includes(hardKeep.id));
+  assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
 });
 
-test("only previous-day hardness-two keeps are excluded from the lineup", () => {
+test("hard rotation never overrides a higher persisted user score", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
-  const yesterdayHard = exercise(
+  const rejectedHard = exercise(
     1,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
-    100,
+    -1,
     undefined,
     true,
     2,
   );
-  const yesterdayModerate = exercise(
+  const nonHard = exercise(
     2,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
@@ -1241,14 +1363,11 @@ test("only previous-day hardness-two keeps are excluded from the lineup", () => 
     true,
     1,
   );
-  const olderHard = exercise(
+  const middle = exercise(
     3,
     groups[1].canonicalGroups[0],
     groups[1].canonicalGroups.slice(1),
     0,
-    undefined,
-    true,
-    2,
   );
   const last = exercise(
     4,
@@ -1257,43 +1376,129 @@ test("only previous-day hardness-two keeps are excluded from the lineup", () => 
     0,
   );
   const state = createDefaultState();
-  state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [
-    yesterdayHard.id,
-    yesterdayModerate.id,
-    olderHard.id,
-  ];
-  state.lastKeptLocalDateByExerciseId = {
-    [yesterdayHard.id]: "2026-08-19",
-    [yesterdayModerate.id]: "2026-08-19",
-    [olderHard.id]: "2026-08-18",
-  };
-  state.selectedExerciseIds = {
-    [groups[0].id]: yesterdayHard.id,
-    [groups[1].id]: olderHard.id,
-  };
   const session = new WorkoutSession(
-    [yesterdayHard, yesterdayModerate, olderHard, last],
+    [rejectedHard, nonHard, middle, last],
     state,
     () => 0,
-    () => "2026-08-20",
+    () => now,
   );
 
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
 
-  assert.deepEqual(session.state.activeRecoveryExcludedExerciseIds, [yesterdayHard.id]);
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], yesterdayModerate.id);
-  assert.equal(session.state.selectedExerciseIds[groups[1].id], olderHard.id);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], nonHard.id);
+  assert.equal(session.getScore(rejectedHard), -1);
+  assert.equal(session.getScore(nonHard), 0);
 });
 
-test("completed keeps persist their local date and rest the next day", () => {
-  let localDate = "2026-08-20";
+test("recovery remains soft when the hard exercise has a higher user score", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
-  const hardKeep = exercise(
+  const recoveringHard = exercise(
     1,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
+    1,
+    undefined,
+    true,
+    2,
+  );
+  const nonHard = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
     0,
+    undefined,
+    true,
+    1,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
+    [recoveringHard.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
+  };
+  const session = new WorkoutSession(
+    [recoveringHard, nonHard, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], recoveringHard.id);
+});
+
+test("equivalent fresh hard candidates favor the longest-rested primary muscle", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const recentlyWorked = groups[0].canonicalGroups[0];
+  const longestRested = groups[0].canonicalGroups[1];
+  const recentHard = exercise(
+    1,
+    recentlyWorked,
+    groups[0].canonicalGroups.filter((muscle) => muscle !== recentlyWorked),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const restedHard = exercise(
+    2,
+    longestRested,
+    groups[0].canonicalGroups.filter((muscle) => muscle !== longestRested),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
+    [recentlyWorked]: now - 40 * 60 * 60 * 1000,
+    [longestRested]: now - 72 * 60 * 60 * 1000,
+  };
+  const session = new WorkoutSession(
+    [recentHard, restedHard, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], restedHard.id);
+});
+
+test("completed hard exercise starts recovery but skipped exercise does not", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const hard = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    10,
     undefined,
     true,
     2,
@@ -1308,39 +1513,44 @@ test("completed keeps persist their local date and rest the next day", () => {
     3,
     groups[1].canonicalGroups[0],
     groups[1].canonicalGroups.slice(1),
-    0,
+    10,
   );
   const last = exercise(
     4,
     groups[2].canonicalGroups[0],
     groups[2].canonicalGroups.slice(1),
-    0,
-  );
-  const state = createDefaultState();
-  state.lastKeptExerciseIds = [hardKeep.id];
-  const session = new WorkoutSession(
-    [hardKeep, alternative, middle, last],
-    state,
-    () => 0,
-    () => localDate,
+    10,
   );
 
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
-  for (const round of session.getActiveGroups()) {
-    session.recordOutcome(round, true);
-  }
-  session.acknowledgeCompletion();
+  const completed = new WorkoutSession(
+    [hard, alternative, middle, last],
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  completed.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const completedGroup = completed.getNextGroup();
+  completed.beginRest(completedGroup, now + 15_000);
+  const persistedCompletion = parseStoredState(JSON.stringify(completed.state));
 
   assert.equal(
-    session.state.lastKeptLocalDateByExerciseId[String(hardKeep.id)],
-    "2026-08-20",
+    persistedCompletion.lastHardWorkUnixMillisecondsByPrimaryMuscle[
+      hard.primaryCanonicalGroup
+    ],
+    now,
   );
+  assert.equal(completed.getScore(hard), 10);
 
-  localDate = "2026-08-21";
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const skipped = new WorkoutSession(
+    [hard, alternative, middle, last],
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  skipped.startWorkout(3, WORKOUT_MODIFIERS.None);
+  skipped.recordOutcome(skipped.getNextGroup(), false);
 
-  assert.ok(session.state.activeRecoveryExcludedExerciseIds.includes(hardKeep.id));
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], alternative.id);
+  assert.deepEqual(skipped.state.lastHardWorkUnixMillisecondsByPrimaryMuscle, {});
 });
 
 test("rejected replacements use global matching instead of greedy group order", () => {
@@ -1690,7 +1900,6 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
   ]));
   const originalScores = new Map(exercises.map((item) => [item.id, item.score]));
   session.state.lastKeptExerciseIds = [originalId];
-  session.state.lastKeptLocalDateByExerciseId[String(originalId)] = "2026-08-21";
   session.state.selectedExerciseIds[
     `p${WORKOUT_MODIFIERS.Insect}|${getSelectionKey(current)}`
   ] = originalId;
@@ -1710,10 +1919,6 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
   assert.equal(session.state.scores[originalId], originalScores.get(originalId) - 1);
   assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(originalId));
   assert.equal(session.state.lastKeptExerciseIds.includes(originalId), false);
-  assert.equal(
-    session.state.lastKeptLocalDateByExerciseId[String(originalId)],
-    undefined,
-  );
   assert.equal(
     Object.values(session.state.selectedExerciseIds).includes(originalId),
     false,
@@ -1993,7 +2198,7 @@ test("version five long workout recomputes direction allocation without enabling
   );
   restored.normalizeActiveLongWorkoutAllocation();
 
-  assert.equal(restored.state.version, 10);
+  assert.equal(restored.state.version, 11);
   assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
@@ -2499,7 +2704,11 @@ test("pending rest survives schedule order and coverage changes for the performe
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
   started.startWorkout(3, WORKOUT_MODIFIERS.None);
-  const pendingGroup = started.getActiveGroups().at(-1);
+  const activeGroups = started.getActiveGroups();
+  const pendingGroup = activeGroups.at(-1);
+  for (const completedGroup of activeGroups.slice(0, -1)) {
+    started.recordOutcome(completedGroup, true);
+  }
   const performed = started.getSelectedExercise(pendingGroup);
   started.beginRest(pendingGroup, Date.now() + 15_000);
 

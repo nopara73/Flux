@@ -131,12 +131,18 @@ export const MUSCLE_SESSION_BUDGET_HALF_UNITS = 10;
 export const MINIMUM_MUSCULAR_DEMAND = 0;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
+export const HARD_RECOVERY_WINDOW_MS = 36 * 60 * 60 * 1000;
+export const HARD_ROTATION_STATUS = Object.freeze({
+  RecoveringHard: "RecoveringHard",
+  Neutral: "Neutral",
+  FreshHard: "FreshHard",
+});
 export const PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
 export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 10;
+export const CURRENT_WORKOUT_STATE_VERSION = 11;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 export const MOVEMENT_DURATION_MS = 45_000;
@@ -640,48 +646,46 @@ export function hasReviewedMuscularDemand(exercise) {
     exercise.muscularDemand <= MAXIMUM_MUSCULAR_DEMAND;
 }
 
-const LOCAL_DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-
-export function toLocalDateKey(value = new Date()) {
-  if (typeof value === "string" && isValidLocalDateKey(value)) {
-    return value;
-  }
-  if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
-    throw new TypeError("Local date provider must return a valid Date or YYYY-MM-DD string.");
-  }
-  return [
-    String(value.getFullYear()).padStart(4, "0"),
-    String(value.getMonth() + 1).padStart(2, "0"),
-    String(value.getDate()).padStart(2, "0"),
-  ].join("-");
-}
-
-export function isValidLocalDateKey(value) {
-  if (typeof value !== "string" || !LOCAL_DATE_KEY_PATTERN.test(value)) {
-    return false;
-  }
-  const [year, month, day] = value.split("-").map(Number);
-  const parsed = new Date(year, month - 1, day);
-  return parsed.getFullYear() === year &&
-    parsed.getMonth() === month - 1 &&
-    parsed.getDate() === day;
-}
-
-export function getPreviousDayHardKeptExerciseIds(
-  exercises,
-  keptExerciseIds,
-  lastKeptLocalDateByExerciseId,
-  currentLocalDate = new Date(),
+export function getLastHardWorkUnixMilliseconds(
+  lastHardWorkByPrimaryMuscle,
+  primaryMuscle,
 ) {
-  const currentDateKey = toLocalDateKey(currentLocalDate);
-  const [year, month, day] = currentDateKey.split("-").map(Number);
-  const previousLocalDate = new Date(year, month - 1, day);
-  previousLocalDate.setDate(previousLocalDate.getDate() - 1);
-  const previousLocalDateKey = toLocalDateKey(previousLocalDate);
-  const exercisesById = new Map(exercises.map((exercise) => [exercise.id, exercise]));
-  return new Set([...keptExerciseIds].filter((exerciseId) =>
-    lastKeptLocalDateByExerciseId[String(exerciseId)] === previousLocalDateKey &&
-    exercisesById.get(exerciseId)?.muscularDemand === HARD_MUSCULAR_DEMAND));
+  const value = lastHardWorkByPrimaryMuscle?.[primaryMuscle];
+  return Number.isSafeInteger(value) && value > 0 ? value : 0;
+}
+
+export function isPrimaryMuscleRecovering(
+  lastHardWorkByPrimaryMuscle,
+  primaryMuscle,
+  nowUnixMilliseconds = Date.now(),
+) {
+  const lastHardWork = getLastHardWorkUnixMilliseconds(
+    lastHardWorkByPrimaryMuscle,
+    primaryMuscle,
+  );
+  return lastHardWork > 0 &&
+    nowUnixMilliseconds - lastHardWork < HARD_RECOVERY_WINDOW_MS;
+}
+
+export function getHardRotationStatus(
+  exercise,
+  group,
+  lastHardWorkByPrimaryMuscle,
+  nowUnixMilliseconds = Date.now(),
+) {
+  if (exercise?.muscularDemand !== HARD_MUSCULAR_DEMAND) {
+    return HARD_ROTATION_STATUS.Neutral;
+  }
+  if (isPrimaryMuscleRecovering(
+    lastHardWorkByPrimaryMuscle,
+    exercise.primaryCanonicalGroup,
+    nowUnixMilliseconds,
+  )) {
+    return HARD_ROTATION_STATUS.RecoveringHard;
+  }
+  return group?.canonicalGroups?.includes(exercise.primaryCanonicalGroup)
+    ? HARD_ROTATION_STATUS.FreshHard
+    : HARD_ROTATION_STATUS.Neutral;
 }
 
 export function createWorkoutSchedule(
@@ -1172,26 +1176,26 @@ function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
     return Array(groupCount).fill(-1);
   }
 
-  const invalidCost = (maximumUtility + 1) * (groupCount + 1);
+  const invalidCost = (maximumUtility + 1n) * BigInt(groupCount + 1);
   const costs = utilities.map((row, groupIndex) =>
     row.map((utility, candidateIndex) =>
       allowed[groupIndex][candidateIndex]
         ? maximumUtility - utility
         : invalidCost));
-  const rowPotential = Array(groupCount + 1).fill(0);
-  const columnPotential = Array(candidateCount + 1).fill(0);
+  const rowPotential = Array(groupCount + 1).fill(0n);
+  const columnPotential = Array(candidateCount + 1).fill(0n);
   const matchedRowByColumn = Array(candidateCount + 1).fill(0);
   const previousColumn = Array(candidateCount + 1).fill(0);
 
   for (let row = 1; row <= groupCount; row += 1) {
     matchedRowByColumn[0] = row;
     let column = 0;
-    const minimumReducedCost = Array(candidateCount + 1).fill(Infinity);
+    const minimumReducedCost = Array(candidateCount + 1).fill(null);
     const visitedColumns = Array(candidateCount + 1).fill(false);
     do {
       visitedColumns[column] = true;
       const currentRow = matchedRowByColumn[column];
-      let delta = Infinity;
+      let delta = null;
       let nextColumn = 0;
       for (let candidateColumn = 1;
         candidateColumn <= candidateCount;
@@ -1202,16 +1206,17 @@ function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
         const reducedCost = costs[currentRow - 1][candidateColumn - 1] -
           rowPotential[currentRow] -
           columnPotential[candidateColumn];
-        if (reducedCost < minimumReducedCost[candidateColumn]) {
+        if (minimumReducedCost[candidateColumn] === null ||
+            reducedCost < minimumReducedCost[candidateColumn]) {
           minimumReducedCost[candidateColumn] = reducedCost;
           previousColumn[candidateColumn] = column;
         }
-        if (minimumReducedCost[candidateColumn] < delta) {
+        if (delta === null || minimumReducedCost[candidateColumn] < delta) {
           delta = minimumReducedCost[candidateColumn];
           nextColumn = candidateColumn;
         }
       }
-      if (!Number.isFinite(delta)) {
+      if (delta === null) {
         return Array(groupCount).fill(-1);
       }
       for (let candidateColumn = 0;
@@ -1220,7 +1225,7 @@ function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
         if (visitedColumns[candidateColumn]) {
           rowPotential[matchedRowByColumn[candidateColumn]] += delta;
           columnPotential[candidateColumn] -= delta;
-        } else {
+        } else if (minimumReducedCost[candidateColumn] !== null) {
           minimumReducedCost[candidateColumn] -= delta;
         }
       }
@@ -1425,9 +1430,8 @@ export function createDefaultState() {
     scores: {},
     outcomes: {},
     lastKeptExerciseIds: [],
-    lastKeptLocalDateByExerciseId: {},
+    lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
     nextWorkoutExcludedExerciseIds: [],
-    activeRecoveryExcludedExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
     activeSetCountsBySelectionGroupId: {},
     activeDirectionPartnerExerciseIds: {},
@@ -1507,19 +1511,19 @@ function normalizeStateShape(raw) {
     }
   }
   state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
-  for (const [exerciseId, localDateKey] of Object.entries(
-    objectOrEmpty(raw.lastKeptLocalDateByExerciseId),
+  const canonicalMuscleGroups = new Set(CANONICAL_GROUPS.slice(1));
+  for (const [primaryMuscle, completedAtUnixMilliseconds] of Object.entries(
+    objectOrEmpty(raw.lastHardWorkUnixMillisecondsByPrimaryMuscle),
   )) {
-    if (/^\d+$/.test(exerciseId) && Number(exerciseId) > 0 &&
-        isValidLocalDateKey(localDateKey)) {
-      state.lastKeptLocalDateByExerciseId[exerciseId] = localDateKey;
+    if (canonicalMuscleGroups.has(primaryMuscle) &&
+        Number.isSafeInteger(completedAtUnixMilliseconds) &&
+        completedAtUnixMilliseconds > 0) {
+      state.lastHardWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
+        completedAtUnixMilliseconds;
     }
   }
   state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
     raw.nextWorkoutExcludedExerciseIds,
-  );
-  state.activeRecoveryExcludedExerciseIds = uniquePositiveIntegers(
-    raw.activeRecoveryExcludedExerciseIds,
   );
   state.activeExtraSetSelectionGroupIds = Array.isArray(raw.activeExtraSetSelectionGroupIds)
     ? [...new Set(raw.activeExtraSetSelectionGroupIds.filter((groupId) =>
@@ -1626,7 +1630,7 @@ export class WorkoutSession {
     exercises,
     storedState = createDefaultState(),
     random = Math.random,
-    localDateProvider = () => new Date(),
+    nowProvider = () => Date.now(),
   ) {
     if (!Array.isArray(exercises)) {
       throw new TypeError("Exercise catalog must be an array.");
@@ -1638,11 +1642,15 @@ export class WorkoutSession {
     }
     this.state = normalizeStateShape(storedState);
     this.random = random;
-    this.localDateProvider = localDateProvider;
+    this.nowProvider = nowProvider;
   }
 
-  getCurrentLocalDateKey() {
-    return toLocalDateKey(this.localDateProvider());
+  getCurrentUnixTimeMilliseconds() {
+    const value = this.nowProvider();
+    if (!Number.isSafeInteger(value) || value <= 0) {
+      throw new TypeError("Time provider must return positive Unix milliseconds.");
+    }
+    return value;
   }
 
   initialize() {
@@ -1720,14 +1728,6 @@ export class WorkoutSession {
     this.state.lastWorkoutModifiers = modifiers;
     this.state.activeWorkoutMinutes = minutes;
     this.state.activeWorkoutModifiers = modifiers;
-    this.state.activeRecoveryExcludedExerciseIds = [
-      ...getPreviousDayHardKeptExerciseIds(
-        this.exercises,
-        new Set(this.state.lastKeptExerciseIds),
-        this.state.lastKeptLocalDateByExerciseId,
-        this.getCurrentLocalDateKey(),
-      ),
-    ];
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
@@ -1816,9 +1816,6 @@ export class WorkoutSession {
     this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter(
       (exerciseId) => !rejectedExerciseIds.has(exerciseId),
     );
-    for (const exerciseId of rejectedExerciseIds) {
-      delete this.state.lastKeptLocalDateByExerciseId[String(exerciseId)];
-    }
     for (const [savedGroupId, exerciseId] of Object.entries(
       this.state.selectedExerciseIds,
     )) {
@@ -1958,9 +1955,28 @@ export class WorkoutSession {
   }
 
   beginRest(group, endsAtUnixMilliseconds) {
+    const nextGroup = this.getNextGroup();
+    if (!nextGroup || nextGroup.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+    if (!Number.isSafeInteger(endsAtUnixMilliseconds) || endsAtUnixMilliseconds <= 0) {
+      throw new RangeError("Rest deadline must be positive Unix milliseconds.");
+    }
     this.state.pendingRestGroupId = group.id;
     this.state.pendingRestEndsAtUnixMilliseconds = Math.trunc(endsAtUnixMilliseconds);
     this.state.pendingRestKept = false;
+    const exercise = this.getSelectedExercise(group);
+    if (exercise.muscularDemand === HARD_MUSCULAR_DEMAND) {
+      const primaryMuscle = exercise.primaryCanonicalGroup;
+      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
+        Math.max(
+          this.getCurrentUnixTimeMilliseconds(),
+          getLastHardWorkUnixMilliseconds(
+            this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+            primaryMuscle,
+          ),
+        );
+    }
   }
 
   keepPendingRest() {
@@ -2133,14 +2149,6 @@ export class WorkoutSession {
       ),
       ...newlyKeptExerciseIds,
     ])];
-    for (const exerciseId of rejectedExerciseIds) {
-      delete this.state.lastKeptLocalDateByExerciseId[String(exerciseId)];
-    }
-    const currentLocalDateKey = this.getCurrentLocalDateKey();
-    for (const exerciseId of newlyKeptExerciseIds) {
-      this.state.lastKeptLocalDateByExerciseId[String(exerciseId)] =
-        currentLocalDateKey;
-    }
     const currentExerciseIds = new Map(
       selectionGroups
         .filter((group) => !rejectedSelectionKeys.has(group.id))
@@ -2264,6 +2272,14 @@ export class WorkoutSession {
     }
 
     const isAllowed = (exercise, group) => {
+      if (this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id)) {
+        return false;
+      }
+      const nextExcludedPartner = this.getDirectionPartner(exercise);
+      if (nextExcludedPartner &&
+          this.state.nextWorkoutExcludedExerciseIds.includes(nextExcludedPartner.id)) {
+        return false;
+      }
       if (excludedExerciseIdsByGroup.get(group.id)?.has(exercise.id)) {
         return false;
       }
@@ -2301,28 +2317,65 @@ export class WorkoutSession {
     const orderedScores = [...new Set(candidates.map((exercise) =>
       this.getSelectionScore(exercise)))].sort((left, right) => left - right);
     const scoreRanks = new Map(orderedScores.map((score, rank) => [score, rank]));
+    const highestScoreByGroup = new Map(groups.map((group) => {
+      const allowedScores = candidates
+        .filter((exercise) => isAllowed(exercise, group))
+        .map((exercise) => this.getSelectionScore(exercise));
+      return [
+        group.id,
+        allowedScores.length > 0
+          ? Math.max(...allowedScores)
+          : Number.MIN_SAFE_INTEGER,
+      ];
+    }));
+    const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    const freshHardMuscleTimestamps = [...new Set(candidates
+      .filter((exercise) =>
+        exercise.muscularDemand === HARD_MUSCULAR_DEMAND &&
+        groups.some((group) => group.canonicalGroups.includes(
+          exercise.primaryCanonicalGroup,
+        )) &&
+        !isPrimaryMuscleRecovering(
+          this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+          exercise.primaryCanonicalGroup,
+          selectionTimeUnixMilliseconds,
+        ))
+      .map((exercise) => getLastHardWorkUnixMilliseconds(
+        this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+        exercise.primaryCanonicalGroup,
+      )))].sort((left, right) => right - left);
+    const freshHardMuscleRanks = new Map(
+      freshHardMuscleTimestamps.map((timestamp, rank) => [timestamp, rank]),
+    );
     const maximumCoverage = Math.max(...groups.map((group) => group.canonicalGroups.length));
-    const totalCoverageRange = groups.length * maximumCoverage;
-    const primaryWeight = totalCoverageRange + 1;
-    const totalPrimaryAndCoverageRange = groups.length *
-      (primaryWeight + maximumCoverage);
-    const mirrorPreferenceWeight = totalPrimaryAndCoverageRange + 1;
-    const totalMirrorPreferenceRange = groups.length * mirrorPreferenceWeight +
-      totalPrimaryAndCoverageRange;
-    const scoreWeight = totalMirrorPreferenceRange + 1;
-    const totalScoreRange = groups.length *
-      ((orderedScores.length - 1) * scoreWeight + primaryWeight + maximumCoverage);
-    const currentSelectionWeight = totalScoreRange + 1;
-    const totalCurrentSelectionRange = groups.length * currentSelectionWeight +
-      totalScoreRange;
-    const hardPreferredExerciseWeight = totalCurrentSelectionRange + 1;
-    const totalHardPreferredRange = groups.length * hardPreferredExerciseWeight +
-      totalCurrentSelectionRange;
-    const preferredExerciseWeight = totalHardPreferredRange + 1;
+    // These are exact lexicographic assignment dimensions, not hardness
+    // points. BigInt keeps arbitrary saved-score histories lossless without
+    // persisting any derived value.
+    let totalLowerPriorityRange = BigInt(groups.length * maximumCoverage);
+    const addPriorityDimension = (maximumValue) => {
+      const weight = totalLowerPriorityRange + 1n;
+      totalLowerPriorityRange +=
+        BigInt(groups.length) * BigInt(maximumValue) * weight;
+      return weight;
+    };
+    const primaryWeight = addPriorityDimension(1);
+    const mirrorPreferenceWeight = addPriorityDimension(1);
+    const currentSelectionWeight = addPriorityDimension(1);
+    const hardMuscleAgeWeight = addPriorityDimension(
+      Math.max(0, freshHardMuscleRanks.size - 1),
+    );
+    const hardRecoveryAvoidanceWeight = addPriorityDimension(1);
+    const freshHardWeight = addPriorityDimension(1);
+    const scoreWeight = addPriorityDimension(Math.max(0, orderedScores.length - 1));
+    const keptExerciseWeight = addPriorityDimension(1);
+    const hardOpportunityWeight = addPriorityDimension(1);
+    const preservedActiveSelectionWeight = allowSavedSelectionException
+      ? totalLowerPriorityRange + 1n
+      : 0n;
 
     const allowed = groups.map(() => candidates.map(() => false));
-    const utilities = groups.map(() => candidates.map(() => 0));
-    let maximumUtility = 0;
+    const utilities = groups.map(() => candidates.map(() => 0n));
+    let maximumUtility = 0n;
     for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
       const group = groups[groupIndex];
       for (let exerciseIndex = 0; exerciseIndex < candidates.length; exerciseIndex += 1) {
@@ -2331,19 +2384,49 @@ export class WorkoutSession {
           continue;
         }
         allowed[groupIndex][exerciseIndex] = true;
+        const hardRotationStatus = getHardRotationStatus(
+          exercise,
+          group,
+          this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+          selectionTimeUnixMilliseconds,
+        );
+        const hardMuscleAgeRank = hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
+          ? freshHardMuscleRanks.get(getLastHardWorkUnixMilliseconds(
+              this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+              exercise.primaryCanonicalGroup,
+            )) ?? 0
+          : 0;
+        const isKept = preferredExerciseIds.has(exercise.id);
+        // A non-kept hard exercise can displace a keep only while it is fresh,
+        // primary for this slot, and already in that slot's top saved-score
+        // bucket. A fresh hard keep is the explicit second path.
+        const hasHardOpportunity =
+          hardRotationStatus === HARD_ROTATION_STATUS.FreshHard &&
+          (isKept ||
+            this.getSelectionScore(exercise) === highestScoreByGroup.get(group.id));
+        const hasContextualKeepPreference = isKept &&
+          hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard;
         const utility =
-          (preferredExerciseIds.has(exercise.id) ? preferredExerciseWeight : 0) +
-          (preferredExerciseIds.has(exercise.id) &&
-            exercise.muscularDemand === HARD_MUSCULAR_DEMAND
-            ? hardPreferredExerciseWeight
-            : 0) +
-          (currentExerciseIds.get(group.id) === exercise.id ? currentSelectionWeight : 0) +
-          scoreRanks.get(this.getSelectionScore(exercise)) * scoreWeight +
-          (isMirrorPreferred(exercise, modifiers) ? mirrorPreferenceWeight : 0) +
-          (isPrimaryForGroup(exercise, group) ? primaryWeight : 0) +
-          getCanonicalCoverage(exercise, group);
+          (allowSavedSelectionException &&
+            currentExerciseIds.get(group.id) === exercise.id
+            ? preservedActiveSelectionWeight
+            : 0n) +
+          (hasHardOpportunity ? hardOpportunityWeight : 0n) +
+          (hasContextualKeepPreference ? keptExerciseWeight : 0n) +
+          BigInt(scoreRanks.get(this.getSelectionScore(exercise))) * scoreWeight +
+          (hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard
+            ? hardRecoveryAvoidanceWeight
+            : 0n) +
+          (hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
+            ? freshHardWeight
+            : 0n) +
+          BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
+          (currentExerciseIds.get(group.id) === exercise.id ? currentSelectionWeight : 0n) +
+          (isMirrorPreferred(exercise, modifiers) ? mirrorPreferenceWeight : 0n) +
+          (isPrimaryForGroup(exercise, group) ? primaryWeight : 0n) +
+          BigInt(getCanonicalCoverage(exercise, group));
         utilities[groupIndex][exerciseIndex] = utility;
-        maximumUtility = Math.max(maximumUtility, utility);
+        maximumUtility = maximumUtility > utility ? maximumUtility : utility;
       }
     }
 
@@ -2370,17 +2453,51 @@ export class WorkoutSession {
   ) {
     const candidates = this.exercises.filter((exercise) =>
       this.isSelectable(exercise, group, modifiers) &&
-      !this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) &&
       !excludedExerciseIds.has(exercise.id));
     if (candidates.length === 0) {
       throw new Error(`No eligible exercise exists for ${group.displayName}.`);
     }
 
-    const highestScore = Math.max(...candidates.map((exercise) => this.getScore(exercise)));
-    const highestScored = candidates.filter((exercise) => this.getScore(exercise) === highestScore);
-    const mirrorRelevant = highestScored.filter((exercise) =>
+    const highestScore = Math.max(...candidates.map((exercise) =>
+      this.getSelectionScore(exercise)));
+    const highestScored = candidates.filter((exercise) =>
+      this.getSelectionScore(exercise) === highestScore);
+    const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    const rotationStatusByExercise = new Map(highestScored.map((exercise) => [
+      exercise.id,
+      getHardRotationStatus(
+        exercise,
+        group,
+        this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      ),
+    ]));
+    const highestRotationStatus = [
+      HARD_ROTATION_STATUS.FreshHard,
+      HARD_ROTATION_STATUS.Neutral,
+      HARD_ROTATION_STATUS.RecoveringHard,
+    ].find((status) =>
+      highestScored.some((exercise) => rotationStatusByExercise.get(exercise.id) === status));
+    const rotationPreferred = highestScored.filter((exercise) =>
+      rotationStatusByExercise.get(exercise.id) === highestRotationStatus);
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    const kept = rotationPreferred.filter((exercise) => keptExerciseIds.has(exercise.id));
+    let keepPreferred = kept.length > 0 ? kept : rotationPreferred;
+    if (highestRotationStatus === HARD_ROTATION_STATUS.FreshHard) {
+      const oldestHardWork = Math.min(...keepPreferred.map((exercise) =>
+        getLastHardWorkUnixMilliseconds(
+          this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+          exercise.primaryCanonicalGroup,
+        )));
+      keepPreferred = keepPreferred.filter((exercise) =>
+        getLastHardWorkUnixMilliseconds(
+          this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+          exercise.primaryCanonicalGroup,
+        ) === oldestHardWork);
+    }
+    const mirrorRelevant = keepPreferred.filter((exercise) =>
       isMirrorPreferred(exercise, modifiers));
-    const mirrorPreferred = mirrorRelevant.length > 0 ? mirrorRelevant : highestScored;
+    const mirrorPreferred = mirrorRelevant.length > 0 ? mirrorRelevant : keepPreferred;
     const primaryOwned = mirrorPreferred.filter((exercise) =>
       isPrimaryForGroup(exercise, group));
     const ownershipPreferred = primaryOwned.length > 0 ? primaryOwned : mirrorPreferred;
@@ -2444,10 +2561,7 @@ export class WorkoutSession {
   }
 
   isWorkoutSelectionCandidate(exercise, group, modifiers) {
-    if (
-      this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) ||
-      !this.isSelectable(exercise, group, modifiers)
-    ) {
+    if (!this.isSelectable(exercise, group, modifiers)) {
       return false;
     }
     const partner = this.getDirectionPartner(exercise);
@@ -2458,7 +2572,6 @@ export class WorkoutSession {
       this.state.activeWorkoutMinutes > 30 &&
       exercise.id < partner.id &&
       partner.directionPartnerExerciseId === exercise.id &&
-      !this.state.activeRecoveryExcludedExerciseIds.includes(partner.id) &&
       this.isSelectable(partner, group, modifiers)
     );
   }
@@ -2547,27 +2660,13 @@ export class WorkoutSession {
       this.exercisesById.has(exerciseId)));
     this.expandDirectionPairIds(keptExerciseIds);
     this.state.lastKeptExerciseIds = [...keptExerciseIds];
-    for (const exerciseId of keptExerciseIds) {
-      const exercise = this.exercisesById.get(exerciseId);
-      const partner = this.getDirectionPartner(exercise);
-      if (!partner || exercise.id > partner.id) {
-        continue;
-      }
-      const sharedDate = [
-        this.state.lastKeptLocalDateByExerciseId[String(exercise.id)],
-        this.state.lastKeptLocalDateByExerciseId[String(partner.id)],
-      ].filter(isValidLocalDateKey).sort().at(-1);
-      if (sharedDate) {
-        this.state.lastKeptLocalDateByExerciseId[String(exercise.id)] = sharedDate;
-        this.state.lastKeptLocalDateByExerciseId[String(partner.id)] = sharedDate;
-      }
-    }
-    this.state.lastKeptLocalDateByExerciseId = Object.fromEntries(
-      Object.entries(this.state.lastKeptLocalDateByExerciseId)
-        .filter(([exerciseId, localDateKey]) =>
-          keptExerciseIds.has(Number(exerciseId)) &&
-          this.exercisesById.has(Number(exerciseId)) &&
-          isValidLocalDateKey(localDateKey)),
+    const canonicalMuscleGroups = new Set(CANONICAL_GROUPS.slice(1));
+    this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = Object.fromEntries(
+      Object.entries(this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle)
+        .filter(([primaryMuscle, completedAtUnixMilliseconds]) =>
+          canonicalMuscleGroups.has(primaryMuscle) &&
+          Number.isSafeInteger(completedAtUnixMilliseconds) &&
+          completedAtUnixMilliseconds > 0),
     );
     const nextExcludedExerciseIds = new Set(
       this.state.nextWorkoutExcludedExerciseIds.filter((exerciseId) =>
@@ -2575,9 +2674,6 @@ export class WorkoutSession {
     );
     this.expandDirectionPairIds(nextExcludedExerciseIds);
     this.state.nextWorkoutExcludedExerciseIds = [...nextExcludedExerciseIds];
-    this.state.activeRecoveryExcludedExerciseIds =
-      this.state.activeRecoveryExcludedExerciseIds.filter((exerciseId) =>
-        this.exercisesById.get(exerciseId)?.muscularDemand === HARD_MUSCULAR_DEMAND);
   }
 
   expandDirectionPairIds(exerciseIds) {
@@ -2840,6 +2936,7 @@ export class WorkoutSession {
     if (groups.length === 0) {
       return;
     }
+    const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
 
     const seenLineups = new Set();
     for (let pass = 0; pass < MUSCLE_BUDGET_MAX_REBALANCE_PASSES; pass += 1) {
@@ -2885,8 +2982,13 @@ export class WorkoutSession {
               group,
               currentExercise,
               loadWithoutCurrent,
+              selectionTimeUnixMilliseconds,
             )
-          : this.evaluateMuscleBudgetCandidate(group, currentExercise);
+          : this.evaluateMuscleBudgetCandidate(
+              group,
+              currentExercise,
+              selectionTimeUnixMilliseconds,
+            );
         const alternatives = this.exercises
           .filter((exercise) =>
             exercise.id !== currentExerciseId &&
@@ -2904,11 +3006,20 @@ export class WorkoutSession {
                 group,
                 exercise,
                 loadWithoutCurrent,
+                selectionTimeUnixMilliseconds,
               )
-            : this.evaluateMuscleBudgetCandidate(group, exercise))
+            : this.evaluateMuscleBudgetCandidate(
+                group,
+                exercise,
+                selectionTimeUnixMilliseconds,
+              ))
           .sort((left, right) =>
             right.adjustedScoreHalfUnits - left.adjustedScoreHalfUnits ||
             right.realScore - left.realScore ||
+            Number(right.isFreshHard) - Number(left.isFreshHard) ||
+            Number(left.isRecoveringHard) - Number(right.isRecoveringHard) ||
+            Number(right.isKept) - Number(left.isKept) ||
+            left.lastHardWorkUnixMilliseconds - right.lastHardWorkUnixMilliseconds ||
             Number(right.isMirrorPreferred) - Number(left.isMirrorPreferred) ||
             Number(right.isPrimary) - Number(left.isPrimary) ||
             right.canonicalCoverage - left.canonicalCoverage ||
@@ -2929,7 +3040,7 @@ export class WorkoutSession {
     }
   }
 
-  evaluateMuscleBudgetCandidate(group, candidate) {
+  evaluateMuscleBudgetCandidate(group, candidate, selectionTimeUnixMilliseconds) {
     const selectionStorageKey = this.getSelectionStorageKey(
       group.id,
       this.state.activeWorkoutModifiers,
@@ -2960,6 +3071,12 @@ export class WorkoutSession {
         candidateMuscleGroups,
       );
       const realScore = this.getSelectionScore(candidate);
+      const rotationStatus = getHardRotationStatus(
+        candidate,
+        group,
+        this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      );
       return {
         exerciseId: candidate.id,
         realScore,
@@ -2967,6 +3084,16 @@ export class WorkoutSession {
           realScore,
           temporaryDownvoteHalfUnits,
         ),
+        isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
+        isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
+        isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
+        lastHardWorkUnixMilliseconds:
+          rotationStatus === HARD_ROTATION_STATUS.FreshHard
+            ? getLastHardWorkUnixMilliseconds(
+                this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+                candidate.primaryCanonicalGroup,
+              )
+            : 0,
         isMirrorPreferred: isMirrorPreferred(
           candidate,
           this.state.activeWorkoutModifiers,
@@ -2979,13 +3106,24 @@ export class WorkoutSession {
     }
   }
 
-  evaluateSingleRoundMuscleBudgetCandidate(group, candidate, loadWithoutCandidate) {
+  evaluateSingleRoundMuscleBudgetCandidate(
+    group,
+    candidate,
+    loadWithoutCandidate,
+    selectionTimeUnixMilliseconds,
+  ) {
     const realScore = this.getSelectionScore(candidate);
     const temporaryDownvoteHalfUnits =
       getTemporaryDownvoteHalfUnitsAfterAddingExercise(
         loadWithoutCandidate,
         candidate,
       );
+    const rotationStatus = getHardRotationStatus(
+      candidate,
+      group,
+      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+      selectionTimeUnixMilliseconds,
+    );
     return {
       exerciseId: candidate.id,
       realScore,
@@ -2993,6 +3131,16 @@ export class WorkoutSession {
         realScore,
         temporaryDownvoteHalfUnits,
       ),
+      isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
+      isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
+      isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
+      lastHardWorkUnixMilliseconds:
+        rotationStatus === HARD_ROTATION_STATUS.FreshHard
+          ? getLastHardWorkUnixMilliseconds(
+              this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+              candidate.primaryCanonicalGroup,
+            )
+          : 0,
       isMirrorPreferred: isMirrorPreferred(
         candidate,
         this.state.activeWorkoutModifiers,
@@ -3069,7 +3217,6 @@ export class WorkoutSession {
     }
     if (
       !this.pendingRestMatchesSelectionGroup(getSelectionKey(group)) ||
-      this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) ||
       !this.isCompatibleWithModifiers(exercise, modifiers) ||
       !this.isAssignedToGroup(exercise, group)
     ) {
@@ -3083,7 +3230,6 @@ export class WorkoutSession {
       this.state.activeWorkoutMinutes > 30 &&
       exercise.id < partner.id &&
       partner.directionPartnerExerciseId === exercise.id &&
-      !this.state.activeRecoveryExcludedExerciseIds.includes(partner.id) &&
       this.isCompatibleWithModifiers(partner, modifiers) &&
       this.isAssignedToGroup(partner, group)
     );
@@ -3092,7 +3238,6 @@ export class WorkoutSession {
   isDirectionPartnerOverrideValid(exercise, group, modifiers) {
     if (
       this.state.activeWorkoutMinutes <= 30 ||
-      this.state.activeRecoveryExcludedExerciseIds.includes(exercise.id) ||
       !isSelectableForWorkoutProfile(exercise, group, modifiers)
     ) {
       return false;
@@ -3213,7 +3358,6 @@ export class WorkoutSession {
     this.state.activeSetCountsBySelectionGroupId = {};
     this.state.activeDirectionPartnerExerciseIds = {};
     this.state.activeFullSideRoundIds = [];
-    this.state.activeRecoveryExcludedExerciseIds = [];
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
     this.clearPendingRest();

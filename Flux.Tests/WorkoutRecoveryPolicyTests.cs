@@ -5,61 +5,125 @@ namespace Flux.Tests;
 
 public sealed class WorkoutRecoveryPolicyTests
 {
+    private static readonly long Now =
+        new DateTimeOffset(2026, 8, 22, 12, 0, 0, TimeSpan.Zero)
+            .ToUnixTimeMilliseconds();
+
     [Fact]
-    public void PreviousDayFilterRequiresKeepDateAndHardDemandTogether()
+    public void RecoveryIsRollingForThirtySixHoursAtPrimaryMuscleLevel()
     {
-        Exercise yesterdayHard = Exercise(1, muscularDemand: 2);
-        Exercise yesterdayModerate = Exercise(2, muscularDemand: 1);
-        Exercise yesterdayHardButNotKept = Exercise(3, muscularDemand: 2);
-        Exercise olderHard = Exercise(4, muscularDemand: 2);
-        Exercise todayHard = Exercise(5, muscularDemand: 2);
-        Exercise[] exercises =
-            [yesterdayHard, yesterdayModerate, yesterdayHardButNotKept, olderHard, todayHard];
-        var keptExerciseIds = new HashSet<int>
-        {
-            yesterdayHard.Id,
-            yesterdayModerate.Id,
-            olderHard.Id,
-            todayHard.Id,
-        };
-        var lastKeptDates = new Dictionary<int, string>
-        {
-            [yesterdayHard.Id] = "2026-08-19",
-            [yesterdayModerate.Id] = "2026-08-19",
-            [yesterdayHardButNotKept.Id] = "2026-08-19",
-            [olderHard.Id] = "2026-08-18",
-            [todayHard.Id] = "2026-08-20",
-        };
+        const string muscle = nameof(CanonicalMuscleGroup.GlutealExtensors);
 
-        HashSet<int> excluded =
-            WorkoutRecoveryPolicy.GetPreviousDayHardKeptExerciseIds(
-                keptExerciseIds,
-                lastKeptDates,
-                exercises.ToDictionary(exercise => exercise.Id),
-                new DateOnly(2026, 8, 20));
-
-        Assert.Equal([yesterdayHard.Id], excluded);
+        Assert.True(WorkoutRecoveryPolicy.IsPrimaryMuscleRecovering(
+            new Dictionary<string, long>
+            {
+                [muscle] = Now -
+                    WorkoutRecoveryPolicy.HardRecoveryWindowMilliseconds + 1,
+            },
+            CanonicalMuscleGroup.GlutealExtensors,
+            Now));
+        Assert.False(WorkoutRecoveryPolicy.IsPrimaryMuscleRecovering(
+            new Dictionary<string, long>
+            {
+                [muscle] = Now -
+                    WorkoutRecoveryPolicy.HardRecoveryWindowMilliseconds,
+            },
+            CanonicalMuscleGroup.GlutealExtensors,
+            Now));
+        Assert.False(WorkoutRecoveryPolicy.IsPrimaryMuscleRecovering(
+            new Dictionary<string, long>(),
+            CanonicalMuscleGroup.GlutealExtensors,
+            Now));
     }
 
-    [Theory]
-    [InlineData("2024-02-29", true)]
-    [InlineData("2026-02-29", false)]
-    [InlineData("2026-8-20", false)]
-    [InlineData("", false)]
-    public void LocalDateKeysUseOneStrictCalendarFormat(
-        string value,
-        bool expected)
+    [Fact]
+    public void RotationTierRewardsOnlyFreshHardPrimaryWorkAndPenalizesRecovery()
     {
-        Assert.Equal(expected, WorkoutRecoveryPolicy.IsValidLocalDateKey(value));
+        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(3).Groups[0];
+        CanonicalMuscleGroup primary = group.CanonicalGroups.First();
+        CanonicalMuscleGroup outsidePrimary =
+            MassGroupingTaxonomy.GetResolution(3).Groups[1].CanonicalGroups.First();
+        Exercise freshHard = Exercise(1, primary, muscularDemand: 2);
+        Exercise recoveringHard = Exercise(2, primary, muscularDemand: 2);
+        Exercise moderate = Exercise(3, primary, muscularDemand: 1);
+        Exercise hardOwnedByAnotherGroup = Exercise(
+            4,
+            outsidePrimary,
+            muscularDemand: 2);
+        var recovery = new Dictionary<string, long>
+        {
+            [primary.ToString()] = Now - (long)TimeSpan.FromHours(4).TotalMilliseconds,
+        };
+
+        Assert.Equal(
+            HardExerciseRotationStatus.FreshHard,
+            WorkoutRecoveryPolicy.GetRotationStatus(
+                freshHard,
+                group,
+                new Dictionary<string, long>(),
+                Now));
+        Assert.Equal(
+            HardExerciseRotationStatus.RecoveringHard,
+            WorkoutRecoveryPolicy.GetRotationStatus(
+                recoveringHard,
+                group,
+                recovery,
+                Now));
+        Assert.Equal(
+            HardExerciseRotationStatus.Neutral,
+            WorkoutRecoveryPolicy.GetRotationStatus(
+                moderate,
+                group,
+                recovery,
+                Now));
+        Assert.Equal(
+            HardExerciseRotationStatus.Neutral,
+            WorkoutRecoveryPolicy.GetRotationStatus(
+                hardOwnedByAnotherGroup,
+                group,
+                new Dictionary<string, long>(),
+                Now));
     }
 
-    private static Exercise Exercise(int id, int muscularDemand) =>
+    [Fact]
+    public void CompletingHardWorkRecordsThePrimaryMuscleWithoutRewindingHistory()
+    {
+        Exercise hard = Exercise(
+            1,
+            CanonicalMuscleGroup.GlutealExtensors,
+            muscularDemand: 2);
+        Exercise moderate = Exercise(
+            2,
+            CanonicalMuscleGroup.Chest,
+            muscularDemand: 1);
+        var history = new Dictionary<string, long>
+        {
+            [hard.PrimaryCanonicalGroup.ToString()] = Now,
+        };
+
+        WorkoutRecoveryPolicy.RecordCompletedHardExercise(
+            history,
+            hard,
+            Now - 1);
+        WorkoutRecoveryPolicy.RecordCompletedHardExercise(
+            history,
+            moderate,
+            Now + 1);
+
+        Assert.Equal(Now, history[hard.PrimaryCanonicalGroup.ToString()]);
+        Assert.DoesNotContain(moderate.PrimaryCanonicalGroup.ToString(), history.Keys);
+    }
+
+    private static Exercise Exercise(
+        int id,
+        CanonicalMuscleGroup primary,
+        int muscularDemand) =>
         new()
         {
             Id = id,
             Name = $"Exercise {id}",
             Video = $"exercise_videos/exercise_{id:D4}.mp4",
-            PrimaryCanonicalGroup = CanonicalMuscleGroup.GlutealExtensors,
+            PrimaryCanonicalGroup = primary,
             SecondaryCanonicalGroups = [],
             Practice = "Test",
             MotionProfile = "Test",

@@ -13,6 +13,8 @@ import {
   EXERCISE_MIRROR_COVERAGE,
   FULL_SIDE_MOVEMENT_DURATION_MS,
   HARD_MUSCULAR_DEMAND,
+  HARD_RECOVERY_WINDOW_MS,
+  HARD_ROTATION_STATUS,
   LAST_CUMULATIVE_CATALOG_REVISION,
   MAXIMUM_MUSCULAR_DEMAND,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
@@ -202,8 +204,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 10);
-  assert.match(workoutState, /public int Version[^=]*=\s*13/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 11);
+  assert.match(workoutState, /public int Version[^=]*=\s*14/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -428,32 +430,52 @@ test("muscular demand is a separate reviewed catalog score on both platforms", (
   assert.ok(catalog.every((exercise) => exercise.score === 0));
 });
 
-test("web and mobile rest exactly yesterday's kept hardness-two exercises", () => {
+test("web and mobile rotate hard work by primary muscle for rolling 36 hours", () => {
   assert.equal(HARD_MUSCULAR_DEMAND, MAXIMUM_MUSCULAR_DEMAND);
+  assert.equal(HARD_RECOVERY_WINDOW_MS, 36 * 60 * 60 * 1000);
+  assert.deepEqual(HARD_ROTATION_STATUS, {
+    RecoveringHard: "RecoveringHard",
+    Neutral: "Neutral",
+    FreshHard: "FreshHard",
+  });
   assert.match(
     recoveryPolicy,
     /HardMuscularDemand\s*=\s*Exercise\.MaximumMuscularDemand/,
   );
-  assert.match(workoutState, /Dictionary<int, string> LastKeptLocalDateByExerciseId/);
-  assert.match(workoutState, /HashSet<int> ActiveRecoveryExcludedExerciseIds/);
+  assert.match(recoveryPolicy, /HardRecoveryWindowMilliseconds[\s\S]*36L/);
+  assert.match(
+    workoutState,
+    /Dictionary<string, long>[\s\S]*LastHardWorkUnixMillisecondsByPrimaryMuscle/,
+  );
+  assert.doesNotMatch(workoutState, /LastKeptLocalDateByExerciseId/);
+  assert.doesNotMatch(workoutState, /ActiveRecoveryExcludedExerciseIds/);
   assert.match(
     recoveryPolicy,
-    /previousLocalDateKey[\s\S]*keptExerciseIds[\s\S]*lastKeptLocalDateByExerciseId[\s\S]*MuscularDemand\s*==\s*HardMuscularDemand/,
+    /GetRotationStatus[\s\S]*IsPrimaryMuscleRecovering[\s\S]*HardExerciseRotationStatus\.FreshHard/,
   );
   assert.match(
     workoutModule,
-    /previousLocalDateKey[\s\S]*keptExerciseIds[\s\S]*lastKeptLocalDateByExerciseId[\s\S]*muscularDemand\s*===\s*HARD_MUSCULAR_DEMAND/,
+    /getHardRotationStatus[\s\S]*isPrimaryMuscleRecovering[\s\S]*HARD_ROTATION_STATUS\.FreshHard/,
   );
   assert.match(
     sessionService,
-    /StartWorkout\([\s\S]*ActiveRecoveryExcludedExerciseIds\s*=\s*[\s\S]*GetPreviousDayHardKeptExerciseIds/,
+    /BeginRest\([\s\S]*RecordCompletedHardExercise\([\s\S]*LastHardWorkUnixMillisecondsByPrimaryMuscle/,
   );
   assert.match(
     workoutModule,
-    /startWorkout\([\s\S]*activeRecoveryExcludedExerciseIds\s*=\s*\[[\s\S]*getPreviousDayHardKeptExerciseIds/,
+    /beginRest\([\s\S]*lastHardWorkUnixMillisecondsByPrimaryMuscle[\s\S]*getCurrentUnixTimeMilliseconds/,
   );
-  assert.match(sessionService, /hardPreferredExerciseWeight[\s\S]*preferredExerciseWeight/);
-  assert.match(workoutModule, /hardPreferredExerciseWeight[\s\S]*preferredExerciseWeight/);
+  assert.match(mainActivity, /_sessionService\.BeginRest\(/);
+  assert.match(
+    sessionService,
+    /mirrorPreferenceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
+  );
+  assert.match(
+    workoutModule,
+    /mirrorPreferenceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
+  );
+  assert.match(sessionService, /BigInteger\[,] utilities/);
+  assert.match(workoutModule, /candidates\.map\(\(\) => 0n\)/);
 });
 
 test("runtime media and the deployable web shell are content-addressed", () => {
