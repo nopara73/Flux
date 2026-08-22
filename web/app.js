@@ -483,8 +483,8 @@ function shuffleCurrentExercise() {
   }
 
   elements.shuffleExercise.disabled = true;
-  const replacement = session.shuffleNextExercise(currentGroup);
-  if (!replacement) {
+  const result = session.shuffleNextExercise(currentGroup);
+  if (!result) {
     elements.shuffleExercise.hidden = true;
     elements.shuffleExercise.disabled = false;
     return;
@@ -492,7 +492,9 @@ function shuffleCurrentExercise() {
 
   persistState();
   showNextExercise();
-  elements.status.textContent = `Changed to ${replacement.name}.`;
+  elements.status.textContent =
+    `Rejected ${result.rejectedExercise.name}. ` +
+    `Changed to ${result.replacementExercise.name}.`;
   elements.shuffleExercise.disabled = false;
 }
 
@@ -524,7 +526,9 @@ function showRestPanel() {
     currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound,
   );
   elements.keepExercise.hidden = isDirectionPairLead;
-  elements.keepExercise.textContent = "Tap to keep";
+  elements.keepExercise.disabled = false;
+  elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");
+  elements.keepExercise.title = "Keep exercise";
 }
 
 function assetUrl(path) {
@@ -1061,7 +1065,7 @@ function completeMovement() {
   elements.status.textContent = currentGroup?.pairedRoundId &&
       !currentGroup.isPairDecisionRound
     ? "Rest, 15 seconds. The other direction is next."
-    : "Rest, 15 seconds. Tap to keep this exercise.";
+    : "Rest, 15 seconds. Tap the heart to keep this exercise.";
   startRestTimer();
 }
 

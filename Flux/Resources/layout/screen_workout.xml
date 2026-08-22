@@ -431,16 +431,18 @@
                     android:progress="15000"
                     android:progressDrawable="@drawable/rest_progress_track" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/keep_button"
                     style="@style/FluxKeepButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="68dp"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/tap_to_keep_description"
+                    android:contentDescription="@string/keep_exercise_description"
                     android:minHeight="60dp"
-                    android:maxLines="2"
-                    android:text="@string/tap_to_keep" />
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_love"
+                    android:tint="@color/white" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

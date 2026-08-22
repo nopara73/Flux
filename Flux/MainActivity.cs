@@ -118,7 +118,7 @@ public class MainActivity : Activity
     private LinearLayout _restPanel = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
-    private Button _keepButton = null!;
+    private ImageButton _keepButton = null!;
     private ImageView _completionMark = null!;
     private Button _doneButton = null!;
     private SystemBarsController[] _systemBarsControllers = [];
@@ -354,7 +354,7 @@ public class MainActivity : Activity
         _restPanel = FindRequiredView<LinearLayout>(Resource.Id.rest_panel);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
-        _keepButton = FindRequiredView<Button>(Resource.Id.keep_button);
+        _keepButton = FindRequiredView<ImageButton>(Resource.Id.keep_button);
         _completionMark = FindRequiredView<ImageView>(Resource.Id.completion_mark);
         _doneButton = FindRequiredView<Button>(Resource.Id.done_button);
 
@@ -460,14 +460,7 @@ public class MainActivity : Activity
         _restCountdownText.SetMaxLines(1);
         _durationDecreaseButton.SetMaxLines(1);
         _durationIncreaseButton.SetMaxLines(1);
-        foreach (Button button in new[]
-                 {
-                     _keepButton,
-                     _doneButton,
-                 })
-        {
-            button.SetMaxLines(2);
-        }
+        _doneButton.SetMaxLines(2);
 
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
@@ -508,18 +501,11 @@ public class MainActivity : Activity
                     1,
                     (int)Android.Util.ComplexUnitType.Sp);
             }
-            foreach (Button button in new[]
-                     {
-                         _keepButton,
-                         _doneButton,
-                     })
-            {
-                button.SetAutoSizeTextTypeUniformWithConfiguration(
-                    14,
-                    20,
-                    1,
-                    (int)Android.Util.ComplexUnitType.Sp);
-            }
+            _doneButton.SetAutoSizeTextTypeUniformWithConfiguration(
+                14,
+                20,
+                1,
+                (int)Android.Util.ComplexUnitType.Sp);
 
             return;
         }
@@ -553,14 +539,7 @@ public class MainActivity : Activity
         SetResponsiveTextSize(_beginWorkoutButton, 24f, 34f, fontScale);
         SetResponsiveTextSize(_durationDecreaseButton, 18f, 28f, fontScale);
         SetResponsiveTextSize(_durationIncreaseButton, 18f, 28f, fontScale);
-        foreach (Button button in new[]
-                 {
-                     _keepButton,
-                     _doneButton,
-                 })
-        {
-            SetResponsiveTextSize(button, 14f, 20f, fontScale);
-        }
+        SetResponsiveTextSize(_doneButton, 14f, 20f, fontScale);
     }
 
     private void ApplyResponsiveDimensions()
@@ -2316,20 +2295,21 @@ public class MainActivity : Activity
         }
 
         _shuffleButton.Enabled = false;
-        Exercise? replacement = _sessionService.ShuffleNextExercise(
+        ShuffledExerciseResult? result = _sessionService.ShuffleNextExercise(
             _state,
             _currentWorkoutGroup);
-        if (replacement is null)
+        if (result is null)
         {
             UpdateShuffleAvailability();
             return;
         }
 
-        _stateStore.Save(_state);
+        SaveStateAndScores(result.ScoreUpdates);
         ShowNextExercise();
         AnnouncePhaseForAccessibility(
             _workoutHeader,
-            $"Changed to {replacement.Name}.");
+            $"Rejected {result.RejectedExercise.Name}. " +
+            $"Changed to {result.ReplacementExercise.Name}.");
     }
 
     private void StartCountdown()
@@ -3049,7 +3029,7 @@ public class MainActivity : Activity
         ShowRestPanel();
         string restDescription = _currentWorkoutGroup.IsDirectionPairLead
             ? "Rest, 15 seconds. The other direction is next."
-            : "Rest, 15 seconds. Tap to keep this exercise.";
+            : "Rest, 15 seconds. Tap the heart to keep this exercise.";
         AnnouncePhaseForAccessibility(_restPanel, restDescription);
         ResumeRestCountdown();
     }
@@ -3074,19 +3054,16 @@ public class MainActivity : Activity
         _keepButton.Visibility = ViewStates.Visible;
         _keepButton.Enabled = !_state.PendingRestKept;
         _keepButton.Alpha = 1f;
-        _keepButton.Text = _state.PendingRestKept
-            ? GetString(Resource.String.kept)
-            : GetString(Resource.String.tap_to_keep);
         _keepButton.SetBackgroundResource(_state.PendingRestKept
             ? Resource.Drawable.kept_button_background
             : Resource.Drawable.rest_button_background);
-        _keepButton.SetTextColor(new Android.Graphics.Color(GetColor(
+        _keepButton.SetColorFilter(new Android.Graphics.Color(GetColor(
             _state.PendingRestKept
                 ? Resource.Color.accent_text
                 : Resource.Color.white)));
         _keepButton.ContentDescription = _state.PendingRestKept
             ? "Exercise kept for the next session"
-            : GetString(Resource.String.tap_to_keep_description);
+            : GetString(Resource.String.keep_exercise_description);
     }
 
     private void ResumeRestCountdown()

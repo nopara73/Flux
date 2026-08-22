@@ -606,7 +606,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void ShuffleReplacesOnlyTheCurrentSlotWithoutVotingItDown()
+    public void ShuffleRejectsTheCurrentExerciseAndReplacesOnlyItsSlot()
     {
         Exercise[] exercises = ThreeGroupCatalog();
         var service = new ExerciseSessionService(exercises, new Random(1));
@@ -624,16 +624,36 @@ public sealed class ExerciseSessionServiceTests
         Dictionary<int, int> originalScores = exercises.ToDictionary(
             exercise => exercise.Id,
             exercise => exercise.Score);
+        state.LastKeptExerciseIds.Add(originalExerciseId);
+        state.LastKeptLocalDateByExerciseId[originalExerciseId] = "2026-08-21";
+        state.SelectedExerciseIds[
+            $"p{(int)WorkoutModifiers.Insect}|{current.SelectionKey}"] =
+            originalExerciseId;
 
         Assert.True(service.CanShuffleNextExercise(state, current));
-        Exercise? replacement = service.ShuffleNextExercise(state, current);
+        ShuffledExerciseResult? result = service.ShuffleNextExercise(state, current);
 
-        Assert.NotNull(replacement);
-        Assert.NotEqual(originalExerciseId, replacement.Id);
-        Assert.Same(replacement, service.GetSelectedExercise(state, current));
+        Assert.NotNull(result);
+        Assert.Equal(originalExerciseId, result.RejectedExercise.Id);
+        Assert.NotEqual(originalExerciseId, result.ReplacementExercise.Id);
+        Assert.Same(
+            result.ReplacementExercise,
+            service.GetSelectedExercise(state, current));
         Assert.Empty(state.Outcomes);
-        Assert.All(exercises, exercise =>
-            Assert.Equal(originalScores[exercise.Id], exercise.Score));
+        Assert.Equal(
+            [originalExerciseId],
+            result.ScoreUpdates.Select(exercise => exercise.Id));
+        Assert.Equal(
+            originalScores[originalExerciseId] - 1,
+            result.RejectedExercise.Score);
+        Assert.Contains(originalExerciseId, state.NextWorkoutExcludedExerciseIds);
+        Assert.DoesNotContain(originalExerciseId, state.LastKeptExerciseIds);
+        Assert.DoesNotContain(
+            originalExerciseId,
+            state.LastKeptLocalDateByExerciseId.Keys);
+        Assert.DoesNotContain(originalExerciseId, state.SelectedExerciseIds.Values);
+        Assert.All(exercises.Where(exercise => exercise.Id != originalExerciseId),
+            exercise => Assert.Equal(originalScores[exercise.Id], exercise.Score));
         Assert.All(groups.Skip(1), group =>
             Assert.Equal(
                 otherSelections[group.Id],
@@ -641,7 +661,43 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void DirectionPairCanShuffleAtomicallyOnlyBeforeItsFirstRound()
+    public void ShuffleVisitsEveryEligibleAlternativeWithoutRepeating()
+    {
+        Exercise[] exercises =
+        [
+            .. ThreeGroupCatalog(),
+            QualifiedExercise(8, CanonicalMuscleGroup.ScapularGirdle, 3),
+        ];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup group = service.GetNextGroup(state)!;
+        var visitedExerciseIds = new HashSet<int>
+        {
+            service.GetSelectedExercise(state, group).Id,
+        };
+
+        int shuffleCount = 0;
+        while (service.CanShuffleNextExercise(state, group))
+        {
+            ShuffledExerciseResult result =
+                service.ShuffleNextExercise(state, group)!;
+            Assert.True(visitedExerciseIds.Add(result.ReplacementExercise.Id));
+            Assert.Empty(state.Outcomes);
+            Assert.True(++shuffleCount < 10);
+        }
+
+        Assert.Equal([5, 6, 8], visitedExerciseIds.Order());
+        int currentExerciseId = service.GetSelectedExercise(state, group).Id;
+        Assert.Equal(
+            visitedExerciseIds.Where(id => id != currentExerciseId).Order(),
+            state.NextWorkoutExcludedExerciseIds
+                .Where(visitedExerciseIds.Contains)
+                .Order());
+    }
+
+    [Fact]
+    public void DirectionPairShuffleRejectsBothAndIsUnavailableAfterDirectionOne()
     {
         const CanonicalMuscleGroup primary =
             CanonicalMuscleGroup.ForearmFlexorsAndPronators;
@@ -665,22 +721,58 @@ public sealed class ExerciseSessionServiceTests
         }
 
         Assert.True(service.CanShuffleNextExercise(state, lead));
-        Exercise? replacement = service.ShuffleNextExercise(state, lead);
+        Exercise rejectedLead = service.GetSelectedExercise(state, lead);
+        Exercise rejectedPartner = exercises.Single(exercise =>
+            exercise.Id == rejectedLead.DirectionPartnerExerciseId);
+        int rejectedLeadScore = rejectedLead.Score;
+        int rejectedPartnerScore = rejectedPartner.Score;
+        ShuffledExerciseResult? result = service.ShuffleNextExercise(state, lead);
 
-        Assert.Same(third, replacement);
-        Assert.Equal(fourth.Id, state.ActiveDirectionPartnerExerciseIds[lead.SelectionKey]);
+        Assert.NotNull(result);
+        Assert.DoesNotContain(
+            result.ReplacementExercise.Id,
+            new[] { rejectedLead.Id, rejectedPartner.Id });
+        Assert.Equal(
+            [rejectedLead.Id, rejectedPartner.Id],
+            result.ScoreUpdates.Select(exercise => exercise.Id));
+        Assert.Equal(rejectedLeadScore - 1, rejectedLead.Score);
+        Assert.Equal(rejectedPartnerScore - 1, rejectedPartner.Score);
+        Assert.Contains(rejectedLead.Id, state.NextWorkoutExcludedExerciseIds);
+        Assert.Contains(rejectedPartner.Id, state.NextWorkoutExcludedExerciseIds);
         WorkoutGroup replacementLead = service.GetNextGroup(state)!;
-        WorkoutGroup replacementDecision = service.GetActiveGroups(state).Single(round =>
-            round.Id == replacementLead.PairedRoundId);
-        Assert.Same(third, service.GetSelectedExercise(state, replacementLead));
-        Assert.Same(fourth, service.GetSelectedExercise(state, replacementDecision));
-
-        service.AdvanceDirectionPair(state, replacementLead);
-
-        Assert.False(service.CanShuffleNextExercise(state, replacementDecision));
-        Assert.Null(service.ShuffleNextExercise(state, replacementDecision));
+        Assert.Same(
+            result.ReplacementExercise,
+            service.GetSelectedExercise(state, replacementLead));
+        Assert.Equal(
+            45,
+            service.GetActiveGroups(state).Sum(round =>
+                round.UsesFullSideTiming ? 2 : 1));
         Assert.Equal(-100, third.Score);
         Assert.Equal(-100, fourth.Score);
+
+        Exercise[] secondExercises = DirectionPairCatalog();
+        var secondService = new ExerciseSessionService(
+            secondExercises,
+            new Random(1));
+        var secondState = new WorkoutState();
+        secondService.StartWorkout(secondState, 45, WorkoutModifiers.None);
+        WorkoutGroup secondLead = secondService.GetActiveGroups(secondState)
+            .Single(round => round.IsDirectionPairLead);
+        foreach (WorkoutGroup priorRound in secondService.GetActiveGroups(secondState)
+                     .TakeWhile(round => round.Id != secondLead.Id))
+        {
+            secondService.RecordOutcome(secondState, priorRound, keep: true);
+        }
+        secondService.AdvanceDirectionPair(secondState, secondLead);
+        WorkoutGroup secondDirection = secondService.GetNextGroup(secondState)!;
+
+        Assert.True(secondDirection.IsPairDecisionRound);
+        Assert.False(secondService.CanShuffleNextExercise(
+            secondState,
+            secondDirection));
+        Assert.Null(secondService.ShuffleNextExercise(
+            secondState,
+            secondDirection));
     }
 
     [Fact]

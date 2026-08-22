@@ -1672,7 +1672,7 @@ test("every repeated direction pair remains adjacent in ninety minutes", () => {
   }
 });
 
-test("shuffle replaces only the current slot without voting it down", () => {
+test("shuffle rejects the current exercise and replaces only its slot", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const exercises = groups.flatMap((group, index) => [
     exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10),
@@ -1689,21 +1689,77 @@ test("shuffle replaces only the current slot without voting it down", () => {
     session.getSelectedExercise(group).id,
   ]));
   const originalScores = new Map(exercises.map((item) => [item.id, item.score]));
+  session.state.lastKeptExerciseIds = [originalId];
+  session.state.lastKeptLocalDateByExerciseId[String(originalId)] = "2026-08-21";
+  session.state.selectedExerciseIds[
+    `p${WORKOUT_MODIFIERS.Insect}|${getSelectionKey(current)}`
+  ] = originalId;
 
   assert.equal(session.canShuffleNextExercise(current), true);
-  const replacement = session.shuffleNextExercise(current);
+  const result = session.shuffleNextExercise(current);
 
-  assert.ok(replacement);
-  assert.notEqual(replacement.id, originalId);
-  assert.equal(session.getSelectedExercise(current).id, replacement.id);
+  assert.ok(result);
+  assert.equal(result.rejectedExercise.id, originalId);
+  assert.notEqual(result.replacementExercise.id, originalId);
+  assert.equal(
+    session.getSelectedExercise(current).id,
+    result.replacementExercise.id,
+  );
   assert.deepEqual(session.state.outcomes, {});
-  assert.deepEqual(session.state.scores, {});
-  assert.ok(exercises.every((item) => item.score === originalScores.get(item.id)));
+  assert.deepEqual(result.scoreUpdates.map((item) => item.id), [originalId]);
+  assert.equal(session.state.scores[originalId], originalScores.get(originalId) - 1);
+  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(originalId));
+  assert.equal(session.state.lastKeptExerciseIds.includes(originalId), false);
+  assert.equal(
+    session.state.lastKeptLocalDateByExerciseId[String(originalId)],
+    undefined,
+  );
+  assert.equal(
+    Object.values(session.state.selectedExerciseIds).includes(originalId),
+    false,
+  );
+  assert.ok(exercises
+    .filter((item) => item.id !== originalId)
+    .every((item) => item.score === originalScores.get(item.id)));
   assert.ok(activeGroups.slice(1).every((group) =>
     session.getSelectedExercise(group).id === otherSelections.get(group.id)));
 });
 
-test("direction pair can shuffle atomically only before its first round", () => {
+test("shuffle visits every eligible alternative without repeating", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.flatMap((group, index) => [
+    exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10),
+    exercise(2 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 7),
+    exercise(3 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 5),
+  ]);
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = session.getNextGroup();
+  const visitedExerciseIds = new Set([session.getSelectedExercise(group).id]);
+
+  let shuffleCount = 0;
+  while (session.canShuffleNextExercise(group)) {
+    const result = session.shuffleNextExercise(group);
+    assert.equal(visitedExerciseIds.has(result.replacementExercise.id), false);
+    visitedExerciseIds.add(result.replacementExercise.id);
+    assert.deepEqual(session.state.outcomes, {});
+    shuffleCount += 1;
+    assert.ok(shuffleCount < 10);
+  }
+
+  assert.deepEqual([...visitedExerciseIds].sort((a, b) => a - b), [1, 2, 3]);
+  const currentExerciseId = session.getSelectedExercise(group).id;
+  assert.deepEqual(
+    [...visitedExerciseIds]
+      .filter((id) => id !== currentExerciseId)
+      .sort((a, b) => a - b),
+    session.state.nextWorkoutExcludedExerciseIds
+      .filter((id) => visitedExerciseIds.has(id))
+      .sort((a, b) => a - b),
+  );
+});
+
+test("direction pair shuffle rejects both and is unavailable after direction one", () => {
   const exercises = directionPairCatalog();
   const canonicalGroups = [...new Set(RESOLUTIONS.get(30).groups.flatMap(
     (group) => group.canonicalGroups,
@@ -1735,24 +1791,62 @@ test("direction pair can shuffle atomically only before its first round", () => 
   }
 
   assert.equal(session.canShuffleNextExercise(lead), true);
-  const replacement = session.shuffleNextExercise(lead);
+  const rejectedLead = session.getSelectedExercise(lead);
+  const rejectedPartner = exercises.find((exercise) =>
+    exercise.id === rejectedLead.directionPartnerExerciseId);
+  const rejectedLeadScore = rejectedLead.score;
+  const rejectedPartnerScore = rejectedPartner.score;
+  const result = session.shuffleNextExercise(lead);
 
-  assert.equal(replacement.id, third.id);
   assert.equal(
-    session.state.activeDirectionPartnerExerciseIds[getSelectionKey(lead)],
-    fourth.id,
+    [rejectedLead.id, rejectedPartner.id].includes(result.replacementExercise.id),
+    false,
   );
+  assert.deepEqual(
+    result.scoreUpdates.map((exercise) => exercise.id),
+    [rejectedLead.id, rejectedPartner.id],
+  );
+  assert.equal(session.state.scores[rejectedLead.id], rejectedLeadScore - 1);
+  assert.equal(session.state.scores[rejectedPartner.id], rejectedPartnerScore - 1);
+  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(rejectedLead.id));
+  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(rejectedPartner.id));
   const replacementLead = session.getNextGroup();
-  const replacementDecision = session.getActiveGroups().find((round) =>
-    round.id === replacementLead.pairedRoundId);
-  assert.equal(session.getSelectedExercise(replacementLead).id, third.id);
-  assert.equal(session.getSelectedExercise(replacementDecision).id, fourth.id);
+  assert.equal(
+    session.getSelectedExercise(replacementLead).id,
+    result.replacementExercise.id,
+  );
+  assert.equal(
+    session.getActiveGroups().reduce(
+      (minutes, round) => minutes + (round.usesFullSideTiming ? 2 : 1),
+      0,
+    ),
+    45,
+  );
+  assert.equal(session.state.scores[rejectedLead.id], rejectedLeadScore - 1);
+  assert.equal(session.state.scores[rejectedPartner.id], rejectedPartnerScore - 1);
+  assert.equal(session.state.scores[third.id], undefined);
+  assert.equal(session.state.scores[fourth.id], undefined);
 
-  session.advanceDirectionPair(replacementLead);
+  const secondSession = new WorkoutSession(
+    directionPairCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+  secondSession.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const secondLead = secondSession.getActiveGroups().find((round) =>
+    round.pairedRoundId && !round.isPairDecisionRound);
+  for (const priorRound of secondSession.getActiveGroups()) {
+    if (priorRound.id === secondLead.id) {
+      break;
+    }
+    secondSession.recordOutcome(priorRound, true);
+  }
+  secondSession.advanceDirectionPair(secondLead);
+  const secondDirection = secondSession.getNextGroup();
 
-  assert.equal(session.canShuffleNextExercise(replacementDecision), false);
-  assert.equal(session.shuffleNextExercise(replacementDecision), null);
-  assert.deepEqual(session.state.scores, {});
+  assert.equal(secondDirection.isPairDecisionRound, true);
+  assert.equal(secondSession.canShuffleNextExercise(secondDirection), false);
+  assert.equal(secondSession.shuffleNextExercise(secondDirection), null);
 });
 
 test("a direction pair can only be kept after its second direction", () => {

@@ -57,6 +57,7 @@ const [
   recoveryPolicy,
   exerciseDatabase,
   durationLayout,
+  workoutLayout,
   androidColors,
   androidStyles,
   strings,
@@ -87,6 +88,7 @@ const [
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
+  source("Flux", "Resources", "layout", "screen_workout.xml"),
   source("Flux", "Resources", "values", "colors.xml"),
   source("Flux", "Resources", "values", "styles.xml"),
   source("Flux", "Resources", "values", "strings.xml"),
@@ -498,11 +500,15 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
   assert.match(
     androidStyles,
-    /FluxKeepButton[\s\S]*@drawable\/rest_button_background[\s\S]*@color\/white/,
+    /FluxKeepButton[\s\S]*@drawable\/rest_button_background/,
+  );
+  assert.match(
+    workoutLayout,
+    /<ImageButton[\s\S]*@\+id\/keep_button[\s\S]*@drawable\/ic_love[\s\S]*@color\/white/,
   );
   assert.match(
     mainActivity,
-    /PendingRestKept[\s\S]*rest_button_background[\s\S]*Resource\.Color\.white/,
+    /PendingRestKept[\s\S]*rest_button_background[\s\S]*SetColorFilter[\s\S]*Resource\.Color\.white/,
   );
   assert.match(
     webApp,
@@ -635,7 +641,7 @@ test("workout transport controls are functional and muscle labels stay hidden", 
     "private void ShuffleCurrentExercise()",
     "private void StartCountdown()",
   );
-  assert.match(mobileShuffle, /ShuffleNextExercise[\s\S]*_stateStore\.Save[\s\S]*ShowNextExercise/);
+  assert.match(mobileShuffle, /ShuffleNextExercise[\s\S]*SaveStateAndScores[\s\S]*ShowNextExercise/);
   assert.doesNotMatch(mobileShuffle, /FinalizeCurrentRound|RecordOutcome/);
   assert.match(mainActivity, /_repeatAction\.Click[\s\S]*_playbackAction\.Click[\s\S]*_nextAction\.Click/);
 
@@ -665,9 +671,28 @@ test("workout transport controls are functional and muscle labels stay hidden", 
     "function showMovePanel()",
   );
   assert.match(webShuffle, /shuffleNextExercise\(currentGroup\)[\s\S]*persistState\(\)[\s\S]*showNextExercise\(\)/);
-  assert.doesNotMatch(webShuffle, /recordOutcome|setScore/);
+  assert.doesNotMatch(webShuffle, /recordOutcome/);
   assert.match(webApp, /repeatExercise\.addEventListener[\s\S]*playbackToggle\.addEventListener[\s\S]*nextExercise\.addEventListener/);
-  assert.match(workoutModule, /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates/);
+  assert.match(
+    workoutModule,
+    /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates[\s\S]*setScore\(exercise, this\.getScore\(exercise\) - 1\)/,
+  );
+  assert.match(
+    sessionService,
+    /Shuffle\(candidates\);[\s\S]*ShuffleCandidate selected = candidates\[0\]/,
+  );
+  assert.match(
+    workoutModule,
+    /this\.shuffle\(candidates\);[\s\S]*const selected = candidates\[0\]/,
+  );
+  assert.match(
+    sessionService,
+    /ChooseLongWorkoutAllocation\([\s\S]*startedSelectionGroupIds/,
+  );
+  assert.match(
+    workoutModule,
+    /chooseLongWorkoutAllocation\(startedSelectionGroupIds\)/,
+  );
   assert.doesNotMatch(mainActivity, /_workoutGroupName/);
   assert.doesNotMatch(webApp, /workoutGroupName/);
 });
@@ -814,9 +839,9 @@ test("complete direction sequences coexist with linked side-direction exercises"
   assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
   assert.match(
     sessionService,
-    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*UsesTimedPair/,
+    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRounds[\s\S]*UsesTimedPair/,
   );
-  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partner\.id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*usesTimedPair/);
+  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partner\.id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRounds[\s\S]*usesTimedPair/);
   assert.deepEqual(
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")
@@ -867,16 +892,20 @@ test("linked directions are adjacent indivisible units on mobile and web", () =>
   );
   assert.match(
     mainActivity,
-    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*Resource\.String\.tap_to_keep/,
+    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*Resource\.String\.keep_exercise_description/,
   );
   assert.match(
     webApp,
-    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*keepExercise\.textContent = "Tap to keep"/,
+    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*aria-label[\s\S]*Keep exercise/,
   );
-  assert.match(strings, /name="tap_to_keep">Tap to keep</);
+  assert.match(
+    webIndex,
+    /id="keep-exercise"[\s\S]*aria-label="Keep exercise for the next session"[\s\S]*class="keep-love-icon"/,
+  );
+  assert.match(strings, /name="keep_exercise_description">Keep this exercise/);
   assert.doesNotMatch(mainActivity, /Tap to keep both|keep both directions|tap_to_keep_both/);
   assert.doesNotMatch(webApp, /Tap to keep both|keep both directions/);
-  assert.doesNotMatch(strings, /tap_to_keep_both|Tap to keep both/);
+  assert.doesNotMatch(strings, /tap_to_keep|Tap to keep/);
 });
 
 test("web catalog migration matches the mobile workout contract", () => {

@@ -65,9 +65,10 @@ choice from consuming the only exercise capable of filling a later group.
 
 ### Personalization stays inside anatomical guardrails
 
-Tap **Tap to keep** during rest to retain an exercise. Let rest expire, or press
-**Skip**, to reject it. Rejection decreases that exercise's local score once and
-removes saved copies of it; keeping creates a durable preference.
+Tap the large **heart** during rest to retain an exercise. Let rest expire, or
+press **Next** during movement, to reject it. Rejection decreases that exercise's
+local score once and removes saved copies of it; keeping creates a durable
+preference.
 
 When duration or modifiers change, Flux remaps the whole lineup and maximizes
 the number of kept exercises that can occupy legitimate slots. A kept exercise
@@ -184,19 +185,24 @@ Every round begins with five seconds of quiet preparation.
   Linked opposite-direction exercises are available only in workouts longer
   than 30 minutes. They always run consecutively: the first rest advances to
   the other direction without a Keep action, and the second rest presents one
-  shared `Tap to keep` decision. Rejecting either direction rejects and
+  shared heart decision. Rejecting either direction rejects and
   scores both records together.
 
 Red means movement. Blue means change or rest. A large asymmetric human icon
 marks timed side or lead-stance pairs, while `BIDIRECTIONAL` identifies timed
 opposite-direction pairs. The workout controls follow a media-player model:
-shuffle replaces an unstarted exercise without scoring it, play starts,
-pause/resume controls the active timer, repeat restarts the current exercise
-without scoring it, and next rejects it and advances. Shuffle preserves the
-session profile and any linked direction pair, and is unavailable after an
-earlier round from the same paired or repeated unit has begun. Anatomical
-group routing remains internal rather than appearing as a potentially
-misleading exercise label.
+shuffle rejects an unstarted exercise with the same -1 vote as Next and replaces
+it in place, play starts, pause/resume controls the active timer, repeat restarts
+the current exercise without scoring it, and next rejects it and advances.
+Shuffle preserves the session profile and any linked direction pair, and is
+unavailable after an earlier round from the same paired or repeated unit has
+begun. Repeated shuffles draw without repetition from every remaining exercise
+valid for that anatomical slot and modifier profile; they do not re-rank the
+pool toward the normal automatic-selection winner. In long workouts, completed
+timer allocations stay locked while still-unstarted allocations are safely
+recomputed around the replacement. Anatomical group routing remains internal
+rather than appearing as a potentially misleading exercise label. A large
+heart is the shared Keep action during rest.
 
 Repetition demonstrations run at normal speed. Hold demonstrations loop during
 the preview, play once when work begins, and then remain on a reviewed target

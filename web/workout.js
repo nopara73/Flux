@@ -1777,44 +1777,55 @@ export class WorkoutSession {
       return null;
     }
 
+    const rejectedExercise = this.getSelectedExercise(group);
+    const rejectedPartner = this.getDirectionPartner(rejectedExercise);
+    const scoreUpdates = rejectedPartner?.directionPartnerExerciseId === rejectedExercise.id
+      ? [rejectedExercise, rejectedPartner]
+      : [rejectedExercise];
+
     this.shuffle(candidates);
     const selectionGroup = this.getSelectionGroups().find((candidate) =>
       candidate.id === getSelectionKey(group));
     if (!selectionGroup) {
       return null;
     }
-    const loadWithoutCurrent = this.state.activeWorkoutMinutes <= 30
-      ? calculateMuscleLoadHalfUnits(this.getSelectionGroups()
-          .filter((candidate) => candidate.id !== selectionGroup.id)
-          .map((candidate) => this.getSelectedExercise(candidate)))
-      : null;
-    const selected = candidates
-      .map((candidate) => ({
-        candidate,
-        ranking: loadWithoutCurrent
-          ? this.evaluateSingleRoundMuscleBudgetCandidate(
-              selectionGroup,
-              candidate.exercise,
-              loadWithoutCurrent,
-            )
-          : this.evaluateMuscleBudgetCandidate(
-              selectionGroup,
-              candidate.exercise,
-            ),
-      }))
-      .sort((left, right) =>
-        right.ranking.adjustedScoreHalfUnits - left.ranking.adjustedScoreHalfUnits ||
-        right.ranking.realScore - left.ranking.realScore ||
-        Number(right.ranking.isMirrorPreferred) - Number(left.ranking.isMirrorPreferred) ||
-        Number(right.ranking.isPrimary) - Number(left.ranking.isPrimary) ||
-        right.ranking.canonicalCoverage - left.ranking.canonicalCoverage)[0].candidate;
+    const selected = candidates[0];
 
     this.state.selectedExerciseIds[this.getSelectionStorageKey(
       selectionGroup.id,
       this.state.activeWorkoutModifiers,
     )] = selected.exercise.id;
+    this.applyShuffleRejection(scoreUpdates);
     this.applyLongWorkoutAllocation(selected.allocation);
-    return selected.exercise;
+    return {
+      rejectedExercise,
+      replacementExercise: selected.exercise,
+      scoreUpdates,
+    };
+  }
+
+  applyShuffleRejection(exercises) {
+    const rejectedExerciseIds = new Set(exercises.map((exercise) => exercise.id));
+    for (const exercise of exercises) {
+      this.setScore(exercise, this.getScore(exercise) - 1);
+    }
+    this.state.nextWorkoutExcludedExerciseIds = [...new Set([
+      ...this.state.nextWorkoutExcludedExerciseIds,
+      ...rejectedExerciseIds,
+    ])];
+    this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter(
+      (exerciseId) => !rejectedExerciseIds.has(exerciseId),
+    );
+    for (const exerciseId of rejectedExerciseIds) {
+      delete this.state.lastKeptLocalDateByExerciseId[String(exerciseId)];
+    }
+    for (const [savedGroupId, exerciseId] of Object.entries(
+      this.state.selectedExerciseIds,
+    )) {
+      if (rejectedExerciseIds.has(exerciseId)) {
+        delete this.state.selectedExerciseIds[savedGroupId];
+      }
+    }
   }
 
   getSelectedExercise(group) {
@@ -1875,9 +1886,21 @@ export class WorkoutSession {
       this.state.activeWorkoutModifiers,
     );
     const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
-    if (!Number.isInteger(currentExerciseId) || currentExerciseId <= 0) {
+    const currentExercise = this.exercisesById.get(currentExerciseId);
+    if (!Number.isInteger(currentExerciseId) ||
+        currentExerciseId <= 0 ||
+        !currentExercise) {
       return [];
     }
+
+    const rejectedExerciseIds = new Set([currentExerciseId]);
+    const currentPartner = this.getDirectionPartner(currentExercise);
+    if (currentPartner?.directionPartnerExerciseId === currentExercise.id) {
+      rejectedExerciseIds.add(currentPartner.id);
+    }
+    const startedSelectionGroupIds = new Set(activeRounds
+      .filter((round) => this.state.outcomes[round.id] !== undefined)
+      .map(getSelectionKey));
 
     const unavailableExerciseIds = new Set(this.getSelectionGroups()
       .filter((group) => group.id !== selectionGroup.id)
@@ -1890,6 +1913,7 @@ export class WorkoutSession {
     for (const exercise of this.exercises) {
       if (
         exercise.id === currentExerciseId ||
+        this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id) ||
         unavailableExerciseIds.has(exercise.id) ||
         !this.isWorkoutSelectionCandidate(
           exercise,
@@ -1900,9 +1924,10 @@ export class WorkoutSession {
         continue;
       }
       const allocation = this.tryGetCompatibleShuffleAllocation(
-        selectionGroup.id,
         selectionStorageKey,
         exercise,
+        startedSelectionGroupIds,
+        rejectedExerciseIds,
       );
       if (allocation) {
         candidates.push({ exercise, allocation });
@@ -1912,49 +1937,23 @@ export class WorkoutSession {
   }
 
   tryGetCompatibleShuffleAllocation(
-    selectionGroupId,
     selectionStorageKey,
     candidate,
+    startedSelectionGroupIds,
+    rejectedExerciseIds,
   ) {
     const previousExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+    const previousLastKeptExerciseIds = this.state.lastKeptExerciseIds;
     this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+    this.state.lastKeptExerciseIds = previousLastKeptExerciseIds
+      .filter((exerciseId) => !rejectedExerciseIds.has(exerciseId));
     try {
-      const allocation = this.chooseLongWorkoutAllocation();
-      const candidateSetCounts = Object.fromEntries(allocation.setCountsBySelectionGroupId);
-      const candidateDirections = Object.fromEntries(
-        allocation.directionPartnerExerciseIds,
-      );
-      const actualSetCounts = Object.entries(
-        this.state.activeSetCountsBySelectionGroupId,
-      );
-      const actualDirections = Object.entries(
-        this.state.activeDirectionPartnerExerciseIds,
-      );
-      if (
-        !sameStringSet(
-          this.state.activeExtraSetSelectionGroupIds,
-          allocation.extraSetSelectionGroupIds,
-        ) ||
-        !sameStringSet(
-          this.state.activeFullSideRoundIds,
-          allocation.fullSideRoundIds,
-        ) ||
-        actualSetCounts.length !== allocation.setCountsBySelectionGroupId.size ||
-        actualSetCounts.some(([groupId, setCount]) =>
-          candidateSetCounts[groupId] !== setCount) ||
-        actualDirections.length !== allocation.directionPartnerExerciseIds.size ||
-        actualDirections.some(([groupId]) =>
-          !allocation.directionPartnerExerciseIds.has(groupId)) ||
-        actualDirections.some(([groupId, partnerId]) =>
-          groupId !== selectionGroupId && candidateDirections[groupId] !== partnerId)
-      ) {
-        return null;
-      }
-      return allocation;
+      return this.chooseLongWorkoutAllocation(startedSelectionGroupIds);
     } catch {
       return null;
     } finally {
       this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
+      this.state.lastKeptExerciseIds = previousLastKeptExerciseIds;
     }
   }
 
@@ -2124,7 +2123,10 @@ export class WorkoutSession {
         .filter(({ group }) => this.state.outcomes[group.id] === "x")
         .map(({ exercise }) => exercise.id),
     );
-    this.state.nextWorkoutExcludedExerciseIds = [...rejectedExerciseIds];
+    this.state.nextWorkoutExcludedExerciseIds = [...new Set([
+      ...this.state.nextWorkoutExcludedExerciseIds,
+      ...rejectedExerciseIds,
+    ])];
     this.state.lastKeptExerciseIds = [...new Set([
       ...this.state.lastKeptExerciseIds.filter(
         (exerciseId) => !rejectedExerciseIds.has(exerciseId),
@@ -2672,7 +2674,7 @@ export class WorkoutSession {
     return this.state.activeWorkoutMinutes - this.getSelectionGroups().length;
   }
 
-  chooseLongWorkoutAllocation() {
+  chooseLongWorkoutAllocation(lockedSelectionGroupIds = new Set()) {
     const extraMinutes = this.getExtraMinuteCount();
     if (extraMinutes === 0) {
       return {
@@ -2719,28 +2721,88 @@ export class WorkoutSession {
     if (directionPartnerExerciseIds.size > extraMinutes) {
       throw new Error("The selected direction pairs do not fit this workout duration.");
     }
-    const remainingExtraMinutes = extraMinutes - directionPartnerExerciseIds.size;
-    const timedPairRoundIds = [];
+    let remainingExtraMinutes = extraMinutes - directionPartnerExerciseIds.size;
+    const timedPairRounds = [];
     for (const group of rankedGroups) {
       const selected = this.exercisesById.get(this.state.selectedExerciseIds[
         this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
       ]);
       if (selected && usesTimedPair(selected)) {
-        timedPairRoundIds.push(`${group.id}.set1`);
+        timedPairRounds.push({ groupId: group.id, roundId: `${group.id}.set1` });
       }
       const partner = this.exercisesById.get(directionPartnerExerciseIds.get(group.id));
       if (partner && usesTimedPair(partner)) {
-        timedPairRoundIds.push(`${group.id}.direction1`);
+        timedPairRounds.push({
+          groupId: group.id,
+          roundId: `${group.id}.direction1`,
+        });
       }
     }
-    const fullSideRoundIds = timedPairRoundIds.slice(0, remainingExtraMinutes);
-    let repeatedMinutes = remainingExtraMinutes - fullSideRoundIds.length;
     const setCountsBySelectionGroupId = new Map(
       rankedGroups.map((group) => [group.id, 1]),
     );
+    const fullSideRoundIds = [];
+    const validTimedPairRoundIds = new Set(
+      timedPairRounds.map(({ roundId }) => roundId),
+    );
+    for (const group of rankedGroups.filter(({ id }) =>
+      lockedSelectionGroupIds.has(id))) {
+      const previousPartnerId = this.state.activeDirectionPartnerExerciseIds[group.id];
+      const proposedPartnerId = directionPartnerExerciseIds.get(group.id);
+      const hadDirectionPartner = Number.isInteger(previousPartnerId);
+      const hasDirectionPartner = Number.isInteger(proposedPartnerId);
+      if (hadDirectionPartner !== hasDirectionPartner ||
+          (hadDirectionPartner && previousPartnerId !== proposedPartnerId)) {
+        throw new Error(
+          `The completed direction allocation for ${group.displayName} changed.`,
+        );
+      }
+
+      const lockedSetCount =
+        this.state.activeSetCountsBySelectionGroupId[group.id] ?? 1;
+      if (!Number.isInteger(lockedSetCount) || lockedSetCount < 1) {
+        throw new Error(
+          `The completed set allocation for ${group.displayName} is invalid.`,
+        );
+      }
+      setCountsBySelectionGroupId.set(group.id, lockedSetCount);
+      remainingExtraMinutes -=
+        (lockedSetCount - 1) * (hasDirectionPartner ? 2 : 1);
+
+      const roundPrefix = `${group.id}.`;
+      for (const roundId of this.state.activeFullSideRoundIds.filter(
+        (candidate) => candidate.startsWith(roundPrefix),
+      )) {
+        if (!validTimedPairRoundIds.has(roundId)) {
+          throw new Error(
+            `The completed full-side allocation for ${group.displayName} changed.`,
+          );
+        }
+        fullSideRoundIds.push(roundId);
+        remainingExtraMinutes -= 1;
+      }
+    }
+
+    if (remainingExtraMinutes < 0) {
+      throw new Error("The completed workout rounds exceed the selected duration.");
+    }
+
+    for (const { groupId, roundId } of timedPairRounds) {
+      if (remainingExtraMinutes === 0) {
+        break;
+      }
+      if (lockedSelectionGroupIds.has(groupId)) {
+        continue;
+      }
+      fullSideRoundIds.push(roundId);
+      remainingExtraMinutes -= 1;
+    }
+
+    let repeatedMinutes = remainingExtraMinutes;
     while (repeatedMinutes > 0) {
       let allocated = false;
-      for (const group of rankedGroups) {
+      for (const group of rankedGroups.filter(({ id }) =>
+        !lockedSelectionGroupIds.has(id))) {
         const setCost = directionPartnerExerciseIds.has(group.id) ? 2 : 1;
         if (setCost > repeatedMinutes) {
           continue;

@@ -1027,12 +1027,22 @@ button.modifier-tile:not(:disabled):active {
 
 .keep-button {
   width: 100%;
-  min-height: 60px;
+  min-height: 68px;
   margin-top: 10px;
+  display: grid;
+  place-items: center;
+  padding: 8px;
   border-radius: 18px;
   border-color: var(--rest-text);
   color: white;
   background: var(--rest-accent);
+}
+
+.keep-love-icon {
+  width: 48px;
+  height: 48px;
+  display: block;
+  fill: currentColor;
 }
 
 .completion-screen {
@@ -1730,7 +1740,11 @@ input:focus-visible {
   .keep-button {
     min-height: 80px;
     margin-top: 18px;
-    font-size: 24px;
+  }
+
+  .keep-love-icon {
+    width: 56px;
+    height: 56px;
   }
 
   .completion-screen {
