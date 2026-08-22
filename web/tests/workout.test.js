@@ -1917,7 +1917,7 @@ test("reviewed sided movements always receive a timed side swap", () => {
     16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
     213, 220, 225, 234, 239, 241, 242, 248, 256, 258, 269,
     278, 279, 282, 283, 285, 286, 291, 294, 326, 329,
-    394, 395, 396, 397, 507, 513, 572, 577, 618, 636,
+    198, 394, 395, 396, 397, 421, 427, 468, 507, 512, 513, 572, 577, 618, 636,
     685, 745, 834,
   ];
   for (const exerciseId of sidedIds) {
@@ -1929,12 +1929,17 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const correctedOneSideMedia = new Map([
+    [198, "ScreenLeftThenRight"],
     [248, "ScreenRightThenLeft"],
     [282, "ScreenLeftThenRight"],
     [394, "ScreenLeftThenRight"],
     [395, "ScreenLeftThenRight"],
     [397, "ScreenRightThenLeft"],
+    [421, "ScreenLeftThenRight"],
+    [427, "ScreenLeftLeadThenRightLead"],
+    [468, "ScreenLeftThenRight"],
     [507, "ScreenRightThenLeft"],
+    [512, "ScreenRightThenLeft"],
     [577, "ScreenRightThenLeft"],
     [618, "ScreenLeftThenRight"],
     [834, "ScreenLeftThenRight"],
@@ -1959,8 +1964,8 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const alternating = catalog.filter((item) => item.sideSequence === "Alternating");
-  assert.equal(alternating.length, 121);
-  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 413, 508, 576, 816]) {
+  assert.equal(alternating.length, 123);
+  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 398, 413, 508, 515, 576, 816]) {
     assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, "Alternating");
   }
   assert.equal(catalog.find((item) => item.id === 15).sideSequence, "Alternating");
@@ -1978,6 +1983,7 @@ test("reviewed sided movements always receive a timed side swap", () => {
     [274, "ScreenLeftLeadThenRightLead"],
     [280, "ScreenLeftLeadThenRightLead"],
     [287, "ScreenRightLeadThenLeftLead"],
+    [427, "ScreenLeftLeadThenRightLead"],
     [473, "ScreenLeftLeadThenRightLead"],
     [591, "ScreenLeftLeadThenRightLead"],
     [884, "ScreenRightLeadThenLeftLead"],
@@ -3087,6 +3093,31 @@ test("lead-stance timing revision rebuilds workouts without resetting scores", (
   restored.reconcileCatalog();
 
   for (const exerciseId of leadStanceIds) {
+    assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
+    assert.equal(restored.state.scores[String(exerciseId)], -4);
+  }
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("unilateral setup correction rebuilds workouts without resetting scores", () => {
+  const correctedIds = [198, 398, 421, 427, 468, 512, 515];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(47)],
+    correctedIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(47), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 46;
+  for (const exerciseId of correctedIds) {
+    state.selectedExerciseIds[`changed.${exerciseId}`] = exerciseId;
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of correctedIds) {
     assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
     assert.equal(restored.state.scores[String(exerciseId)], -4);
   }

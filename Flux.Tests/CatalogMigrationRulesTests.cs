@@ -749,7 +749,7 @@ public sealed class CatalogMigrationRulesTests
     public void LatestCatalogRevisionDropsEveryChangedExerciseReference()
     {
         const int replacedId = 212;
-        const int retainedId = 198;
+        const int retainedId = 101;
         const string replacedGroup = "group.replaced";
         const string retainedGroup = "group.retained";
         var state = new WorkoutState
@@ -1841,6 +1841,45 @@ public sealed class CatalogMigrationRulesTests
         Assert.DoesNotContain(changedGroup, state.Outcomes);
         Assert.Null(state.PendingRestGroupId);
         Assert.Equal(884, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void UnilateralSetupCorrectionRevisionRebuildsWorkoutWithoutResettingScore()
+    {
+        int[] correctedIds = [198, 398, 421, 427, 468, 512, 515];
+        Assert.Equal(
+            correctedIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[47]);
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(47));
+
+        const string changedGroup = "unilateral-setup.changed";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 46,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 512,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 512,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(512, state.PendingScoreExerciseId);
         Assert.Equal(-4, state.PendingScoreValue);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }

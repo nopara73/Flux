@@ -3636,7 +3636,7 @@
         MotionProfile = 'SealJack'
         Primary = 'HipAbductors'
         Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3792,7 +3792,7 @@
         MotionProfile = 'SplitJack'
         Primary = 'HipFlexors'
         Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'BreathingMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4858,7 +4858,7 @@
         MotionProfile = 'ScarecrowJack'
         Primary = 'RotatorCuff'
         Secondary = @('ShoulderAbductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5923,7 +5923,7 @@
         MotionProfile = 'NeckStretch'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
         Secondary = @('SpinalExtensors', 'DeepAndIntersegmentalBack')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Hold'
         Presentation = 'Still'
         HoldFramePercent = 72
@@ -7526,7 +7526,7 @@
         MotionProfile = 'OneEyebrowIsolation'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0

@@ -378,10 +378,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*63/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*64/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+62\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+63\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(
@@ -567,7 +567,7 @@ test("exercise previews label every timed side or direction execution", async ()
 
 test("lead-stance timing and cues are identical on mobile and web", () => {
   const expectedLeadStanceIds = [
-    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+    265, 274, 280, 287, 427, 473, 591, 884, 885, 886, 887,
   ];
   assert.deepEqual(
     catalog

@@ -203,7 +203,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(147, timedSideExercises.Length);
+        Assert.Equal(152, timedSideExercises.Length);
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -213,10 +213,12 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(121, alternatingExercises.Length);
+        Assert.Equal(123, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
+        Assert.Contains(alternatingExercises, exercise => exercise.Id == 398);
+        Assert.Contains(alternatingExercises, exercise => exercise.Id == 515);
         Exercise[] timedDirectionExercises = exercises
             .Where(exercise =>
                 exercise.DirectionSequence != ExerciseDirectionSequence.None)
@@ -340,6 +342,7 @@ public sealed class CatalogInvariantTests
             [31] = ExerciseSideSequence.Alternating,
             [176] = ExerciseSideSequence.Alternating,
             [195] = ExerciseSideSequence.Alternating,
+            [198] = ExerciseSideSequence.ScreenLeftThenRight,
             [219] = ExerciseSideSequence.Alternating,
             [248] = ExerciseSideSequence.ScreenRightThenLeft,
             [265] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
@@ -352,6 +355,7 @@ public sealed class CatalogInvariantTests
             [394] = ExerciseSideSequence.ScreenLeftThenRight,
             [395] = ExerciseSideSequence.ScreenLeftThenRight,
             [397] = ExerciseSideSequence.ScreenRightThenLeft,
+            [398] = ExerciseSideSequence.Alternating,
             [407] = ExerciseSideSequence.Continuous,
             [408] = ExerciseSideSequence.ScreenRightThenLeft,
             [410] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -364,12 +368,17 @@ public sealed class CatalogInvariantTests
             [417] = ExerciseSideSequence.Continuous,
             [418] = ExerciseSideSequence.Alternating,
             [419] = ExerciseSideSequence.ScreenLeftThenRight,
+            [421] = ExerciseSideSequence.ScreenLeftThenRight,
+            [427] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            [468] = ExerciseSideSequence.ScreenLeftThenRight,
             [473] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [482] = ExerciseSideSequence.Continuous,
             [483] = ExerciseSideSequence.Continuous,
             [507] = ExerciseSideSequence.ScreenRightThenLeft,
             [508] = ExerciseSideSequence.Alternating,
+            [512] = ExerciseSideSequence.ScreenRightThenLeft,
             [513] = ExerciseSideSequence.ScreenLeftThenRight,
+            [515] = ExerciseSideSequence.Alternating,
             [576] = ExerciseSideSequence.Alternating,
             [577] = ExerciseSideSequence.ScreenRightThenLeft,
             [591] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
@@ -404,7 +413,7 @@ public sealed class CatalogInvariantTests
 
         int[] leadStanceExerciseIds =
         [
-            265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+            265, 274, 280, 287, 427, 473, 591, 884, 885, 886, 887,
         ];
         Assert.Equal(
             leadStanceExerciseIds,
@@ -434,7 +443,7 @@ public sealed class CatalogInvariantTests
             16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
             213, 220, 225, 234, 239, 241, 242, 248, 256, 258, 269,
             278, 279, 282, 283, 285, 286, 291, 294, 326, 329,
-            394, 395, 396, 397, 507, 513, 572, 577, 618, 636,
+            198, 394, 395, 396, 397, 421, 427, 468, 507, 512, 513, 572, 577, 618, 636,
             685, 745, 834,
         ];
         Assert.All(auditedSidedClarityReplacementIds, exerciseId =>
