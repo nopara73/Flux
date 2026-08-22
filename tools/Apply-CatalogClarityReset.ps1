@@ -92,7 +92,7 @@ $rows = @(
     New-ClarityReplacement 283 'Straight-Fist Tendon Glide' 'Hand therapy' 'StraightFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 178 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 285 'Karate Inside Block' 'Karate' 'InsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 82 24
     New-ClarityReplacement 286 'Karate Outside Block' 'Karate' 'OutsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 47 24
-    New-ClarityReplacement 287 'Standing Uppercuts' 'Boxing conditioning' 'Uppercut' 'Continuous' 'ADotmBi8lPg.mp4' 'https://www.youtube.com/watch?v=ADotmBi8lPg' 12 20 10
+    New-ClarityReplacement 287 'Standing Uppercuts' 'Boxing conditioning' 'Uppercut' 'ScreenRightLeadThenLeftLead' 'ADotmBi8lPg.mp4' 'https://www.youtube.com/watch?v=ADotmBi8lPg' 12 20 10
     New-ClarityReplacement 291 'Open-to-Claw Tendon Glide' 'Hand therapy' 'ClawTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 148 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 294 'Five-Position Tendon Glide' 'Hand therapy' 'TendonGlideSequence' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 198 25 10
     New-ClarityReplacement 314 'Alternating Forward Lunge Pulses' 'Bodyweight conditioning' 'ForwardLungePulse' 'Continuous' 'FGB_9YVUmfY.mp4' $standingUrl 190 25

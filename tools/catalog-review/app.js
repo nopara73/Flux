@@ -38,7 +38,12 @@ elements.video.addEventListener("ended", () => {
   const exercise = exercises[index];
   if (
     exercise.directionSequence === "None" &&
-    ["ScreenLeftThenRight", "ScreenRightThenLeft"].includes(exercise.sideSequence)
+    [
+      "ScreenLeftThenRight",
+      "ScreenRightThenLeft",
+      "ScreenLeftLeadThenRightLead",
+      "ScreenRightLeadThenLeftLead",
+    ].includes(exercise.sideSequence)
   ) {
     mirrorNextLoop = !mirrorNextLoop;
     elements.video.style.transform = mirrorNextLoop ? "scaleX(-1)" : "none";

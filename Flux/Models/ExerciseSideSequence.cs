@@ -6,11 +6,19 @@ public enum ExerciseSideSequence
     Alternating,
     ScreenLeftThenRight,
     ScreenRightThenLeft,
+    ScreenLeftLeadThenRightLead,
+    ScreenRightLeadThenLeftLead,
 }
 
 public static class ExerciseSideSequenceExtensions
 {
     public static bool UsesTimedSides(this ExerciseSideSequence sequence) =>
         sequence is ExerciseSideSequence.ScreenLeftThenRight or
-            ExerciseSideSequence.ScreenRightThenLeft;
+            ExerciseSideSequence.ScreenRightThenLeft or
+            ExerciseSideSequence.ScreenLeftLeadThenRightLead or
+            ExerciseSideSequence.ScreenRightLeadThenLeftLead;
+
+    public static bool UsesTimedLeadStances(this ExerciseSideSequence sequence) =>
+        sequence is ExerciseSideSequence.ScreenLeftLeadThenRightLead or
+            ExerciseSideSequence.ScreenRightLeadThenLeftLead;
 }

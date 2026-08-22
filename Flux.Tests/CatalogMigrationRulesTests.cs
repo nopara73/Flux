@@ -1804,6 +1804,48 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void LeadStanceTimingRevisionRebuildsWorkoutWithoutResettingScore()
+    {
+        int[] leadStanceIds =
+        [
+            265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+        ];
+        Assert.Equal(
+            leadStanceIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[46]);
+        Assert.False(
+            CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(46));
+
+        const string changedGroup = "lead-stance.changed";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 45,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 884,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 884,
+            PendingScoreValue = -4,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(884, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(

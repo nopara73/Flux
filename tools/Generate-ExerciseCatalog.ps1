@@ -245,7 +245,9 @@ $invalidReplacementDefinitions = @(
             -not $replacement.ContainsKey('SideSequence') -or
             [string]$replacement.SideSequence -notin @(
                 'Continuous', 'Alternating',
-                'ScreenLeftThenRight', 'ScreenRightThenLeft') -or
+                'ScreenLeftThenRight', 'ScreenRightThenLeft',
+                'ScreenLeftLeadThenRightLead',
+                'ScreenRightLeadThenLeftLead') -or
             -not $replacement.ContainsKey('Mode') -or
             [string]$replacement.Mode -notin @('Repetition', 'Hold') -or
             -not $replacement.ContainsKey('Presentation') -or
@@ -478,7 +480,9 @@ if ($invalidHumanSources.Count -gt 0) {
 
 $validSideSequences = @(
     'ScreenLeftThenRight',
-    'ScreenRightThenLeft')
+    'ScreenRightThenLeft',
+    'ScreenLeftLeadThenRightLead',
+    'ScreenRightLeadThenLeftLead')
 $validDirectionSequences = @(
     'ForwardThenBackward',
     'BackwardThenForward',
@@ -1716,7 +1720,9 @@ function New-ExternalExerciseGif {
     }
 
     if ($Media.MirrorForAlternation -and $SideSequence -notin @(
-            'ScreenLeftThenRight', 'ScreenRightThenLeft')) {
+            'ScreenLeftThenRight', 'ScreenRightThenLeft',
+            'ScreenLeftLeadThenRightLead',
+            'ScreenRightLeadThenLeftLead')) {
         $mirroredPaths = [System.Collections.Generic.List[string]]::new()
         for ($index = 0; $index -lt $framePaths.Count; $index++) {
             $mirroredPath = Join-Path $frameRoot ('mirror_{0:D4}.png' -f $index)
@@ -1754,7 +1760,9 @@ function New-ExternalExerciseGif {
     else {
         $patterns = @((Join-Path $frameRoot 'frame_*.png'))
         if ($Media.MirrorForAlternation -and $SideSequence -notin @(
-                'ScreenLeftThenRight', 'ScreenRightThenLeft')) {
+                'ScreenLeftThenRight', 'ScreenRightThenLeft',
+                'ScreenLeftLeadThenRightLead',
+                'ScreenRightLeadThenLeftLead')) {
             $patterns += (Join-Path $frameRoot 'mirror_*.png')
         }
         $patterns
@@ -3472,7 +3480,9 @@ $constraintViolations = $records | Where-Object {
         'Continuous',
         'Alternating',
         'ScreenLeftThenRight',
-        'ScreenRightThenLeft') -or
+        'ScreenRightThenLeft',
+        'ScreenLeftLeadThenRightLead',
+        'ScreenRightLeadThenLeftLead') -or
     $_['directionSequence'] -notin @(
         'None',
         'ForwardThenBackward',
@@ -3484,7 +3494,9 @@ $constraintViolations = $records | Where-Object {
     $_['directionPartnerExerciseId'] -isnot [int] -or
     $_['directionPartnerExerciseId'] -lt 0 -or
     ($_['sideSequence'] -in @(
-            'ScreenLeftThenRight', 'ScreenRightThenLeft') -and
+            'ScreenLeftThenRight', 'ScreenRightThenLeft',
+            'ScreenLeftLeadThenRightLead',
+            'ScreenRightLeadThenLeftLead') -and
         $_['directionSequence'] -ne 'None') -or
     ($_['directionSequence'] -ne 'None' -and (
         $_['mode'] -ne 'Repetition' -or $_['presentation'] -ne 'Motion')) -or

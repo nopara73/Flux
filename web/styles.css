@@ -667,7 +667,7 @@ button.modifier-tile:not(:disabled):active {
   white-space: nowrap;
 }
 
-.side-phase-label.unilateral {
+.side-phase-label.timed-pair {
   border-color: var(--move-text);
   background: var(--move-accent);
 }

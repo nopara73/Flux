@@ -43,6 +43,18 @@ public sealed class MovementPhasePresentationPolicyTests
         MovementDirectionCue.ScreenLeft,
         ScreenSide.Right,
         ScreenSide.Left)]
+    [InlineData(
+        ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+        MovementDirectionCue.ShownLeadStance,
+        MovementDirectionCue.OppositeLeadStance,
+        ScreenSide.Left,
+        ScreenSide.Right)]
+    [InlineData(
+        ExerciseSideSequence.ScreenRightLeadThenLeftLead,
+        MovementDirectionCue.ShownLeadStance,
+        MovementDirectionCue.OppositeLeadStance,
+        ScreenSide.Right,
+        ScreenSide.Left)]
     public void Side_pairs_preserve_split_hue_and_second_side_mirroring(
         ExerciseSideSequence sideSequence,
         MovementDirectionCue expectedFirstCue,
@@ -197,6 +209,8 @@ public sealed class MovementPhasePresentationPolicyTests
     [
         ExerciseSideSequence.ScreenLeftThenRight,
         ExerciseSideSequence.ScreenRightThenLeft,
+        ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+        ExerciseSideSequence.ScreenRightLeadThenLeftLead,
     ];
 
     private static readonly ExerciseDirectionSequence[] TimedDirectionSequences =

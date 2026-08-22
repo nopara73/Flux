@@ -143,7 +143,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 45;
+export const CURRENT_CATALOG_REVISION = 46;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -218,6 +218,9 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [45, new Set([
     264, 275, 406, 409, 460, 588, 608, 611, 617, 620, 743,
     757, 759, 760, 761, 762, 763, 764,
+  ])],
+  [46, new Set([
+    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
   ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
@@ -841,7 +844,14 @@ export function usesTimedPair(exercise) {
 
 export function usesTimedSides(exercise) {
   return exercise.sideSequence === "ScreenLeftThenRight" ||
-    exercise.sideSequence === "ScreenRightThenLeft";
+    exercise.sideSequence === "ScreenRightThenLeft" ||
+    exercise.sideSequence === "ScreenLeftLeadThenRightLead" ||
+    exercise.sideSequence === "ScreenRightLeadThenLeftLead";
+}
+
+export function usesTimedLeadStances(exercise) {
+  return exercise.sideSequence === "ScreenLeftLeadThenRightLead" ||
+    exercise.sideSequence === "ScreenRightLeadThenLeftLead";
 }
 
 export function getMovementDurationMs(group) {
@@ -1297,17 +1307,20 @@ export function getMovementPresentation(exercise, phase) {
 
   const second = phase === "SecondSide";
   if (usesTimedSides(exercise)) {
-    const firstCue =
-      exercise.sideSequence === "ScreenLeftThenRight" ? "ScreenLeft" : "ScreenRight";
-    const cue = second
-      ? firstCue === "ScreenLeft"
-        ? "ScreenRight"
-        : "ScreenLeft"
-      : firstCue;
+    const firstScreenSide = exercise.sideSequence === "ScreenLeftThenRight" ||
+      exercise.sideSequence === "ScreenLeftLeadThenRightLead"
+      ? "Left"
+      : "Right";
+    const activeScreenSide = second
+      ? firstScreenSide === "Left" ? "Right" : "Left"
+      : firstScreenSide;
+    const cue = usesTimedLeadStances(exercise)
+      ? second ? "OppositeLeadStance" : "ShownLeadStance"
+      : activeScreenSide === "Left" ? "ScreenLeft" : "ScreenRight";
     return {
       cue,
       mirrorMedia: second,
-      activeScreenSide: cue === "ScreenLeft" ? "Left" : "Right",
+      activeScreenSide,
     };
   }
 
@@ -2234,25 +2247,25 @@ export class WorkoutSession {
       return false;
     }
 
-    const eligibleFullSideRoundIds = new Set();
+    const eligibleFullPairRoundIds = new Set();
     for (const group of groups) {
       const selected = this.exercisesById.get(this.state.selectedExerciseIds[
         this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
       ]);
-      if (selected && usesTimedSides(selected)) {
-        eligibleFullSideRoundIds.add(`${group.id}.set1`);
+      if (selected && usesTimedPair(selected)) {
+        eligibleFullPairRoundIds.add(`${group.id}.set1`);
       }
       const partner = this.exercisesById.get(
         this.state.activeDirectionPartnerExerciseIds[group.id],
       );
-      if (partner && usesTimedSides(partner)) {
-        eligibleFullSideRoundIds.add(`${group.id}.direction`);
+      if (partner && usesTimedPair(partner)) {
+        eligibleFullPairRoundIds.add(`${group.id}.direction`);
       }
     }
     const remainingAfterPartners = extraMinutes - expectedPartnerCount;
     const expectedFullSideCount = Math.min(
       remainingAfterPartners,
-      eligibleFullSideRoundIds.size,
+      eligibleFullPairRoundIds.size,
     );
     const repeatedMinutes = remainingAfterPartners - expectedFullSideCount;
     const expectedPartialExtraSets = groups.length === 0
@@ -2260,7 +2273,7 @@ export class WorkoutSession {
       : repeatedMinutes % groups.length;
     return this.state.activeFullSideRoundIds.length === expectedFullSideCount &&
       this.state.activeFullSideRoundIds.every((roundId) =>
-        eligibleFullSideRoundIds.has(roundId)) &&
+        eligibleFullPairRoundIds.has(roundId)) &&
       this.state.activeExtraSetSelectionGroupIds.length === expectedPartialExtraSets &&
       this.state.activeExtraSetSelectionGroupIds.every((groupId) =>
         groupsById.has(groupId));
@@ -2333,20 +2346,20 @@ export class WorkoutSession {
       directionPartnerExerciseIds.set(group.id, partnerId);
     }
     const remainingExtraMinutes = extraMinutes - directionPartnerExerciseIds.size;
-    const sidedRoundIds = [];
+    const timedPairRoundIds = [];
     for (const group of rankedGroups) {
       const selected = this.exercisesById.get(this.state.selectedExerciseIds[
         this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
       ]);
-      if (selected && usesTimedSides(selected)) {
-        sidedRoundIds.push(`${group.id}.set1`);
+      if (selected && usesTimedPair(selected)) {
+        timedPairRoundIds.push(`${group.id}.set1`);
       }
       const partner = this.exercisesById.get(directionPartnerExerciseIds.get(group.id));
-      if (partner && usesTimedSides(partner)) {
-        sidedRoundIds.push(`${group.id}.direction`);
+      if (partner && usesTimedPair(partner)) {
+        timedPairRoundIds.push(`${group.id}.direction`);
       }
     }
-    const fullSideRoundIds = sidedRoundIds.slice(0, remainingExtraMinutes);
+    const fullSideRoundIds = timedPairRoundIds.slice(0, remainingExtraMinutes);
     const repeatedMinutes = remainingExtraMinutes - fullSideRoundIds.length;
     const partialExtraSets = repeatedMinutes % rankedGroups.length;
     return {

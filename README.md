@@ -80,9 +80,9 @@ per-muscle workload budget helps choose the remaining exercises. Each scheduled
 primary association counts as 1 unit and each secondary association as 0.5.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
 affected muscle; these adjustments are used only while completing that lineup
-and never alter saved scores. A
-unilateral exercise's two timed sides count once, linked opposite directions
-count separately, and genuinely repeated rounds count again.
+and never alter saved scores. A timed side, stance, or direction pair counts
+once; linked opposite-direction exercises count separately, and genuinely
+repeated rounds count again.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -175,11 +175,16 @@ Every round begins with five seconds of quiet preparation.
 - Naturally alternating movements switch sides inside the same 45-second phase.
 - Unilateral movements run for 20 seconds on the demonstrated side, pause for a
   five-second change, then run for 20 seconds on the mirrored side.
-- Expanded unilateral rounds use 45 seconds, a 15-second change, and 45 seconds.
+- Fixed-lead stance movements use the same timing while cueing the demonstrated
+  lead stance, a stance change, and the opposite lead stance.
+- Bidirectional movements run for 20 seconds in the first direction, pause for a
+  five-second direction change, then run for 20 seconds in the opposite direction.
+- Expanded timed-pair rounds use 45 seconds, a 15-second change, and 45 seconds.
 - Each normal round ends with a 15-second rest and keep/discard decision.
 
 Red means movement. Blue means change or rest. A `UNILATERAL` label appears
-before movements that use the timed-side protocol.
+before timed side or lead-stance pairs, while `BIDIRECTIONAL` appears before
+timed opposite-direction pairs.
 
 Repetition demonstrations run at normal speed. Hold demonstrations loop during
 the preview, play once when work begins, and then remain on a reviewed target

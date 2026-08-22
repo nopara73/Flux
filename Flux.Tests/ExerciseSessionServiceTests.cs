@@ -423,7 +423,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void FortyFiveMinutesUpgradeSidedExercisesBeforeAddingRepeatedSets()
+    public void FortyFiveMinutesUpgradeTimedPairsBeforeAddingRepeatedSets()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -433,9 +433,12 @@ public sealed class ExerciseSessionServiceTests
             .Select((group, index) => QualifiedForGroup(
                 index + 1,
                 group,
-                sideSequence: index < 12
+                sideSequence: index < 6
                     ? ExerciseSideSequence.ScreenRightThenLeft
-                    : ExerciseSideSequence.Continuous))
+                    : ExerciseSideSequence.Continuous,
+                directionSequence: index is >= 6 and < 12
+                    ? ExerciseDirectionSequence.ClockwiseThenCounterclockwise
+                    : ExerciseDirectionSequence.None))
             .ToArray();
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
@@ -446,9 +449,14 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(33, rounds.Length);
         Assert.Equal(12, rounds.Count(round => round.UsesFullSideTiming));
         Assert.All(rounds.Where(round => round.UsesFullSideTiming), round =>
-            Assert.NotEqual(
-                ExerciseSideSequence.Continuous,
-                service.GetSelectedExercise(state, round).SideSequence));
+            Assert.True(MovementPhasePresentationPolicy.UsesTimedPair(
+                service.GetSelectedExercise(state, round).SideSequence,
+                service.GetSelectedExercise(state, round).DirectionSequence)));
+        Assert.Equal(
+            6,
+            rounds.Count(round => round.UsesFullSideTiming &&
+                service.GetSelectedExercise(state, round).DirectionSequence !=
+                    ExerciseDirectionSequence.None));
         Assert.Equal(3, state.ActiveExtraSetSelectionGroupIds.Count);
         Assert.Equal(12, state.ActiveFullSideRoundIds.Count);
         Assert.Equal(45, rounds.Sum(round => round.UsesFullSideTiming ? 2 : 1));
@@ -2112,7 +2120,8 @@ public sealed class ExerciseSessionServiceTests
         int score = 0,
         ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed)
+            ExerciseInsectCompatibility.Unreviewed,
+        ExerciseDirectionSequence directionSequence = ExerciseDirectionSequence.None)
     {
         CanonicalMuscleGroup primary = group.CanonicalGroups
             .Order()
@@ -2126,7 +2135,8 @@ public sealed class ExerciseSessionServiceTests
             WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group),
             score,
             sideSequence: sideSequence,
-            insectCompatibility: insectCompatibility);
+            insectCompatibility: insectCompatibility,
+            directionSequence: directionSequence);
     }
 
     private static Exercise QualifiedExercise(
@@ -2155,7 +2165,8 @@ public sealed class ExerciseSessionServiceTests
         CanonicalMuscleGroup[]? additionalSecondaries = null,
         ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed)
+            ExerciseInsectCompatibility.Unreviewed,
+        ExerciseDirectionSequence directionSequence = ExerciseDirectionSequence.None)
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, primary);
         if (inBucketCoverage is < 1 || inBucketCoverage > group.CanonicalGroups.Count)
@@ -2177,6 +2188,7 @@ public sealed class ExerciseSessionServiceTests
             score,
             sideSequence,
             insectCompatibility,
+            directionSequence,
             secondary);
     }
 
@@ -2329,6 +2341,23 @@ public sealed class ExerciseSessionServiceTests
         ExerciseSideSequence sideSequence,
         ExerciseInsectCompatibility insectCompatibility,
         params CanonicalMuscleGroup[] secondary)
+        => Exercise(
+            id,
+            primary,
+            score,
+            sideSequence,
+            insectCompatibility,
+            ExerciseDirectionSequence.None,
+            secondary);
+
+    private static Exercise Exercise(
+        int id,
+        CanonicalMuscleGroup primary,
+        int score,
+        ExerciseSideSequence sideSequence,
+        ExerciseInsectCompatibility insectCompatibility,
+        ExerciseDirectionSequence directionSequence,
+        params CanonicalMuscleGroup[] secondary)
     {
         return new Exercise
         {
@@ -2343,6 +2372,7 @@ public sealed class ExerciseSessionServiceTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = sideSequence,
+            DirectionSequence = directionSequence,
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,

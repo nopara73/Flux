@@ -203,14 +203,17 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(137, timedSideExercises.Length);
-        Assert.DoesNotContain(timedSideExercises, exercise =>
+        Assert.Equal(147, timedSideExercises.Length);
+        Assert.DoesNotContain(
+            timedSideExercises.Where(exercise =>
+                !exercise.SideSequence.UsesTimedLeadStances()),
+            exercise =>
             exercise.Name.StartsWith("Alternating ", StringComparison.Ordinal));
         Exercise[] alternatingExercises = exercises
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(128, alternatingExercises.Length);
+        Assert.Equal(121, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -339,6 +342,10 @@ public sealed class CatalogInvariantTests
             [195] = ExerciseSideSequence.Alternating,
             [219] = ExerciseSideSequence.Alternating,
             [248] = ExerciseSideSequence.ScreenRightThenLeft,
+            [265] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            [274] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            [280] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            [287] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
             [282] = ExerciseSideSequence.ScreenLeftThenRight,
             [390] = ExerciseSideSequence.Alternating,
             [391] = ExerciseSideSequence.Alternating,
@@ -357,6 +364,7 @@ public sealed class CatalogInvariantTests
             [417] = ExerciseSideSequence.Continuous,
             [418] = ExerciseSideSequence.Alternating,
             [419] = ExerciseSideSequence.ScreenLeftThenRight,
+            [473] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [482] = ExerciseSideSequence.Continuous,
             [483] = ExerciseSideSequence.Continuous,
             [507] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -364,6 +372,7 @@ public sealed class CatalogInvariantTests
             [513] = ExerciseSideSequence.ScreenLeftThenRight,
             [576] = ExerciseSideSequence.Alternating,
             [577] = ExerciseSideSequence.ScreenRightThenLeft,
+            [591] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [611] = ExerciseSideSequence.Continuous,
             [617] = ExerciseSideSequence.ScreenLeftThenRight,
             [618] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -378,8 +387,10 @@ public sealed class CatalogInvariantTests
             [745] = ExerciseSideSequence.ScreenLeftThenRight,
             [816] = ExerciseSideSequence.Alternating,
             [834] = ExerciseSideSequence.ScreenLeftThenRight,
-            [884] = ExerciseSideSequence.Alternating,
-            [885] = ExerciseSideSequence.Alternating,
+            [884] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
+            [885] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
+            [886] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
+            [887] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
             [910] = ExerciseSideSequence.ScreenLeftThenRight,
             [996] = ExerciseSideSequence.ScreenLeftThenRight,
             [997] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -390,6 +401,24 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expected.Value,
                 exercises.Single(exercise => exercise.Id == expected.Key).SideSequence));
+
+        int[] leadStanceExerciseIds =
+        [
+            265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+        ];
+        Assert.Equal(
+            leadStanceExerciseIds,
+            exercises
+                .Where(exercise => exercise.SideSequence.UsesTimedLeadStances())
+                .Select(exercise => exercise.Id)
+                .Order()
+                .ToArray());
+        Assert.All(
+            leadStanceExerciseIds,
+            exerciseId => Assert.True(
+                exercises.Single(exercise => exercise.Id == exerciseId)
+                    .SideSequence
+                    .UsesTimedSides()));
 
         Exercise forwardSideLegCircles = exercises.Single(exercise => exercise.Id == 617);
         Exercise backwardSideLegCircles = exercises.Single(exercise => exercise.Id == 620);
@@ -417,9 +446,9 @@ public sealed class CatalogInvariantTests
         int[] auditedContinuousClarityReplacementIds =
         [
             15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
-            201, 230, 251, 257, 262, 263, 265, 266,
-            267, 268, 270, 275, 287, 289, 301, 314, 321,
-            413, 425, 516, 615, 677, 683, 687, 884, 885,
+            201, 230, 251, 257, 262, 263, 266,
+            267, 268, 270, 275, 289, 301, 314, 321,
+            413, 425, 516, 615, 677, 683, 687,
         ];
         Assert.All(auditedContinuousClarityReplacementIds, exerciseId =>
             Assert.False(
@@ -579,7 +608,9 @@ public sealed class CatalogInvariantTests
         Assert.Equal(
             CanonicalMuscleGroup.ShoulderAbductors,
             shadowBoxing.PrimaryCanonicalGroup);
-        Assert.Equal(ExerciseSideSequence.Alternating, shadowBoxing.SideSequence);
+        Assert.Equal(
+            ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            shadowBoxing.SideSequence);
         Assert.Equal(ExerciseMode.Repetition, shadowBoxing.Mode);
         Assert.Equal(ExercisePresentation.Motion, shadowBoxing.Presentation);
         Assert.Contains(

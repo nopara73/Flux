@@ -18,6 +18,7 @@ import {
   isModifierMetadataComplete,
   parseStoredState,
   usesTimedPair,
+  usesTimedLeadStances,
   usesTimedSides,
   withMirrorEquipment,
 } from "./workout.js";
@@ -435,18 +436,24 @@ function showNextExercise() {
 }
 
 function renderSidePhasePreview(exercise) {
-  if (!usesTimedSides(exercise)) {
+  const isUnilateral = usesTimedSides(exercise);
+  const isBidirectional = exercise.directionSequence !== "None";
+  if (!isUnilateral && !isBidirectional) {
     elements.sidePhasePreview.hidden = true;
     elements.sidePhasePreview.setAttribute("aria-label", "");
-    elements.sidePhaseLabel.classList.remove("unilateral");
+    elements.sidePhaseLabel.classList.remove("timed-pair");
     return;
   }
 
-  elements.sidePhaseLabel.textContent = "UNILATERAL";
-  elements.sidePhaseLabel.classList.add("unilateral");
+  elements.sidePhaseLabel.textContent = isUnilateral ? "UNILATERAL" : "BIDIRECTIONAL";
+  elements.sidePhaseLabel.classList.add("timed-pair");
   elements.sidePhasePreview.setAttribute(
     "aria-label",
-    "Unilateral exercise. Work one side, change, then the other.",
+    usesTimedLeadStances(exercise)
+      ? "Unilateral exercise. Match the shown lead stance, change stance, then repeat from the opposite lead stance."
+      : isUnilateral
+        ? "Unilateral exercise. Work one side, change, then the other."
+        : "Bidirectional exercise. Complete the shown direction, change direction, then complete the opposite direction.",
   );
   elements.sidePhasePreview.hidden = false;
 }
@@ -715,10 +722,13 @@ function applyMovementPhase(phase) {
     elements.mediaCard.classList.add("resting");
     elements.video.pause();
     playSound("side_change");
+    const changeSeconds = currentGroup?.usesFullSideTiming ? 15 : 5;
     elements.status.textContent =
-      currentExercise.directionSequence === "None"
-        ? `Change sides, ${currentGroup?.usesFullSideTiming ? 15 : 5} seconds.`
-        : "Change direction, 5 seconds.";
+      usesTimedLeadStances(currentExercise)
+        ? `Change stance, ${changeSeconds} seconds.`
+        : currentExercise.directionSequence === "None"
+        ? `Change sides, ${changeSeconds} seconds.`
+        : `Change direction, ${changeSeconds} seconds.`;
     return;
   }
 
@@ -1069,6 +1079,8 @@ function cueSymbol(cue) {
     Switch: "⇄",
     ScreenLeft: "▶",
     ScreenRight: "▶",
+    ShownLeadStance: "▶",
+    OppositeLeadStance: "▶",
     Forward: "↓",
     Backward: "↑",
     Clockwise: "↻",
@@ -1084,6 +1096,8 @@ function movementCueDescription(cue) {
     Switch: "Change",
     ScreenLeft: "Left side",
     ScreenRight: "Right side",
+    ShownLeadStance: "Shown lead stance",
+    OppositeLeadStance: "Opposite lead stance",
     Forward: "Forward",
     Backward: "Backward",
     Clockwise: "Clockwise",

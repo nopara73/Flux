@@ -1097,35 +1097,39 @@ public sealed class ExerciseSessionService
             return false;
         }
 
-        var eligibleFullSideRoundIds = new HashSet<string>(StringComparer.Ordinal);
+        var eligibleFullPairRoundIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (WorkoutGroup group in groups)
         {
             int selectedId = state.SelectedExerciseIds.GetValueOrDefault(
                 GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers));
             if (_exercisesById.TryGetValue(selectedId, out Exercise? selected) &&
-                selected.SideSequence.UsesTimedSides())
+                MovementPhasePresentationPolicy.UsesTimedPair(
+                    selected.SideSequence,
+                    selected.DirectionSequence))
             {
-                eligibleFullSideRoundIds.Add($"{group.Id}.set1");
+                eligibleFullPairRoundIds.Add($"{group.Id}.set1");
             }
             if (state.ActiveDirectionPartnerExerciseIds.TryGetValue(
                     group.Id,
                     out int partnerId) &&
                 _exercisesById.TryGetValue(partnerId, out Exercise? partner) &&
-                partner.SideSequence.UsesTimedSides())
+                MovementPhasePresentationPolicy.UsesTimedPair(
+                    partner.SideSequence,
+                    partner.DirectionSequence))
             {
-                eligibleFullSideRoundIds.Add($"{group.Id}.direction");
+                eligibleFullPairRoundIds.Add($"{group.Id}.direction");
             }
         }
         int remainingAfterPartners = extraMinutes - expectedPartnerCount;
         int expectedFullSideCount = Math.Min(
             remainingAfterPartners,
-            eligibleFullSideRoundIds.Count);
+            eligibleFullPairRoundIds.Count);
         int repeatedMinutes = remainingAfterPartners - expectedFullSideCount;
         int expectedPartialExtraSets = groups.Length == 0
             ? 0
             : repeatedMinutes % groups.Length;
         return state.ActiveFullSideRoundIds.Count == expectedFullSideCount &&
-            state.ActiveFullSideRoundIds.All(eligibleFullSideRoundIds.Contains) &&
+            state.ActiveFullSideRoundIds.All(eligibleFullPairRoundIds.Contains) &&
             state.ActiveExtraSetSelectionGroupIds.Count == expectedPartialExtraSets &&
             state.ActiveExtraSetSelectionGroupIds.All(validGroupIds.Contains);
     }
@@ -1462,25 +1466,29 @@ public sealed class ExerciseSessionService
         }
 
         int remainingExtraMinutes = extraMinutes - directionPartners.Count;
-        var sidedRoundIds = new List<string>();
+        var timedPairRoundIds = new List<string>();
         foreach (WorkoutGroup group in rankedGroups)
         {
             int exerciseId = state.SelectedExerciseIds.GetValueOrDefault(
                 GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers));
             if (_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
-                exercise.SideSequence.UsesTimedSides())
+                MovementPhasePresentationPolicy.UsesTimedPair(
+                    exercise.SideSequence,
+                    exercise.DirectionSequence))
             {
-                sidedRoundIds.Add($"{group.Id}.set1");
+                timedPairRoundIds.Add($"{group.Id}.set1");
             }
             if (directionPartners.TryGetValue(group.Id, out int partnerId) &&
                 _exercisesById.TryGetValue(partnerId, out Exercise? partner) &&
-                partner.SideSequence.UsesTimedSides())
+                MovementPhasePresentationPolicy.UsesTimedPair(
+                    partner.SideSequence,
+                    partner.DirectionSequence))
             {
-                sidedRoundIds.Add($"{group.Id}.direction");
+                timedPairRoundIds.Add($"{group.Id}.direction");
             }
         }
 
-        HashSet<string> fullSideRounds = sidedRoundIds
+        HashSet<string> fullSideRounds = timedPairRoundIds
             .Take(remainingExtraMinutes)
             .ToHashSet(StringComparer.Ordinal);
         int repeatMinutes = remainingExtraMinutes - fullSideRounds.Count;

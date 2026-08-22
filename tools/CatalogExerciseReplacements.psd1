@@ -2105,7 +2105,7 @@
         MotionProfile = 'SpeedBagPunch'
         Primary = 'ShoulderAbductors'
         Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'RotatorCuff', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -2285,7 +2285,7 @@
         MotionProfile = 'MartialHand'
         Primary = 'ElbowFlexors'
         Secondary = @('Chest', 'AbdominalWall', 'GlutealExtensors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -2415,7 +2415,7 @@
         MotionProfile = 'MartialHand'
         Primary = 'Chest'
         Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors', 'ForearmExtensorsAndSupinators', 'ScapularGirdle')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -2597,7 +2597,7 @@
         MotionProfile = 'Uppercut'
         Primary = 'ElbowFlexors'
         Secondary = @('ForearmExtensorsAndSupinators', 'IntrinsicHand')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4988,7 +4988,7 @@
         MotionProfile = 'BouncingUppercut'
         Primary = 'ElbowFlexors'
         Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -6183,7 +6183,7 @@
         MotionProfile = 'MartialHand'
         Primary = 'ShoulderAbductors'
         Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -7114,7 +7114,7 @@
         MotionProfile = 'BoxingHeadMovement'
         Primary = 'MedialAndDeepKneeExtensors'
         Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -7140,7 +7140,7 @@
         MotionProfile = 'BoxingHeadMovement'
         Primary = 'SpinalExtensors'
         Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0

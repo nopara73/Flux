@@ -64,6 +64,8 @@ const [
   webBuild,
   mirrorEquipmentModel,
   mirrorCoverageModel,
+  sideSequenceModel,
+  movementPresentationPolicy,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -89,6 +91,8 @@ const [
   source("web", "scripts", "build.mjs"),
   source("Flux", "Models", "MirrorEquipment.cs"),
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
+  source("Flux", "Models", "ExerciseSideSequence.cs"),
+  source("Flux", "Services", "MovementPhasePresentationPolicy.cs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -374,10 +378,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*62/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*63/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+61\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+62\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(
@@ -388,6 +392,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(exerciseDatabase, /equipment IN \('None', 'Mirror'\)/);
   assert.match(exerciseDatabase, /mirror_relationship TEXT NOT NULL/);
   assert.match(exerciseDatabase, /mirror_coverage TEXT NOT NULL/);
+  assert.match(
+    exerciseDatabase,
+    /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead/,
+  );
 });
 
 test("muscular demand is a separate reviewed catalog score on both platforms", () => {
@@ -493,11 +501,17 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("exercise previews label only timed unilateral execution", async () => {
+test("exercise previews label every timed side or direction execution", async () => {
+  const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
+  assert.equal(fullNeckCircles.name, "Full Neck Circles");
+  assert.equal(
+    fullNeckCircles.directionSequence,
+    "ClockwiseThenCounterclockwise",
+  );
   const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
   assert.match(workoutLayout, /@\+id\/side_phase_preview/);
   assert.match(workoutLayout, /@\+id\/side_phase_label/);
-  assert.match(workoutLayout, /@drawable\/exercise_execution_label_unilateral_background/);
+  assert.match(workoutLayout, /@drawable\/exercise_execution_label_timed_pair_background/);
   assert.match(workoutLayout, /android:textColor="@color\/white"/);
   assert.match(webIndex, /id="exercise-name"[\s\S]*id="side-phase-preview"[\s\S]*id="exercise-media-card"/);
   assert.match(webIndex, /id="side-phase-label"/);
@@ -511,7 +525,7 @@ test("exercise previews label only timed unilateral execution", async () => {
       "private void RenderSidePhasePreview(",
       "private void AnimateExerciseChange(",
     ),
-    /ScreenLeftThenRight[\s\S]*ScreenRightThenLeft[\s\S]*if \(!isUnilateral\)[\s\S]*"UNILATERAL"/,
+    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*"UNILATERAL"[\s\S]*"BIDIRECTIONAL"/,
   );
   assert.doesNotMatch(
     methodBody(
@@ -527,7 +541,7 @@ test("exercise previews label only timed unilateral execution", async () => {
       "function renderSidePhasePreview(",
       "function showReadyPanel()",
     ),
-    /if \(!usesTimedSides\(exercise\)\)[\s\S]*textContent = "UNILATERAL"[\s\S]*classList\.add\("unilateral"\)/,
+    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*"UNILATERAL"[\s\S]*"BIDIRECTIONAL"[\s\S]*classList\.add\("timed-pair"\)/,
   );
   assert.doesNotMatch(
     methodBody(
@@ -539,7 +553,7 @@ test("exercise previews label only timed unilateral execution", async () => {
   );
   assert.match(
     webStyles,
-    /\.side-phase-label\.unilateral[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
+    /\.side-phase-label\.timed-pair[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
   );
   assert.doesNotMatch(webStyles, /\.side-phase-label\.alternating/);
   assert.doesNotMatch(workoutLayout, /side_phase_(?:first|change|second)/);
@@ -549,6 +563,40 @@ test("exercise previews label only timed unilateral execution", async () => {
   assert.doesNotMatch(webIndex, /two-sided-badge|BOTH SIDES/);
   assert.doesNotMatch(webApp, /twoSidedBadge/);
   assert.doesNotMatch(webStyles, /\.two-sided-(?:badge|icon)/);
+});
+
+test("lead-stance timing and cues are identical on mobile and web", () => {
+  const expectedLeadStanceIds = [
+    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+  ];
+  assert.deepEqual(
+    catalog
+      .filter((exercise) => exercise.sideSequence.includes("LeadThen"))
+      .map((exercise) => exercise.id),
+    expectedLeadStanceIds,
+  );
+  assert.match(
+    sideSequenceModel,
+    /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead[\s\S]*UsesTimedLeadStances/,
+  );
+  assert.match(
+    movementPresentationPolicy,
+    /ShownLeadStance[\s\S]*OppositeLeadStance[\s\S]*MirrorMedia: secondDirection/,
+  );
+  assert.match(
+    workoutModule,
+    /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead[\s\S]*usesTimedLeadStances/,
+  );
+  assert.match(workoutModule, /ShownLeadStance/);
+  assert.match(workoutModule, /OppositeLeadStance/);
+  assert.match(
+    mainActivity,
+    /UsesTimedLeadStances[\s\S]*Change stance[\s\S]*Shown lead stance[\s\S]*Opposite lead stance/,
+  );
+  assert.match(
+    webApp,
+    /usesTimedLeadStances[\s\S]*Change stance[\s\S]*Shown lead stance[\s\S]*Opposite lead stance/,
+  );
 });
 
 test("web and mobile preserve deployed keeps by catalog membership", () => {
@@ -590,6 +638,14 @@ test("web movement and rest timing match the mobile workout contract", () => {
   );
   assert.equal(integerConstant(movementSchedule, "FullSideDurationSeconds"), 45);
   assert.equal(integerConstant(movementSchedule, "FullSideChangeDurationSeconds"), 15);
+  assert.match(
+    mainActivity,
+    /timedPairWorkSeconds[\s\S]*FullSideDurationSeconds[\s\S]*timedPairChangeSeconds[\s\S]*FullSideChangeDurationSeconds/,
+  );
+  assert.match(
+    webApp,
+    /changeSeconds\s*=\s*currentGroup\?\.usesFullSideTiming\s*\?\s*15\s*:\s*5[\s\S]*Change direction, \$\{changeSeconds\} seconds/,
+  );
   assert.equal(
     REST_DURATION_MS / 1000,
     integerConstant(mainActivity, "RestSeconds"),
@@ -651,9 +707,9 @@ test("complete direction sequences coexist with linked side-direction exercises"
   assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
   assert.match(
     sessionService,
-    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/,
+    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*UsesTimedPair/,
   );
-  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partnerId\);[\s\S]*remainingExtraMinutes[\s\S]*sidedRoundIds/);
+  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partnerId\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*usesTimedPair/);
   assert.deepEqual(
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")

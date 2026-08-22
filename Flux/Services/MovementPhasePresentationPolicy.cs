@@ -9,6 +9,8 @@ public enum MovementDirectionCue
     Switch,
     ScreenLeft,
     ScreenRight,
+    ShownLeadStance,
+    OppositeLeadStance,
     Forward,
     Backward,
     Clockwise,
@@ -91,12 +93,21 @@ public static class MovementPhasePresentationPolicy
         (MovementDirectionCue first, MovementDirectionCue second) =
             GetDirectionPair(sideSequence, directionSequence);
         MovementDirectionCue cue = secondDirection ? second : first;
-        ScreenSide? activeScreenSide = cue switch
+        ScreenSide? firstScreenSide = sideSequence switch
         {
-            MovementDirectionCue.ScreenLeft => ScreenSide.Left,
-            MovementDirectionCue.ScreenRight => ScreenSide.Right,
+            ExerciseSideSequence.ScreenLeftThenRight or
+                ExerciseSideSequence.ScreenLeftLeadThenRightLead =>
+                ScreenSide.Left,
+            ExerciseSideSequence.ScreenRightThenLeft or
+                ExerciseSideSequence.ScreenRightLeadThenLeftLead =>
+                ScreenSide.Right,
             _ => null,
         };
+        ScreenSide? activeScreenSide = firstScreenSide is null
+            ? null
+            : secondDirection
+                ? Opposite(firstScreenSide.Value)
+                : firstScreenSide;
 
         return new MovementPhasePresentation(
             cue,
@@ -117,6 +128,10 @@ public static class MovementPhasePresentationPolicy
                 (MovementDirectionCue.ScreenLeft, MovementDirectionCue.ScreenRight),
                 ExerciseSideSequence.ScreenRightThenLeft =>
                 (MovementDirectionCue.ScreenRight, MovementDirectionCue.ScreenLeft),
+                ExerciseSideSequence.ScreenLeftLeadThenRightLead or
+                    ExerciseSideSequence.ScreenRightLeadThenLeftLead =>
+                (MovementDirectionCue.ShownLeadStance,
+                    MovementDirectionCue.OppositeLeadStance),
                 _ => throw new ArgumentOutOfRangeException(
                     nameof(sideSequence),
                     sideSequence,
@@ -144,6 +159,13 @@ public static class MovementPhasePresentationPolicy
                 null),
         };
     }
+
+    private static ScreenSide Opposite(ScreenSide side) => side switch
+    {
+        ScreenSide.Left => ScreenSide.Right,
+        ScreenSide.Right => ScreenSide.Left,
+        _ => throw new ArgumentOutOfRangeException(nameof(side), side, null),
+    };
 
     private static void ValidateSequenceCombination(
         ExerciseSideSequence sideSequence,

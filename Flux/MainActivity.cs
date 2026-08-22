@@ -2200,21 +2200,27 @@ public class MainActivity : Activity
 
     private void RenderSidePhasePreview(Exercise exercise)
     {
-        bool isUnilateral = exercise.SideSequence is
-            ExerciseSideSequence.ScreenLeftThenRight or
-            ExerciseSideSequence.ScreenRightThenLeft;
-        if (!isUnilateral)
+        bool isUnilateral = exercise.SideSequence.UsesTimedSides();
+        bool isBidirectional = exercise.DirectionSequence !=
+            ExerciseDirectionSequence.None;
+        if (!isUnilateral && !isBidirectional)
         {
             _sidePhasePreview.Visibility = ViewStates.Gone;
             _sidePhasePreview.ContentDescription = null;
             return;
         }
 
-        _sidePhaseLabel.Text = "UNILATERAL";
+        _sidePhaseLabel.Text = isUnilateral ? "UNILATERAL" : "BIDIRECTIONAL";
         _sidePhaseLabel.SetBackgroundResource(
-            Resource.Drawable.exercise_execution_label_unilateral_background);
+            Resource.Drawable.exercise_execution_label_timed_pair_background);
         _sidePhasePreview.ContentDescription =
-            "Unilateral exercise. Work one side, change, then the other.";
+            exercise.SideSequence.UsesTimedLeadStances()
+                ? "Unilateral exercise. Match the shown lead stance, change stance, " +
+                    "then repeat from the opposite lead stance."
+                : isUnilateral
+                    ? "Unilateral exercise. Work one side, change, then the other."
+                    : "Bidirectional exercise. Complete the shown direction, change " +
+                        "direction, then complete the opposite direction.";
         _sidePhasePreview.Visibility = ViewStates.Visible;
     }
 
@@ -2518,15 +2524,24 @@ public class MainActivity : Activity
                 throw new ArgumentOutOfRangeException(nameof(state));
         }
 
+        int timedPairWorkSeconds = _currentWorkoutGroup?.UsesFullSideTiming == true
+            ? MovementPhaseSchedule.FullSideDurationSeconds
+            : MovementPhaseSchedule.SideDurationSeconds;
+        int timedPairChangeSeconds = _currentWorkoutGroup?.UsesFullSideTiming == true
+            ? MovementPhaseSchedule.FullSideChangeDurationSeconds
+            : MovementPhaseSchedule.SideChangeDurationSeconds;
         string? announcement = state.Phase switch
         {
             MovementPhase.Continuous when previousPhase is null or MovementPhase.Preparation =>
                 "Move, 45 seconds.",
             MovementPhase.FirstSide when previousPhase is null or MovementPhase.Preparation =>
-                $"{GetMovementCueDescription(presentation.Cue)}, 20 seconds.",
-            MovementPhase.ChangeSides => $"{GetPairChangeDescription()}, 5 seconds.",
+                $"{GetMovementCueDescription(presentation.Cue)}, " +
+                    $"{timedPairWorkSeconds} seconds.",
+            MovementPhase.ChangeSides =>
+                $"{GetPairChangeDescription()}, {timedPairChangeSeconds} seconds.",
             MovementPhase.SecondSide =>
-                $"{GetMovementCueDescription(presentation.Cue)}, 20 seconds.",
+                $"{GetMovementCueDescription(presentation.Cue)}, " +
+                    $"{timedPairWorkSeconds} seconds.",
             _ => null,
         };
         if (announcement is not null)
@@ -2705,8 +2720,12 @@ public class MainActivity : Activity
 
     private string GetPairChangeDescription()
     {
-        return _currentExercise?.DirectionSequence ==
-            ExerciseDirectionSequence.None
+        if (_currentExercise?.SideSequence.UsesTimedLeadStances() == true)
+        {
+            return "Change stance";
+        }
+
+        return _currentExercise?.DirectionSequence == ExerciseDirectionSequence.None
             ? "Change sides"
             : "Change direction";
     }
@@ -2720,6 +2739,8 @@ public class MainActivity : Activity
             MovementDirectionCue.Switch => "Change",
             MovementDirectionCue.ScreenLeft => "Left side",
             MovementDirectionCue.ScreenRight => "Right side",
+            MovementDirectionCue.ShownLeadStance => "Shown lead stance",
+            MovementDirectionCue.OppositeLeadStance => "Opposite lead stance",
             MovementDirectionCue.Forward => "Forward",
             MovementDirectionCue.Backward => "Backward",
             MovementDirectionCue.Clockwise => "Clockwise",

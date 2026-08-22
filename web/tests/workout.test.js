@@ -58,6 +58,7 @@ import {
   normalizeWorkoutModifiers,
   normalizeMinutes,
   parseStoredState,
+  usesTimedLeadStances,
   usesTimedSides,
   withMirrorEquipment,
 } from "../workout.js";
@@ -1532,11 +1533,14 @@ test("long workouts repeat the thirty-minute lineup with unique round IDs", () =
   }
 });
 
-test("long workouts spend extra minutes on full sides before repeated sets", () => {
+test("long workouts spend extra minutes on full timed pairs before repeated sets", () => {
   const selectionGroups = RESOLUTIONS.get(30).groups;
   const exercises = selectionGroups.map((group, index) => ({
     ...exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0),
-    sideSequence: index < 12 ? "ScreenRightThenLeft" : "Continuous",
+    sideSequence: index < 6 ? "ScreenRightThenLeft" : "Continuous",
+    directionSequence: index >= 6 && index < 12
+      ? "ClockwiseThenCounterclockwise"
+      : "None",
   }));
   const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
 
@@ -1545,6 +1549,9 @@ test("long workouts spend extra minutes on full sides before repeated sets", () 
   const rounds = session.getActiveGroups();
   assert.equal(rounds.length, 33);
   assert.equal(rounds.filter((round) => round.usesFullSideTiming).length, 12);
+  assert.equal(rounds.filter((round) =>
+    round.usesFullSideTiming &&
+    session.getSelectedExercise(round).directionSequence !== "None").length, 6);
   assert.equal(session.state.activeFullSideRoundIds.length, 12);
   assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 3);
   assert.equal(
@@ -1844,6 +1851,10 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
     sideSequence: "Continuous",
     directionSequence: "ForwardThenBackward",
   };
+  const leadStance = {
+    sideSequence: "ScreenRightLeadThenLeftLead",
+    directionSequence: "None",
+  };
 
   assert.deepEqual(getMovementPresentation(side, "FirstSide"), {
     cue: "ScreenRight",
@@ -1859,6 +1870,16 @@ test("side pairs mirror only phase two and direction pairs never mirror", () => 
     cue: "Backward",
     mirrorMedia: false,
     activeScreenSide: null,
+  });
+  assert.deepEqual(getMovementPresentation(leadStance, "FirstSide"), {
+    cue: "ShownLeadStance",
+    mirrorMedia: false,
+    activeScreenSide: "Right",
+  });
+  assert.deepEqual(getMovementPresentation(leadStance, "SecondSide"), {
+    cue: "OppositeLeadStance",
+    mirrorMedia: true,
+    activeScreenSide: "Left",
   });
 });
 
@@ -1925,9 +1946,9 @@ test("reviewed sided movements always receive a timed side swap", () => {
 
   const continuousIds = [
     15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
-    201, 230, 251, 257, 262, 263, 265, 266,
-    267, 268, 270, 275, 287, 289, 301, 314, 321,
-    391, 413, 425, 516, 615, 677, 683, 687, 884, 885,
+    201, 230, 251, 257, 262, 263, 266,
+    267, 268, 270, 275, 289, 301, 314, 321,
+    391, 413, 425, 516, 615, 677, 683, 687,
   ];
   for (const exerciseId of continuousIds) {
     assert.equal(
@@ -1938,8 +1959,8 @@ test("reviewed sided movements always receive a timed side swap", () => {
   }
 
   const alternating = catalog.filter((item) => item.sideSequence === "Alternating");
-  assert.equal(alternating.length, 128);
-  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 413, 508, 576, 816, 884, 885]) {
+  assert.equal(alternating.length, 121);
+  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 413, 508, 576, 816]) {
     assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, "Alternating");
   }
   assert.equal(catalog.find((item) => item.id === 15).sideSequence, "Alternating");
@@ -1951,6 +1972,28 @@ test("reviewed sided movements always receive a timed side swap", () => {
     segmentDurationSeconds: 45,
     isExercise: true,
   });
+
+  const leadStanceSequences = new Map([
+    [265, "ScreenLeftLeadThenRightLead"],
+    [274, "ScreenLeftLeadThenRightLead"],
+    [280, "ScreenLeftLeadThenRightLead"],
+    [287, "ScreenRightLeadThenLeftLead"],
+    [473, "ScreenLeftLeadThenRightLead"],
+    [591, "ScreenLeftLeadThenRightLead"],
+    [884, "ScreenRightLeadThenLeftLead"],
+    [885, "ScreenRightLeadThenLeftLead"],
+    [886, "ScreenRightLeadThenLeftLead"],
+    [887, "ScreenRightLeadThenLeftLead"],
+  ]);
+  assert.deepEqual(
+    catalog.filter(usesTimedLeadStances).map((exercise) => exercise.id),
+    [...leadStanceSequences.keys()],
+  );
+  for (const [exerciseId, sideSequence] of leadStanceSequences) {
+    const exercise = catalog.find((item) => item.id === exerciseId);
+    assert.equal(exercise.sideSequence, sideSequence);
+    assert.equal(usesTimedSides(exercise), true);
+  }
 });
 
 test("forty-five-minute direction and side allocation remains fixed after start", () => {
@@ -3020,6 +3063,33 @@ test("complete-direction revision retires duplicates and preserves side-leg scor
   assert.equal(restored.state.selectedExerciseIds[relinkedGroup], undefined);
   assert.equal(restored.state.scores["409"], undefined);
   assert.equal(restored.state.scores["617"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("lead-stance timing revision rebuilds workouts without resetting scores", () => {
+  const leadStanceIds = [
+    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+  ];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(46)],
+    leadStanceIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(46), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 45;
+  for (const exerciseId of leadStanceIds) {
+    state.selectedExerciseIds[`changed.${exerciseId}`] = exerciseId;
+    state.scores[String(exerciseId)] = -4;
+  }
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  for (const exerciseId of leadStanceIds) {
+    assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
+    assert.equal(restored.state.scores[String(exerciseId)], -4);
+  }
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
