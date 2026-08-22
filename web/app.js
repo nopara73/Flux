@@ -49,7 +49,6 @@ const elements = {
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
   mirrorModifier: byId("mirror-modifier"),
-  mirrorModeLabel: byId("mirror-mode-label"),
   modifierFeedback: byId("modifier-feedback"),
   workoutScreen: byId("workout-screen"),
   phaseSurface: byId("phase-surface"),
@@ -360,9 +359,6 @@ function renderWorkoutModifiers() {
       : `Mirror equipment: ${mirrorEquipment.toLowerCase()} mirror available`,
   );
   elements.mirrorModifier.dataset.mirrorEquipment = mirrorEquipment.toLowerCase();
-  elements.mirrorModeLabel.textContent = mirrorEquipment === MIRROR_EQUIPMENT.None
-    ? ""
-    : mirrorEquipment.toUpperCase();
 }
 
 function showScreen(screen) {

@@ -263,18 +263,10 @@
                         android:button="@null"
                         android:checked="false"
                         android:contentDescription="@string/mirror_modifier_description"
-                        android:drawablePadding="0dp"
                         android:drawableTint="@color/duration_modifier_icon_tint"
                         android:drawableTop="@drawable/ic_mirror"
-                        android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:letterSpacing="0.04"
-                        android:maxLines="1"
-                        android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/brand_chartreuse"
-                        android:textSize="0sp"
                         android:tooltipText="@string/mirror_equipment_disabled_feedback" />
                 </GridLayout>
 

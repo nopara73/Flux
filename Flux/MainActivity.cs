@@ -1207,38 +1207,28 @@ public class MainActivity : Activity
         MirrorEquipment equipment,
         int? tileSize = null)
     {
+        int drawableResourceId = equipment switch
+        {
+            MirrorEquipment.Compact => Resource.Drawable.ic_mirror_compact,
+            MirrorEquipment.Tall => Resource.Drawable.ic_mirror_tall,
+            _ => Resource.Drawable.ic_mirror,
+        };
         _mirrorModifierButton.SetCompoundDrawablesWithIntrinsicBounds(
             0,
-            Resource.Drawable.ic_mirror,
+            drawableResourceId,
             0,
             0);
-
-        if (equipment == MirrorEquipment.None)
-        {
-            _mirrorModifierButton.SetTextSize(
-                Android.Util.ComplexUnitType.Sp,
-                0f);
-
-            int size = tileSize ?? _mirrorModifierButton.LayoutParameters?.Width
-                ?? DpInt(64);
-            int padding = GetModifierTilePadding(size);
-            _mirrorModifierButton.SetPadding(
-                padding,
-                padding,
-                padding,
-                padding);
-            return;
-        }
-
         _mirrorModifierButton.SetTextSize(
             Android.Util.ComplexUnitType.Sp,
-            8f);
-        int compactPadding = DpInt(4);
+            0f);
+        int size = tileSize ?? _mirrorModifierButton.LayoutParameters?.Width
+            ?? DpInt(64);
+        int padding = GetModifierTilePadding(size);
         _mirrorModifierButton.SetPadding(
-            compactPadding,
-            compactPadding,
-            compactPadding,
-            compactPadding);
+            padding,
+            padding,
+            padding,
+            padding);
     }
 
     private void ResizeMediaCard()
@@ -1361,12 +1351,7 @@ public class MainActivity : Activity
             _selectedWorkoutModifiers,
             equipment);
         _mirrorModifierButton.Checked = equipment != MirrorEquipment.None;
-        _mirrorModifierButton.Text = equipment switch
-        {
-            MirrorEquipment.Compact => "COMPACT",
-            MirrorEquipment.Tall => "TALL",
-            _ => string.Empty,
-        };
+        _mirrorModifierButton.Text = string.Empty;
         UpdateMirrorModifierPresentation(equipment);
         int stateResourceId = equipment switch
         {

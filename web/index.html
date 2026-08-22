@@ -91,12 +91,22 @@
                   type="button"
                   aria-label="Mirror equipment: no mirror available"
                   aria-pressed="false"
+                  data-mirror-equipment="none"
                 >
-                  <svg class="modifier-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path class="modifier-icon-stroke" d="M12 2.5c-3.9 0-6 2.9-6 8s2.1 8 6 8 6-2.9 6-8-2.1-8-6-8Z" />
-                    <path class="modifier-icon-stroke mirror-detail" d="m9 8.5 2.5-2.5M9 12l5.5-5.5M12 18.5v3M8.5 21.5h7" />
+                  <svg class="modifier-icon mirror-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <g class="mirror-glyph mirror-glyph-none">
+                      <path class="modifier-icon-stroke" d="M12 2.5c-3.9 0-6 2.9-6 8s2.1 8 6 8 6-2.9 6-8-2.1-8-6-8Z" />
+                      <path class="modifier-icon-stroke mirror-detail" d="m9 8.5 2.5-2.5M9 12l5.5-5.5M12 18.5v3M8.5 21.5h7" />
+                    </g>
+                    <g class="mirror-glyph mirror-glyph-compact">
+                      <path class="modifier-icon-stroke" d="M12 3.5c-4.8 0-8 2.3-8 6s3.2 6 8 6 8-2.3 8-6-3.2-6-8-6Z" />
+                      <path class="modifier-icon-stroke mirror-detail" d="m8 8 2.5-2.5M8 11.5l5-5m-1 9v5m-3.5 0h7" />
+                    </g>
+                    <g class="mirror-glyph mirror-glyph-tall">
+                      <path class="modifier-icon-stroke" d="M8 2.5h8a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" />
+                      <path class="modifier-icon-stroke mirror-detail" d="m9 7 3-3m-3 8 6-6m-6 13.5L8 22m7-2.5 1 2.5M6.5 22h11" />
+                    </g>
                   </svg>
-                  <span id="mirror-mode-label" class="mirror-mode-label" aria-hidden="true"></span>
                 </button>
               </div>
             </div>

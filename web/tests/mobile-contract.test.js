@@ -67,6 +67,8 @@ const [
   mirrorCoverageModel,
   sideSequenceModel,
   movementPresentationPolicy,
+  compactMirrorIcon,
+  tallMirrorIcon,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -95,6 +97,8 @@ const [
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
   source("Flux", "Models", "ExerciseSideSequence.cs"),
   source("Flux", "Services", "MovementPhasePresentationPolicy.cs"),
+  source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
+  source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -320,11 +324,15 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     mainActivity,
-    /UpdateMirrorModifierPresentation[\s\S]*SetCompoundDrawablesWithIntrinsicBounds\([\s\S]*Resource\.Drawable\.ic_mirror[\s\S]*MirrorEquipment\.None[\s\S]*ComplexUnitType\.Sp,[\s\S]*0f[\s\S]*ComplexUnitType\.Sp,[\s\S]*8f/,
+    /UpdateMirrorModifierPresentation[\s\S]*MirrorEquipment\.Compact\s*=>\s*Resource\.Drawable\.ic_mirror_compact[\s\S]*MirrorEquipment\.Tall\s*=>\s*Resource\.Drawable\.ic_mirror_tall[\s\S]*Resource\.Drawable\.ic_mirror/,
   );
+  assert.doesNotMatch(mainActivity, /_mirrorModifierButton\.Text\s*=\s*equipment\s+switch/);
+  assert.notEqual(compactMirrorIcon, tallMirrorIcon);
+  assert.match(compactMirrorIcon, /pathData="M12,3\.5C7\.2,3\.5/);
+  assert.match(tallMirrorIcon, /pathData="M8,2\.5H16/);
   assert.match(
     webStyles,
-    /data-mirror-equipment="compact"[\s\S]*data-mirror-equipment="tall"[\s\S]*\.modifier-icon[\s\S]*scale\(0\.88\)/,
+    /data-mirror-equipment="none"[\s\S]*mirror-glyph-none[\s\S]*data-mirror-equipment="compact"[\s\S]*mirror-glyph-compact[\s\S]*data-mirror-equipment="tall"[\s\S]*mirror-glyph-tall/,
   );
   assert.match(durationLayout, /@drawable\/ic_no_clap/);
   assert.doesNotMatch(
@@ -345,7 +353,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webIndex, /id="insect-modifier"/);
   assert.match(webIndex, /id="silence-modifier"/);
   assert.match(webIndex, /id="mirror-modifier"/);
-  assert.match(webIndex, /id="mirror-mode-label"/);
+  assert.match(webIndex, /class="mirror-glyph mirror-glyph-compact"/);
+  assert.match(webIndex, /class="mirror-glyph mirror-glyph-tall"/);
+  assert.doesNotMatch(webIndex, /mirror-mode-label/);
+  assert.doesNotMatch(webApp, /mirrorModeLabel/);
   assert.match(webIndex, /Quiet exercise filter: quiet exercises only/);
   assert.match(durationLayout, /@\+id\/duration_modifier_feedback/);
   assert.match(durationLayout, /@drawable\/duration_modifier_feedback_background/);
