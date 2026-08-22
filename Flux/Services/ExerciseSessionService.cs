@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Flux.Models;
 
 namespace Flux.Services;
@@ -10,7 +11,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 12;
+    private const int CurrentStateVersion = 13;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
@@ -23,6 +24,10 @@ public sealed class ExerciseSessionService
         MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes => MassGroupingTaxonomy.GetResolution(minutes).Groups)
             .ToDictionary(group => group.Id, StringComparer.Ordinal);
+    private static readonly HashSet<string> LongWorkoutSelectionGroupIds =
+        MassGroupingTaxonomy.GetResolution(30).Groups
+            .Select(group => group.Id)
+            .ToHashSet(StringComparer.Ordinal);
 
     private readonly IReadOnlyList<Exercise> _exercises;
     private readonly IReadOnlyDictionary<int, Exercise> _exercisesById;
@@ -176,7 +181,7 @@ public sealed class ExerciseSessionService
                 state.ActiveWorkoutMinutes,
                 GetEffectiveDirectionPartnerExercises(state),
                 GetEffectiveFullSideRounds(state),
-                GetEffectiveExtraSetSelectionGroups(state))
+                GetEffectiveSetCounts(state))
             : [];
     }
 
@@ -190,7 +195,7 @@ public sealed class ExerciseSessionService
             if (!_exercisesById.TryGetValue(
                     group.ExerciseOverrideId,
                     out Exercise? overrideExercise) ||
-                !IsSavedSelectionValid(
+                !IsDirectionPartnerOverrideValid(
                     state,
                     overrideExercise,
                     group,
@@ -246,6 +251,12 @@ public sealed class ExerciseSessionService
     public Exercise RecordOutcome(
         WorkoutState state,
         WorkoutGroup group,
+        bool keep) =>
+        RecordOutcomeWithScoreUpdates(state, group, keep).Exercise;
+
+    public RecordedWorkoutOutcome RecordOutcomeWithScoreUpdates(
+        WorkoutState state,
+        WorkoutGroup group,
         bool keep)
     {
         ArgumentNullException.ThrowIfNull(state);
@@ -257,11 +268,43 @@ public sealed class ExerciseSessionService
             throw new InvalidOperationException(
                 $"{group.DisplayName} is not the next workout group.");
         }
+        if (keep && group.IsDirectionPairLead)
+        {
+            throw new InvalidOperationException(
+                "A direction pair can only be kept after its second direction.");
+        }
 
-        return ApplyOutcome(state, group, keep);
+        return group.IsDirectionPairRound
+            ? ApplyDirectionPairOutcome(state, group, keep)
+            : ApplySingleOutcome(state, group, keep);
     }
 
-    private Exercise ApplyOutcome(
+    public void AdvanceDirectionPair(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        WorkoutGroup? nextGroup = GetNextGroup(state);
+        if (nextGroup?.Id != group.Id)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the next workout group.");
+        }
+        if (!group.IsDirectionPairLead)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the first direction of a pair.");
+        }
+
+        _ = GetPairedRound(state, group);
+        state.Outcomes[group.Id] = ExerciseOutcome.Neutral;
+        state.WorkoutCompleted = false;
+        state.CompletionAcknowledged = false;
+    }
+
+    private RecordedWorkoutOutcome ApplySingleOutcome(
         WorkoutState state,
         WorkoutGroup group,
         bool keep)
@@ -277,7 +320,60 @@ public sealed class ExerciseSessionService
         state.WorkoutCompleted = GetActiveGroups(state)
             .All(activeGroup => state.Outcomes.ContainsKey(activeGroup.Id));
         state.CompletionAcknowledged = false;
-        return exercise;
+        return new RecordedWorkoutOutcome(
+            exercise,
+            keep ? [] : Array.AsReadOnly([exercise]));
+    }
+
+    private RecordedWorkoutOutcome ApplyDirectionPairOutcome(
+        WorkoutState state,
+        WorkoutGroup group,
+        bool keep)
+    {
+        WorkoutGroup pairedRound = GetPairedRound(state, group);
+        WorkoutGroup[] orderedRounds = [group, pairedRound];
+        Array.Sort(orderedRounds, (left, right) => left.Order.CompareTo(right.Order));
+        Exercise[] exercises = orderedRounds
+            .Select(round => GetSelectedExercise(state, round))
+            .DistinctBy(exercise => exercise.Id)
+            .ToArray();
+        if (exercises.Length != 2)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} does not resolve to two direction exercises.");
+        }
+
+        if (!keep)
+        {
+            foreach (Exercise exercise in exercises)
+            {
+                exercise.Score--;
+            }
+        }
+
+        ExerciseOutcome outcome = keep ? ExerciseOutcome.Tick : ExerciseOutcome.X;
+        state.Outcomes[group.Id] = outcome;
+        state.Outcomes[pairedRound.Id] = outcome;
+        state.WorkoutCompleted = GetActiveGroups(state)
+            .All(activeGroup => state.Outcomes.ContainsKey(activeGroup.Id));
+        state.CompletionAcknowledged = false;
+        return new RecordedWorkoutOutcome(
+            GetSelectedExercise(state, group),
+            keep ? [] : Array.AsReadOnly(exercises));
+    }
+
+    private WorkoutGroup GetPairedRound(WorkoutState state, WorkoutGroup group)
+    {
+        if (group.PairedRoundId is not string pairedRoundId)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not part of a direction pair.");
+        }
+
+        return GetActiveGroups(state).SingleOrDefault(round =>
+                   string.Equals(round.Id, pairedRoundId, StringComparison.Ordinal))
+            ?? throw new InvalidOperationException(
+                $"The paired direction for {group.DisplayName} is unavailable.");
     }
 
     public void AcknowledgeCompletion(WorkoutState state)
@@ -293,7 +389,11 @@ public sealed class ExerciseSessionService
         PrepareNextSession(state);
     }
 
-    public Exercise? FinishInterruptedWorkout(WorkoutState state)
+    public Exercise? FinishInterruptedWorkout(WorkoutState state) =>
+        FinishInterruptedWorkoutWithScoreUpdates(state).FirstOrDefault();
+
+    public IReadOnlyList<Exercise> FinishInterruptedWorkoutWithScoreUpdates(
+        WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -302,26 +402,45 @@ public sealed class ExerciseSessionService
             Exercise? legacyPenalty = ResolveLegacyPendingRest(state);
             ResetToDurationSelection(state);
             ClearLegacyMigrationState(state);
-            return legacyPenalty;
+            return legacyPenalty is null
+                ? []
+                : Array.AsReadOnly([legacyPenalty]);
         }
 
         if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
         {
             ResetToDurationSelection(state);
-            return null;
+            return [];
         }
 
-        Exercise? scorePenalty = null;
+        IReadOnlyList<Exercise> scoreUpdates = [];
         if (state.PendingRestGroupId is not null)
         {
             WorkoutGroup? pendingGroup = GetValidPendingRestGroup(state);
             if (pendingGroup is not null)
             {
-                bool keep = state.PendingRestKept;
-                Exercise exercise = ApplyOutcome(state, pendingGroup, keep);
-                if (!keep)
+                if (pendingGroup.IsDirectionPairLead)
                 {
-                    scorePenalty = exercise;
+                    _ = GetPairedRound(state, pendingGroup);
+                    state.Outcomes[pendingGroup.Id] = ExerciseOutcome.Neutral;
+                }
+                else if (pendingGroup.IsDirectionPairRound)
+                {
+                    bool keep = state.PendingRestKept;
+                    scoreUpdates = ApplyDirectionPairOutcome(
+                            state,
+                            pendingGroup,
+                            keep)
+                        .ScoreUpdates;
+                }
+                else
+                {
+                    bool keep = state.PendingRestKept;
+                    scoreUpdates = ApplySingleOutcome(
+                            state,
+                            pendingGroup,
+                            keep)
+                        .ScoreUpdates;
                 }
             }
 
@@ -329,7 +448,7 @@ public sealed class ExerciseSessionService
         }
 
         PrepareNextSession(state);
-        return scorePenalty;
+        return scoreUpdates;
     }
 
     public (int Replaced, int Kept) GetOutcomeCounts(WorkoutState state)
@@ -342,7 +461,7 @@ public sealed class ExerciseSessionService
         int replaced = state.Outcomes.Count(entry =>
             activeGroupIds.Contains(entry.Key) && entry.Value == ExerciseOutcome.X);
         int kept = state.Outcomes.Count(entry =>
-            activeGroupIds.Contains(entry.Key) && entry.Value != ExerciseOutcome.X);
+            activeGroupIds.Contains(entry.Key) && entry.Value == ExerciseOutcome.Tick);
         return (replaced, kept);
     }
 
@@ -370,8 +489,7 @@ public sealed class ExerciseSessionService
         HashSet<string> rejectedSelectionKeys = activeRounds
             .Where(round => state.Outcomes.TryGetValue(
                 round.Id,
-                out ExerciseOutcome outcome) && outcome == ExerciseOutcome.X &&
-                round.ExerciseOverrideId == 0)
+                out ExerciseOutcome outcome) && outcome == ExerciseOutcome.X)
             .Select(round => round.SelectionKey)
             .ToHashSet(StringComparer.Ordinal);
         HashSet<int> newlyKeptExerciseIds = resolvedRounds
@@ -382,7 +500,13 @@ public sealed class ExerciseSessionService
                     out ExerciseOutcome outcome) && outcome == ExerciseOutcome.Tick) &&
                 rounds.All(entry => !state.Outcomes.TryGetValue(
                     entry.Round.Id,
-                    out ExerciseOutcome outcome) || outcome != ExerciseOutcome.X))
+                    out ExerciseOutcome outcome) || outcome != ExerciseOutcome.X) &&
+                rounds.Where(entry => state.Outcomes.GetValueOrDefault(
+                        entry.Round.Id) == ExerciseOutcome.Tick)
+                    .All(entry =>
+                        !entry.Round.IsDirectionPairRound ||
+                        state.Outcomes.GetValueOrDefault(
+                            entry.Round.PairedRoundId!) == ExerciseOutcome.Tick))
             .Select(rounds => rounds.Key)
             .ToHashSet();
         HashSet<int> rejectedExerciseIds = resolvedRounds
@@ -493,20 +617,17 @@ public sealed class ExerciseSessionService
 
         bool IsAllowed(Exercise exercise, WorkoutGroup group)
         {
-            if (state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id))
-            {
-                return false;
-            }
-
             if (excludedExerciseIdsByGroup.TryGetValue(
                     group.Id,
                     out IReadOnlySet<int>? excludedExerciseIds) &&
-                excludedExerciseIds.Contains(exercise.Id))
+                (excludedExerciseIds.Contains(exercise.Id) ||
+                 TryGetDirectionPartner(exercise, out Exercise? excludedPartner) &&
+                 excludedExerciseIds.Contains(excludedPartner.Id)))
             {
                 return false;
             }
 
-            if (IsSelectable(exercise, group, modifiers))
+            if (IsWorkoutSelectionCandidate(state, exercise, group, modifiers))
             {
                 return true;
             }
@@ -539,7 +660,7 @@ public sealed class ExerciseSessionService
         }
 
         int[] orderedScores = candidates
-            .Select(exercise => exercise.Score)
+            .Select(GetSelectionScore)
             .Distinct()
             .Order()
             .ToArray();
@@ -601,7 +722,7 @@ public sealed class ExerciseSessionService
                     (currentExerciseIds.GetValueOrDefault(group.Id) == exercise.Id
                         ? currentSelectionWeight
                         : 0L) +
-                    (long)scoreRanks[exercise.Score] * scoreWeight +
+                    (long)scoreRanks[GetSelectionScore(exercise)] * scoreWeight +
                     (WorkoutModifierPolicy.IsMirrorPreferred(exercise, modifiers)
                         ? mirrorPreferenceWeight
                         : 0L) +
@@ -897,23 +1018,103 @@ public sealed class ExerciseSessionService
         WorkoutGroup group,
         WorkoutModifiers modifiers)
     {
-        if (state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id))
+        if (IsWorkoutSelectionCandidate(state, exercise, group, modifiers))
+        {
+            return true;
+        }
+
+        if (!PendingRestMatchesSelectionGroup(state, group.SelectionKey) ||
+            state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id) ||
+            !IsCompatibleWithModifiers(exercise, modifiers) ||
+            !IsAssignedToGroup(exercise, group))
         {
             return false;
         }
 
-        return IsSelectable(exercise, group, modifiers) ||
-            (PendingRestMatchesSelectionGroup(state, group.SelectionKey) &&
-             IsCompatibleWithModifiers(exercise, modifiers) &&
-             IsAssignedToGroup(exercise, group));
+        if (!TryGetDirectionPartner(exercise, out Exercise? partner))
+        {
+            return true;
+        }
+
+        return state.ActiveWorkoutMinutes > 30 &&
+            exercise.Id < partner.Id &&
+            partner.DirectionPartnerExerciseId == exercise.Id &&
+            !state.ActiveRecoveryExcludedExerciseIds.Contains(partner.Id) &&
+            IsCompatibleWithModifiers(partner, modifiers) &&
+            IsAssignedToGroup(partner, group);
     }
 
-    private bool IsSelectable(
+    private bool IsDirectionPartnerOverrideValid(
+        WorkoutState state,
         Exercise exercise,
         WorkoutGroup group,
         WorkoutModifiers modifiers)
     {
-        return WorkoutModifierPolicy.IsSelectable(exercise, group, modifiers);
+        if (state.ActiveWorkoutMinutes <= 30 ||
+            state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id) ||
+            !WorkoutModifierPolicy.IsSelectable(exercise, group, modifiers))
+        {
+            return false;
+        }
+
+        string selectionStorageKey = GetSelectionStorageKey(
+            group.SelectionKey,
+            modifiers);
+        return state.SelectedExerciseIds.TryGetValue(
+                selectionStorageKey,
+                out int baseExerciseId) &&
+            _exercisesById.TryGetValue(baseExerciseId, out Exercise? baseExercise) &&
+            baseExercise.DirectionPartnerExerciseId == exercise.Id &&
+            exercise.DirectionPartnerExerciseId == baseExercise.Id &&
+            IsWorkoutSelectionCandidate(state, baseExercise, group, modifiers);
+    }
+
+    private bool IsWorkoutSelectionCandidate(
+        WorkoutState state,
+        Exercise exercise,
+        WorkoutGroup group,
+        WorkoutModifiers modifiers)
+    {
+        if (state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id) ||
+            !WorkoutModifierPolicy.IsSelectable(exercise, group, modifiers))
+        {
+            return false;
+        }
+
+        if (!TryGetDirectionPartner(exercise, out Exercise? partner))
+        {
+            return true;
+        }
+
+        return state.ActiveWorkoutMinutes > 30 &&
+            exercise.Id < partner.Id &&
+            partner.DirectionPartnerExerciseId == exercise.Id &&
+            !state.ActiveRecoveryExcludedExerciseIds.Contains(partner.Id) &&
+            WorkoutModifierPolicy.IsSelectable(partner, group, modifiers);
+    }
+
+    private bool TryGetDirectionPartner(
+        Exercise exercise,
+        [NotNullWhen(true)]
+        out Exercise? partner)
+    {
+        if (exercise.DirectionPartnerExerciseId > 0 &&
+            _exercisesById.TryGetValue(
+                exercise.DirectionPartnerExerciseId,
+                out partner))
+        {
+            return true;
+        }
+
+        partner = null;
+        return false;
+    }
+
+    private int GetSelectionScore(Exercise exercise)
+    {
+        return TryGetDirectionPartner(exercise, out Exercise? partner)
+            ? Math.Min(exercise.Score, partner.Score)
+            : exercise.Score;
     }
 
     private bool IsCompatibleWithModifiers(
@@ -942,10 +1143,10 @@ public sealed class ExerciseSessionService
         }
 
         string suffix = pendingRoundId[(suffixIndex + 1)..];
-        bool isDirectionRound = string.Equals(
-            suffix,
-            "direction",
-            StringComparison.Ordinal);
+        bool isDirectionRound =
+            suffix.StartsWith("direction", StringComparison.Ordinal) &&
+            int.TryParse(suffix.AsSpan(9), out int directionSetNumber) &&
+            directionSetNumber > 0;
         bool isSetRound = suffix.StartsWith("set", StringComparison.Ordinal) &&
             int.TryParse(suffix.AsSpan(3), out int setNumber) &&
             setNumber > 0;
@@ -1033,8 +1234,10 @@ public sealed class ExerciseSessionService
         state.NextWorkoutExcludedExerciseIds ??= [];
         state.ActiveRecoveryExcludedExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
+        state.ActiveSetCountsBySelectionGroupId ??= [];
         state.ActiveDirectionPartnerExerciseIds ??= [];
         state.ActiveFullSideRoundIds ??= [];
+        state.PendingScoreUpdates ??= [];
         state.LegacySelectedExerciseNames ??= [];
         state.LegacyOutcomes ??= [];
     }
@@ -1049,95 +1252,101 @@ public sealed class ExerciseSessionService
 
     private bool IsLongWorkoutAllocationValid(WorkoutState state)
     {
-        WorkoutGroup[] groups = GetSelectionGroups(state).ToArray();
-        HashSet<string> validGroupIds = groups
-            .Select(group => group.Id)
-            .ToHashSet(StringComparer.Ordinal);
-        HashSet<int> selectedExerciseIds = groups
-            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
-                GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers)))
-            .Where(exerciseId => exerciseId > 0)
-            .ToHashSet();
-        int extraMinutes = GetExtraMinuteCount(state.ActiveWorkoutMinutes);
-        int eligiblePartnerCount = groups.Count(group =>
+        if (state.ActiveWorkoutMinutes <= 30)
         {
-            int exerciseId = state.SelectedExerciseIds.GetValueOrDefault(
-                GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers));
-            return _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
-                exercise.DirectionPartnerExerciseId > 0 &&
-                !selectedExerciseIds.Contains(exercise.DirectionPartnerExerciseId) &&
-                _exercisesById.TryGetValue(
-                    exercise.DirectionPartnerExerciseId,
-                    out Exercise? partner) &&
-                IsSavedSelectionValid(
-                    state,
-                    partner,
-                    group,
-                    state.ActiveWorkoutModifiers);
-        });
-        int expectedPartnerCount = Math.Min(extraMinutes, eligiblePartnerCount);
-        if (state.ActiveDirectionPartnerExerciseIds.Count != expectedPartnerCount ||
+            return state.ActiveDirectionPartnerExerciseIds.Count == 0 &&
+                state.ActiveFullSideRoundIds.Count == 0 &&
+                state.ActiveExtraSetSelectionGroupIds.Count == 0 &&
+                state.ActiveSetCountsBySelectionGroupId.Count == 0;
+        }
+
+        LongWorkoutAllocation expected = ChooseLongWorkoutAllocation(state);
+        if (state.ActiveDirectionPartnerExerciseIds.Count !=
+                expected.DirectionPartnerExerciseIds.Count ||
             state.ActiveDirectionPartnerExerciseIds.Any(entry =>
-                !validGroupIds.Contains(entry.Key) ||
-                selectedExerciseIds.Contains(entry.Value) ||
-                !_exercisesById.TryGetValue(entry.Value, out Exercise? partner) ||
-                !state.SelectedExerciseIds.TryGetValue(
-                    GetSelectionStorageKey(
-                        entry.Key,
-                        state.ActiveWorkoutModifiers),
-                    out int selectedId) ||
-                !_exercisesById.TryGetValue(selectedId, out Exercise? selected) ||
-                selected.DirectionPartnerExerciseId != partner.Id ||
-                !IsSavedSelectionValid(
-                    state,
-                    partner,
-                    groups.Single(group => group.Id == entry.Key),
-                    state.ActiveWorkoutModifiers)))
+                expected.DirectionPartnerExerciseIds.GetValueOrDefault(entry.Key) !=
+                    entry.Value))
         {
             return false;
         }
 
-        var eligibleFullPairRoundIds = new HashSet<string>(StringComparer.Ordinal);
-        foreach (WorkoutGroup group in groups)
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
+        if (state.ActiveSetCountsBySelectionGroupId.Count !=
+                selectionGroups.Length ||
+            selectionGroups.Any(group =>
+                state.ActiveSetCountsBySelectionGroupId.GetValueOrDefault(
+                    group.Id) < 1))
         {
-            int selectedId = state.SelectedExerciseIds.GetValueOrDefault(
-                GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers));
-            if (_exercisesById.TryGetValue(selectedId, out Exercise? selected) &&
-                MovementPhasePresentationPolicy.UsesTimedPair(
-                    selected.SideSequence,
-                    selected.DirectionSequence))
-            {
-                eligibleFullPairRoundIds.Add($"{group.Id}.set1");
-            }
-            if (state.ActiveDirectionPartnerExerciseIds.TryGetValue(
-                    group.Id,
-                    out int partnerId) &&
-                _exercisesById.TryGetValue(partnerId, out Exercise? partner) &&
-                MovementPhasePresentationPolicy.UsesTimedPair(
-                    partner.SideSequence,
-                    partner.DirectionSequence))
-            {
-                eligibleFullPairRoundIds.Add($"{group.Id}.direction");
-            }
+            return false;
         }
-        int remainingAfterPartners = extraMinutes - expectedPartnerCount;
-        int expectedFullSideCount = Math.Min(
-            remainingAfterPartners,
-            eligibleFullPairRoundIds.Count);
-        int repeatedMinutes = remainingAfterPartners - expectedFullSideCount;
-        int expectedPartialExtraSets = groups.Length == 0
-            ? 0
-            : repeatedMinutes % groups.Length;
-        return state.ActiveFullSideRoundIds.Count == expectedFullSideCount &&
-            state.ActiveFullSideRoundIds.All(eligibleFullPairRoundIds.Contains) &&
-            state.ActiveExtraSetSelectionGroupIds.Count == expectedPartialExtraSets &&
-            state.ActiveExtraSetSelectionGroupIds.All(validGroupIds.Contains);
+
+        HashSet<string> expectedExtraSetGroups =
+            state.ActiveSetCountsBySelectionGroupId
+                .Where(entry => entry.Value > 1)
+                .Select(entry => entry.Key)
+                .ToHashSet(StringComparer.Ordinal);
+        if (!state.ActiveExtraSetSelectionGroupIds.SetEquals(
+                expectedExtraSetGroups))
+        {
+            return false;
+        }
+
+        try
+        {
+            IReadOnlyList<WorkoutGroup> rounds = CreateWorkoutSchedule(
+                state.ActiveWorkoutMinutes,
+                state.ActiveDirectionPartnerExerciseIds,
+                state.ActiveFullSideRoundIds,
+                state.ActiveSetCountsBySelectionGroupId);
+            return state.ActiveFullSideRoundIds.All(roundId =>
+            {
+                WorkoutGroup? round = rounds.SingleOrDefault(candidate =>
+                    candidate.Id == roundId);
+                if (round is null)
+                {
+                    return false;
+                }
+
+                Exercise exercise = GetSelectedExercise(state, round);
+                return MovementPhasePresentationPolicy.UsesTimedPair(
+                    exercise.SideSequence,
+                    exercise.DirectionSequence);
+            });
+        }
+        catch (InvalidOperationException)
+        {
+            return false;
+        }
     }
 
     private void NormalizeKeptExerciseIds(WorkoutState state)
     {
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
+        ExpandDirectionPairIds(state.LastKeptExerciseIds);
+        foreach (int exerciseId in state.LastKeptExerciseIds.ToArray())
+        {
+            if (!_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
+                !TryGetDirectionPartner(exercise, out Exercise? partner) ||
+                exercise.Id > partner.Id)
+            {
+                continue;
+            }
+
+            string? sharedDate = new[]
+                {
+                    state.LastKeptLocalDateByExerciseId.GetValueOrDefault(exercise.Id),
+                    state.LastKeptLocalDateByExerciseId.GetValueOrDefault(partner.Id),
+                }
+                .Where(WorkoutRecoveryPolicy.IsValidLocalDateKey)
+                .OrderDescending()
+                .FirstOrDefault();
+            if (sharedDate is not null)
+            {
+                state.LastKeptLocalDateByExerciseId[exercise.Id] = sharedDate;
+                state.LastKeptLocalDateByExerciseId[partner.Id] = sharedDate;
+            }
+        }
         foreach (int exerciseId in state.LastKeptLocalDateByExerciseId.Keys
                      .Where(exerciseId =>
                          !state.LastKeptExerciseIds.Contains(exerciseId) ||
@@ -1150,9 +1359,22 @@ public sealed class ExerciseSessionService
         }
         state.NextWorkoutExcludedExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
+        ExpandDirectionPairIds(state.NextWorkoutExcludedExerciseIds);
         state.ActiveRecoveryExcludedExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
             exercise.MuscularDemand != WorkoutRecoveryPolicy.HardMuscularDemand);
+    }
+
+    private void ExpandDirectionPairIds(HashSet<int> exerciseIds)
+    {
+        foreach (int exerciseId in exerciseIds.ToArray())
+        {
+            if (_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+                TryGetDirectionPartner(exercise, out Exercise? partner))
+            {
+                exerciseIds.Add(partner.Id);
+            }
+        }
     }
 
     private void MigrateImplicitSilenceModifier(WorkoutState state)
@@ -1222,7 +1444,7 @@ public sealed class ExerciseSessionService
                 !_exercisesById.TryGetValue(
                     state.SelectedExerciseIds[selectionStorageKey],
                     out Exercise? exercise) ||
-                !IsSavedSelectionValid(state, exercise, group, modifiers))
+                !IsStoredLineupSelectionValid(state, exercise, group, modifiers))
             {
                 state.SelectedExerciseIds.Remove(selectionStorageKey);
             }
@@ -1231,12 +1453,11 @@ public sealed class ExerciseSessionService
 
     private void NormalizeOutcomes(WorkoutState state)
     {
-        HashSet<string> activeGroupIds = GetActiveGroups(state)
-            .Select(group => group.Id)
-            .ToHashSet(StringComparer.Ordinal);
+        Dictionary<string, WorkoutGroup> activeGroups = GetActiveGroups(state)
+            .ToDictionary(group => group.Id, StringComparer.Ordinal);
 
         foreach (string groupId in state.Outcomes.Keys
-                     .Where(groupId => !activeGroupIds.Contains(groupId))
+                     .Where(groupId => !activeGroups.ContainsKey(groupId))
                      .ToArray())
         {
             state.Outcomes.Remove(groupId);
@@ -1247,6 +1468,23 @@ public sealed class ExerciseSessionService
                      .Select(entry => entry.Key)
                      .ToArray())
         {
+            WorkoutGroup group = activeGroups[groupId];
+            if (group.IsDirectionPairLead &&
+                group.PairedRoundId is string pairedRoundId)
+            {
+                if (!state.Outcomes.TryGetValue(
+                        pairedRoundId,
+                        out ExerciseOutcome pairedOutcome))
+                {
+                    continue;
+                }
+                if (pairedOutcome is ExerciseOutcome.Tick or ExerciseOutcome.X)
+                {
+                    state.Outcomes[groupId] = pairedOutcome;
+                    continue;
+                }
+            }
+
             state.Outcomes[groupId] = ExerciseOutcome.Tick;
         }
     }
@@ -1312,6 +1550,7 @@ public sealed class ExerciseSessionService
         state.ActiveWorkoutModifiers = WorkoutModifiers.None;
         state.Outcomes.Clear();
         state.ActiveExtraSetSelectionGroupIds.Clear();
+        state.ActiveSetCountsBySelectionGroupId.Clear();
         state.ActiveDirectionPartnerExerciseIds.Clear();
         state.ActiveFullSideRoundIds.Clear();
         state.ActiveRecoveryExcludedExerciseIds.Clear();
@@ -1411,7 +1650,7 @@ public sealed class ExerciseSessionService
         int extraMinutes = GetExtraMinuteCount(state.ActiveWorkoutMinutes);
         if (extraMinutes == 0)
         {
-            return new LongWorkoutAllocation([], [], []);
+            return new LongWorkoutAllocation([], [], [], []);
         }
 
         WorkoutGroup[] rankedGroups = GetSelectionGroups(state)
@@ -1434,35 +1673,25 @@ public sealed class ExerciseSessionService
                     WorkoutRecoveryPolicy.HardMuscularDemand)
             .ThenByDescending(group => group.Order)
             .ToArray();
-        HashSet<int> selectedExerciseIds = rankedGroups
-            .Select(group => state.SelectedExerciseIds.GetValueOrDefault(
-                GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers)))
-            .Where(exerciseId => exerciseId > 0)
-            .ToHashSet();
         var directionPartners = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (WorkoutGroup group in rankedGroups)
         {
-            if (directionPartners.Count >= extraMinutes ||
-                !state.SelectedExerciseIds.TryGetValue(
+            if (!state.SelectedExerciseIds.TryGetValue(
                     GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers),
                     out int exerciseId) ||
                 !_exercisesById.TryGetValue(exerciseId, out Exercise? exercise) ||
-                exercise.DirectionPartnerExerciseId <= 0 ||
-                selectedExerciseIds.Contains(exercise.DirectionPartnerExerciseId) ||
-                directionPartners.ContainsValue(exercise.DirectionPartnerExerciseId) ||
-                !_exercisesById.TryGetValue(
-                    exercise.DirectionPartnerExerciseId,
-                    out Exercise? partner) ||
-                !IsSavedSelectionValid(
-                    state,
-                    partner,
-                    group,
-                    state.ActiveWorkoutModifiers))
+                !TryGetDirectionPartner(exercise, out Exercise? partner))
             {
                 continue;
             }
 
             directionPartners.Add(group.Id, partner.Id);
+        }
+
+        if (directionPartners.Count > extraMinutes)
+        {
+            throw new InvalidOperationException(
+                "The selected direction pairs do not fit in this workout duration.");
         }
 
         int remainingExtraMinutes = extraMinutes - directionPartners.Count;
@@ -1484,7 +1713,7 @@ public sealed class ExerciseSessionService
                     partner.SideSequence,
                     partner.DirectionSequence))
             {
-                timedPairRoundIds.Add($"{group.Id}.direction");
+                timedPairRoundIds.Add($"{group.Id}.direction1");
             }
         }
 
@@ -1492,15 +1721,46 @@ public sealed class ExerciseSessionService
             .Take(remainingExtraMinutes)
             .ToHashSet(StringComparer.Ordinal);
         int repeatMinutes = remainingExtraMinutes - fullSideRounds.Count;
-        int partialExtraSets = repeatMinutes % rankedGroups.Length;
-        HashSet<string> extraSetGroups = rankedGroups
-            .Take(partialExtraSets)
-            .Select(group => group.Id)
+        Dictionary<string, int> setCounts = rankedGroups.ToDictionary(
+            group => group.Id,
+            _ => 1,
+            StringComparer.Ordinal);
+        while (repeatMinutes > 0)
+        {
+            bool allocated = false;
+            foreach (WorkoutGroup group in rankedGroups)
+            {
+                int setCost = directionPartners.ContainsKey(group.Id) ? 2 : 1;
+                if (setCost > repeatMinutes)
+                {
+                    continue;
+                }
+
+                setCounts[group.Id]++;
+                repeatMinutes -= setCost;
+                allocated = true;
+                if (repeatMinutes == 0)
+                {
+                    break;
+                }
+            }
+
+            if (!allocated)
+            {
+                throw new InvalidOperationException(
+                    "The long-workout direction units cannot fill the selected duration.");
+            }
+        }
+
+        HashSet<string> extraSetGroups = setCounts
+            .Where(entry => entry.Value > 1)
+            .Select(entry => entry.Key)
             .ToHashSet(StringComparer.Ordinal);
         return new LongWorkoutAllocation(
             directionPartners,
             fullSideRounds,
-            extraSetGroups);
+            extraSetGroups,
+            setCounts);
     }
 
     private void RebalanceNewExercisesByMuscleBudget(WorkoutState state)
@@ -1572,13 +1832,13 @@ public sealed class ExerciseSessionService
                     .Where(exercise =>
                         exercise.Id != currentExerciseId &&
                         WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
-                            exercise.Score,
+                            GetSelectionScore(exercise),
                             temporaryDownvoteHalfUnits: 0) >
                             current.AdjustedScoreHalfUnits &&
                         !unavailableExerciseIds.Contains(exercise.Id) &&
                         !state.NextWorkoutExcludedExerciseIds.Contains(exercise.Id) &&
-                        !state.ActiveRecoveryExcludedExerciseIds.Contains(exercise.Id) &&
-                        IsSelectable(
+                        IsWorkoutSelectionCandidate(
+                            state,
                             exercise,
                             group,
                             state.ActiveWorkoutModifiers))
@@ -1615,6 +1875,32 @@ public sealed class ExerciseSessionService
         }
     }
 
+    private bool IsStoredLineupSelectionValid(
+        WorkoutState state,
+        Exercise exercise,
+        WorkoutGroup group,
+        WorkoutModifiers modifiers)
+    {
+        if (IsSavedSelectionValid(state, exercise, group, modifiers))
+        {
+            return true;
+        }
+
+        if (state.ActiveWorkoutMinutes != 0 ||
+            !LongWorkoutSelectionGroupIds.Contains(group.Id) ||
+            !TryGetDirectionPartner(exercise, out Exercise? partner))
+        {
+            return false;
+        }
+
+        return exercise.Id < partner.Id &&
+            partner.DirectionPartnerExerciseId == exercise.Id &&
+            IsCompatibleWithModifiers(exercise, modifiers) &&
+            IsCompatibleWithModifiers(partner, modifiers) &&
+            IsAssignedToGroup(exercise, group) &&
+            IsAssignedToGroup(partner, group);
+    }
+
     private MuscleBudgetCandidate EvaluateMuscleBudgetCandidate(
         WorkoutState state,
         WorkoutGroup group,
@@ -1633,7 +1919,7 @@ public sealed class ExerciseSessionService
                 state.ActiveWorkoutMinutes,
                 allocation.DirectionPartnerExerciseIds,
                 allocation.FullSideRoundIds,
-                allocation.ExtraSetSelectionGroupIds);
+                allocation.SetCountsBySelectionGroupId);
             var scheduledExercises = rounds
                 .Select(round => GetSelectedExercise(state, round))
                 .ToArray();
@@ -1651,11 +1937,12 @@ public sealed class ExerciseSessionService
                 WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnits(
                     loadHalfUnits,
                     candidateMuscleGroups);
+            int selectionScore = GetSelectionScore(candidate);
             return new MuscleBudgetCandidate(
                 candidate.Id,
-                candidate.Score,
+                selectionScore,
                 WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
-                    candidate.Score,
+                    selectionScore,
                     temporaryDownvoteHalfUnits),
                 WorkoutModifierPolicy.IsMirrorPreferred(
                     candidate,
@@ -1669,7 +1956,7 @@ public sealed class ExerciseSessionService
         }
     }
 
-    private static MuscleBudgetCandidate EvaluateSingleRoundMuscleBudgetCandidate(
+    private MuscleBudgetCandidate EvaluateSingleRoundMuscleBudgetCandidate(
         WorkoutGroup group,
         Exercise candidate,
         IReadOnlyDictionary<CanonicalMuscleGroup, int> loadWithoutCandidate,
@@ -1679,11 +1966,12 @@ public sealed class ExerciseSessionService
             WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
                 loadWithoutCandidate,
                 candidate);
+        int selectionScore = GetSelectionScore(candidate);
         return new MuscleBudgetCandidate(
             candidate.Id,
-            candidate.Score,
+            selectionScore,
             WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
-                candidate.Score,
+                selectionScore,
                 temporaryDownvoteHalfUnits),
             WorkoutModifierPolicy.IsMirrorPreferred(candidate, modifiers),
             WorkoutCoveragePolicy.IsPrimaryForGroup(candidate, group),
@@ -1704,13 +1992,17 @@ public sealed class ExerciseSessionService
             new HashSet<string>(allocation.FullSideRoundIds, StringComparer.Ordinal);
         state.ActiveExtraSetSelectionGroupIds =
             new HashSet<string>(allocation.ExtraSetSelectionGroupIds, StringComparer.Ordinal);
+        state.ActiveSetCountsBySelectionGroupId = new Dictionary<string, int>(
+            allocation.SetCountsBySelectionGroupId,
+            StringComparer.Ordinal);
     }
 
-    private IReadOnlySet<string> GetEffectiveExtraSetSelectionGroups(WorkoutState state)
+    private IReadOnlyDictionary<string, int> GetEffectiveSetCounts(
+        WorkoutState state)
     {
         return IsLongWorkoutAllocationValid(state)
-            ? state.ActiveExtraSetSelectionGroupIds
-            : ChooseLongWorkoutAllocation(state).ExtraSetSelectionGroupIds;
+            ? state.ActiveSetCountsBySelectionGroupId
+            : ChooseLongWorkoutAllocation(state).SetCountsBySelectionGroupId;
     }
 
     private IReadOnlyDictionary<string, int> GetEffectiveDirectionPartnerExercises(
@@ -1732,7 +2024,7 @@ public sealed class ExerciseSessionService
         int workoutMinutes,
         IReadOnlyDictionary<string, int> directionPartnerExerciseIds,
         IReadOnlySet<string> fullSideRoundIds,
-        IReadOnlySet<string> extraSetSelectionGroupIds)
+        IReadOnlyDictionary<string, int> setCountsBySelectionGroupId)
     {
         WorkoutResolution resolution = GetBaseResolution(workoutMinutes);
         if (workoutMinutes <= 30)
@@ -1740,51 +2032,59 @@ public sealed class ExerciseSessionService
             return resolution.Groups;
         }
 
-        int extraMinutes = workoutMinutes - resolution.Groups.Count;
-        int repeatedMinutes = extraMinutes - directionPartnerExerciseIds.Count -
-            fullSideRoundIds.Count;
-        int completeExtraSets = repeatedMinutes / resolution.Groups.Count;
-        var rounds = new List<WorkoutGroup>(
-            resolution.Groups.Count + repeatedMinutes);
+        var rounds = new List<WorkoutGroup>(workoutMinutes);
 
         for (int groupIndex = 0;
              groupIndex < resolution.Groups.Count;
-             groupIndex++)
+            groupIndex++)
         {
             WorkoutGroup selectionGroup = resolution.Groups[groupIndex];
-            int setCount = 1 + completeExtraSets +
-                (extraSetSelectionGroupIds.Contains(selectionGroup.Id) ? 1 : 0);
-            string firstRoundId = $"{selectionGroup.Id}.set1";
-            rounds.Add(selectionGroup with
-            {
-                Id = firstRoundId,
-                Order = rounds.Count + 1,
-                SelectionGroupId = selectionGroup.Id,
-                UsesFullSideTiming = fullSideRoundIds.Contains(firstRoundId),
-            });
-            if (directionPartnerExerciseIds.TryGetValue(
+            int setCount = Math.Max(
+                1,
+                setCountsBySelectionGroupId.GetValueOrDefault(
                     selectionGroup.Id,
-                    out int partnerExerciseId))
+                    1));
+            bool hasDirectionPartner = directionPartnerExerciseIds.TryGetValue(
+                selectionGroup.Id,
+                out int partnerExerciseId);
+            for (int setNumber = 1; setNumber <= setCount; setNumber++)
             {
-                string directionRoundId = $"{selectionGroup.Id}.direction";
+                string setRoundId = $"{selectionGroup.Id}.set{setNumber}";
+                string? directionRoundId = hasDirectionPartner
+                    ? $"{selectionGroup.Id}.direction{setNumber}"
+                    : null;
                 rounds.Add(selectionGroup with
                 {
-                    Id = directionRoundId,
+                    Id = setRoundId,
                     Order = rounds.Count + 1,
                     SelectionGroupId = selectionGroup.Id,
-                    UsesFullSideTiming = fullSideRoundIds.Contains(directionRoundId),
-                    ExerciseOverrideId = partnerExerciseId,
+                    UsesFullSideTiming = fullSideRoundIds.Contains(setRoundId),
+                    PairedRoundId = directionRoundId,
                 });
-            }
-            for (int setNumber = 2; setNumber <= setCount; setNumber++)
-            {
-                rounds.Add(selectionGroup with
+                if (directionRoundId is not null)
                 {
-                    Id = $"{selectionGroup.Id}.set{setNumber}",
-                    Order = rounds.Count + 1,
-                    SelectionGroupId = selectionGroup.Id,
-                });
+                    rounds.Add(selectionGroup with
+                    {
+                        Id = directionRoundId,
+                        Order = rounds.Count + 1,
+                        SelectionGroupId = selectionGroup.Id,
+                        UsesFullSideTiming = fullSideRoundIds.Contains(
+                            directionRoundId),
+                        ExerciseOverrideId = partnerExerciseId,
+                        PairedRoundId = setRoundId,
+                        IsPairDecisionRound = true,
+                    });
+                }
             }
+        }
+
+        int scheduledMinutes = rounds.Sum(round =>
+            round.UsesFullSideTiming ? 2 : 1);
+        if (scheduledMinutes != workoutMinutes)
+        {
+            throw new InvalidOperationException(
+                $"The {workoutMinutes}-minute workout scheduled " +
+                $"{scheduledMinutes} minutes.");
         }
 
         return rounds.AsReadOnly();
@@ -1793,7 +2093,8 @@ public sealed class ExerciseSessionService
     private sealed record LongWorkoutAllocation(
         Dictionary<string, int> DirectionPartnerExerciseIds,
         HashSet<string> FullSideRoundIds,
-        HashSet<string> ExtraSetSelectionGroupIds);
+        HashSet<string> ExtraSetSelectionGroupIds,
+        Dictionary<string, int> SetCountsBySelectionGroupId);
 
     private sealed record MuscleBudgetCandidate(
         int ExerciseId,

@@ -7,9 +7,16 @@ public sealed record WorkoutGroup(
     IReadOnlySet<CanonicalMuscleGroup> CanonicalGroups,
     string? SelectionGroupId = null,
     bool UsesFullSideTiming = false,
-    int ExerciseOverrideId = 0)
+    int ExerciseOverrideId = 0,
+    string? PairedRoundId = null,
+    bool IsPairDecisionRound = false)
 {
     public string SelectionKey => SelectionGroupId ?? Id;
+
+    public bool IsDirectionPairRound => PairedRoundId is not null;
+
+    public bool IsDirectionPairLead =>
+        IsDirectionPairRound && !IsPairDecisionRound;
 }
 
 public sealed record WorkoutResolution(

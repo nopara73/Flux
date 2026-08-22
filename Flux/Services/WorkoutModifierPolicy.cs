@@ -222,6 +222,7 @@ public static class WorkoutModifierPolicy
                                     MirrorEquipment = GetMirrorEquipment(profile),
                                     Count = exercises
                                         .Where(exercise =>
+                                            exercise.DirectionPartnerExerciseId == 0 &&
                                             Rules.All(rule =>
                                                 rule.IsReviewed(exercise)) &&
                                             IsSelectable(
@@ -298,7 +299,9 @@ public static class WorkoutModifierPolicy
             .GetResolution(MaterialityResolutionMinutes)
             .Groups;
         Exercise[] reviewedExercises = exercises
-            .Where(exercise => Rules.All(rule => rule.IsReviewed(exercise)))
+            .Where(exercise =>
+                exercise.DirectionPartnerExerciseId == 0 &&
+                Rules.All(rule => rule.IsReviewed(exercise)))
             .ToArray();
 
         return GetMaterialityEdges()
@@ -382,7 +385,8 @@ public static class WorkoutModifierPolicy
                     MaximumDistinctExerciseCount = GetMaximumDistinctLineupSize(
                         exercises,
                         groups,
-                        profile),
+                        profile,
+                        minutes),
                     RequiredDistinctExerciseCount = groups.Count,
                 });
             })
@@ -400,14 +404,22 @@ public static class WorkoutModifierPolicy
     public static int GetMaximumDistinctLineupSize(
         IReadOnlyCollection<Exercise> exercises,
         IReadOnlyList<WorkoutGroup> groups,
-        WorkoutModifiers profile)
+        WorkoutModifiers profile,
+        int workoutMinutes = MaterialityResolutionMinutes)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         ArgumentNullException.ThrowIfNull(groups);
 
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
         int[][] candidateExerciseIdsByGroup = groups
             .Select(group => exercises
-                .Where(exercise => IsSelectable(exercise, group, profile))
+                .Where(exercise => IsSelectionUnitEligible(
+                    exercise,
+                    exercisesById,
+                    group,
+                    profile,
+                    workoutMinutes))
                 .Select(exercise => exercise.Id)
                 .Distinct()
                 .ToArray())
@@ -431,6 +443,34 @@ public static class WorkoutModifierPolicy
         }
 
         return matchedGroupCount;
+    }
+
+    private static bool IsSelectionUnitEligible(
+        Exercise exercise,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        WorkoutGroup group,
+        WorkoutModifiers profile,
+        int workoutMinutes)
+    {
+        if (!IsSelectable(exercise, group, profile))
+        {
+            return false;
+        }
+        if (exercise.DirectionPartnerExerciseId <= 0)
+        {
+            return true;
+        }
+        if (workoutMinutes <= MaterialityResolutionMinutes ||
+            exercise.Id >= exercise.DirectionPartnerExerciseId ||
+            !exercisesById.TryGetValue(
+                exercise.DirectionPartnerExerciseId,
+                out Exercise? partner))
+        {
+            return false;
+        }
+
+        return partner.DirectionPartnerExerciseId == exercise.Id &&
+            IsSelectable(partner, group, profile);
     }
 
     private static bool TryAssignDistinctExercise(

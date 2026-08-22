@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 12;
+    public int Version { get; set; } = 13;
 
     public int CatalogRevision { get; set; }
 
@@ -20,6 +20,8 @@ public sealed class WorkoutState
 
     public HashSet<string> ActiveExtraSetSelectionGroupIds { get; set; } = [];
 
+    public Dictionary<string, int> ActiveSetCountsBySelectionGroupId { get; set; } = [];
+
     public Dictionary<string, int> ActiveDirectionPartnerExerciseIds { get; set; } = [];
 
     public HashSet<string> ActiveFullSideRoundIds { get; set; } = [];
@@ -33,6 +35,8 @@ public sealed class WorkoutState
     public int PendingScoreExerciseId { get; set; }
 
     public int PendingScoreValue { get; set; }
+
+    public Dictionary<int, int> PendingScoreUpdates { get; set; } = [];
 
     public int LastWorkoutMinutes { get; set; } = 10;
 

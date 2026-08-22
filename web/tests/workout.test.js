@@ -328,7 +328,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 9);
+  assert.equal(state.version, 10);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -345,7 +345,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 9);
+  assert.equal(state.version, 10);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -799,6 +799,10 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
           group,
           profile,
         )));
+      if (minutes <= 30) {
+        assert.ok(session.getActiveGroups().every((group) =>
+          session.getSelectedExercise(group).directionPartnerExerciseId === 0));
+      }
     }
   }
   const allModifiers = WORKOUT_MODIFIERS.Insect |
@@ -1580,7 +1584,7 @@ test("forty-five minutes add linked directions before lengthening sided timers",
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
 
   const rounds = session.getActiveGroups();
-  const directionRounds = rounds.filter((round) => round.id.endsWith(".direction"));
+  const directionRounds = rounds.filter((round) => round.id.endsWith(".direction1"));
   assert.equal(directionRounds.length, 15);
   assert.equal(rounds.length, 45);
   assert.equal(session.state.activeFullSideRoundIds.length, 0);
@@ -1594,7 +1598,112 @@ test("forty-five minutes add linked directions before lengthening sided timers",
   }
 });
 
-test("a linked direction already selected in the base lineup is not duplicated", () => {
+for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
+  test(`direction pairs are entirely excluded from ${minutes}-minute workouts`, () => {
+    const session = new WorkoutSession(
+      directionPairCatalog(),
+      createDefaultState(),
+      () => 0,
+    );
+
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
+
+    assert.ok(session.getActiveGroups().every((group) =>
+      session.getSelectedExercise(group).directionPartnerExerciseId === 0));
+    assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, {});
+  });
+}
+
+test("an idle pair selection is kept for long workouts but replaced at thirty minutes", () => {
+  const exercises = directionPairCatalog();
+  const group = RESOLUTIONS.get(30).groups[0];
+  const shortState = createDefaultState();
+  shortState.catalogRevision = CURRENT_CATALOG_REVISION;
+  shortState.selectedExerciseIds[group.id] = 1;
+  const shortSession = new WorkoutSession(exercises, shortState, () => 0);
+  shortSession.initialize();
+  assert.equal(shortSession.state.selectedExerciseIds[group.id], 1);
+
+  shortSession.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.notEqual(shortSession.state.selectedExerciseIds[group.id], 1);
+  assert.equal(
+    shortSession.getSelectedExercise(group).directionPartnerExerciseId,
+    0,
+  );
+
+  const longState = createDefaultState();
+  longState.catalogRevision = CURRENT_CATALOG_REVISION;
+  longState.selectedExerciseIds[group.id] = 1;
+  const longSession = new WorkoutSession(exercises, longState, () => 0);
+  longSession.initialize();
+  longSession.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  assert.equal(longSession.state.selectedExerciseIds[group.id], 1);
+  assert.equal(longSession.state.activeDirectionPartnerExerciseIds[group.id], 2);
+});
+
+test("every repeated direction pair remains adjacent in ninety minutes", () => {
+  const session = new WorkoutSession(
+    directionPairCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(90, WORKOUT_MODIFIERS.None);
+
+  const rounds = session.getActiveGroups();
+  const pairLeads = rounds.filter((round) =>
+    round.pairedRoundId && !round.isPairDecisionRound);
+  assert.ok(pairLeads.length >= 2);
+  assert.equal(rounds.reduce(
+    (total, round) => total + (round.usesFullSideTiming ? 2 : 1),
+    0,
+  ), 90);
+  for (const lead of pairLeads) {
+    const decision = rounds[lead.order];
+    assert.equal(decision.isPairDecisionRound, true);
+    assert.equal(lead.pairedRoundId, decision.id);
+    assert.equal(decision.pairedRoundId, lead.id);
+    assert.equal(getSelectionKey(lead), getSelectionKey(decision));
+    assert.equal(
+      session.getSelectedExercise(lead).directionPartnerExerciseId,
+      session.getSelectedExercise(decision).id,
+    );
+  }
+});
+
+test("a direction pair can only be kept after its second direction", () => {
+  const session = new WorkoutSession(
+    directionPairCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const lead = session.getActiveGroups().find((round) =>
+    round.pairedRoundId && !round.isPairDecisionRound);
+  const decision = session.getActiveGroups().find((round) =>
+    round.id === lead.pairedRoundId);
+  for (const priorRound of session.getActiveGroups().slice(0, lead.order - 1)) {
+    session.recordOutcome(priorRound, true);
+  }
+
+  assert.throws(
+    () => session.recordOutcome(lead, true),
+    /only be kept after its second direction/,
+  );
+  assert.equal(session.state.outcomes[lead.id], undefined);
+  session.advanceDirectionPair(lead);
+  assert.equal(session.state.outcomes[lead.id], "neutral");
+  assert.equal(session.getNextGroup().id, decision.id);
+  session.recordOutcome(decision, true);
+
+  assert.equal(session.state.outcomes[lead.id], "tick");
+  assert.equal(session.state.outcomes[decision.id], "tick");
+  assert.equal(session.getScore(session.getSelectedExercise(lead)), 100);
+  assert.equal(session.getScore(session.getSelectedExercise(decision)), 100);
+});
+
+test("a linked direction partner is never selected as another base unit", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const allCanonicalGroups = [...new Set(groups.flatMap((group) =>
     group.canonicalGroups))];
@@ -1618,22 +1727,31 @@ test("a linked direction already selected in the base lineup is not duplicated",
   };
   const remaining = groups.slice(2).map((group, index) =>
     exercise(3 + index, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10));
+  const filler = exercise(
+    100,
+    groups[1].canonicalGroups[0],
+    allCanonicalGroups.filter((group) => group !== groups[1].canonicalGroups[0]),
+    10,
+  );
   const session = new WorkoutSession(
-    [first, second, ...remaining],
+    [first, second, filler, ...remaining],
     createDefaultState(),
     () => 0,
   );
 
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
 
-  assert.equal(Object.keys(session.state.activeDirectionPartnerExerciseIds).length, 0);
+  assert.equal(Object.keys(session.state.activeDirectionPartnerExerciseIds).length, 1);
   assert.equal(
-    session.getActiveGroups().some((round) => round.id.endsWith(".direction")),
+    Object.values(session.state.selectedExerciseIds).includes(second.id),
     false,
   );
+  assert.equal(session.getActiveGroups().filter((round) =>
+    round.id.endsWith(".direction1") &&
+    session.getSelectedExercise(round).id === second.id).length, 1);
 });
 
-test("rejecting a linked direction scores only that direction", () => {
+test("rejecting linked directions applies one shared decision to both", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const baseExercises = groups.map((group, index) =>
     exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10));
@@ -1650,14 +1768,21 @@ test("rejecting a linked direction scores only that direction", () => {
 
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
   const directionRound = session.getActiveGroups().find((round) =>
-    round.id.endsWith(".direction"));
+    round.id.endsWith(".direction1"));
+  const pairLead = session.getActiveGroups().find((round) =>
+    round.pairedRoundId === directionRound.id);
   const baseExerciseId = session.state.selectedExerciseIds[getSelectionKey(directionRound)];
-  for (const priorRound of session.getActiveGroups().slice(0, directionRound.order - 1)) {
+  for (const priorRound of session.getActiveGroups().slice(0, pairLead.order - 1)) {
     session.recordOutcome(priorRound, true);
   }
+  session.advanceDirectionPair(pairLead);
   session.recordOutcome(directionRound, false);
 
   assert.equal(session.getScore(partner), -1);
+  assert.equal(session.getScore(baseExercises.find((item) =>
+    item.id === baseExerciseId)), 9);
+  assert.equal(session.state.outcomes[pairLead.id], "x");
+  assert.equal(session.state.outcomes[directionRound.id], "x");
   assert.equal(
     session.state.selectedExerciseIds[getSelectionKey(directionRound)],
     baseExerciseId,
@@ -1682,6 +1807,7 @@ test("version five long workout recomputes direction allocation without enabling
   delete stored.activeDirectionPartnerExerciseIds;
   delete stored.activeFullSideRoundIds;
   delete stored.activeExtraSetSelectionGroupIds;
+  delete stored.activeSetCountsBySelectionGroupId;
 
   const restored = new WorkoutSession(
     exercises,
@@ -1690,7 +1816,7 @@ test("version five long workout recomputes direction allocation without enabling
   );
   restored.normalizeActiveLongWorkoutAllocation();
 
-  assert.equal(restored.state.version, 9);
+  assert.equal(restored.state.version, 10);
   assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
@@ -1774,15 +1900,24 @@ test("persisted pending direction rest cannot recurse through allocation validat
     directionPartnerExerciseId: baseExercises[0].id,
   };
   baseExercises[0].directionPartnerExerciseId = partner.id;
+  const allCanonicalGroups = [...new Set(groups.flatMap((group) =>
+    group.canonicalGroups))];
+  const filler = exercise(
+    2001,
+    groups[0].canonicalGroups[0],
+    allCanonicalGroups.filter((group) => group !== groups[0].canonicalGroups[0]),
+    10,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
   const session = new WorkoutSession(
-    [...baseExercises, partner],
+    [...baseExercises, partner, filler],
     createDefaultState(),
     () => 0,
   );
   session.startWorkout(45, WORKOUT_MODIFIERS.Silence);
   assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, {});
   session.state.activeDirectionPartnerExerciseIds[groups[0].id] = partner.id;
-  session.state.pendingRestGroupId = `${groups[0].id}.direction`;
+  session.state.pendingRestGroupId = `${groups[0].id}.direction1`;
   session.state.pendingRestEndsAtUnixMilliseconds = 123456;
 
   session.initialize();
@@ -2294,7 +2429,13 @@ test("approved clarity corrections preserve browser memory", () => {
     );
     restored.initialize();
 
-    assert.equal(restored.state.selectedExerciseIds[group.id], exerciseId);
+    const isDirectionPartnerOnly =
+      currentExercise.directionPartnerExerciseId > 0 &&
+      currentExercise.id > currentExercise.directionPartnerExerciseId;
+    assert.equal(
+      restored.state.selectedExerciseIds[group.id],
+      isDirectionPartnerOnly ? undefined : exerciseId,
+    );
     assert.equal(restored.getScore(currentExercise), -3);
   }
 });
@@ -3179,13 +3320,20 @@ test("deployment migration preserves present keeps and drops missing exercises",
   );
   restored.initialize();
 
-  assert.deepEqual(restored.state.lastKeptExerciseIds, [present.id]);
+  assert.deepEqual(
+    restored.state.lastKeptExerciseIds,
+    [present.id, present.directionPartnerExerciseId],
+  );
   assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 
-  restored.startWorkout(30, WORKOUT_MODIFIERS.None);
+  restored.startWorkout(45, WORKOUT_MODIFIERS.None);
 
   assert.equal(restored.state.selectedExerciseIds[group.id], present.id);
+  assert.equal(
+    restored.state.activeDirectionPartnerExerciseIds[group.id],
+    present.directionPartnerExerciseId,
+  );
 });
 
 test("legacy catalog revision still retires every historical replacement", () => {
@@ -3350,6 +3498,30 @@ function reviewedInsectCatalog() {
     ));
   }
   return exercises;
+}
+
+function directionPairCatalog() {
+  const canonicalGroups = [...new Set(RESOLUTIONS.get(30).groups.flatMap(
+    (group) => group.canonicalGroups,
+  ))];
+  const first = {
+    ...exercise(1, canonicalGroups[0], canonicalGroups.slice(1), 100),
+    directionPartnerExerciseId: 2,
+  };
+  const second = {
+    ...exercise(2, canonicalGroups[0], canonicalGroups.slice(1), 100),
+    directionPartnerExerciseId: 1,
+  };
+  const fillers = Array.from({ length: 30 }, (_, index) => {
+    const primary = canonicalGroups[index % canonicalGroups.length];
+    return exercise(
+      100 + index,
+      primary,
+      canonicalGroups.filter((group) => group !== primary),
+      0,
+    );
+  });
+  return [first, second, ...fillers];
 }
 
 async function assertFile(file) {

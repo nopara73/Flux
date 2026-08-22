@@ -36,6 +36,7 @@
     <Compile Include="..\Flux\Models\ExerciseDirectionSequence.cs" Link="Production\Models\ExerciseDirectionSequence.cs" />
     <Compile Include="..\Flux\Models\ExerciseSideSequence.cs" Link="Production\Models\ExerciseSideSequence.cs" />
     <Compile Include="..\Flux\Models\ExerciseOutcome.cs" Link="Production\Models\ExerciseOutcome.cs" />
+    <Compile Include="..\Flux\Models\RecordedWorkoutOutcome.cs" Link="Production\Models\RecordedWorkoutOutcome.cs" />
     <Compile Include="..\Flux\Models\LegacyWorkoutState.cs" Link="Production\Models\LegacyWorkoutState.cs" />
     <Compile Include="..\Flux\Models\WorkoutGroup.cs" Link="Production\Models\WorkoutGroup.cs" />
     <Compile Include="..\Flux\Models\WorkoutModifiers.cs" Link="Production\Models\WorkoutModifiers.cs" />

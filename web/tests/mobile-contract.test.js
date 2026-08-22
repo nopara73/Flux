@@ -42,6 +42,7 @@ const repositoryRoot = path.resolve(testDirectory, "..", "..");
 const [
   sessionService,
   workoutState,
+  workoutGroup,
   taxonomy,
   movementSchedule,
   mainActivity,
@@ -69,6 +70,7 @@ const [
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
+  source("Flux", "Models", "WorkoutGroup.cs"),
   source("Flux", "Services", "MassGroupingTaxonomy.cs"),
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
@@ -194,8 +196,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 9);
-  assert.match(workoutState, /public int Version[^=]*=\s*12/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 10);
+  assert.match(workoutState, /public int Version[^=]*=\s*13/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -709,7 +711,7 @@ test("complete direction sequences coexist with linked side-direction exercises"
     sessionService,
     /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*UsesTimedPair/,
   );
-  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partnerId\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*usesTimedPair/);
+  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partner\.id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRoundIds[\s\S]*usesTimedPair/);
   assert.deepEqual(
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")
@@ -725,6 +727,48 @@ test("complete direction sequences coexist with linked side-direction exercises"
     assert.ok(partner);
     assert.equal(partner.directionPartnerExerciseId, exercise.id);
   }
+});
+
+test("linked directions are adjacent indivisible units on mobile and web", () => {
+  assert.match(workoutGroup, /string\? PairedRoundId[\s\S]*bool IsPairDecisionRound/);
+  assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
+  assert.match(
+    sessionService,
+    /ActiveWorkoutMinutes > 30[\s\S]*exercise\.Id < partner\.Id/,
+  );
+  assert.match(
+    sessionService,
+    /PairedRoundId = directionRoundId[\s\S]*IsPairDecisionRound = true/,
+  );
+  assert.match(
+    sessionService,
+    /only be kept after its second direction[\s\S]*ApplyDirectionPairOutcome/,
+  );
+  assert.match(
+    sessionService,
+    /state\.Outcomes\[group\.Id\] = outcome;[\s\S]*state\.Outcomes\[pairedRound\.Id\] = outcome;/,
+  );
+  assert.match(
+    workoutModule,
+    /workoutMinutes > 30[\s\S]*exercise\.id < exercise\.directionPartnerExerciseId/,
+  );
+  assert.match(
+    workoutModule,
+    /pairedRoundId: directionRoundId[\s\S]*isPairDecisionRound: true/,
+  );
+  assert.match(
+    workoutModule,
+    /only be kept after its second direction[\s\S]*applyDirectionPairOutcome/,
+  );
+  assert.match(
+    mainActivity,
+    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*tap_to_keep_both/,
+  );
+  assert.match(
+    webApp,
+    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*Tap to keep both/,
+  );
+  assert.match(strings, /name="tap_to_keep_both">Tap to keep both</);
 });
 
 test("web catalog migration matches the mobile workout contract", () => {

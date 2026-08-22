@@ -161,6 +161,14 @@ public sealed class CatalogInvariantTests
                         profileService.GetSelectedExercise(profileState, group),
                         group,
                         profile)));
+                if (minutes <= 30)
+                {
+                    Assert.All(profileService.GetActiveGroups(profileState), group =>
+                        Assert.Equal(
+                            0,
+                            profileService.GetSelectedExercise(profileState, group)
+                                .DirectionPartnerExerciseId));
+                }
             }
         }
         WorkoutModifiers allModifiers = WorkoutModifiers.Insect |

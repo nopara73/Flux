@@ -1338,8 +1338,10 @@ public static class CatalogMigrationRules
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
+        state.ActiveSetCountsBySelectionGroupId ??= [];
         state.ActiveDirectionPartnerExerciseIds ??= [];
         state.ActiveFullSideRoundIds ??= [];
+        state.PendingScoreUpdates ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
         IReadOnlySet<int> scoreInvalidatedExerciseIds =
@@ -1388,6 +1390,12 @@ public static class CatalogMigrationRules
             state.PendingScoreExerciseId = 0;
             state.PendingScoreValue = 0;
         }
+        foreach (int exerciseId in state.PendingScoreUpdates.Keys
+                     .Where(scoreInvalidatedExerciseIds.Contains)
+                     .ToArray())
+        {
+            state.PendingScoreUpdates.Remove(exerciseId);
+        }
 
         state.CatalogRevision = CurrentCatalogRevision;
         return true;
@@ -1412,11 +1420,22 @@ public static class CatalogMigrationRules
 
     private static string GetSelectionGroupIdFromRoundId(string roundId)
     {
-        const string directionSuffix = ".direction";
-        if (roundId.EndsWith(directionSuffix, StringComparison.Ordinal) &&
-            roundId.Length > directionSuffix.Length)
+        const string directionMarker = ".direction";
+        int directionIndex = roundId.LastIndexOf(
+            directionMarker,
+            StringComparison.Ordinal);
+        if (directionIndex > 0 &&
+            directionIndex + directionMarker.Length == roundId.Length)
         {
-            return roundId[..^directionSuffix.Length];
+            return roundId[..directionIndex];
+        }
+        if (directionIndex > 0 &&
+            int.TryParse(
+                roundId.AsSpan(directionIndex + directionMarker.Length),
+                out int directionSetNumber) &&
+            directionSetNumber >= 1)
+        {
+            return roundId[..directionIndex];
         }
 
         int suffixIndex = roundId.LastIndexOf(".set", StringComparison.Ordinal);

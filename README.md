@@ -180,7 +180,12 @@ Every round begins with five seconds of quiet preparation.
 - Bidirectional movements run for 20 seconds in the first direction, pause for a
   five-second direction change, then run for 20 seconds in the opposite direction.
 - Expanded timed-pair rounds use 45 seconds, a 15-second change, and 45 seconds.
-- Each normal round ends with a 15-second rest and keep/discard decision.
+- Each unlinked round ends with a 15-second rest and keep/discard decision.
+  Linked opposite-direction exercises are available only in workouts longer
+  than 30 minutes. They always run consecutively: the first rest advances to
+  the other direction without a Keep action, and the second rest presents one
+  shared `Tap to keep both` decision. Rejecting either direction rejects and
+  scores both records together.
 
 Red means movement. Blue means change or rest. A `UNILATERAL` label appears
 before timed side or lead-stance pairs, while `BIDIRECTIONAL` appears before

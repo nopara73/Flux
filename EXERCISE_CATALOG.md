@@ -69,10 +69,14 @@ Hold MP4s loop only during preview; during an active side they play once and
 freeze on the curated target from `tools/HoldExerciseFrames.psd1`.
 
 Opposite directions are separate, plainly named catalog exercises with separate
-demonstrations and scores. Reciprocal `directionPartnerExerciseId` links let a
-long workout add the missing direction before lengthening a two-sided timer.
-Direction is never represented as another 20 / 5 / 20 phase inside one exercise,
-so an exercise can be two-sided without becoming a four-phase drill.
+demonstrations and reciprocal `directionPartnerExerciseId` links. A linked pair
+is an indivisible long-workout selection unit: both records are excluded from
+workouts of 30 minutes or less, every selected and repeated pair is scheduled
+adjacently, and one Keep/Reject decision after the second direction updates both
+records. Long workouts allocate the missing direction before lengthening a
+two-sided timer. Direction is never represented as another 20 / 5 / 20 phase
+inside one exercise, so an exercise can be two-sided without becoming a
+four-phase drill.
 
 `tools/ExerciseCanonicalGroups.psd1` is the stable primary/secondary assignment
 source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.

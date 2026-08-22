@@ -475,6 +475,13 @@ function showRestPanel() {
   elements.readyPanel.hidden = true;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = false;
+  const isDirectionPairLead = Boolean(
+    currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound,
+  );
+  elements.keepExercise.hidden = isDirectionPairLead;
+  elements.keepExercise.textContent = currentGroup?.isPairDecisionRound
+    ? "Tap to keep both"
+    : "Tap to keep";
 }
 
 function assetUrl(path) {
@@ -931,7 +938,12 @@ function completeMovement() {
   setFullPhaseSurface("rest");
   elements.mediaCard.classList.add("resting");
   showRestPanel();
-  elements.status.textContent = "Rest, 15 seconds. Tap to keep this exercise.";
+  elements.status.textContent = currentGroup?.pairedRoundId &&
+      !currentGroup.isPairDecisionRound
+    ? "Rest, 15 seconds. The other direction is next."
+    : currentGroup?.isPairDecisionRound
+      ? "Rest, 15 seconds. Tap to keep both directions."
+      : "Rest, 15 seconds. Tap to keep this exercise.";
   startRestTimer();
 }
 
@@ -977,6 +989,13 @@ function completeRest() {
   restActive = false;
   clearInterval(restTimer);
   restTimer = null;
+  if (currentGroup.pairedRoundId && !currentGroup.isPairDecisionRound) {
+    session.advanceDirectionPair(currentGroup);
+    session.clearPendingRest();
+    persistState();
+    showNextExercise();
+    return;
+  }
   const keep = session.state.pendingRestKept;
   session.recordOutcome(currentGroup, keep);
   session.clearPendingRest();

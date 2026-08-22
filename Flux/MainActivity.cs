@@ -1645,23 +1645,32 @@ public class MainActivity : Activity
 
     private void FinishInterruptedWorkout()
     {
-        Exercise? scorePenalty = _sessionService.FinishInterruptedWorkout(_state);
-        SaveStateAndScore(scorePenalty);
+        IReadOnlyList<Exercise> scoreUpdates =
+            _sessionService.FinishInterruptedWorkoutWithScoreUpdates(_state);
+        SaveStateAndScores(scoreUpdates);
     }
 
     private void RecoverPendingScoreUpdate()
     {
-        if (_state.PendingScoreExerciseId <= 0)
+        if (_state.PendingScoreExerciseId > 0)
         {
-            return;
+            _state.PendingScoreUpdates.TryAdd(
+                _state.PendingScoreExerciseId,
+                _state.PendingScoreValue);
         }
 
-        Exercise? exercise = _exerciseDatabase.Exercises.SingleOrDefault(
-            candidate => candidate.Id == _state.PendingScoreExerciseId);
-        if (exercise is not null)
+        foreach ((int exerciseId, int score) in
+                 _state.PendingScoreUpdates.ToArray())
         {
-            exercise.Score = _state.PendingScoreValue;
-            _exerciseDatabase.UpdateScore(exercise);
+            Exercise? exercise = _exerciseDatabase.Exercises.SingleOrDefault(
+                candidate => candidate.Id == exerciseId);
+            if (exercise is not null)
+            {
+                exercise.Score = score;
+                _exerciseDatabase.UpdateScore(exercise);
+            }
+
+            _state.PendingScoreUpdates.Remove(exerciseId);
         }
 
         _state.PendingScoreExerciseId = 0;
@@ -1670,24 +1679,30 @@ public class MainActivity : Activity
         // here would serialize away the compatibility-only legacy fields.
     }
 
-    private void SaveStateAndScore(Exercise? scorePenalty)
+    private void SaveStateAndScores(IReadOnlyList<Exercise> scoreUpdates)
     {
-        if (scorePenalty is not null)
+        Exercise[] distinctUpdates = scoreUpdates
+            .DistinctBy(exercise => exercise.Id)
+            .ToArray();
+        foreach (Exercise exercise in distinctUpdates)
         {
-            _state.PendingScoreExerciseId = scorePenalty.Id;
-            _state.PendingScoreValue = scorePenalty.Score;
+            _state.PendingScoreUpdates[exercise.Id] = exercise.Score;
         }
+        _state.PendingScoreExerciseId = 0;
+        _state.PendingScoreValue = 0;
 
         _stateStore.Save(_state);
 
-        if (scorePenalty is null)
+        if (distinctUpdates.Length == 0)
         {
             return;
         }
 
-        _exerciseDatabase.UpdateScore(scorePenalty);
-        _state.PendingScoreExerciseId = 0;
-        _state.PendingScoreValue = 0;
+        foreach (Exercise exercise in distinctUpdates)
+        {
+            _exerciseDatabase.UpdateScore(exercise);
+        }
+        _state.PendingScoreUpdates.Clear();
         _stateStore.Save(_state);
     }
 
@@ -2890,9 +2905,12 @@ public class MainActivity : Activity
             FreezeHoldOnFinalFrame();
         }
         ShowRestPanel();
-        AnnouncePhaseForAccessibility(
-            _restPanel,
-            "Rest, 15 seconds. Tap to keep this exercise.");
+        string restDescription = _currentWorkoutGroup.IsDirectionPairLead
+            ? "Rest, 15 seconds. The other direction is next."
+            : _currentWorkoutGroup.IsPairDecisionRound
+                ? "Rest, 15 seconds. Tap to keep both directions."
+                : "Rest, 15 seconds. Tap to keep this exercise.";
+        AnnouncePhaseForAccessibility(_restPanel, restDescription);
         ResumeRestCountdown();
     }
 
@@ -2906,11 +2924,22 @@ public class MainActivity : Activity
 
     private void UpdateKeepButtonState()
     {
+        if (_currentWorkoutGroup.IsDirectionPairLead)
+        {
+            _keepButton.Enabled = false;
+            _keepButton.Visibility = ViewStates.Gone;
+            return;
+        }
+
+        _keepButton.Visibility = ViewStates.Visible;
+        bool pairDecision = _currentWorkoutGroup.IsPairDecisionRound;
         _keepButton.Enabled = !_state.PendingRestKept;
         _keepButton.Alpha = 1f;
         _keepButton.Text = _state.PendingRestKept
             ? GetString(Resource.String.kept)
-            : GetString(Resource.String.tap_to_keep);
+            : GetString(pairDecision
+                ? Resource.String.tap_to_keep_both
+                : Resource.String.tap_to_keep);
         _keepButton.SetBackgroundResource(_state.PendingRestKept
             ? Resource.Drawable.kept_button_background
             : Resource.Drawable.rest_button_background);
@@ -2919,8 +2948,12 @@ public class MainActivity : Activity
                 ? Resource.Color.accent_text
                 : Resource.Color.white)));
         _keepButton.ContentDescription = _state.PendingRestKept
-            ? "Exercise kept for the next session"
-            : GetString(Resource.String.tap_to_keep_description);
+            ? pairDecision
+                ? "Both directions kept for the next session"
+                : "Exercise kept for the next session"
+            : GetString(pairDecision
+                ? Resource.String.tap_to_keep_both_description
+                : Resource.String.tap_to_keep_description);
     }
 
     private void ResumeRestCountdown()
@@ -2980,7 +3013,9 @@ public class MainActivity : Activity
 
     private void KeepCurrentExercise()
     {
-        if (!_restActive || _state.PendingRestKept)
+        if (!_restActive ||
+            _state.PendingRestKept ||
+            _currentWorkoutGroup.IsDirectionPairLead)
         {
             return;
         }
@@ -3001,19 +3036,28 @@ public class MainActivity : Activity
 
         _restActive = false;
         PauseRestCountdown();
+        if (_currentWorkoutGroup.IsDirectionPairLead)
+        {
+            _sessionService.AdvanceDirectionPair(_state, _currentWorkoutGroup);
+            _sessionService.ClearPendingRest(_state);
+            _stateStore.Save(_state);
+            ShowNextExercise();
+            return;
+        }
+
         bool keep = _state.PendingRestKept;
         FinalizeCurrentRound(keep);
     }
 
     private void FinalizeCurrentRound(bool keep)
     {
-        Exercise exercise = _sessionService.RecordOutcome(
+        RecordedWorkoutOutcome result = _sessionService.RecordOutcomeWithScoreUpdates(
             _state,
             _currentWorkoutGroup,
             keep);
         _sessionService.ClearPendingRest(_state);
 
-        SaveStateAndScore(keep ? null : exercise);
+        SaveStateAndScores(result.ScoreUpdates);
         if (_state.WorkoutCompleted)
         {
             PlayWhistleCue(_workoutCompleteWhistleId);
