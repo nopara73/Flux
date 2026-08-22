@@ -323,25 +323,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             )
             """);
         database.ExecSQL(
-            """
-            INSERT INTO exercises_v60 (
-                id, name, video, practice, motion_profile, score,
-                muscular_demand, only_feet_touch_ground, shoe_agnostic,
-                max_space_meters,
-                equipment, silent, exercise_mode, presentation,
-                hold_frame_percent, side_sequence, direction_sequence,
-                direction_partner_exercise_id,
-                insect_compatibility, mirror_relationship, mirror_coverage)
-            SELECT
-                id, name, video, practice, motion_profile, score, 0,
-                only_feet_touch_ground, shoe_agnostic,
-                CASE WHEN max_space_meters BETWEEN 1 AND 2
-                    THEN max_space_meters ELSE 2 END,
-                equipment, silent, exercise_mode, presentation,
-                hold_frame_percent, side_sequence, direction_sequence, 0,
-                insect_compatibility, 'Unreviewed', 'None'
-            FROM exercises
-            """);
+            ExerciseDatabaseMigrationSql
+                .CopyExistingExercisesWithNeutralMirrorMetadata);
         database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
         database.ExecSQL("DROP TABLE exercises");
         database.ExecSQL("ALTER TABLE exercises_v60 RENAME TO exercises");

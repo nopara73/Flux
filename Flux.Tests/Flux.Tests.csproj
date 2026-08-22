@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.11" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +24,7 @@
   -->
   <ItemGroup>
     <Compile Include="..\Flux\Data\IExerciseDatabase.cs" Link="Production\Data\IExerciseDatabase.cs" />
+    <Compile Include="..\Flux\Data\ExerciseDatabaseMigrationSql.cs" Link="Production\Data\ExerciseDatabaseMigrationSql.cs" />
     <Compile Include="..\Flux\Data\IWorkoutStateStore.cs" Link="Production\Data\IWorkoutStateStore.cs" />
     <Compile Include="..\Flux\Models\CanonicalMuscleGroup.cs" Link="Production\Models\CanonicalMuscleGroup.cs" />
     <Compile Include="..\Flux\Models\Exercise.cs" Link="Production\Models\Exercise.cs" />
