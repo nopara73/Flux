@@ -382,6 +382,16 @@ public sealed class ExerciseSessionService
         return GetValidPendingMovementGroup(state);
     }
 
+    public WorkoutGroup? GetPendingRestGroup(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        WorkoutGroup? pendingGroup = GetValidPendingRestGroup(state);
+        return pendingGroup is not null &&
+            GetNextGroup(state)?.Id == pendingGroup.Id
+                ? pendingGroup
+                : null;
+    }
+
     public long GetPendingMovementMillisecondsRemaining(
         WorkoutState state,
         long nowUnixMilliseconds)
@@ -398,11 +408,18 @@ public sealed class ExerciseSessionService
             return 0;
         }
 
-        long remaining = state.PendingMovementEndsAtUnixMilliseconds > 0
-            ? Math.Min(
-                state.PendingMovementMillisecondsRemaining,
-                state.PendingMovementEndsAtUnixMilliseconds - nowUnixMilliseconds)
-            : state.PendingMovementMillisecondsRemaining;
+        long remaining = state.PendingMovementMillisecondsRemaining;
+        if (state.PendingMovementEndsAtUnixMilliseconds > nowUnixMilliseconds)
+        {
+            remaining = Math.Min(
+                remaining,
+                state.PendingMovementEndsAtUnixMilliseconds - nowUnixMilliseconds);
+        }
+
+        // An expired wall-clock deadline means the app stopped before its
+        // lifecycle pause could checkpoint the monotonic countdown. Resume
+        // conservatively from the last stored time instead of crediting an
+        // exercise that may not have been performed while Flux was absent.
         long maximum = MovementPhaseSchedule.GetCountdownDurationSeconds(
             group.UsesFullSideTiming) * 1_000L;
         return Math.Clamp(remaining, 1L, maximum);

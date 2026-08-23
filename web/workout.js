@@ -1782,7 +1782,7 @@ export class WorkoutSession {
     this.normalizePendingMovement();
     this.repairActiveLineup();
     this.normalizePendingMovement();
-    if (this.getPendingMovementGroup()) {
+    if (this.getPendingMovementGroup() || this.getPendingRestGroup()) {
       return;
     }
     this.finishInterruptedWorkout();
@@ -2083,6 +2083,36 @@ export class WorkoutSession {
     return pendingGroup;
   }
 
+  getPendingRestGroup() {
+    const pendingGroup = this.getValidPendingRestGroup();
+    return pendingGroup && this.getNextGroup()?.id === pendingGroup.id
+      ? pendingGroup
+      : null;
+  }
+
+  getValidPendingRestGroup() {
+    const pendingGroup = this.getActiveGroups().find(
+      (group) => group.id === this.state.pendingRestGroupId,
+    );
+    if (!pendingGroup ||
+        this.state.pendingRestEndsAtUnixMilliseconds <= 0 ||
+        this.state.outcomes[pendingGroup.id] !== undefined) {
+      return null;
+    }
+
+    try {
+      const pendingExercise = this.getSelectedExercise(pendingGroup);
+      return isCompatibleWithWorkoutModifiers(
+          pendingExercise,
+          this.state.activeWorkoutModifiers,
+        ) && this.isAssignedToGroup(pendingExercise, pendingGroup)
+        ? pendingGroup
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
   getPendingMovementMillisecondsRemaining(nowUnixMilliseconds) {
     if (!Number.isSafeInteger(nowUnixMilliseconds) || nowUnixMilliseconds <= 0) {
       throw new RangeError("Current time must be positive Unix milliseconds.");
@@ -2092,7 +2122,8 @@ export class WorkoutSession {
       return 0;
     }
     const storedRemaining = this.state.pendingMovementMillisecondsRemaining;
-    const remaining = this.state.pendingMovementEndsAtUnixMilliseconds > 0
+    const remaining = this.state.pendingMovementEndsAtUnixMilliseconds >
+        nowUnixMilliseconds
       ? Math.min(
           storedRemaining,
           this.state.pendingMovementEndsAtUnixMilliseconds - nowUnixMilliseconds,
@@ -3411,28 +3442,7 @@ export class WorkoutSession {
   }
 
   normalizePendingRest() {
-    const pendingGroup = this.getActiveGroups().find(
-      (group) => group.id === this.state.pendingRestGroupId,
-    );
-    let pendingExercise = null;
-    if (pendingGroup) {
-      try {
-        pendingExercise = this.getSelectedExercise(pendingGroup);
-      } catch {
-        pendingExercise = null;
-      }
-    }
-    if (
-      !pendingGroup ||
-      !pendingExercise ||
-      this.state.pendingRestEndsAtUnixMilliseconds <= 0 ||
-      this.state.outcomes[pendingGroup.id] !== undefined ||
-      !isCompatibleWithWorkoutModifiers(
-        pendingExercise,
-        this.state.activeWorkoutModifiers,
-      ) ||
-      !this.isAssignedToGroup(pendingExercise, pendingGroup)
-    ) {
+    if (!this.getValidPendingRestGroup()) {
       this.clearPendingRest();
     }
   }

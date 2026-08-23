@@ -441,13 +441,12 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 
 ### 8.6 Abrupt close
 
-An actively timed movement resumes after process recreation; other interruption
-phases retain their existing settlement behavior:
+An actively timed movement or pending rest resumes after process recreation:
 
 - Completed rest decisions remain persisted.
-- If the app closes during a pending rest, resolve that rest using its persisted `kept` value: tapped means keep; not tapped means one decrement/replacement.
+- If the app closes during a pending rest, restore that rest using its persisted absolute deadline. If the deadline already passed, resolve its persisted `kept` value immediately: tapped means keep; not tapped means one decrement/replacement.
 - When movement starts or resumes, persist its round, remaining duration, and a wall-clock deadline. On backgrounding or user pause, replace the deadline with the exact paused remaining duration and persist whether the pause was user initiated.
-- If the process dies during Move, restore that same round and remaining time. Do not score it, restart it, or allow time spent in the background to consume the paused timer.
+- If the process dies during Move, restore that same round and remaining time. A still-valid foreground deadline may account for time before the crash; an expired deadline falls back to the last safe stored duration so unseen background time is never credited. Do not score the restored movement.
 - If it closes during Ready before movement begins, record no outcome for that unfinished round and return to duration selection under the existing interruption-finalization path.
 - When an interruption is finalized rather than restored, apply replacements for all resolved not-kept rounds, retain kept and unreached selections, clear active progress, and preserve last duration.
 - Initialization must be idempotent after process death at every write boundary.

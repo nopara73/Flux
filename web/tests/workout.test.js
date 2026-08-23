@@ -22,6 +22,7 @@ import {
   MINIMUM_MUSCULAR_DEMAND,
   MUSCLE_SESSION_BUDGET_HALF_UNITS,
   PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  REST_DURATION_MS,
   SCORE_HALF_UNITS_PER_VOTE,
   SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
@@ -2423,7 +2424,7 @@ test("a rejected repeated round replaces its shared exercise once", () => {
   assert.equal(session.state.activeWorkoutMinutes, 0);
 });
 
-test("interrupted long workout settles a pending repeated round exactly once", () => {
+test("abandoned long workout settles a pending repeated round exactly once", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
   started.startWorkout(90, WORKOUT_MODIFIERS.None);
@@ -2441,6 +2442,9 @@ test("interrupted long workout settles a pending repeated round exactly once", (
     () => 0,
   );
   restored.initialize();
+  assert.equal(restored.getPendingRestGroup()?.id, pendingRound.id);
+  assert.equal(restored.getScore(performed), 0);
+  restored.finishInterruptedWorkout();
   assert.equal(restored.getScore(performed), -1);
   assert.equal(restored.state.activeWorkoutMinutes, 0);
 
@@ -2863,7 +2867,7 @@ test("rejection decrements once, purges saved copies, and replaces only rejected
   assert.equal(session.state.activeWorkoutMinutes, 0);
 });
 
-test("interrupted movement is neutral while an unkept pending rest is settled once", () => {
+test("interrupted movement is neutral while an explicitly abandoned rest settles once", () => {
   const neutral = new WorkoutSession(catalog, createDefaultState(), () => 0);
   neutral.startWorkout(3, WORKOUT_MODIFIERS.None);
   const neutralGroup = neutral.getNextGroup();
@@ -2881,6 +2885,9 @@ test("interrupted movement is neutral while an unkept pending rest is settled on
 
   const restored = new WorkoutSession(catalog, parseStoredState(serialized), () => 0);
   restored.initialize();
+  assert.equal(restored.getPendingRestGroup()?.id, rejectedGroup.id);
+  assert.equal(restored.getScore(rejectedExercise), 0);
+  restored.finishInterruptedWorkout();
   assert.equal(restored.getScore(rejectedExercise), -1);
   assert.equal(restored.state.activeWorkoutMinutes, 0);
 
@@ -2919,6 +2926,9 @@ test("pending rest survives schedule order and coverage changes for the performe
   );
   restored.initialize();
 
+  assert.equal(restored.getPendingRestGroup()?.id, pendingGroup.id);
+  assert.equal(restored.getScore(performed), 0);
+  restored.finishInterruptedWorkout();
   assert.equal(restored.getScore(performed), -1);
   assert.equal(restored.state.activeWorkoutMinutes, 0);
 });
@@ -3038,6 +3048,10 @@ test("an in-progress movement restores with its exact paused time", () => {
     restoredRunning.getPendingMovementMillisecondsRemaining(now + 2_000),
     40_000,
   );
+  assert.equal(
+    restoredRunning.getPendingMovementMillisecondsRemaining(now + 120_000),
+    42_000,
+  );
 
   restoredRunning.pauseMovement(group, 31_123, false);
   const restoredPaused = new WorkoutSession(
@@ -3056,6 +3070,25 @@ test("an in-progress movement restores with its exact paused time", () => {
     restoredPaused.getPendingMovementMillisecondsRemaining(now + 7_200_000),
     31_123,
   );
+});
+
+test("a pending rest remains resumable after state restoration", () => {
+  const now = Date.UTC(2026, 7, 23, 2, 0, 0);
+  const started = new WorkoutSession(catalog, createDefaultState(), () => now);
+  started.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = started.getNextGroup();
+  started.beginRest(group, now + REST_DURATION_MS);
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(started.state)),
+    () => now,
+  );
+  restored.initialize();
+
+  assert.equal(restored.getPendingRestGroup()?.id, group.id);
+  assert.equal(restored.state.pendingRestEndsAtUnixMilliseconds, now + REST_DURATION_MS);
+  assert.equal(restored.state.activeWorkoutMinutes, 3);
 });
 
 test("beginning rest clears the completed movement resume checkpoint", () => {

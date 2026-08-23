@@ -168,6 +168,8 @@ async function bootstrap() {
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       showCompletion(false);
+    } else if (session.getPendingRestGroup()) {
+      restorePendingRest();
     } else if (session.getPendingMovementGroup()) {
       restorePendingMovement();
     } else {
@@ -474,6 +476,31 @@ function restorePendingMovement() {
   return true;
 }
 
+function restorePendingRest() {
+  if (!session) {
+    return false;
+  }
+  const pendingGroup = session.getPendingRestGroup();
+  if (!pendingGroup) {
+    return false;
+  }
+
+  showNextExercise();
+  if (!currentGroup || currentGroup.id !== pendingGroup.id || !currentExercise) {
+    throw new Error("The persisted rest is not for the next workout round.");
+  }
+
+  restActive = true;
+  elements.video.pause();
+  setMediaMirrored(false);
+  setFullPhaseSurface("rest");
+  elements.mediaCard.classList.add("resting");
+  showRestPanel();
+  elements.status.textContent = restStatusMessage();
+  startRestTimer();
+  return true;
+}
+
 function renderPersistedMovementCountdown() {
   const movementDuration = getMovementCountdownDurationMs(currentGroup);
   const state = getMovementPhaseState(
@@ -549,7 +576,10 @@ function showMovePanel() {
 function setPlaybackControlsEnabled(enabled) {
   elements.repeatExercise.disabled = !enabled;
   elements.playbackToggle.disabled = !enabled;
-  elements.nextExercise.disabled = !enabled;
+
+  // Broken or buffering media can disable playback, but it must never trap
+  // the workout. A paused movement is still safe to reject and advance.
+  elements.nextExercise.disabled = !movementRunning && !movementPauseReason;
 }
 
 function renderPlaybackToggle() {
@@ -1077,7 +1107,7 @@ function repeatMovement() {
 
 function goToNextExercise() {
   if (
-    (!movementRunning && movementPauseReason !== "user") ||
+    (!movementRunning && !movementPauseReason) ||
     !session ||
     !currentGroup
   ) {
@@ -1113,11 +1143,14 @@ function completeMovement() {
   setFullPhaseSurface("rest");
   elements.mediaCard.classList.add("resting");
   showRestPanel();
-  elements.status.textContent = currentGroup?.pairedRoundId &&
-      !currentGroup.isPairDecisionRound
+  elements.status.textContent = restStatusMessage();
+  startRestTimer();
+}
+
+function restStatusMessage() {
+  return currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound
     ? "Rest, 15 seconds. The other direction is next."
     : "Rest, 15 seconds. Tap the heart to keep this exercise.";
-  startRestTimer();
 }
 
 function startRestTimer() {

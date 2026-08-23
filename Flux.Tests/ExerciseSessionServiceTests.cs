@@ -2472,6 +2472,11 @@ public sealed class ExerciseSessionServiceTests
             service.GetPendingMovementMillisecondsRemaining(
                 restoredRunning,
                 now + 2_000));
+        Assert.Equal(
+            42_000,
+            service.GetPendingMovementMillisecondsRemaining(
+                restoredRunning,
+                now + (long)TimeSpan.FromMinutes(2).TotalMilliseconds));
 
         service.PauseMovement(
             restoredRunning,
@@ -2492,6 +2497,26 @@ public sealed class ExerciseSessionServiceTests
             service.GetPendingMovementMillisecondsRemaining(
                 restoredPaused,
                 now + (long)TimeSpan.FromHours(2).TotalMilliseconds));
+    }
+
+    [Fact]
+    public void PendingRestSurvivesInitializationAndIdentifiesTheNextRound()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup group = service.GetNextGroup(state)
+            ?? throw new InvalidOperationException("Workout has no first group.");
+        long restEndsAt = DateTimeOffset.UtcNow.AddSeconds(15)
+            .ToUnixTimeMilliseconds();
+        service.BeginRest(state, group, restEndsAt);
+
+        service.Initialize(state);
+
+        Assert.Equal(group.Id, service.GetPendingRestGroup(state)?.Id);
+        Assert.Equal(restEndsAt, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(3, state.ActiveWorkoutMinutes);
     }
 
     [Fact]

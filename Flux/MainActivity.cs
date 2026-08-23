@@ -177,10 +177,13 @@ public class MainActivity : Activity
 
         WorkoutGroup? pendingMovementGroup =
             _sessionService.GetPendingMovementGroup(_state);
+        WorkoutGroup? pendingRestGroup =
+            _sessionService.GetPendingRestGroup(_state);
 
         if (!_state.WorkoutCompleted &&
             _state.ActiveWorkoutMinutes != 0 &&
-            pendingMovementGroup is null)
+            pendingMovementGroup is null &&
+            pendingRestGroup is null)
         {
             FinishInterruptedWorkout();
         }
@@ -199,6 +202,10 @@ public class MainActivity : Activity
         else if (pendingMovementGroup is not null)
         {
             RestorePendingMovement(pendingMovementGroup);
+        }
+        else if (pendingRestGroup is not null)
+        {
+            RestorePendingRest(pendingRestGroup);
         }
         else
         {
@@ -1993,18 +2000,25 @@ public class MainActivity : Activity
 
     private void SetPlaybackControlsAvailability(bool available)
     {
-        foreach (ImageButton control in new[]
-                 {
-                     _repeatAction,
-                     _playbackAction,
-                     _nextAction,
-                 })
-        {
-            control.Enabled = available;
-            control.Alpha = available
-                ? PlaybackControlEnabledAlpha
-                : PlaybackControlDisabledAlpha;
-        }
+        SetPlaybackControlAvailability(_repeatAction, available);
+        SetPlaybackControlAvailability(_playbackAction, available);
+
+        // A missing or buffering demonstration must never trap the workout.
+        // Repeat and play/pause require ready media; Next only requires an
+        // active movement that can be rejected and advanced.
+        bool nextAvailable = _workoutPhase == WorkoutPhase.Move &&
+            (_countdownActive || _countdownPaused);
+        SetPlaybackControlAvailability(_nextAction, nextAvailable);
+    }
+
+    private static void SetPlaybackControlAvailability(
+        ImageButton control,
+        bool available)
+    {
+        control.Enabled = available;
+        control.Alpha = available
+            ? PlaybackControlEnabledAlpha
+            : PlaybackControlDisabledAlpha;
     }
 
     private void UpdatePlaybackActionVisual()
@@ -2260,6 +2274,22 @@ public class MainActivity : Activity
         UpdatePlaybackActionVisual();
     }
 
+    private void RestorePendingRest(WorkoutGroup pendingGroup)
+    {
+        ShowNextExercise();
+        if (_currentWorkoutGroup?.Id != pendingGroup.Id)
+        {
+            throw new InvalidOperationException(
+                "The persisted rest is not for the next workout round.");
+        }
+
+        _restActive = true;
+        _exerciseVideo.Pause();
+        ShowRestPanel();
+        AnnouncePhaseForAccessibility(_restPanel, GetRestDescription());
+        ResumeRestCountdown();
+    }
+
     private void RenderExecutionSignifier(Exercise exercise)
     {
         bool isUnilateral = exercise.SideSequence.UsesTimedSides();
@@ -2444,7 +2474,7 @@ public class MainActivity : Activity
 
     private void GoToNextExercise()
     {
-        if (!_countdownActive && !_countdownPausedByUser)
+        if (!_countdownActive && !_countdownPaused)
         {
             return;
         }
@@ -3117,12 +3147,14 @@ public class MainActivity : Activity
             FreezeHoldOnFinalFrame();
         }
         ShowRestPanel();
-        string restDescription = _currentWorkoutGroup.IsDirectionPairLead
-            ? "Rest, 15 seconds. The other direction is next."
-            : "Rest, 15 seconds. Tap the heart to keep this exercise.";
-        AnnouncePhaseForAccessibility(_restPanel, restDescription);
+        AnnouncePhaseForAccessibility(_restPanel, GetRestDescription());
         ResumeRestCountdown();
     }
+
+    private string GetRestDescription() =>
+        _currentWorkoutGroup.IsDirectionPairLead
+            ? "Rest, 15 seconds. The other direction is next."
+            : "Rest, 15 seconds. Tap the heart to keep this exercise.";
 
     private void ShowRestPanel()
     {

@@ -236,10 +236,12 @@ those cues.
 If movement media buffers or the app is backgrounded, movement time pauses. The
 active round, exact remaining movement time, and user-pause state are committed
 locally; reopening after process death returns to that movement instead of
-discarding the workout. A foreground deadline also prevents an abrupt crash from
-rewinding the timer. Rest uses an absolute deadline. Closing during Ready still
-leaves the unreached exercise neutral, while a pending rest choice is resolved
-exactly once under the existing scoring rules.
+discarding the workout. A live foreground deadline preserves elapsed time; if
+that deadline expired while Flux was absent, restoration uses the last safe
+checkpoint instead of crediting unseen exercise time. Rest uses an absolute
+deadline and also restores after process death, advancing normally if its
+deadline already passed. Closing during Ready still leaves the unreached
+exercise neutral.
 
 ## Exercise catalog
 

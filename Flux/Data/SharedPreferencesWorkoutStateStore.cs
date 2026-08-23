@@ -30,11 +30,20 @@ public sealed class SharedPreferencesWorkoutStateStore : IWorkoutStateStore
         try
         {
             using JsonDocument document = JsonDocument.Parse(json);
-            int version = document.RootElement.TryGetProperty(
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+            {
+                return new WorkoutState();
+            }
+
+            int version = 4;
+            if (document.RootElement.TryGetProperty(
                     "version",
-                    out JsonElement versionElement)
-                ? versionElement.GetInt32()
-                : 4;
+                    out JsonElement versionElement) &&
+                (versionElement.ValueKind != JsonValueKind.Number ||
+                 !versionElement.TryGetInt32(out version)))
+            {
+                return new WorkoutState();
+            }
 
             if (version >= 5)
             {

@@ -645,6 +645,23 @@ test("Android device builds embed their managed assemblies", async () => {
   assert.match(project, /<EmbedAssembliesIntoApk>true<\/EmbedAssembliesIntoApk>/);
 });
 
+test("Android persistence rejects malformed stored shapes without crashing launch", async () => {
+  const stateStore = await source(
+    "Flux",
+    "Data",
+    "SharedPreferencesWorkoutStateStore.cs",
+  );
+  assert.match(
+    stateStore,
+    /RootElement\.ValueKind != JsonValueKind\.Object[\s\S]*return new WorkoutState\(\)/,
+  );
+  assert.match(
+    stateStore,
+    /versionElement\.ValueKind != JsonValueKind\.Number[\s\S]*!versionElement\.TryGetInt32\(out version\)[\s\S]*return new WorkoutState\(\)/,
+  );
+  assert.match(stateStore, /catch \(JsonException\)/);
+});
+
 test("workout transport controls are functional and muscle labels stay hidden", async () => {
   const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
   const startControl = workoutLayout.match(
@@ -682,6 +699,18 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(mobileRepeat, /StopCountdownTimer\(\)[\s\S]*StartCountdownTimer\(GetCurrentCountdownDurationMilliseconds\(\)\)/);
   assert.doesNotMatch(mobileRepeat, /FinalizeCurrentRound|RecordOutcome/);
   assert.match(mobileNext, /FinalizeCurrentRound\(keep: false\)/);
+  assert.match(mobileNext, /!_countdownActive && !_countdownPaused/);
+  const mobileAvailability = methodBody(
+    mainActivity,
+    "private void SetPlaybackControlsAvailability(bool available)",
+    "private static void SetPlaybackControlAvailability(",
+  );
+  assert.match(mobileAvailability, /_repeatAction, available/);
+  assert.match(mobileAvailability, /_playbackAction, available/);
+  assert.match(
+    mobileAvailability,
+    /_workoutPhase == WorkoutPhase\.Move[\s\S]*_countdownActive \|\| _countdownPaused[\s\S]*_nextAction, nextAvailable/,
+  );
   const mobileShuffle = methodBody(
     mainActivity,
     "private void ShuffleCurrentExercise()",
@@ -711,6 +740,18 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(webRepeat, /getMovementCountdownDurationMs\(currentGroup\)[\s\S]*setMovementDeadline\(movementRemaining\)/);
   assert.doesNotMatch(webRepeat, /recordOutcome|persistState/);
   assert.match(webNext, /recordOutcome\(currentGroup, false\)/);
+  assert.match(webNext, /!movementRunning && !movementPauseReason/);
+  const webAvailability = methodBody(
+    webApp,
+    "function setPlaybackControlsEnabled(enabled)",
+    "function renderPlaybackToggle()",
+  );
+  assert.match(webAvailability, /repeatExercise\.disabled = !enabled/);
+  assert.match(webAvailability, /playbackToggle\.disabled = !enabled/);
+  assert.match(
+    webAvailability,
+    /nextExercise\.disabled = !movementRunning && !movementPauseReason/,
+  );
   const webShuffle = methodBody(
     webApp,
     "function shuffleCurrentExercise()",
@@ -775,7 +816,7 @@ test("active movement checkpoints and invalid media recovery match across platfo
   );
   assert.match(
     mobileCreate,
-    /GetPendingMovementGroup[\s\S]*pendingMovementGroup is null[\s\S]*FinishInterruptedWorkout[\s\S]*RestorePendingMovement/,
+    /GetPendingMovementGroup[\s\S]*GetPendingRestGroup[\s\S]*pendingMovementGroup is null[\s\S]*pendingRestGroup is null[\s\S]*FinishInterruptedWorkout[\s\S]*RestorePendingMovement[\s\S]*RestorePendingRest/,
   );
   assert.match(mobilePause, /PauseMovement[\s\S]*_stateStore\.Save/);
   assert.match(mobileStart, /BeginMovement[\s\S]*_stateStore\.Save/);
@@ -786,11 +827,19 @@ test("active movement checkpoints and invalid media recovery match across platfo
 
   assert.match(
     workoutModule,
-    /initialize\(\)[\s\S]*normalizePendingMovement\(\)[\s\S]*getPendingMovementGroup\(\)[\s\S]*return;/,
+    /initialize\(\)[\s\S]*normalizePendingRest\(\)[\s\S]*normalizePendingMovement\(\)[\s\S]*getPendingRestGroup\(\)[\s\S]*getPendingMovementGroup\(\)/,
   );
   assert.match(
     webApp,
-    /getPendingMovementGroup\(\)[\s\S]*restorePendingMovement\(\)/,
+    /getPendingRestGroup\(\)[\s\S]*restorePendingRest\(\)[\s\S]*getPendingMovementGroup\(\)[\s\S]*restorePendingMovement\(\)/,
+  );
+  assert.match(
+    mainActivity,
+    /RestorePendingRest\([\s\S]*ShowNextExercise\(\)[\s\S]*_restActive = true[\s\S]*ShowRestPanel\(\)[\s\S]*ResumeRestCountdown\(\)/,
+  );
+  assert.match(
+    webApp,
+    /function restorePendingRest\([\s\S]*showNextExercise\(\)[\s\S]*restActive = true[\s\S]*showRestPanel\(\)[\s\S]*startRestTimer\(\)/,
   );
   assert.match(
     webApp,
