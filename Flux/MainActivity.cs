@@ -93,9 +93,8 @@ public class MainActivity : Activity
     private FrameLayout _completionActionBar = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
-    private FrameLayout _sidePhasePreview = null!;
-    private ImageView _unilateralExecutionIcon = null!;
-    private TextView _sidePhaseLabel = null!;
+    private FrameLayout _executionSignifier = null!;
+    private ImageView _executionSignifierIcon = null!;
     private FrameLayout _exerciseMediaArea = null!;
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
@@ -109,7 +108,6 @@ public class MainActivity : Activity
     private ImageButton _shuffleButton = null!;
     private ImageButton _startButton = null!;
     private LinearLayout _countdownPanel = null!;
-    private ImageView _countdownPhaseIcon = null!;
     private TextView _countdownText = null!;
     private ProgressBar _countdownProgress = null!;
     private ImageButton _repeatAction = null!;
@@ -332,11 +330,10 @@ public class MainActivity : Activity
             Resource.Id.completion_action_bar);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
-        _sidePhasePreview = FindRequiredView<FrameLayout>(
-            Resource.Id.side_phase_preview);
-        _unilateralExecutionIcon = FindRequiredView<ImageView>(
-            Resource.Id.unilateral_execution_icon);
-        _sidePhaseLabel = FindRequiredView<TextView>(Resource.Id.side_phase_label);
+        _executionSignifier = FindRequiredView<FrameLayout>(
+            Resource.Id.execution_signifier);
+        _executionSignifierIcon = FindRequiredView<ImageView>(
+            Resource.Id.execution_signifier_icon);
         _exerciseMediaArea = FindRequiredView<FrameLayout>(
             Resource.Id.exercise_media_area);
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
@@ -353,8 +350,6 @@ public class MainActivity : Activity
         _shuffleButton = FindRequiredView<ImageButton>(Resource.Id.shuffle_button);
         _startButton = FindRequiredView<ImageButton>(Resource.Id.start_button);
         _countdownPanel = FindRequiredView<LinearLayout>(Resource.Id.countdown_panel);
-        _countdownPhaseIcon = FindRequiredView<ImageView>(
-            Resource.Id.countdown_phase_icon);
         _countdownText = FindRequiredView<TextView>(Resource.Id.countdown_text);
         _countdownProgress = FindRequiredView<ProgressBar>(Resource.Id.countdown_progress);
         _repeatAction = FindRequiredView<ImageButton>(Resource.Id.repeat_action);
@@ -2206,7 +2201,7 @@ public class MainActivity : Activity
             : exercise.DirectionSequence != ExerciseDirectionSequence.None
                 ? $"{exercise.Name}. First direction, change, then opposite direction."
                 : $"{exercise.Name}. Repetition.";
-        RenderSidePhasePreview(exercise);
+        RenderExecutionSignifier(exercise);
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
@@ -2265,33 +2260,22 @@ public class MainActivity : Activity
         UpdatePlaybackActionVisual();
     }
 
-    private void RenderSidePhasePreview(Exercise exercise)
+    private void RenderExecutionSignifier(Exercise exercise)
     {
         bool isUnilateral = exercise.SideSequence.UsesTimedSides();
         bool isBidirectional = exercise.DirectionSequence !=
             ExerciseDirectionSequence.None;
         if (!isUnilateral && !isBidirectional)
         {
-            _sidePhasePreview.Visibility = ViewStates.Gone;
-            _unilateralExecutionIcon.Visibility = ViewStates.Gone;
-            _sidePhaseLabel.Visibility = ViewStates.Gone;
-            _sidePhasePreview.ContentDescription = null;
+            _executionSignifier.Visibility = ViewStates.Gone;
+            _executionSignifier.ContentDescription = null;
             return;
         }
 
-        _unilateralExecutionIcon.Visibility = isUnilateral
-            ? ViewStates.Visible
-            : ViewStates.Gone;
-        _sidePhaseLabel.Visibility = !isUnilateral && isBidirectional
-            ? ViewStates.Visible
-            : ViewStates.Gone;
-        if (!isUnilateral && isBidirectional)
-        {
-            _sidePhaseLabel.Text = "BIDIRECTIONAL";
-            _sidePhaseLabel.SetBackgroundResource(
-                Resource.Drawable.exercise_execution_label_timed_pair_background);
-        }
-        _sidePhasePreview.ContentDescription =
+        _executionSignifierIcon.SetImageResource(isUnilateral
+            ? Resource.Drawable.ic_unilateral_asymmetry
+            : Resource.Drawable.ic_bidirectional_execution);
+        _executionSignifier.ContentDescription =
             exercise.SideSequence.UsesTimedLeadStances()
                 ? "Unilateral exercise. Match the shown lead stance, change stance, " +
                     "then repeat from the opposite lead stance."
@@ -2299,7 +2283,7 @@ public class MainActivity : Activity
                     ? "Unilateral exercise. Work one side, change, then the other."
                     : "Bidirectional exercise. Complete the shown direction, change " +
                         "direction, then complete the opposite direction.";
-        _sidePhasePreview.Visibility = ViewStates.Visible;
+        _executionSignifier.Visibility = ViewStates.Visible;
     }
 
     private void AnimateExerciseChange()
@@ -2883,31 +2867,13 @@ public class MainActivity : Activity
         int textColorResource = changingPair
             ? Resource.Color.rest_text
             : Resource.Color.move_text;
-        int? iconResource = GetMovementCueIcon(cue);
         int progressResource = changingPair
             ? Resource.Drawable.rest_progress_track
             : Resource.Drawable.move_progress_track;
         int actionBackgroundResource = changingPair
             ? Resource.Drawable.phase_rest_chip_background
             : Resource.Drawable.phase_move_chip_background;
-        string description = changingPair
-            ? GetPairChangeDescription()
-            : GetMovementCueDescription(cue);
-
         var textColor = new Android.Graphics.Color(GetColor(textColorResource));
-        if (iconResource is int visibleIconResource)
-        {
-            _countdownPhaseIcon.SetImageResource(visibleIconResource);
-            _countdownPhaseIcon.ImageTintList =
-                Android.Content.Res.ColorStateList.ValueOf(textColor);
-            _countdownPhaseIcon.ContentDescription = description;
-            _countdownPhaseIcon.Visibility = ViewStates.Visible;
-        }
-        else
-        {
-            _countdownPhaseIcon.ContentDescription = null;
-            _countdownPhaseIcon.Visibility = ViewStates.Gone;
-        }
         _countdownText.SetTextColor(textColor);
         StylePlaybackControls(textColor, actionBackgroundResource);
         _countdownProgress.ProgressDrawable = GetDrawable(progressResource);
@@ -2917,8 +2883,6 @@ public class MainActivity : Activity
     {
         var textColor = new Android.Graphics.Color(
             GetColor(Resource.Color.rest_text));
-        _countdownPhaseIcon.ContentDescription = null;
-        _countdownPhaseIcon.Visibility = ViewStates.Gone;
         _countdownText.SetTextColor(textColor);
         StylePlaybackControls(
             textColor,
@@ -3027,22 +2991,6 @@ public class MainActivity : Activity
             MovementDirectionCue.Inward => "Inward",
             MovementDirectionCue.Outward => "Outward",
             _ => throw new ArgumentOutOfRangeException(nameof(cue), cue, null),
-        };
-    }
-
-    private static int? GetMovementCueIcon(MovementDirectionCue cue)
-    {
-        return cue switch
-        {
-            MovementDirectionCue.Switch => Resource.Drawable.ic_phase_swap,
-            MovementDirectionCue.Forward => Resource.Drawable.ic_direction_forward,
-            MovementDirectionCue.Backward => Resource.Drawable.ic_direction_backward,
-            MovementDirectionCue.Clockwise => Resource.Drawable.ic_direction_clockwise,
-            MovementDirectionCue.Counterclockwise =>
-                Resource.Drawable.ic_direction_counterclockwise,
-            MovementDirectionCue.Inward => Resource.Drawable.ic_direction_inward,
-            MovementDirectionCue.Outward => Resource.Drawable.ic_direction_outward,
-            _ => null,
         };
     }
 

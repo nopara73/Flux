@@ -62,9 +62,9 @@ const elements = {
   video: byId("exercise-video"),
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
-  sidePhasePreview: byId("side-phase-preview"),
-  unilateralExecutionIcon: byId("unilateral-execution-icon"),
-  sidePhaseLabel: byId("side-phase-label"),
+  executionSignifier: byId("execution-signifier"),
+  unilateralSignifier: byId("unilateral-signifier"),
+  bidirectionalSignifier: byId("bidirectional-signifier"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
@@ -72,7 +72,6 @@ const elements = {
   shuffleExercise: byId("shuffle-exercise"),
   startMovement: byId("start-movement"),
   movePanel: byId("move-panel"),
-  movementCue: byId("movement-cue"),
   repeatExercise: byId("repeat-exercise"),
   playbackToggle: byId("toggle-playback"),
   nextExercise: byId("next-exercise"),
@@ -426,7 +425,7 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
   elements.workoutProgressText.setAttribute("aria-label", `Round ${position} of ${total}`);
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
   elements.exerciseName.textContent = currentExercise.name;
-  renderSidePhasePreview(currentExercise);
+  renderExecutionSignifier(currentExercise);
   elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
     `Round ${position} of ${total}. ${currentExercise.name}.`;
@@ -488,27 +487,18 @@ function renderPersistedMovementCountdown() {
     `scaleX(${movementRemaining / movementDuration})`;
 }
 
-function renderSidePhasePreview(exercise) {
+function renderExecutionSignifier(exercise) {
   const isUnilateral = usesTimedSides(exercise);
   const isBidirectional = exercise.directionSequence !== "None";
   if (!isUnilateral && !isBidirectional) {
-    elements.sidePhasePreview.hidden = true;
-    elements.sidePhasePreview.setAttribute("aria-label", "");
-    elements.unilateralExecutionIcon.toggleAttribute("hidden", true);
-    elements.sidePhaseLabel.hidden = true;
-    elements.sidePhaseLabel.classList.remove("timed-pair");
+    elements.executionSignifier.hidden = true;
+    elements.executionSignifier.setAttribute("aria-label", "");
     return;
   }
 
-  elements.unilateralExecutionIcon.toggleAttribute("hidden", !isUnilateral);
-  elements.sidePhaseLabel.hidden = isUnilateral;
-  if (!isUnilateral) {
-    elements.sidePhaseLabel.textContent = "BIDIRECTIONAL";
-    elements.sidePhaseLabel.classList.add("timed-pair");
-  } else {
-    elements.sidePhaseLabel.classList.remove("timed-pair");
-  }
-  elements.sidePhasePreview.setAttribute(
+  elements.unilateralSignifier.toggleAttribute("hidden", !isUnilateral);
+  elements.bidirectionalSignifier.toggleAttribute("hidden", isUnilateral);
+  elements.executionSignifier.setAttribute(
     "aria-label",
     usesTimedLeadStances(exercise)
       ? "Unilateral exercise. Match the shown lead stance, change stance, then repeat from the opposite lead stance."
@@ -516,7 +506,7 @@ function renderSidePhasePreview(exercise) {
         ? "Unilateral exercise. Work one side, change, then the other."
         : "Bidirectional exercise. Complete the shown direction, change direction, then complete the opposite direction.",
   );
-  elements.sidePhasePreview.hidden = false;
+  elements.executionSignifier.hidden = false;
 }
 
 function showReadyPanel() {
@@ -832,8 +822,6 @@ function applyMovementPhase(phase) {
   );
 
   if (phase === "Preparation") {
-    elements.movementCue.textContent = "";
-    elements.movementCue.hidden = true;
     setMediaMirrored(false);
     setFullPhaseSurface("rest");
     elements.mediaCard.classList.add("resting");
@@ -844,9 +832,6 @@ function applyMovementPhase(phase) {
 
   const presentation = getMovementPresentation(currentExercise, phase);
   const description = movementCueDescription(presentation.cue);
-  const symbol = cueSymbol(presentation.cue);
-  elements.movementCue.textContent = symbol;
-  elements.movementCue.hidden = !symbol;
 
   if (phase === "ChangeSides") {
     setMediaMirrored(false);
@@ -1031,9 +1016,6 @@ function resumePausedMovementWhenVisible() {
 function restorePausedMovementMedia(phase) {
   const presentation = getMovementPresentation(currentExercise, phase);
   lastMovementPhase = phase;
-  const symbol = cueSymbol(presentation.cue);
-  elements.movementCue.textContent = symbol;
-  elements.movementCue.hidden = !symbol;
   elements.movePanel.classList.toggle("change", phase === "ChangeSides");
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
@@ -1246,8 +1228,6 @@ function stopRuntimeTimers(preservePendingMovement = false) {
 function resetMovementVisuals() {
   lastMovementPhase = null;
   movementPauseReason = null;
-  elements.movementCue.textContent = "";
-  elements.movementCue.hidden = true;
   setPlaybackControlsEnabled(false);
   renderPlaybackToggle();
   elements.phaseSurface.classList.remove("visible");
@@ -1291,23 +1271,6 @@ function setMediaMirrored(mirrored) {
   const scale = mirrored ? "-1" : "1";
   elements.video.style.setProperty("--media-scale-x", scale);
   elements.holdFrame.style.setProperty("--media-scale-x", scale);
-}
-
-function cueSymbol(cue) {
-  return {
-    Move: "",
-    Switch: "⇄",
-    ScreenLeft: "",
-    ScreenRight: "",
-    ShownLeadStance: "",
-    OppositeLeadStance: "",
-    Forward: "↓",
-    Backward: "↑",
-    Clockwise: "↻",
-    Counterclockwise: "↺",
-    Inward: "⇥",
-    Outward: "⇤",
-  }[cue] ?? "";
 }
 
 function movementCueDescription(cue) {

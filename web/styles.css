@@ -606,7 +606,7 @@ button.modifier-tile:not(:disabled):active {
   text-overflow: ellipsis;
 }
 
-.side-phase-preview {
+.execution-signifier {
   min-height: 52px;
   margin-left: auto;
   display: flex;
@@ -614,7 +614,7 @@ button.modifier-tile:not(:disabled):active {
   justify-content: flex-end;
 }
 
-.unilateral-execution-icon {
+.execution-signifier-icon {
   width: 72px;
   height: 52px;
   display: block;
@@ -652,27 +652,20 @@ button.modifier-tile:not(:disabled):active {
   stroke: var(--move-accent);
 }
 
-.side-phase-label {
-  min-width: 132px;
-  min-height: 34px;
-  padding: 0 16px;
-  display: grid;
-  place-items: center;
-  color: var(--surface);
-  border: 2px solid transparent;
-  border-radius: 11px;
-  background: var(--graphite);
-  box-shadow: 0 3px 8px rgb(18 20 22 / 18%);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  white-space: nowrap;
+.bidirectional-blue,
+.bidirectional-red {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.side-phase-label.timed-pair {
-  border-color: var(--move-text);
-  background: var(--move-accent);
+.bidirectional-blue {
+  stroke: var(--rest-accent);
+}
+
+.bidirectional-red {
+  stroke: var(--move-accent);
 }
 
 .exercise-media-area {
@@ -932,19 +925,6 @@ button.modifier-tile:not(:disabled):active {
   position: relative;
   display: grid;
   place-items: center;
-}
-
-.movement-cue {
-  min-width: 32px;
-  min-height: 32px;
-  position: absolute;
-  left: 0;
-  display: grid;
-  place-items: center;
-  color: currentColor;
-  font-size: 29px;
-  font-weight: 700;
-  line-height: 1;
 }
 
 .movement-countdown {
@@ -1287,10 +1267,6 @@ input:focus-visible {
     font-size: clamp(11px, 2.4vw, 19px);
   }
 
-  .side-phase-label {
-    min-height: 34px;
-  }
-
   .exercise-media-area {
     min-width: 0;
     min-height: 0;
@@ -1604,18 +1580,13 @@ input:focus-visible {
     line-height: 1.12;
   }
 
-  .side-phase-preview {
+  .execution-signifier {
     min-height: 60px;
   }
 
-  .unilateral-execution-icon {
+  .execution-signifier-icon {
     width: 88px;
     height: 60px;
-  }
-
-  .side-phase-label {
-    min-height: 42px;
-    font-size: 12px;
   }
 
   .exercise-media-area {
@@ -1679,10 +1650,6 @@ input:focus-visible {
 
   .phase-row {
     min-height: 64px;
-  }
-
-  .movement-cue {
-    font-size: 48px;
   }
 
   .media-controls {

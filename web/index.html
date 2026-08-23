@@ -138,26 +138,25 @@
           <header id="workout-header" class="workout-header">
             <div class="workout-meta">
               <span id="workout-progress-text" class="workout-progress-text">01&nbsp;&nbsp;/&nbsp;&nbsp;10</span>
-              <div
-                id="side-phase-preview"
-                class="side-phase-preview"
-                aria-label=""
-                hidden
-              >
+              <div id="execution-signifier" class="execution-signifier" aria-label="" hidden>
                 <svg
-                  id="unilateral-execution-icon"
-                  class="unilateral-execution-icon"
+                  id="execution-signifier-icon"
+                  class="execution-signifier-icon"
                   viewBox="0 0 72 52"
                   aria-hidden="true"
                   focusable="false"
-                  hidden
                 >
-                  <circle class="unilateral-core" cx="50" cy="8" r="6"></circle>
-                  <path class="unilateral-core-stroke" d="M44 18 34 31"></path>
-                  <path class="unilateral-blue" d="M42 19 20 5M34 31 11 44"></path>
-                  <path class="unilateral-red" d="M45 20 55 46M34 32 19 49"></path>
+                  <g id="unilateral-signifier">
+                    <circle class="unilateral-core" cx="50" cy="8" r="6"></circle>
+                    <path class="unilateral-core-stroke" d="M44 18 34 31"></path>
+                    <path class="unilateral-blue" d="M42 19 20 5M34 31 11 44"></path>
+                    <path class="unilateral-red" d="M45 20 55 46M34 32 19 49"></path>
+                  </g>
+                  <g id="bidirectional-signifier" hidden>
+                    <path class="bidirectional-blue" d="M13 17H57M49 9l8 8-8 8"></path>
+                    <path class="bidirectional-red" d="M59 35H15M23 27l-8 8 8 8"></path>
+                  </g>
                 </svg>
-                <span id="side-phase-label" class="side-phase-label" hidden></span>
               </div>
             </div>
             <div class="progress-track workout-progress" aria-hidden="true">
@@ -259,7 +258,6 @@
                 </button>
               </div>
               <div class="movement-time-row">
-                <span id="movement-cue" class="movement-cue" aria-hidden="true" hidden></span>
                 <output id="movement-countdown" class="movement-countdown">45</output>
               </div>
               <div id="movement-track" class="progress-track movement-track" aria-hidden="true">

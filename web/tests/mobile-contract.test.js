@@ -563,7 +563,7 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("exercise previews identify every timed side or direction execution", async () => {
+test("one icon-only signifier identifies unilateral or bidirectional execution", async () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");
   assert.equal(
@@ -577,69 +577,72 @@ test("exercise previews identify every timed side or direction execution", async
     "drawable",
     "ic_unilateral_asymmetry.xml",
   );
-  assert.match(workoutLayout, /@\+id\/side_phase_preview/);
-  assert.match(workoutLayout, /@\+id\/unilateral_execution_icon/);
-  assert.match(workoutLayout, /@\+id\/side_phase_label/);
+  const bidirectionalIcon = await source(
+    "Flux",
+    "Resources",
+    "drawable",
+    "ic_bidirectional_execution.xml",
+  );
+  assert.match(workoutLayout, /@\+id\/execution_signifier/);
+  assert.match(workoutLayout, /@\+id\/execution_signifier_icon/);
   assert.match(workoutLayout, /@drawable\/ic_unilateral_asymmetry/);
-  assert.match(workoutLayout, /@drawable\/exercise_execution_label_timed_pair_background/);
-  assert.match(workoutLayout, /android:textColor="@color\/white"/);
-  assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="side-phase-preview"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
-  assert.match(webIndex, /id="unilateral-execution-icon"/);
-  assert.match(webIndex, /id="side-phase-label"/);
+  assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="execution-signifier"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
+  assert.match(webIndex, /id="execution-signifier-icon"/);
+  assert.match(webIndex, /id="unilateral-signifier"/);
+  assert.match(webIndex, /id="bidirectional-signifier"/);
   assert.match(unilateralIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
   assert.match(unilateralIcon, /@color\/rest_accent/);
   assert.match(unilateralIcon, /@color\/move_accent/);
+  assert.match(bidirectionalIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
+  assert.match(bidirectionalIcon, /@color\/rest_accent/);
+  assert.match(bidirectionalIcon, /@color\/move_accent/);
   assert.match(
     mainActivity,
-    /RenderSidePhasePreview\(exercise\)/,
+    /RenderExecutionSignifier\(exercise\)/,
+  );
+  const androidSignifier = methodBody(
+    mainActivity,
+    "private void RenderExecutionSignifier(",
+    "private void AnimateExerciseChange(",
   );
   assert.match(
-    methodBody(
-      mainActivity,
-      "private void RenderSidePhasePreview(",
-      "private void AnimateExerciseChange(",
-    ),
-    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*_unilateralExecutionIcon\.Visibility = isUnilateral[\s\S]*_sidePhaseLabel\.Visibility = !isUnilateral && isBidirectional[\s\S]*"BIDIRECTIONAL"/,
+    androidSignifier,
+    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*_executionSignifierIcon\.SetImageResource\(isUnilateral[\s\S]*ic_unilateral_asymmetry[\s\S]*ic_bidirectional_execution/,
   );
-  assert.doesNotMatch(
-    methodBody(
-      mainActivity,
-      "private void RenderSidePhasePreview(",
-      "private void AnimateExerciseChange(",
-    ),
-    /UNILATERAL|ALTERNATING|exercise_execution_label_alternating_background/,
+  assert.match(androidSignifier, /Unilateral exercise[\s\S]*Bidirectional exercise/);
+  const webSignifier = methodBody(
+    webApp,
+    "function renderExecutionSignifier(",
+    "function showReadyPanel()",
   );
   assert.match(
-    methodBody(
-      webApp,
-      "function renderSidePhasePreview(",
-      "function showReadyPanel()",
-    ),
-    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*unilateralExecutionIcon\.toggleAttribute\("hidden", !isUnilateral\)[\s\S]*sidePhaseLabel\.hidden = isUnilateral[\s\S]*"BIDIRECTIONAL"[\s\S]*classList\.add\("timed-pair"\)/,
+    webSignifier,
+    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*unilateralSignifier\.toggleAttribute\("hidden", !isUnilateral\)[\s\S]*bidirectionalSignifier\.toggleAttribute\("hidden", isUnilateral\)/,
   );
-  assert.doesNotMatch(
-    methodBody(
-      webApp,
-      "function renderSidePhasePreview(",
-      "function showReadyPanel()",
-    ),
-    /UNILATERAL|ALTERNATING|classList\.(?:add|toggle)\("alternating"/,
-  );
-  assert.match(webStyles, /\.unilateral-execution-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
+  assert.match(webSignifier, /Unilateral exercise[\s\S]*Bidirectional exercise/);
+  assert.match(webStyles, /\.execution-signifier-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
   assert.match(webStyles, /\.unilateral-blue[\s\S]*var\(--rest-accent\)/);
   assert.match(webStyles, /\.unilateral-red[\s\S]*var\(--move-accent\)/);
-  assert.match(
-    webStyles,
-    /\.side-phase-label\.timed-pair[\s\S]*border-color: var\(--move-text\)[\s\S]*background: var\(--move-accent\)/,
+  assert.match(webStyles, /\.bidirectional-blue[\s\S]*var\(--rest-accent\)/);
+  assert.match(webStyles, /\.bidirectional-red[\s\S]*var\(--move-accent\)/);
+  assert.doesNotMatch(workoutLayout, /side_phase_label|countdown_phase_icon/);
+  assert.doesNotMatch(mainActivity, /_sidePhaseLabel|_countdownPhaseIcon|GetMovementCueIcon/);
+  assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL/);
+  assert.doesNotMatch(
+    webApp,
+    /sidePhaseLabel|elements\.movementCue|function cueSymbol|BIDIRECTIONAL/,
   );
-  assert.doesNotMatch(webStyles, /\.side-phase-label\.alternating/);
-  assert.doesNotMatch(workoutLayout, /side_phase_(?:first|change|second)/);
-  assert.doesNotMatch(webIndex, /side-phase-(?:first|change|second)/);
+  assert.doesNotMatch(webStyles, /\.side-phase-label|\.movement-cue/);
   assert.doesNotMatch(workoutLayout, /two_sided_badge|ic_two_sides/);
   assert.doesNotMatch(mainActivity, /_twoSidedBadge/);
   assert.doesNotMatch(webIndex, /two-sided-badge|BOTH SIDES/);
   assert.doesNotMatch(webApp, /twoSidedBadge/);
   assert.doesNotMatch(webStyles, /\.two-sided-(?:badge|icon)/);
+});
+
+test("Android device builds embed their managed assemblies", async () => {
+  const project = await source("Flux", "Flux.csproj");
+  assert.match(project, /<EmbedAssembliesIntoApk>true<\/EmbedAssembliesIntoApk>/);
 });
 
 test("workout transport controls are functional and muscle labels stay hidden", async () => {
