@@ -11,10 +11,21 @@ public enum HardExerciseRotationStatus
 
 public static class WorkoutRecoveryPolicy
 {
+    public const int ModerateMuscularDemand = Exercise.ModerateMuscularDemand;
+
     public const int HardMuscularDemand = Exercise.MaximumMuscularDemand;
+
+    public const long ModerateRecoveryWindowMilliseconds =
+        18L * 60L * 60L * 1000L;
 
     public const long HardRecoveryWindowMilliseconds =
         36L * 60L * 60L * 1000L;
+
+    public static bool IsModerateExercise(Exercise exercise)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+        return exercise.MuscularDemand == ModerateMuscularDemand;
+    }
 
     public static bool IsHardExercise(Exercise exercise)
     {
@@ -27,8 +38,19 @@ public static class WorkoutRecoveryPolicy
         CanonicalMuscleGroup primaryMuscle)
     {
         ArgumentNullException.ThrowIfNull(lastHardWorkByPrimaryMuscle);
-        return lastHardWorkByPrimaryMuscle.GetValueOrDefault(
-            primaryMuscle.ToString());
+        return GetLastWorkUnixMilliseconds(
+            lastHardWorkByPrimaryMuscle,
+            primaryMuscle);
+    }
+
+    public static long GetLastMeaningfulWorkUnixMilliseconds(
+        IReadOnlyDictionary<string, long> lastMeaningfulWorkByPrimaryMuscle,
+        CanonicalMuscleGroup primaryMuscle)
+    {
+        ArgumentNullException.ThrowIfNull(lastMeaningfulWorkByPrimaryMuscle);
+        return GetLastWorkUnixMilliseconds(
+            lastMeaningfulWorkByPrimaryMuscle,
+            primaryMuscle);
     }
 
     public static bool IsPrimaryMuscleRecovering(
@@ -36,17 +58,38 @@ public static class WorkoutRecoveryPolicy
         CanonicalMuscleGroup primaryMuscle,
         long nowUnixMilliseconds)
     {
-        long lastHardWorkUnixMilliseconds = GetLastHardWorkUnixMilliseconds(
+        return IsPrimaryMuscleWithinRecoveryWindow(
             lastHardWorkByPrimaryMuscle,
-            primaryMuscle);
-        if (lastHardWorkUnixMilliseconds <= 0)
-        {
-            return false;
-        }
+            primaryMuscle,
+            nowUnixMilliseconds,
+            HardRecoveryWindowMilliseconds);
+    }
 
-        long elapsedMilliseconds = nowUnixMilliseconds -
-            lastHardWorkUnixMilliseconds;
-        return elapsedMilliseconds < HardRecoveryWindowMilliseconds;
+    public static bool IsPrimaryMuscleInModerateRecovery(
+        IReadOnlyDictionary<string, long> lastMeaningfulWorkByPrimaryMuscle,
+        CanonicalMuscleGroup primaryMuscle,
+        long nowUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(lastMeaningfulWorkByPrimaryMuscle);
+        return IsPrimaryMuscleWithinRecoveryWindow(
+            lastMeaningfulWorkByPrimaryMuscle,
+            primaryMuscle,
+            nowUnixMilliseconds,
+            ModerateRecoveryWindowMilliseconds);
+    }
+
+    public static bool IsModerateExerciseRecovering(
+        Exercise exercise,
+        IReadOnlyDictionary<string, long> lastMeaningfulWorkByPrimaryMuscle,
+        long nowUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+        ArgumentNullException.ThrowIfNull(lastMeaningfulWorkByPrimaryMuscle);
+        return IsModerateExercise(exercise) &&
+            IsPrimaryMuscleInModerateRecovery(
+                lastMeaningfulWorkByPrimaryMuscle,
+                exercise.PrimaryCanonicalGroup,
+                nowUnixMilliseconds);
     }
 
     public static HardExerciseRotationStatus GetRotationStatus(
@@ -76,24 +119,66 @@ public static class WorkoutRecoveryPolicy
             : HardExerciseRotationStatus.Neutral;
     }
 
-    public static void RecordCompletedHardExercise(
+    public static void RecordCompletedMuscularWork(
+        IDictionary<string, long> lastMeaningfulWorkByPrimaryMuscle,
         IDictionary<string, long> lastHardWorkByPrimaryMuscle,
         Exercise exercise,
         long completedAtUnixMilliseconds)
     {
+        ArgumentNullException.ThrowIfNull(lastMeaningfulWorkByPrimaryMuscle);
         ArgumentNullException.ThrowIfNull(lastHardWorkByPrimaryMuscle);
         ArgumentNullException.ThrowIfNull(exercise);
 
-        if (!IsHardExercise(exercise) || completedAtUnixMilliseconds <= 0)
+        if (completedAtUnixMilliseconds <= 0 ||
+            (!IsModerateExercise(exercise) && !IsHardExercise(exercise)))
         {
             return;
         }
 
         string primaryMuscle = exercise.PrimaryCanonicalGroup.ToString();
-        _ = lastHardWorkByPrimaryMuscle.TryGetValue(
+        RecordCompletion(
+            lastMeaningfulWorkByPrimaryMuscle,
             primaryMuscle,
-            out long previousCompletion);
-        lastHardWorkByPrimaryMuscle[primaryMuscle] = Math.Max(
+            completedAtUnixMilliseconds);
+        if (IsHardExercise(exercise))
+        {
+            RecordCompletion(
+                lastHardWorkByPrimaryMuscle,
+                primaryMuscle,
+                completedAtUnixMilliseconds);
+        }
+    }
+
+    private static long GetLastWorkUnixMilliseconds(
+        IReadOnlyDictionary<string, long> lastWorkByPrimaryMuscle,
+        CanonicalMuscleGroup primaryMuscle) =>
+        lastWorkByPrimaryMuscle.GetValueOrDefault(primaryMuscle.ToString());
+
+    private static bool IsPrimaryMuscleWithinRecoveryWindow(
+        IReadOnlyDictionary<string, long> lastWorkByPrimaryMuscle,
+        CanonicalMuscleGroup primaryMuscle,
+        long nowUnixMilliseconds,
+        long recoveryWindowMilliseconds)
+    {
+        long lastWorkUnixMilliseconds = GetLastWorkUnixMilliseconds(
+            lastWorkByPrimaryMuscle,
+            primaryMuscle);
+        if (lastWorkUnixMilliseconds <= 0)
+        {
+            return false;
+        }
+
+        return nowUnixMilliseconds - lastWorkUnixMilliseconds <
+            recoveryWindowMilliseconds;
+    }
+
+    private static void RecordCompletion(
+        IDictionary<string, long> history,
+        string primaryMuscle,
+        long completedAtUnixMilliseconds)
+    {
+        _ = history.TryGetValue(primaryMuscle, out long previousCompletion);
+        history[primaryMuscle] = Math.Max(
             completedAtUnixMilliseconds,
             previousCompletion);
     }

@@ -169,6 +169,8 @@ async function bootstrap() {
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       showCompletion(false);
+    } else if (session.getPendingMovementGroup()) {
+      restorePendingMovement();
     } else {
       showDuration();
     }
@@ -199,6 +201,7 @@ function bindEvents() {
   elements.mediaRetry.addEventListener("click", retryMedia);
   elements.doneButton.addEventListener("click", closeCompletion);
   document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("pagehide", handlePageHide);
 }
 
 function byId(id) {
@@ -403,7 +406,7 @@ function startWorkout() {
   }
 }
 
-function showNextExercise() {
+function showNextExercise({ preservePendingMovement = false } = {}) {
   if (!session) {
     return;
   }
@@ -428,12 +431,61 @@ function showNextExercise() {
   elements.status.textContent =
     `Round ${position} of ${total}. ${currentExercise.name}.`;
 
-  stopRuntimeTimers();
+  stopRuntimeTimers(preservePendingMovement);
   resetMovementVisuals();
   showReadyPanel();
   showScreen("workout");
   requestWakeLock();
   loadExerciseMedia();
+}
+
+function restorePendingMovement() {
+  if (!session) {
+    return false;
+  }
+  const pendingGroup = session.getPendingMovementGroup();
+  if (!pendingGroup) {
+    return false;
+  }
+
+  showNextExercise({ preservePendingMovement: true });
+  if (!currentGroup || currentGroup.id !== pendingGroup.id || !currentExercise) {
+    throw new Error("The persisted movement is not the next workout round.");
+  }
+
+  movementRemaining = session.getPendingMovementMillisecondsRemaining(Date.now());
+  movementEndsAt = 0;
+  movementRunning = false;
+  movementPauseReason = session.state.pendingMovementPausedByUser
+    ? "user"
+    : "restore";
+  session.pauseMovement(
+    currentGroup,
+    movementRemaining,
+    movementPauseReason === "user",
+  );
+  persistState();
+  lastMovementPhase = null;
+  showMovePanel();
+  renderPersistedMovementCountdown();
+  setPlaybackControlsEnabled(
+    movementPauseReason === "user" && mediaReady,
+  );
+  renderPlaybackToggle();
+  return true;
+}
+
+function renderPersistedMovementCountdown() {
+  const movementDuration = getMovementCountdownDurationMs(currentGroup);
+  const state = getMovementPhaseState(
+    movementRemaining,
+    usesTimedPair(currentExercise),
+    currentGroup?.usesFullSideTiming === true,
+  );
+  elements.movementCountdown.value = String(state.secondsRemaining);
+  elements.movementCountdown.textContent = String(state.secondsRemaining);
+  elements.movementProgressFill.style.transform =
+    `scaleX(${movementRemaining / movementDuration})`;
 }
 
 function renderSidePhasePreview(exercise) {
@@ -728,6 +780,15 @@ function setMovementDeadline(remainingMilliseconds) {
   movementEndsAt = performance.now() + remainingMilliseconds;
   movementRunning = true;
   movementPauseReason = null;
+  if (session && currentGroup) {
+    const persistedRemaining = Math.max(1, Math.trunc(remainingMilliseconds));
+    session.beginMovement(
+      currentGroup,
+      persistedRemaining,
+      Date.now() + persistedRemaining,
+    );
+    persistState();
+  }
   setPlaybackControlsEnabled(true);
   renderPlaybackToggle();
   updateMovement();
@@ -915,6 +976,14 @@ function pauseMovement(reason) {
   movementTimer = null;
   movementRunning = false;
   movementPauseReason = reason;
+  if (session && currentGroup) {
+    session.pauseMovement(
+      currentGroup,
+      Math.max(1, Math.trunc(movementRemaining)),
+      reason === "user",
+    );
+    persistState();
+  }
   elements.video.pause();
   setPlaybackControlsEnabled(reason === "user" && mediaReady);
   renderPlaybackToggle();
@@ -1152,19 +1221,23 @@ function closeCompletion() {
   showDuration();
 }
 
-function stopMovementTimer() {
+function stopMovementTimer(clearPendingMovement = true) {
   clearInterval(movementTimer);
   movementTimer = null;
   movementRunning = false;
   movementPauseReason = null;
   movementEndsAt = 0;
   movementRemaining = 0;
+  if (clearPendingMovement && session?.state.pendingMovementGroupId) {
+    session.clearPendingMovement();
+    persistState();
+  }
   setPlaybackControlsEnabled(false);
   renderPlaybackToggle();
 }
 
-function stopRuntimeTimers() {
-  stopMovementTimer();
+function stopRuntimeTimers(preservePendingMovement = false) {
+  stopMovementTimer(!preservePendingMovement);
   restActive = false;
   clearInterval(restTimer);
   restTimer = null;
@@ -1306,6 +1379,16 @@ function handleVisibilityChange() {
   if (!elements.workoutScreen.hidden) {
     requestWakeLock();
   }
+}
+
+function handlePageHide() {
+  clearMediaRecoveryTimer();
+  if (movementRunning) {
+    pauseMovement("visibility");
+  }
+  clearInterval(restTimer);
+  restTimer = null;
+  elements.video.pause();
 }
 
 function scheduleMediaRecoveryFailure(generation) {

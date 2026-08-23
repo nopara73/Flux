@@ -12,7 +12,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 14;
+    private const int CurrentStateVersion = 16;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
@@ -111,7 +111,9 @@ public sealed class ExerciseSessionService
         NormalizeOutcomes(state);
         NormalizeCompletionState(state);
         NormalizePendingRest(state);
+        NormalizePendingMovement(state);
         RepairActiveLineup(state);
+        NormalizePendingMovement(state);
         NormalizeCompletionState(state);
 
         if (state.WorkoutCompleted && state.CompletionAcknowledged)
@@ -155,6 +157,7 @@ public sealed class ExerciseSessionService
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
+        ClearPendingMovement(state);
         ClearPendingRest(state);
         ClearLegacyMigrationState(state);
         CarryKeptExercisesForward(
@@ -318,13 +321,100 @@ public sealed class ExerciseSessionService
                 nameof(endsAtUnixMilliseconds));
         }
 
+        ClearPendingMovement(state);
         state.PendingRestGroupId = group.Id;
         state.PendingRestEndsAtUnixMilliseconds = endsAtUnixMilliseconds;
         state.PendingRestKept = false;
-        WorkoutRecoveryPolicy.RecordCompletedHardExercise(
+        WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
+            state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
             state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
             GetSelectedExercise(state, group),
             GetCurrentUnixTimeMilliseconds());
+    }
+
+    public void BeginMovement(
+        WorkoutState state,
+        WorkoutGroup group,
+        long millisecondsRemaining,
+        long endsAtUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        ValidatePendingMovement(
+            state,
+            group,
+            millisecondsRemaining,
+            endsAtUnixMilliseconds,
+            allowPausedDeadline: false);
+        ClearPendingRest(state);
+        state.PendingMovementGroupId = group.Id;
+        state.PendingMovementMillisecondsRemaining = millisecondsRemaining;
+        state.PendingMovementEndsAtUnixMilliseconds = endsAtUnixMilliseconds;
+        state.PendingMovementPausedByUser = false;
+    }
+
+    public void PauseMovement(
+        WorkoutState state,
+        WorkoutGroup group,
+        long millisecondsRemaining,
+        bool pausedByUser)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        ValidatePendingMovement(
+            state,
+            group,
+            millisecondsRemaining,
+            endsAtUnixMilliseconds: 0,
+            allowPausedDeadline: true);
+        ClearPendingRest(state);
+        state.PendingMovementGroupId = group.Id;
+        state.PendingMovementMillisecondsRemaining = millisecondsRemaining;
+        state.PendingMovementEndsAtUnixMilliseconds = 0;
+        state.PendingMovementPausedByUser = pausedByUser;
+    }
+
+    public WorkoutGroup? GetPendingMovementGroup(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        return GetValidPendingMovementGroup(state);
+    }
+
+    public long GetPendingMovementMillisecondsRemaining(
+        WorkoutState state,
+        long nowUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        if (nowUnixMilliseconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(nowUnixMilliseconds));
+        }
+
+        WorkoutGroup? group = GetValidPendingMovementGroup(state);
+        if (group is null)
+        {
+            return 0;
+        }
+
+        long remaining = state.PendingMovementEndsAtUnixMilliseconds > 0
+            ? Math.Min(
+                state.PendingMovementMillisecondsRemaining,
+                state.PendingMovementEndsAtUnixMilliseconds - nowUnixMilliseconds)
+            : state.PendingMovementMillisecondsRemaining;
+        long maximum = MovementPhaseSchedule.GetCountdownDurationSeconds(
+            group.UsesFullSideTiming) * 1_000L;
+        return Math.Clamp(remaining, 1L, maximum);
+    }
+
+    public void ClearPendingMovement(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        state.PendingMovementGroupId = null;
+        state.PendingMovementMillisecondsRemaining = 0;
+        state.PendingMovementEndsAtUnixMilliseconds = 0;
+        state.PendingMovementPausedByUser = false;
     }
 
     public Exercise RecordOutcome(
@@ -353,6 +443,7 @@ public sealed class ExerciseSessionService
                 "A direction pair can only be kept after its second direction.");
         }
 
+        ClearPendingMovement(state);
         return group.IsDirectionPairRound
             ? ApplyDirectionPairOutcome(state, group, keep)
             : ApplySingleOutcome(state, group, keep);
@@ -924,6 +1015,7 @@ public sealed class ExerciseSessionService
         BigInteger currentSelectionWeight = AddPriorityDimension(1L);
         BigInteger hardMuscleAgeWeight = AddPriorityDimension(
             Math.Max(0, freshHardMuscleRanks.Count - 1));
+        BigInteger moderateRecoveryAvoidanceWeight = AddPriorityDimension(1L);
         BigInteger hardRecoveryAvoidanceWeight = AddPriorityDimension(1L);
         BigInteger freshHardWeight = AddPriorityDimension(1L);
         BigInteger scoreWeight = AddPriorityDimension(
@@ -953,10 +1045,15 @@ public sealed class ExerciseSessionService
                 allowed[groupIndex, exerciseIndex] = true;
                 HardExerciseRotationStatus hardRotationStatus =
                     WorkoutRecoveryPolicy.GetRotationStatus(
-                    exercise,
-                    group,
-                    state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
-                    selectionTimeUnixMilliseconds);
+                        exercise,
+                        group,
+                        state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
+                        selectionTimeUnixMilliseconds);
+                bool isRecoveringModerate =
+                    WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
+                        exercise,
+                        state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+                        selectionTimeUnixMilliseconds);
                 int hardMuscleAgeRank = hardRotationStatus ==
                         HardExerciseRotationStatus.FreshHard
                     ? freshHardMuscleRanks.GetValueOrDefault(
@@ -975,7 +1072,8 @@ public sealed class ExerciseSessionService
                      GetSelectionScore(exercise) == highestScoreByGroup[group.Id]);
                 bool hasContextualKeepPreference = isKept &&
                     hardRotationStatus !=
-                        HardExerciseRotationStatus.RecoveringHard;
+                        HardExerciseRotationStatus.RecoveringHard &&
+                    !isRecoveringModerate;
                 BigInteger utility =
                     (allowSavedSelectionException &&
                      currentExerciseIds.GetValueOrDefault(group.Id) == exercise.Id
@@ -990,6 +1088,9 @@ public sealed class ExerciseSessionService
                     scoreRanks[GetSelectionScore(exercise)] * scoreWeight +
                     (hardRotationStatus != HardExerciseRotationStatus.RecoveringHard
                         ? hardRecoveryAvoidanceWeight
+                        : BigInteger.Zero) +
+                    (!isRecoveringModerate
+                        ? moderateRecoveryAvoidanceWeight
                         : BigInteger.Zero) +
                     (hardRotationStatus == HardExerciseRotationStatus.FreshHard
                         ? freshHardWeight
@@ -1507,6 +1608,7 @@ public sealed class ExerciseSessionService
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
         state.LastHardWorkUnixMillisecondsByPrimaryMuscle ??= [];
+        state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle ??= [];
         state.NextWorkoutExcludedExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
         state.ActiveSetCountsBySelectionGroupId ??= [];
@@ -1599,17 +1701,28 @@ public sealed class ExerciseSessionService
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
         ExpandDirectionPairIds(state.LastKeptExerciseIds);
-        NormalizeHardWorkHistory(state);
+        NormalizeWorkHistory(state);
         state.NextWorkoutExcludedExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
         ExpandDirectionPairIds(state.NextWorkoutExcludedExerciseIds);
     }
 
-    private static void NormalizeHardWorkHistory(WorkoutState state)
+    private static void NormalizeWorkHistory(WorkoutState state)
+    {
+        state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle =
+            NormalizeWorkHistory(
+                state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle);
+        state.LastHardWorkUnixMillisecondsByPrimaryMuscle =
+            NormalizeWorkHistory(
+                state.LastHardWorkUnixMillisecondsByPrimaryMuscle);
+    }
+
+    private static Dictionary<string, long> NormalizeWorkHistory(
+        IReadOnlyDictionary<string, long> history)
     {
         var normalized = new Dictionary<string, long>(StringComparer.Ordinal);
         foreach ((string muscleKey, long completedAtUnixMilliseconds) in
-                 state.LastHardWorkUnixMillisecondsByPrimaryMuscle)
+                 history)
         {
             if (completedAtUnixMilliseconds <= 0 ||
                 !Enum.TryParse(
@@ -1627,7 +1740,7 @@ public sealed class ExerciseSessionService
                 normalized.GetValueOrDefault(canonicalKey));
         }
 
-        state.LastHardWorkUnixMillisecondsByPrimaryMuscle = normalized;
+        return normalized;
     }
 
     private void ExpandDirectionPairIds(HashSet<int> exerciseIds)
@@ -1762,6 +1875,86 @@ public sealed class ExerciseSessionService
         }
     }
 
+    private void NormalizePendingMovement(WorkoutState state)
+    {
+        if (GetValidPendingMovementGroup(state) is null)
+        {
+            ClearPendingMovement(state);
+            return;
+        }
+
+        // Movement and rest are mutually exclusive persisted phases. A valid
+        // rest means movement already completed, so rest takes precedence.
+        if (GetValidPendingRestGroup(state) is not null)
+        {
+            ClearPendingMovement(state);
+        }
+    }
+
+    private WorkoutGroup? GetValidPendingMovementGroup(WorkoutState state)
+    {
+        if (state.PendingMovementGroupId is not string pendingGroupId ||
+            state.PendingMovementMillisecondsRemaining <= 0 ||
+            state.Outcomes.ContainsKey(pendingGroupId))
+        {
+            return null;
+        }
+
+        WorkoutGroup? pendingGroup = GetActiveGroups(state)
+            .SingleOrDefault(group => group.Id == pendingGroupId);
+        if (pendingGroup is null || GetNextGroup(state)?.Id != pendingGroup.Id)
+        {
+            return null;
+        }
+
+        long maximum = MovementPhaseSchedule.GetCountdownDurationSeconds(
+            pendingGroup.UsesFullSideTiming) * 1_000L;
+        if (state.PendingMovementMillisecondsRemaining > maximum ||
+            state.PendingMovementEndsAtUnixMilliseconds < 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            _ = GetSelectedExercise(state, pendingGroup);
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+
+        return pendingGroup;
+    }
+
+    private void ValidatePendingMovement(
+        WorkoutState state,
+        WorkoutGroup group,
+        long millisecondsRemaining,
+        long endsAtUnixMilliseconds,
+        bool allowPausedDeadline)
+    {
+        if (GetNextGroup(state)?.Id != group.Id)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the next workout group.");
+        }
+
+        long maximum = MovementPhaseSchedule.GetCountdownDurationSeconds(
+            group.UsesFullSideTiming) * 1_000L;
+        if (millisecondsRemaining <= 0 || millisecondsRemaining > maximum)
+        {
+            throw new ArgumentOutOfRangeException(nameof(millisecondsRemaining));
+        }
+        if ((!allowPausedDeadline && endsAtUnixMilliseconds <= 0) ||
+            (allowPausedDeadline && endsAtUnixMilliseconds != 0))
+        {
+            throw new ArgumentOutOfRangeException(nameof(endsAtUnixMilliseconds));
+        }
+
+        _ = GetSelectedExercise(state, group);
+    }
+
     private WorkoutGroup? GetValidPendingRestGroup(WorkoutState state)
     {
         if (state.PendingRestGroupId is not string pendingGroupId ||
@@ -1820,6 +2013,10 @@ public sealed class ExerciseSessionService
         state.ActiveFullSideRoundIds.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
+        state.PendingMovementGroupId = null;
+        state.PendingMovementMillisecondsRemaining = 0;
+        state.PendingMovementEndsAtUnixMilliseconds = 0;
+        state.PendingMovementPausedByUser = false;
         state.PendingRestGroupId = null;
         state.PendingRestEndsAtUnixMilliseconds = 0;
         state.PendingRestKept = false;
@@ -2200,6 +2397,7 @@ public sealed class ExerciseSessionService
                     .ThenByDescending(candidate => candidate.RealScore)
                     .ThenByDescending(candidate => candidate.IsFreshHard)
                     .ThenBy(candidate => candidate.IsRecoveringHard)
+                    .ThenBy(candidate => candidate.IsRecoveringModerate)
                     .ThenByDescending(candidate => candidate.IsKept)
                     .ThenBy(candidate => candidate.LastHardWorkUnixMilliseconds)
                     .ThenByDescending(candidate => candidate.IsMirrorPreferred)
@@ -2296,6 +2494,11 @@ public sealed class ExerciseSessionService
                     group,
                     state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
                     selectionTimeUnixMilliseconds);
+            bool isRecoveringModerate =
+                WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
+                    candidate,
+                    state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+                    selectionTimeUnixMilliseconds);
             return new MuscleBudgetCandidate(
                 candidate.Id,
                 selectionScore,
@@ -2306,6 +2509,7 @@ public sealed class ExerciseSessionService
                     HardExerciseRotationStatus.FreshHard,
                 rotationStatus ==
                     HardExerciseRotationStatus.RecoveringHard,
+                isRecoveringModerate,
                 state.LastKeptExerciseIds.Contains(candidate.Id),
                 rotationStatus == HardExerciseRotationStatus.FreshHard
                     ? WorkoutRecoveryPolicy.GetLastHardWorkUnixMilliseconds(
@@ -2343,6 +2547,11 @@ public sealed class ExerciseSessionService
                 group,
                 state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
                 selectionTimeUnixMilliseconds);
+        bool isRecoveringModerate =
+            WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
+                candidate,
+                state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+                selectionTimeUnixMilliseconds);
         return new MuscleBudgetCandidate(
             candidate.Id,
             selectionScore,
@@ -2353,6 +2562,7 @@ public sealed class ExerciseSessionService
                 HardExerciseRotationStatus.FreshHard,
             rotationStatus ==
                 HardExerciseRotationStatus.RecoveringHard,
+            isRecoveringModerate,
             state.LastKeptExerciseIds.Contains(candidate.Id),
             rotationStatus == HardExerciseRotationStatus.FreshHard
                 ? WorkoutRecoveryPolicy.GetLastHardWorkUnixMilliseconds(
@@ -2492,6 +2702,7 @@ public sealed class ExerciseSessionService
         long AdjustedScoreHalfUnits,
         bool IsFreshHard,
         bool IsRecoveringHard,
+        bool IsRecoveringModerate,
         bool IsKept,
         long LastHardWorkUnixMilliseconds,
         bool IsMirrorPreferred,

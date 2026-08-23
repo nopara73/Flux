@@ -4,6 +4,8 @@ public sealed class Exercise
 {
     public const int MinimumMuscularDemand = 0;
 
+    public const int ModerateMuscularDemand = 1;
+
     public const int MaximumMuscularDemand = 2;
 
     public required int Id { get; init; }

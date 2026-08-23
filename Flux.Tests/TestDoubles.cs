@@ -61,6 +61,10 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 new Dictionary<string, long>(
                     state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
                     StringComparer.Ordinal),
+            LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle =
+                new Dictionary<string, long>(
+                    state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+                    StringComparer.Ordinal),
             NextWorkoutExcludedExerciseIds = new HashSet<int>(
                 state.NextWorkoutExcludedExerciseIds),
             ActiveExtraSetSelectionGroupIds = new HashSet<string>(
@@ -75,6 +79,12 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             ActiveFullSideRoundIds = new HashSet<string>(
                 state.ActiveFullSideRoundIds,
                 StringComparer.Ordinal),
+            PendingMovementGroupId = state.PendingMovementGroupId,
+            PendingMovementMillisecondsRemaining =
+                state.PendingMovementMillisecondsRemaining,
+            PendingMovementEndsAtUnixMilliseconds =
+                state.PendingMovementEndsAtUnixMilliseconds,
+            PendingMovementPausedByUser = state.PendingMovementPausedByUser,
             PendingRestGroupId = state.PendingRestGroupId,
             PendingRestEndsAtUnixMilliseconds = state.PendingRestEndsAtUnixMilliseconds,
             PendingRestKept = state.PendingRestKept,

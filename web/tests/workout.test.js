@@ -15,6 +15,8 @@ import {
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
   MAXIMUM_MUSCULAR_DEMAND,
+  MODERATE_MUSCULAR_DEMAND,
+  MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_MUSCULAR_DEMAND,
@@ -49,9 +51,12 @@ import {
   getAdjustedScoreHalfUnits,
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
+  getLastMeaningfulWorkUnixMilliseconds,
   getMuscleBudgetTemporaryDownvoteHalfUnits,
   getSelectionKey,
   hasReviewedMuscularDemand,
+  isModerateExerciseRecovering,
+  isPrimaryMuscleInModerateRecovery,
   isPrimaryMuscleRecovering,
   isSelectable,
   isSelectableForWorkoutProfile,
@@ -198,7 +203,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   }
 });
 
-test("hard recovery is a persisted rolling primary-muscle window", () => {
+test("muscular recovery uses persisted rolling primary-muscle windows", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const group = RESOLUTIONS.get(3).groups[0];
   const primaryMuscle = group.canonicalGroups[0];
@@ -210,8 +215,13 @@ test("hard recovery is a persisted rolling primary-muscle window", () => {
   const fresh = {
     [primaryMuscle]: now - HARD_RECOVERY_WINDOW_MS,
   };
+  const moderateRecovering = {
+    [primaryMuscle]: now - MODERATE_RECOVERY_WINDOW_MS + 1,
+  };
 
   assert.equal(HARD_MUSCULAR_DEMAND, 2);
+  assert.equal(MODERATE_MUSCULAR_DEMAND, 1);
+  assert.equal(MODERATE_RECOVERY_WINDOW_MS, 18 * 60 * 60 * 1000);
   assert.equal(isPrimaryMuscleRecovering(recovering, primaryMuscle, now), true);
   assert.equal(isPrimaryMuscleRecovering(fresh, primaryMuscle, now), false);
   assert.equal(
@@ -226,11 +236,24 @@ test("hard recovery is a persisted rolling primary-muscle window", () => {
     getHardRotationStatus(moderate, group, recovering, now),
     HARD_ROTATION_STATUS.Neutral,
   );
+  assert.equal(isModerateExerciseRecovering(moderate, moderateRecovering, now), true);
+  assert.equal(isModerateExerciseRecovering(hard, moderateRecovering, now), false);
+  assert.equal(
+    isPrimaryMuscleInModerateRecovery({
+      [primaryMuscle]: now - MODERATE_RECOVERY_WINDOW_MS,
+    }, primaryMuscle, now),
+    false,
+  );
 
   const restored = parseStoredState(JSON.stringify({
     lastKeptExerciseIds: [1, 2],
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {
       [primaryMuscle]: now,
+      NotAMuscle: now,
+      Chest: "invalid",
+    },
+    lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {
+      [primaryMuscle]: now - 1,
       NotAMuscle: now,
       Chest: "invalid",
     },
@@ -242,12 +265,22 @@ test("hard recovery is a persisted rolling primary-muscle window", () => {
   assert.deepEqual(restored.lastHardWorkUnixMillisecondsByPrimaryMuscle, {
     [primaryMuscle]: now,
   });
+  assert.deepEqual(restored.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle, {
+    [primaryMuscle]: now - 1,
+  });
   assert.equal(
     getLastHardWorkUnixMilliseconds(
       restored.lastHardWorkUnixMillisecondsByPrimaryMuscle,
       primaryMuscle,
     ),
     now,
+  );
+  assert.equal(
+    getLastMeaningfulWorkUnixMilliseconds(
+      restored.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+      primaryMuscle,
+    ),
+    now - 1,
   );
   assert.equal("activeRecoveryExcludedExerciseIds" in restored, false);
 });
@@ -347,7 +380,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 11);
+  assert.equal(state.version, 13);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -364,7 +397,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 11);
+  assert.equal(state.version, 13);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -1342,6 +1375,59 @@ test("recovering hard keep yields to a non-hard keep without being forgotten", (
   assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
 });
 
+test("recovering moderate keep yields to easy work without being forgotten", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const moderateKeep = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    1,
+  );
+  const easy = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    0,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 3;
+  state.lastKeptExerciseIds = [moderateKeep.id];
+  state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = {
+    [moderateKeep.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
+  };
+  state.selectedExerciseIds = { [groups[0].id]: moderateKeep.id };
+  const session = new WorkoutSession(
+    [moderateKeep, easy, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], easy.id);
+  assert.ok(session.state.lastKeptExerciseIds.includes(moderateKeep.id));
+});
+
 test("hard rotation never overrides a higher persisted user score", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
@@ -1439,6 +1525,55 @@ test("recovery remains soft when the hard exercise has a higher user score", () 
   assert.equal(session.state.selectedExerciseIds[groups[0].id], recoveringHard.id);
 });
 
+test("moderate recovery remains soft when the exercise has a higher user score", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const recoveringModerate = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    1,
+    undefined,
+    true,
+    1,
+  );
+  const easy = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    0,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = {
+    [recoveringModerate.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
+  };
+  const session = new WorkoutSession(
+    [recoveringModerate, easy, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], recoveringModerate.id);
+});
+
 test("equivalent fresh hard candidates favor the longest-rested primary muscle", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
@@ -1491,7 +1626,7 @@ test("equivalent fresh hard candidates favor the longest-rested primary muscle",
   assert.equal(session.state.selectedExerciseIds[groups[0].id], restedHard.id);
 });
 
-test("completed hard exercise starts recovery but skipped exercise does not", () => {
+test("completed hard exercise starts both recovery windows but skipped does not", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
   const hard = exercise(
@@ -1539,6 +1674,12 @@ test("completed hard exercise starts recovery but skipped exercise does not", ()
     ],
     now,
   );
+  assert.equal(
+    persistedCompletion.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[
+      hard.primaryCanonicalGroup
+    ],
+    now,
+  );
   assert.equal(completed.getScore(hard), 10);
 
   const skipped = new WorkoutSession(
@@ -1551,6 +1692,58 @@ test("completed hard exercise starts recovery but skipped exercise does not", ()
   skipped.recordOutcome(skipped.getNextGroup(), false);
 
   assert.deepEqual(skipped.state.lastHardWorkUnixMillisecondsByPrimaryMuscle, {});
+  assert.deepEqual(skipped.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle, {});
+});
+
+test("completed moderate exercise starts only meaningful recovery", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const moderate = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    10,
+    undefined,
+    true,
+    1,
+  );
+  const alternative = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    10,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    10,
+  );
+  const session = new WorkoutSession(
+    [moderate, alternative, middle, last],
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const completedGroup = session.getNextGroup();
+
+  session.beginRest(completedGroup, now + 15_000);
+
+  assert.equal(
+    session.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[
+      moderate.primaryCanonicalGroup
+    ],
+    now,
+  );
+  assert.deepEqual(session.state.lastHardWorkUnixMillisecondsByPrimaryMuscle, {});
+  assert.equal(session.getScore(moderate), 10);
 });
 
 test("rejected replacements use global matching instead of greedy group order", () => {
@@ -2198,7 +2391,7 @@ test("version five long workout recomputes direction allocation without enabling
   );
   restored.normalizeActiveLongWorkoutAllocation();
 
-  assert.equal(restored.state.version, 11);
+  assert.equal(restored.state.version, 13);
   assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
@@ -2824,6 +3017,61 @@ test("approved clarity corrections preserve browser memory", () => {
     );
     assert.equal(restored.getScore(currentExercise), -3);
   }
+});
+
+test("an in-progress movement restores with its exact paused time", () => {
+  const now = Date.UTC(2026, 7, 23, 2, 0, 0);
+  const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  started.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = started.getNextGroup();
+  started.beginMovement(group, 42_000, now + 42_000);
+
+  const restoredRunning = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(started.state)),
+    () => 0,
+  );
+  restoredRunning.initialize();
+  assert.equal(restoredRunning.state.activeWorkoutMinutes, 3);
+  assert.equal(restoredRunning.getPendingMovementGroup()?.id, group.id);
+  assert.equal(
+    restoredRunning.getPendingMovementMillisecondsRemaining(now + 2_000),
+    40_000,
+  );
+
+  restoredRunning.pauseMovement(group, 31_123, false);
+  const restoredPaused = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(restoredRunning.state)),
+    () => 0,
+  );
+  restoredPaused.initialize();
+
+  assert.equal(restoredPaused.state.activeWorkoutMinutes, 3);
+  assert.equal(restoredPaused.state.pendingMovementGroupId, group.id);
+  assert.equal(restoredPaused.state.pendingMovementMillisecondsRemaining, 31_123);
+  assert.equal(restoredPaused.state.pendingMovementEndsAtUnixMilliseconds, 0);
+  assert.equal(restoredPaused.state.pendingMovementPausedByUser, false);
+  assert.equal(
+    restoredPaused.getPendingMovementMillisecondsRemaining(now + 7_200_000),
+    31_123,
+  );
+});
+
+test("beginning rest clears the completed movement resume checkpoint", () => {
+  const now = Date.UTC(2026, 7, 23, 2, 0, 0);
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = session.getNextGroup();
+  session.beginMovement(group, 50_000, now + 50_000);
+
+  session.beginRest(group, now + 15_000);
+
+  assert.equal(session.state.pendingMovementGroupId, null);
+  assert.equal(session.state.pendingMovementMillisecondsRemaining, 0);
+  assert.equal(session.state.pendingMovementEndsAtUnixMilliseconds, 0);
+  assert.equal(session.state.pendingMovementPausedByUser, false);
+  assert.equal(session.state.pendingRestGroupId, group.id);
 });
 
 test("second clarity corrections preserve earlier browser memory", () => {

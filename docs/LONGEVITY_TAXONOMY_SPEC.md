@@ -441,12 +441,15 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 
 ### 8.6 Abrupt close
 
-The next launch always starts at duration selection, never mid-workout, while respecting decisions already made:
+An actively timed movement resumes after process recreation; other interruption
+phases retain their existing settlement behavior:
 
 - Completed rest decisions remain persisted.
 - If the app closes during a pending rest, resolve that rest using its persisted `kept` value: tapped means keep; not tapped means one decrement/replacement.
-- If it closes during Ready or the 45-second exercise before rest begins, record no outcome for that unfinished round.
-- Apply replacements for all resolved not-kept rounds, retain kept and unreached selections, clear active progress, and preserve last duration.
+- When movement starts or resumes, persist its round, remaining duration, and a wall-clock deadline. On backgrounding or user pause, replace the deadline with the exact paused remaining duration and persist whether the pause was user initiated.
+- If the process dies during Move, restore that same round and remaining time. Do not score it, restart it, or allow time spent in the background to consume the paused timer.
+- If it closes during Ready before movement begins, record no outcome for that unfinished round and return to duration selection under the existing interruption-finalization path.
+- When an interruption is finalized rather than restored, apply replacements for all resolved not-kept rounds, retain kept and unreached selections, clear active progress, and preserve last duration.
 - Initialization must be idempotent after process death at every write boundary.
 
 ### 8.7 Legacy-state compatibility

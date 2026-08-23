@@ -10,7 +10,7 @@ public sealed class WorkoutRecoveryPolicyTests
             .ToUnixTimeMilliseconds();
 
     [Fact]
-    public void RecoveryIsRollingForThirtySixHoursAtPrimaryMuscleLevel()
+    public void RecoveryWindowsUseRollingBoundariesAtPrimaryMuscleLevel()
     {
         const string muscle = nameof(CanonicalMuscleGroup.GlutealExtensors);
 
@@ -32,6 +32,23 @@ public sealed class WorkoutRecoveryPolicyTests
             Now));
         Assert.False(WorkoutRecoveryPolicy.IsPrimaryMuscleRecovering(
             new Dictionary<string, long>(),
+            CanonicalMuscleGroup.GlutealExtensors,
+            Now));
+
+        Assert.True(WorkoutRecoveryPolicy.IsPrimaryMuscleInModerateRecovery(
+            new Dictionary<string, long>
+            {
+                [muscle] = Now -
+                    WorkoutRecoveryPolicy.ModerateRecoveryWindowMilliseconds + 1,
+            },
+            CanonicalMuscleGroup.GlutealExtensors,
+            Now));
+        Assert.False(WorkoutRecoveryPolicy.IsPrimaryMuscleInModerateRecovery(
+            new Dictionary<string, long>
+            {
+                [muscle] = Now -
+                    WorkoutRecoveryPolicy.ModerateRecoveryWindowMilliseconds,
+            },
             CanonicalMuscleGroup.GlutealExtensors,
             Now));
     }
@@ -76,6 +93,14 @@ public sealed class WorkoutRecoveryPolicyTests
                 group,
                 recovery,
                 Now));
+        Assert.True(WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
+            moderate,
+            recovery,
+            Now));
+        Assert.False(WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
+            freshHard,
+            recovery,
+            Now));
         Assert.Equal(
             HardExerciseRotationStatus.Neutral,
             WorkoutRecoveryPolicy.GetRotationStatus(
@@ -86,7 +111,7 @@ public sealed class WorkoutRecoveryPolicyTests
     }
 
     [Fact]
-    public void CompletingHardWorkRecordsThePrimaryMuscleWithoutRewindingHistory()
+    public void CompletedMuscularWorkRecordsOnlyItsApplicableRecoveryHistories()
     {
         Exercise hard = Exercise(
             1,
@@ -96,22 +121,41 @@ public sealed class WorkoutRecoveryPolicyTests
             2,
             CanonicalMuscleGroup.Chest,
             muscularDemand: 1);
-        var history = new Dictionary<string, long>
+        Exercise easy = Exercise(
+            3,
+            CanonicalMuscleGroup.AnteriorLateralNeckAndHyoidMuscles,
+            muscularDemand: 0);
+        var hardHistory = new Dictionary<string, long>
         {
             [hard.PrimaryCanonicalGroup.ToString()] = Now,
         };
+        var meaningfulHistory = new Dictionary<string, long>();
 
-        WorkoutRecoveryPolicy.RecordCompletedHardExercise(
-            history,
+        WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
+            meaningfulHistory,
+            hardHistory,
             hard,
             Now - 1);
-        WorkoutRecoveryPolicy.RecordCompletedHardExercise(
-            history,
+        WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
+            meaningfulHistory,
+            hardHistory,
             moderate,
             Now + 1);
+        WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
+            meaningfulHistory,
+            hardHistory,
+            easy,
+            Now + 2);
 
-        Assert.Equal(Now, history[hard.PrimaryCanonicalGroup.ToString()]);
-        Assert.DoesNotContain(moderate.PrimaryCanonicalGroup.ToString(), history.Keys);
+        Assert.Equal(Now, hardHistory[hard.PrimaryCanonicalGroup.ToString()]);
+        Assert.DoesNotContain(moderate.PrimaryCanonicalGroup.ToString(), hardHistory.Keys);
+        Assert.Equal(
+            Now - 1,
+            meaningfulHistory[hard.PrimaryCanonicalGroup.ToString()]);
+        Assert.Equal(
+            Now + 1,
+            meaningfulHistory[moderate.PrimaryCanonicalGroup.ToString()]);
+        Assert.DoesNotContain(easy.PrimaryCanonicalGroup.ToString(), meaningfulHistory.Keys);
     }
 
     private static Exercise Exercise(

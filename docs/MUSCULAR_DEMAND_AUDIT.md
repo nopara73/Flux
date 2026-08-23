@@ -26,13 +26,17 @@ fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
-`score`; it never creates hardness points or rewrites votes. A fresh rating-`2`
-keep, or a fresh rating-`2` exercise already in the highest available
-saved-score bucket, is preferred when its primary canonical muscle belongs to
-the current workout group. Completing it starts a rolling 36-hour soft recovery
-preference for that primary muscle:
-same-score rating-`0` or `1` work is preferred while every rating-`2` exercise
-with that primary muscle remains selectable and saved for later. Among
+`score`; it never creates hardness points or rewrites votes. Completing a
+rating-`1` exercise starts a rolling 18-hour soft recovery preference for its
+primary canonical muscle, during which same-score rating-`0` work is preferred.
+Completing a rating-`2` exercise starts both that 18-hour window and the
+separate 36-hour hard-work window, during which same-score non-hard work is
+preferred to rating-`2` work for the same primary muscle.
+
+A fresh rating-`2` keep, or a fresh rating-`2` exercise already in the highest
+available saved-score bucket, is preferred when its primary canonical muscle
+belongs to the current workout group. Recovering exercises remain selectable,
+and their keeps remain saved for later; a higher user score still wins. Among
 otherwise equivalent fresh hard choices, the longest-rested primary muscle is
 preferred. Mirror relevance is a lower-order tie-break, and a rejected
-lower-score hard exercise is never pulled upward by this rotation.
+lower-score exercise is never pulled upward by recovery rotation.

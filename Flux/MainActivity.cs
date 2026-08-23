@@ -177,7 +177,12 @@ public class MainActivity : Activity
         _sessionService.Initialize(_state);
         RecoverPendingScoreUpdate();
 
-        if (!_state.WorkoutCompleted && _state.ActiveWorkoutMinutes != 0)
+        WorkoutGroup? pendingMovementGroup =
+            _sessionService.GetPendingMovementGroup(_state);
+
+        if (!_state.WorkoutCompleted &&
+            _state.ActiveWorkoutMinutes != 0 &&
+            pendingMovementGroup is null)
         {
             FinishInterruptedWorkout();
         }
@@ -192,6 +197,10 @@ public class MainActivity : Activity
         if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
             ShowCongratulations();
+        }
+        else if (pendingMovementGroup is not null)
+        {
+            RestorePendingMovement(pendingMovementGroup);
         }
         else
         {
@@ -1668,8 +1677,21 @@ public class MainActivity : Activity
         {
             _mediaReady = true;
             _activeMediaPlayer = mediaPlayer;
-            _activeMediaPlayer.Looping = _loopExerciseVideo;
-            _activeMediaPlayer.SetVolume(0f, 0f);
+            try
+            {
+                _activeMediaPlayer.Looping = _loopExerciseVideo;
+                _activeMediaPlayer.SetVolume(0f, 0f);
+            }
+            catch (Java.Lang.IllegalStateException)
+            {
+                RecoverInvalidMediaPlayerState();
+                return;
+            }
+            catch (ObjectDisposedException)
+            {
+                RecoverInvalidMediaPlayerState();
+                return;
+            }
             if (_countdownPausedForMediaError &&
                 !_countdownPausedByUser &&
                 _activityResumed)
@@ -2075,7 +2097,20 @@ public class MainActivity : Activity
         _freezeHoldAtEnd = true;
         if (_activeMediaPlayer is not null)
         {
-            _activeMediaPlayer.Looping = false;
+            try
+            {
+                _activeMediaPlayer.Looping = false;
+            }
+            catch (Java.Lang.IllegalStateException)
+            {
+                RecoverInvalidMediaPlayerState();
+                return;
+            }
+            catch (ObjectDisposedException)
+            {
+                RecoverInvalidMediaPlayerState();
+                return;
+            }
         }
 
         _exerciseVideo.SeekTo(0);
@@ -2188,6 +2223,46 @@ public class MainActivity : Activity
             $"Round {position} of {totalRounds}. " +
             $"{exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
+    }
+
+    private void RestorePendingMovement(WorkoutGroup pendingGroup)
+    {
+        ShowNextExercise();
+        if (_currentWorkoutGroup?.Id != pendingGroup.Id)
+        {
+            throw new InvalidOperationException(
+                "The persisted movement is not the next workout round.");
+        }
+
+        long millisecondsRemaining =
+            _sessionService.GetPendingMovementMillisecondsRemaining(
+                _state,
+                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        if (millisecondsRemaining <= 0)
+        {
+            throw new InvalidOperationException(
+                "The persisted movement has no remaining time.");
+        }
+
+        _countdownActive = false;
+        _countdownPaused = true;
+        _countdownMillisecondsRemaining = millisecondsRemaining;
+        _countdownEndsAtElapsedMilliseconds = 0;
+        _countdownPausedByUser = _state.PendingMovementPausedByUser;
+        _countdownPausedForMediaError =
+            !_countdownPausedByUser && !_mediaReady;
+        _sessionService.PauseMovement(
+            _state,
+            pendingGroup,
+            millisecondsRemaining,
+            _countdownPausedByUser);
+        _stateStore.Save(_state);
+        _lastMovementPhase = null;
+        ShowWorkoutPhase(WorkoutPhase.Move);
+        UpdateMoveCountdown(millisecondsRemaining);
+        SetPlaybackControlsAvailability(
+            _mediaReady && _countdownPausedByUser);
+        UpdatePlaybackActionVisual();
     }
 
     private void RenderSidePhasePreview(Exercise exercise)
@@ -2349,8 +2424,8 @@ public class MainActivity : Activity
             return;
         }
 
-        PauseCountdown();
         _countdownPausedByUser = true;
+        PauseCountdown();
         _exerciseVideo.Pause();
         SetPlaybackControlsAvailability(available: true);
         UpdatePlaybackActionVisual();
@@ -2463,6 +2538,15 @@ public class MainActivity : Activity
         _countdownTimer?.Cancel();
         _countdownTimer?.Dispose();
         _countdownTimer = null;
+        if (_currentWorkoutGroup is not null)
+        {
+            _sessionService.PauseMovement(
+                _state,
+                _currentWorkoutGroup,
+                _countdownMillisecondsRemaining,
+                _countdownPausedByUser);
+            _stateStore.Save(_state);
+        }
     }
 
     private void ResumeCountdown()
@@ -2479,6 +2563,18 @@ public class MainActivity : Activity
 
     private void StartCountdownTimer(long millisecondsRemaining)
     {
+        if (_currentWorkoutGroup is null)
+        {
+            throw new InvalidOperationException(
+                "A movement timer requires a current workout group.");
+        }
+
+        _sessionService.BeginMovement(
+            _state,
+            _currentWorkoutGroup,
+            millisecondsRemaining,
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + millisecondsRemaining);
+        _stateStore.Save(_state);
         _countdownActive = true;
         _countdownPaused = false;
         _countdownMillisecondsRemaining = millisecondsRemaining;
@@ -2486,6 +2582,11 @@ public class MainActivity : Activity
             Android.OS.SystemClock.ElapsedRealtime() + millisecondsRemaining;
         UpdateMoveCountdown(millisecondsRemaining);
         UpdatePlaybackActionVisual();
+
+        if (!_countdownActive)
+        {
+            return;
+        }
 
         _countdownTimer = new WorkoutCountDownTimer(
             millisecondsRemaining,
@@ -2711,7 +2812,21 @@ public class MainActivity : Activity
             : 0;
         int segmentEndMilliseconds =
             segmentStartMilliseconds + DirectionSegmentDurationMilliseconds;
-        int positionMilliseconds = _activeMediaPlayer.CurrentPosition;
+        int positionMilliseconds;
+        try
+        {
+            positionMilliseconds = _activeMediaPlayer.CurrentPosition;
+        }
+        catch (Java.Lang.IllegalStateException)
+        {
+            RecoverInvalidMediaPlayerState();
+            return;
+        }
+        catch (ObjectDisposedException)
+        {
+            RecoverInvalidMediaPlayerState();
+            return;
+        }
         if (positionMilliseconds >= segmentStartMilliseconds &&
             positionMilliseconds < segmentEndMilliseconds)
         {
@@ -2721,6 +2836,33 @@ public class MainActivity : Activity
         _exerciseVideo.Pause();
         _exerciseVideo.SeekTo(segmentStartMilliseconds);
         ApplyCurrentMediaPlaybackState();
+    }
+
+    private void RecoverInvalidMediaPlayerState()
+    {
+        _mediaReady = false;
+        _activeMediaPlayer = null;
+        if (_workoutPhase == WorkoutPhase.Move && _countdownActive)
+        {
+            PauseCountdown();
+        }
+        if (_workoutPhase == WorkoutPhase.Move &&
+            _countdownPaused &&
+            !_countdownPausedByUser)
+        {
+            _countdownPausedForMediaError = true;
+        }
+
+        SetStartAvailability(available: false);
+        SetPlaybackControlsAvailability(available: false);
+        if (_currentExercise is not null)
+        {
+            LoadExerciseMedia(_currentExercise);
+        }
+        else
+        {
+            ShowMediaError();
+        }
     }
 
     private void CueSideChange()

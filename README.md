@@ -55,11 +55,11 @@ The optimizer applies these priorities lexicographically:
 1. preserve a valid in-progress lineup while restoring an active workout;
 2. give a fresh hard keep, or a suitable highest-score fresh hard exercise, a
    hard-work opportunity;
-3. retain contextual keeps, except hard keeps whose primary muscle is still
-   inside its recovery window;
+3. retain contextual keeps, except demand-`1` and demand-`2` keeps whose
+   primary muscle is still inside the applicable recovery window;
 4. prefer exercises with better saved keep/discard scores;
-5. prefer non-recovering hard work, then the longest-rested fresh primary
-   muscle;
+5. prefer work outside its recovery window, then fresh hard work and its
+   longest-rested primary muscle;
 6. preserve a valid existing selection when the higher priorities tie;
 7. apply the soft Mirror preference;
 8. prefer primary ownership and then wider coverage of the target group;
@@ -86,11 +86,12 @@ It never changes the exercise's saved user score.
 At the start of every session, the global assignment carries keeps
 contextually. A fresh hard keep, or a fresh suitable hard exercise already in
 the highest available score bucket for that slot, gets an opportunity ahead of
-a non-hard keep. During recovery, the hard keep loses only its current lineup
-preference and remains saved; ordinary score ordering continues to prevent a
-rejected lower-score hard exercise from returning. A separate soft per-muscle
-workload budget may rebalance unkept selections: each scheduled primary
-association counts as 1 unit and each secondary association as 0.5.
+a non-hard keep. During recovery, an affected demand-`1` or demand-`2` keep
+loses only its current lineup preference and remains saved; ordinary score
+ordering continues to prevent a rejected lower-score exercise from returning.
+A separate soft per-muscle workload budget may rebalance unkept selections:
+each scheduled primary association counts as 1 unit and each secondary
+association as 0.5.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
 affected muscle; these adjustments exist only while completing that lineup and
 never alter saved scores. A timed side, stance, or direction pair counts once;
@@ -104,18 +105,22 @@ fatigue is expected to limit a continuously performed 45-second round. This
 metadata never overwrites or masquerades as the user's persisted preference
 `score`.
 
-Completing a `muscularDemand` `2` exercise records the completion time for that
-exercise's primary canonical muscle. For the next rolling 36 hours, every hard
-exercise with that same primary muscle is softly deprioritized—not excluded—and
-a same-score non-hard exercise is preferred. Once the muscle is fresh, a hard
-exercise whose primary muscle belongs to the current workout group outranks a
-same-score non-hard keep and the soft Mirror preference. Hard keeps remain
-saved during recovery, and a lower-score hard exercise is never promoted over a
-higher-score candidate. Among otherwise equivalent fresh hard choices, the
-primary muscle that has gone longest without completed hard work wins, allowing
-short workouts to rotate hard opportunities across their canonical muscles.
-Only a completed movement reaching rest records hard work; shuffle, skip, and
-repeat do not.
+Completing a `muscularDemand` `1` exercise records meaningful muscular work for
+its primary canonical muscle. For the next rolling 18 hours, same-score
+demand-`0` work is preferred to every demand-`1` exercise with that primary
+muscle. Completing a demand-`2` exercise starts this 18-hour window as well as
+the separate 36-hour hard-work window. During the latter, same-score non-hard
+work is preferred to every demand-`2` exercise with that primary muscle.
+
+Both windows are soft preferences, never exclusions or score changes. A
+higher-score recovering exercise remains selectable. Once hard work is fresh,
+a demand-`2` exercise whose primary muscle belongs to the current workout group
+outranks a same-score non-hard keep and the soft Mirror preference. Recovering
+keeps remain saved for later. Among otherwise equivalent fresh hard choices,
+the primary muscle that has gone longest without completed hard work wins,
+allowing short workouts to rotate hard opportunities across their canonical
+muscles. Only a completed movement reaching rest records muscular work;
+shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
@@ -228,10 +233,13 @@ frame for the rest of the hold. Start, side-change, rest, and completion use
 distinct whistle cues; the Silence modifier controls exercise selection, not
 those cues.
 
-If movement media buffers or the app is backgrounded, movement time pauses.
-Rest uses an absolute deadline. Closing or killing Flux applies completed
-decisions and a pending rest choice exactly once, while an exercise interrupted
-before rest remains neutral.
+If movement media buffers or the app is backgrounded, movement time pauses. The
+active round, exact remaining movement time, and user-pause state are committed
+locally; reopening after process death returns to that movement instead of
+discarding the workout. A foreground deadline also prevents an abrupt crash from
+rewinding the timer. Rest uses an absolute deadline. Closing during Ready still
+leaves the unreached exercise neutral, while a pending rest choice is resolved
+exactly once under the existing scoring rules.
 
 ## Exercise catalog
 
@@ -268,9 +276,9 @@ explicit side decision. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
 
 ## Persistence and upgrades
 
-Duration, modifier profile, lineups, keeps, scores, active progress, and pending
-rest are stored locally. Modifier combinations retain separate stable lineups
-while sharing durable keeps.
+Duration, modifier profile, lineups, keeps, scores, active progress, active
+movement checkpoints, and pending rest are stored locally. Modifier combinations
+retain separate stable lineups while sharing durable keeps.
 
 The Android catalog uses SQLite schema version 60. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.

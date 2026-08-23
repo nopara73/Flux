@@ -129,8 +129,10 @@ export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
 export const MUSCLE_SESSION_BUDGET_HALF_UNITS = 10;
 export const MINIMUM_MUSCULAR_DEMAND = 0;
+export const MODERATE_MUSCULAR_DEMAND = 1;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
+export const MODERATE_RECOVERY_WINDOW_MS = 18 * 60 * 60 * 1000;
 export const HARD_RECOVERY_WINDOW_MS = 36 * 60 * 60 * 1000;
 export const HARD_ROTATION_STATUS = Object.freeze({
   RecoveringHard: "RecoveringHard",
@@ -142,7 +144,7 @@ export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 11;
+export const CURRENT_WORKOUT_STATE_VERSION = 13;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 export const MOVEMENT_DURATION_MS = 45_000;
@@ -650,7 +652,18 @@ export function getLastHardWorkUnixMilliseconds(
   lastHardWorkByPrimaryMuscle,
   primaryMuscle,
 ) {
-  const value = lastHardWorkByPrimaryMuscle?.[primaryMuscle];
+  return getLastWorkUnixMilliseconds(lastHardWorkByPrimaryMuscle, primaryMuscle);
+}
+
+export function getLastMeaningfulWorkUnixMilliseconds(
+  lastMeaningfulWorkByPrimaryMuscle,
+  primaryMuscle,
+) {
+  return getLastWorkUnixMilliseconds(lastMeaningfulWorkByPrimaryMuscle, primaryMuscle);
+}
+
+function getLastWorkUnixMilliseconds(lastWorkByPrimaryMuscle, primaryMuscle) {
+  const value = lastWorkByPrimaryMuscle?.[primaryMuscle];
   return Number.isSafeInteger(value) && value > 0 ? value : 0;
 }
 
@@ -659,12 +672,49 @@ export function isPrimaryMuscleRecovering(
   primaryMuscle,
   nowUnixMilliseconds = Date.now(),
 ) {
-  const lastHardWork = getLastHardWorkUnixMilliseconds(
+  return isPrimaryMuscleWithinRecoveryWindow(
     lastHardWorkByPrimaryMuscle,
     primaryMuscle,
+    nowUnixMilliseconds,
+    HARD_RECOVERY_WINDOW_MS,
   );
-  return lastHardWork > 0 &&
-    nowUnixMilliseconds - lastHardWork < HARD_RECOVERY_WINDOW_MS;
+}
+
+export function isPrimaryMuscleInModerateRecovery(
+  lastMeaningfulWorkByPrimaryMuscle,
+  primaryMuscle,
+  nowUnixMilliseconds = Date.now(),
+) {
+  return isPrimaryMuscleWithinRecoveryWindow(
+    lastMeaningfulWorkByPrimaryMuscle,
+    primaryMuscle,
+    nowUnixMilliseconds,
+    MODERATE_RECOVERY_WINDOW_MS,
+  );
+}
+
+export function isModerateExerciseRecovering(
+  exercise,
+  lastMeaningfulWorkByPrimaryMuscle,
+  nowUnixMilliseconds = Date.now(),
+) {
+  return exercise?.muscularDemand === MODERATE_MUSCULAR_DEMAND &&
+    isPrimaryMuscleInModerateRecovery(
+      lastMeaningfulWorkByPrimaryMuscle,
+      exercise.primaryCanonicalGroup,
+      nowUnixMilliseconds,
+    );
+}
+
+function isPrimaryMuscleWithinRecoveryWindow(
+  lastWorkByPrimaryMuscle,
+  primaryMuscle,
+  nowUnixMilliseconds,
+  recoveryWindowMilliseconds,
+) {
+  const lastWork = getLastWorkUnixMilliseconds(lastWorkByPrimaryMuscle, primaryMuscle);
+  return lastWork > 0 &&
+    nowUnixMilliseconds - lastWork < recoveryWindowMilliseconds;
 }
 
 export function getHardRotationStatus(
@@ -1431,11 +1481,16 @@ export function createDefaultState() {
     outcomes: {},
     lastKeptExerciseIds: [],
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
+    lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {},
     nextWorkoutExcludedExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
     activeSetCountsBySelectionGroupId: {},
     activeDirectionPartnerExerciseIds: {},
     activeFullSideRoundIds: [],
+    pendingMovementGroupId: null,
+    pendingMovementMillisecondsRemaining: 0,
+    pendingMovementEndsAtUnixMilliseconds: 0,
+    pendingMovementPausedByUser: false,
     pendingRestGroupId: null,
     pendingRestEndsAtUnixMilliseconds: 0,
     pendingRestKept: false,
@@ -1489,6 +1544,20 @@ function normalizeStateShape(raw) {
     ? Math.trunc(raw.pendingRestEndsAtUnixMilliseconds)
     : 0;
   state.pendingRestKept = raw.pendingRestKept === true;
+  state.pendingMovementGroupId = typeof raw.pendingMovementGroupId === "string"
+    ? raw.pendingMovementGroupId
+    : null;
+  state.pendingMovementMillisecondsRemaining = Number.isFinite(
+    raw.pendingMovementMillisecondsRemaining,
+  )
+    ? Math.trunc(raw.pendingMovementMillisecondsRemaining)
+    : 0;
+  state.pendingMovementEndsAtUnixMilliseconds = Number.isFinite(
+    raw.pendingMovementEndsAtUnixMilliseconds,
+  )
+    ? Math.trunc(raw.pendingMovementEndsAtUnixMilliseconds)
+    : 0;
+  state.pendingMovementPausedByUser = raw.pendingMovementPausedByUser === true;
 
   for (const [groupId, exerciseId] of Object.entries(objectOrEmpty(raw.selectedExerciseIds))) {
     if (typeof groupId === "string" && Number.isInteger(exerciseId) && exerciseId > 0) {
@@ -1511,17 +1580,12 @@ function normalizeStateShape(raw) {
     }
   }
   state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
-  const canonicalMuscleGroups = new Set(CANONICAL_GROUPS.slice(1));
-  for (const [primaryMuscle, completedAtUnixMilliseconds] of Object.entries(
-    objectOrEmpty(raw.lastHardWorkUnixMillisecondsByPrimaryMuscle),
-  )) {
-    if (canonicalMuscleGroups.has(primaryMuscle) &&
-        Number.isSafeInteger(completedAtUnixMilliseconds) &&
-        completedAtUnixMilliseconds > 0) {
-      state.lastHardWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
-        completedAtUnixMilliseconds;
-    }
-  }
+  state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
+    raw.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+  );
+  state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
+    raw.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+  );
   state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
     raw.nextWorkoutExcludedExerciseIds,
   );
@@ -1618,6 +1682,15 @@ function objectOrEmpty(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+function normalizeWorkHistory(value) {
+  const canonicalMuscleGroups = new Set(CANONICAL_GROUPS.slice(1));
+  return Object.fromEntries(Object.entries(objectOrEmpty(value))
+    .filter(([primaryMuscle, completedAtUnixMilliseconds]) =>
+      canonicalMuscleGroups.has(primaryMuscle) &&
+      Number.isSafeInteger(completedAtUnixMilliseconds) &&
+      completedAtUnixMilliseconds > 0));
+}
+
 function sameStringSet(left, right) {
   const leftSet = new Set(left);
   const rightSet = new Set(right);
@@ -1706,7 +1779,12 @@ export class WorkoutSession {
 
     this.state.completionAcknowledged = false;
     this.normalizePendingRest();
+    this.normalizePendingMovement();
     this.repairActiveLineup();
+    this.normalizePendingMovement();
+    if (this.getPendingMovementGroup()) {
+      return;
+    }
     this.finishInterruptedWorkout();
   }
 
@@ -1731,6 +1809,7 @@ export class WorkoutSession {
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
+    this.clearPendingMovement();
     this.clearPendingRest();
     this.carryKeptExercisesForward(previousWorkoutMinutes, previousWorkoutModifiers);
     this.repairActiveLineup();
@@ -1954,6 +2033,108 @@ export class WorkoutSession {
     }
   }
 
+  beginMovement(group, millisecondsRemaining, endsAtUnixMilliseconds) {
+    const normalizedRemaining = Math.trunc(millisecondsRemaining);
+    const normalizedDeadline = Math.trunc(endsAtUnixMilliseconds);
+    this.validatePendingMovement(
+      group,
+      normalizedRemaining,
+      normalizedDeadline,
+      false,
+    );
+    this.clearPendingRest();
+    this.state.pendingMovementGroupId = group.id;
+    this.state.pendingMovementMillisecondsRemaining = normalizedRemaining;
+    this.state.pendingMovementEndsAtUnixMilliseconds = normalizedDeadline;
+    this.state.pendingMovementPausedByUser = false;
+  }
+
+  pauseMovement(group, millisecondsRemaining, pausedByUser) {
+    const normalizedRemaining = Math.trunc(millisecondsRemaining);
+    this.validatePendingMovement(group, normalizedRemaining, 0, true);
+    this.clearPendingRest();
+    this.state.pendingMovementGroupId = group.id;
+    this.state.pendingMovementMillisecondsRemaining = normalizedRemaining;
+    this.state.pendingMovementEndsAtUnixMilliseconds = 0;
+    this.state.pendingMovementPausedByUser = pausedByUser === true;
+  }
+
+  getPendingMovementGroup() {
+    const pendingGroup = this.getActiveGroups().find(
+      (group) => group.id === this.state.pendingMovementGroupId,
+    );
+    if (!pendingGroup ||
+        this.getNextGroup()?.id !== pendingGroup.id ||
+        this.state.outcomes[pendingGroup.id] !== undefined ||
+        !Number.isSafeInteger(this.state.pendingMovementMillisecondsRemaining) ||
+        this.state.pendingMovementMillisecondsRemaining <= 0 ||
+        this.state.pendingMovementMillisecondsRemaining >
+          getMovementCountdownDurationMs(pendingGroup) ||
+        !Number.isSafeInteger(this.state.pendingMovementEndsAtUnixMilliseconds) ||
+        this.state.pendingMovementEndsAtUnixMilliseconds < 0) {
+      return null;
+    }
+
+    try {
+      this.getSelectedExercise(pendingGroup);
+    } catch {
+      return null;
+    }
+    return pendingGroup;
+  }
+
+  getPendingMovementMillisecondsRemaining(nowUnixMilliseconds) {
+    if (!Number.isSafeInteger(nowUnixMilliseconds) || nowUnixMilliseconds <= 0) {
+      throw new RangeError("Current time must be positive Unix milliseconds.");
+    }
+    const pendingGroup = this.getPendingMovementGroup();
+    if (!pendingGroup) {
+      return 0;
+    }
+    const storedRemaining = this.state.pendingMovementMillisecondsRemaining;
+    const remaining = this.state.pendingMovementEndsAtUnixMilliseconds > 0
+      ? Math.min(
+          storedRemaining,
+          this.state.pendingMovementEndsAtUnixMilliseconds - nowUnixMilliseconds,
+        )
+      : storedRemaining;
+    return Math.max(
+      1,
+      Math.min(remaining, getMovementCountdownDurationMs(pendingGroup)),
+    );
+  }
+
+  clearPendingMovement() {
+    this.state.pendingMovementGroupId = null;
+    this.state.pendingMovementMillisecondsRemaining = 0;
+    this.state.pendingMovementEndsAtUnixMilliseconds = 0;
+    this.state.pendingMovementPausedByUser = false;
+  }
+
+  validatePendingMovement(
+    group,
+    millisecondsRemaining,
+    endsAtUnixMilliseconds,
+    allowPausedDeadline,
+  ) {
+    const nextGroup = this.getNextGroup();
+    if (!nextGroup || nextGroup.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+    if (!Number.isSafeInteger(millisecondsRemaining) ||
+        millisecondsRemaining <= 0 ||
+        millisecondsRemaining > getMovementCountdownDurationMs(group)) {
+      throw new RangeError("Movement time remaining is invalid.");
+    }
+    if ((!allowPausedDeadline &&
+          (!Number.isSafeInteger(endsAtUnixMilliseconds) ||
+            endsAtUnixMilliseconds <= 0)) ||
+        (allowPausedDeadline && endsAtUnixMilliseconds !== 0)) {
+      throw new RangeError("Movement deadline is invalid.");
+    }
+    this.getSelectedExercise(group);
+  }
+
   beginRest(group, endsAtUnixMilliseconds) {
     const nextGroup = this.getNextGroup();
     if (!nextGroup || nextGroup.id !== group.id) {
@@ -1962,20 +2143,33 @@ export class WorkoutSession {
     if (!Number.isSafeInteger(endsAtUnixMilliseconds) || endsAtUnixMilliseconds <= 0) {
       throw new RangeError("Rest deadline must be positive Unix milliseconds.");
     }
+    this.clearPendingMovement();
     this.state.pendingRestGroupId = group.id;
     this.state.pendingRestEndsAtUnixMilliseconds = Math.trunc(endsAtUnixMilliseconds);
     this.state.pendingRestKept = false;
     const exercise = this.getSelectedExercise(group);
-    if (exercise.muscularDemand === HARD_MUSCULAR_DEMAND) {
+    if (exercise.muscularDemand === MODERATE_MUSCULAR_DEMAND ||
+        exercise.muscularDemand === HARD_MUSCULAR_DEMAND) {
       const primaryMuscle = exercise.primaryCanonicalGroup;
-      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
+      const completedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+      this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
         Math.max(
-          this.getCurrentUnixTimeMilliseconds(),
-          getLastHardWorkUnixMilliseconds(
-            this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+          completedAtUnixMilliseconds,
+          getLastMeaningfulWorkUnixMilliseconds(
+            this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
             primaryMuscle,
           ),
         );
+      if (exercise.muscularDemand === HARD_MUSCULAR_DEMAND) {
+        this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
+          Math.max(
+            completedAtUnixMilliseconds,
+            getLastHardWorkUnixMilliseconds(
+              this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+              primaryMuscle,
+            ),
+          );
+      }
     }
   }
 
@@ -2008,6 +2202,7 @@ export class WorkoutSession {
       throw new Error("A direction pair can only be kept after its second direction.");
     }
 
+    this.clearPendingMovement();
     return group.pairedRoundId
       ? this.applyDirectionPairOutcome(group, keep)
       : this.applySingleOutcome(group, keep);
@@ -2364,6 +2559,7 @@ export class WorkoutSession {
     const hardMuscleAgeWeight = addPriorityDimension(
       Math.max(0, freshHardMuscleRanks.size - 1),
     );
+    const moderateRecoveryAvoidanceWeight = addPriorityDimension(1);
     const hardRecoveryAvoidanceWeight = addPriorityDimension(1);
     const freshHardWeight = addPriorityDimension(1);
     const scoreWeight = addPriorityDimension(Math.max(0, orderedScores.length - 1));
@@ -2390,6 +2586,11 @@ export class WorkoutSession {
           this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
           selectionTimeUnixMilliseconds,
         );
+        const isRecoveringModerate = isModerateExerciseRecovering(
+          exercise,
+          this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+          selectionTimeUnixMilliseconds,
+        );
         const hardMuscleAgeRank = hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
           ? freshHardMuscleRanks.get(getLastHardWorkUnixMilliseconds(
               this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -2405,7 +2606,8 @@ export class WorkoutSession {
           (isKept ||
             this.getSelectionScore(exercise) === highestScoreByGroup.get(group.id));
         const hasContextualKeepPreference = isKept &&
-          hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard;
+          hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard &&
+          !isRecoveringModerate;
         const utility =
           (allowSavedSelectionException &&
             currentExerciseIds.get(group.id) === exercise.id
@@ -2417,6 +2619,7 @@ export class WorkoutSession {
           (hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard
             ? hardRecoveryAvoidanceWeight
             : 0n) +
+          (!isRecoveringModerate ? moderateRecoveryAvoidanceWeight : 0n) +
           (hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
             ? freshHardWeight
             : 0n) +
@@ -2472,18 +2675,30 @@ export class WorkoutSession {
         selectionTimeUnixMilliseconds,
       ),
     ]));
-    const highestRotationStatus = [
-      HARD_ROTATION_STATUS.FreshHard,
-      HARD_ROTATION_STATUS.Neutral,
-      HARD_ROTATION_STATUS.RecoveringHard,
-    ].find((status) =>
-      highestScored.some((exercise) => rotationStatusByExercise.get(exercise.id) === status));
-    const rotationPreferred = highestScored.filter((exercise) =>
-      rotationStatusByExercise.get(exercise.id) === highestRotationStatus);
+    const isRecoveringModerateByExercise = new Map(highestScored.map((exercise) => [
+      exercise.id,
+      isModerateExerciseRecovering(
+        exercise,
+        this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      ),
+    ]));
+    const rotationTiers = [
+      highestScored.filter((exercise) =>
+        rotationStatusByExercise.get(exercise.id) === HARD_ROTATION_STATUS.FreshHard),
+      highestScored.filter((exercise) =>
+        rotationStatusByExercise.get(exercise.id) !== HARD_ROTATION_STATUS.RecoveringHard &&
+        !isRecoveringModerateByExercise.get(exercise.id)),
+      highestScored.filter((exercise) => isRecoveringModerateByExercise.get(exercise.id)),
+      highestScored.filter((exercise) =>
+        rotationStatusByExercise.get(exercise.id) === HARD_ROTATION_STATUS.RecoveringHard),
+    ];
+    const rotationPreferred = rotationTiers.find((tier) => tier.length > 0);
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
     const kept = rotationPreferred.filter((exercise) => keptExerciseIds.has(exercise.id));
     let keepPreferred = kept.length > 0 ? kept : rotationPreferred;
-    if (highestRotationStatus === HARD_ROTATION_STATUS.FreshHard) {
+    if (rotationPreferred.every((exercise) =>
+      rotationStatusByExercise.get(exercise.id) === HARD_ROTATION_STATUS.FreshHard)) {
       const oldestHardWork = Math.min(...keepPreferred.map((exercise) =>
         getLastHardWorkUnixMilliseconds(
           this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -2660,13 +2875,11 @@ export class WorkoutSession {
       this.exercisesById.has(exerciseId)));
     this.expandDirectionPairIds(keptExerciseIds);
     this.state.lastKeptExerciseIds = [...keptExerciseIds];
-    const canonicalMuscleGroups = new Set(CANONICAL_GROUPS.slice(1));
-    this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = Object.fromEntries(
-      Object.entries(this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle)
-        .filter(([primaryMuscle, completedAtUnixMilliseconds]) =>
-          canonicalMuscleGroups.has(primaryMuscle) &&
-          Number.isSafeInteger(completedAtUnixMilliseconds) &&
-          completedAtUnixMilliseconds > 0),
+    this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
+      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+    );
+    this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
+      this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
     );
     const nextExcludedExerciseIds = new Set(
       this.state.nextWorkoutExcludedExerciseIds.filter((exerciseId) =>
@@ -3018,6 +3231,7 @@ export class WorkoutSession {
             right.realScore - left.realScore ||
             Number(right.isFreshHard) - Number(left.isFreshHard) ||
             Number(left.isRecoveringHard) - Number(right.isRecoveringHard) ||
+            Number(left.isRecoveringModerate) - Number(right.isRecoveringModerate) ||
             Number(right.isKept) - Number(left.isKept) ||
             left.lastHardWorkUnixMilliseconds - right.lastHardWorkUnixMilliseconds ||
             Number(right.isMirrorPreferred) - Number(left.isMirrorPreferred) ||
@@ -3077,6 +3291,11 @@ export class WorkoutSession {
         this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
         selectionTimeUnixMilliseconds,
       );
+      const isRecoveringModerate = isModerateExerciseRecovering(
+        candidate,
+        this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      );
       return {
         exerciseId: candidate.id,
         realScore,
@@ -3086,6 +3305,7 @@ export class WorkoutSession {
         ),
         isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
         isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
+        isRecoveringModerate,
         isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
         lastHardWorkUnixMilliseconds:
           rotationStatus === HARD_ROTATION_STATUS.FreshHard
@@ -3124,6 +3344,11 @@ export class WorkoutSession {
       this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
       selectionTimeUnixMilliseconds,
     );
+    const isRecoveringModerate = isModerateExerciseRecovering(
+      candidate,
+      this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+      selectionTimeUnixMilliseconds,
+    );
     return {
       exerciseId: candidate.id,
       realScore,
@@ -3133,6 +3358,7 @@ export class WorkoutSession {
       ),
       isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
       isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
+      isRecoveringModerate,
       isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
       lastHardWorkUnixMilliseconds:
         rotationStatus === HARD_ROTATION_STATUS.FreshHard
@@ -3208,6 +3434,24 @@ export class WorkoutSession {
       !this.isAssignedToGroup(pendingExercise, pendingGroup)
     ) {
       this.clearPendingRest();
+    }
+  }
+
+  normalizePendingMovement() {
+    if (!this.getPendingMovementGroup()) {
+      this.clearPendingMovement();
+      return;
+    }
+
+    // A valid rest means this movement already completed. Persisted phases
+    // are mutually exclusive, and rest therefore wins over movement.
+    const pendingRest = this.getActiveGroups().find(
+      (group) => group.id === this.state.pendingRestGroupId,
+    );
+    if (pendingRest &&
+        this.state.pendingRestEndsAtUnixMilliseconds > 0 &&
+        this.state.outcomes[pendingRest.id] === undefined) {
+      this.clearPendingMovement();
     }
   }
 
@@ -3360,6 +3604,7 @@ export class WorkoutSession {
     this.state.activeFullSideRoundIds = [];
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
+    this.clearPendingMovement();
     this.clearPendingRest();
   }
 }

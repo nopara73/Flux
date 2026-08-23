@@ -17,6 +17,8 @@ import {
   HARD_ROTATION_STATUS,
   LAST_CUMULATIVE_CATALOG_REVISION,
   MAXIMUM_MUSCULAR_DEMAND,
+  MODERATE_MUSCULAR_DEMAND,
+  MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
@@ -204,8 +206,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 11);
-  assert.match(workoutState, /public int Version[^=]*=\s*14/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 13);
+  assert.match(workoutState, /public int Version[^=]*=\s*16/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -430,8 +432,10 @@ test("muscular demand is a separate reviewed catalog score on both platforms", (
   assert.ok(catalog.every((exercise) => exercise.score === 0));
 });
 
-test("web and mobile rotate hard work by primary muscle for rolling 36 hours", () => {
+test("web and mobile apply rolling muscular recovery by primary muscle", () => {
+  assert.equal(MODERATE_MUSCULAR_DEMAND, 1);
   assert.equal(HARD_MUSCULAR_DEMAND, MAXIMUM_MUSCULAR_DEMAND);
+  assert.equal(MODERATE_RECOVERY_WINDOW_MS, 18 * 60 * 60 * 1000);
   assert.equal(HARD_RECOVERY_WINDOW_MS, 36 * 60 * 60 * 1000);
   assert.deepEqual(HARD_ROTATION_STATUS, {
     RecoveringHard: "RecoveringHard",
@@ -440,12 +444,21 @@ test("web and mobile rotate hard work by primary muscle for rolling 36 hours", (
   });
   assert.match(
     recoveryPolicy,
+    /ModerateMuscularDemand\s*=\s*Exercise\.ModerateMuscularDemand/,
+  );
+  assert.match(
+    recoveryPolicy,
     /HardMuscularDemand\s*=\s*Exercise\.MaximumMuscularDemand/,
   );
+  assert.match(recoveryPolicy, /ModerateRecoveryWindowMilliseconds[\s\S]*18L/);
   assert.match(recoveryPolicy, /HardRecoveryWindowMilliseconds[\s\S]*36L/);
   assert.match(
     workoutState,
     /Dictionary<string, long>[\s\S]*LastHardWorkUnixMillisecondsByPrimaryMuscle/,
+  );
+  assert.match(
+    workoutState,
+    /Dictionary<string, long>[\s\S]*LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle/,
   );
   assert.doesNotMatch(workoutState, /LastKeptLocalDateByExerciseId/);
   assert.doesNotMatch(workoutState, /ActiveRecoveryExcludedExerciseIds/);
@@ -458,21 +471,29 @@ test("web and mobile rotate hard work by primary muscle for rolling 36 hours", (
     /getHardRotationStatus[\s\S]*isPrimaryMuscleRecovering[\s\S]*HARD_ROTATION_STATUS\.FreshHard/,
   );
   assert.match(
-    sessionService,
-    /BeginRest\([\s\S]*RecordCompletedHardExercise\([\s\S]*LastHardWorkUnixMillisecondsByPrimaryMuscle/,
+    recoveryPolicy,
+    /IsModerateExerciseRecovering[\s\S]*IsPrimaryMuscleInModerateRecovery/,
   );
   assert.match(
     workoutModule,
-    /beginRest\([\s\S]*lastHardWorkUnixMillisecondsByPrimaryMuscle[\s\S]*getCurrentUnixTimeMilliseconds/,
+    /isModerateExerciseRecovering[\s\S]*isPrimaryMuscleInModerateRecovery/,
+  );
+  assert.match(
+    sessionService,
+    /BeginRest\([\s\S]*RecordCompletedMuscularWork\([\s\S]*LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[\s\S]*LastHardWorkUnixMillisecondsByPrimaryMuscle/,
+  );
+  assert.match(
+    workoutModule,
+    /beginRest\([\s\S]*lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[\s\S]*lastHardWorkUnixMillisecondsByPrimaryMuscle/,
   );
   assert.match(mainActivity, /_sessionService\.BeginRest\(/);
   assert.match(
     sessionService,
-    /mirrorPreferenceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
+    /mirrorPreferenceWeight[\s\S]*moderateRecoveryAvoidanceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
   );
   assert.match(
     workoutModule,
-    /mirrorPreferenceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
+    /mirrorPreferenceWeight[\s\S]*moderateRecoveryAvoidanceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
   );
   assert.match(sessionService, /BigInteger\[,] utilities/);
   assert.match(workoutModule, /candidates\.map\(\(\) => 0n\)/);
@@ -654,7 +675,7 @@ test("workout transport controls are functional and muscle labels stay hidden", 
     "private void CompleteCountdown()",
   );
   assert.match(mobilePause, /ResumeCountdown\(\)/);
-  assert.match(mobilePause, /PauseCountdown\(\)[\s\S]*_countdownPausedByUser = true/);
+  assert.match(mobilePause, /_countdownPausedByUser = true[\s\S]*PauseCountdown\(\)/);
   assert.match(mobileRepeat, /StopCountdownTimer\(\)[\s\S]*StartCountdownTimer\(GetCurrentCountdownDurationMilliseconds\(\)\)/);
   assert.doesNotMatch(mobileRepeat, /FinalizeCurrentRound|RecordOutcome/);
   assert.match(mobileNext, /FinalizeCurrentRound\(keep: false\)/);
@@ -717,6 +738,66 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   );
   assert.doesNotMatch(mainActivity, /_workoutGroupName/);
   assert.doesNotMatch(webApp, /workoutGroupName/);
+});
+
+test("active movement checkpoints and invalid media recovery match across platforms", () => {
+  assert.match(workoutState, /PendingMovementGroupId/);
+  assert.match(workoutState, /PendingMovementMillisecondsRemaining/);
+  assert.match(workoutState, /PendingMovementEndsAtUnixMilliseconds/);
+  assert.match(workoutState, /PendingMovementPausedByUser/);
+  assert.match(workoutModule, /pendingMovementGroupId:\s*null/);
+  assert.match(workoutModule, /pendingMovementMillisecondsRemaining:\s*0/);
+  assert.match(workoutModule, /pendingMovementEndsAtUnixMilliseconds:\s*0/);
+  assert.match(workoutModule, /pendingMovementPausedByUser:\s*false/);
+
+  const mobileCreate = methodBody(
+    mainActivity,
+    "protected override void OnCreate(Bundle? savedInstanceState)",
+    "protected override void OnResume()",
+  );
+  const mobilePause = methodBody(
+    mainActivity,
+    "private void PauseCountdown()",
+    "private void ResumeCountdown()",
+  );
+  const mobileStart = methodBody(
+    mainActivity,
+    "private void StartCountdownTimer(long millisecondsRemaining)",
+    "private void UpdateMoveCountdown(long millisecondsRemaining)",
+  );
+  const mobileDirectionGuard = methodBody(
+    mainActivity,
+    "private void EnforceDirectionMediaSegment(MovementPhase phase)",
+    "private void CueSideChange()",
+  );
+  assert.match(
+    mobileCreate,
+    /GetPendingMovementGroup[\s\S]*pendingMovementGroup is null[\s\S]*FinishInterruptedWorkout[\s\S]*RestorePendingMovement/,
+  );
+  assert.match(mobilePause, /PauseMovement[\s\S]*_stateStore\.Save/);
+  assert.match(mobileStart, /BeginMovement[\s\S]*_stateStore\.Save/);
+  assert.match(
+    mobileDirectionGuard,
+    /CurrentPosition[\s\S]*catch \(Java\.Lang\.IllegalStateException\)[\s\S]*RecoverInvalidMediaPlayerState/,
+  );
+
+  assert.match(
+    workoutModule,
+    /initialize\(\)[\s\S]*normalizePendingMovement\(\)[\s\S]*getPendingMovementGroup\(\)[\s\S]*return;/,
+  );
+  assert.match(
+    webApp,
+    /getPendingMovementGroup\(\)[\s\S]*restorePendingMovement\(\)/,
+  );
+  assert.match(
+    webApp,
+    /function setMovementDeadline[\s\S]*session\.beginMovement[\s\S]*persistState\(\)/,
+  );
+  assert.match(
+    webApp,
+    /function pauseMovement[\s\S]*session\.pauseMovement[\s\S]*persistState\(\)/,
+  );
+  assert.match(webApp, /visibilitychange[\s\S]*pagehide/);
 });
 
 test("lead-stance timing and cues are identical on mobile and web", () => {
