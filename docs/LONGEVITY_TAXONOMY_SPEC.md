@@ -432,6 +432,11 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 ### 8.5 Scoring, rest, and replacement
 
 - Every atomic sequence block is 45 seconds of exercise and 15 seconds of rest.
+- Atomic sequences are never excluded by duration. Exact block capacity decides
+  whether they fit. Blocks with genuinely different primary workout groups may
+  satisfy those slots together; same-primary side or direction blocks consume
+  time without claiming extra slots. All blocks stay consecutive even when the
+  surrounding group order shifts.
 - Keep is the only rest decision, and a sequence exposes it only after its final
   block and final repeated set.
 - Intermediate sequence rests are neutral: they hide Keep, apply no score, and

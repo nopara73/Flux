@@ -44,6 +44,7 @@
     <Compile Include="..\Flux\Models\MirrorEquipment.cs" Link="Production\Models\MirrorEquipment.cs" />
     <Compile Include="..\Flux\Models\WorkoutState.cs" Link="Production\Models\WorkoutState.cs" />
     <Compile Include="..\Flux\Services\ExerciseSessionService.cs" Link="Production\Services\ExerciseSessionService.cs" />
+    <Compile Include="..\Flux\Services\AtomicSequenceLineupSolver.cs" Link="Production\Services\AtomicSequenceLineupSolver.cs" />
     <Compile Include="..\Flux\Services\LegacyWorkoutStateMigration.cs" Link="Production\Services\LegacyWorkoutStateMigration.cs" />
     <Compile Include="..\Flux\Services\CatalogMigrationRules.cs" Link="Production\Services\CatalogMigrationRules.cs" />
     <Compile Include="..\Flux\Services\MassGroupingTaxonomy.cs" Link="Production\Services\MassGroupingTaxonomy.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="..\Flux\Services\WorkoutModifierPolicy.cs" Link="Production\Services\WorkoutModifierPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutMuscleBudgetPolicy.cs" Link="Production\Services\WorkoutMuscleBudgetPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutRecoveryPolicy.cs" Link="Production\Services\WorkoutRecoveryPolicy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutSequencePolicy.cs" Link="Production\Services\WorkoutSequencePolicy.cs" />
   </ItemGroup>
 
   <ItemGroup>

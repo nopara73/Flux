@@ -805,6 +805,76 @@ public sealed class WorkoutModifierPolicyTests
                 WorkoutModifiers.Insect));
     }
 
+    [Fact]
+    public void MaximumDistinctLineupCreditsCrossPrimarySequenceSlots()
+    {
+        WorkoutGroup[] groups =
+        [
+            Group("a", CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Group("b", CanonicalMuscleGroup.PosteriorThighAndKneeFlexors),
+            Group("c", CanonicalMuscleGroup.MajorHipAdductors),
+        ];
+        Exercise member = Exercise(
+            2,
+            CanonicalMuscleGroup.PosteriorThighAndKneeFlexors,
+            sequenceBlocks: []);
+        Exercise root = Exercise(
+            1,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            sequenceBlocks:
+            [
+                new ExerciseSequenceBlock { ExerciseId = 1, MirrorMedia = false },
+                new ExerciseSequenceBlock { ExerciseId = 2, MirrorMedia = false },
+            ]);
+        Exercise singleton = Exercise(
+            3,
+            CanonicalMuscleGroup.MajorHipAdductors);
+
+        Assert.Equal(
+            3,
+            WorkoutModifierPolicy.GetMaximumDistinctLineupSize(
+                [root, member, singleton],
+                groups,
+                WorkoutModifiers.Insect,
+                workoutMinutes: 3));
+    }
+
+    [Fact]
+    public void MaximumDistinctLineupLetsSamePrimarySequenceYieldToCapacity()
+    {
+        WorkoutGroup[] groups =
+        [
+            Group("a", CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Group("b", CanonicalMuscleGroup.PosteriorThighAndKneeFlexors),
+            Group("c", CanonicalMuscleGroup.MajorHipAdductors),
+        ];
+        Exercise member = Exercise(
+            2,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            sequenceBlocks: []);
+        Exercise root = Exercise(
+            1,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            sequenceBlocks:
+            [
+                new ExerciseSequenceBlock { ExerciseId = 1, MirrorMedia = false },
+                new ExerciseSequenceBlock { ExerciseId = 2, MirrorMedia = false },
+            ]);
+
+        Assert.Equal(
+            2,
+            WorkoutModifierPolicy.GetMaximumDistinctLineupSize(
+                [
+                    root,
+                    member,
+                    Exercise(3, CanonicalMuscleGroup.PosteriorThighAndKneeFlexors),
+                    Exercise(4, CanonicalMuscleGroup.MajorHipAdductors),
+                ],
+                groups,
+                WorkoutModifiers.Insect,
+                workoutMinutes: 3));
+    }
+
     private static WorkoutGroup Group(
         string id,
         CanonicalMuscleGroup canonicalGroup)
@@ -828,7 +898,8 @@ public sealed class WorkoutModifierPolicyTests
             ExerciseMirrorRelationship.Agnostic,
         string? equipment = null,
         ExerciseMirrorCoverage? minimumMirrorCoverage = null,
-        int sessionMovementId = 0)
+        int sessionMovementId = 0,
+        ExerciseSequenceBlock[]? sequenceBlocks = null)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -847,16 +918,16 @@ public sealed class WorkoutModifierPolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
-            SequenceBlocks =
-            [
-                new ExerciseSequenceBlock
-                {
-                    ExerciseId = id,
-                    SideCue = ExerciseSequenceSideCue.None,
-                    DirectionCue = ExerciseSequenceDirectionCue.None,
-                    MirrorMedia = false,
-                },
-            ],
+            SequenceBlocks = sequenceBlocks ??
+                [
+                    new ExerciseSequenceBlock
+                    {
+                        ExerciseId = id,
+                        SideCue = ExerciseSequenceSideCue.None,
+                        DirectionCue = ExerciseSequenceDirectionCue.None,
+                        MirrorMedia = false,
+                    },
+                ],
             SessionMovementId = sessionMovementId,
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = mirrorRelationship,

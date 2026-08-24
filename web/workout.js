@@ -751,43 +751,62 @@ export function createWorkoutSchedule(
   minutes,
   sequenceRootsBySelectionGroupId = null,
   setCountsBySelectionGroupId = null,
+  exercisesById = null,
+  isRelaxedSingletonValid = null,
 ) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
     throw new RangeError("Unsupported workout duration.");
   }
 
-  const resolution = getResolution(minutes > 30 ? 30 : minutes);
-  if (minutes <= 30) {
-    return resolution.groups;
-  }
-
   const sequenceRoots = sequenceRootsBySelectionGroupId instanceof Map
     ? sequenceRootsBySelectionGroupId
     : new Map();
+  const exerciseMap = exercisesById instanceof Map
+    ? exercisesById
+    : new Map([...sequenceRoots.values()]
+        .filter(Boolean)
+        .map((exercise) => [exercise.id, exercise]));
+  const placements = getSelectedSequencePlacements(
+    minutes,
+    sequenceRoots,
+    exerciseMap,
+    isRelaxedSingletonValid,
+  );
   const setCounts = setCountsBySelectionGroupId instanceof Map
     ? setCountsBySelectionGroupId
-    : createDefaultLongWorkoutSetCounts(
+    : createDefaultWorkoutSetCounts(
       minutes,
-      resolution.groups,
-      sequenceRoots,
+      placements,
     );
   const rounds = [];
-  for (let groupIndex = 0; groupIndex < resolution.groups.length; groupIndex++) {
-    const selectionGroup = resolution.groups[groupIndex];
-    const setCount = Math.max(1, setCounts.get(selectionGroup.id) ?? 1);
-    const root = sequenceRoots.get(selectionGroup.id);
-    const blocks = root?.sequenceBlocks;
-    if (!Array.isArray(blocks) || blocks.length === 0) {
-      throw new Error(`${selectionGroup.displayName} has no selected sequence.`);
-    }
+  for (const placement of placements) {
+    const { root, anchor, coveredGroups } = placement;
+    const setCount = Math.max(1, setCounts.get(anchor.id) ?? 1);
+    const blocks = root.sequenceBlocks;
     for (let setNumber = 1; setNumber <= setCount; setNumber += 1) {
       for (let blockIndex = 0; blockIndex < blocks.length; blockIndex += 1) {
         const block = blocks[blockIndex];
+        const blockExercise = exerciseMap.get(block.exerciseId);
+        const blockGroup = coveredGroups.length === 1
+          ? anchor
+          : coveredGroups.find((group) => group.canonicalGroups.includes(
+              blockExercise?.primaryCanonicalGroup,
+            ));
+        if (!blockExercise || !blockGroup) {
+          throw new Error(`${anchor.displayName} has an invalid sequence block.`);
+        }
+        if (minutes <= 30 && blocks.length === 1 && setCount === 1) {
+          rounds.push(Object.freeze({
+            ...blockGroup,
+            order: rounds.length + 1,
+          }));
+          continue;
+        }
         rounds.push(Object.freeze({
-          ...selectionGroup,
-          id: `${selectionGroup.id}.set${setNumber}.block${blockIndex + 1}`,
+          ...blockGroup,
+          id: `${anchor.id}.set${setNumber}.block${blockIndex + 1}`,
           order: rounds.length + 1,
-          selectionGroupId: selectionGroup.id,
+          selectionGroupId: anchor.id,
           exerciseOverrideId: block.exerciseId,
           sequenceBlockIndex: blockIndex,
           sequenceBlockCount: blocks.length,
@@ -809,25 +828,20 @@ export function createWorkoutSchedule(
   return Object.freeze(rounds);
 }
 
-function createDefaultLongWorkoutSetCounts(
+function createDefaultWorkoutSetCounts(
   minutes,
-  groups,
-  sequenceRoots,
+  placements,
 ) {
-  const setCounts = new Map(groups.map((group) => [group.id, 1]));
-  const blockCosts = new Map(groups.map((group) => {
-    const blocks = sequenceRoots.get(group.id)?.sequenceBlocks;
-    if (!Array.isArray(blocks) || blocks.length === 0) {
-      throw new Error(`${group.displayName} has no selected sequence.`);
-    }
-    return [group.id, blocks.length];
-  }));
+  const setCounts = new Map(placements.map((placement) =>
+    [placement.anchor.id, 1]));
+  const blockCosts = new Map(placements.map((placement) =>
+    [placement.anchor.id, placement.root.sequenceBlocks.length]));
   let remainingMinutes = minutes - [...blockCosts.values()]
     .reduce((total, cost) => total + cost, 0);
   if (remainingMinutes < 0) {
     throw new Error("The selected sequences do not fit this workout duration.");
   }
-  const rankedGroups = [...groups].reverse();
+  const rankedPlacements = [...placements].reverse();
   const canFill = (remaining) => {
     const reachable = new Array(remaining + 1).fill(false);
     reachable[0] = true;
@@ -838,15 +852,18 @@ function createDefaultLongWorkoutSetCounts(
     return reachable[remaining];
   };
   while (remainingMinutes > 0) {
-    const group = rankedGroups.find((candidate) => {
-      const cost = blockCosts.get(candidate.id);
+    const placement = rankedPlacements.find((candidate) => {
+      const cost = blockCosts.get(candidate.anchor.id);
       return cost <= remainingMinutes && canFill(remainingMinutes - cost);
     });
-    if (!group) {
+    if (!placement) {
       throw new Error("The selected sequence lengths cannot fill this workout duration.");
     }
-    setCounts.set(group.id, setCounts.get(group.id) + 1);
-    remainingMinutes -= blockCosts.get(group.id);
+    setCounts.set(
+      placement.anchor.id,
+      setCounts.get(placement.anchor.id) + 1,
+    );
+    remainingMinutes -= blockCosts.get(placement.anchor.id);
   }
   return setCounts;
 }
@@ -875,6 +892,118 @@ export function getRequiredCanonicalCoverage(group) {
 
 export function isSelectable(exercise, group) {
   return getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group);
+}
+
+function getSequenceMembers(root, exercisesById) {
+  if (!Array.isArray(root?.sequenceBlocks) || root.sequenceBlocks.length === 0) {
+    return [];
+  }
+  const members = new Map();
+  for (const block of root.sequenceBlocks) {
+    const member = exercisesById.get(block.exerciseId);
+    if (!member) {
+      return [];
+    }
+    members.set(member.id, member);
+  }
+  return [...members.values()];
+}
+
+function getSequenceCanonicalCoverage(root, exercisesById, group) {
+  const trained = new Set(getSequenceMembers(root, exercisesById)
+    .flatMap((member) => [
+      member.primaryCanonicalGroup,
+      ...(member.secondaryCanonicalGroups ?? []),
+    ]));
+  return group.canonicalGroups.filter((canonicalGroup) =>
+    trained.has(canonicalGroup)).length;
+}
+
+function getSequencePrimaryGroups(root, exercisesById, groups) {
+  const coveredGroupIds = new Set();
+  for (const block of root?.sequenceBlocks ?? []) {
+    const member = exercisesById.get(block.exerciseId);
+    const primaryGroups = groups.filter((group) =>
+      group.canonicalGroups.includes(member?.primaryCanonicalGroup));
+    if (!member || primaryGroups.length !== 1) {
+      return [];
+    }
+    coveredGroupIds.add(primaryGroups[0].id);
+  }
+  return groups.filter((group) => coveredGroupIds.has(group.id));
+}
+
+function getSequencePlacementOptions(root, exercisesById, groups) {
+  if (!Array.isArray(root?.sequenceBlocks) || root.sequenceBlocks.length === 0) {
+    return [];
+  }
+  const eligibleAnchors = groups.filter((group) =>
+    getSequenceCanonicalCoverage(root, exercisesById, group) >=
+      getRequiredCanonicalCoverage(group));
+  const primaryGroups = getSequencePrimaryGroups(root, exercisesById, groups);
+  const canClaimMultiplePrimarySlots = primaryGroups.length > 1 &&
+    primaryGroups.every((primaryGroup) => eligibleAnchors.some((anchor) =>
+      anchor.id === primaryGroup.id));
+  const options = eligibleAnchors.map((anchor) =>
+    canClaimMultiplePrimarySlots && primaryGroups.some((primaryGroup) =>
+      primaryGroup.id === anchor.id)
+      ? primaryGroups
+      : [anchor]);
+  return [...new Map(options.map((option) => [
+    option.map((group) => group.id).sort().join("|"),
+    [...option].sort((left, right) => left.order - right.order),
+  ])).values()];
+}
+
+function getSelectedSequencePlacements(
+  minutes,
+  sequenceRoots,
+  exercisesById,
+  isRelaxedSingletonValid = null,
+) {
+  const groups = getResolution(minutes > 30 ? 30 : minutes).groups;
+  const selectedGroupsByRootId = new Map();
+  for (const group of groups) {
+    const root = sequenceRoots.get(group.id);
+    if (!root || !Array.isArray(root.sequenceBlocks) || root.sequenceBlocks.length === 0) {
+      throw new Error(`${group.displayName} has no selected sequence.`);
+    }
+    const selected = selectedGroupsByRootId.get(root.id) ?? { root, groups: [] };
+    selected.groups.push(group);
+    selectedGroupsByRootId.set(root.id, selected);
+  }
+
+  const movementIds = new Set();
+  const placements = [];
+  for (const { root, groups: selectedGroups } of selectedGroupsByRootId.values()) {
+    const selectedGroupIds = new Set(selectedGroups.map((group) => group.id));
+    let coveredGroups = getSequencePlacementOptions(root, exercisesById, groups)
+      .find((option) => sameStringSet(
+        option.map((group) => group.id),
+        selectedGroupIds,
+      ));
+    if (!coveredGroups && selectedGroups.length === 1 &&
+        typeof isRelaxedSingletonValid === "function" &&
+        isRelaxedSingletonValid(root, selectedGroups[0])) {
+      coveredGroups = selectedGroups;
+    }
+    const movementId = getSessionMovementId(root);
+    if (!coveredGroups || movementIds.has(movementId)) {
+      throw new Error(
+        "The selected atomic sequence placements do not match their " +
+        "primary-muscle workout slots.",
+      );
+    }
+    movementIds.add(movementId);
+    const orderedCoveredGroups = [...coveredGroups]
+      .sort((left, right) => left.order - right.order);
+    placements.push({
+      root,
+      anchor: orderedCoveredGroups[0],
+      coveredGroups: orderedCoveredGroups,
+    });
+  }
+  return placements.sort((left, right) => left.anchor.order - right.anchor.order);
 }
 
 export function isPrimaryForGroup(exercise, group) {
@@ -983,10 +1112,6 @@ export function isSessionMovementMetadataValid(exercises) {
     if (root.sequenceBlocks.length === 0) {
       continue;
     }
-    const rootMuscles = new Set([
-      root.primaryCanonicalGroup,
-      ...(root.secondaryCanonicalGroups ?? []),
-    ]);
     const uniqueMemberIds = new Set();
     for (const block of root.sequenceBlocks) {
       const member = exercisesById.get(block?.exerciseId);
@@ -994,11 +1119,7 @@ export function isSessionMovementMetadataValid(exercises) {
           !validSideCues.has(block.sideCue ?? "None") ||
           !validDirectionCues.has(block.directionCue ?? "None") ||
           typeof block.mirrorMedia !== "boolean" ||
-          !validMediaSegments.has(block.mediaSegment ?? "Full") ||
-          ![
-            member.primaryCanonicalGroup,
-            ...(member.secondaryCanonicalGroups ?? []),
-          ].some((muscle) => rootMuscles.has(muscle))) {
+          !validMediaSegments.has(block.mediaSegment ?? "Full")) {
         return false;
       }
       uniqueMemberIds.add(member.id);
@@ -1088,23 +1209,29 @@ function isSequenceUnitEligible(
   exercisesById,
   group,
   modifiers,
-  workoutMinutes = null,
 ) {
   if (!Array.isArray(exercise?.sequenceBlocks) ||
       exercise.sequenceBlocks.length === 0 ||
-      (workoutMinutes !== null && workoutMinutes <= 30 &&
-        exercise.sequenceBlocks.length > 1) ||
-      !isSelectableForWorkoutProfile(exercise, group, modifiers)) {
+      getSequenceCanonicalCoverage(exercise, exercisesById, group) <
+      getRequiredCanonicalCoverage(group)) {
     return false;
   }
 
+  return isSequenceCompatible(exercise, exercisesById, modifiers);
+}
+
+function isSequenceCompatible(exercise, exercisesById, modifiers) {
+  if (!Array.isArray(exercise?.sequenceBlocks) ||
+      exercise.sequenceBlocks.length === 0) {
+    return false;
+  }
   const memberIds = [...new Set(exercise.sequenceBlocks.map((block) =>
     block.exerciseId))];
   return memberIds.length > 0 && memberIds.every((exerciseId) => {
     const member = exercisesById.get(exerciseId);
     return member &&
       MODIFIER_RULES.every((rule) => rule.isReviewed(member)) &&
-      isSelectableForWorkoutProfile(member, group, modifiers);
+      isCompatibleWithWorkoutModifiers(member, modifiers);
   });
 }
 
@@ -1313,51 +1440,102 @@ export function getMaximumDistinctLineupSize(
   exercises,
   groups,
   modifiers,
-  workoutMinutes = 30,
+  workoutMinutes = groups.length,
 ) {
+  if (!Number.isInteger(workoutMinutes) || workoutMinutes < groups.length) {
+    throw new RangeError("Workout minutes must fit every workout group.");
+  }
   const exercisesById = new Map(exercises.map((exercise) =>
     [exercise.id, exercise]));
-  const candidateMovementIdsByGroup = groups
+  const candidateOneBlockMovementsByGroup = groups
     .map((group) => [...new Set(exercises
-      .filter((exercise) => isSequenceUnitEligible(
-        exercise,
-        exercisesById,
-        group,
-        modifiers,
-        workoutMinutes,
-      ))
+      .filter((exercise) =>
+        exercise.sequenceBlocks?.length === 1 &&
+        isSequenceCompatible(exercise, exercisesById, modifiers) &&
+        getSequencePlacementOptions(exercise, exercisesById, groups)
+          .some((option) => option.length === 1 && option[0].id === group.id))
       .map(getSessionMovementId))])
     .sort((left, right) => left.length - right.length);
-  const assignedGroupByMovementId = new Map();
-
-  function tryAssignDistinctMovement(groupIndex, visitedMovementIds) {
-    for (const movementId of candidateMovementIdsByGroup[groupIndex]) {
+  const assignedOneBlockGroupByMovement = new Map();
+  const tryAssignOneBlockMovement = (groupIndex, visitedMovementIds) => {
+    for (const movementId of candidateOneBlockMovementsByGroup[groupIndex]) {
       if (visitedMovementIds.has(movementId)) {
         continue;
       }
       visitedMovementIds.add(movementId);
-
-      const assignedGroupIndex = assignedGroupByMovementId.get(movementId);
+      const assignedGroupIndex = assignedOneBlockGroupByMovement.get(movementId);
       if (assignedGroupIndex === undefined ||
-          tryAssignDistinctMovement(assignedGroupIndex, visitedMovementIds)) {
-        assignedGroupByMovementId.set(movementId, groupIndex);
+          tryAssignOneBlockMovement(assignedGroupIndex, visitedMovementIds)) {
+        assignedOneBlockGroupByMovement.set(movementId, groupIndex);
         return true;
       }
     }
-
     return false;
+  };
+  let oneBlockLineupSize = 0;
+  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+    if (tryAssignOneBlockMovement(groupIndex, new Set())) {
+      oneBlockLineupSize += 1;
+    }
+  }
+  if (oneBlockLineupSize === groups.length) {
+    return groups.length;
   }
 
-  let matchedGroupCount = 0;
-  for (let groupIndex = 0;
-    groupIndex < candidateMovementIdsByGroup.length;
-    groupIndex += 1) {
-    if (tryAssignDistinctMovement(groupIndex, new Set())) {
-      matchedGroupCount += 1;
+  const groupIndexes = new Map(groups.map((group, index) => [group.id, index]));
+  const candidates = [];
+  for (const exercise of exercises.filter((candidate) =>
+    isSequenceCompatible(candidate, exercisesById, modifiers))) {
+    for (const placement of getSequencePlacementOptions(
+      exercise,
+      exercisesById,
+      groups,
+    )) {
+      if (exercise.sequenceBlocks.length + groups.length - placement.length >
+          workoutMinutes) {
+        continue;
+      }
+      let coverageMask = 0n;
+      const utilitiesByGroup = Array(groups.length).fill(0n);
+      for (const group of placement) {
+        const groupIndex = groupIndexes.get(group.id);
+        coverageMask |= 1n << BigInt(groupIndex);
+        utilitiesByGroup[groupIndex] = 1n;
+      }
+      candidates.push({
+        exerciseId: exercise.id,
+        movementId: getSessionMovementId(exercise),
+        coverageMask,
+        blockCount: exercise.sequenceBlocks.length,
+        utilitiesByGroup,
+        tieOrder: exercise.id,
+      });
     }
   }
 
-  return matchedGroupCount;
+  // One empty one-block placement per group makes this an exact maximum-
+  // coverage audit while still using the production atomic-capacity solver.
+  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+    candidates.push({
+      exerciseId: -groupIndex - 1,
+      movementId: -groupIndex - 1,
+      coverageMask: 1n << BigInt(groupIndex),
+      blockCount: 1,
+      utilitiesByGroup: Array(groups.length).fill(0n),
+      tieOrder: Number.MAX_SAFE_INTEGER - groupIndex,
+    });
+  }
+
+  const solution = solveAtomicSequenceLineup(
+    groups.length,
+    workoutMinutes,
+    candidates,
+  );
+  if (!solution) {
+    throw new Error("Atomic lineup validation could not place empty muscle slots.");
+  }
+  return [...solution.exerciseIdByGroupIndex.values()]
+    .filter((exerciseId) => exerciseId > 0).length;
 }
 
 export function findWorkoutProfileLineupDeficiencies(exercises) {
@@ -1458,6 +1636,243 @@ function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
     }
   }
   return assignment;
+}
+
+function countMaskBits(mask) {
+  let value = mask;
+  let count = 0;
+  while (value !== 0n) {
+    value &= value - 1n;
+    count += 1;
+  }
+  return count;
+}
+
+function solveAtomicSequenceLineup(
+  groupCount,
+  workoutMinutes,
+  sourceCandidates,
+) {
+  const allGroupsMask = (1n << BigInt(groupCount)) - 1n;
+  const candidates = sourceCandidates.filter((candidate) =>
+    candidate.coverageMask !== 0n &&
+    (candidate.coverageMask & ~allGroupsMask) === 0n &&
+    candidate.blockCount > 0 &&
+    candidate.utilitiesByGroup.length === groupCount);
+  const candidateUtility = (candidate) => candidate.utilitiesByGroup
+    .reduce((sum, utility, groupIndex) =>
+      (candidate.coverageMask & (1n << BigInt(groupIndex))) !== 0n
+        ? sum + utility
+        : sum, 0n);
+  const singletonCandidatesByGroup = Array.from({ length: groupCount }, (_, groupIndex) =>
+    candidates.filter((candidate) =>
+      candidate.coverageMask === (1n << BigInt(groupIndex))));
+  const multiGroupCandidates = candidates
+    .filter((candidate) => countMaskBits(candidate.coverageMask) > 1)
+    .sort((left, right) => {
+      const utilityDifference = candidateUtility(right) - candidateUtility(left);
+      return utilityDifference > 0n ? 1 : utilityDifference < 0n ? -1 :
+        left.blockCount - right.blockCount;
+    });
+  const maximumUtilityByGroup = Array.from({ length: groupCount }, (_, groupIndex) =>
+    candidates
+      .filter((candidate) =>
+        (candidate.coverageMask & (1n << BigInt(groupIndex))) !== 0n)
+      .reduce((maximum, candidate) =>
+        candidate.utilitiesByGroup[groupIndex] > maximum
+          ? candidate.utilitiesByGroup[groupIndex]
+          : maximum, 0n));
+
+  let best = null;
+  const selected = [];
+  const selectedMovementIds = new Set();
+
+  const canAllocate = (placements) => {
+    const baseBlockCount = placements.reduce((sum, candidate) =>
+      sum + candidate.blockCount, 0);
+    if (baseBlockCount > workoutMinutes) {
+      return false;
+    }
+    const remainingBlocks = workoutMinutes - baseBlockCount;
+    if (remainingBlocks === 0) {
+      return true;
+    }
+    const costs = [...new Set(placements.map((candidate) => candidate.blockCount))];
+    const fillable = new Array(remainingBlocks + 1).fill(false);
+    fillable[0] = true;
+    for (let value = 1; value <= remainingBlocks; value += 1) {
+      fillable[value] = costs.some((cost) =>
+        cost <= value && fillable[value - cost]);
+    }
+    return fillable[remainingBlocks];
+  };
+
+  const completeWithSingletons = (singletonGroupsMask) => {
+    const singletonGroupIndexes = Array.from({ length: groupCount }, (_, index) => index)
+      .filter((groupIndex) =>
+        (singletonGroupsMask & (1n << BigInt(groupIndex))) !== 0n);
+    const selectedByGroupIndex = new Map();
+    const fixedBlockCount = selected.reduce((sum, candidate) =>
+      sum + candidate.blockCount, 0);
+    const availableSingletonBlocks = workoutMinutes - fixedBlockCount;
+    if (availableSingletonBlocks < singletonGroupIndexes.length) {
+      return null;
+    }
+    const everySingletonMustUseOneBlock =
+      availableSingletonBlocks === singletonGroupIndexes.length;
+    if (singletonGroupIndexes.length > 0) {
+      const movementIds = [...new Map(singletonGroupIndexes
+        .flatMap((groupIndex) => singletonCandidatesByGroup[groupIndex])
+        .filter((candidate) => !everySingletonMustUseOneBlock ||
+          candidate.blockCount === 1)
+        .filter((candidate) => !selectedMovementIds.has(candidate.movementId))
+        .sort((left, right) => left.tieOrder - right.tieOrder)
+        .map((candidate) => [candidate.movementId, candidate.movementId])).values()];
+      if (movementIds.length < singletonGroupIndexes.length) {
+        return null;
+      }
+      const movementIndexes = new Map(movementIds.map((movementId, index) =>
+        [movementId, index]));
+      const allowed = singletonGroupIndexes.map(() => movementIds.map(() => false));
+      const utilities = singletonGroupIndexes.map(() => movementIds.map(() => 0n));
+      const chosen = singletonGroupIndexes.map(() => movementIds.map(() => null));
+      let maximumUtility = 0n;
+      for (let row = 0; row < singletonGroupIndexes.length; row += 1) {
+        const groupIndex = singletonGroupIndexes[row];
+        for (const candidate of singletonCandidatesByGroup[groupIndex]) {
+          if (selectedMovementIds.has(candidate.movementId) ||
+              (everySingletonMustUseOneBlock && candidate.blockCount !== 1)) {
+            continue;
+          }
+          const column = movementIndexes.get(candidate.movementId);
+          const utility = candidate.utilitiesByGroup[groupIndex];
+          if (!allowed[row][column] || utility > utilities[row][column]) {
+            allowed[row][column] = true;
+            utilities[row][column] = utility;
+            chosen[row][column] = candidate;
+            if (utility > maximumUtility) {
+              maximumUtility = utility;
+            }
+          }
+        }
+      }
+      const assignment = solveMaximumWeightAssignment(
+        utilities,
+        allowed,
+        maximumUtility,
+      );
+      for (let row = 0; row < singletonGroupIndexes.length; row += 1) {
+        const column = assignment[row];
+        const candidate = column >= 0 ? chosen[row][column] : null;
+        if (!candidate) {
+          return null;
+        }
+        selectedByGroupIndex.set(singletonGroupIndexes[row], candidate);
+      }
+    }
+
+    while (!canAllocate([...selected, ...selectedByGroupIndex.values()])) {
+      const usedMovementIds = new Set([
+        ...selected,
+        ...selectedByGroupIndex.values(),
+      ].map((candidate) => candidate.movementId));
+      let replacement = null;
+      for (const [groupIndex, current] of selectedByGroupIndex) {
+        for (const alternative of singletonCandidatesByGroup[groupIndex]) {
+          const savedBlocks = current.blockCount - alternative.blockCount;
+          if (savedBlocks <= 0 ||
+              (alternative.movementId !== current.movementId &&
+                usedMovementIds.has(alternative.movementId))) {
+            continue;
+          }
+          const utilityLoss = current.utilitiesByGroup[groupIndex] -
+            alternative.utilitiesByGroup[groupIndex];
+          if (!replacement || utilityLoss < replacement.utilityLoss ||
+              (utilityLoss === replacement.utilityLoss &&
+                savedBlocks < replacement.savedBlocks)) {
+            replacement = { groupIndex, alternative, utilityLoss, savedBlocks };
+          }
+        }
+      }
+      if (!replacement) {
+        return null;
+      }
+      selectedByGroupIndex.set(replacement.groupIndex, replacement.alternative);
+    }
+
+    const exerciseIdByGroupIndex = new Map();
+    let utility = 0n;
+    for (const candidate of selected) {
+      utility += candidateUtility(candidate);
+      for (let groupIndex = 0; groupIndex < groupCount; groupIndex += 1) {
+        if ((candidate.coverageMask & (1n << BigInt(groupIndex))) !== 0n) {
+          exerciseIdByGroupIndex.set(groupIndex, candidate.exerciseId);
+        }
+      }
+    }
+    for (const [groupIndex, candidate] of selectedByGroupIndex) {
+      exerciseIdByGroupIndex.set(groupIndex, candidate.exerciseId);
+      utility += candidate.utilitiesByGroup[groupIndex];
+    }
+    return exerciseIdByGroupIndex.size === groupCount
+      ? { exerciseIdByGroupIndex, utility }
+      : null;
+  };
+
+  const search = (decidedMask, coveredMask, utility) => {
+    let upperBound = utility;
+    for (let groupIndex = 0; groupIndex < groupCount; groupIndex += 1) {
+      if ((coveredMask & (1n << BigInt(groupIndex))) === 0n) {
+        upperBound += maximumUtilityByGroup[groupIndex];
+      }
+    }
+    if (best && upperBound <= best.utility) {
+      return;
+    }
+    if (decidedMask === allGroupsMask) {
+      const completed = completeWithSingletons(allGroupsMask & ~coveredMask);
+      if (completed && (!best || completed.utility > best.utility)) {
+        best = completed;
+      }
+      return;
+    }
+
+    const undecidedGroupIndexes = Array.from({ length: groupCount }, (_, index) => index)
+      .filter((groupIndex) =>
+        (decidedMask & (1n << BigInt(groupIndex))) === 0n)
+      .sort((left, right) => {
+        const count = (groupIndex) => multiGroupCandidates.filter((candidate) =>
+          (candidate.coverageMask & (1n << BigInt(groupIndex))) !== 0n &&
+          (candidate.coverageMask & decidedMask) === 0n &&
+          !selectedMovementIds.has(candidate.movementId)).length;
+        return count(left) - count(right);
+      });
+    const nextGroupIndex = undecidedGroupIndexes[0];
+    const nextGroupMask = 1n << BigInt(nextGroupIndex);
+    search(decidedMask | nextGroupMask, coveredMask, utility);
+    for (const candidate of multiGroupCandidates) {
+      if ((candidate.coverageMask & nextGroupMask) === 0n ||
+          (candidate.coverageMask & decidedMask) !== 0n ||
+          selectedMovementIds.has(candidate.movementId)) {
+        continue;
+      }
+      selectedMovementIds.add(candidate.movementId);
+      selected.push(candidate);
+      search(
+        decidedMask | candidate.coverageMask,
+        coveredMask | candidate.coverageMask,
+        utility + candidateUtility(candidate),
+      );
+      selected.pop();
+      selectedMovementIds.delete(candidate.movementId);
+    }
+  };
+
+  if (multiGroupCandidates.length === 0) {
+    return completeWithSingletons(allGroupsMask);
+  }
+  search(0n, 0n, 0n);
+  return best;
 }
 
 export function normalizeWorkoutModifiers(modifiers) {
@@ -1913,6 +2328,30 @@ export class WorkoutSession {
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
       return [];
     }
+    return this.createActiveWorkoutSchedule(this.getEffectiveSetCounts());
+  }
+
+  getSelectedSequencePlacements() {
+    const roots = new Map(this.getSelectionGroups().map((group) => [
+      group.id,
+      this.exercisesById.get(this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
+      ]),
+    ]));
+    return getSelectedSequencePlacements(
+      this.state.activeWorkoutMinutes,
+      roots,
+      this.exercisesById,
+      (root, group) =>
+        (this.pendingRestMatchesSelectionGroup(group.id) ||
+          Object.prototype.hasOwnProperty.call(this.state.outcomes, group.id)) &&
+        this.getSequenceExercises(root).every((member) =>
+          this.isCompatibleWithModifiers(member, this.state.activeWorkoutModifiers) &&
+          this.isAssignedToGroup(member, group)),
+    );
+  }
+
+  createActiveWorkoutSchedule(setCountsBySelectionGroupId) {
     const roots = new Map(this.getSelectionGroups().map((group) => [
       group.id,
       this.exercisesById.get(this.state.selectedExerciseIds[
@@ -1922,7 +2361,14 @@ export class WorkoutSession {
     return createWorkoutSchedule(
       this.state.activeWorkoutMinutes,
       roots,
-      this.getEffectiveSetCounts(),
+      setCountsBySelectionGroupId,
+      this.exercisesById,
+      (root, group) =>
+        (this.pendingRestMatchesSelectionGroup(group.id) ||
+          Object.prototype.hasOwnProperty.call(this.state.outcomes, group.id)) &&
+        this.getSequenceExercises(root).every((member) =>
+          this.isCompatibleWithModifiers(member, this.state.activeWorkoutModifiers) &&
+          this.isAssignedToGroup(member, group)),
     );
   }
 
@@ -1981,17 +2427,14 @@ export class WorkoutSession {
     const scoreUpdates = this.getSequenceExercises(rejectedExercise);
 
     this.shuffle(candidates);
-    const selectionGroup = this.getSelectionGroups().find((candidate) =>
-      candidate.id === getSelectionKey(group));
-    if (!selectionGroup) {
-      return null;
-    }
     const selected = candidates[0];
 
-    this.state.selectedExerciseIds[this.getSelectionStorageKey(
-      selectionGroup.id,
-      this.state.activeWorkoutModifiers,
-    )] = selected.exercise.id;
+    for (const coveredGroup of selected.coveredGroups) {
+      this.state.selectedExerciseIds[this.getSelectionStorageKey(
+        coveredGroup.id,
+        this.state.activeWorkoutModifiers,
+      )] = selected.exercise.id;
+    }
     this.applyShuffleRejection(scoreUpdates);
     this.applyLongWorkoutAllocation(selected.allocation);
     return {
@@ -2070,22 +2513,20 @@ export class WorkoutSession {
       return [];
     }
 
-    const selectionGroup = this.getSelectionGroups().find((group) =>
-      group.id === selectionGroupId);
-    if (!selectionGroup) {
+    let currentPlacement;
+    try {
+      currentPlacement = this.getSelectedSequencePlacements().find((placement) =>
+        placement.anchor.id === selectionGroupId);
+    } catch {
       return [];
     }
-    const selectionStorageKey = this.getSelectionStorageKey(
-      selectionGroup.id,
-      this.state.activeWorkoutModifiers,
-    );
-    const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
-    const currentExercise = this.exercisesById.get(currentExerciseId);
-    if (!Number.isInteger(currentExerciseId) ||
-        currentExerciseId <= 0 ||
-        !currentExercise) {
+    if (!currentPlacement) {
       return [];
     }
+    const currentExercise = currentPlacement.root;
+    const currentExerciseId = currentExercise.id;
+    const coveredGroupIds = new Set(currentPlacement.coveredGroups.map((group) =>
+      group.id));
 
     const rejectedExerciseIds = new Set(this.getSequenceExercises(currentExercise)
       .map((exercise) => exercise.id));
@@ -2094,7 +2535,7 @@ export class WorkoutSession {
       .map(getSelectionKey));
 
     const unavailableExerciseIds = new Set(this.getSelectionGroups()
-      .filter((group) => group.id !== selectionGroup.id)
+      .filter((group) => !coveredGroupIds.has(group.id))
       .map((group) => this.state.selectedExerciseIds[this.getSelectionStorageKey(
         group.id,
         this.state.activeWorkoutModifiers,
@@ -2114,36 +2555,53 @@ export class WorkoutSession {
         this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id) ||
         unavailableExerciseIds.has(exercise.id) ||
         unavailableMovementIds.has(getSessionMovementId(exercise)) ||
+        !this.getSequencePlacementOptions(exercise, this.getSelectionGroups())
+          .some((option) => sameStringSet(
+            option.map((group) => group.id),
+            coveredGroupIds,
+          )) ||
         !this.isWorkoutSelectionCandidate(
           exercise,
-          selectionGroup,
+          currentPlacement.anchor,
           this.state.activeWorkoutModifiers,
         )
       ) {
         continue;
       }
       const allocation = this.tryGetCompatibleShuffleAllocation(
-        selectionStorageKey,
+        currentPlacement.coveredGroups,
         exercise,
         startedSelectionGroupIds,
         rejectedExerciseIds,
       );
       if (allocation) {
-        candidates.push({ exercise, allocation });
+        candidates.push({
+          exercise,
+          coveredGroups: currentPlacement.coveredGroups,
+          allocation,
+        });
       }
     }
     return candidates;
   }
 
   tryGetCompatibleShuffleAllocation(
-    selectionStorageKey,
+    coveredGroups,
     candidate,
     startedSelectionGroupIds,
     rejectedExerciseIds,
   ) {
-    const previousExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
+    const previousExerciseIds = new Map(coveredGroups.map((group) => {
+      const selectionStorageKey = this.getSelectionStorageKey(
+        group.id,
+        this.state.activeWorkoutModifiers,
+      );
+      return [selectionStorageKey, this.state.selectedExerciseIds[selectionStorageKey]];
+    }));
     const previousLastKeptExerciseIds = this.state.lastKeptExerciseIds;
-    this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+    for (const selectionStorageKey of previousExerciseIds.keys()) {
+      this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+    }
     this.state.lastKeptExerciseIds = previousLastKeptExerciseIds
       .filter((exerciseId) => !rejectedExerciseIds.has(exerciseId));
     try {
@@ -2151,7 +2609,9 @@ export class WorkoutSession {
     } catch {
       return null;
     } finally {
-      this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
+      for (const [selectionStorageKey, previousExerciseId] of previousExerciseIds) {
+        this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
+      }
       this.state.lastKeptExerciseIds = previousLastKeptExerciseIds;
     }
   }
@@ -2656,11 +3116,14 @@ export class WorkoutSession {
     }));
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     const freshHardMuscleTimestamps = [...new Set(candidates
+      .flatMap((exercise) => groups
+        .filter((group) => isAllowed(exercise, group))
+        .map((group) => this.getSequenceSelectionExerciseForGroup(
+          exercise,
+          group,
+        )))
       .filter((exercise) =>
         exercise.muscularDemand === HARD_MUSCULAR_DEMAND &&
-        groups.some((group) => group.canonicalGroups.includes(
-          exercise.primaryCanonicalGroup,
-        )) &&
         !isPrimaryMuscleRecovering(
           this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
           exercise.primaryCanonicalGroup,
@@ -2702,7 +3165,6 @@ export class WorkoutSession {
 
     const allowed = groups.map(() => candidates.map(() => false));
     const utilities = groups.map(() => candidates.map(() => 0n));
-    let maximumUtility = 0n;
     for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
       const group = groups[groupIndex];
       for (let exerciseIndex = 0; exerciseIndex < candidates.length; exerciseIndex += 1) {
@@ -2711,24 +3173,29 @@ export class WorkoutSession {
           continue;
         }
         allowed[groupIndex][exerciseIndex] = true;
-        const hardRotationStatus = getHardRotationStatus(
+        const selectionExercise = this.getSequenceSelectionExerciseForGroup(
           exercise,
+          group,
+        );
+        const hardRotationStatus = getHardRotationStatus(
+          selectionExercise,
           group,
           this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
           selectionTimeUnixMilliseconds,
         );
         const isRecoveringModerate = isModerateExerciseRecovering(
-          exercise,
+          selectionExercise,
           this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
           selectionTimeUnixMilliseconds,
         );
         const hardMuscleAgeRank = hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
           ? freshHardMuscleRanks.get(getLastHardWorkUnixMilliseconds(
               this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-              exercise.primaryCanonicalGroup,
+              selectionExercise.primaryCanonicalGroup,
             )) ?? 0
           : 0;
-        const isKept = preferredExerciseIds.has(exercise.id);
+        const isKept = this.getSequenceExercises(exercise).some((member) =>
+          preferredExerciseIds.has(member.id));
         // A non-kept hard exercise can displace a keep only while it is fresh,
         // primary for this slot, and already in that slot's top saved-score
         // bucket. A fresh hard keep is the explicit second path.
@@ -2756,110 +3223,84 @@ export class WorkoutSession {
             : 0n) +
           BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
           (currentExerciseIds.get(group.id) === exercise.id ? currentSelectionWeight : 0n) +
-          (isMirrorPreferred(exercise, modifiers) ? mirrorPreferenceWeight : 0n) +
-          (isPrimaryForGroup(exercise, group) ? primaryWeight : 0n) +
-          BigInt(getCanonicalCoverage(exercise, group));
+          (isMirrorPreferred(selectionExercise, modifiers)
+            ? mirrorPreferenceWeight
+            : 0n) +
+          (isPrimaryForGroup(selectionExercise, group) ? primaryWeight : 0n) +
+          BigInt(getSequenceCanonicalCoverage(
+            exercise,
+            this.exercisesById,
+            group,
+          ));
         utilities[groupIndex][exerciseIndex] = utility;
-        maximumUtility = maximumUtility > utility ? maximumUtility : utility;
       }
     }
 
-    const movementIds = [...new Set(candidates.map(getSessionMovementId))];
-    if (movementIds.length < groups.length) {
-      throw this.createDistinctLineupError(groups, movementIds.length);
-    }
-    const movementIndexes = new Map(movementIds.map((movementId, index) =>
-      [movementId, index]));
-    const movementAllowed = groups.map(() => movementIds.map(() => false));
-    const movementUtilities = groups.map(() => movementIds.map(() => 0n));
-    const candidateIndexesByGroupAndMovement = groups.map(() =>
-      movementIds.map(() => -1));
-    for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-      for (let candidateIndex = 0;
-        candidateIndex < candidates.length;
-        candidateIndex += 1) {
-        if (!allowed[groupIndex][candidateIndex]) {
+    const groupIndexById = new Map(groups.map((group, groupIndex) =>
+      [group.id, groupIndex]));
+    const atomicCandidates = [];
+    for (let candidateIndex = 0;
+      candidateIndex < candidates.length;
+      candidateIndex += 1) {
+      const candidate = candidates[candidateIndex];
+      const placementOptions = this.getSequencePlacementOptions(candidate, groups);
+      if (allowSavedSelectionException) {
+        for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+          if (currentExerciseIds.get(groups[groupIndex].id) === candidate.id &&
+              allowed[groupIndex][candidateIndex] &&
+              placementOptions.every((option) =>
+                option.every((placementGroup) =>
+                  placementGroup.id !== groups[groupIndex].id))) {
+            placementOptions.push([groups[groupIndex]]);
+          }
+        }
+      }
+
+      for (const placementGroups of placementOptions) {
+        if (candidate.sequenceBlocks.length +
+              (groups.length - placementGroups.length) >
+            this.state.activeWorkoutMinutes) {
+          // Even with one block in every remaining slot, this placement
+          // cannot fit the requested duration.
           continue;
         }
-        const movementIndex = movementIndexes.get(getSessionMovementId(
-          candidates[candidateIndex],
-        ));
-        if (!movementAllowed[groupIndex][movementIndex] ||
-            utilities[groupIndex][candidateIndex] >
-              movementUtilities[groupIndex][movementIndex]) {
-          movementAllowed[groupIndex][movementIndex] = true;
-          movementUtilities[groupIndex][movementIndex] =
-            utilities[groupIndex][candidateIndex];
-          candidateIndexesByGroupAndMovement[groupIndex][movementIndex] =
-            candidateIndex;
+        let coverageMask = 0n;
+        let placementAllowed = true;
+        for (const placementGroup of placementGroups) {
+          const groupIndex = groupIndexById.get(placementGroup.id);
+          if (groupIndex === undefined || !allowed[groupIndex][candidateIndex]) {
+            placementAllowed = false;
+            break;
+          }
+          coverageMask |= 1n << BigInt(groupIndex);
         }
+        if (!placementAllowed) {
+          continue;
+        }
+        atomicCandidates.push({
+          exerciseId: candidate.id,
+          movementId: getSessionMovementId(candidate),
+          coverageMask,
+          blockCount: candidate.sequenceBlocks.length,
+          utilitiesByGroup: utilities.map((row) => row[candidateIndex]),
+          tieOrder: candidateIndex,
+        });
       }
     }
 
-    const assignment = solveMaximumWeightAssignment(
-      movementUtilities,
-      movementAllowed,
-      maximumUtility,
+    const solution = solveAtomicSequenceLineup(
+      groups.length,
+      this.state.activeWorkoutMinutes,
+      atomicCandidates,
     );
-    const lineup = new Map();
-    for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-      const movementIndex = assignment[groupIndex];
-      if (movementIndex < 0 || !movementAllowed[groupIndex][movementIndex]) {
-        throw this.createDistinctLineupError(groups, movementIds.length);
-      }
-      const candidateIndex =
-        candidateIndexesByGroupAndMovement[groupIndex][movementIndex];
-      lineup.set(groups[groupIndex].id, candidates[candidateIndex].id);
+    if (!solution) {
+      const movementCount = new Set(atomicCandidates.map((candidate) =>
+        candidate.movementId)).size;
+      throw this.createDistinctLineupError(groups, movementCount);
     }
-
-    const scheduledBlockCount = () => [...lineup.values()]
-      .reduce((total, exerciseId) => total +
-        this.exercisesById.get(exerciseId).sequenceBlocks.length, 0);
-    const hasSingleBlockSequence = () => [...lineup.values()].some((exerciseId) =>
-      this.exercisesById.get(exerciseId).sequenceBlocks.length === 1);
-    while (scheduledBlockCount() > this.state.activeWorkoutMinutes ||
-           (this.state.activeWorkoutMinutes > 30 && !hasSingleBlockSequence())) {
-      const selectedMovementIds = new Set([...lineup.values()].map((exerciseId) =>
-        getSessionMovementId(this.exercisesById.get(exerciseId))));
-      let best = null;
-      for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-        const currentExerciseId = lineup.get(groups[groupIndex].id);
-        const currentCandidateIndex = candidates.findIndex((candidate) =>
-          candidate.id === currentExerciseId);
-        const currentExercise = this.exercisesById.get(currentExerciseId);
-        const currentCost = currentExercise.sequenceBlocks.length;
-        const currentMovementId = getSessionMovementId(currentExercise);
-        for (let candidateIndex = 0;
-          candidateIndex < candidates.length;
-          candidateIndex += 1) {
-          if (!allowed[groupIndex][candidateIndex]) {
-            continue;
-          }
-          const alternative = candidates[candidateIndex];
-          const savedBlocks = currentCost - alternative.sequenceBlocks.length;
-          if (savedBlocks <= 0) {
-            continue;
-          }
-          const alternativeMovementId = getSessionMovementId(alternative);
-          if (alternativeMovementId !== currentMovementId &&
-              selectedMovementIds.has(alternativeMovementId)) {
-            continue;
-          }
-          const utilityLoss = utilities[groupIndex][currentCandidateIndex] -
-            utilities[groupIndex][candidateIndex];
-          if (!best || utilityLoss < best.utilityLoss ||
-              (utilityLoss === best.utilityLoss &&
-                savedBlocks < best.savedBlocks)) {
-            best = { groupIndex, candidateIndex, utilityLoss, savedBlocks };
-          }
-        }
-      }
-      if (!best) {
-        throw new Error("No distinct sequence lineup fits the selected workout duration.");
-      }
-      lineup.set(groups[best.groupIndex].id, candidates[best.candidateIndex].id);
-    }
-    return lineup;
+    return new Map([...solution.exerciseIdByGroupIndex].map(
+      ([groupIndex, exerciseId]) => [groups[groupIndex].id, exerciseId],
+    ));
   }
 
   chooseBestCandidate(
@@ -3001,18 +3442,51 @@ export class WorkoutSession {
     })).values()];
   }
 
+  getSequenceSelectionExerciseForGroup(exercise, group) {
+    const root = this.getSequenceRoot(exercise);
+    const primaryMembers = root.sequenceBlocks
+      .map((block) => this.exercisesById.get(block.exerciseId))
+      .filter((member) => group.canonicalGroups.includes(
+        member.primaryCanonicalGroup,
+      ));
+    return primaryMembers.find((member) => member.id === root.id) ??
+      primaryMembers[0] ??
+      root;
+  }
+
+  getSequencePlacementOptions(exercise, groups) {
+    return getSequencePlacementOptions(
+      this.getSequenceRoot(exercise),
+      this.exercisesById,
+      groups,
+    );
+  }
+
+  getResolutionGroupsForGroup(group) {
+    const resolution = [...RESOLUTIONS.values()].find((candidate) =>
+      candidate.groups.some((knownGroup) => knownGroup.id === group.id));
+    if (!resolution) {
+      throw new Error(`${group.displayName} has no workout resolution.`);
+    }
+    return resolution.groups;
+  }
+
   isWorkoutSelectionCandidate(exercise, group, modifiers) {
     if (!Array.isArray(exercise?.sequenceBlocks) ||
         exercise.sequenceBlocks.length === 0 ||
-        this.getSequenceRoot(exercise).id !== exercise.id ||
-        (this.state.activeWorkoutMinutes <= 30 &&
-          exercise.sequenceBlocks.length > 1) ||
-        (this.state.activeWorkoutMinutes > 30 &&
-          exercise.sequenceBlocks.length > this.state.activeWorkoutMinutes - 29)) {
+        this.getSequenceRoot(exercise).id !== exercise.id) {
       return false;
     }
-    return this.getSequenceExercises(exercise).every((member) =>
-      this.isSelectable(member, group, modifiers));
+    const activeGroups = this.getSelectionGroups();
+    const groups = activeGroups.length > 0
+      ? activeGroups
+      : this.getResolutionGroupsForGroup(group);
+    return this.getSequencePlacementOptions(exercise, groups).some((option) =>
+      option.some((candidate) => sameStringSet(
+        candidate.canonicalGroups,
+        group.canonicalGroups,
+      ))) && this.getSequenceExercises(exercise).every((member) =>
+      this.isCompatibleWithModifiers(member, modifiers));
   }
 
   isSelectable(exercise, group, modifiers) {
@@ -3126,17 +3600,19 @@ export class WorkoutSession {
     if (this.isSavedSelectionValid(exercise, group, modifiers)) {
       return true;
     }
-    const isLongWorkoutSelectionGroup = RESOLUTIONS.get(30).groups.some(
-      (candidate) => candidate.id === group.id,
-    );
     return this.state.activeWorkoutMinutes === 0 &&
-      isLongWorkoutSelectionGroup &&
       Array.isArray(exercise.sequenceBlocks) &&
       exercise.sequenceBlocks.length > 0 &&
       this.getSequenceRoot(exercise).id === exercise.id &&
+      this.getSequencePlacementOptions(
+        exercise,
+        this.getResolutionGroupsForGroup(group),
+      ).some((option) => option.some((candidate) => sameStringSet(
+        candidate.canonicalGroups,
+        group.canonicalGroups,
+      ))) &&
       this.getSequenceExercises(exercise).every((member) =>
-        this.isCompatibleWithModifiers(member, modifiers) &&
-        this.isAssignedToGroup(member, group));
+        this.isCompatibleWithModifiers(member, modifiers));
   }
 
   normalizeActiveLongWorkoutAllocation() {
@@ -3147,10 +3623,20 @@ export class WorkoutSession {
 
   isLongWorkoutAllocationValid() {
     if (this.state.activeWorkoutMinutes <= 30) {
-      return Object.keys(this.state.activeDirectionPartnerExerciseIds).length === 0 &&
-        this.state.activeFullSideRoundIds.length === 0 &&
-        this.state.activeExtraSetSelectionGroupIds.length === 0 &&
-        Object.keys(this.state.activeSetCountsBySelectionGroupId).length === 0;
+      if (Object.keys(this.state.activeDirectionPartnerExerciseIds).length !== 0 ||
+          this.state.activeFullSideRoundIds.length !== 0 ||
+          this.state.activeExtraSetSelectionGroupIds.length !== 0 ||
+          Object.keys(this.state.activeSetCountsBySelectionGroupId).length !== 0) {
+        return false;
+      }
+      try {
+        const allocation = this.chooseLongWorkoutAllocation();
+        return this.createActiveWorkoutSchedule(
+          allocation.setCountsBySelectionGroupId,
+        ).length === this.state.activeWorkoutMinutes;
+      } catch {
+        return false;
+      }
     }
 
     let expected;
@@ -3164,14 +3650,19 @@ export class WorkoutSession {
       return false;
     }
 
-    const selectionGroups = this.getSelectionGroups();
+    let placements;
+    try {
+      placements = this.getSelectedSequencePlacements();
+    } catch {
+      return false;
+    }
     const actualSetCounts = new Map(Object.entries(
       this.state.activeSetCountsBySelectionGroupId,
     ));
-    if (actualSetCounts.size !== selectionGroups.length ||
-        selectionGroups.some((group) =>
-          !Number.isInteger(actualSetCounts.get(group.id)) ||
-          actualSetCounts.get(group.id) < 1)) {
+    if (actualSetCounts.size !== placements.length ||
+        placements.some((placement) =>
+          !Number.isInteger(actualSetCounts.get(placement.anchor.id)) ||
+          actualSetCounts.get(placement.anchor.id) < 1)) {
       return false;
     }
 
@@ -3186,17 +3677,7 @@ export class WorkoutSession {
     }
 
     try {
-      const roots = new Map(selectionGroups.map((group) => [
-        group.id,
-        this.exercisesById.get(this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
-        ]),
-      ]));
-      const rounds = createWorkoutSchedule(
-        this.state.activeWorkoutMinutes,
-        roots,
-        actualSetCounts,
-      );
+      const rounds = this.createActiveWorkoutSchedule(actualSetCounts);
       return rounds.length === this.state.activeWorkoutMinutes &&
         actualSetCounts.size === expected.setCountsBySelectionGroupId.size &&
         [...actualSetCounts].every(([groupId, setCount]) =>
@@ -3207,64 +3688,51 @@ export class WorkoutSession {
   }
 
   chooseLongWorkoutAllocation(lockedSelectionGroupIds = new Set()) {
-    if (this.state.activeWorkoutMinutes <= 30) {
-      return {
-        extraSetSelectionGroupIds: [],
-        setCountsBySelectionGroupId: new Map(),
-      };
-    }
-
-    const selected = (group) => {
-      const exercise = this.exercisesById.get(this.state.selectedExerciseIds[
-        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
-      ]);
-      if (!exercise) {
-        throw new Error(`${group.displayName} has no selected sequence.`);
-      }
-      return exercise;
-    };
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    const rankedGroups = [...this.getSelectionGroups()].sort((left, right) => {
-      const leftExercise = selected(left);
-      const rightExercise = selected(right);
-      return Number(rightExercise.muscularDemand === HARD_MUSCULAR_DEMAND) -
-          Number(leftExercise.muscularDemand === HARD_MUSCULAR_DEMAND) ||
-        Number(keptExerciseIds.has(rightExercise.id)) -
-          Number(keptExerciseIds.has(leftExercise.id)) ||
-        right.order - left.order;
-    });
-    const blockCostByGroup = new Map(rankedGroups.map((group) => [
-      group.id,
-      selected(group).sequenceBlocks.length,
+    const rankedPlacements = [...this.getSelectedSequencePlacements()]
+      .sort((left, right) => {
+        const leftMembers = this.getSequenceExercises(left.root);
+        const rightMembers = this.getSequenceExercises(right.root);
+        return Number(rightMembers.some((member) =>
+          member.muscularDemand === HARD_MUSCULAR_DEMAND)) -
+            Number(leftMembers.some((member) =>
+              member.muscularDemand === HARD_MUSCULAR_DEMAND)) ||
+          Number(rightMembers.some((member) => keptExerciseIds.has(member.id))) -
+            Number(leftMembers.some((member) => keptExerciseIds.has(member.id))) ||
+          right.anchor.order - left.anchor.order;
+      });
+    const blockCostByGroup = new Map(rankedPlacements.map((placement) => [
+      placement.anchor.id,
+      placement.root.sequenceBlocks.length,
     ]));
-    const setCountsBySelectionGroupId = new Map(rankedGroups.map((group) => [
-      group.id,
+    const setCountsBySelectionGroupId = new Map(rankedPlacements.map((placement) => [
+      placement.anchor.id,
       1,
     ]));
     let remainingMinutes = this.state.activeWorkoutMinutes -
       [...blockCostByGroup.values()].reduce((total, cost) => total + cost, 0);
 
-    for (const group of rankedGroups.filter(({ id }) =>
-      lockedSelectionGroupIds.has(id))) {
+    for (const placement of rankedPlacements.filter(({ anchor }) =>
+      lockedSelectionGroupIds.has(anchor.id))) {
       const lockedSetCount =
-        this.state.activeSetCountsBySelectionGroupId[group.id] ?? 1;
+        this.state.activeSetCountsBySelectionGroupId[placement.anchor.id] ?? 1;
       if (!Number.isInteger(lockedSetCount) || lockedSetCount < 1) {
         throw new Error(
-          `The completed set allocation for ${group.displayName} is invalid.`,
+          `The completed set allocation for ${placement.anchor.displayName} is invalid.`,
         );
       }
-      setCountsBySelectionGroupId.set(group.id, lockedSetCount);
+      setCountsBySelectionGroupId.set(placement.anchor.id, lockedSetCount);
       remainingMinutes -=
-        (lockedSetCount - 1) * blockCostByGroup.get(group.id);
+        (lockedSetCount - 1) * blockCostByGroup.get(placement.anchor.id);
     }
     if (remainingMinutes < 0) {
       throw new Error("The selected mandatory sequences exceed the workout duration.");
     }
 
-    const repeatableGroups = rankedGroups.filter(({ id }) =>
-      !lockedSelectionGroupIds.has(id));
-    const repeatableCosts = [...new Set(repeatableGroups.map((group) =>
-      blockCostByGroup.get(group.id)))];
+    const repeatablePlacements = rankedPlacements.filter(({ anchor }) =>
+      !lockedSelectionGroupIds.has(anchor.id));
+    const repeatableCosts = [...new Set(repeatablePlacements.map((placement) =>
+      blockCostByGroup.get(placement.anchor.id)))];
     const canFill = (minutes) => {
       const fillable = new Array(minutes + 1).fill(false);
       fillable[0] = true;
@@ -3276,25 +3744,25 @@ export class WorkoutSession {
     };
 
     while (remainingMinutes > 0) {
-      const selectedGroup = [...repeatableGroups]
+      const selectedPlacement = [...repeatablePlacements]
         .sort((left, right) =>
-          setCountsBySelectionGroupId.get(left.id) -
-            setCountsBySelectionGroupId.get(right.id))
-        .find((group) => {
-          const cost = blockCostByGroup.get(group.id);
+          setCountsBySelectionGroupId.get(left.anchor.id) -
+            setCountsBySelectionGroupId.get(right.anchor.id))
+        .find((placement) => {
+          const cost = blockCostByGroup.get(placement.anchor.id);
           return cost <= remainingMinutes &&
             canFill(remainingMinutes - cost);
         });
-      if (!selectedGroup) {
+      if (!selectedPlacement) {
         throw new Error(
           "The selected sequence lengths cannot fill the workout duration.",
         );
       }
       setCountsBySelectionGroupId.set(
-        selectedGroup.id,
-        setCountsBySelectionGroupId.get(selectedGroup.id) + 1,
+        selectedPlacement.anchor.id,
+        setCountsBySelectionGroupId.get(selectedPlacement.anchor.id) + 1,
       );
-      remainingMinutes -= blockCostByGroup.get(selectedGroup.id);
+      remainingMinutes -= blockCostByGroup.get(selectedPlacement.anchor.id);
     }
 
     return {
@@ -3330,7 +3798,12 @@ export class WorkoutSession {
         );
         const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
         const currentExercise = this.exercisesById.get(currentExerciseId);
-        if (!currentExercise || keptExerciseIds.has(currentExerciseId)) {
+        if (!currentExercise || keptExerciseIds.has(currentExerciseId) ||
+            groups.filter((candidateGroup) =>
+              this.state.selectedExerciseIds[this.getSelectionStorageKey(
+                candidateGroup.id,
+                this.state.activeWorkoutModifiers,
+              )] === currentExerciseId).length > 1) {
           continue;
         }
 
@@ -3353,7 +3826,7 @@ export class WorkoutSession {
             .map(getSessionMovementId),
           getSessionMovementId(currentExercise),
         ]);
-        const loadWithoutCurrent = this.state.activeWorkoutMinutes <= 30
+        const loadWithoutCurrent = currentExercise.sequenceBlocks.length === 1
           ? calculateMuscleLoadHalfUnits(groups
               .filter((candidateGroup) => candidateGroup.id !== group.id)
               .map((candidateGroup) => this.getSelectedExercise(candidateGroup)))
@@ -3378,12 +3851,14 @@ export class WorkoutSession {
             !unavailableExerciseIds.has(exercise.id) &&
             !unavailableMovementIds.has(getSessionMovementId(exercise)) &&
             !this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id) &&
+            this.getSequencePlacementOptions(exercise, groups).some((option) =>
+              option.length === 1 && option[0].id === group.id) &&
             this.isWorkoutSelectionCandidate(
               exercise,
               group,
               this.state.activeWorkoutModifiers,
             ))
-          .map((exercise) => loadWithoutCurrent
+          .map((exercise) => loadWithoutCurrent && exercise.sequenceBlocks.length === 1
             ? this.evaluateSingleRoundMuscleBudgetCandidate(
                 group,
                 exercise,
@@ -3432,18 +3907,7 @@ export class WorkoutSession {
     this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
     try {
       const allocation = this.chooseLongWorkoutAllocation();
-      const roots = new Map(this.getSelectionGroups().map((selectionGroup) => [
-        selectionGroup.id,
-        this.exercisesById.get(this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(
-            selectionGroup.id,
-            this.state.activeWorkoutModifiers,
-          )
-        ]),
-      ]));
-      const rounds = createWorkoutSchedule(
-        this.state.activeWorkoutMinutes,
-        roots,
+      const rounds = this.createActiveWorkoutSchedule(
         allocation.setCountsBySelectionGroupId,
       );
       const scheduledExercises = rounds.map((round) => this.getSelectedExercise(round));
@@ -3462,14 +3926,18 @@ export class WorkoutSession {
         candidateMuscleGroups,
       );
       const realScore = this.getSelectionScore(candidate);
-      const rotationStatus = getHardRotationStatus(
+      const selectionExercise = this.getSequenceSelectionExerciseForGroup(
         candidate,
+        group,
+      );
+      const rotationStatus = getHardRotationStatus(
+        selectionExercise,
         group,
         this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
         selectionTimeUnixMilliseconds,
       );
       const isRecoveringModerate = isModerateExerciseRecovering(
-        candidate,
+        selectionExercise,
         this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
         selectionTimeUnixMilliseconds,
       );
@@ -3488,15 +3956,33 @@ export class WorkoutSession {
           rotationStatus === HARD_ROTATION_STATUS.FreshHard
             ? getLastHardWorkUnixMilliseconds(
                 this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-                candidate.primaryCanonicalGroup,
+                selectionExercise.primaryCanonicalGroup,
               )
             : 0,
         isMirrorPreferred: isMirrorPreferred(
-          candidate,
+          selectionExercise,
           this.state.activeWorkoutModifiers,
         ),
-        isPrimary: isPrimaryForGroup(candidate, group),
-        canonicalCoverage: getCanonicalCoverage(candidate, group),
+        isPrimary: isPrimaryForGroup(selectionExercise, group),
+        canonicalCoverage: getSequenceCanonicalCoverage(
+          candidate,
+          this.exercisesById,
+          group,
+        ),
+      };
+    } catch {
+      return {
+        exerciseId: candidate.id,
+        realScore: this.getSelectionScore(candidate),
+        adjustedScoreHalfUnits: Number.MIN_SAFE_INTEGER,
+        isFreshHard: false,
+        isRecoveringHard: false,
+        isRecoveringModerate: false,
+        isKept: false,
+        lastHardWorkUnixMilliseconds: 0,
+        isMirrorPreferred: false,
+        isPrimary: false,
+        canonicalCoverage: 0,
       };
     } finally {
       this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
@@ -3515,14 +4001,18 @@ export class WorkoutSession {
         loadWithoutCandidate,
         candidate,
       );
-    const rotationStatus = getHardRotationStatus(
+    const selectionExercise = this.getSequenceSelectionExerciseForGroup(
       candidate,
+      group,
+    );
+    const rotationStatus = getHardRotationStatus(
+      selectionExercise,
       group,
       this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
       selectionTimeUnixMilliseconds,
     );
     const isRecoveringModerate = isModerateExerciseRecovering(
-      candidate,
+      selectionExercise,
       this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
       selectionTimeUnixMilliseconds,
     );
@@ -3541,15 +4031,19 @@ export class WorkoutSession {
         rotationStatus === HARD_ROTATION_STATUS.FreshHard
           ? getLastHardWorkUnixMilliseconds(
               this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-              candidate.primaryCanonicalGroup,
+              selectionExercise.primaryCanonicalGroup,
             )
           : 0,
       isMirrorPreferred: isMirrorPreferred(
-        candidate,
+        selectionExercise,
         this.state.activeWorkoutModifiers,
       ),
-      isPrimary: isPrimaryForGroup(candidate, group),
-      canonicalCoverage: getCanonicalCoverage(candidate, group),
+      isPrimary: isPrimaryForGroup(selectionExercise, group),
+      canonicalCoverage: getSequenceCanonicalCoverage(
+        candidate,
+        this.exercisesById,
+        group,
+      ),
     };
   }
 
@@ -3560,6 +4054,11 @@ export class WorkoutSession {
   applyLongWorkoutAllocation(allocation) {
     this.state.activeDirectionPartnerExerciseIds = {};
     this.state.activeFullSideRoundIds = [];
+    if (this.state.activeWorkoutMinutes <= 30) {
+      this.state.activeExtraSetSelectionGroupIds = [];
+      this.state.activeSetCountsBySelectionGroupId = {};
+      return;
+    }
     this.state.activeExtraSetSelectionGroupIds = [...allocation.extraSetSelectionGroupIds];
     this.state.activeSetCountsBySelectionGroupId = Object.fromEntries(
       allocation.setCountsBySelectionGroupId,
@@ -3567,6 +4066,9 @@ export class WorkoutSession {
   }
 
   getEffectiveSetCounts() {
+    if (this.state.activeWorkoutMinutes <= 30) {
+      return this.chooseLongWorkoutAllocation().setCountsBySelectionGroupId;
+    }
     return this.isLongWorkoutAllocationValid()
       ? new Map(Object.entries(this.state.activeSetCountsBySelectionGroupId))
       : this.chooseLongWorkoutAllocation().setCountsBySelectionGroupId;
@@ -3842,6 +4344,24 @@ export class WorkoutSession {
   }
 
   normalizePendingRest() {
+    const pendingBaseGroup = ALL_GROUPS.get(this.state.pendingRestGroupId);
+    const pendingRoot = pendingBaseGroup
+      ? this.exercisesById.get(this.state.selectedExerciseIds[
+          this.getSelectionStorageKey(
+            pendingBaseGroup.id,
+            this.state.activeWorkoutModifiers,
+          )
+        ])
+      : null;
+    if (pendingBaseGroup && pendingRoot &&
+        this.state.pendingRestEndsAtUnixMilliseconds > 0 &&
+        this.isSavedSelectionValid(
+          pendingRoot,
+          pendingBaseGroup,
+          this.state.activeWorkoutModifiers,
+        )) {
+      return;
+    }
     try {
       if (this.getValidPendingRestGroup()) {
         return;
@@ -3880,9 +4400,7 @@ export class WorkoutSession {
     ) {
       return false;
     }
-    return (this.state.activeWorkoutMinutes > 30 ||
-        exercise.sequenceBlocks.length === 1) &&
-      this.getSequenceExercises(exercise).every((member) =>
+    return this.getSequenceExercises(exercise).every((member) =>
         this.isCompatibleWithModifiers(member, modifiers) &&
         this.isAssignedToGroup(member, group));
   }
@@ -3970,25 +4488,19 @@ export class WorkoutSession {
         .map(([selectionStorageKey]) => selectionStorageKey);
       for (const selectionStorageKey of affectedSelectionStorageKeys) {
         delete this.state.selectedExerciseIds[selectionStorageKey];
-        for (const round of this.getActiveGroups().filter((candidate) =>
-          this.getSelectionStorageKey(
-            getSelectionKey(candidate),
-            this.state.activeWorkoutModifiers,
-          ) === selectionStorageKey)) {
-          delete this.state.outcomes[round.id];
+        const parsed = this.parseSelectionStorageKey(selectionStorageKey);
+        if (parsed.modifiers !== this.state.activeWorkoutModifiers) {
+          continue;
         }
-      }
-      if (
-        this.state.pendingRestGroupId &&
-        affectedSelectionStorageKeys.some((selectionStorageKey) =>
-          this.getActiveGroups().some((round) =>
-            round.id === this.state.pendingRestGroupId &&
-            this.getSelectionStorageKey(
-              getSelectionKey(round),
-              this.state.activeWorkoutModifiers,
-            ) === selectionStorageKey))
-      ) {
-        this.clearPendingRest();
+        for (const roundId of Object.keys(this.state.outcomes)) {
+          if (this.resolveLegacySelectionKey(roundId) === parsed.selectionGroupId) {
+            delete this.state.outcomes[roundId];
+          }
+        }
+        if (this.resolveLegacySelectionKey(this.state.pendingRestGroupId) ===
+            parsed.selectionGroupId) {
+          this.clearPendingRest();
+        }
       }
     }
 

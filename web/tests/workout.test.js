@@ -881,10 +881,6 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
           group,
           profile,
         )));
-      if (minutes <= 30) {
-        assert.ok(session.getSelectionGroups().every((group) =>
-          session.getSelectedExercise(group).sequenceBlocks.length === 1));
-      }
     }
   }
   const allModifiers = WORKOUT_MODIFIERS.Insect |
@@ -1201,6 +1197,69 @@ test("distinct-lineup capacity counts aliases as one session movement", () => {
     ),
     2,
   );
+});
+
+test("distinct-lineup capacity credits a cross-primary atomic sequence", () => {
+  const groups = [
+    { id: "a", displayName: "A", order: 1, canonicalGroups: ["A"] },
+    { id: "b", displayName: "B", order: 2, canonicalGroups: ["B"] },
+    { id: "c", displayName: "C", order: 3, canonicalGroups: ["C"] },
+  ];
+  const root = {
+    ...exercise(1, "A", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sequenceBlocks: [
+      { exerciseId: 1, sideCue: "None", directionCue: "None", mirrorMedia: false },
+      { exerciseId: 2, sideCue: "None", directionCue: "None", mirrorMedia: false },
+    ],
+  };
+  const member = {
+    ...exercise(2, "B", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sequenceBlocks: [],
+  };
+
+  assert.equal(getMaximumDistinctLineupSize(
+    [root, member, exercise(
+      3,
+      "C",
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    )],
+    groups,
+    WORKOUT_MODIFIERS.Insect,
+    3,
+  ), 3);
+});
+
+test("same-primary sequence yields naturally when exact capacity is too small", () => {
+  const groups = [
+    { id: "a", displayName: "A", order: 1, canonicalGroups: ["A"] },
+    { id: "b", displayName: "B", order: 2, canonicalGroups: ["B"] },
+    { id: "c", displayName: "C", order: 3, canonicalGroups: ["C"] },
+  ];
+  const root = {
+    ...exercise(1, "A", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sequenceBlocks: [
+      { exerciseId: 1, sideCue: "None", directionCue: "None", mirrorMedia: false },
+      { exerciseId: 2, sideCue: "None", directionCue: "None", mirrorMedia: false },
+    ],
+  };
+  const member = {
+    ...exercise(2, "A", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sequenceBlocks: [],
+  };
+
+  assert.equal(getMaximumDistinctLineupSize(
+    [
+      root,
+      member,
+      exercise(3, "B", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+      exercise(4, "C", [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    ],
+    groups,
+    WORKOUT_MODIFIERS.Insect,
+    3,
+  ), 2);
 });
 
 test("session movement metadata requires an explicit anatomically related root family", () => {
@@ -2163,7 +2222,7 @@ test("long workouts emit adjacent atomic sequence blocks with exact duration", (
 });
 
 for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
-  test(`multi-block sequences are entirely excluded from ${minutes}-minute workouts`, () => {
+  test(`same-primary sequences yield to exact ${minutes}-minute block capacity`, () => {
     const exercises = directionPairCatalog();
     const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
     session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
@@ -2178,6 +2237,162 @@ for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
     assert.deepEqual(session.state.activeFullSideRoundIds, []);
   });
 }
+
+test("cross-primary atomic sequence fills two slots in a three-minute workout", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const qualified = (id, group, score) => exercise(
+    id,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    score,
+  );
+  const first = qualified(1, groups[0], 100);
+  first.sequenceBlocks = [
+    { ...first.sequenceBlocks[0] },
+    {
+      exerciseId: 2,
+      sideCue: "None",
+      directionCue: "None",
+      mirrorMedia: false,
+      mediaSegment: "Full",
+    },
+  ];
+  const second = qualified(2, groups[1], 100);
+  second.sequenceBlocks = [];
+  const exercises = [
+    first,
+    second,
+    qualified(10, groups[0], 0),
+    qualified(11, groups[1], 0),
+    qualified(12, groups[2], 100),
+  ];
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  const restored = new WorkoutSession(
+    exercises,
+    parseStoredState(JSON.stringify(session.state)),
+    () => 0,
+  );
+  restored.initialize();
+
+  assert.equal(restored.state.selectedExerciseIds[groups[0].id], first.id);
+  assert.equal(restored.state.selectedExerciseIds[groups[1].id], first.id);
+  const rounds = restored.getActiveGroups();
+  assert.deepEqual(
+    rounds.map((round) => restored.getSelectedExercise(round).id),
+    [1, 2, 12],
+  );
+  assert.equal(getSelectionKey(rounds[0]), getSelectionKey(rounds[1]));
+  assert.equal(restored.isIntermediateSequenceBlock(rounds[0]), true);
+  assert.equal(restored.isIntermediateSequenceBlock(rounds[1]), false);
+});
+
+test("cross-primary shuffle replaces every covered slot atomically", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const qualified = (id, group, score) => exercise(
+    id,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    score,
+  );
+  const linked = (root, memberId) => {
+    root.sequenceBlocks = root.id < memberId
+      ? [
+          { ...root.sequenceBlocks[0] },
+          {
+            exerciseId: memberId,
+            sideCue: "None",
+            directionCue: "None",
+            mirrorMedia: false,
+            mediaSegment: "Full",
+          },
+        ]
+      : [];
+    return root;
+  };
+  const first = linked(qualified(1, groups[0], 100), 2);
+  const second = linked(qualified(2, groups[1], 100), 1);
+  const replacementFirst = linked(qualified(3, groups[0], 0), 4);
+  const replacementSecond = linked(qualified(4, groups[1], 0), 3);
+  const third = qualified(5, groups[2], 100);
+  const session = new WorkoutSession(
+    [first, second, replacementFirst, replacementSecond, third],
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  const result = session.shuffleNextExercise(session.getActiveGroups()[0]);
+
+  assert.equal(result.rejectedExercise.id, first.id);
+  assert.equal(result.replacementExercise.id, replacementFirst.id);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], replacementFirst.id);
+  assert.equal(session.state.selectedExerciseIds[groups[1].id], replacementFirst.id);
+  assert.equal(session.getScore(first), 99);
+  assert.equal(session.getScore(second), 99);
+  assert.deepEqual(
+    session.getActiveGroups().map((round) => session.getSelectedExercise(round).id),
+    [replacementFirst.id, replacementSecond.id, third.id],
+  );
+});
+
+test("cross-primary sequence uses each block's muscular recovery state", () => {
+  const now = Date.UTC(2026, 7, 24, 12);
+  const groups = RESOLUTIONS.get(3).groups;
+  const qualified = (id, group) => exercise(
+    id,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  );
+  const first = qualified(1, groups[0]);
+  first.sequenceBlocks.push({
+    exerciseId: 2,
+    sideCue: "None",
+    directionCue: "None",
+    mirrorMedia: false,
+    mediaSegment: "Full",
+  });
+  const hardSecond = qualified(2, groups[1]);
+  hardSecond.sequenceBlocks = [];
+  hardSecond.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const firstFallback = qualified(3, groups[0]);
+  const secondFallback = qualified(4, groups[1]);
+  const third = qualified(5, groups[2]);
+  const exercises = [first, hardSecond, firstFallback, secondFallback, third];
+
+  const fresh = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  fresh.startWorkout(3, WORKOUT_MODIFIERS.None);
+  assert.equal(fresh.state.selectedExerciseIds[groups[0].id], first.id);
+  assert.equal(fresh.state.selectedExerciseIds[groups[1].id], first.id);
+
+  const recoveringState = createDefaultState();
+  recoveringState.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
+    [hardSecond.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
+  };
+  const recovering = new WorkoutSession(
+    exercises,
+    recoveringState,
+    () => 0,
+    () => now,
+  );
+  recovering.startWorkout(3, WORKOUT_MODIFIERS.None);
+  assert.equal(
+    recovering.state.selectedExerciseIds[groups[0].id],
+    firstFallback.id,
+  );
+  assert.equal(
+    recovering.state.selectedExerciseIds[groups[1].id],
+    secondFallback.id,
+  );
+});
 
 test("four-block side-by-direction sequences preserve independent cues", () => {
   const root = catalog.find((exercise) => exercise.id === 214);

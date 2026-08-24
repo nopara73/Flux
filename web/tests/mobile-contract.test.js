@@ -74,6 +74,8 @@ const [
   compactMirrorIcon,
   tallMirrorIcon,
   exerciseSequenceIcon,
+  atomicSequenceLineupSolver,
+  workoutSequencePolicy,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -106,6 +108,8 @@ const [
   source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
   source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
   source("Flux", "Resources", "drawable", "ic_exercise_sequence.xml"),
+  source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
+  source("Flux", "Services", "WorkoutSequencePolicy.cs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -120,17 +124,17 @@ test("web duration choices match the mobile workout contract", () => {
   );
 });
 
-test("web and mobile persist hard-first block-aware long-workout allocation", () => {
+test("web and mobile persist hard-first block-aware workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
   assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
   assert.match(
     sessionService,
-    /OrderByDescending\(group =>[\s\S]*IsHardExercise\(Selected\(group\)\)[\s\S]*ThenByDescending\(group =>[\s\S]*LastKeptExerciseIds\.Contains\(Selected\(group\)\.Id\)[\s\S]*ThenByDescending\(group => group\.Order\)/,
+    /OrderByDescending\(placement =>[\s\S]*GetSequenceExercises\(placement\.Root\)[\s\S]*Any\(WorkoutRecoveryPolicy\.IsHardExercise\)[\s\S]*ThenByDescending\(placement =>[\s\S]*LastKeptExerciseIds\.Contains\(member\.Id\)[\s\S]*ThenByDescending\(placement => placement\.Anchor\.Order\)/,
   );
   assert.match(
     workoutModule,
-    /Number\(rightExercise\.muscularDemand === HARD_MUSCULAR_DEMAND\) -[\s\S]*Number\(leftExercise\.muscularDemand === HARD_MUSCULAR_DEMAND\)[\s\S]*keptExerciseIds\.has\(rightExercise\.id\)[\s\S]*keptExerciseIds\.has\(leftExercise\.id\)[\s\S]*right\.order - left\.order/,
+    /rightMembers\.some\(\(member\) =>[\s\S]*HARD_MUSCULAR_DEMAND[\s\S]*leftMembers\.some[\s\S]*keptExerciseIds\.has\(member\.id\)[\s\S]*right\.anchor\.order - left\.anchor\.order/,
   );
   assert.match(
     sessionService,
@@ -153,7 +157,7 @@ test("web and mobile carry kept exercises across workout durations", () => {
   );
   assert.match(
     sessionService,
-    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*IsSelectable\(/,
+    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*ChooseBestDistinctLineup\([\s\S]*preferredTieOrder: orderedKeptExerciseIds/,
   );
 });
 
@@ -243,15 +247,15 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
-    /GetMaximumDistinctLineupSize[\s\S]*Select\(GetSessionMovementId\)[\s\S]*TryAssignDistinctMovement/,
+    /GetMaximumDistinctLineupSize[\s\S]*WorkoutSequencePolicy\.GetPlacementOptions[\s\S]*GetSessionMovementId\(exercise\)[\s\S]*AtomicSequenceLineupSolver\.Solve/,
   );
   assert.match(
     sessionService,
-    /movementAllowed[\s\S]*GetSessionMovementId[\s\S]*SolveMaximumWeightAssignment/,
+    /ChooseBestDistinctLineup[\s\S]*GetSessionMovementId\(candidate\)[\s\S]*AtomicSequenceLineupSolver\.Solve/,
   );
   assert.match(
     workoutModule,
-    /movementAllowed[\s\S]*getSessionMovementId[\s\S]*solveMaximumWeightAssignment/,
+    /chooseBestDistinctLineup[\s\S]*getSessionMovementId\(candidate\)[\s\S]*solveAtomicSequenceLineup/,
   );
   assert.equal((sessionService.match(/unavailableMovementIds/g) ?? []).length, 4);
   assert.equal((workoutModule.match(/unavailableMovementIds/g) ?? []).length, 4);
@@ -531,8 +535,14 @@ test("web and mobile apply rolling muscular recovery by primary muscle", () => {
     workoutModule,
     /mirrorPreferenceWeight[\s\S]*moderateRecoveryAvoidanceWeight[\s\S]*hardRecoveryAvoidanceWeight[\s\S]*freshHardWeight[\s\S]*scoreWeight/,
   );
-  assert.match(sessionService, /BigInteger\[,] utilities/);
-  assert.match(workoutModule, /candidates\.map\(\(\) => 0n\)/);
+  assert.match(
+    sessionService,
+    /var utilities = new BigInteger\[groups\.Count, candidates\.Count\][\s\S]*utilitiesByGroup/,
+  );
+  assert.match(
+    workoutModule,
+    /const utilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*utilitiesByGroup/,
+  );
 });
 
 test("runtime media and the deployable web shell are content-addressed", () => {
@@ -1037,19 +1047,43 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
   );
 });
 
-test("sequence blocks are adjacent indivisible units and short workouts exclude them", () => {
+test("atomic sequences are adjacent units that may satisfy multiple primary slots", () => {
   assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
-  assert.match(
+  assert.doesNotMatch(
     sessionService,
     /state\.ActiveWorkoutMinutes <= 30 &&[\s\S]*exercise\.SequenceBlocks\.Length > 1/,
   );
-  assert.match(
+  assert.doesNotMatch(
     workoutModule,
     /workoutMinutes !== null && workoutMinutes <= 30[\s\S]*exercise\.sequenceBlocks\.length > 1/,
   );
   assert.match(
+    workoutSequencePolicy,
+    /GetPrimaryCoverageGroups[\s\S]*member\.PrimaryCanonicalGroup[\s\S]*coveredGroupIds\.Add/,
+  );
+  assert.match(
+    atomicSequenceLineupSolver,
+    /CoverageMask[\s\S]*BlockCount[\s\S]*workoutMinutes[\s\S]*ReduceToBlockCapacity/,
+  );
+  assert.match(
     sessionService,
-    /for \(int setNumber = 1;[\s\S]*for \(int blockIndex = 0;[\s\S]*\.set\{setNumber\}\.block\{blockIndex \+ 1\}/,
+    /candidate\.SequenceBlocks\.Length \+[\s\S]*groups\.Count - placementGroups\.Length[\s\S]*state\.ActiveWorkoutMinutes/,
+  );
+  assert.match(
+    workoutModule,
+    /candidate\.sequenceBlocks\.length \+[\s\S]*groups\.length - placementGroups\.length[\s\S]*this\.state\.activeWorkoutMinutes/,
+  );
+  assert.match(
+    sessionService,
+    /selectedGroupsByRootId[\s\S]*GetSequencePlacementOptions[\s\S]*CoveredGroups/,
+  );
+  assert.match(
+    workoutModule,
+    /selectedGroupsByRootId[\s\S]*getSequencePlacementOptions[\s\S]*coveredGroups/,
+  );
+  assert.match(
+    sessionService,
+    /for \(int setNumber = 1;[\s\S]*for \(int blockIndex = 0;[\s\S]*\.set\{setNumber\}\.[\s\S]*block\{blockIndex \+ 1\}/,
   );
   assert.match(
     workoutModule,

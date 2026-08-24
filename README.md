@@ -47,13 +47,17 @@ movement with only a token association to one small part of it.
 ### The lineup is solved as one constrained assignment
 
 Flux does not select each round independently. It solves the complete lineup as
-a maximum-weight one-to-one assignment between workout groups and eligible
-session movements. The result must contain one distinct movement per base group.
+a maximum-weight atomic assignment between workout groups and eligible exercise
+sequences. Most sequences occupy one base group. A sequence whose consecutive
+blocks genuinely have primary muscles in different workout groups may occupy all
+of those groups together, provided its complete sequence meaningfully covers
+each claimed group and fits the exact workout duration.
 Catalog records that are merely repetition, hold, or naming variants of the
 same demonstrated movement share an explicit `sessionMovementId`; only one of
-those aliases may occupy the base lineup. Linked opposite directions and
-deliberate extra sets remain consecutive rounds of one base slot rather than
-competing for another muscle group's slot. The strict reviewed identity families
+those aliases may occupy the base lineup. Every block of a selected sequence
+remains adjacent even when that shifts the otherwise mass-ordered muscle-group
+schedule. Extra side or direction blocks with the same primary muscle consume
+time but do not pretend to fill another muscle slot. The strict reviewed identity families
 live in `tools/ExerciseSessionMovements.psd1`, and generation plus deployment
 audits reject missing, overlapping, or anatomically inconsistent mappings.
 
@@ -146,8 +150,8 @@ Flux currently provides three composable modifiers:
   budget.
 
 Mirror availability affects exercise eligibility and selection only. It never
-horizontally flips demonstration media; timed second-side playback remains the
-separate side-sequence behavior.
+horizontally flips demonstration media; reviewed atomic side blocks remain a
+separate exercise-sequence behavior.
 
 Turning Insect or Silence off relaxes its requirement. Mirror behavior is
 coverage-aware:
@@ -168,7 +172,8 @@ equipment compatibility is applied. Separately, each of the five global mirror
 classification cells—`MirrorOnly` upper/full body, `BenefitsGreatly`
 upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
 Relationship labels are never promoted to hide a genuine gap. Every supported
-duration and profile must also admit a completely distinct lineup.
+duration and profile must also admit a capacity-exact atomic lineup without
+reusing a session movement.
 
 A separate materiality test prevents placebo modifiers. Insect and Silence must
 remove at least five exercises or 5% of the previous candidate pool, whichever
@@ -203,13 +208,22 @@ Sequence structure is derived from the demonstrated movement:
 - Distinct established exercises that are useful only together may be linked in
   one sequence.
 
-Multi-block sequences are unavailable in workouts of 30 minutes or less. Longer
-workouts select a globally valid lineup whose complete sequences fit the chosen
-duration. Remaining time is filled by repeating complete sequences, prioritizing
-selected demand-2 work before kept work and balancing set counts where an exact
-fit permits. The allocation is persisted when the workout starts, so reopening
-the app cannot silently change the remaining session. Recovery preferences apply
-between sessions, not when repeating a selected sequence within the current one.
+There is no duration-based sequence exclusion. The solver counts every block
+against exact workout capacity. In a 30-minute-or-shorter workout, the number of
+base groups equals the number of available blocks, so a two-block same-muscle
+sequence naturally yields when it would leave another required group unfilled.
+A two-block sequence with two genuinely distinct primary workout groups can fill
+both slots and therefore can fit even a 3-minute workout. Larger sequences can
+fit by the same rule when their real primary-muscle coverage accounts for their
+blocks. Their blocks remain consecutive; only the surrounding muscle-group order
+may move.
+
+When the duration has additional capacity, remaining time is filled by repeating
+complete sequences, prioritizing selected demand-2 work before kept work and
+balancing set counts where an exact fit permits. The allocation is persisted when
+the workout starts, so reopening the app cannot silently change the remaining
+session. Recovery preferences apply between sessions, not when repeating a
+selected sequence within the current one.
 
 ## What a workout looks like
 
@@ -230,8 +244,8 @@ unavailable after any earlier block from that sequence has begun. Repeated
 shuffles draw without repetition from every remaining session
 movement valid for that anatomical slot and modifier profile; an alias of the
 rejected movement is not a replacement. They do not re-rank the pool toward the
-normal automatic-selection winner. In long workouts, completed
-timer allocations stay locked while still-unstarted allocations are safely
+normal automatic-selection winner. Completed timer allocations stay locked
+while still-unstarted allocations are safely
 recomputed around the replacement. Anatomical group routing remains internal
 rather than appearing as a potentially misleading exercise label. A large
 heart is the shared Keep action during rest.

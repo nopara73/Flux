@@ -3714,16 +3714,6 @@ foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 
         if ($memberId -ne $rootId -and @($member['sequenceBlocks']).Count -ne 0) {
             $sequenceViolations.Add($rootId)
         }
-        if ($member['primaryCanonicalGroup'] -ne $root['primaryCanonicalGroup'] -or
-            (@($member['secondaryCanonicalGroups']) -join "`n") -ne
-                (@($root['secondaryCanonicalGroups']) -join "`n") -or
-            $member['insectCompatibility'] -ne $root['insectCompatibility'] -or
-            $member['mirrorRelationship'] -ne $root['mirrorRelationship'] -or
-            $member['minimumMirrorCoverage'] -ne $root['minimumMirrorCoverage'] -or
-            $member['silent'] -ne $root['silent'] -or
-            $member['muscularDemand'] -ne $root['muscularDemand']) {
-            $sequenceViolations.Add($rootId)
-        }
     }
 }
 if (@(Compare-Object `

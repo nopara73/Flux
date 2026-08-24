@@ -53,30 +53,31 @@ Every entry must:
 - be naturally quiet whenever the default-on Silence modifier is enabled;
   established impact movements may be eligible only after Silence is explicitly
   disabled;
-- be bilateral/symmetric, naturally alternate in one uninterrupted loop, or use
-  an explicit reviewed screen-side order for the 20 / 5 / 20 timed-side flow;
+- be a genuinely simultaneous/symmetric movement, naturally alternate in one
+  uninterrupted loop, or belong to one complete reviewed atomic sequence that
+  includes every required side and direction as full 45-second blocks;
 - have one or more muscle-group assignments and its own bundled H.264 MP4.
 
-Each entry is explicitly a repetition or hold and a continuous, alternating, or
-timed-unilateral sequence. Naturally alternating sides, breath cycles,
-raise-and-lower actions, flows, and repeated contractions remain repetitions.
-An alternating sequence switches its working side inside one uninterrupted
-45-second phase. A unilateral movement
-runs for 20 seconds on its demonstrated side, pauses for a 5-second side
-change, then replays the same human demonstration mirrored for 20 seconds; it is
-labeled `UNILATERAL` before Start.
-Hold MP4s loop only during preview; during an active side they play once and
-freeze on the curated target from `tools/HoldExerciseFrames.psd1`.
+Each entry is explicitly a repetition or hold and belongs to exactly one atomic
+sequence root. A genuinely simultaneous bilateral movement or a natural
+alternating loop remains one 45-second block. Fixed-side or fixed-stance work
+uses two complete consecutive side blocks. Cyclic work that is incomplete in
+only one direction uses consecutive direction blocks. Combining those
+requirements can produce four blocks; a useful alternating integration block
+is included only when it adds a real coordination effect rather than awkward
+filler. Distinct established movements may also form one reviewed sequence when
+they are valuable only as a complete set. Hold MP4s loop only during preview;
+during active work they play once and freeze on the curated target from
+`tools/HoldExerciseFrames.psd1`.
 
-Opposite directions are separate, plainly named catalog exercises with separate
-demonstrations and reciprocal `directionPartnerExerciseId` links. A linked pair
-is an indivisible long-workout selection unit: both records are excluded from
-workouts of 30 minutes or less, every selected and repeated pair is scheduled
-adjacently, and one Keep/Reject decision after the second direction updates both
-records. Long workouts allocate the missing direction before lengthening a
-two-sided timer. Direction is never represented as another 20 / 5 / 20 phase
-inside one exercise, so an exercise can be two-sided without becoming a
-four-phase drill.
+Every block is 45 seconds with a 15-second rest. Sequence blocks are always
+adjacent and share one Keep/Reject decision after the final block and final set.
+There is no explicit short-workout exclusion. Exact block capacity determines
+what fits: same-primary extra blocks consume capacity without claiming another
+muscle slot, while blocks with genuinely different primary workout groups may
+collectively fill those slots. This can place a multi-block sequence in a
+sub-30-minute workout and may shift surrounding muscle-group order, but never
+the sequence's internal order.
 
 `tools/ExerciseCanonicalGroups.psd1` is the stable primary/secondary assignment
 source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.
@@ -136,7 +137,9 @@ The retained inventory and media mappings live in:
 - `tools/ExactExerciseMediaTransforms.psd1`
 - `tools/HoldExerciseFrames.psd1`
 - `tools/ExerciseSideSequences.psd1`
-- `tools/ExerciseDirectionPartners.psd1`
+- `tools/ExerciseAlternatingSequences.psd1`
+- `tools/ExerciseDirectionSequences.psd1`
+- `tools/ExerciseSequences.psd1`
 - `tools/ReviewedContinuousExercises.psd1`
 
 `tools/Test-ExerciseVideos.ps1` verifies the complete media inventory and

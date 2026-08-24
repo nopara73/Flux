@@ -1032,14 +1032,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 }
                 sequenceOwnerByExerciseId[member.Id] = root.Id;
                 if (member.Id != root.Id && member.SequenceBlocks.Length > 0 ||
-                    member.PrimaryCanonicalGroup != root.PrimaryCanonicalGroup ||
-                    !member.SecondaryCanonicalGroups.SequenceEqual(
-                        root.SecondaryCanonicalGroups) ||
-                    member.InsectCompatibility != root.InsectCompatibility ||
-                    member.MirrorRelationship != root.MirrorRelationship ||
-                    member.MinimumMirrorCoverage != root.MinimumMirrorCoverage ||
-                    member.MuscularDemand != root.MuscularDemand ||
-                    member.Silent != root.Silent ||
                     block.MediaSegment != ExerciseSequenceMediaSegment.Full &&
                         member.DirectionSequence == ExerciseDirectionSequence.None)
                 {

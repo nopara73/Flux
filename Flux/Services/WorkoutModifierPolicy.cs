@@ -1,3 +1,4 @@
+using System.Numerics;
 using Flux.Models;
 
 namespace Flux.Services;
@@ -427,21 +428,104 @@ public static class WorkoutModifierPolicy
         IReadOnlyCollection<Exercise> exercises,
         IReadOnlyList<WorkoutGroup> groups,
         WorkoutModifiers profile,
-        int workoutMinutes = MaterialityResolutionMinutes)
+        int? workoutMinutes = null)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         ArgumentNullException.ThrowIfNull(groups);
+        int availableBlocks = workoutMinutes ?? groups.Count;
+        if (availableBlocks < groups.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(workoutMinutes));
+        }
 
         IReadOnlyDictionary<int, Exercise> exercisesById = exercises
             .ToDictionary(exercise => exercise.Id);
+        int oneBlockLineupSize = GetMaximumOneBlockLineupSize(
+            exercises,
+            exercisesById,
+            groups,
+            profile);
+        if (oneBlockLineupSize == groups.Count)
+        {
+            return groups.Count;
+        }
+
+        var groupIndexById = groups
+            .Select((group, index) => (group.Id, index))
+            .ToDictionary(entry => entry.Id, entry => entry.index);
+        var candidates = new List<AtomicSequenceCandidate>();
+        foreach (Exercise exercise in exercises.Where(exercise =>
+                     IsSequenceCompatible(exercise, exercisesById, profile)))
+        {
+            foreach (WorkoutGroup[] placement in
+                     WorkoutSequencePolicy.GetPlacementOptions(
+                         exercise,
+                         exercisesById,
+                         groups))
+            {
+                if (exercise.SequenceBlocks.Length +
+                        (groups.Count - placement.Length) > availableBlocks)
+                {
+                    continue;
+                }
+                ulong coverageMask = placement.Aggregate(
+                    0UL,
+                    (mask, group) => mask | 1UL << groupIndexById[group.Id]);
+                var utilities = new BigInteger[groups.Count];
+                foreach (WorkoutGroup coveredGroup in placement)
+                {
+                    utilities[groupIndexById[coveredGroup.Id]] = BigInteger.One;
+                }
+                candidates.Add(new AtomicSequenceCandidate(
+                    exercise.Id,
+                    GetSessionMovementId(exercise),
+                    coverageMask,
+                    exercise.SequenceBlocks.Length,
+                    utilities,
+                    exercise.Id));
+            }
+        }
+
+        // Empty one-block placements make the solver return the maximum number
+        // of real muscle slots that can be filled atomically, rather than only
+        // answering whether a complete lineup exists.
+        for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+        {
+            var utilities = new BigInteger[groups.Count];
+            candidates.Add(new AtomicSequenceCandidate(
+                int.MinValue + groupIndex,
+                int.MinValue + groupIndex,
+                1UL << groupIndex,
+                1,
+                utilities,
+                int.MaxValue - groupIndex));
+        }
+
+        AtomicSequenceLineup lineup = AtomicSequenceLineupSolver.Solve(
+            groups.Count,
+            availableBlocks,
+            candidates) ?? throw new InvalidOperationException(
+                "Atomic lineup validation could not place empty muscle slots.");
+        return lineup.ExerciseIdByGroupIndex.Values.Count(exerciseId =>
+            exerciseId > 0);
+    }
+
+    private static int GetMaximumOneBlockLineupSize(
+        IReadOnlyCollection<Exercise> exercises,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        IReadOnlyList<WorkoutGroup> groups,
+        WorkoutModifiers profile)
+    {
         int[][] candidateMovementIdsByGroup = groups
             .Select(group => exercises
-                .Where(exercise => IsRuntimeSelectionUnitEligible(
-                    exercise,
-                    exercisesById,
-                    group,
-                    profile,
-                    workoutMinutes))
+                .Where(exercise =>
+                    exercise.SequenceBlocks.Length == 1 &&
+                    IsSequenceCompatible(exercise, exercisesById, profile) &&
+                    WorkoutSequencePolicy.GetPlacementOptions(
+                        exercise,
+                        exercisesById,
+                        groups).Any(option =>
+                            option.Length == 1 && option[0].Id == group.Id))
                 .Select(GetSessionMovementId)
                 .Distinct()
                 .ToArray())
@@ -449,12 +533,11 @@ public static class WorkoutModifierPolicy
             .ToArray();
         var assignedGroupByMovementId = new Dictionary<int, int>();
         int matchedGroupCount = 0;
-
         for (int groupIndex = 0;
              groupIndex < candidateMovementIdsByGroup.Length;
              groupIndex++)
         {
-            if (TryAssignDistinctMovement(
+            if (TryAssignDistinctOneBlockMovement(
                     groupIndex,
                     candidateMovementIdsByGroup,
                     assignedGroupByMovementId,
@@ -463,34 +546,43 @@ public static class WorkoutModifierPolicy
                 matchedGroupCount++;
             }
         }
-
         return matchedGroupCount;
     }
 
-    private static bool IsRuntimeSelectionUnitEligible(
-        Exercise exercise,
-        IReadOnlyDictionary<int, Exercise> exercisesById,
-        WorkoutGroup group,
-        WorkoutModifiers profile,
-        int workoutMinutes)
+    private static bool TryAssignDistinctOneBlockMovement(
+        int groupIndex,
+        IReadOnlyList<int[]> candidateMovementIdsByGroup,
+        IDictionary<int, int> assignedGroupByMovementId,
+        HashSet<int> visitedMovementIds)
     {
-        return !(workoutMinutes <= MaterialityResolutionMinutes &&
-                exercise.SequenceBlocks.Length > 1) &&
-            IsSequenceUnitEligible(
-                exercise,
-                exercisesById,
-                group,
-                profile);
+        foreach (int movementId in candidateMovementIdsByGroup[groupIndex])
+        {
+            if (!visitedMovementIds.Add(movementId))
+            {
+                continue;
+            }
+            if (!assignedGroupByMovementId.TryGetValue(
+                    movementId,
+                    out int assignedGroupIndex) ||
+                TryAssignDistinctOneBlockMovement(
+                    assignedGroupIndex,
+                    candidateMovementIdsByGroup,
+                    assignedGroupByMovementId,
+                    visitedMovementIds))
+            {
+                assignedGroupByMovementId[movementId] = groupIndex;
+                return true;
+            }
+        }
+        return false;
     }
 
-    private static bool IsSequenceUnitEligible(
+    private static bool IsSequenceCompatible(
         Exercise exercise,
         IReadOnlyDictionary<int, Exercise> exercisesById,
-        WorkoutGroup group,
         WorkoutModifiers profile)
     {
-        if (exercise.SequenceBlocks.Length == 0 ||
-            !IsSelectable(exercise, group, profile))
+        if (exercise.SequenceBlocks.Length == 0)
         {
             return false;
         }
@@ -506,37 +598,25 @@ public static class WorkoutModifierPolicy
             exercise.SequenceBlocks.All(block =>
                 exercisesById.TryGetValue(block.ExerciseId, out Exercise? member) &&
                 Rules.All(rule => rule.IsReviewed(member)) &&
-                IsSelectable(member, group, profile));
+                IsCompatible(member, profile));
     }
 
-    private static bool TryAssignDistinctMovement(
-        int groupIndex,
-        IReadOnlyList<int[]> candidateMovementIdsByGroup,
-        IDictionary<int, int> assignedGroupByMovementId,
-        HashSet<int> visitedMovementIds)
+    private static bool IsSequenceUnitEligible(
+        Exercise exercise,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        WorkoutGroup group,
+        WorkoutModifiers profile)
     {
-        foreach (int movementId in candidateMovementIdsByGroup[groupIndex])
+        if (exercise.SequenceBlocks.Length == 0 ||
+            WorkoutSequencePolicy.GetCanonicalCoverage(
+                exercise,
+                exercisesById,
+                group) < WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group))
         {
-            if (!visitedMovementIds.Add(movementId))
-            {
-                continue;
-            }
-
-            if (!assignedGroupByMovementId.TryGetValue(
-                    movementId,
-                    out int assignedGroupIndex) ||
-                TryAssignDistinctMovement(
-                    assignedGroupIndex,
-                    candidateMovementIdsByGroup,
-                    assignedGroupByMovementId,
-                    visitedMovementIds))
-            {
-                assignedGroupByMovementId[movementId] = groupIndex;
-                return true;
-            }
+            return false;
         }
 
-        return false;
+        return IsSequenceCompatible(exercise, exercisesById, profile);
     }
 
     private static WorkoutModifiers[] CreatePairwiseValidationProfiles()
