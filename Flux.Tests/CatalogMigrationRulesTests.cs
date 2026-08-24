@@ -622,6 +622,50 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void TimedSideNormalizationPreservesAlreadyReviewedReplacement()
+    {
+        const int exerciseId = 845;
+        const string video = "exercise_videos/exercise_0845.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(
+                "Alternating Overhead Side Stretch",
+                video,
+                -7),
+        };
+        Exercise normalized = Exercise(
+            exerciseId,
+            "Overhead Side Stretch",
+            video,
+            sideSequence: ExerciseSideSequence.ScreenRightThenLeft,
+            retiredName: "Extended-Mountain Backline Reach and Lower");
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [normalized],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+
+        Exercise continuous = Exercise(
+            exerciseId,
+            normalized.Name,
+            video,
+            retiredName: normalized.RetiredName);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([continuous], stored));
+
+        Exercise changedMedia = Exercise(
+            exerciseId,
+            normalized.Name,
+            "replacement.mp4",
+            sideSequence: normalized.SideSequence,
+            retiredName: normalized.RetiredName);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([changedMedia], stored));
+    }
+
+    [Fact]
     public void ReviewedExternalRotationReplacementRetiresTheCorrectedPriorIdentity()
     {
         const string video = "exercise_0268.mp4";

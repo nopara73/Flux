@@ -1072,10 +1072,18 @@ public static class CatalogMigrationRules
                 }
 
                 bool currentReviewedIdentityMatches =
-                    string.Equals(
-                        stored.Name,
-                        replacement.Name,
-                        StringComparison.Ordinal) &&
+                    (string.Equals(
+                            stored.Name,
+                            replacement.Name,
+                            StringComparison.Ordinal) ||
+                        (replacement.SideSequence.UsesTimedSides() &&
+                            stored.Name.StartsWith(
+                                AlternatingPrefix,
+                                StringComparison.Ordinal) &&
+                            string.Equals(
+                                stored.Name[AlternatingPrefix.Length..],
+                                replacement.Name,
+                                StringComparison.Ordinal))) &&
                     string.Equals(
                         stored.Video,
                         replacement.Video,
