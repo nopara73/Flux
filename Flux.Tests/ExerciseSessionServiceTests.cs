@@ -963,6 +963,47 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void HardSidedExercisesReceiveFullSideTimingBeforeNonHardKeeps()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(
+                index + 1,
+                group,
+                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
+            .Select((exercise, index) => index is >= 10 and < 25
+                ? CloneWithMuscularDemand(
+                    exercise,
+                    WorkoutRecoveryPolicy.HardMuscularDemand)
+                : exercise)
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastKeptExerciseIds = exercises.Take(10)
+                .Select(exercise => exercise.Id)
+                .ToHashSet(),
+        };
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        string[] expected = groups.Skip(10)
+            .Take(15)
+            .Select(group => $"{group.Id}.set1")
+            .ToArray();
+        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
+        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
+        Assert.DoesNotContain(
+            $"{groups[0].Id}.set1",
+            state.ActiveFullSideRoundIds);
+
+        state.LastKeptExerciseIds.Clear();
+        service.Initialize(state);
+        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
+    }
+
+    [Fact]
     public void FortyFiveMinuteExtraSetsPreferPreviouslyKeptExercisesThenMuscleMass()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
@@ -1017,6 +1058,45 @@ public sealed class ExerciseSessionServiceTests
             .Where(group => service.GetActiveGroups(state)
                 .Count(round => round.SelectionKey == group.Id) == 2)
             .Select(group => group.Id));
+    }
+
+    [Fact]
+    public void FortyFiveMinuteExtraSetsPreferHardExercisesBeforeNonHardKeeps()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .Select((exercise, index) => index is >= 10 and < 25
+                ? CloneWithMuscularDemand(
+                    exercise,
+                    WorkoutRecoveryPolicy.HardMuscularDemand)
+                : exercise)
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastKeptExerciseIds = exercises.Take(10)
+                .Select(exercise => exercise.Id)
+                .ToHashSet(),
+        };
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        string[] expected = groups.Skip(10)
+            .Take(15)
+            .Select(group => group.Id)
+            .ToArray();
+        Assert.Equal(
+            expected.Order(),
+            state.ActiveExtraSetSelectionGroupIds.Order());
+        Assert.All(groups.Take(10), group => Assert.Single(
+            service.GetActiveGroups(state),
+            round => round.SelectionKey == group.Id));
+        Assert.All(groups.Skip(10).Take(15), group => Assert.Equal(
+            2,
+            service.GetActiveGroups(state)
+                .Count(round => round.SelectionKey == group.Id)));
     }
 
     [Theory]

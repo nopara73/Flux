@@ -183,9 +183,12 @@ this order:
 2. expand eligible unilateral rounds from 20 / 5 / 20 to 45 / 15 / 45;
 3. add repeated sets only after direction and side opportunities are exhausted.
 
-Kept exercises receive priority, followed by later groups in the mass-ordered
-schedule. The allocation is persisted when the workout starts, so reopening the
-app cannot silently change the remaining session.
+Within each optional side-expansion or repeated-set pass, selected demand-2
+exercises receive priority over non-hard exercises. Keep status breaks ties,
+followed by later groups in the mass-ordered schedule. This is an intra-session
+dose decision; the 18- and 36-hour recovery preferences apply only when choosing
+the next session's lineup. The allocation is persisted when the workout starts,
+so reopening the app cannot silently change the remaining session.
 
 Opposite directions are separate, plainly named, demonstrated, and scored
 exercise identities connected by reciprocal links. Direction is never hidden

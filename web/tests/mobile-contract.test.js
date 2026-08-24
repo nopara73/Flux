@@ -119,14 +119,18 @@ test("web duration choices match the mobile workout contract", () => {
   );
 });
 
-test("web and mobile persist keep-first long-workout allocation", () => {
+test("web and mobile persist hard-first optional long-workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
   assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveFullSideRoundIds/);
   assert.match(
     sessionService,
-    /OrderByDescending\(group\s*=>[\s\S]*LastKeptExerciseIds\.Contains\(exerciseId\)\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
+    /OrderByDescending\(IsSelectedHard\)[\s\S]*ThenByDescending\(IsSelectedKept\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
+  );
+  assert.match(
+    workoutModule,
+    /return rightHard - leftHard \|\|[\s\S]*rightKept - leftKept \|\|[\s\S]*right\.order - left\.order/,
   );
   assert.match(
     sessionService,

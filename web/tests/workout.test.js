@@ -1968,6 +1968,93 @@ test("long workouts spend extra minutes on full timed pairs before repeated sets
   );
 });
 
+test("hard timed pairs receive full-side expansion before non-hard keeps", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const exercises = groups.map((group, index) => ({
+    ...exercise(
+      index + 1,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+      true,
+      index >= 10 && index < 25 ? HARD_MUSCULAR_DEMAND : 0,
+    ),
+    sideSequence: "ScreenLeftThenRight",
+  }));
+  const state = createDefaultState();
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.lastKeptExerciseIds = exercises.slice(0, 10).map((item) => item.id);
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  session.initialize();
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  const expected = groups.slice(10, 25).map((group) => `${group.id}.set1`);
+  assert.deepEqual(
+    [...session.state.activeFullSideRoundIds].sort(),
+    [...expected].sort(),
+  );
+  assert.deepEqual(session.state.activeExtraSetSelectionGroupIds, []);
+  assert.equal(
+    session.state.activeFullSideRoundIds.includes(`${groups[0].id}.set1`),
+    false,
+  );
+
+  const now = Date.UTC(2026, 7, 24, 2, 0, 0);
+  session.beginMovement(session.getNextGroup(), 42_000, now + 42_000);
+  const stored = JSON.parse(JSON.stringify(session.state));
+  stored.lastKeptExerciseIds = [];
+  const restored = new WorkoutSession(
+    exercises,
+    parseStoredState(JSON.stringify(stored)),
+    () => 0,
+    () => now,
+  );
+  restored.initialize();
+  assert.deepEqual(
+    [...restored.state.activeFullSideRoundIds].sort(),
+    [...expected].sort(),
+  );
+});
+
+test("long-workout extra sets prefer hard exercises before non-hard keeps", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+    true,
+    index >= 10 && index < 25 ? HARD_MUSCULAR_DEMAND : 0,
+  ));
+  const state = createDefaultState();
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.lastKeptExerciseIds = exercises.slice(0, 10).map((item) => item.id);
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  const expected = groups.slice(10, 25).map((group) => group.id);
+  assert.deepEqual(
+    [...session.state.activeExtraSetSelectionGroupIds].sort(),
+    [...expected].sort(),
+  );
+  for (const group of groups.slice(0, 10)) {
+    assert.equal(
+      session.getActiveGroups().filter((round) => getSelectionKey(round) === group.id).length,
+      1,
+    );
+  }
+  for (const group of groups.slice(10, 25)) {
+    assert.equal(
+      session.getActiveGroups().filter((round) => getSelectionKey(round) === group.id).length,
+      2,
+    );
+  }
+});
+
 test("forty-five minutes add linked directions before lengthening sided timers", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const baseExercises = groups.map((group, index) => ({

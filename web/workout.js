@@ -3027,24 +3027,20 @@ export class WorkoutSession {
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
     const rankedGroups = [...this.getSelectionGroups()]
       .sort((left, right) => {
-        const leftKept = keptExerciseIds.has(this.state.selectedExerciseIds[
+        const leftExerciseId = this.state.selectedExerciseIds[
           this.getSelectionStorageKey(left.id, this.state.activeWorkoutModifiers)
-        ]) ? 1 : 0;
-        const rightKept = keptExerciseIds.has(this.state.selectedExerciseIds[
+        ];
+        const rightExerciseId = this.state.selectedExerciseIds[
           this.getSelectionStorageKey(right.id, this.state.activeWorkoutModifiers)
-        ]) ? 1 : 0;
-        const leftExercise = this.exercisesById.get(this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(left.id, this.state.activeWorkoutModifiers)
-        ]);
-        const rightExercise = this.exercisesById.get(this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(right.id, this.state.activeWorkoutModifiers)
-        ]);
-        const leftHardKept = leftKept &&
-          leftExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
-        const rightHardKept = rightKept &&
-          rightExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
-        return rightKept - leftKept ||
-          rightHardKept - leftHardKept ||
+        ];
+        const leftExercise = this.exercisesById.get(leftExerciseId);
+        const rightExercise = this.exercisesById.get(rightExerciseId);
+        const leftHard = leftExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
+        const rightHard = rightExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
+        const leftKept = keptExerciseIds.has(leftExerciseId) ? 1 : 0;
+        const rightKept = keptExerciseIds.has(rightExerciseId) ? 1 : 0;
+        return rightHard - leftHard ||
+          rightKept - leftKept ||
           right.order - left.order;
       });
     const directionPartnerExerciseIds = new Map();

@@ -2135,24 +2135,26 @@ public sealed class ExerciseSessionService
 
         lockedSelectionGroupIds ??= new HashSet<string>(StringComparer.Ordinal);
 
+        bool IsSelectedHard(WorkoutGroup group) =>
+            state.SelectedExerciseIds.TryGetValue(
+                GetSelectionStorageKey(
+                    group.Id,
+                    state.ActiveWorkoutModifiers),
+                out int exerciseId) &&
+            _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
+            WorkoutRecoveryPolicy.IsHardExercise(exercise);
+
+        bool IsSelectedKept(WorkoutGroup group) =>
+            state.SelectedExerciseIds.TryGetValue(
+                GetSelectionStorageKey(
+                    group.Id,
+                    state.ActiveWorkoutModifiers),
+                out int exerciseId) &&
+            state.LastKeptExerciseIds.Contains(exerciseId);
+
         WorkoutGroup[] rankedGroups = GetSelectionGroups(state)
-            .OrderByDescending(group =>
-                state.SelectedExerciseIds.TryGetValue(
-                    GetSelectionStorageKey(
-                        group.Id,
-                        state.ActiveWorkoutModifiers),
-                    out int exerciseId) &&
-                state.LastKeptExerciseIds.Contains(exerciseId))
-            .ThenByDescending(group =>
-                state.SelectedExerciseIds.TryGetValue(
-                    GetSelectionStorageKey(
-                        group.Id,
-                        state.ActiveWorkoutModifiers),
-                    out int exerciseId) &&
-                state.LastKeptExerciseIds.Contains(exerciseId) &&
-                _exercisesById.TryGetValue(exerciseId, out Exercise? exercise) &&
-                exercise.MuscularDemand ==
-                    WorkoutRecoveryPolicy.HardMuscularDemand)
+            .OrderByDescending(IsSelectedHard)
+            .ThenByDescending(IsSelectedKept)
             .ThenByDescending(group => group.Order)
             .ToArray();
         var directionPartners = new Dictionary<string, int>(StringComparer.Ordinal);
