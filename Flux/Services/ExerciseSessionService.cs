@@ -12,7 +12,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 17;
+    private const int CurrentStateVersion = 18;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
@@ -76,7 +76,7 @@ public sealed class ExerciseSessionService
 
         NormalizeCollections(state);
         LegacyActiveProgressSnapshot? atomicSequenceMigration =
-            state.Version == 16 && state.ActiveWorkoutMinutes > 0
+            state.Version is 16 or 17 && state.ActiveWorkoutMinutes > 0
                 ? CaptureLegacyActiveProgress(state)
                 : null;
         CatalogMigrationRules.ReconcileWorkoutState(state);
@@ -1166,7 +1166,7 @@ public sealed class ExerciseSessionService
                             selectionExercise.PrimaryCanonicalGroup))
                     : 0;
                 bool isKept = GetSequenceExercises(exercise)
-                    .Any(member => preferredExerciseIds.Contains(member.Id));
+                    .All(member => preferredExerciseIds.Contains(member.Id));
                 // A non-kept hard exercise can displace a keep only while it is
                 // fresh, primary for this slot, and already in that slot's top
                 // saved-score bucket. A fresh hard keep is the explicit second
@@ -1569,8 +1569,10 @@ public sealed class ExerciseSessionService
             .Where(member => group.CanonicalGroups.Contains(
                 member.PrimaryCanonicalGroup))
             .ToArray();
-        return primaryMembers.FirstOrDefault(member => member.Id == root.Id) ??
-            primaryMembers.FirstOrDefault() ??
+        return primaryMembers
+            .OrderByDescending(member => member.MuscularDemand)
+            .ThenByDescending(member => member.Id == root.Id)
+            .FirstOrDefault() ??
             root;
     }
 
@@ -1787,12 +1789,30 @@ public sealed class ExerciseSessionService
     {
         state.LastKeptExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
-        ExpandSequenceIds(state.LastKeptExerciseIds);
+        RemovePartialSequenceIds(state.LastKeptExerciseIds);
         NormalizeWorkHistory(state);
         state.NextWorkoutExcludedExerciseIds.RemoveWhere(exerciseId =>
             !_exercisesById.ContainsKey(exerciseId));
         ExpandSequenceIds(state.NextWorkoutExcludedExerciseIds);
     }
+
+    private void RemovePartialSequenceIds(HashSet<int> exerciseIds)
+    {
+        HashSet<int> completeSequenceExerciseIds = exerciseIds
+            .Select(exerciseId => _exercisesById[exerciseId])
+            .Select(GetSequenceRoot)
+            .DistinctBy(root => root.Id)
+            .Where(root => GetSequenceExercises(root)
+                .All(member => exerciseIds.Contains(member.Id)))
+            .SelectMany(GetSequenceExercises)
+            .Select(member => member.Id)
+            .ToHashSet();
+        exerciseIds.IntersectWith(completeSequenceExerciseIds);
+    }
+
+    private bool IsSequenceKept(WorkoutState state, Exercise exercise) =>
+        GetSequenceExercises(exercise)
+            .All(member => state.LastKeptExerciseIds.Contains(member.Id));
 
     private static void NormalizeWorkHistory(WorkoutState state)
     {
@@ -2020,6 +2040,14 @@ public sealed class ExerciseSessionService
                      round => round.SelectionKey,
                      StringComparer.Ordinal))
         {
+            if (!LegacySelectionMatchesCurrentSequence(
+                    state,
+                    snapshot,
+                    sequence.Key))
+            {
+                continue;
+            }
+
             KeyValuePair<string, ExerciseOutcome>[] oldOutcomes = snapshot.Outcomes
                 .Where(entry => ResolveLegacySelectionKey(entry.Key) == sequence.Key)
                 .ToArray();
@@ -2062,6 +2090,13 @@ public sealed class ExerciseSessionService
             snapshot.PendingRestGroupId ?? snapshot.PendingMovementGroupId;
         string? pendingSelectionKey = ResolveLegacySelectionKey(legacyPendingRoundId);
         if (legacyPendingRoundId is null || pendingSelectionKey is null)
+        {
+            return;
+        }
+        if (!LegacySelectionMatchesCurrentSequence(
+                state,
+                snapshot,
+                pendingSelectionKey))
         {
             return;
         }
@@ -2133,6 +2168,25 @@ public sealed class ExerciseSessionService
                 : 0;
         state.PendingMovementPausedByUser =
             snapshot.PendingMovementPausedByUser;
+    }
+
+    private bool LegacySelectionMatchesCurrentSequence(
+        WorkoutState state,
+        LegacyActiveProgressSnapshot snapshot,
+        string selectionKey)
+    {
+        int legacyExerciseId = ResolveLegacyMemberExerciseId(
+            state,
+            snapshot,
+            selectionKey,
+            selectionKey);
+        int currentExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
+            GetSelectionStorageKey(selectionKey, state.ActiveWorkoutModifiers));
+        return legacyExerciseId > 0 &&
+            currentExerciseId > 0 &&
+            _exercisesById.TryGetValue(legacyExerciseId, out Exercise? legacyExercise) &&
+            _exercisesById.TryGetValue(currentExerciseId, out Exercise? currentExercise) &&
+            GetSequenceRoot(legacyExercise).Id == GetSequenceRoot(currentExercise).Id;
     }
 
     private WorkoutGroup[] ResolveLegacyRepresentedRounds(
@@ -2625,17 +2679,16 @@ public sealed class ExerciseSessionService
 
     private LongWorkoutAllocation ChooseLongWorkoutAllocation(
         WorkoutState state,
-        IReadOnlySet<string>? lockedSelectionGroupIds = null)
+        IReadOnlySet<string>? lockedSelectionGroupIds = null,
+        IReadOnlyList<SelectedSequencePlacement>? selectedPlacements = null)
     {
         lockedSelectionGroupIds ??= new HashSet<string>(StringComparer.Ordinal);
         SelectedSequencePlacement[] rankedPlacements =
-            GetSelectedSequencePlacements(state)
+            (selectedPlacements ?? GetSelectedSequencePlacements(state))
             .OrderByDescending(placement =>
                 GetSequenceExercises(placement.Root)
                     .Any(WorkoutRecoveryPolicy.IsHardExercise))
-            .ThenByDescending(placement =>
-                GetSequenceExercises(placement.Root)
-                    .Any(member => state.LastKeptExerciseIds.Contains(member.Id)))
+            .ThenByDescending(placement => IsSequenceKept(state, placement.Root))
             .ThenByDescending(placement => placement.Anchor.Order)
             .ToArray();
         Dictionary<string, int> blockCostByGroup = rankedPlacements.ToDictionary(
@@ -2726,6 +2779,8 @@ public sealed class ExerciseSessionService
             return;
         }
         long selectionTimeUnixMilliseconds = GetCurrentUnixTimeMilliseconds();
+        var allocationCache = new Dictionary<string, LongWorkoutAllocation?>(
+            StringComparer.Ordinal);
 
         var seenLineups = new HashSet<string>(StringComparer.Ordinal);
         for (int pass = 0;
@@ -2754,7 +2809,7 @@ public sealed class ExerciseSessionService
                 if (!_exercisesById.TryGetValue(
                         currentExerciseId,
                         out Exercise? currentExercise) ||
-                    state.LastKeptExerciseIds.Contains(currentExerciseId) ||
+                    IsSequenceKept(state, currentExercise) ||
                     groups.Count(candidateGroup =>
                         state.SelectedExerciseIds.GetValueOrDefault(
                             GetSelectionStorageKey(
@@ -2782,28 +2837,17 @@ public sealed class ExerciseSessionService
                     .Append(WorkoutModifierPolicy.GetSessionMovementId(
                         currentExercise))
                     .ToHashSet();
-                IReadOnlyDictionary<CanonicalMuscleGroup, int>? loadWithoutCurrent =
-                    currentExercise.SequenceBlocks.Length == 1
-                        ? WorkoutMuscleBudgetPolicy.CalculateLoadHalfUnits(
-                            groups
-                                .Where(candidateGroup => candidateGroup.Id != group.Id)
-                                .Select(candidateGroup => GetSelectedExercise(
-                                    state,
-                                    candidateGroup)))
-                        : null;
-                MuscleBudgetCandidate current = loadWithoutCurrent is null
-                    ? EvaluateMuscleBudgetCandidate(
-                        state,
-                        group,
-                        currentExercise,
-                        selectionTimeUnixMilliseconds)
-                    : EvaluateSingleRoundMuscleBudgetCandidate(
-                        state,
-                        group,
-                        currentExercise,
-                        loadWithoutCurrent,
-                        state.ActiveWorkoutModifiers,
-                        selectionTimeUnixMilliseconds);
+                SelectedSequencePlacement[] placementsWithoutCurrent =
+                    GetSelectedSequencePlacements(state)
+                        .Where(placement => placement.Anchor.Id != group.Id)
+                        .ToArray();
+                MuscleBudgetCandidate current = EvaluateMuscleBudgetCandidate(
+                    state,
+                    group,
+                    currentExercise,
+                    placementsWithoutCurrent,
+                    allocationCache,
+                    selectionTimeUnixMilliseconds);
                 MuscleBudgetCandidate? bestAlternative = _exercises
                     .Where(exercise =>
                         exercise.Id != currentExerciseId &&
@@ -2822,19 +2866,12 @@ public sealed class ExerciseSessionService
                             exercise,
                             group,
                             state.ActiveWorkoutModifiers))
-                    .Select(exercise => loadWithoutCurrent is null ||
-                            exercise.SequenceBlocks.Length != 1
-                        ? EvaluateMuscleBudgetCandidate(
+                    .Select(exercise => EvaluateMuscleBudgetCandidate(
                             state,
                             group,
                             exercise,
-                            selectionTimeUnixMilliseconds)
-                        : EvaluateSingleRoundMuscleBudgetCandidate(
-                            state,
-                            group,
-                            exercise,
-                            loadWithoutCurrent,
-                            state.ActiveWorkoutModifiers,
+                            placementsWithoutCurrent,
+                            allocationCache,
                             selectionTimeUnixMilliseconds))
                     .OrderByDescending(candidate => candidate.AdjustedScoreHalfUnits)
                     .ThenByDescending(candidate => candidate.RealScore)
@@ -2906,31 +2943,26 @@ public sealed class ExerciseSessionService
         WorkoutState state,
         WorkoutGroup group,
         Exercise candidate,
+        IReadOnlyList<SelectedSequencePlacement> placementsWithoutCandidate,
+        IDictionary<string, LongWorkoutAllocation?> allocationCache,
         long selectionTimeUnixMilliseconds)
     {
-        string selectionStorageKey = GetSelectionStorageKey(
-            group.Id,
-            state.ActiveWorkoutModifiers);
-        int previousExerciseId =
-            state.SelectedExerciseIds.GetValueOrDefault(selectionStorageKey);
-        state.SelectedExerciseIds[selectionStorageKey] = candidate.Id;
         try
         {
-            LongWorkoutAllocation allocation = ChooseLongWorkoutAllocation(state);
-            IReadOnlyList<WorkoutGroup> rounds = CreateWorkoutSchedule(
-                state,
-                allocation.SetCountsBySelectionGroupId);
-            var scheduledExercises = rounds
-                .Select(round => GetSelectedExercise(state, round))
+            SelectedSequencePlacement[] placements = placementsWithoutCandidate
+                .Append(new SelectedSequencePlacement(candidate, group, [group]))
+                .OrderBy(placement => placement.Anchor.Order)
                 .ToArray();
+            LongWorkoutAllocation allocation = GetCachedLongWorkoutAllocation(
+                state,
+                placements,
+                allocationCache);
             IReadOnlyDictionary<CanonicalMuscleGroup, int> loadHalfUnits =
-                WorkoutMuscleBudgetPolicy.CalculateLoadHalfUnits(scheduledExercises);
-            CanonicalMuscleGroup[] candidateMuscleGroups = rounds
-                .Where(round => round.SelectionKey == group.Id)
-                .Select(round => GetSelectedExercise(state, round))
-                .SelectMany(exercise =>
-                    exercise.SecondaryCanonicalGroups
-                        .Append(exercise.PrimaryCanonicalGroup))
+                CalculateScheduledLoadHalfUnits(placements, allocation);
+            CanonicalMuscleGroup[] candidateMuscleGroups =
+                GetSequenceExercises(candidate)
+                .SelectMany(exercise => exercise.SecondaryCanonicalGroups
+                    .Append(exercise.PrimaryCanonicalGroup))
                 .Distinct()
                 .ToArray();
             int temporaryDownvoteHalfUnits =
@@ -2962,7 +2994,7 @@ public sealed class ExerciseSessionService
                 rotationStatus ==
                     HardExerciseRotationStatus.RecoveringHard,
                 isRecoveringModerate,
-                state.LastKeptExerciseIds.Contains(candidate.Id),
+                IsSequenceKept(state, candidate),
                 rotationStatus == HardExerciseRotationStatus.FreshHard
                     ? WorkoutRecoveryPolicy.GetLastHardWorkUnixMilliseconds(
                         state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -2992,61 +3024,72 @@ public sealed class ExerciseSessionService
                 IsPrimary: false,
                 CanonicalCoverage: 0);
         }
-        finally
+    }
+
+    private LongWorkoutAllocation GetCachedLongWorkoutAllocation(
+        WorkoutState state,
+        IReadOnlyList<SelectedSequencePlacement> placements,
+        IDictionary<string, LongWorkoutAllocation?> allocationCache)
+    {
+        string signature = string.Join(
+            '|',
+            placements
+                .OrderBy(placement => placement.Anchor.Order)
+                .Select(placement =>
+                    $"{placement.Anchor.Id}:" +
+                    $"{placement.Root.SequenceBlocks.Length}:" +
+                    $"{GetSequenceExercises(placement.Root).Any(WorkoutRecoveryPolicy.IsHardExercise)}:" +
+                    IsSequenceKept(state, placement.Root)));
+        if (allocationCache.TryGetValue(
+                signature,
+                out LongWorkoutAllocation? cached))
         {
-            state.SelectedExerciseIds[selectionStorageKey] = previousExerciseId;
+            return cached ?? throw new InvalidOperationException(
+                "The selected sequence lengths cannot fill the workout duration.");
+        }
+
+        try
+        {
+            LongWorkoutAllocation allocation = ChooseLongWorkoutAllocation(
+                state,
+                selectedPlacements: placements);
+            allocationCache[signature] = allocation;
+            return allocation;
+        }
+        catch (InvalidOperationException)
+        {
+            allocationCache[signature] = null;
+            throw;
         }
     }
 
-    private MuscleBudgetCandidate EvaluateSingleRoundMuscleBudgetCandidate(
-        WorkoutState state,
-        WorkoutGroup group,
-        Exercise candidate,
-        IReadOnlyDictionary<CanonicalMuscleGroup, int> loadWithoutCandidate,
-        WorkoutModifiers modifiers,
-        long selectionTimeUnixMilliseconds)
+    private IReadOnlyDictionary<CanonicalMuscleGroup, int>
+        CalculateScheduledLoadHalfUnits(
+            IReadOnlyList<SelectedSequencePlacement> placements,
+            LongWorkoutAllocation allocation)
     {
-        int temporaryDownvoteHalfUnits =
-            WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
-                loadWithoutCandidate,
-                candidate);
-        int selectionScore = GetSelectionScore(candidate);
-        Exercise selectionExercise =
-            GetSequenceSelectionExerciseForGroup(candidate, group);
-        HardExerciseRotationStatus rotationStatus =
-            WorkoutRecoveryPolicy.GetRotationStatus(
-                selectionExercise,
-                group,
-                state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
-                selectionTimeUnixMilliseconds);
-        bool isRecoveringModerate =
-            WorkoutRecoveryPolicy.IsModerateExerciseRecovering(
-                selectionExercise,
-                state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
-                selectionTimeUnixMilliseconds);
-        return new MuscleBudgetCandidate(
-            candidate.Id,
-            selectionScore,
-            WorkoutMuscleBudgetPolicy.GetAdjustedScoreHalfUnits(
-                selectionScore,
-                temporaryDownvoteHalfUnits),
-            rotationStatus ==
-                HardExerciseRotationStatus.FreshHard,
-            rotationStatus ==
-                HardExerciseRotationStatus.RecoveringHard,
-            isRecoveringModerate,
-            state.LastKeptExerciseIds.Contains(candidate.Id),
-            rotationStatus == HardExerciseRotationStatus.FreshHard
-                ? WorkoutRecoveryPolicy.GetLastHardWorkUnixMilliseconds(
-                    state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
-                    selectionExercise.PrimaryCanonicalGroup)
-                : 0L,
-            WorkoutModifierPolicy.IsMirrorPreferred(selectionExercise, modifiers),
-            WorkoutCoveragePolicy.IsPrimaryForGroup(selectionExercise, group),
-            WorkoutSequencePolicy.GetCanonicalCoverage(
-                candidate,
-                _exercisesById,
-                group));
+        var loadHalfUnits = new Dictionary<CanonicalMuscleGroup, int>();
+        foreach (SelectedSequencePlacement placement in
+                 placements)
+        {
+            int setCount = allocation.SetCountsBySelectionGroupId
+                .GetValueOrDefault(placement.Anchor.Id, 1);
+            foreach (Exercise exercise in GetSequenceExercises(placement.Root))
+            {
+                loadHalfUnits[exercise.PrimaryCanonicalGroup] =
+                    loadHalfUnits.GetValueOrDefault(exercise.PrimaryCanonicalGroup) +
+                    WorkoutMuscleBudgetPolicy.PrimaryLoadHalfUnits * setCount;
+                foreach (CanonicalMuscleGroup secondary in
+                         exercise.SecondaryCanonicalGroups.Distinct())
+                {
+                    loadHalfUnits[secondary] =
+                        loadHalfUnits.GetValueOrDefault(secondary) +
+                        WorkoutMuscleBudgetPolicy.SecondaryLoadHalfUnits * setCount;
+                }
+            }
+        }
+
+        return loadHalfUnits;
     }
 
     private void SetActiveLongWorkoutAllocation(WorkoutState state) =>

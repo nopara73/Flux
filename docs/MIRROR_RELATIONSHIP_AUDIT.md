@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 431 retained exercises are reviewed against physical mirror equipment, not
+The 448 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -15,9 +15,9 @@ Each exercise has both a relationship and a minimum useful coverage:
 | --- | --- | --- | ---: |
 | `MirrorOnly` | `UpperBody` | Requires compact or tall | 5 |
 | `MirrorOnly` | `FullBody` | Requires tall | 5 |
-| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 22 |
-| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 36 |
-| `Agnostic` | `None` | Unaffected | 363 |
+| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 27 |
+| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 44 |
+| `Agnostic` | `None` | Unaffected | 367 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
@@ -27,24 +27,24 @@ require `equipment: "None"`.
 
 The upper-body set is:
 
-- `One-Eyebrow Isolation Practice`
-- `Silent Vowel-Shape Sequence`
-- `Smile-to-Neutral Transitions`
-- `Tutting Box Sequence`
-- `Arm-Wave Isolation Practice`
+- `Mirror One-Eyebrow Isolation Practice`
+- `Mirror Facial-Expression Practice`
+- `Smile at Yourself in the Mirror`
+- `Mirror Tutting Box Sequence`
+- `Mirror Arm-Wave Isolation Practice`
 
 The full-body set is:
 
-- `Front Double-Biceps Pose Hold`
-- `Front Lat-Spread Pose Hold`
-- `Side-Chest Pose Hold`
-- `Side-Triceps Pose Hold`
-- `Abdominals-and-Thighs Pose Hold`
+- `Mirror Front Double-Biceps Pose Hold`
+- `Mirror Front Lat-Spread Pose Hold`
+- `Mirror Side-Chest Pose Hold`
+- `Mirror Side-Triceps Pose Hold`
+- `Mirror Abdominals-and-Thighs Pose Hold`
 
 These are established reflection practices with exact human demonstrations.
-The compact-mirror set uses live self-view to isolate an eyebrow, silently form
-vowels, control a smile-to-neutral transition, and correct the visual geometry
-of tutting and arm-wave illusions. The tall-mirror set contains five standard
+The compact-mirror set uses live self-view to isolate an eyebrow, practise
+facial expressions, smile at one's own reflection, and correct the visual
+geometry of tutting and arm-wave illusions. The tall-mirror set contains five standard
 bodybuilding poses whose intended whole-body line and contraction are judged
 through live full-body view. The reflection is part of each practice; ordinary
 movements do not become `MirrorOnly` merely because a mirror could offer
@@ -61,10 +61,10 @@ of four audited reasons:
 4. live plane, path, or symmetry correction.
 
 Merely seeing oneself, comparing oneself with the demonstration, or receiving
-ordinary optional form feedback does not qualify. The current 58 assignments
+ordinary optional form feedback does not qualify. The current 71 assignments
 are an audit result, never a quota, target, cap, or reason to promote or demote
 an exercise. Their coverage split is independently reviewed and must exactly
-partition the same 58 IDs.
+partition the same 71 IDs.
 
 ## Catalog guarantees
 

@@ -73,7 +73,17 @@ internal static class AtomicSequenceLineupSolver
                 .Max())
             .ToArray();
 
-        AtomicSequenceLineup? best = null;
+        // The singleton matcher is polynomial and usually reaches the exact
+        // per-group utility ceiling by itself. Seed branch-and-bound with that
+        // complete lineup so multi-group placements are explored only when
+        // they can genuinely improve the result.
+        AtomicSequenceLineup? best = CompleteWithSingletons(
+            groupCount,
+            workoutMinutes,
+            allGroupsMask,
+            [],
+            new HashSet<int>(),
+            singletonCandidatesByGroup);
         var selected = new List<AtomicSequenceCandidate>();
         var selectedMovementIds = new HashSet<int>();
 
@@ -119,9 +129,6 @@ internal static class AtomicSequenceLineupSolver
                 .First();
             ulong nextGroupMask = 1UL << nextGroupIndex;
 
-            // Leave this bucket for the polynomial distinct-singleton matcher.
-            Search(decidedMask | nextGroupMask, coveredMask, utility);
-
             foreach (AtomicSequenceCandidate candidate in multiGroupCandidates)
             {
                 if ((candidate.CoverageMask & nextGroupMask) == 0 ||
@@ -139,6 +146,12 @@ internal static class AtomicSequenceLineupSolver
                 selected.RemoveAt(selected.Count - 1);
                 selectedMovementIds.Remove(candidate.MovementId);
             }
+
+            // Explore high-utility atomic placements before the singleton-only
+            // branch. That establishes a strong exact incumbent early, so the
+            // lexicographic upper bound can prune equivalent catalog choices
+            // instead of enumerating them combinatorially.
+            Search(decidedMask | nextGroupMask, coveredMask, utility);
         }
 
         Search(0, 0, BigInteger.Zero);

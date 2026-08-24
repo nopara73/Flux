@@ -7521,7 +7521,7 @@
     }
     515 = @{
         RetiredName = 'Scapular Downward Rotation'
-        Name = 'One-Eyebrow Isolation Practice'
+        Name = 'Mirror One-Eyebrow Isolation Practice'
         Practice = 'Facial action isolation'
         MotionProfile = 'OneEyebrowIsolation'
         Primary = 'CranialMuscles'
@@ -7547,35 +7547,9 @@
     }
     520 = @{
         RetiredName = 'Scapular Clock'
-        Name = 'Silent Vowel-Shape Sequence'
-        Practice = 'Speech articulation practice'
-        MotionProfile = 'VowelShapeSequence'
-        Primary = 'CranialMuscles'
-        Secondary = @('AnteriorLateralNeckAndHyoidMuscles')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'vowel-shapes.mp4'
-            Url = 'https://www.youtube.com/watch?v=JFaLrfm2rlY'
-            SourcePage = 'https://www.youtube.com/watch?v=JFaLrfm2rlY'
-            Human = $true
-            Youtube = $true
-            Video = $true
-            StartSeconds = 1
-            DurationSeconds = 48
-            FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $false
-            MirrorForAlternation = $false
-        }
-    }
-    521 = @{
-        RetiredName = 'Scapular Figure Eight'
-        Name = 'Smile-to-Neutral Transitions'
+        Name = 'Mirror Facial-Expression Practice'
         Practice = 'Acting facial-expression control'
-        MotionProfile = 'SmileNeutralTransition'
+        MotionProfile = 'MirrorFacialExpressionPractice'
         Primary = 'CranialMuscles'
         Secondary = @()
         SideSequence = 'Continuous'
@@ -7583,23 +7557,45 @@
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'seven-emotions.mp4'
-            Url = 'https://www.youtube.com/watch?v=embYkODkzcs'
-            SourcePage = 'https://www.youtube.com/watch?v=embYkODkzcs'
+            File = 'pexels-mirror-facial-expressions.mp4'
+            Url = 'https://videos.pexels.com/video-files/8627750/8627750-hd_1920_1080_25fps.mp4'
+            SourcePage = 'https://www.pexels.com/video/a-man-making-face-in-front-of-the-mirror-8627750/'
             Human = $true
-            Youtube = $true
             Video = $true
-            StartSeconds = 47.7
-            DurationSeconds = 3.1
+            StartSeconds = 0
+            DurationSeconds = 14.32
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    521 = @{
+        RetiredName = 'Scapular Figure Eight'
+        Name = 'Smile at Yourself in the Mirror'
+        Practice = 'Facial movement exercise'
+        MotionProfile = 'MirrorSmile'
+        Primary = 'CranialMuscles'
+        Secondary = @()
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pexels-mirror-smile.mp4'
+            Url = 'https://videos.pexels.com/video-files/28827911/12488149_3840_2160_50fps.mp4'
+            SourcePage = 'https://www.pexels.com/video/woman-smiling-in-mirror-reflection-shot-28827911/'
+            Human = $true
+            Video = $true
+            StartSeconds = 5.5
+            DurationSeconds = 1.4
+            FramesPerSecond = 10
+            PingPong = $true
             MirrorForAlternation = $false
         }
     }
     522 = @{
         RetiredName = 'Shoulder-Blade Squeeze'
-        Name = 'Tutting Box Sequence'
+        Name = 'Mirror Tutting Box Sequence'
         Practice = 'Tutting'
         MotionProfile = 'TuttingBox'
         Primary = 'IntrinsicHand'
@@ -7624,7 +7620,7 @@
     }
     523 = @{
         RetiredName = 'Serratus Reach'
-        Name = 'Arm-Wave Isolation Practice'
+        Name = 'Mirror Arm-Wave Isolation Practice'
         Practice = 'Popping and waving'
         MotionProfile = 'ArmWaveIsolation'
         Primary = 'ShoulderAbductors'
@@ -7649,7 +7645,7 @@
     }
     524 = @{
         RetiredName = 'Standing W Raise'
-        Name = 'Front Double-Biceps Pose Hold'
+        Name = 'Mirror Front Double-Biceps Pose Hold'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'FrontDoubleBicepsPose'
         Primary = 'ElbowFlexors'
@@ -7667,7 +7663,7 @@
             Video = $true
             StartSeconds = 47
             DurationSeconds = 3
-            Crop = 'crop=ih:ih:iw-ih:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             FramesPerSecond = 10
             PingPong = $false
             MirrorForAlternation = $false
@@ -7675,7 +7671,7 @@
     }
     525 = @{
         RetiredName = 'Standing Y Raise'
-        Name = 'Front Lat-Spread Pose Hold'
+        Name = 'Mirror Front Lat-Spread Pose Hold'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'FrontLatSpreadPose'
         Primary = 'ShoulderAdductorsAndExtensors'
@@ -7693,7 +7689,7 @@
             Video = $true
             StartSeconds = 96
             DurationSeconds = 5
-            Crop = 'crop=ih:ih:iw-ih:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             FramesPerSecond = 10
             PingPong = $false
             MirrorForAlternation = $false
@@ -7701,7 +7697,7 @@
     }
     526 = @{
         RetiredName = 'Standing T Raise'
-        Name = 'Side-Chest Pose Hold'
+        Name = 'Mirror Side-Chest Pose Hold'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'SideChestPose'
         Primary = 'Chest'
@@ -7719,7 +7715,7 @@
             Video = $true
             StartSeconds = 132
             DurationSeconds = 4
-            Crop = 'crop=ih:ih:iw-ih:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             FramesPerSecond = 10
             PingPong = $false
             MirrorForAlternation = $false
@@ -7727,7 +7723,7 @@
     }
     527 = @{
         RetiredName = 'Standing I Raise'
-        Name = 'Side-Triceps Pose Hold'
+        Name = 'Mirror Side-Triceps Pose Hold'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'SideTricepsPose'
         Primary = 'ElbowExtensors'
@@ -7745,7 +7741,7 @@
             Video = $true
             StartSeconds = 179
             DurationSeconds = 5
-            Crop = 'crop=ih:ih:iw-ih:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             FramesPerSecond = 10
             PingPong = $false
             MirrorForAlternation = $false
@@ -7753,7 +7749,7 @@
     }
     528 = @{
         RetiredName = 'Goalpost Open-and-Close'
-        Name = 'Abdominals-and-Thighs Pose Hold'
+        Name = 'Mirror Abdominals-and-Thighs Pose Hold'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'AbdominalsAndThighsPose'
         Primary = 'AbdominalWall'
@@ -7771,8 +7767,450 @@
             Video = $true
             StartSeconds = 277
             DurationSeconds = 4
-            Crop = 'crop=ih:ih:iw-ih:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    529 = @{
+        RetiredName = 'Cactus-Arm Overhead Press'
+        Name = 'Alternating Single-Leg Bodyweight Deadlifts'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'SingleLegDeadlift'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-single-leg-rdl.mp4'
+            Url = 'https://www.youtube.com/watch?v=YYJEoyjuLU8'
+            SourcePage = 'https://www.youtube.com/watch?v=YYJEoyjuLU8'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 24
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    530 = @{
+        RetiredName = 'Standing W External Rotation'
+        Name = 'Alternating Standing Lateral Leg Raises'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'HipAbduction'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('HipAbductors', 'GlutealExtensors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-lateral-leg-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=U3F8qo_2zDI'
+            SourcePage = 'https://www.youtube.com/watch?v=U3F8qo_2zDI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 7.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    531 = @{
+        RetiredName = 'Cuban Shoulder Rotation'
+        Name = 'Alternating Standing Shoulder CARs'
+        Practice = 'Shoulder mobility'
+        MotionProfile = 'ShoulderCAR'
+        Primary = 'RotatorCuff'
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-shoulder-cars.mp4'
+            Url = 'https://www.youtube.com/watch?v=X53F29VmjY0'
+            SourcePage = 'https://www.youtube.com/watch?v=X53F29VmjY0'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1
+            DurationSeconds = 34
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    532 = @{
+        RetiredName = 'External Rotation at Side'
+        Name = 'Alternating Pistol Squats'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'SingleLegSquat'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-pistol-squats.mp4'
+            Url = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            SourcePage = 'https://www.youtube.com/watch?v=H-8t44E0UxA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 38
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    533 = @{
+        RetiredName = 'External Rotation at Ninety Degrees'
+        Name = 'Alternating Standing Donkey Kicks'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'LegFront'
+        Primary = 'GlutealExtensors'
+        Secondary = @('PosteriorThighAndKneeFlexors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-donkey-kicks.mp4'
+            Url = 'https://www.youtube.com/watch?v=xDt3m0C0dgw'
+            SourcePage = 'https://www.youtube.com/watch?v=xDt3m0C0dgw'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 32
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    534 = @{
+        RetiredName = 'Internal Rotation at Ninety Degrees'
+        Name = 'Alternating Standing Front Snap Kicks'
+        Practice = 'Martial-arts conditioning'
+        MotionProfile = 'FrontSnapKick'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'HipFlexors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-front-snap-kicks.mp4'
+            Url = 'https://www.youtube.com/watch?v=53Lumjigk5I'
+            SourcePage = 'https://www.youtube.com/watch?v=53Lumjigk5I'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 9
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    535 = @{
+        RetiredName = 'Bilateral Shoulder Flexion Pulse'
+        Name = 'Alternating Crescent Kicks'
+        Practice = 'Martial-arts conditioning'
+        MotionProfile = 'LegFront'
+        Primary = 'DeepHipRotators'
+        Secondary = @('HipFlexors', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-crescent-kicks.mp4'
+            Url = 'https://www.youtube.com/watch?v=zgFrSuadr7M'
+            SourcePage = 'https://www.youtube.com/watch?v=zgFrSuadr7M'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 8
+            DurationSeconds = 11.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    536 = @{
+        RetiredName = 'Bilateral Shoulder Extension Pulse'
+        Name = 'Alternating Standing Side Thrust Kicks'
+        Practice = 'Martial-arts conditioning'
+        MotionProfile = 'LegSide'
+        Primary = 'HipAbductors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-side-thrust-kicks.mp4'
+            Url = 'https://www.youtube.com/watch?v=yHO_oh-Ruto'
+            SourcePage = 'https://www.youtube.com/watch?v=yHO_oh-Ruto'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 7
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    537 = @{
+        RetiredName = 'Bilateral Shoulder Abduction Pulse'
+        Name = 'Alternating Single-Leg Deadlifts to Runner March'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'DeadliftKneeDrive'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-single-leg-deadlift-runner-march.mp4'
+            Url = 'https://www.youtube.com/watch?v=c8MWZQUq9Sg'
+            SourcePage = 'https://www.youtube.com/watch?v=c8MWZQUq9Sg'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 36
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    538 = @{
+        RetiredName = 'Bilateral Overhead Arm-Adduction Pull'
+        Name = 'Alternating Reverse Lunge to Front Kicks'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'Lunge'
+        Primary = 'HipFlexors'
+        Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AbdominalWall')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-reverse-lunge-front-kicks.mp4'
+            Url = 'https://www.youtube.com/watch?v=MburFRifRfk'
+            SourcePage = 'https://www.youtube.com/watch?v=MburFRifRfk'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 3
+            DurationSeconds = 33
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    539 = @{
+        RetiredName = 'Bilateral Bent-Elbow External Rotation'
+        Name = 'Alternating Hip-Hinge Rear-Leg Raises'
+        Practice = 'Standing posterior-chain conditioning'
+        MotionProfile = 'HipHingeRearLegRaise'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-hip-hinge-rear-leg-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=OTxPsNMC4UM'
+            SourcePage = 'https://www.youtube.com/watch?v=OTxPsNMC4UM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 11.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    540 = @{
+        RetiredName = 'Bilateral Bent-Elbow Internal Rotation'
+        Name = 'Alternating Figure-Four Squats'
+        Practice = 'Balance training'
+        MotionProfile = 'HipOpenClose'
+        Primary = 'DeepHipRotators'
+        Secondary = @('GlutealExtensors', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-figure-four-squats.mp4'
+            Url = 'https://www.youtube.com/watch?v=Jqau4ezKaiw'
+            SourcePage = 'https://www.youtube.com/watch?v=Jqau4ezKaiw'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 6
+            DurationSeconds = 22
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    541 = @{
+        RetiredName = 'Standing Snow Angel'
+        Name = 'Alternating Karate Inside Blocks'
+        Practice = 'Karate'
+        MotionProfile = 'InsideBlock'
+        Primary = 'ElbowFlexors'
+        Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-karate-inside-blocks.mp4'
+            Url = 'https://www.youtube.com/watch?v=MrDPCf6IXfI'
+            SourcePage = 'https://www.youtube.com/watch?v=MrDPCf6IXfI'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 27
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    542 = @{
+        RetiredName = 'Standing Reverse Snow Angel'
+        Name = 'Alternating Standing Bird Dogs'
+        Practice = 'Balance training'
+        MotionProfile = 'BirdDog'
+        Primary = 'SpinalExtensors'
+        Secondary = @('DeepAndIntersegmentalBack', 'AbdominalWall', 'GlutealExtensors', 'ShoulderAbductors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-standing-bird-dogs.mp4'
+            Url = 'https://www.youtube.com/watch?v=xL4jw_Ao2PM'
+            SourcePage = 'https://www.youtube.com/watch?v=xL4jw_Ao2PM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 23
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    543 = @{
+        RetiredName = 'Scaption Arm Arc'
+        Name = 'Alternating Karate Rising Blocks'
+        Practice = 'Karate'
+        MotionProfile = 'RisingBlock'
+        Primary = 'ElbowFlexors'
+        Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-karate-rising-blocks.mp4'
+            Url = 'https://www.youtube.com/watch?v=dfz0foQoB2Y'
+            SourcePage = 'https://www.youtube.com/watch?v=dfz0foQoB2Y'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 11.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    545 = @{
+        RetiredName = 'Shoulder Halo'
+        Name = 'Alternating Karate Outside Blocks'
+        Practice = 'Karate'
+        MotionProfile = 'OutsideBlock'
+        Primary = 'ElbowFlexors'
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-karate-outside-blocks.mp4'
+            Url = 'https://www.youtube.com/watch?v=oWfBeuzs51Q'
+            SourcePage = 'https://www.youtube.com/watch?v=oWfBeuzs51Q'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 11
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    546 = @{
+        RetiredName = 'Elbow Circle'
+        Name = 'Alternating Muay Thai Horizontal Elbow Strikes'
+        Practice = 'Muay Thai'
+        MotionProfile = 'MartialHand'
+        Primary = 'ElbowFlexors'
+        Secondary = @('Chest', 'RotatorCuff', 'AbdominalWall', 'ShoulderAdductorsAndExtensors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'alternating-horizontal-elbow-strikes.mp4'
+            Url = 'https://www.youtube.com/watch?v=x4MsCJ9Re68'
+            SourcePage = 'https://www.youtube.com/watch?v=x4MsCJ9Re68'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4.25
+            DurationSeconds = 5.75
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }

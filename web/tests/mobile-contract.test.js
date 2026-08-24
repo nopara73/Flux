@@ -130,7 +130,7 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
   assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
   assert.match(
     sessionService,
-    /OrderByDescending\(placement =>[\s\S]*GetSequenceExercises\(placement\.Root\)[\s\S]*Any\(WorkoutRecoveryPolicy\.IsHardExercise\)[\s\S]*ThenByDescending\(placement =>[\s\S]*LastKeptExerciseIds\.Contains\(member\.Id\)[\s\S]*ThenByDescending\(placement => placement\.Anchor\.Order\)/,
+    /OrderByDescending\(placement =>[\s\S]*GetSequenceExercises\(placement\.Root\)[\s\S]*Any\(WorkoutRecoveryPolicy\.IsHardExercise\)[\s\S]*ThenByDescending\(placement => IsSequenceKept\(state, placement\.Root\)\)[\s\S]*ThenByDescending\(placement => placement\.Anchor\.Order\)/,
   );
   assert.match(
     workoutModule,
@@ -196,11 +196,11 @@ test("web and mobile apply the same temporary muscle workload budget", () => {
   );
   assert.match(
     sessionService,
-    /LastKeptExerciseIds\.Contains\(currentExerciseId\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
+    /IsSequenceKept\(state, currentExercise\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
   );
   assert.match(
     workoutModule,
-    /keptExerciseIds\.has\(currentExerciseId\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
+    /this\.isSequenceKept\(currentExercise\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
   );
   assert.match(workoutState, /HashSet<int> NextWorkoutExcludedExerciseIds/);
 });
@@ -222,8 +222,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 14);
-  assert.match(workoutState, /public int Version[^=]*=\s*17/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 15);
+  assert.match(workoutState, /public int Version[^=]*=\s*18/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -1043,7 +1043,12 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
     catalog
       .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
       .map((root) => root.id),
-    [214, 223, 288, 414, 617],
+    [
+      96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
+      211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
+      367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 610, 612,
+      617, 742, 784, 834, 845, 910, 948, 996,
+    ],
   );
 });
 

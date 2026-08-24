@@ -437,6 +437,16 @@ Multi-category tags remain scientifically and analytically useful, but the requi
   satisfy those slots together; same-primary side or direction blocks consume
   time without claiming extra slots. All blocks stay consecutive even when the
   surrounding group order shifts.
+- Every retained record must be declared in exactly one mandatory sequence or
+  in the explicit standalone inventory. There is no implicit standalone
+  fallback; generation rejects unreviewed, overlapping, or orphaned records.
+- For candidate priority, a sequence uses the hardest member whose primary
+  muscle belongs to the slot being filled. Recovery timestamps are still
+  recorded from each completed block's own exercise identity.
+- The soft muscle-workload budget counts each distinct exercise identity once
+  per sequence set. Side or direction blocks of the same identity do not
+  double-count bilateral muscle work; different linked identities do, and a
+  later repeated set counts again.
 - Keep is the only rest decision, and a sequence exposes it only after its final
   block and final repeated set.
 - Intermediate sequence rests are neutral: they hide Keep, apply no score, and

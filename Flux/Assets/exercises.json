@@ -820,6 +820,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 540,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1153,6 +1160,13 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 626,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1470,6 +1484,13 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 135,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1556,6 +1577,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 532,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1630,22 +1658,7 @@
     "holdFramePercent": 5,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 117,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 117,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -1766,6 +1779,20 @@
       },
       {
         "exerciseId": 120,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 184,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 184,
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
@@ -1892,6 +1919,27 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 117,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 117,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 199,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -2329,15 +2377,7 @@
     "holdFramePercent": 38,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 135,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -2619,6 +2659,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 538,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -3114,6 +3161,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 533,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -3504,6 +3558,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 186,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 186,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -3551,6 +3619,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 535,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -3596,6 +3671,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 539,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -3639,6 +3721,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 534,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -3685,6 +3774,13 @@
         "sideCue": "ScreenRight",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 536,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -3812,22 +3908,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 184,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 184,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -3903,22 +3984,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 186,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 186,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "BenefitsGreatly",
     "minimumMirrorCoverage": "FullBody",
@@ -4390,15 +4456,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 199,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -4570,6 +4628,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 213,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 213,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -4637,22 +4709,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 213,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 213,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -4956,6 +5013,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 543,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -5290,22 +5354,7 @@
     "holdFramePercent": 80,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 232,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 232,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "BenefitsGreatly",
     "minimumMirrorCoverage": "FullBody",
@@ -5873,6 +5922,27 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 253,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 254,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 267,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -5903,15 +5973,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 253,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -5942,15 +6004,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 254,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -6019,22 +6073,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 256,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 256,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -6206,6 +6245,13 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 677,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -6328,6 +6374,20 @@
         "directionCue": "Forward",
         "mirrorMedia": false,
         "mediaSegment": "SecondDirection"
+      },
+      {
+        "exerciseId": 406,
+        "sideCue": "None",
+        "directionCue": "Clockwise",
+        "mirrorMedia": false,
+        "mediaSegment": "FirstDirection"
+      },
+      {
+        "exerciseId": 406,
+        "sideCue": "None",
+        "directionCue": "Counterclockwise",
+        "mirrorMedia": false,
+        "mediaSegment": "SecondDirection"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -6444,15 +6504,7 @@
     "holdFramePercent": 15,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 267,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -7225,6 +7277,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 541,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -7269,6 +7328,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 545,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -7540,6 +7606,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 542,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -8043,6 +8116,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 546,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -8087,6 +8167,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 531,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -8118,22 +8205,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 338,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 338,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -8261,6 +8333,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 529,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -8498,6 +8577,20 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 399,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 400,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -8545,6 +8638,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 537,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -8792,15 +8892,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 399,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -8830,15 +8922,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 400,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -9062,22 +9146,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "ClockwiseThenCounterclockwise",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 406,
-        "sideCue": "None",
-        "directionCue": "Clockwise",
-        "mirrorMedia": false,
-        "mediaSegment": "FirstDirection"
-      },
-      {
-        "exerciseId": 406,
-        "sideCue": "None",
-        "directionCue": "Counterclockwise",
-        "mirrorMedia": false,
-        "mediaSegment": "SecondDirection"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -9506,6 +9575,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 416,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 416,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -9536,22 +9619,7 @@
     "holdFramePercent": 0,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 416,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 416,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -9707,6 +9775,20 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 421,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 426,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -9742,15 +9824,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 421,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -9939,15 +10013,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 426,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -10773,15 +10839,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 445,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -11372,6 +11430,20 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 468,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 469,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -11637,6 +11709,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 445,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -11744,15 +11823,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 468,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -11784,15 +11855,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 469,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -12702,6 +12765,13 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 501,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -13010,6 +13080,20 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 505,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 506,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -13040,15 +13124,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 501,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -13091,6 +13167,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 503,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 503,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -13121,22 +13211,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 503,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 503,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -13198,15 +13273,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 505,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -13232,15 +13299,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 506,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -13578,11 +13637,12 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 514
   },
   {
     "id": 515,
-    "name": "One-Eyebrow Isolation Practice",
+    "name": "Mirror One-Eyebrow Isolation Practice",
     "retiredName": "Scapular Downward Rotation",
     "video": "exercise_videos/exercise_0515.mp4",
     "primaryCanonicalGroup": "CranialMuscles",
@@ -13769,15 +13829,13 @@
   },
   {
     "id": 520,
-    "name": "Silent Vowel-Shape Sequence",
+    "name": "Mirror Facial-Expression Practice",
     "retiredName": "Scapular Clock",
     "video": "exercise_videos/exercise_0520.mp4",
     "primaryCanonicalGroup": "CranialMuscles",
-    "secondaryCanonicalGroups": [
-      "AnteriorLateralNeckAndHyoidMuscles"
-    ],
-    "practice": "Speech articulation practice",
-    "motionProfile": "VowelShapeSequence",
+    "secondaryCanonicalGroups": [],
+    "practice": "Acting facial-expression control",
+    "motionProfile": "MirrorFacialExpressionPractice",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
@@ -13805,13 +13863,13 @@
   },
   {
     "id": 521,
-    "name": "Smile-to-Neutral Transitions",
+    "name": "Smile at Yourself in the Mirror",
     "retiredName": "Scapular Figure Eight",
     "video": "exercise_videos/exercise_0521.mp4",
     "primaryCanonicalGroup": "CranialMuscles",
     "secondaryCanonicalGroups": [],
-    "practice": "Acting facial-expression control",
-    "motionProfile": "SmileNeutralTransition",
+    "practice": "Facial movement exercise",
+    "motionProfile": "MirrorSmile",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
@@ -13835,11 +13893,12 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "Mirror",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 514
   },
   {
     "id": 522,
-    "name": "Tutting Box Sequence",
+    "name": "Mirror Tutting Box Sequence",
     "retiredName": "Shoulder-Blade Squeeze",
     "video": "exercise_videos/exercise_0522.mp4",
     "primaryCanonicalGroup": "IntrinsicHand",
@@ -13881,7 +13940,7 @@
   },
   {
     "id": 523,
-    "name": "Arm-Wave Isolation Practice",
+    "name": "Mirror Arm-Wave Isolation Practice",
     "retiredName": "Serratus Reach",
     "video": "exercise_videos/exercise_0523.mp4",
     "primaryCanonicalGroup": "ShoulderAbductors",
@@ -13923,7 +13982,7 @@
   },
   {
     "id": 524,
-    "name": "Front Double-Biceps Pose Hold",
+    "name": "Mirror Front Double-Biceps Pose Hold",
     "retiredName": "Standing W Raise",
     "video": "exercise_videos/exercise_0524.mp4",
     "primaryCanonicalGroup": "ElbowFlexors",
@@ -13969,7 +14028,7 @@
   },
   {
     "id": 525,
-    "name": "Front Lat-Spread Pose Hold",
+    "name": "Mirror Front Lat-Spread Pose Hold",
     "retiredName": "Standing Y Raise",
     "video": "exercise_videos/exercise_0525.mp4",
     "primaryCanonicalGroup": "ShoulderAdductorsAndExtensors",
@@ -14012,7 +14071,7 @@
   },
   {
     "id": 526,
-    "name": "Side-Chest Pose Hold",
+    "name": "Mirror Side-Chest Pose Hold",
     "retiredName": "Standing T Raise",
     "video": "exercise_videos/exercise_0526.mp4",
     "primaryCanonicalGroup": "Chest",
@@ -14065,7 +14124,7 @@
   },
   {
     "id": 527,
-    "name": "Side-Triceps Pose Hold",
+    "name": "Mirror Side-Triceps Pose Hold",
     "retiredName": "Standing I Raise",
     "video": "exercise_videos/exercise_0527.mp4",
     "primaryCanonicalGroup": "ElbowExtensors",
@@ -14118,7 +14177,7 @@
   },
   {
     "id": 528,
-    "name": "Abdominals-and-Thighs Pose Hold",
+    "name": "Mirror Abdominals-and-Thighs Pose Hold",
     "retiredName": "Goalpost Open-and-Close",
     "video": "exercise_videos/exercise_0528.mp4",
     "primaryCanonicalGroup": "AbdominalWall",
@@ -14160,6 +14219,467 @@
     "silent": true
   },
   {
+    "id": 529,
+    "name": "Alternating Single-Leg Bodyweight Deadlifts",
+    "retiredName": "Cactus-Arm Overhead Press",
+    "video": "exercise_videos/exercise_0529.mp4",
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "SpinalExtensors",
+      "DeepAndIntersegmentalBack",
+      "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "SingleLegDeadlift",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 530,
+    "name": "Alternating Standing Lateral Leg Raises",
+    "retiredName": "Standing W External Rotation",
+    "video": "exercise_videos/exercise_0530.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [
+      "HipAbductors",
+      "GlutealExtensors",
+      "DeepHipRotators",
+      "CalfDeepPosteriorLegAndPlantarFoot"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "HipAbduction",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Incompatible",
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 531,
+    "name": "Alternating Standing Shoulder CARs",
+    "retiredName": "Cuban Shoulder Rotation",
+    "video": "exercise_videos/exercise_0531.mp4",
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ScapularGirdle"
+    ],
+    "practice": "Shoulder mobility",
+    "motionProfile": "ShoulderCAR",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Incompatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 532,
+    "name": "Alternating Pistol Squats",
+    "retiredName": "External Rotation at Side",
+    "video": "exercise_videos/exercise_0532.mp4",
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "GlutealExtensors",
+      "HipFlexors",
+      "AbdominalWall",
+      "CalfDeepPosteriorLegAndPlantarFoot"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "SingleLegSquat",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 533,
+    "name": "Alternating Standing Donkey Kicks",
+    "retiredName": "External Rotation at Ninety Degrees",
+    "video": "exercise_videos/exercise_0533.mp4",
+    "primaryCanonicalGroup": "GlutealExtensors",
+    "secondaryCanonicalGroups": [
+      "PosteriorThighAndKneeFlexors"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "LegFront",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Incompatible",
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 534,
+    "name": "Alternating Standing Front Snap Kicks",
+    "retiredName": "Internal Rotation at Ninety Degrees",
+    "video": "exercise_videos/exercise_0534.mp4",
+    "primaryCanonicalGroup": "LateralKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "HipFlexors"
+    ],
+    "practice": "Martial-arts conditioning",
+    "motionProfile": "FrontSnapKick",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 535,
+    "name": "Alternating Crescent Kicks",
+    "retiredName": "Bilateral Shoulder Flexion Pulse",
+    "video": "exercise_videos/exercise_0535.mp4",
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Martial-arts conditioning",
+    "motionProfile": "LegFront",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 536,
+    "name": "Alternating Standing Side Thrust Kicks",
+    "retiredName": "Bilateral Shoulder Extension Pulse",
+    "video": "exercise_videos/exercise_0536.mp4",
+    "primaryCanonicalGroup": "HipAbductors",
+    "secondaryCanonicalGroups": [
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "DeepHipRotators"
+    ],
+    "practice": "Martial-arts conditioning",
+    "motionProfile": "LegSide",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 537,
+    "name": "Alternating Single-Leg Deadlifts to Runner March",
+    "retiredName": "Bilateral Shoulder Abduction Pulse",
+    "video": "exercise_videos/exercise_0537.mp4",
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipFlexors",
+      "SpinalExtensors",
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall",
+      "HipAbductors"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "DeadliftKneeDrive",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 538,
+    "name": "Alternating Reverse Lunge to Front Kicks",
+    "retiredName": "Bilateral Overhead Arm-Adduction Pull",
+    "video": "exercise_videos/exercise_0538.mp4",
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "AbdominalWall"
+    ],
+    "practice": "Bodyweight conditioning",
+    "motionProfile": "Lunge",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 539,
+    "name": "Alternating Hip-Hinge Rear-Leg Raises",
+    "retiredName": "Bilateral Bent-Elbow External Rotation",
+    "video": "exercise_videos/exercise_0539.mp4",
+    "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
+    "secondaryCanonicalGroups": [
+      "HipFlexors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors"
+    ],
+    "practice": "Standing posterior-chain conditioning",
+    "motionProfile": "HipHingeRearLegRaise",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 540,
+    "name": "Alternating Figure-Four Squats",
+    "retiredName": "Bilateral Bent-Elbow Internal Rotation",
+    "video": "exercise_videos/exercise_0540.mp4",
+    "primaryCanonicalGroup": "DeepHipRotators",
+    "secondaryCanonicalGroups": [
+      "GlutealExtensors",
+      "HipAbductors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot"
+    ],
+    "practice": "Balance training",
+    "motionProfile": "HipOpenClose",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 541,
+    "name": "Alternating Karate Inside Blocks",
+    "retiredName": "Standing Snow Angel",
+    "video": "exercise_videos/exercise_0541.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand"
+    ],
+    "practice": "Karate",
+    "motionProfile": "InsideBlock",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 542,
+    "name": "Alternating Standing Bird Dogs",
+    "retiredName": "Standing Reverse Snow Angel",
+    "video": "exercise_videos/exercise_0542.mp4",
+    "primaryCanonicalGroup": "SpinalExtensors",
+    "secondaryCanonicalGroups": [
+      "DeepAndIntersegmentalBack",
+      "AbdominalWall",
+      "GlutealExtensors",
+      "ShoulderAbductors"
+    ],
+    "practice": "Balance training",
+    "motionProfile": "BirdDog",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 543,
+    "name": "Alternating Karate Rising Blocks",
+    "retiredName": "Scaption Arm Arc",
+    "video": "exercise_videos/exercise_0543.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "ShoulderAdductorsAndExtensors",
+      "ScapularGirdle",
+      "RotatorCuff"
+    ],
+    "practice": "Karate",
+    "motionProfile": "RisingBlock",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Incompatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
     "id": 544,
     "name": "Standing Overhead Slam",
     "retiredName": null,
@@ -14195,6 +14715,67 @@
     "minimumMirrorCoverage": "None",
     "score": 0,
     "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 545,
+    "name": "Alternating Karate Outside Blocks",
+    "retiredName": "Shoulder Halo",
+    "video": "exercise_videos/exercise_0545.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators",
+      "IntrinsicHand"
+    ],
+    "practice": "Karate",
+    "motionProfile": "OutsideBlock",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 546,
+    "name": "Alternating Muay Thai Horizontal Elbow Strikes",
+    "retiredName": "Elbow Circle",
+    "video": "exercise_videos/exercise_0546.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "RotatorCuff",
+      "AbdominalWall",
+      "ShoulderAdductorsAndExtensors"
+    ],
+    "practice": "Muay Thai",
+    "motionProfile": "MartialHand",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [],
+    "insectCompatibility": "Compatible",
+    "mirrorRelationship": "BenefitsGreatly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 1,
     "onlyFeetTouchGround": true,
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
@@ -14591,6 +15172,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 232,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 232,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -14685,6 +15280,13 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 530,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -15086,15 +15688,7 @@
     "holdFramePercent": 55,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 626,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -15436,15 +16030,7 @@
     "holdFramePercent": 33,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 677,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -15952,6 +16538,20 @@
       {
         "exerciseId": 742,
         "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 338,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 338,
+        "sideCue": "ScreenRight",
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
@@ -16474,6 +17074,20 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 969,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 1000,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -16711,6 +17325,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 914,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -16833,6 +17454,20 @@
       },
       {
         "exerciseId": 845,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 256,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 256,
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
@@ -17173,6 +17808,13 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 962,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -17203,15 +17845,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 914,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -17388,6 +18022,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 949,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 949,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -17419,22 +18067,7 @@
     "holdFramePercent": 0,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 949,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 949,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -17573,15 +18206,7 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 962,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Compatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -17611,15 +18236,7 @@
     "holdFramePercent": 92,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 969,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
@@ -17830,6 +18447,20 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 997,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 997,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -17863,22 +18494,7 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 997,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 997,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "BenefitsGreatly",
     "minimumMirrorCoverage": "FullBody",
@@ -17991,15 +18607,7 @@
     "holdFramePercent": 90,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [
-      {
-        "exerciseId": 1000,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      }
-    ],
+    "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",

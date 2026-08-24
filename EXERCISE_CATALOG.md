@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 431 human-demonstrated standing movements. Exercises are chosen
+Flux contains 448 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -27,13 +27,15 @@ with each paired modifier. Primary ownership is a preference after
 score/keep priority, never a reason to discard a truthful secondary association
 or admit a weak quota-filler.
 
-At session construction, kept exercises remain fixed. The remaining choices use
-a soft per-muscle workload budget of 5: each scheduled primary association counts
-1 and each distinct secondary counts 0.5. Every excess 0.5 becomes a 0.5
-temporary downvote for candidates training that muscle. The adjustment is deterministic,
-is never persisted, and replaces the current candidate only on a strictly higher
-adjusted score. Timed unilateral phases count once; linked direction exercises
-and actual repeated rounds count as separate scheduled work.
+At session construction, keeps remain saved but are preferred contextually. The
+remaining choices use a soft per-muscle workload budget of 5: each scheduled
+primary association counts 1 and each distinct secondary counts 0.5. Every
+excess 0.5 becomes a 0.5 temporary downvote for candidates training that muscle.
+The adjustment is deterministic, is never persisted, and replaces the current
+candidate only on a strictly higher adjusted score. Each distinct exercise
+identity counts once per sequence set, so the two sides or directions of one
+identity do not double-count bilateral muscle work. Different linked exercise
+identities count separately, and an actual repeated set counts again.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
@@ -79,6 +81,15 @@ collectively fill those slots. This can place a multi-block sequence in a
 sub-30-minute workout and may shift surrounding muscle-group order, but never
 the sequence's internal order.
 
+`tools/ExerciseSequences.psd1` exhaustively partitions the retained inventory:
+every record is either in exactly one mandatory sequence or is explicitly
+standalone. Generation rejects implicit defaults, overlaps, orphans, and hidden
+members scheduled as roots. The current reviewed inventory has 393 schedulable
+roots: 243 one-block, 107 two-block, 26 three-block, 16 four-block, and one
+five-block root. Forty-seven roots couple multiple named records, including
+17 exact alternating integrations added after the side/integration audit.
+These numbers are audit outputs rather than coverage targets.
+
 `tools/ExerciseCanonicalGroups.psd1` is the stable primary/secondary assignment
 source, and `tools/CanonicalMuscleGroups.psd1` defines the canonical identities.
 Replacement definitions repeat those fields for reviewability, and generation
@@ -105,7 +116,7 @@ This equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 
-The current 58 `BenefitsGreatly` assignments are an audited result, not a quota,
+The current 71 `BenefitsGreatly` assignments are an audited result, not a quota,
 target, or ceiling. Each entry must belong to one of the manifest's narrow
 audited criteria, and ordinary optional form checking does not qualify. Changes
 to the count must follow the exercise semantics, never a coverage requirement.
@@ -122,7 +133,7 @@ mirror-category floor.
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 431 included
+movements. All 448 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

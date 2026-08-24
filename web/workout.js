@@ -152,14 +152,14 @@ export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 14;
+export const CURRENT_WORKOUT_STATE_VERSION = 15;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 48;
+export const CURRENT_CATALOG_REVISION = 49;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -241,6 +241,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [47, new Set([
     198, 398, 421, 427, 468, 512, 515,
   ])],
+  [49, new Set([
+    520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
+    538, 539, 540, 541, 542, 543, 545, 546,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -302,6 +306,10 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [45, new Set([
     264, 275, 406, 409, 460, 588, 608, 611, 743,
     757, 759, 760, 761, 762, 763, 764,
+  ])],
+  [49, new Set([
+    520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
+    538, 539, 540, 541, 542, 543, 545, 546,
   ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
@@ -377,6 +385,14 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [500, ["Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening"]],
   [511, ["Mirror-Guided Lip Pucker", "Lip Pucker"]],
   [514, ["Mirror-Guided Symmetric Smile", "Symmetric Smile"]],
+  [515, ["One-Eyebrow Isolation Practice", "Mirror One-Eyebrow Isolation Practice"]],
+  [522, ["Tutting Box Sequence", "Mirror Tutting Box Sequence"]],
+  [523, ["Arm-Wave Isolation Practice", "Mirror Arm-Wave Isolation Practice"]],
+  [524, ["Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Pose Hold"]],
+  [525, ["Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Pose Hold"]],
+  [526, ["Side-Chest Pose Hold", "Mirror Side-Chest Pose Hold"]],
+  [527, ["Side-Triceps Pose Hold", "Mirror Side-Triceps Pose Hold"]],
+  [528, ["Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Pose Hold"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
@@ -1849,7 +1865,6 @@ function solveAtomicSequenceLineup(
       });
     const nextGroupIndex = undecidedGroupIndexes[0];
     const nextGroupMask = 1n << BigInt(nextGroupIndex);
-    search(decidedMask | nextGroupMask, coveredMask, utility);
     for (const candidate of multiGroupCandidates) {
       if ((candidate.coverageMask & nextGroupMask) === 0n ||
           (candidate.coverageMask & decidedMask) !== 0n ||
@@ -1866,11 +1881,19 @@ function solveAtomicSequenceLineup(
       selected.pop();
       selectedMovementIds.delete(candidate.movementId);
     }
+    // Establish a high-utility exact incumbent before exploring the
+    // singleton-only branch, allowing the upper bound to prune equivalent
+    // catalog choices instead of enumerating them combinatorially.
+    search(decidedMask | nextGroupMask, coveredMask, utility);
   };
 
   if (multiGroupCandidates.length === 0) {
     return completeWithSingletons(allGroupsMask);
   }
+  // Seed exact branch-and-bound with the polynomial singleton solution. In
+  // ordinary catalogs this already reaches the per-group utility ceiling and
+  // prevents exponential enumeration of equivalent multi-group placements.
+  best = completeWithSingletons(allGroupsMask);
   search(0n, 0n, 0n);
   return best;
 }
@@ -2259,7 +2282,8 @@ export class WorkoutSession {
 
   initialize() {
     const atomicSequenceMigration =
-      this.loadedStateVersion === 13 && this.state.activeWorkoutMinutes > 0
+      [13, 14].includes(this.loadedStateVersion) &&
+        this.state.activeWorkoutMinutes > 0
         ? this.captureLegacyActiveProgress()
         : null;
     this.reconcileCatalog();
@@ -3194,7 +3218,7 @@ export class WorkoutSession {
               selectionExercise.primaryCanonicalGroup,
             )) ?? 0
           : 0;
-        const isKept = this.getSequenceExercises(exercise).some((member) =>
+        const isKept = this.getSequenceExercises(exercise).every((member) =>
           preferredExerciseIds.has(member.id));
         // A non-kept hard exercise can displace a keep only while it is fresh,
         // primary for this slot, and already in that slot's top saved-score
@@ -3449,8 +3473,9 @@ export class WorkoutSession {
       .filter((member) => group.canonicalGroups.includes(
         member.primaryCanonicalGroup,
       ));
-    return primaryMembers.find((member) => member.id === root.id) ??
-      primaryMembers[0] ??
+    return primaryMembers.sort((left, right) =>
+      right.muscularDemand - left.muscularDemand ||
+      Number(right.id === root.id) - Number(left.id === root.id))[0] ??
       root;
   }
 
@@ -3569,7 +3594,7 @@ export class WorkoutSession {
   normalizeKeptExerciseIds() {
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds.filter((exerciseId) =>
       this.exercisesById.has(exerciseId)));
-    this.expandSequenceIds(keptExerciseIds);
+    this.removePartialSequenceIds(keptExerciseIds);
     this.state.lastKeptExerciseIds = [...keptExerciseIds];
     this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
       this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -3583,6 +3608,33 @@ export class WorkoutSession {
     );
     this.expandSequenceIds(nextExcludedExerciseIds);
     this.state.nextWorkoutExcludedExerciseIds = [...nextExcludedExerciseIds];
+  }
+
+  removePartialSequenceIds(exerciseIds) {
+    const completeSequenceExerciseIds = new Set();
+    const roots = new Map([...exerciseIds].map((exerciseId) => {
+      const root = this.getSequenceRoot(this.exercisesById.get(exerciseId));
+      return [root.id, root];
+    }));
+    for (const root of roots.values()) {
+      const members = this.getSequenceExercises(root);
+      if (members.every((member) => exerciseIds.has(member.id))) {
+        for (const member of members) {
+          completeSequenceExerciseIds.add(member.id);
+        }
+      }
+    }
+    for (const exerciseId of [...exerciseIds]) {
+      if (!completeSequenceExerciseIds.has(exerciseId)) {
+        exerciseIds.delete(exerciseId);
+      }
+    }
+  }
+
+  isSequenceKept(exercise) {
+    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    return this.getSequenceExercises(exercise).every((member) =>
+      keptExerciseIds.has(member.id));
   }
 
   expandSequenceIds(exerciseIds) {
@@ -3687,9 +3739,13 @@ export class WorkoutSession {
     }
   }
 
-  chooseLongWorkoutAllocation(lockedSelectionGroupIds = new Set()) {
+  chooseLongWorkoutAllocation(
+    lockedSelectionGroupIds = new Set(),
+    selectedPlacements = null,
+  ) {
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    const rankedPlacements = [...this.getSelectedSequencePlacements()]
+    const rankedPlacements = [...(selectedPlacements ??
+      this.getSelectedSequencePlacements())]
       .sort((left, right) => {
         const leftMembers = this.getSequenceExercises(left.root);
         const rightMembers = this.getSequenceExercises(right.root);
@@ -3697,8 +3753,8 @@ export class WorkoutSession {
           member.muscularDemand === HARD_MUSCULAR_DEMAND)) -
             Number(leftMembers.some((member) =>
               member.muscularDemand === HARD_MUSCULAR_DEMAND)) ||
-          Number(rightMembers.some((member) => keptExerciseIds.has(member.id))) -
-            Number(leftMembers.some((member) => keptExerciseIds.has(member.id))) ||
+          Number(rightMembers.every((member) => keptExerciseIds.has(member.id))) -
+            Number(leftMembers.every((member) => keptExerciseIds.has(member.id))) ||
           right.anchor.order - left.anchor.order;
       });
     const blockCostByGroup = new Map(rankedPlacements.map((placement) => [
@@ -3779,6 +3835,7 @@ export class WorkoutSession {
       return;
     }
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    const allocationCache = new Map();
 
     const seenLineups = new Set();
     for (let pass = 0; pass < MUSCLE_BUDGET_MAX_REBALANCE_PASSES; pass += 1) {
@@ -3798,7 +3855,7 @@ export class WorkoutSession {
         );
         const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
         const currentExercise = this.exercisesById.get(currentExerciseId);
-        if (!currentExercise || keptExerciseIds.has(currentExerciseId) ||
+        if (!currentExercise || this.isSequenceKept(currentExercise) ||
             groups.filter((candidateGroup) =>
               this.state.selectedExerciseIds[this.getSelectionStorageKey(
                 candidateGroup.id,
@@ -3826,23 +3883,15 @@ export class WorkoutSession {
             .map(getSessionMovementId),
           getSessionMovementId(currentExercise),
         ]);
-        const loadWithoutCurrent = currentExercise.sequenceBlocks.length === 1
-          ? calculateMuscleLoadHalfUnits(groups
-              .filter((candidateGroup) => candidateGroup.id !== group.id)
-              .map((candidateGroup) => this.getSelectedExercise(candidateGroup)))
-          : null;
-        const current = loadWithoutCurrent
-          ? this.evaluateSingleRoundMuscleBudgetCandidate(
-              group,
-              currentExercise,
-              loadWithoutCurrent,
-              selectionTimeUnixMilliseconds,
-            )
-          : this.evaluateMuscleBudgetCandidate(
-              group,
-              currentExercise,
-              selectionTimeUnixMilliseconds,
-            );
+        const placementsWithoutCurrent = this.getSelectedSequencePlacements()
+          .filter((placement) => placement.anchor.id !== group.id);
+        const current = this.evaluateMuscleBudgetCandidate(
+          group,
+          currentExercise,
+          placementsWithoutCurrent,
+          allocationCache,
+          selectionTimeUnixMilliseconds,
+        );
         const alternatives = this.exercises
           .filter((exercise) =>
             exercise.id !== currentExerciseId &&
@@ -3858,18 +3907,13 @@ export class WorkoutSession {
               group,
               this.state.activeWorkoutModifiers,
             ))
-          .map((exercise) => loadWithoutCurrent && exercise.sequenceBlocks.length === 1
-            ? this.evaluateSingleRoundMuscleBudgetCandidate(
-                group,
-                exercise,
-                loadWithoutCurrent,
-                selectionTimeUnixMilliseconds,
-              )
-            : this.evaluateMuscleBudgetCandidate(
-                group,
-                exercise,
-                selectionTimeUnixMilliseconds,
-              ))
+          .map((exercise) => this.evaluateMuscleBudgetCandidate(
+            group,
+            exercise,
+            placementsWithoutCurrent,
+            allocationCache,
+            selectionTimeUnixMilliseconds,
+          ))
           .sort((left, right) =>
             right.adjustedScoreHalfUnits - left.adjustedScoreHalfUnits ||
             right.realScore - left.realScore ||
@@ -3898,29 +3942,31 @@ export class WorkoutSession {
     }
   }
 
-  evaluateMuscleBudgetCandidate(group, candidate, selectionTimeUnixMilliseconds) {
-    const selectionStorageKey = this.getSelectionStorageKey(
-      group.id,
-      this.state.activeWorkoutModifiers,
-    );
-    const previousExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
-    this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
+  evaluateMuscleBudgetCandidate(
+    group,
+    candidate,
+    placementsWithoutCandidate,
+    allocationCache,
+    selectionTimeUnixMilliseconds,
+  ) {
     try {
-      const allocation = this.chooseLongWorkoutAllocation();
-      const rounds = this.createActiveWorkoutSchedule(
-        allocation.setCountsBySelectionGroupId,
+      const placements = [
+        ...placementsWithoutCandidate,
+        { root: candidate, anchor: group, coveredGroups: [group] },
+      ].sort((left, right) => left.anchor.order - right.anchor.order);
+      const allocation = this.getCachedLongWorkoutAllocation(
+        placements,
+        allocationCache,
       );
-      const scheduledExercises = rounds.map((round) => this.getSelectedExercise(round));
-      const loadHalfUnits = calculateMuscleLoadHalfUnits(scheduledExercises);
-      const candidateMuscleGroups = [...new Set(rounds
-        .filter((round) => getSelectionKey(round) === group.id)
-        .flatMap((round) => {
-          const exercise = this.getSelectedExercise(round);
-          return [
-            exercise.primaryCanonicalGroup,
-            ...(exercise.secondaryCanonicalGroups ?? []),
-          ];
-        }))];
+      const loadHalfUnits = this.calculateScheduledLoadHalfUnits(
+        placements,
+        allocation,
+      );
+      const candidateMuscleGroups = [...new Set(this.getSequenceExercises(candidate)
+        .flatMap((exercise) => [
+          exercise.primaryCanonicalGroup,
+          ...(exercise.secondaryCanonicalGroups ?? []),
+        ]))];
       const temporaryDownvoteHalfUnits = getMuscleBudgetTemporaryDownvoteHalfUnits(
         loadHalfUnits,
         candidateMuscleGroups,
@@ -3951,7 +3997,7 @@ export class WorkoutSession {
         isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
         isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
         isRecoveringModerate,
-        isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
+        isKept: this.isSequenceKept(candidate),
         lastHardWorkUnixMilliseconds:
           rotationStatus === HARD_ROTATION_STATUS.FreshHard
             ? getLastHardWorkUnixMilliseconds(
@@ -3984,67 +4030,59 @@ export class WorkoutSession {
         isPrimary: false,
         canonicalCoverage: 0,
       };
-    } finally {
-      this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
     }
   }
 
-  evaluateSingleRoundMuscleBudgetCandidate(
-    group,
-    candidate,
-    loadWithoutCandidate,
-    selectionTimeUnixMilliseconds,
-  ) {
-    const realScore = this.getSelectionScore(candidate);
-    const temporaryDownvoteHalfUnits =
-      getTemporaryDownvoteHalfUnitsAfterAddingExercise(
-        loadWithoutCandidate,
-        candidate,
-      );
-    const selectionExercise = this.getSequenceSelectionExerciseForGroup(
-      candidate,
-      group,
-    );
-    const rotationStatus = getHardRotationStatus(
-      selectionExercise,
-      group,
-      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-      selectionTimeUnixMilliseconds,
-    );
-    const isRecoveringModerate = isModerateExerciseRecovering(
-      selectionExercise,
-      this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
-      selectionTimeUnixMilliseconds,
-    );
-    return {
-      exerciseId: candidate.id,
-      realScore,
-      adjustedScoreHalfUnits: getAdjustedScoreHalfUnits(
-        realScore,
-        temporaryDownvoteHalfUnits,
-      ),
-      isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
-      isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
-      isRecoveringModerate,
-      isKept: this.state.lastKeptExerciseIds.includes(candidate.id),
-      lastHardWorkUnixMilliseconds:
-        rotationStatus === HARD_ROTATION_STATUS.FreshHard
-          ? getLastHardWorkUnixMilliseconds(
-              this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-              selectionExercise.primaryCanonicalGroup,
-            )
-          : 0,
-      isMirrorPreferred: isMirrorPreferred(
-        selectionExercise,
-        this.state.activeWorkoutModifiers,
-      ),
-      isPrimary: isPrimaryForGroup(selectionExercise, group),
-      canonicalCoverage: getSequenceCanonicalCoverage(
-        candidate,
-        this.exercisesById,
-        group,
-      ),
-    };
+  getCachedLongWorkoutAllocation(placements, allocationCache) {
+    const signature = placements
+      .sort((left, right) => left.anchor.order - right.anchor.order)
+      .map((placement) => [
+        placement.anchor.id,
+        placement.root.sequenceBlocks.length,
+        this.getSequenceExercises(placement.root).some((member) =>
+          member.muscularDemand === HARD_MUSCULAR_DEMAND),
+        this.isSequenceKept(placement.root),
+      ].join(":"))
+      .join("|");
+    if (allocationCache.has(signature)) {
+      const cached = allocationCache.get(signature);
+      if (!cached) {
+        throw new Error("The selected sequence lengths cannot fill the workout duration.");
+      }
+      return cached;
+    }
+    try {
+      const allocation = this.chooseLongWorkoutAllocation(new Set(), placements);
+      allocationCache.set(signature, allocation);
+      return allocation;
+    } catch (error) {
+      allocationCache.set(signature, null);
+      throw error;
+    }
+  }
+
+  calculateScheduledLoadHalfUnits(placements, allocation) {
+    const loadHalfUnits = new Map();
+    for (const placement of placements) {
+      const setCount = allocation.setCountsBySelectionGroupId.get(
+        placement.anchor.id,
+      ) ?? 1;
+      for (const exercise of this.getSequenceExercises(placement.root)) {
+        loadHalfUnits.set(
+          exercise.primaryCanonicalGroup,
+          (loadHalfUnits.get(exercise.primaryCanonicalGroup) ?? 0) +
+            PRIMARY_MUSCLE_LOAD_HALF_UNITS * setCount,
+        );
+        for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+          loadHalfUnits.set(
+            secondary,
+            (loadHalfUnits.get(secondary) ?? 0) +
+              SECONDARY_MUSCLE_LOAD_HALF_UNITS * setCount,
+          );
+        }
+      }
+    }
+    return loadHalfUnits;
   }
 
   setActiveLongWorkoutAllocation() {
@@ -4129,6 +4167,12 @@ export class WorkoutSession {
     for (const selectionGroup of this.getSelectionGroups()) {
       const sequenceRounds = rounds.filter((round) =>
         getSelectionKey(round) === selectionGroup.id);
+      if (!this.legacySelectionMatchesCurrentSequence(
+        snapshot,
+        selectionGroup.id,
+      )) {
+        continue;
+      }
       const oldOutcomes = Object.entries(snapshot.outcomes)
         .filter(([roundId]) =>
           this.resolveLegacySelectionKey(roundId) === selectionGroup.id);
@@ -4167,6 +4211,9 @@ export class WorkoutSession {
       legacyPendingRoundId,
     );
     if (!legacyPendingRoundId || !pendingSelectionKey) {
+      return;
+    }
+    if (!this.legacySelectionMatchesCurrentSequence(snapshot, pendingSelectionKey)) {
       return;
     }
     const pendingSequenceRounds = rounds.filter((round) =>
@@ -4219,6 +4266,25 @@ export class WorkoutSession {
         ? snapshot.pendingMovementEndsAtUnixMilliseconds
         : 0;
     this.state.pendingMovementPausedByUser = snapshot.pendingMovementPausedByUser;
+  }
+
+  legacySelectionMatchesCurrentSequence(snapshot, selectionKey) {
+    const legacyExerciseId = this.resolveLegacyMemberExerciseId(
+      snapshot,
+      selectionKey,
+      selectionKey,
+    );
+    const currentExerciseId = this.state.selectedExerciseIds[
+      this.getSelectionStorageKey(
+        selectionKey,
+        this.state.activeWorkoutModifiers,
+      )
+    ];
+    const legacyExercise = this.exercisesById.get(legacyExerciseId);
+    const currentExercise = this.exercisesById.get(currentExerciseId);
+    return Boolean(legacyExercise && currentExercise &&
+      this.getSequenceRoot(legacyExercise).id ===
+        this.getSequenceRoot(currentExercise).id);
   }
 
   resolveLegacyRepresentedRounds(snapshot, sequenceRounds, legacyRoundId) {

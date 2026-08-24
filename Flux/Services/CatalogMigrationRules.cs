@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 48;
+    public const int CurrentCatalogRevision = 49;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -240,6 +240,30 @@ public static class CatalogMigrationRules
                 [514] = new(
                     "Mirror-Guided Symmetric Smile",
                     "Symmetric Smile"),
+                [515] = new(
+                    "One-Eyebrow Isolation Practice",
+                    "Mirror One-Eyebrow Isolation Practice"),
+                [522] = new(
+                    "Tutting Box Sequence",
+                    "Mirror Tutting Box Sequence"),
+                [523] = new(
+                    "Arm-Wave Isolation Practice",
+                    "Mirror Arm-Wave Isolation Practice"),
+                [524] = new(
+                    "Front Double-Biceps Pose Hold",
+                    "Mirror Front Double-Biceps Pose Hold"),
+                [525] = new(
+                    "Front Lat-Spread Pose Hold",
+                    "Mirror Front Lat-Spread Pose Hold"),
+                [526] = new(
+                    "Side-Chest Pose Hold",
+                    "Mirror Side-Chest Pose Hold"),
+                [527] = new(
+                    "Side-Triceps Pose Hold",
+                    "Mirror Side-Triceps Pose Hold"),
+                [528] = new(
+                    "Abdominals-and-Thighs Pose Hold",
+                    "Mirror Abdominals-and-Thighs Pose Hold"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -811,6 +835,7 @@ public static class CatalogMigrationRules
         484, 485, 486, 487, 488, 489, 494, 496, 517, 518, 519,
         490, 491, 492, 493, 495, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
         509, 510, 511, 512, 513, 514, 515, 516, 520, 521, 522, 523, 524, 525, 526, 527, 528,
+        529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 545, 546,
         572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
@@ -927,6 +952,11 @@ public static class CatalogMigrationRules
                 {
                     198, 398, 421, 427, 468, 512, 515,
                 },
+                [49] = new HashSet<int>
+                {
+                    520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
+                    538, 539, 540, 541, 542, 543, 545, 546,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1004,6 +1034,11 @@ public static class CatalogMigrationRules
                 {
                     264, 275, 406, 409, 460, 588, 608, 611, 743,
                     757, 759, 760, 761, 762, 763, 764,
+                },
+                [49] = new HashSet<int>
+                {
+                    520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
+                    538, 539, 540, 541, 542, 543, 545, 546,
                 },
             };
 

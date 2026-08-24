@@ -74,7 +74,7 @@ import {
   withMirrorEquipment,
 } from "../workout.js";
 
-test("muscle budget counts each scheduled block once and repeated blocks again", () => {
+test("muscle budget counts an exercise once and actual repeated sets again", () => {
   const sideSpecific = exercise(
     1,
     "HipAbductors",
@@ -93,6 +93,27 @@ test("muscle budget counts each scheduled block once and repeated blocks again",
   assert.equal(oneRound.get("GlutealExtensors"), 1);
   assert.equal(twoRounds.get("HipAbductors"), 4);
   assert.equal(twoRounds.get("GlutealExtensors"), 2);
+});
+
+test("scheduled load does not double-count side blocks within one set", () => {
+  const sideSpecific = exercise(1, "HipAbductors", ["GlutealExtensors"], 0);
+  sideSpecific.sequenceBlocks = [
+    { ...sideSpecific.sequenceBlocks[0], sideCue: "ScreenLeft" },
+    { ...sideSpecific.sequenceBlocks[0], sideCue: "ScreenRight" },
+  ];
+  const session = new WorkoutSession([sideSpecific], createDefaultState(), () => 0);
+  const placements = [{ anchor: { id: "slot" }, root: sideSpecific }];
+  const allocation = (setCount) => ({
+    setCountsBySelectionGroupId: new Map([["slot", setCount]]),
+  });
+
+  const oneSet = session.calculateScheduledLoadHalfUnits(placements, allocation(1));
+  const twoSets = session.calculateScheduledLoadHalfUnits(placements, allocation(2));
+
+  assert.equal(oneSet.get("HipAbductors"), 2);
+  assert.equal(oneSet.get("GlutealExtensors"), 1);
+  assert.equal(twoSets.get("HipAbductors"), 4);
+  assert.equal(twoSets.get("GlutealExtensors"), 2);
 });
 
 test("every overloaded half unit adds one temporary downvote half unit", () => {
@@ -177,6 +198,45 @@ test("muscle budget prefers a once-downvoted alternative to an overloaded zero",
   assert.equal(tieSession.state.selectedExerciseIds[targetGroup.id], overloadedZero.id);
 });
 
+test("long-workout muscle budget counts the extra set before replacing a choice", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const overloadedMuscle = groups[0].canonicalGroups[0];
+  const targetGroup = groups.at(-1);
+  const selected = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    index >= 1 && index <= 7 ? [overloadedMuscle] : [],
+    0,
+  ));
+  const overloaded = selected.at(-1);
+  overloaded.secondaryCanonicalGroups = [overloadedMuscle];
+  overloaded.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const replacement = exercise(
+    1_001,
+    targetGroup.canonicalGroups[0],
+    [],
+    0,
+  );
+  replacement.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 45;
+  for (let index = 0; index < groups.length; index += 1) {
+    state.selectedExerciseIds[groups[index].id] = selected[index].id;
+  }
+  const session = new WorkoutSession([...selected, replacement], state, () => 0);
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], replacement.id);
+  assert.equal(session.state.scores[String(overloaded.id)], undefined);
+  assert.equal(session.state.scores[String(replacement.id)], undefined);
+  assert.equal(
+    session.getActiveGroups().filter((round) =>
+      getSelectionKey(round) === targetGroup.id).length,
+    2,
+  );
+});
+
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(testDirectory, "..", "..");
 const catalog = JSON.parse(
@@ -189,7 +249,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [116, 186, 129],
+    [117, 197, 134],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -204,7 +264,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   for (const root of catalog.filter((item) => item.sequenceBlocks.length > 1)) {
     for (const memberId of new Set(root.sequenceBlocks.map((block) =>
       block.exerciseId))) {
-      assert.equal(root.muscularDemand, exercisesById.get(memberId)?.muscularDemand);
+      assert.equal(hasReviewedMuscularDemand(exercisesById.get(memberId)), true);
     }
   }
 });
@@ -386,7 +446,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 14);
+  assert.equal(state.version, 15);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -403,7 +463,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 14);
+  assert.equal(state.version, 15);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -833,9 +893,9 @@ test("insect profile carries keeps into a long workout", () => {
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
-      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 58);
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 71);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 363);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 367);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 10);
@@ -847,10 +907,10 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 5);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
-    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody).length, 22);
+    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody).length, 27);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
-    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 36);
+    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 44);
   assert.deepEqual(new Set(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly &&
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody)
@@ -875,12 +935,14 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     for (const minutes of SUPPORTED_MINUTES) {
       const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
       session.startWorkout(minutes, profile);
-      assert.ok(session.getActiveGroups().every((group) =>
-        isSelectableForWorkoutProfile(
-          session.getSelectedExercise(group),
+      assert.ok(session.getActiveGroups().every((group) => {
+        const selected = session.getSelectedExercise(group);
+        return isSelectableForWorkoutProfile(
+          session.getSequenceSelectionExerciseForGroup(selected, group),
           group,
           profile,
-        )));
+        );
+      }));
     }
   }
   const allModifiers = WORKOUT_MODIFIERS.Insect |
@@ -1518,6 +1580,40 @@ test("fresh hard work outranks a non-hard keep and soft mirror preference", () =
   assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
 });
 
+test("a same-muscle sequence is ranked by its hardest primary block", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const root = exercise(1, groups[0].canonicalGroups[0], [], 0);
+  const hardMember = exercise(1_001, groups[0].canonicalGroups[0], [], 0);
+  hardMember.muscularDemand = HARD_MUSCULAR_DEMAND;
+  root.sequenceBlocks = [
+    { ...root.sequenceBlocks[0] },
+    { ...hardMember.sequenceBlocks[0] },
+  ];
+  hardMember.sequenceBlocks = [];
+  const nonHardKeep = exercise(1_002, groups[0].canonicalGroups[0], [], 0);
+  nonHardKeep.muscularDemand = MODERATE_MUSCULAR_DEMAND;
+  const fillers = groups.slice(1).map((group, index) => exercise(
+    index + 2,
+    group.canonicalGroups[0],
+    [],
+    0,
+  ));
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 45;
+  state.lastKeptExerciseIds = [nonHardKeep.id];
+  state.selectedExerciseIds[groups[0].id] = nonHardKeep.id;
+  const session = new WorkoutSession(
+    [root, hardMember, nonHardKeep, ...fillers],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], root.id);
+  assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
+});
+
 test("fresh hard keep gets an opportunity despite a lower saved score", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
@@ -2080,9 +2176,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 431);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 431);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 431);
+  assert.equal(catalog.length, 448);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 448);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 448);
   assert.equal(isSessionMovementMetadataValid(catalog), true);
   const actualSessionMovements = {};
   for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
@@ -2109,6 +2205,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
       253: [253, 267],
       256: [256, 845],
       261: [261, 677],
+      514: [514, 521],
       755: [755, 756],
     },
   );
@@ -2140,11 +2237,12 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(backwardSideLegCircles.primaryCanonicalGroup, "HipAbductors");
   assert.notEqual(forwardSideLegCircles.video, backwardSideLegCircles.video);
 
-  for (const exerciseId of [395, 507, 577, 618, 654, 834, 915]) {
+  for (const exerciseId of [395, 507, 577, 618, 654, 915]) {
     const exercise = catalog.find((candidate) => candidate.id === exerciseId);
     assert.match(exercise.name, /^Single-Side /);
     assert.equal(exercise.sequenceBlocks.length, 2);
   }
+  assert.equal(catalog.find((exercise) => exercise.id === 834).sequenceBlocks.length, 3);
   const alternatingHighKneePull = catalog.find((exercise) => exercise.id === 219);
   assert.equal(alternatingHighKneePull.name, "Alternating High-Knee Cross-Body Pull");
   assert.equal(alternatingHighKneePull.sideSequence, "Alternating");
@@ -2413,10 +2511,18 @@ test("four-block side-by-direction sequences preserve independent cues", () => {
 });
 
 test("simultaneous and alternating bilateral movements remain one block", () => {
+  const ownerByExerciseId = new Map();
+  for (const root of catalog.filter((item) => item.sequenceBlocks.length > 0)) {
+    for (const block of root.sequenceBlocks) {
+      ownerByExerciseId.set(block.exerciseId, root);
+    }
+  }
   for (const exerciseId of [248, 394, 421, 427, 468]) {
-    const item = catalog.find((exercise) => exercise.id === exerciseId);
-    assert.equal(item.sequenceBlocks.length, 1);
-    assert.equal(item.sequenceBlocks[0].exerciseId, exerciseId);
+    const owner = ownerByExerciseId.get(exerciseId);
+    assert.equal(
+      owner.sequenceBlocks.filter((block) => block.exerciseId === exerciseId).length,
+      1,
+    );
   }
   assert.equal(catalog.find((exercise) => exercise.id === 421).sideSequence, "Continuous");
   for (const exerciseId of [248, 394, 427, 468]) {
@@ -2705,7 +2811,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 14);
+  assert.equal(restored.state.version, 15);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -3084,9 +3190,11 @@ test("approved clarity corrections preserve browser memory", () => {
     restored.initialize();
 
     const isSequenceMemberOnly = currentExercise.sequenceBlocks.length === 0;
+    const isUnavailableWithoutMirror = currentExercise.mirrorRelationship ===
+      EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly;
     assert.equal(
       restored.state.selectedExerciseIds[group.id],
-      isSequenceMemberOnly ? undefined : exerciseId,
+      isSequenceMemberOnly || isUnavailableWithoutMirror ? undefined : exerciseId,
     );
     assert.equal(restored.getScore(currentExercise), -3);
   }
@@ -3198,7 +3306,12 @@ test("second clarity corrections preserve earlier browser memory", () => {
       );
       restored.initialize();
 
-      assert.equal(restored.state.selectedExerciseIds[group.id], exerciseId);
+      const owner = currentCatalog.find((item) => item.sequenceBlocks
+        .some((block) => block.exerciseId === exerciseId));
+      assert.equal(
+        restored.state.selectedExerciseIds[group.id],
+        owner.id === exerciseId ? exerciseId : undefined,
+      );
       assert.equal(restored.getScore(currentExercise), -4);
     }
   }
@@ -3396,6 +3509,9 @@ test("reactivated replacement revision drops only changed progress and scores", 
       !changedIdSet.has(exercise.id) && isSelectable(exercise, group)));
   const retainedExercise = catalog.find((exercise) =>
     !changedIdSet.has(exercise.id) && isSelectable(exercise, retainedGroup));
+  const retainedSequenceExerciseIds = [...new Set(
+    retainedExercise.sequenceBlocks.map((block) => block.exerciseId),
+  )];
   const changedSelectionKey = getSelectionKey(changedGroup);
   const retainedSelectionKey = getSelectionKey(retainedGroup);
   const state = createDefaultState();
@@ -3408,7 +3524,10 @@ test("reactivated replacement revision drops only changed progress and scores", 
   state.pendingRestGroupId = changedGroup.id;
   state.pendingRestEndsAtUnixMilliseconds = Date.now() + 15_000;
   state.pendingRestKept = true;
-  state.lastKeptExerciseIds = [changedExercise.id, retainedExercise.id];
+  state.lastKeptExerciseIds = [
+    changedExercise.id,
+    ...retainedSequenceExerciseIds,
+  ];
   for (const exerciseId of changedIds) {
     state.scores[String(exerciseId)] = -4;
   }
@@ -3433,7 +3552,7 @@ test("reactivated replacement revision drops only changed progress and scores", 
   assert.equal(restored.state.scores[String(retainedExercise.id)], -7);
   assert.deepEqual(
     restored.state.lastKeptExerciseIds,
-    [changedExercise.id, retainedExercise.id],
+    [changedExercise.id, ...retainedSequenceExerciseIds],
   );
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
@@ -4049,7 +4168,10 @@ test("deployment migration preserves present keeps and drops missing exercises",
   const state = createDefaultState();
   state.catalogRevision = 12;
   state.selectedExerciseIds[group.id] = present.id;
-  state.lastKeptExerciseIds = [present.id, 999999];
+  state.lastKeptExerciseIds = [
+    ...new Set(present.sequenceBlocks.map((block) => block.exerciseId)),
+    999999,
+  ];
 
   const restored = new WorkoutSession(
     catalog,
@@ -4074,6 +4196,84 @@ test("deployment migration preserves present keeps and drops missing exercises",
       .map((round) => restored.getSelectedExercise(round).id),
     present.sequenceBlocks.map((block) => block.exerciseId),
   );
+});
+
+test("a legacy partial sequence keep is removed instead of promoted", () => {
+  const root = catalog.find((item) => item.id === 223);
+  const memberIds = [...new Set(root.sequenceBlocks.map((block) => block.exerciseId))];
+  assert.ok(memberIds.length > 1);
+  const partialState = createDefaultState();
+  partialState.lastKeptExerciseIds = [memberIds[0]];
+  const partial = new WorkoutSession(catalog, partialState, () => 0);
+
+  partial.initialize();
+
+  assert.deepEqual(partial.state.lastKeptExerciseIds, []);
+
+  const completeState = createDefaultState();
+  completeState.lastKeptExerciseIds = memberIds;
+  const complete = new WorkoutSession(catalog, completeState, () => 0);
+
+  complete.initialize();
+
+  assert.deepEqual(new Set(complete.state.lastKeptExerciseIds), new Set(memberIds));
+});
+
+test("version fourteen progress migrates only when repaired selection stays in its sequence", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    [],
+    10,
+  ));
+  const root = exercises[0];
+  const member = exercise(1_001, groups[0].canonicalGroups[0], [], 10);
+  root.sequenceBlocks = [
+    { ...root.sequenceBlocks[0] },
+    { ...member.sequenceBlocks[0] },
+  ];
+  member.sequenceBlocks = [];
+  const currentCatalog = [...exercises, member];
+  const makeState = (legacyExerciseId) => {
+    const state = createDefaultState();
+    state.version = 14;
+    state.catalogRevision = CURRENT_CATALOG_REVISION;
+    state.activeWorkoutMinutes = 45;
+    state.lastWorkoutMinutes = 45;
+    for (let index = 0; index < groups.length; index += 1) {
+      state.selectedExerciseIds[groups[index].id] = exercises[index].id;
+    }
+    state.selectedExerciseIds[groups[0].id] = legacyExerciseId;
+    state.outcomes[groups[0].id] = "tick";
+    return state;
+  };
+
+  const matching = new WorkoutSession(
+    currentCatalog,
+    makeState(member.id),
+    () => 0,
+  );
+  matching.initialize();
+  const matchingRounds = matching.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === groups[0].id);
+  assert.equal(matching.state.selectedExerciseIds[groups[0].id], root.id);
+  assert.deepEqual(
+    matchingRounds.map((round) => matching.state.outcomes[round.id]),
+    ["neutral", "tick"],
+  );
+
+  const unrelated = new WorkoutSession(
+    currentCatalog,
+    makeState(exercises[1].id),
+    () => 0,
+  );
+  unrelated.initialize();
+  const unrelatedRounds = unrelated.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === groups[0].id);
+  assert.equal(unrelated.state.selectedExerciseIds[groups[0].id], root.id);
+  assert.ok(unrelatedRounds.every((round) =>
+    unrelated.state.outcomes[round.id] === undefined));
 });
 
 test("legacy catalog revision still retires every historical replacement", () => {
@@ -4116,7 +4316,10 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
 
     if (item.directionSequence !== "None") {
       directionIds.push(item.id);
-      const directionSegments = item.sequenceBlocks
+      const owner = catalog.find((candidate) => candidate.sequenceBlocks
+        .some((block) => block.exerciseId === item.id));
+      const directionSegments = owner.sequenceBlocks
+        .filter((block) => block.exerciseId === item.id)
         .map((block) => block.mediaSegment)
         .filter((segment) => segment !== "Full");
       assert.deepEqual(
@@ -4144,7 +4347,12 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
   const multiExerciseSequenceRoots = catalog
     .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
     .map((root) => root.id);
-  assert.deepEqual(multiExerciseSequenceRoots, [214, 223, 288, 414, 617]);
+  assert.deepEqual(multiExerciseSequenceRoots, [
+    96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
+    211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
+    367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 610, 612,
+    617, 742, 784, 834, 845, 910, 948, 996,
+  ]);
   assert.ok(holds.length > 0);
   assert.ok(holds.some((item) => item.presentation === "Still"));
 });

@@ -85,6 +85,101 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void LongWorkoutMuscleBudgetCountsExtraSetBeforeReplacingAChoice()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
+        WorkoutGroup targetGroup = groups[^1];
+        Exercise[] selected = groups
+            .Select((group, index) => Exercise(
+                index + 1,
+                group.CanonicalGroups.Single(),
+                0,
+                index is >= 1 and <= 7 ? [overloadedMuscle] : []))
+            .ToArray();
+        Exercise overloaded = CloneWithMuscularDemand(
+            Exercise(
+                selected[^1].Id,
+                targetGroup.CanonicalGroups.Single(),
+                0,
+                overloadedMuscle),
+            muscularDemand: WorkoutRecoveryPolicy.HardMuscularDemand);
+        selected[^1] = overloaded;
+        Exercise replacement = CloneWithMuscularDemand(
+            Exercise(1_001, targetGroup.CanonicalGroups.Single()),
+            muscularDemand: WorkoutRecoveryPolicy.HardMuscularDemand);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 45,
+            SelectedExerciseIds = groups
+                .Select((group, index) => (
+                    GroupId: group.Id,
+                    ExerciseId: selected[index].Id))
+                .ToDictionary(entry => entry.GroupId, entry => entry.ExerciseId),
+        };
+        var service = new ExerciseSessionService(
+            [.. selected, replacement],
+            new AlwaysZeroRandom());
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        Assert.Equal(replacement.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(0, overloaded.Score);
+        Assert.Equal(0, replacement.Score);
+        Assert.Equal(
+            2,
+            service.GetActiveGroups(state).Count(round =>
+                round.SelectionKey == targetGroup.Id));
+    }
+
+    [Fact]
+    public void MuscleBudgetCountsUnilateralSidesOncePerSet()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
+        WorkoutGroup targetGroup = groups[^1];
+        Exercise[] selected = groups
+            .Select((group, index) => Exercise(
+                index + 1,
+                group.CanonicalGroups.Single(),
+                0,
+                index is >= 1 and <= 6 ? [overloadedMuscle] : []))
+            .ToArray();
+        Exercise unilateral = CloneWithMuscularDemand(
+            Exercise(
+                selected[^1].Id,
+                targetGroup.CanonicalGroups.Single(),
+                0,
+                ExerciseSideSequence.ScreenLeftThenRight,
+                overloadedMuscle),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        selected[^1] = unilateral;
+        Exercise replacement = CloneWithMuscularDemand(
+            Exercise(1_001, targetGroup.CanonicalGroups.Single()),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 45,
+            SelectedExerciseIds = groups
+                .Select((group, index) => (
+                    GroupId: group.Id,
+                    ExerciseId: selected[index].Id))
+                .ToDictionary(entry => entry.GroupId, entry => entry.ExerciseId),
+        };
+        var service = new ExerciseSessionService(
+            [.. selected, replacement],
+            new AlwaysZeroRandom());
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        Assert.Equal(unilateral.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(
+            4,
+            service.GetActiveGroups(state).Count(round =>
+                round.SelectionKey == targetGroup.Id));
+    }
+
+    [Fact]
     public void UnreviewedCatalogCannotSilentlyTreatEnabledModifierAsOff()
     {
         Exercise[] exercises = ThreeGroupCatalog();
@@ -195,7 +290,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(17, state.Version);
+        Assert.Equal(18, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -221,7 +316,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(17, state.Version);
+        Assert.Equal(18, state.Version);
         Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
@@ -812,6 +907,47 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void PartialLegacySequenceKeepIsRemovedInsteadOfPromoted()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise root = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(1, groups[0]),
+            1_001);
+        Exercise member = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(1_001, groups[0]),
+            root.Id);
+        Exercise[] exercises =
+        [
+            root,
+            member,
+            QualifiedForGroup(2, groups[1]),
+            QualifiedForGroup(3, groups[2]),
+        ];
+        var service = new ExerciseSessionService(exercises, new AlwaysZeroRandom());
+        var partial = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastKeptExerciseIds = [root.Id],
+        };
+
+        service.Initialize(partial);
+
+        Assert.Empty(partial.LastKeptExerciseIds);
+
+        var complete = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastKeptExerciseIds = [root.Id, member.Id],
+        };
+
+        service.Initialize(complete);
+
+        Assert.Equal(
+            new[] { root.Id, member.Id }.Order(),
+            complete.LastKeptExerciseIds.Order());
+    }
+
+    [Fact]
     public void IntermediateSequenceBlockHasNoKeepAndRestoresAutomaticContinuation()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
@@ -1018,7 +1154,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(17, state.Version);
+        Assert.Equal(18, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1075,7 +1211,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(17, state.Version);
+        Assert.Equal(18, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -1088,6 +1224,65 @@ public sealed class ExerciseSessionServiceTests
                 round.SequenceBlockIndex == 0);
         Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[migratedLead.Id]);
         Assert.False(state.WorkoutCompleted);
+    }
+
+    [Fact]
+    public void VersionSeventeenProgressMigratesOnlyWithinTheSameRepairedSequence()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise root = CloneWithLinkedSequenceMember(exercises[0], 1_001);
+        Exercise member = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(1_001, groups[0], 10),
+            root.Id);
+        exercises[0] = root;
+        Exercise[] currentCatalog = [.. exercises, member];
+        var service = new ExerciseSessionService(
+            currentCatalog,
+            new AlwaysZeroRandom());
+
+        WorkoutState CreateLegacyState(int legacyExerciseId)
+        {
+            var state = new WorkoutState
+            {
+                Version = 17,
+                CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+                ActiveWorkoutMinutes = 45,
+                LastWorkoutMinutes = 45,
+                SelectedExerciseIds = groups
+                    .Select((group, index) => (
+                        GroupId: group.Id,
+                        ExerciseId: exercises[index].Id))
+                    .ToDictionary(entry => entry.GroupId, entry => entry.ExerciseId),
+                Outcomes = new Dictionary<string, ExerciseOutcome>
+                {
+                    [groups[0].Id] = ExerciseOutcome.Tick,
+                },
+            };
+            state.SelectedExerciseIds[groups[0].Id] = legacyExerciseId;
+            return state;
+        }
+
+        WorkoutState matching = CreateLegacyState(member.Id);
+        service.Initialize(matching);
+        WorkoutGroup[] matchingRounds = service.GetActiveGroups(matching)
+            .Where(round => round.SelectionKey == groups[0].Id)
+            .ToArray();
+        Assert.Equal(root.Id, matching.SelectedExerciseIds[groups[0].Id]);
+        Assert.Equal(
+            [ExerciseOutcome.Neutral, ExerciseOutcome.Tick],
+            matchingRounds.Select(round => matching.Outcomes[round.Id]));
+
+        WorkoutState unrelated = CreateLegacyState(exercises[1].Id);
+        service.Initialize(unrelated);
+        WorkoutGroup[] unrelatedRounds = service.GetActiveGroups(unrelated)
+            .Where(round => round.SelectionKey == groups[0].Id)
+            .ToArray();
+        Assert.Equal(root.Id, unrelated.SelectedExerciseIds[groups[0].Id]);
+        Assert.All(unrelatedRounds, round =>
+            Assert.DoesNotContain(round.Id, unrelated.Outcomes.Keys));
     }
 
     [Fact]
@@ -2290,6 +2485,44 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void SameMuscleSequenceIsRankedByItsHardestPrimaryBlock()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise root = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(1, groups[0]),
+            1_001);
+        Exercise hardMember = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(1_001, groups[0]),
+                root.Id),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        Exercise nonHardKeep = CloneWithMuscularDemand(
+            QualifiedForGroup(1_002, groups[0]),
+            WorkoutRecoveryPolicy.ModerateMuscularDemand);
+        Exercise[] fillers = groups
+            .Skip(1)
+            .Select((group, index) => QualifiedForGroup(index + 2, group))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [root, hardMember, nonHardKeep, .. fillers],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 45,
+            LastKeptExerciseIds = [nonHardKeep.Id],
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = nonHardKeep.Id,
+            },
+        };
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        Assert.Equal(root.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Contains(nonHardKeep.Id, state.LastKeptExerciseIds);
+    }
+
+    [Fact]
     public void FreshHardKeepGetsAnOpportunityDespiteLowerSavedScore()
     {
         DateTimeOffset now = new(2026, 8, 22, 12, 0, 0, TimeSpan.Zero);
@@ -2839,7 +3072,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(17, state.Version);
+        Assert.Equal(18, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(

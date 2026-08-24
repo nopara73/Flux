@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 17;
+    public int Version { get; set; } = 18;
 
     public int CatalogRevision { get; set; }
 
@@ -25,7 +25,8 @@ public sealed class WorkoutState
     public Dictionary<string, int> ActiveSetCountsBySelectionGroupId { get; set; } = [];
 
     // Version 16 migration inputs only. Atomic sequences replace both legacy
-    // direction-partner allocation and split-side timing in version 17.
+    // direction-partner allocation and split-side timing in version 17; the
+    // fields remain readable so in-progress upgrades can still be recovered.
     public Dictionary<string, int> ActiveDirectionPartnerExerciseIds { get; set; } = [];
 
     public HashSet<string> ActiveFullSideRoundIds { get; set; } = [];

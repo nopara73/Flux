@@ -18,6 +18,7 @@
         '253' = @(253, 267)      # Double calf raise
         '256' = @(256, 845)      # Overhead side stretch
         '261' = @(261, 677)      # Bent-elbow reverse fly
+        '514' = @(514, 521)      # Symmetric smile / mirror smiling practice
         '755' = @(755, 756)      # Outward wrist circles
     }
 }

@@ -254,6 +254,27 @@ foreach ($entry in $exerciseSequenceReview.Sequences.GetEnumerator()) {
     $sequenceMembersByRootId[$rootId] = $memberIds
 }
 
+$standaloneExerciseIds = @(
+    $exerciseSequenceReview.StandaloneIds |
+        ForEach-Object { [int]$_ })
+$invalidStandaloneExerciseIds = @(
+    $standaloneExerciseIds | Where-Object {
+        $_ -notin $retainedExerciseIds -or
+        $sequenceRootByExerciseId.ContainsKey($_)
+    })
+$reviewedSchedulingExerciseIds = @(
+    @($sequenceRootByExerciseId.Keys | ForEach-Object { [int]$_ }) +
+        $standaloneExerciseIds |
+        Sort-Object -Unique)
+if ($standaloneExerciseIds.Count -ne
+        @($standaloneExerciseIds | Sort-Object -Unique).Count -or
+    $invalidStandaloneExerciseIds.Count -gt 0 -or
+    @(Compare-Object `
+            @($retainedExerciseIds | Sort-Object) `
+            @($reviewedSchedulingExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one explicit mandatory-sequence or standalone scheduling decision.'
+}
+
 $replacementExerciseIds = @(
     $catalogExerciseReplacements.Keys | ForEach-Object { [int]$_ } |
         Sort-Object -Unique)

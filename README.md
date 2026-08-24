@@ -107,10 +107,12 @@ each scheduled primary association counts as 1 unit and each secondary
 association as 0.5.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
 affected muscle; these adjustments exist only while completing that lineup and
-never alter saved scores. Every scheduled 45-second block counts once, including
-opposite sides, opposite directions, integration blocks, and repeated sets. A
-muscle is never counted twice merely because it appears more than once in one
-block's metadata.
+never alter saved scores. Each distinct exercise identity counts once per
+sequence set: two side or direction blocks belonging to the same exercise do
+not double-count bilateral muscle work, while a genuinely different linked
+exercise does. Repeating the complete sequence in another set counts the work
+again. A muscle is never counted twice merely because it appears more than once
+in one exercise's metadata.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -180,7 +182,7 @@ remove at least five exercises or 5% of the previous candidate pool, whichever
 is larger. Mirror must actually prefer at least that many compatible exercises
 for compact and tall equipment independently. Each modifier must affect at
 least 10% of the canonical buckets, both alone and with its paired modifier
-enabled. The current 58 `BenefitsGreatly` assignments are an audited result,
+enabled. The current 71 `BenefitsGreatly` assignments are an audited result,
 not a target or ceiling. Ordinary form checking never qualifies, and
 relationship labels cannot be promoted to satisfy coverage or materiality
 checks.
@@ -208,6 +210,16 @@ Sequence structure is derived from the demonstrated movement:
 - Distinct established exercises that are useful only together may be linked in
   one sequence.
 
+Every retained catalog record has an explicit scheduling verdict in
+`tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
+sequence or is deliberately listed as standalone. Generation rejects implicit
+standalone defaults, orphans, overlaps, and hidden members used as roots. The
+current semantic audit yields 393 schedulable roots from 448 exercise records:
+243 one-block, 107 two-block, 26 three-block, 16 four-block, and one five-block
+root. Forty-seven roots couple multiple named exercise records, including 17
+exact alternating integrations. These counts are pinned audit results, not
+quotas; an awkward block must not be added merely to increase a bucket.
+
 There is no duration-based sequence exclusion. The solver counts every block
 against exact workout capacity. In a 30-minute-or-shorter workout, the number of
 base groups equals the number of available blocks, so a two-block same-muscle
@@ -224,6 +236,11 @@ balancing set counts where an exact fit permits. The allocation is persisted whe
 the workout starts, so reopening the app cannot silently change the remaining
 session. Recovery preferences apply between sessions, not when repeating a
 selected sequence within the current one.
+
+When several members of a sequence share the primary muscle for a workout slot,
+selection and recovery priority use the hardest relevant member rather than
+silently inheriting the root record's demand. Completion still records recovery
+from the block actually performed.
 
 ## What a workout looks like
 
@@ -268,7 +285,7 @@ exercise neutral.
 
 ## Exercise catalog
 
-Flux ships with 431 reviewed movements spanning compound strength and
+Flux ships with 448 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.
@@ -311,6 +328,9 @@ Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery
 journal so an interruption between workout-state and SQLite writes cannot lose
 or double-apply a rejection.
+An older keep for only one member of a newly coupled sequence is discarded
+rather than being promoted into a keep for work the user never chose; a complete
+sequence keep preserves every member.
 
 Packaged media is content-addressed with SHA-256 fingerprints. Android copies
 videos atomically into a versioned cache, and the web build fingerprints both

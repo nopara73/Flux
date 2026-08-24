@@ -40,9 +40,9 @@ public sealed class CatalogInvariantTests
                 Exercise.MinimumMuscularDemand,
                 Exercise.MaximumMuscularDemand);
         });
-        Assert.Equal(116, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(186, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(129, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(117, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(197, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(134, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
             [104] = [104, 136, 626],
@@ -59,6 +59,7 @@ public sealed class CatalogInvariantTests
             [253] = [253, 267],
             [256] = [256, 845],
             [261] = [261, 677],
+            [514] = [514, 521],
             [755] = [755, 756],
         };
         Dictionary<int, int[]> actualSessionMovements = exercises
@@ -80,12 +81,12 @@ public sealed class CatalogInvariantTests
         Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
-            58,
+            71,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            363,
+            367,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
         Assert.Equal(
@@ -98,13 +99,13 @@ public sealed class CatalogInvariantTests
         Assert.Equal(5, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(22, exercises.Count(exercise =>
+        Assert.Equal(27, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.UpperBody));
-        Assert.Equal(36, exercises.Count(exercise =>
+        Assert.Equal(44, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(363, exercises.Count(exercise =>
+        Assert.Equal(367, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.None));
         Assert.DoesNotContain(exercises, exercise => exercise.Id == 90);
@@ -178,14 +179,24 @@ public sealed class CatalogInvariantTests
                 $"{deficiency.MaximumDistinctExerciseCount}/" +
                 $"{deficiency.RequiredDistinctExerciseCount} distinct exercises")));
         var profileService = new ExerciseSessionService(exercises, new Random(1));
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
+        IReadOnlyDictionary<int, Exercise> sequenceRootByExerciseId = exercises
+            .Where(root => root.SequenceBlocks.Length > 0)
+            .SelectMany(root => root.SequenceBlocks
+                .Select(block => (block.ExerciseId, Root: root)))
+            .DistinctBy(entry => entry.ExerciseId)
+            .ToDictionary(entry => entry.ExerciseId, entry => entry.Root);
         foreach (WorkoutModifiers profile in WorkoutModifierPolicy.ValidationProfiles)
         {
             foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
             {
                 var profileState = new WorkoutState();
                 profileService.StartWorkout(profileState, minutes, profile);
-                Exercise[] baseSelections = profileService
+                WorkoutGroup[] activeGroups = profileService
                     .GetActiveGroups(profileState)
+                    .ToArray();
+                Exercise[] baseSelections = activeGroups
                     .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
                     .Select(rounds => profileService.GetSelectedExercise(
                         profileState,
@@ -198,17 +209,29 @@ public sealed class CatalogInvariantTests
                         .Distinct()
                         .Count());
                 Assert.All(profileService.GetActiveGroups(profileState), group =>
-                    Assert.True(WorkoutModifierPolicy.IsSelectable(
+                    Assert.True(WorkoutModifierPolicy.IsCompatible(
                         profileService.GetSelectedExercise(profileState, group),
-                        group,
                         profile)));
-                if (minutes <= 30)
-                {
-                    Assert.All(profileService.GetActiveGroups(profileState), group =>
-                        Assert.Single(
-                            profileService.GetSelectedExercise(profileState, group)
-                                .SequenceBlocks));
-                }
+                IReadOnlyList<WorkoutGroup> resolutionGroups =
+                    MassGroupingTaxonomy.GetResolution(
+                        minutes > 30 ? 30 : minutes).Groups;
+                Assert.All(
+                    activeGroups.GroupBy(group => group.SelectionKey, StringComparer.Ordinal),
+                    rounds =>
+                    {
+                        Exercise selectedMember = profileService.GetSelectedExercise(
+                            profileState,
+                            rounds.First());
+                        Exercise root = sequenceRootByExerciseId[selectedMember.Id];
+                        Assert.Contains(
+                            WorkoutSequencePolicy.GetPlacementOptions(
+                                root,
+                                exercisesById,
+                                resolutionGroups),
+                            placement => placement.Any(group =>
+                                group.Id == rounds.Key));
+                    });
+                Assert.Equal(minutes, activeGroups.Length);
             }
         }
         WorkoutModifiers allModifiers = WorkoutModifiers.Insect |
@@ -219,11 +242,31 @@ public sealed class CatalogInvariantTests
             var profileState = new WorkoutState();
             profileService.StartWorkout(profileState, minutes, allModifiers);
             Assert.Equal(allModifiers, profileState.ActiveWorkoutModifiers);
-            Assert.All(profileService.GetActiveGroups(profileState), group =>
-                Assert.True(WorkoutModifierPolicy.IsSelectable(
+            WorkoutGroup[] activeGroups = profileService
+                .GetActiveGroups(profileState)
+                .ToArray();
+            Assert.All(activeGroups, group =>
+                Assert.True(WorkoutModifierPolicy.IsCompatible(
                     profileService.GetSelectedExercise(profileState, group),
-                    group,
                     allModifiers)));
+            IReadOnlyList<WorkoutGroup> resolutionGroups =
+                MassGroupingTaxonomy.GetResolution(
+                    minutes > 30 ? 30 : minutes).Groups;
+            Assert.All(
+                activeGroups.GroupBy(group => group.SelectionKey, StringComparer.Ordinal),
+                rounds =>
+                {
+                    Exercise selectedMember = profileService.GetSelectedExercise(
+                        profileState,
+                        rounds.First());
+                    Exercise root = sequenceRootByExerciseId[selectedMember.Id];
+                    Assert.Contains(
+                        WorkoutSequencePolicy.GetPlacementOptions(
+                            root,
+                            exercisesById,
+                            resolutionGroups),
+                        placement => placement.Any(group => group.Id == rounds.Key));
+                });
         }
         Exercise[] breathingExercises = exercises
             .Where(exercise =>
@@ -261,7 +304,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(127, alternatingExercises.Length);
+        Assert.Equal(144, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -293,25 +336,100 @@ public sealed class CatalogInvariantTests
                     .DirectionSequence));
         Dictionary<int, int[]> auditedMultiMemberSequences = new()
         {
-            [214] = [214, 214, 755, 755],
-            [223] = [223, 223, 756, 756],
-            [288] = [288, 288, 758, 758],
-            [414] = [414, 414, 418],
-            [617] = [617, 617, 620, 620],
+            [96] = [96, 540],
+            [104] = [104, 626],
+            [113] = [113, 135],
+            [115] = [115, 532],
+            [120] = [120, 184],
+            [123] = [123, 117, 199],
+            [143] = [143, 538],
+            [160] = [160, 533],
+            [177] = [177, 186],
+            [178] = [178, 535],
+            [179] = [179, 539],
+            [180] = [180, 534],
+            [181] = [181, 536],
+            [211] = [211, 213],
+            [214] = [214, 755],
+            [220] = [220, 543],
+            [223] = [223, 756],
+            [252] = [252, 253, 254, 267],
+            [261] = [261, 677],
+            [264] = [264, 406],
+            [285] = [285, 541],
+            [286] = [286, 545],
+            [288] = [288, 758],
+            [292] = [292, 542],
+            [327] = [327, 546],
+            [329] = [329, 531],
+            [367] = [367, 529],
+            [392] = [392, 399, 400],
+            [393] = [393, 537],
+            [414] = [414, 418],
+            [415] = [415, 416],
+            [420] = [420, 421, 426],
+            [459] = [459, 468, 469],
+            [465] = [465, 445],
+            [491] = [491, 501],
+            [500] = [500, 505, 506],
+            [502] = [502, 503],
+            [610] = [610, 232],
+            [612] = [612, 530],
+            [617] = [617, 620],
+            [742] = [742, 338],
+            [784] = [784, 969, 1000],
+            [834] = [834, 914],
+            [845] = [845, 256],
+            [910] = [910, 962],
+            [948] = [948, 949],
+            [996] = [996, 997],
         };
+        int[] actualMultiMemberRoots = exercises
+            .Where(root => root.SequenceBlocks
+                .Select(block => block.ExerciseId)
+                .Distinct()
+                .Count() > 1)
+            .Select(root => root.Id)
+            .Order()
+            .ToArray();
+        Assert.Equal(auditedMultiMemberSequences.Keys.Order(), actualMultiMemberRoots);
         Assert.All(auditedMultiMemberSequences, expected =>
         {
             Exercise root = exercises.Single(exercise => exercise.Id == expected.Key);
+            int[] expectedBlocks = expected.Value
+                .SelectMany(memberId =>
+                {
+                    Exercise member = exercises.Single(exercise => exercise.Id == memberId);
+                    int sideBlocks = member.SideSequence.UsesTimedSides() ? 2 : 1;
+                    int directionBlocks = member.DirectionSequence ==
+                            ExerciseDirectionSequence.None
+                        ? 1
+                        : 2;
+                    return Enumerable.Repeat(memberId, sideBlocks * directionBlocks);
+                })
+                .ToArray();
             Assert.Equal(
-                expected.Value,
+                expectedBlocks,
                 root.SequenceBlocks.Select(block => block.ExerciseId).ToArray());
-            Assert.All(
-                expected.Value.Distinct(),
-                memberId => Assert.Equal(
-                    root.PrimaryCanonicalGroup,
-                    exercises.Single(exercise => exercise.Id == memberId)
-                        .PrimaryCanonicalGroup));
         });
+        Dictionary<int, int> expectedSequenceBlockDistribution = new()
+        {
+            [1] = 243,
+            [2] = 107,
+            [3] = 26,
+            [4] = 16,
+            [5] = 1,
+        };
+        Dictionary<int, int> actualSequenceBlockDistribution = exercises
+            .Where(exercise => exercise.SequenceBlocks.Length > 0)
+            .GroupBy(exercise => exercise.SequenceBlocks.Length)
+            .ToDictionary(group => group.Key, group => group.Count());
+        Assert.Equal(
+            expectedSequenceBlockDistribution.Keys.Order(),
+            actualSequenceBlockDistribution.Keys.Order());
+        Assert.All(expectedSequenceBlockDistribution, expected => Assert.Equal(
+            expected.Value,
+            actualSequenceBlockDistribution[expected.Key]));
         var sequenceOwners = exercises
             .Where(exercise => exercise.SequenceBlocks.Length > 0)
             .SelectMany(root => root.SequenceBlocks
