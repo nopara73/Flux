@@ -331,8 +331,15 @@ Run the Android app on an authorized USB-debugging device:
 
 ```powershell
 adb devices
-dotnet build .\Flux\Flux.csproj -t:Run -f net10.0-android
+dotnet build .\Flux\Flux.csproj -c Debug -f net10.0-android
+adb install -r .\Flux\bin\Debug\net10.0-android\com.local.flux-Signed.apk
+adb shell run-as com.local.flux pwd
 ```
+
+The connected development phone must always receive this debuggable build. Use
+an in-place replacement to preserve its saved workout state; never uninstall or
+clear the package during deployment. A successful `run-as` check verifies that
+the installed build is actually debuggable.
 
 Create a release APK:
 

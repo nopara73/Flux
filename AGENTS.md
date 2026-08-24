@@ -9,6 +9,12 @@
 - Before considering a shared change complete, run the Android tests, the web tests, and the production web build. If either platform cannot be synchronized and validated, report the work as incomplete and do not publish it.
 - Treat `https://nopara73.github.io/Flux/` as the public web deployment; localhost URLs are previews only. After publishing, verify the completed GitHub Pages run and confirm that the public URL serves the current catalog and hashed assets before reporting the release as deployed.
 
+# Physical Android device installs
+
+- Always install a debuggable `Debug` build on the user's connected phone. Release APKs may be built as distribution artifacts, but must not be installed on that phone.
+- Replace the existing package in place so persisted workout state survives. Never uninstall the app or clear its data as part of deployment.
+- Before switching an existing installation to Debug, verify that the installed APK and Debug APK have the same signing certificate. After installation, verify that `run-as com.local.flux` succeeds; an install is not complete merely because `adb install` returned success.
+
 # Exercise selection guidelines
 
 - Select real, established, worthwhile exercises first; never invent movements, filler, or artificial variations.
