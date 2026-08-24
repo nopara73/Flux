@@ -11,7 +11,8 @@ internal static class ExerciseDatabaseMigrationSql
             equipment, silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
             direction_partner_exercise_id,
-            insect_compatibility, mirror_relationship, mirror_coverage)
+            insect_compatibility, mirror_relationship, mirror_coverage,
+            session_movement_id)
         SELECT
             id, name, video, practice, motion_profile, score, 0,
             only_feet_touch_ground, shoe_agnostic,
@@ -19,7 +20,7 @@ internal static class ExerciseDatabaseMigrationSql
                 THEN max_space_meters ELSE 2 END,
             'None', silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence, 0,
-            insect_compatibility, 'Unreviewed', 'None'
+            insect_compatibility, 'Unreviewed', 'None', 0
         FROM exercises
         """;
 }

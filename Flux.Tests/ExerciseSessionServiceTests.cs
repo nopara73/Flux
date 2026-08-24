@@ -381,6 +381,39 @@ public sealed class ExerciseSessionServiceTests
             Assert.Contains(pair.Second.PrimaryCanonicalGroup, pair.First.CanonicalGroups));
     }
 
+    [Fact]
+    public void GlobalLineupUsesAtMostOneAliasOfTheSameSessionMovement()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise root = CloneWithMuscularDemand(
+            FullyCoveredExercise(1, groups[0].CanonicalGroups.First(), 100),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise alias = CloneWithMuscularDemand(
+            FullyCoveredExercise(2, groups[0].CanonicalGroups.First(), 100),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise middle = QualifiedForGroup(3, groups[1]);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [root, alias, middle, last],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Exercise[] selected = groups
+            .Select(group => service.GetSelectedExercise(state, group))
+            .ToArray();
+        Assert.Single(selected, exercise => exercise.Id is 1 or 2);
+        Assert.Equal(
+            selected.Length,
+            selected
+                .Select(WorkoutModifierPolicy.GetSessionMovementId)
+                .Distinct()
+                .Count());
+    }
+
     [Theory]
     [InlineData(45, 1, 2)]
     [InlineData(60, 2, 2)]
@@ -654,6 +687,36 @@ public sealed class ExerciseSessionServiceTests
             Assert.Equal(
                 otherSelections[group.Id],
                 service.GetSelectedExercise(state, group).Id));
+    }
+
+    [Fact]
+    public void ShuffleDoesNotOfferAnotherAliasOfTheRejectedMovement()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise current = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0], score: 100),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise alias = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0], score: 50),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise alternative = QualifiedForGroup(3, groups[0]);
+        Exercise middle = QualifiedForGroup(4, groups[1]);
+        Exercise last = QualifiedForGroup(5, groups[2]);
+        var service = new ExerciseSessionService(
+            [current, alias, alternative, middle, last],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup currentGroup = service.GetActiveGroups(state)[0];
+
+        ShuffledExerciseResult? result =
+            service.ShuffleNextExercise(state, currentGroup);
+
+        Assert.NotNull(result);
+        Assert.Equal(current.Id, result.RejectedExercise.Id);
+        Assert.Equal(alternative.Id, result.ReplacementExercise.Id);
     }
 
     [Fact]
@@ -2018,6 +2081,49 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void InitializeRepairsSavedAliasesAcrossDifferentMuscleSlots()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise root = CloneWithMuscularDemand(
+            FullyCoveredExercise(1, groups[0].CanonicalGroups.First(), 20),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise alias = CloneWithMuscularDemand(
+            FullyCoveredExercise(2, groups[0].CanonicalGroups.First(), 20),
+            muscularDemand: 0,
+            sessionMovementId: 1);
+        Exercise[] fillers = groups
+            .Select((group, index) => QualifiedForGroup(10 + index, group))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [root, alias, .. fillers],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState
+        {
+            ActiveWorkoutMinutes = 3,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = root.Id,
+                [groups[1].Id] = alias.Id,
+                [groups[2].Id] = fillers[2].Id,
+            },
+        };
+
+        service.Initialize(state);
+
+        Exercise[] selected = groups
+            .Select(group => service.GetSelectedExercise(state, group))
+            .ToArray();
+        Assert.Single(selected, exercise => exercise.Id is 1 or 2);
+        Assert.Equal(
+            selected.Length,
+            selected
+                .Select(WorkoutModifierPolicy.GetSessionMovementId)
+                .Distinct()
+                .Count());
+    }
+
+    [Fact]
     public void InitializeUsesGlobalMatchingWhenPreservingASavedExerciseWouldDeadEnd()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -2989,6 +3095,7 @@ public sealed class ExerciseSessionServiceTests
             SideSequence = source.SideSequence,
             DirectionSequence = source.DirectionSequence,
             DirectionPartnerExerciseId = directionPartnerExerciseId,
+            SessionMovementId = source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
@@ -3004,7 +3111,8 @@ public sealed class ExerciseSessionServiceTests
 
     private static Exercise CloneWithMuscularDemand(
         Exercise source,
-        int muscularDemand)
+        int muscularDemand,
+        int? sessionMovementId = null)
     {
         return new Exercise
         {
@@ -3022,6 +3130,7 @@ public sealed class ExerciseSessionServiceTests
             SideSequence = source.SideSequence,
             DirectionSequence = source.DirectionSequence,
             DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
+            SessionMovementId = sessionMovementId ?? source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,

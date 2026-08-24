@@ -228,6 +228,25 @@ test("web and mobile persist one combined duration and modifier selection contex
     sessionService,
     /ChooseBestDistinctLineup\([\s\S]*IsSelectable\(exercise, group, modifiers\)/,
   );
+  assert.match(exerciseModel, /int SessionMovementId/);
+  assert.match(
+    modifierPolicy,
+    /GetSessionMovementId[\s\S]*SessionMovementId > 0[\s\S]*exercise\.Id/,
+  );
+  assert.match(
+    modifierPolicy,
+    /GetMaximumDistinctLineupSize[\s\S]*Select\(GetSessionMovementId\)[\s\S]*TryAssignDistinctMovement/,
+  );
+  assert.match(
+    sessionService,
+    /movementAllowed[\s\S]*GetSessionMovementId[\s\S]*SolveMaximumWeightAssignment/,
+  );
+  assert.match(
+    workoutModule,
+    /movementAllowed[\s\S]*getSessionMovementId[\s\S]*solveMaximumWeightAssignment/,
+  );
+  assert.equal((sessionService.match(/unavailableMovementIds/g) ?? []).length, 4);
+  assert.equal((workoutModule.match(/unavailableMovementIds/g) ?? []).length, 4);
   assert.match(
     modifierPolicy,
     /WorkoutCoveragePolicy\.IsSelectable\(exercise, group\)[\s\S]*IsCompatible\(exercise, profile\)/,
@@ -401,10 +420,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*64/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*66/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+63\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+65\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(
@@ -415,6 +434,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(exerciseDatabase, /equipment IN \('None', 'Mirror'\)/);
   assert.match(exerciseDatabase, /mirror_relationship TEXT NOT NULL/);
   assert.match(exerciseDatabase, /mirror_coverage TEXT NOT NULL/);
+  assert.match(
+    exerciseDatabase,
+    /session_movement_id INTEGER NOT NULL DEFAULT 0[\s\S]*CHECK \(session_movement_id >= 0\)/,
+  );
+  assert.match(exerciseDatabase, /values\.Put\("session_movement_id"/);
   assert.match(
     exerciseDatabase,
     /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead/,

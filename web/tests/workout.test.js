@@ -55,12 +55,14 @@ import {
   getLastMeaningfulWorkUnixMilliseconds,
   getMuscleBudgetTemporaryDownvoteHalfUnits,
   getSelectionKey,
+  getSessionMovementId,
   hasReviewedMuscularDemand,
   isModerateExerciseRecovering,
   isPrimaryMuscleInModerateRecovery,
   isPrimaryMuscleRecovering,
   isSelectable,
   isSelectableForWorkoutProfile,
+  isSessionMovementMetadataValid,
   isCompatibleWithWorkoutModifiers,
   isModifierMetadataComplete,
   isMirrorPreferred,
@@ -590,6 +592,30 @@ test("mirror category floor requires five in every relationship and coverage cel
     matchingExerciseCount: 4,
     requiredExerciseCount: MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   }]);
+});
+
+test("mirror category floor does not double-count movement aliases", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const exercises = Array.from({ length: 5 }, (_, index) => ({
+    ...exercise(
+      index + 1,
+      primary,
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+      0,
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+      EXERCISE_MIRROR_COVERAGE.UpperBody,
+    ),
+    sessionMovementId: index < 2 ? 1 : 0,
+  }));
+
+  const deficiency = findMirrorCategoryDeficiencies(exercises).find((result) =>
+    result.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
+    result.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody);
+
+  assert.equal(deficiency.matchingExerciseCount, 4);
 });
 
 test("mirror metadata is complete only when relationship matches equipment", () => {
@@ -1142,6 +1168,72 @@ test("distinct-lineup matching detects a Hall deficit after modifier filtering",
   );
 });
 
+test("distinct-lineup capacity counts aliases as one session movement", () => {
+  const groups = [
+    { id: "a", displayName: "A", canonicalGroups: ["A"] },
+    { id: "b", displayName: "B", canonicalGroups: ["B"] },
+    { id: "c", displayName: "C", canonicalGroups: ["C"] },
+  ];
+  const root = {
+    ...exercise(1, "A", ["B", "C"], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sessionMovementId: 1,
+  };
+  const alias = {
+    ...exercise(2, "A", ["B", "C"], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    sessionMovementId: 1,
+  };
+  const lastOnly = exercise(
+    3,
+    "C",
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+
+  assert.equal(
+    getMaximumDistinctLineupSize(
+      [root, alias, lastOnly],
+      groups,
+      WORKOUT_MODIFIERS.Insect,
+    ),
+    2,
+  );
+});
+
+test("session movement metadata requires an explicit anatomically related root family", () => {
+  const root = {
+    ...exercise(1, "A", [], 0),
+    sessionMovementId: 1,
+  };
+  const alias = {
+    ...exercise(2, "A", [], 0),
+    sessionMovementId: 1,
+  };
+
+  assert.equal(isSessionMovementMetadataValid([root, alias]), true);
+  assert.equal(isSessionMovementMetadataValid([root]), false);
+  assert.equal(isSessionMovementMetadataValid([alias]), false);
+  assert.equal(isSessionMovementMetadataValid([
+    root,
+    {
+      ...alias,
+      primaryCanonicalGroup: "B",
+      secondaryCanonicalGroups: ["A"],
+    },
+  ]), true);
+  assert.equal(isSessionMovementMetadataValid([
+    root,
+    {
+      ...alias,
+      primaryCanonicalGroup: "B",
+      secondaryCanonicalGroups: [],
+    },
+  ]), false);
+  assert.equal(isSessionMovementMetadataValid([
+    { ...exercise(3, "A", [], 0), sessionMovementId: -1 },
+  ]), false);
+});
+
 test("lineup repair reroutes a saved exercise when preserving it would dead-end", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const allCanonicalGroups = RESOLUTIONS.get(30).groups
@@ -1177,6 +1269,58 @@ test("lineup repair reroutes a saved exercise when preserving it would dead-end"
   assert.equal(session.state.selectedExerciseIds[groups[0].id], firstOnly.id);
   assert.equal(session.state.selectedExerciseIds[groups[1].id], shared.id);
   assert.equal(session.state.selectedExerciseIds[groups[2].id], lastOnly.id);
+});
+
+test("global lineup and repair allow only one alias of a session movement", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const allCanonicalGroups = RESOLUTIONS.get(30).groups
+    .flatMap((group) => group.canonicalGroups);
+  const root = {
+    ...exercise(1, allCanonicalGroups[0], allCanonicalGroups.slice(1), 100),
+    sessionMovementId: 1,
+  };
+  const alias = {
+    ...exercise(2, allCanonicalGroups[0], allCanonicalGroups.slice(1), 100),
+    sessionMovementId: 1,
+  };
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const exercises = [root, alias, middle, last];
+  const freshSession = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+  );
+
+  freshSession.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  let selected = groups.map((group) => freshSession.getSelectedExercise(group));
+  assert.equal(selected.filter((item) => item.id === 1 || item.id === 2).length, 1);
+  assert.equal(new Set(selected.map(getSessionMovementId)).size, selected.length);
+
+  const savedState = createDefaultState();
+  savedState.activeWorkoutMinutes = 3;
+  savedState.selectedExerciseIds = {
+    [groups[0].id]: root.id,
+    [groups[1].id]: alias.id,
+    [groups[2].id]: last.id,
+  };
+  const restoredSession = new WorkoutSession(exercises, savedState, () => 0);
+  restoredSession.repairActiveLineup();
+
+  selected = groups.map((group) => restoredSession.getSelectedExercise(group));
+  assert.equal(selected.filter((item) => item.id === 1 || item.id === 2).length, 1);
+  assert.equal(new Set(selected.map(getSessionMovementId)).size, selected.length);
 });
 
 test("carrying keeps maximizes kept count across the whole lineup", () => {
@@ -1840,6 +1984,35 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(catalog.length, 431);
   assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 431);
   assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 431);
+  assert.equal(isSessionMovementMetadataValid(catalog), true);
+  const actualSessionMovements = {};
+  for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
+    actualSessionMovements[exercise.sessionMovementId] ??= [];
+    actualSessionMovements[exercise.sessionMovementId].push(exercise.id);
+  }
+  for (const exerciseIds of Object.values(actualSessionMovements)) {
+    exerciseIds.sort((left, right) => left - right);
+  }
+  assert.deepEqual(
+    actualSessionMovements,
+    {
+      104: [104, 136, 626],
+      113: [113, 135],
+      115: [115, 997],
+      117: [117, 123],
+      120: [120, 184],
+      124: [124, 636],
+      125: [125, 973],
+      159: [159, 649],
+      177: [177, 186],
+      214: [214, 223],
+      231: [231, 685],
+      253: [253, 267],
+      256: [256, 845],
+      261: [261, 677],
+      755: [755, 756],
+    },
+  );
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -1891,6 +2064,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
       .map((group) => session.getSelectedExercise(group));
     assert.equal(selected.length, minutes);
     assert.equal(new Set(selected.map((exercise) => exercise.id)).size, minutes);
+    assert.equal(new Set(selected.map(getSessionMovementId)).size, minutes);
   }
 
   for (const minutes of [45, 60, 90]) {
@@ -1899,6 +2073,9 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     const selected = session
       .getActiveGroups()
       .map((group) => session.getSelectedExercise(group));
+    const baseSelections = session.getSelectionGroups()
+      .map((group) => session.getSelectedExercise(group));
+    assert.equal(new Set(baseSelections.map(getSessionMovementId)).size, 30);
     assert.equal(
       session.getActiveGroups().reduce(
         (total, group) => total + (group.usesFullSideTiming ? 2 : 1),
@@ -2209,6 +2386,57 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
     .every((item) => item.score === originalScores.get(item.id)));
   assert.ok(activeGroups.slice(1).every((group) =>
     session.getSelectedExercise(group).id === otherSelections.get(group.id)));
+});
+
+test("shuffle does not offer another alias of the rejected movement", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const current = {
+    ...exercise(
+      1,
+      groups[0].canonicalGroups[0],
+      groups[0].canonicalGroups.slice(1),
+      100,
+    ),
+    sessionMovementId: 1,
+  };
+  const alias = {
+    ...exercise(
+      2,
+      groups[0].canonicalGroups[0],
+      groups[0].canonicalGroups.slice(1),
+      50,
+    ),
+    sessionMovementId: 1,
+  };
+  const alternative = exercise(
+    3,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+  );
+  const middle = exercise(
+    4,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    5,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const session = new WorkoutSession(
+    [current, alias, alternative, middle, last],
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  const result = session.shuffleNextExercise(session.getActiveGroups()[0]);
+
+  assert.equal(result.rejectedExercise.id, current.id);
+  assert.equal(result.replacementExercise.id, alternative.id);
 });
 
 test("shuffle visits every eligible alternative without repeating", () => {

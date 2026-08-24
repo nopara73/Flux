@@ -848,11 +848,19 @@ public sealed class ExerciseSessionService
                     state.ActiveWorkoutModifiers)))
             .Where(exerciseId => exerciseId > 0)
             .ToHashSet();
+        HashSet<int> unavailableMovementIds = unavailableExerciseIds
+            .Where(_exercisesById.ContainsKey)
+            .Select(exerciseId => WorkoutModifierPolicy.GetSessionMovementId(
+                _exercisesById[exerciseId]))
+            .Append(WorkoutModifierPolicy.GetSessionMovementId(currentExercise))
+            .ToHashSet();
         var candidates = new List<ShuffleCandidate>();
         foreach (Exercise exercise in _exercises.Where(exercise =>
                      exercise.Id != currentExerciseId &&
                      !state.NextWorkoutExcludedExerciseIds.Contains(exercise.Id) &&
                      !unavailableExerciseIds.Contains(exercise.Id) &&
+                     !unavailableMovementIds.Contains(
+                         WorkoutModifierPolicy.GetSessionMovementId(exercise)) &&
                      IsWorkoutSelectionCandidate(
                          state,
                          exercise,
@@ -972,11 +980,6 @@ public sealed class ExerciseSessionService
                     exercise.Id,
                     int.MaxValue))
                 .ToList();
-        }
-
-        if (candidates.Count < groups.Count)
-        {
-            throw CreateDistinctLineupException(groups, candidates.Count);
         }
 
         int[] orderedScores = candidates
@@ -1128,22 +1131,75 @@ public sealed class ExerciseSessionService
             }
         }
 
-        int[] assignedCandidateIndexes = SolveMaximumWeightAssignment(
-            utilities,
-            allowed,
+        int[] movementIds = candidates
+            .Select(WorkoutModifierPolicy.GetSessionMovementId)
+            .Distinct()
+            .ToArray();
+        if (movementIds.Length < groups.Count)
+        {
+            throw CreateDistinctLineupException(groups, movementIds.Length);
+        }
+
+        Dictionary<int, int> movementIndexes = movementIds
+            .Select((movementId, index) => (movementId, index))
+            .ToDictionary(entry => entry.movementId, entry => entry.index);
+        var movementAllowed = new bool[groups.Count, movementIds.Length];
+        var movementUtilities = new BigInteger[groups.Count, movementIds.Length];
+        var candidateIndexesByGroupAndMovement = new int[
+            groups.Count,
+            movementIds.Length];
+        for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
+        {
+            for (int movementIndex = 0;
+                 movementIndex < movementIds.Length;
+                 movementIndex++)
+            {
+                candidateIndexesByGroupAndMovement[groupIndex, movementIndex] = -1;
+            }
+
+            for (int candidateIndex = 0;
+                 candidateIndex < candidates.Count;
+                 candidateIndex++)
+            {
+                if (!allowed[groupIndex, candidateIndex])
+                {
+                    continue;
+                }
+
+                int movementIndex = movementIndexes[
+                    WorkoutModifierPolicy.GetSessionMovementId(
+                        candidates[candidateIndex])];
+                if (!movementAllowed[groupIndex, movementIndex] ||
+                    utilities[groupIndex, candidateIndex] >
+                        movementUtilities[groupIndex, movementIndex])
+                {
+                    movementAllowed[groupIndex, movementIndex] = true;
+                    movementUtilities[groupIndex, movementIndex] =
+                        utilities[groupIndex, candidateIndex];
+                    candidateIndexesByGroupAndMovement[groupIndex, movementIndex] =
+                        candidateIndex;
+                }
+            }
+        }
+
+        int[] assignedMovementIndexes = SolveMaximumWeightAssignment(
+            movementUtilities,
+            movementAllowed,
             maximumUtility);
         var result = new Dictionary<string, int>(
             groups.Count,
             StringComparer.Ordinal);
         for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
         {
-            int candidateIndex = assignedCandidateIndexes[groupIndex];
-            if (candidateIndex < 0 ||
-                !allowed[groupIndex, candidateIndex])
+            int movementIndex = assignedMovementIndexes[groupIndex];
+            if (movementIndex < 0 ||
+                !movementAllowed[groupIndex, movementIndex])
             {
-                throw CreateDistinctLineupException(groups, candidates.Count);
+                throw CreateDistinctLineupException(groups, movementIds.Length);
             }
 
+            int candidateIndex =
+                candidateIndexesByGroupAndMovement[groupIndex, movementIndex];
             result[groups[groupIndex].Id] = candidates[candidateIndex].Id;
         }
 
@@ -1269,11 +1325,12 @@ public sealed class ExerciseSessionService
 
     private InvalidOperationException CreateDistinctLineupException(
         IReadOnlyList<WorkoutGroup> groups,
-        int candidateCount)
+        int movementCount)
     {
         return new InvalidOperationException(
             $"No distinct exercise lineup exists for the active workout profile " +
-            $"across {groups.Count} groups and {candidateCount} eligible exercises " +
+            $"across {groups.Count} groups and {movementCount} eligible session " +
+            $"movements " +
             $"with at least {WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage.");
     }
 
@@ -2363,6 +2420,14 @@ public sealed class ExerciseSessionService
                     .Where(exerciseId => exerciseId > 0)
                     .Concat(state.LastKeptExerciseIds)
                     .ToHashSet();
+                HashSet<int> unavailableMovementIds = unavailableExerciseIds
+                    .Where(_exercisesById.ContainsKey)
+                    .Select(exerciseId =>
+                        WorkoutModifierPolicy.GetSessionMovementId(
+                            _exercisesById[exerciseId]))
+                    .Append(WorkoutModifierPolicy.GetSessionMovementId(
+                        currentExercise))
+                    .ToHashSet();
                 IReadOnlyDictionary<CanonicalMuscleGroup, int>? loadWithoutCurrent =
                     state.ActiveWorkoutMinutes <= 30
                         ? WorkoutMuscleBudgetPolicy.CalculateLoadHalfUnits(
@@ -2393,6 +2458,8 @@ public sealed class ExerciseSessionService
                             temporaryDownvoteHalfUnits: 0) >
                             current.AdjustedScoreHalfUnits &&
                         !unavailableExerciseIds.Contains(exercise.Id) &&
+                        !unavailableMovementIds.Contains(
+                            WorkoutModifierPolicy.GetSessionMovementId(exercise)) &&
                         !state.NextWorkoutExcludedExerciseIds.Contains(exercise.Id) &&
                         IsWorkoutSelectionCandidate(
                             state,

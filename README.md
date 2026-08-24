@@ -48,7 +48,14 @@ movement with only a token association to one small part of it.
 
 Flux does not select each round independently. It solves the complete lineup as
 a maximum-weight one-to-one assignment between workout groups and eligible
-exercises. The result must contain one distinct exercise per base group.
+session movements. The result must contain one distinct movement per base group.
+Catalog records that are merely repetition, hold, or naming variants of the
+same demonstrated movement share an explicit `sessionMovementId`; only one of
+those aliases may occupy the base lineup. Linked opposite directions and
+deliberate extra sets remain consecutive rounds of one base slot rather than
+competing for another muscle group's slot. The strict reviewed identity families
+live in `tools/ExerciseSessionMovements.psd1`, and generation plus deployment
+audits reject missing, overlapping, or anatomically inconsistent mappings.
 
 The optimizer applies these priorities lexicographically:
 
@@ -215,16 +222,17 @@ Every round begins with five seconds of quiet preparation.
   scores both records together.
 
 Red means movement. Blue means change or rest. A large asymmetric human icon
-marks timed side or lead-stance pairs, while `BIDIRECTIONAL` identifies timed
-opposite-direction pairs. The workout controls follow a media-player model:
+marks timed side or lead-stance pairs, while a direction-loop icon identifies
+timed opposite-direction pairs. The workout controls follow a media-player model:
 shuffle rejects an unstarted exercise with the same -1 vote as Next and replaces
 it in place, play starts, pause/resume controls the active timer, repeat restarts
 the current exercise without scoring it, and next rejects it and advances.
 Shuffle preserves the session profile and any linked direction pair, and is
 unavailable after an earlier round from the same paired or repeated unit has
-begun. Repeated shuffles draw without repetition from every remaining exercise
-valid for that anatomical slot and modifier profile; they do not re-rank the
-pool toward the normal automatic-selection winner. In long workouts, completed
+begun. Repeated shuffles draw without repetition from every remaining session
+movement valid for that anatomical slot and modifier profile; an alias of the
+rejected movement is not a replacement. They do not re-rank the pool toward the
+normal automatic-selection winner. In long workouts, completed
 timer allocations stay locked while still-unstarted allocations are safely
 recomputed around the replacement. Anatomical group routing remains internal
 rather than appearing as a potentially misleading exercise label. A large
@@ -285,7 +293,7 @@ Duration, modifier profile, lineups, keeps, scores, active progress, active
 movement checkpoints, and pending rest are stored locally. Modifier combinations
 retain separate stable lineups while sharing durable keeps.
 
-The Android catalog uses SQLite schema version 60. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 66. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

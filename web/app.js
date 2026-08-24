@@ -16,6 +16,7 @@ import {
   getMovementPresentation,
   getMirrorEquipment,
   isModifierMetadataComplete,
+  isSessionMovementMetadataValid,
   parseStoredState,
   usesTimedPair,
   usesTimedLeadStances,
@@ -152,11 +153,12 @@ async function bootstrap() {
     const lineupDeficiencies =
       findWorkoutProfileLineupDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
+        !isSessionMovementMetadataValid(exercises) ||
         pairwiseCoverageDeficiencies.length > 0 ||
         modifierMaterialityDeficiencies.length > 0 ||
         mirrorCategoryDeficiencies.length > 0 ||
         lineupDeficiencies.length > 0) {
-      throw new Error("Catalog does not satisfy workout modifier coverage.");
+      throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
     session.initialize();

@@ -165,6 +165,28 @@ if ($mirrorAgnosticExerciseIds.Count -lt 5) {
 }
 $muscularDemandReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMuscularDemand.psd1') -SkipLimitCheck
+$sessionMovementReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSessionMovements.psd1') -SkipLimitCheck
+$sessionMovementByExerciseId = @{}
+foreach ($entry in $sessionMovementReview.Families.GetEnumerator()) {
+    $rootId = 0
+    if (-not [int]::TryParse([string]$entry.Key, [ref]$rootId) -or
+        $rootId -le 0) {
+        throw "Invalid session-movement root '$($entry.Key)'."
+    }
+    $memberIds = @($entry.Value | ForEach-Object { [int]$_ })
+    if ($memberIds.Count -lt 2 -or
+        @($memberIds | Sort-Object -Unique).Count -ne $memberIds.Count -or
+        $rootId -notin $memberIds) {
+        throw "Session-movement family $rootId must contain its root and at least one unique alias."
+    }
+    foreach ($exerciseId in $memberIds) {
+        if ($sessionMovementByExerciseId.ContainsKey($exerciseId)) {
+            throw "Exercise $exerciseId belongs to more than one session-movement family."
+        }
+        $sessionMovementByExerciseId[$exerciseId] = $rootId
+    }
+}
 $muscularDemandByExerciseId = @{}
 foreach ($score in 0..2) {
     foreach ($exerciseId in @(
@@ -408,6 +430,35 @@ if ($invalidCanonicalAssignmentIds.Count -gt 0 -or
     $catalogAssignmentDifference.Count -gt 0 -or
     $invalidCanonicalAssignments.Count -gt 0) {
     throw 'The canonical exercise assignment map must cover every retained stable ID exactly once with one valid primary and unique valid secondaries.'
+}
+
+$invalidSessionMovementFamilies = @(
+    foreach ($entry in $sessionMovementReview.Families.GetEnumerator()) {
+        $rootId = [int]$entry.Key
+        $memberIds = @($entry.Value | ForEach-Object { [int]$_ })
+        if ($rootId -notin $retainedExerciseIds -or
+            @($memberIds | Where-Object { $_ -notin $retainedExerciseIds }).Count -gt 0) {
+            $rootId
+            continue
+        }
+        $rootAssignment = $exerciseCanonicalGroups[$rootId]
+        $rootGroups = @(
+            [string]$rootAssignment.Primary
+            @($rootAssignment.Secondary | ForEach-Object { [string]$_ }))
+        if (@($memberIds | Where-Object {
+                    $memberAssignment = $exerciseCanonicalGroups[$_]
+                    $memberGroups = @(
+                        [string]$memberAssignment.Primary
+                        @($memberAssignment.Secondary |
+                            ForEach-Object { [string]$_ }))
+                    @($memberGroups | Where-Object {
+                            $_ -in $rootGroups }).Count -eq 0
+                }).Count -gt 0) {
+            $rootId
+        }
+    })
+if ($invalidSessionMovementFamilies.Count -gt 0) {
+    throw "Session-movement families contain missing or anatomically unrelated exercises: $($invalidSessionMovementFamilies -join ', ')."
 }
 if ($holdExerciseFrames.Count -eq 0 -or @(
         $holdExerciseFrames.GetEnumerator() | Where-Object {
@@ -3111,7 +3162,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
         $videoFileName = 'exercise_{0:D4}.mp4' -f $exerciseId
         $videoRelativePath = "exercise_videos/$videoFileName"
 
-        $records.Add([ordered]@{
+        $record = [ordered]@{
             id = $exerciseId
             name = $exerciseName
             retiredName = if ($null -ne $replacement) {
@@ -3173,7 +3224,12 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 'None'
             }
             silent = $exerciseId -in $silentExerciseIds
-        })
+        }
+        if ($sessionMovementByExerciseId.ContainsKey($exerciseId)) {
+            $record['sessionMovementId'] =
+                [int]$sessionMovementByExerciseId[$exerciseId]
+        }
+        $records.Add($record)
 
         $isSelected = if ($ExerciseIds.Count -gt 0) {
             $ExerciseIds -contains $exerciseId
@@ -3493,6 +3549,9 @@ $constraintViolations = $records | Where-Object {
         'OutwardThenInward') -or
     $_['directionPartnerExerciseId'] -isnot [int] -or
     $_['directionPartnerExerciseId'] -lt 0 -or
+    ($null -ne $_['sessionMovementId'] -and (
+        $_['sessionMovementId'] -isnot [int] -or
+        $_['sessionMovementId'] -lt 0)) -or
     ($_['sideSequence'] -in @(
             'ScreenLeftThenRight', 'ScreenRightThenLeft',
             'ScreenLeftLeadThenRightLead',
@@ -3536,6 +3595,30 @@ $directionPartnerViolations = @($records | Where-Object {
         $_['silent'] -ne $partner['silent'] -or
         $_['muscularDemand'] -ne $partner['muscularDemand']
 })
+$sessionMovementViolations = @($records | Where-Object {
+    $movementId = [int]$_['sessionMovementId']
+    if ($movementId -eq 0) {
+        return $false
+    }
+    if (-not $recordsById.ContainsKey($movementId)) {
+        return $true
+    }
+    $root = $recordsById[$movementId]
+    $family = @($records | Where-Object {
+            [int]$_['sessionMovementId'] -eq $movementId })
+    return $family.Count -lt 2 -or
+        [int]$root['sessionMovementId'] -ne [int]$root['id'] -or
+        @($family | Where-Object {
+                $rootGroups = @(
+                    [string]$root['primaryCanonicalGroup']
+                    @($root['secondaryCanonicalGroups']))
+                $memberGroups = @(
+                    [string]$_['primaryCanonicalGroup']
+                    @($_['secondaryCanonicalGroups']))
+                @($memberGroups | Where-Object {
+                        $_ -in $rootGroups }).Count -eq 0
+            }).Count -gt 0
+})
 $syntheticNames = $records | Where-Object {
     $_['name'] -match ' — ' -or
     $_['name'] -match 'Slow Tempo|Four-Count Tempo|End-Range Pause|Half Range|Full Range|Left Lead|Right Lead|Precision Repetitions|Continuous Flow'
@@ -3544,6 +3627,7 @@ $syntheticNames = $records | Where-Object {
 if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
     $constraintViolations -or
     $directionPartnerViolations -or
+    $sessionMovementViolations -or
     $syntheticNames) {
     $failureDetails = @(
         if ($duplicateNames) {
@@ -3561,6 +3645,10 @@ if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
         if ($directionPartnerViolations) {
             'direction-partner IDs: ' +
                 (@($directionPartnerViolations.id) -join ', ')
+        }
+        if ($sessionMovementViolations) {
+            'session-movement IDs: ' +
+                (@($sessionMovementViolations.id) -join ', ')
         }
         if ($syntheticNames) {
             'synthetic names: ' + (@($syntheticNames.name) -join ', ')

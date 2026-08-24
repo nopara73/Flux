@@ -37,6 +37,8 @@ public sealed class Exercise
 
     public int DirectionPartnerExerciseId { get; init; }
 
+    public int SessionMovementId { get; init; }
+
     public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
         ExerciseInsectCompatibility.Unreviewed;
 

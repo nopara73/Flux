@@ -11,7 +11,7 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 64;
+    private const int DatabaseVersion = 66;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
@@ -41,6 +41,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "insect_compatibility",
         "mirror_relationship",
         "mirror_coverage",
+        "session_movement_id",
     ];
 
     private readonly Context _context;
@@ -75,7 +76,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58 or 59 or 60 or 61 or 62 or 63) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58 or 59 or 60 or 61 or 62 or 63 or 64 or 65) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -227,6 +228,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'None',
                         'UpperBody',
                         'FullBody')),
+                session_movement_id INTEGER NOT NULL DEFAULT 0
+                    CHECK (session_movement_id >= 0),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
                         equipment = 'Mirror' AND
@@ -311,6 +314,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'None',
                         'UpperBody',
                         'FullBody')),
+                session_movement_id INTEGER NOT NULL DEFAULT 0
+                    CHECK (session_movement_id >= 0),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
                         equipment = 'Mirror' AND
@@ -569,6 +574,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
+        values.Put("session_movement_id", exercise.SessionMovementId);
         return values;
     }
 
@@ -741,6 +747,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(20)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
+                SessionMovementId = cursor.GetInt(21),
             });
         }
 
@@ -849,6 +856,21 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             requireInitialScores && exercises.Any(exercise => exercise.Score != 0);
         IReadOnlyDictionary<int, Exercise> exercisesById = exercises
             .ToDictionary(exercise => exercise.Id);
+        bool hasInvalidSessionMovement =
+            exercises.Any(exercise => exercise.SessionMovementId < 0) ||
+            exercises
+                .Where(exercise => exercise.SessionMovementId > 0)
+                .GroupBy(exercise => exercise.SessionMovementId)
+                .Any(movement =>
+                    movement.Count() < 2 ||
+                    !exercisesById.TryGetValue(
+                        movement.Key,
+                        out Exercise? root) ||
+                    root.SessionMovementId != root.Id ||
+                    movement.Any(exercise =>
+                        !exercise.Trains(root.PrimaryCanonicalGroup) &&
+                        !root.Trains(exercise.PrimaryCanonicalGroup) &&
+                        !exercise.SecondaryCanonicalGroups.Any(root.Trains)));
         bool hasInvalidDirectionPartner = exercises.Any(exercise =>
             exercise.DirectionPartnerExerciseId < 0 ||
             (exercise.DirectionPartnerExerciseId > 0 &&
@@ -903,6 +925,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             exercises.Select(exercise => exercise.Video).Distinct().Count() != exercises.Count ||
             violatesRequirements ||
             hasInvalidInitialScore ||
+            hasInvalidSessionMovement ||
             hasInvalidDirectionPartner ||
             hasInvalidReplacementMetadata)
         {

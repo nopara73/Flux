@@ -298,6 +298,42 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void MirrorCategoryFloorDoesNotDoubleCountMovementAliases()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise[] exercises =
+        [
+            Exercise(
+                1,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
+                sessionMovementId: 1),
+            Exercise(
+                2,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
+                sessionMovementId: 1),
+            .. Enumerable.Range(3, 3).Select(id => Exercise(
+                id,
+                group,
+                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody)),
+        ];
+
+        WorkoutMirrorCategoryDeficiency deficiency =
+            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises)
+                .Single(result =>
+                    result.Relationship ==
+                        ExerciseMirrorRelationship.BenefitsGreatly &&
+                    result.MinimumCoverage == ExerciseMirrorCoverage.UpperBody);
+
+        Assert.Equal(4, deficiency.MatchingExerciseCount);
+    }
+
+    [Fact]
     public void MirrorOnPairwiseFloorRequiresMirrorRelevantRelationships()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
@@ -735,6 +771,40 @@ public sealed class WorkoutModifierPolicyTests
                 WorkoutModifiers.Insect));
     }
 
+    [Fact]
+    public void MaximumDistinctLineupCountsAliasesAsOneSessionMovement()
+    {
+        WorkoutGroup[] groups =
+        [
+            Group("a", CanonicalMuscleGroup.MedialAndDeepKneeExtensors),
+            Group("b", CanonicalMuscleGroup.PosteriorThighAndKneeFlexors),
+            Group("c", CanonicalMuscleGroup.MajorHipAdductors),
+        ];
+        Exercise[] exercises =
+        [
+            Exercise(
+                1,
+                CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+                CanonicalMuscleGroup.PosteriorThighAndKneeFlexors,
+                CanonicalMuscleGroup.MajorHipAdductors,
+                sessionMovementId: 1),
+            Exercise(
+                2,
+                CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+                CanonicalMuscleGroup.PosteriorThighAndKneeFlexors,
+                CanonicalMuscleGroup.MajorHipAdductors,
+                sessionMovementId: 1),
+            Exercise(3, CanonicalMuscleGroup.MajorHipAdductors),
+        ];
+
+        Assert.Equal(
+            2,
+            WorkoutModifierPolicy.GetMaximumDistinctLineupSize(
+                exercises,
+                groups,
+                WorkoutModifiers.Insect));
+    }
+
     private static WorkoutGroup Group(
         string id,
         CanonicalMuscleGroup canonicalGroup)
@@ -757,7 +827,8 @@ public sealed class WorkoutModifierPolicyTests
         ExerciseMirrorRelationship mirrorRelationship =
             ExerciseMirrorRelationship.Agnostic,
         string? equipment = null,
-        ExerciseMirrorCoverage? minimumMirrorCoverage = null)
+        ExerciseMirrorCoverage? minimumMirrorCoverage = null,
+        int sessionMovementId = 0)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -776,6 +847,7 @@ public sealed class WorkoutModifierPolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            SessionMovementId = sessionMovementId,
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = minimumMirrorCoverage ??

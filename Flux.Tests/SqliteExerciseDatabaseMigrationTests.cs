@@ -6,7 +6,7 @@ namespace Flux.Tests;
 public sealed class SqliteExerciseDatabaseMigrationTests
 {
     [Fact]
-    public void Version60MirrorOnlyRowCanBeCopiedIntoVersion61Schema()
+    public void LegacyMirrorOnlyRowCanBeCopiedIntoCurrentSchema()
     {
         using var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
@@ -90,6 +90,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
                 insect_compatibility TEXT NOT NULL,
                 mirror_relationship TEXT NOT NULL,
                 mirror_coverage TEXT NOT NULL,
+                session_movement_id INTEGER NOT NULL DEFAULT 0
+                    CHECK (session_movement_id >= 0),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
                         equipment = 'Mirror' AND
@@ -115,7 +117,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         command.CommandText =
             """
             SELECT name, video, score, equipment,
-                mirror_relationship, mirror_coverage
+                mirror_relationship, mirror_coverage, session_movement_id
             FROM exercises_v60
             WHERE id = 528
             """;
@@ -128,6 +130,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.Equal("None", reader.GetString(3));
         Assert.Equal("Unreviewed", reader.GetString(4));
         Assert.Equal("None", reader.GetString(5));
+        Assert.Equal(0, reader.GetInt32(6));
         Assert.False(reader.Read());
     }
 

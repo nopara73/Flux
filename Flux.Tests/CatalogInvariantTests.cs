@@ -43,6 +43,34 @@ public sealed class CatalogInvariantTests
         Assert.Equal(116, exercises.Count(exercise => exercise.MuscularDemand == 0));
         Assert.Equal(186, exercises.Count(exercise => exercise.MuscularDemand == 1));
         Assert.Equal(129, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Dictionary<int, int[]> expectedSessionMovements = new()
+        {
+            [104] = [104, 136, 626],
+            [113] = [113, 135],
+            [115] = [115, 997],
+            [117] = [117, 123],
+            [120] = [120, 184],
+            [124] = [124, 636],
+            [125] = [125, 973],
+            [159] = [159, 649],
+            [177] = [177, 186],
+            [214] = [214, 223],
+            [231] = [231, 685],
+            [253] = [253, 267],
+            [256] = [256, 845],
+            [261] = [261, 677],
+            [755] = [755, 756],
+        };
+        Dictionary<int, int[]> actualSessionMovements = exercises
+            .Where(exercise => exercise.SessionMovementId > 0)
+            .GroupBy(exercise => exercise.SessionMovementId)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Select(exercise => exercise.Id).Order().ToArray());
+        Assert.Equal(expectedSessionMovements.Keys.Order(), actualSessionMovements.Keys.Order());
+        Assert.All(expectedSessionMovements, expected => Assert.Equal(
+            expected.Value,
+            actualSessionMovements[expected.Key]));
         Assert.All(exercises, exercise => Assert.Equal(0, exercise.Score));
         Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
         Assert.Equal(1, exercises.Single(exercise => exercise.Id == 264).MuscularDemand);
@@ -156,6 +184,19 @@ public sealed class CatalogInvariantTests
             {
                 var profileState = new WorkoutState();
                 profileService.StartWorkout(profileState, minutes, profile);
+                Exercise[] baseSelections = profileService
+                    .GetActiveGroups(profileState)
+                    .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
+                    .Select(rounds => profileService.GetSelectedExercise(
+                        profileState,
+                        rounds.First()))
+                    .ToArray();
+                Assert.Equal(
+                    baseSelections.Length,
+                    baseSelections
+                        .Select(WorkoutModifierPolicy.GetSessionMovementId)
+                        .Distinct()
+                        .Count());
                 Assert.All(profileService.GetActiveGroups(profileState), group =>
                     Assert.True(WorkoutModifierPolicy.IsSelectable(
                         profileService.GetSelectedExercise(profileState, group),
