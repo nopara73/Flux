@@ -871,6 +871,113 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void IntermediateRepeatedSetHasNoKeepAndRestoresAsAutomaticContinuation()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+        };
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+        WorkoutGroup[] repeatedRounds = service.GetActiveGroups(state)
+            .GroupBy(round => round.SelectionKey)
+            .First(rounds => rounds.Count() > 1)
+            .OrderBy(round => round.Order)
+            .ToArray();
+        WorkoutGroup firstSet = repeatedRounds[0];
+
+        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
+                     .TakeWhile(round => round.Id != firstSet.Id))
+        {
+            service.RecordOutcome(state, priorRound, keep: true);
+        }
+
+        service.BeginRest(state, firstSet, 123456);
+
+        Assert.True(service.IsIntermediateSetCompletion(state, firstSet));
+        Assert.False(service.KeepPendingRest(state));
+        Assert.False(state.PendingRestKept);
+
+        service.AdvanceRepeatedSet(state, firstSet);
+        service.ClearPendingRest(state);
+        WorkoutGroup nextSet = service.GetNextGroup(state)!;
+        int movementDurationMilliseconds =
+            (nextSet.UsesFullSideTiming
+                ? MovementPhaseSchedule.FullSideTotalDurationSeconds
+                : MovementPhaseSchedule.TotalDurationSeconds) * 1_000;
+        service.PauseMovement(
+            state,
+            nextSet,
+            movementDurationMilliseconds,
+            pausedByUser: false);
+
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        service.Initialize(restored);
+
+        Assert.Equal(ExerciseOutcome.Neutral, restored.Outcomes[firstSet.Id]);
+        Assert.Equal(firstSet.SelectionKey, nextSet.SelectionKey);
+        Assert.True(service.IsSetContinuationRound(restored, nextSet));
+        Assert.Equal(nextSet.Id, service.GetPendingMovementGroup(restored)?.Id);
+        Assert.Equal(
+            movementDurationMilliseconds,
+            service.GetPendingMovementMillisecondsRemaining(restored, 999999));
+        Assert.Equal(10, service.GetSelectedExercise(restored, nextSet).Score);
+
+        service.BeginRest(restored, nextSet, 234567);
+        Assert.False(service.IsIntermediateSetCompletion(restored, nextSet));
+        Assert.True(service.KeepPendingRest(restored));
+    }
+
+    [Fact]
+    public void RepeatedDirectionPairDefersItsSharedKeepUntilTheFinalSet()
+    {
+        Exercise[] exercises = DirectionPairCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+        };
+        service.StartWorkout(state, 90, WorkoutModifiers.None);
+        WorkoutGroup firstLead = service.GetActiveGroups(state)
+            .Where(round => round.IsDirectionPairLead)
+            .GroupBy(round => round.SelectionKey)
+            .First(rounds => rounds.Count() > 1)
+            .OrderBy(round => round.Order)
+            .First();
+        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
+                     .TakeWhile(round => round.Id != firstLead.Id))
+        {
+            service.RecordOutcome(state, priorRound, keep: true);
+        }
+
+        service.AdvanceDirectionPair(state, firstLead);
+        WorkoutGroup firstDecision = service.GetNextGroup(state)!;
+        service.BeginRest(state, firstDecision, 123456);
+
+        Assert.True(firstDecision.IsPairDecisionRound);
+        Assert.True(service.IsIntermediateSetCompletion(state, firstDecision));
+        Assert.False(service.KeepPendingRest(state));
+
+        service.AdvanceRepeatedSet(state, firstDecision);
+        service.ClearPendingRest(state);
+        WorkoutGroup nextSet = service.GetNextGroup(state)!;
+
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[firstLead.Id]);
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[firstDecision.Id]);
+        Assert.Equal(firstLead.SelectionKey, nextSet.SelectionKey);
+        Assert.True(service.IsSetContinuationRound(state, nextSet));
+    }
+
+    [Fact]
     public void LinkedDirectionPartnerIsNeverSelectedAsAnotherBaseUnit()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
@@ -1341,7 +1448,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void InterruptedLongWorkoutSettlesPendingRepeatedRoundExactlyOnce()
+    public void InterruptedIntermediateSetRestDoesNotCreateAHiddenDownvote()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -1352,9 +1459,8 @@ public sealed class ExerciseSessionServiceTests
             .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
             .ToArray();
         Exercise original = baseline[15];
-        Exercise replacement = QualifiedForGroup(1000, target, 5);
         var service = new ExerciseSessionService(
-            [.. baseline, replacement],
+            baseline,
             new Random(1));
         var state = new WorkoutState();
         service.StartWorkout(state, 45, WorkoutModifiers.None);
@@ -1368,14 +1474,59 @@ public sealed class ExerciseSessionServiceTests
         }
         state.PendingRestGroupId = pendingRound.Id;
         state.PendingRestEndsAtUnixMilliseconds = 123456;
+        Assert.True(service.IsIntermediateSetCompletion(state, pendingRound));
 
-        Exercise? penalty = service.FinishInterruptedWorkout(state);
-        Exercise? repeated = service.FinishInterruptedWorkout(state);
+        Exercise? firstResult = service.FinishInterruptedWorkout(state);
+        Exercise? repeatedResult = service.FinishInterruptedWorkout(state);
 
-        Assert.Same(original, penalty);
-        Assert.Null(repeated);
+        Assert.Null(firstResult);
+        Assert.Null(repeatedResult);
+        Assert.Equal(10, original.Score);
+        Assert.Equal(original.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+    }
+
+    [Fact]
+    public void InterruptedFinalRepeatedSetRestStillSettlesExactlyOnce()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] baseline = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        Exercise[] replacements = groups
+            .Select((group, index) => QualifiedForGroup(1001 + index, group, 5))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [.. baseline, .. replacements],
+            new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 90, WorkoutModifiers.None);
+        WorkoutGroup pendingRound = service.GetActiveGroups(state)
+            .First(round =>
+                service.IsSetContinuationRound(state, round) &&
+                !service.IsIntermediateSetCompletion(state, round) &&
+                !round.IsDirectionPairRound);
+        Exercise original = service.GetSelectedExercise(state, pendingRound);
+
+        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
+                     .TakeWhile(round => round.Id != pendingRound.Id))
+        {
+            service.RecordOutcome(state, priorRound, keep: true);
+        }
+        service.BeginRest(state, pendingRound, 123456);
+
+        Exercise? firstResult = service.FinishInterruptedWorkout(state);
+        Exercise? repeatedResult = service.FinishInterruptedWorkout(state);
+
+        Assert.Same(original, firstResult);
+        Assert.Null(repeatedResult);
         Assert.Equal(9, original.Score);
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.NotEqual(
+            original.Id,
+            state.SelectedExerciseIds[pendingRound.SelectionKey]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
 

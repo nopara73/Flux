@@ -145,6 +145,7 @@ public class MainActivity : Activity
     private bool _mediaReady;
     private bool _countdownPausedForMediaError;
     private bool _countdownPausedByUser;
+    private bool _automaticSetStartPending;
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
@@ -2258,6 +2259,10 @@ public class MainActivity : Activity
         _countdownMillisecondsRemaining = millisecondsRemaining;
         _countdownEndsAtElapsedMilliseconds = 0;
         _countdownPausedByUser = _state.PendingMovementPausedByUser;
+        _automaticSetStartPending =
+            !_countdownPausedByUser &&
+            _sessionService.IsSetContinuationRound(_state, pendingGroup) &&
+            millisecondsRemaining == GetCurrentMovementDurationMilliseconds();
         _countdownPausedForMediaError =
             !_countdownPausedByUser && !_mediaReady;
         _sessionService.PauseMovement(
@@ -2347,6 +2352,7 @@ public class MainActivity : Activity
 
     private void ShowStartButton()
     {
+        _automaticSetStartPending = false;
         _countdownPausedByUser = false;
         _startButton.Enabled = true;
         _startButton.Alpha = 1f;
@@ -2570,7 +2576,13 @@ public class MainActivity : Activity
             return;
         }
 
+        bool cueAutomaticSetStart = _automaticSetStartPending;
+        _automaticSetStartPending = false;
         StartCountdownTimer(_countdownMillisecondsRemaining);
+        if (cueAutomaticSetStart)
+        {
+            CueMovementRestart();
+        }
         SetPlaybackControlsAvailability(available: _mediaReady);
         UpdatePlaybackActionVisual();
     }
@@ -3154,6 +3166,10 @@ public class MainActivity : Activity
     private string GetRestDescription() =>
         _currentWorkoutGroup.IsDirectionPairLead
             ? "Rest, 15 seconds. The other direction is next."
+            : _sessionService.IsIntermediateSetCompletion(
+                _state,
+                _currentWorkoutGroup)
+                ? "Rest, 15 seconds. The next set starts automatically."
             : "Rest, 15 seconds. Tap the heart to keep this exercise.";
 
     private void ShowRestPanel()
@@ -3166,7 +3182,10 @@ public class MainActivity : Activity
 
     private void UpdateKeepButtonState()
     {
-        if (_currentWorkoutGroup.IsDirectionPairLead)
+        if (_currentWorkoutGroup.IsDirectionPairLead ||
+            _sessionService.IsIntermediateSetCompletion(
+                _state,
+                _currentWorkoutGroup))
         {
             _keepButton.Enabled = false;
             _keepButton.Visibility = ViewStates.Gone;
@@ -3247,12 +3266,11 @@ public class MainActivity : Activity
     {
         if (!_restActive ||
             _state.PendingRestKept ||
-            _currentWorkoutGroup.IsDirectionPairLead)
+            !_sessionService.KeepPendingRest(_state))
         {
             return;
         }
 
-        _state.PendingRestKept = true;
         _stateStore.Save(_state);
         _keepButton.Enabled = false;
         _keepButton.PerformHapticFeedback(FeedbackConstants.KeyboardTap);
@@ -3277,8 +3295,41 @@ public class MainActivity : Activity
             return;
         }
 
+        if (_sessionService.IsIntermediateSetCompletion(
+                _state,
+                _currentWorkoutGroup))
+        {
+            ContinueWithNextSet();
+            return;
+        }
+
         bool keep = _state.PendingRestKept;
         FinalizeCurrentRound(keep);
+    }
+
+    private void ContinueWithNextSet()
+    {
+        _sessionService.AdvanceRepeatedSet(_state, _currentWorkoutGroup);
+        _sessionService.ClearPendingRest(_state);
+        WorkoutGroup nextSet = _sessionService.GetNextGroup(_state)
+            ?? throw new InvalidOperationException(
+                "An intermediate set has no following set.");
+        int movementDurationMilliseconds =
+            (nextSet.UsesFullSideTiming
+                ? MovementPhaseSchedule.FullSideTotalDurationSeconds
+                : MovementPhaseSchedule.TotalDurationSeconds) * 1_000;
+        _sessionService.PauseMovement(
+            _state,
+            nextSet,
+            movementDurationMilliseconds,
+            pausedByUser: false);
+        _stateStore.Save(_state);
+        RestorePendingMovement(nextSet);
+        if (_mediaReady && _activityResumed)
+        {
+            _countdownPausedForMediaError = false;
+            ResumeCountdown();
+        }
     }
 
     private void FinalizeCurrentRound(bool keep)

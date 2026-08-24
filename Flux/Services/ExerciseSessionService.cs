@@ -233,6 +233,53 @@ public sealed class ExerciseSessionService
             .FirstOrDefault(group => !state.Outcomes.ContainsKey(group.Id));
     }
 
+    public bool IsIntermediateSetCompletion(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        if (group.IsDirectionPairLead)
+        {
+            return false;
+        }
+
+        IReadOnlyList<WorkoutGroup> activeGroups = GetActiveGroups(state);
+        int groupIndex = activeGroups
+            .Select((activeGroup, index) => (activeGroup, index))
+            .Where(entry => entry.activeGroup.Id == group.Id)
+            .Select(entry => entry.index)
+            .DefaultIfEmpty(-1)
+            .Single();
+        return groupIndex >= 0 &&
+            groupIndex + 1 < activeGroups.Count &&
+            activeGroups[groupIndex + 1].SelectionKey == group.SelectionKey;
+    }
+
+    public bool IsSetContinuationRound(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        if (group.IsPairDecisionRound)
+        {
+            return false;
+        }
+
+        IReadOnlyList<WorkoutGroup> activeGroups = GetActiveGroups(state);
+        int groupIndex = activeGroups
+            .Select((activeGroup, index) => (activeGroup, index))
+            .Where(entry => entry.activeGroup.Id == group.Id)
+            .Select(entry => entry.index)
+            .DefaultIfEmpty(-1)
+            .Single();
+        return groupIndex > 0 &&
+            activeGroups[groupIndex - 1].SelectionKey == group.SelectionKey;
+    }
+
     public bool CanShuffleNextExercise(
         WorkoutState state,
         WorkoutGroup group)
@@ -392,6 +439,22 @@ public sealed class ExerciseSessionService
                 : null;
     }
 
+    public bool KeepPendingRest(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+
+        WorkoutGroup? pendingGroup = GetPendingRestGroup(state);
+        if (pendingGroup is null ||
+            pendingGroup.IsDirectionPairLead ||
+            IsIntermediateSetCompletion(state, pendingGroup))
+        {
+            return false;
+        }
+
+        state.PendingRestKept = true;
+        return true;
+    }
+
     public long GetPendingMovementMillisecondsRemaining(
         WorkoutState state,
         long nowUnixMilliseconds)
@@ -486,6 +549,35 @@ public sealed class ExerciseSessionService
         }
 
         _ = GetPairedRound(state, group);
+        state.Outcomes[group.Id] = ExerciseOutcome.Neutral;
+        state.WorkoutCompleted = false;
+        state.CompletionAcknowledged = false;
+    }
+
+    public void AdvanceRepeatedSet(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        WorkoutGroup? nextGroup = GetNextGroup(state);
+        if (nextGroup?.Id != group.Id)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the next workout group.");
+        }
+        if (!IsIntermediateSetCompletion(state, group))
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} is not the end of an intermediate set.");
+        }
+
+        if (group.IsDirectionPairRound)
+        {
+            WorkoutGroup pairedRound = GetPairedRound(state, group);
+            state.Outcomes[pairedRound.Id] = ExerciseOutcome.Neutral;
+        }
         state.Outcomes[group.Id] = ExerciseOutcome.Neutral;
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
@@ -634,6 +726,10 @@ public sealed class ExerciseSessionService
                 {
                     _ = GetPairedRound(state, pendingGroup);
                     state.Outcomes[pendingGroup.Id] = ExerciseOutcome.Neutral;
+                }
+                else if (IsIntermediateSetCompletion(state, pendingGroup))
+                {
+                    AdvanceRepeatedSet(state, pendingGroup);
                 }
                 else if (pendingGroup.IsDirectionPairRound)
                 {
@@ -1921,6 +2017,10 @@ public sealed class ExerciseSessionService
                      .ToArray())
         {
             WorkoutGroup group = activeGroups[groupId];
+            if (IsIntermediateSetCompletion(state, group))
+            {
+                continue;
+            }
             if (group.IsDirectionPairLead &&
                 group.PairedRoundId is string pairedRoundId)
             {
@@ -1933,6 +2033,13 @@ public sealed class ExerciseSessionService
                 if (pairedOutcome is ExerciseOutcome.Tick or ExerciseOutcome.X)
                 {
                     state.Outcomes[groupId] = pairedOutcome;
+                    continue;
+                }
+                if (pairedOutcome == ExerciseOutcome.Neutral &&
+                    IsIntermediateSetCompletion(
+                        state,
+                        activeGroups[pairedRoundId]))
+                {
                     continue;
                 }
             }

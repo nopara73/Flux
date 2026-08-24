@@ -2594,6 +2594,93 @@ test("a direction pair can only be kept after its second direction", () => {
   assert.equal(session.getScore(session.getSelectedExercise(decision)), 100);
 });
 
+test("an intermediate repeated set has no keep and restores as an automatic continuation", () => {
+  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const repeatedRounds = [...Map.groupBy(
+    session.getActiveGroups(),
+    (round) => getSelectionKey(round),
+  ).values()].find((rounds) => rounds.length > 1)
+    .sort((left, right) => left.order - right.order);
+  const firstSet = repeatedRounds[0];
+
+  for (const priorRound of session.getActiveGroups()) {
+    if (priorRound.id === firstSet.id) {
+      break;
+    }
+    session.recordOutcome(priorRound, true);
+  }
+
+  session.beginRest(firstSet, 123456);
+
+  assert.equal(session.isIntermediateSetCompletion(firstSet), true);
+  assert.equal(session.keepPendingRest(), false);
+  assert.equal(session.state.pendingRestKept, false);
+
+  session.advanceRepeatedSet(firstSet);
+  session.clearPendingRest();
+  const nextSet = session.getNextGroup();
+  const movementDuration = getMovementDurationMs(nextSet);
+  session.pauseMovement(nextSet, movementDuration, false);
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(session.state)),
+    () => 0,
+  );
+  restored.initialize();
+
+  assert.equal(restored.state.outcomes[firstSet.id], "neutral");
+  assert.equal(getSelectionKey(nextSet), getSelectionKey(firstSet));
+  assert.equal(restored.isSetContinuationRound(nextSet), true);
+  assert.equal(restored.getPendingMovementGroup()?.id, nextSet.id);
+  assert.equal(restored.getPendingMovementMillisecondsRemaining(999999), movementDuration);
+  assert.equal(restored.getScore(restored.getSelectedExercise(nextSet)), 0);
+
+  restored.beginRest(nextSet, 234567);
+  assert.equal(restored.isIntermediateSetCompletion(nextSet), false);
+  assert.equal(restored.keepPendingRest(), true);
+});
+
+test("a repeated direction pair defers its shared keep until the final set", () => {
+  const session = new WorkoutSession(
+    directionPairCatalog(),
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(90, WORKOUT_MODIFIERS.None);
+  const repeatedPairLeads = [...Map.groupBy(
+    session.getActiveGroups().filter((round) =>
+      round.pairedRoundId && !round.isPairDecisionRound),
+    (round) => getSelectionKey(round),
+  ).values()].find((rounds) => rounds.length > 1)
+    .sort((left, right) => left.order - right.order);
+  const firstLead = repeatedPairLeads[0];
+  for (const priorRound of session.getActiveGroups()) {
+    if (priorRound.id === firstLead.id) {
+      break;
+    }
+    session.recordOutcome(priorRound, true);
+  }
+
+  session.advanceDirectionPair(firstLead);
+  const firstDecision = session.getNextGroup();
+  session.beginRest(firstDecision, 123456);
+
+  assert.equal(firstDecision.isPairDecisionRound, true);
+  assert.equal(session.isIntermediateSetCompletion(firstDecision), true);
+  assert.equal(session.keepPendingRest(), false);
+
+  session.advanceRepeatedSet(firstDecision);
+  session.clearPendingRest();
+  const nextSet = session.getNextGroup();
+
+  assert.equal(session.state.outcomes[firstLead.id], "neutral");
+  assert.equal(session.state.outcomes[firstDecision.id], "neutral");
+  assert.equal(getSelectionKey(nextSet), getSelectionKey(firstLead));
+  assert.equal(session.isSetContinuationRound(nextSet), true);
+});
+
 test("a linked direction partner is never selected as another base unit", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const allCanonicalGroups = [...new Set(groups.flatMap((group) =>
@@ -2739,7 +2826,7 @@ test("a rejected repeated round replaces its shared exercise once", () => {
   assert.equal(session.state.activeWorkoutMinutes, 0);
 });
 
-test("abandoned long workout settles a pending repeated round exactly once", () => {
+test("abandoned long workout settles a pending final repeated round exactly once", () => {
   const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
   started.initialize();
   started.startWorkout(90, WORKOUT_MODIFIERS.None);
@@ -2750,6 +2837,7 @@ test("abandoned long workout settles a pending repeated round exactly once", () 
     started.recordOutcome(round, true);
   }
   started.beginRest(pendingRound, Date.now() + 15_000);
+  assert.equal(started.isIntermediateSetCompletion(pendingRound), false);
 
   const restored = new WorkoutSession(
     catalog,
@@ -2770,6 +2858,32 @@ test("abandoned long workout settles a pending repeated round exactly once", () 
   );
   restoredAgain.initialize();
   assert.equal(restoredAgain.getScore(performed), -1);
+});
+
+test("abandoned intermediate set rest does not create a hidden downvote", () => {
+  const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
+  started.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const pendingRound = started.getActiveGroups().find((round) =>
+    started.isIntermediateSetCompletion(round));
+  const performed = started.getSelectedExercise(pendingRound);
+  for (const round of started.getActiveGroups()) {
+    if (round.id === pendingRound.id) {
+      break;
+    }
+    started.recordOutcome(round, true);
+  }
+  started.beginRest(pendingRound, Date.now() + 15_000);
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(started.state)),
+    () => 0,
+  );
+  restored.initialize();
+  restored.finishInterruptedWorkout();
+
+  assert.equal(restored.getScore(performed), 0);
+  assert.equal(restored.state.activeWorkoutMinutes, 0);
 });
 
 test("persisted pending direction rest cannot recurse through allocation validation", () => {

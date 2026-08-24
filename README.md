@@ -78,10 +78,11 @@ choice from consuming the only exercise capable of filling a later group.
 
 ### Personalization stays inside anatomical guardrails
 
-Tap the large **heart** during rest to retain an exercise. Let rest expire, or
-press **Next** during movement, to reject it. Rejection decreases that exercise's
-local score once and removes saved copies of it; keeping creates a durable
-preference.
+Tap the large **heart** during the final rest for an exercise to retain it. Let
+that decision rest expire, or press **Next** during movement, to reject it.
+Rejection decreases that exercise's local score once and removes saved copies
+of it; keeping creates a durable preference. Repeated sets form one exercise
+unit: their intermediate rests do not score or offer the heart.
 
 When duration or modifiers change, Flux remaps the whole lineup and maximizes
 the useful saved preferences that can occupy legitimate slots. A kept exercise
@@ -203,7 +204,9 @@ as another timer phase inside an exercise, avoiding ambiguous four-part drills.
 
 ## What a workout looks like
 
-Every round begins with five seconds of quiet preparation.
+Every newly presented exercise begins with five seconds of quiet preparation.
+An automatically continued set starts work immediately after its preceding
+15-second rest instead of adding another preparation phase.
 
 - Bilateral and continuous movements run for 45 seconds.
 - Naturally alternating movements switch sides inside the same 45-second phase.
@@ -214,7 +217,10 @@ Every round begins with five seconds of quiet preparation.
 - Bidirectional movements run for 20 seconds in the first direction, pause for a
   five-second direction change, then run for 20 seconds in the opposite direction.
 - Expanded timed-pair rounds use 45 seconds, a 15-second change, and 45 seconds.
-- Each unlinked round ends with a 15-second rest and keep/discard decision.
+- A single-set exercise ends with a 15-second rest and keep/discard decision.
+  For repeated sets, each intermediate set ends with a 15-second timer, hides
+  the heart, remains neutral, and starts the next set automatically. Only the
+  final set presents the one shared keep/discard decision.
   Linked opposite-direction exercises are available only in workouts longer
   than 30 minutes. They always run consecutively: the first rest advances to
   the other direction without a Keep action, and the second rest presents one

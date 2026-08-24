@@ -12,6 +12,7 @@ import {
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
+  getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
   getMirrorEquipment,
@@ -110,6 +111,7 @@ let movementEndsAt = 0;
 let movementRemaining = 0;
 let movementRunning = false;
 let movementPauseReason = null;
+let automaticSetStartPending = false;
 let restTimer = null;
 let restActive = false;
 let wakeLock = null;
@@ -462,6 +464,10 @@ function restorePendingMovement() {
   movementPauseReason = session.state.pendingMovementPausedByUser
     ? "user"
     : "restore";
+  automaticSetStartPending =
+    movementPauseReason !== "user" &&
+    session.isSetContinuationRound(currentGroup) &&
+    movementRemaining === getMovementDurationMs(currentGroup);
   session.pauseMovement(
     currentGroup,
     movementRemaining,
@@ -539,6 +545,7 @@ function renderExecutionSignifier(exercise) {
 }
 
 function showReadyPanel() {
+  automaticSetStartPending = false;
   elements.readyPanel.hidden = false;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = true;
@@ -599,7 +606,10 @@ function showRestPanel() {
   const isDirectionPairLead = Boolean(
     currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound,
   );
-  elements.keepExercise.hidden = isDirectionPairLead;
+  const isIntermediateSet = Boolean(
+    currentGroup && session?.isIntermediateSetCompletion(currentGroup),
+  );
+  elements.keepExercise.hidden = isDirectionPairLead || isIntermediateSet;
   elements.keepExercise.disabled = false;
   elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");
   elements.keepExercise.title = "Keep exercise";
@@ -813,7 +823,12 @@ function setMovementDeadline(remainingMilliseconds) {
   }
   setPlaybackControlsEnabled(true);
   renderPlaybackToggle();
+  const cueAutomaticSetStart = automaticSetStartPending;
+  automaticSetStartPending = false;
   updateMovement();
+  if (cueAutomaticSetStart) {
+    playSound("start");
+  }
   movementTimer = setInterval(updateMovement, TIMER_INTERVAL_MS);
 }
 
@@ -1150,8 +1165,11 @@ function completeMovement() {
 }
 
 function restStatusMessage() {
-  return currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound
-    ? "Rest, 15 seconds. The other direction is next."
+  if (currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound) {
+    return "Rest, 15 seconds. The other direction is next.";
+  }
+  return currentGroup && session?.isIntermediateSetCompletion(currentGroup)
+    ? "Rest, 15 seconds. The next set starts automatically."
     : "Rest, 15 seconds. Tap the heart to keep this exercise.";
 }
 
@@ -1202,6 +1220,22 @@ function completeRest() {
     session.clearPendingRest();
     persistState();
     showNextExercise();
+    return;
+  }
+  if (session.isIntermediateSetCompletion(currentGroup)) {
+    session.advanceRepeatedSet(currentGroup);
+    session.clearPendingRest();
+    const nextSet = session.getNextGroup();
+    if (!nextSet) {
+      throw new Error("An intermediate set has no following set.");
+    }
+    session.pauseMovement(
+      nextSet,
+      getMovementDurationMs(nextSet),
+      false,
+    );
+    persistState();
+    restorePendingMovement();
     return;
   }
   const keep = session.state.pendingRestKept;

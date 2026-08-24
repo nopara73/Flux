@@ -1091,6 +1091,49 @@ test("linked directions are adjacent indivisible units on mobile and web", () =>
   assert.doesNotMatch(strings, /tap_to_keep|Tap to keep/);
 });
 
+test("repeated sets defer keep and continue automatically on mobile and web", () => {
+  assert.match(
+    sessionService,
+    /IsIntermediateSetCompletion[\s\S]*IsDirectionPairLead[\s\S]*SelectionKey == group\.SelectionKey/,
+  );
+  assert.match(
+    workoutModule,
+    /isIntermediateSetCompletion[\s\S]*isPairDecisionRound[\s\S]*getSelectionKey\(activeGroups\[groupIndex \+ 1\]\)/,
+  );
+  assert.match(
+    sessionService,
+    /KeepPendingRest[\s\S]*IsIntermediateSetCompletion[\s\S]*PendingRestKept = true/,
+  );
+  assert.match(
+    workoutModule,
+    /keepPendingRest\(\)[\s\S]*isIntermediateSetCompletion[\s\S]*pendingRestKept = true/,
+  );
+  assert.match(
+    sessionService,
+    /AdvanceRepeatedSet[\s\S]*ExerciseOutcome\.Neutral[\s\S]*WorkoutCompleted = false/,
+  );
+  assert.match(
+    workoutModule,
+    /advanceRepeatedSet[\s\S]*"neutral"[\s\S]*workoutCompleted = false/,
+  );
+  assert.match(
+    mainActivity,
+    /next set starts automatically[\s\S]*ContinueWithNextSet[\s\S]*PauseMovement[\s\S]*RestorePendingMovement/,
+  );
+  assert.match(
+    webApp,
+    /next set starts automatically[\s\S]*advanceRepeatedSet[\s\S]*pauseMovement[\s\S]*restorePendingMovement/,
+  );
+  assert.match(
+    mainActivity,
+    /FullSideTotalDurationSeconds[\s\S]*TotalDurationSeconds[\s\S]*1_000/,
+  );
+  assert.match(
+    webApp,
+    /pauseMovement\([\s\S]*getMovementDurationMs\(nextSet\)[\s\S]*false/,
+  );
+});
+
 test("web catalog migration matches the mobile workout contract", () => {
   assert.equal(
     CURRENT_CATALOG_REVISION,

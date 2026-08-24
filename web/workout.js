@@ -1813,10 +1813,18 @@ export class WorkoutSession {
         continue;
       }
       const group = activeGroupsById.get(groupId);
+      if (this.isIntermediateSetCompletion(group)) {
+        continue;
+      }
       const pairedOutcome = group?.pairedRoundId
         ? this.state.outcomes[group.pairedRoundId]
         : undefined;
       if (group?.pairedRoundId && !group.isPairDecisionRound && pairedOutcome === undefined) {
+        continue;
+      }
+      if (group?.pairedRoundId && !group.isPairDecisionRound &&
+          pairedOutcome === "neutral" &&
+          this.isIntermediateSetCompletion(activeGroupsById.get(group.pairedRoundId))) {
         continue;
       }
       this.state.outcomes[groupId] = pairedOutcome === "x" || pairedOutcome === "tick"
@@ -1896,6 +1904,29 @@ export class WorkoutSession {
 
   getNextGroup() {
     return this.getActiveGroups().find((group) => this.state.outcomes[group.id] === undefined) ?? null;
+  }
+
+  isIntermediateSetCompletion(group) {
+    if (group?.pairedRoundId && !group.isPairDecisionRound) {
+      return false;
+    }
+    const activeGroups = this.getActiveGroups();
+    const groupIndex = activeGroups.findIndex((activeGroup) =>
+      activeGroup.id === group?.id);
+    return groupIndex >= 0 &&
+      groupIndex + 1 < activeGroups.length &&
+      getSelectionKey(activeGroups[groupIndex + 1]) === getSelectionKey(group);
+  }
+
+  isSetContinuationRound(group) {
+    if (!group || group.isPairDecisionRound) {
+      return false;
+    }
+    const activeGroups = this.getActiveGroups();
+    const groupIndex = activeGroups.findIndex((activeGroup) =>
+      activeGroup.id === group.id);
+    return groupIndex > 0 &&
+      getSelectionKey(activeGroups[groupIndex - 1]) === getSelectionKey(group);
   }
 
   canShuffleNextExercise(group) {
@@ -2270,13 +2301,10 @@ export class WorkoutSession {
   }
 
   keepPendingRest() {
-    if (!this.state.pendingRestGroupId) {
-      return false;
-    }
-    const pendingGroup = this.getActiveGroups().find(
-      (group) => group.id === this.state.pendingRestGroupId,
-    );
-    if (pendingGroup?.pairedRoundId && !pendingGroup.isPairDecisionRound) {
+    const pendingGroup = this.getPendingRestGroup();
+    if (!pendingGroup ||
+        (pendingGroup.pairedRoundId && !pendingGroup.isPairDecisionRound) ||
+        this.isIntermediateSetCompletion(pendingGroup)) {
       return false;
     }
     this.state.pendingRestKept = true;
@@ -2313,6 +2341,23 @@ export class WorkoutSession {
       throw new Error(`${group.displayName} is not the first direction of a pair.`);
     }
     this.getPairedRound(group);
+    this.state.outcomes[group.id] = "neutral";
+    this.state.workoutCompleted = false;
+    this.state.completionAcknowledged = false;
+  }
+
+  advanceRepeatedSet(group) {
+    const nextGroup = this.getNextGroup();
+    if (!nextGroup || nextGroup.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+    if (!this.isIntermediateSetCompletion(group)) {
+      throw new Error(`${group.displayName} is not the end of an intermediate set.`);
+    }
+    if (group.pairedRoundId) {
+      const pairedRound = this.getPairedRound(group);
+      this.state.outcomes[pairedRound.id] = "neutral";
+    }
     this.state.outcomes[group.id] = "neutral";
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
@@ -2392,6 +2437,8 @@ export class WorkoutSession {
         if (group.pairedRoundId && !group.isPairDecisionRound) {
           this.getPairedRound(group);
           this.state.outcomes[group.id] = "neutral";
+        } else if (this.isIntermediateSetCompletion(group)) {
+          this.advanceRepeatedSet(group);
         } else if (group.pairedRoundId) {
           this.applyDirectionPairOutcome(group, this.state.pendingRestKept);
         } else {
