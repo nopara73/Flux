@@ -19,9 +19,6 @@ import {
   isModifierMetadataComplete,
   isSessionMovementMetadataValid,
   parseStoredState,
-  usesTimedPair,
-  usesTimedLeadStances,
-  usesTimedSides,
   withMirrorEquipment,
 } from "./workout.js";
 
@@ -65,8 +62,6 @@ const elements = {
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
   executionSignifier: byId("execution-signifier"),
-  unilateralSignifier: byId("unilateral-signifier"),
-  bidirectionalSignifier: byId("bidirectional-signifier"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
@@ -89,7 +84,7 @@ const elements = {
 };
 
 const sounds = Object.fromEntries(
-  ["start", "side_change", "rest", "complete"].map((name) => {
+  ["start", "rest", "complete"].map((name) => {
     const audio = new Audio(new URL(`audio/whistle_${name}.ogg`, document.baseURI));
     audio.preload = "none";
     return [name, audio];
@@ -111,7 +106,7 @@ let movementEndsAt = 0;
 let movementRemaining = 0;
 let movementRunning = false;
 let movementPauseReason = null;
-let automaticSetStartPending = false;
+let automaticSequenceStartPending = false;
 let restTimer = null;
 let restActive = false;
 let wakeLock = null;
@@ -431,7 +426,7 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
   elements.workoutProgressText.setAttribute("aria-label", `Round ${position} of ${total}`);
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
   elements.exerciseName.textContent = currentExercise.name;
-  renderExecutionSignifier(currentExercise);
+  renderExecutionSignifier(currentGroup);
   elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
     `Round ${position} of ${total}. ${currentExercise.name}.`;
@@ -464,9 +459,9 @@ function restorePendingMovement() {
   movementPauseReason = session.state.pendingMovementPausedByUser
     ? "user"
     : "restore";
-  automaticSetStartPending =
+  automaticSequenceStartPending =
     movementPauseReason !== "user" &&
-    session.isSetContinuationRound(currentGroup) &&
+    session.isSequenceContinuationBlock(currentGroup) &&
     movementRemaining === getMovementDurationMs(currentGroup);
   session.pauseMovement(
     currentGroup,
@@ -513,8 +508,7 @@ function renderPersistedMovementCountdown() {
   const movementDuration = getMovementCountdownDurationMs(currentGroup);
   const state = getMovementPhaseState(
     movementRemaining,
-    usesTimedPair(currentExercise),
-    currentGroup?.usesFullSideTiming === true,
+    !session.isSequenceContinuationBlock(currentGroup),
   );
   elements.movementCountdown.value = String(state.secondsRemaining);
   elements.movementCountdown.textContent = String(state.secondsRemaining);
@@ -522,30 +516,24 @@ function renderPersistedMovementCountdown() {
     `scaleX(${movementRemaining / movementDuration})`;
 }
 
-function renderExecutionSignifier(exercise) {
-  const isUnilateral = usesTimedSides(exercise);
-  const isBidirectional = exercise.directionSequence !== "None";
-  if (!isUnilateral && !isBidirectional) {
+function renderExecutionSignifier(group) {
+  const blockCount = (group?.sequenceBlockCount ?? 1) *
+    (group?.setCount ?? 1);
+  if (blockCount <= 1) {
     elements.executionSignifier.hidden = true;
     elements.executionSignifier.setAttribute("aria-label", "");
     return;
   }
-
-  elements.unilateralSignifier.toggleAttribute("hidden", !isUnilateral);
-  elements.bidirectionalSignifier.toggleAttribute("hidden", isUnilateral);
   elements.executionSignifier.setAttribute(
     "aria-label",
-    usesTimedLeadStances(exercise)
-      ? "Unilateral exercise. Match the shown lead stance, change stance, then repeat from the opposite lead stance."
-      : isUnilateral
-        ? "Unilateral exercise. Work one side, change, then the other."
-        : "Bidirectional exercise. Complete the shown direction, change direction, then complete the opposite direction.",
+    `Exercise sequence. ${blockCount} blocks, 45 seconds each, ` +
+      "with 15 seconds between blocks.",
   );
   elements.executionSignifier.hidden = false;
 }
 
 function showReadyPanel() {
-  automaticSetStartPending = false;
+  automaticSequenceStartPending = false;
   elements.readyPanel.hidden = false;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = true;
@@ -603,13 +591,10 @@ function showRestPanel() {
   elements.readyPanel.hidden = true;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = false;
-  const isDirectionPairLead = Boolean(
-    currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound,
+  const isIntermediateBlock = Boolean(
+    currentGroup && session?.isIntermediateSequenceBlock(currentGroup),
   );
-  const isIntermediateSet = Boolean(
-    currentGroup && session?.isIntermediateSetCompletion(currentGroup),
-  );
-  elements.keepExercise.hidden = isDirectionPairLead || isIntermediateSet;
+  elements.keepExercise.hidden = isIntermediateBlock;
   elements.keepExercise.disabled = false;
   elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");
   elements.keepExercise.title = "Keep exercise";
@@ -640,6 +625,7 @@ function loadExerciseMedia() {
   elements.holdFrame.hidden = true;
   elements.holdFrame.removeAttribute("src");
   resetVideoElement();
+  setMediaMirrored(currentGroup?.mirrorSequenceMedia === true);
 
   if (currentExercise.presentation === "Still") {
     elements.video.hidden = true;
@@ -652,8 +638,13 @@ function loadExerciseMedia() {
 
   elements.video.hidden = false;
   elements.video.preload = "auto";
-  elements.video.loop = true;
-  elements.video.oncanplay = () => markMediaReady(generation, false);
+  elements.video.loop =
+    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full";
+  elements.video.onloadedmetadata = () => prepareSequenceMediaSegment();
+  elements.video.oncanplay = () => {
+    prepareSequenceMediaSegment();
+    markMediaReady(generation, false);
+  };
   elements.video.onplaying = () => markMediaReady(generation, true);
   elements.video.onwaiting = () => handleVideoWaiting(generation);
   elements.video.onstalled = () => {
@@ -668,13 +659,17 @@ function loadExerciseMedia() {
   };
   elements.video.onerror = () => showMediaError(generation);
   elements.video.onended = handleVideoEnded;
-  elements.video.ontimeupdate = () => enforceDirectionMediaSegment(lastMovementPhase);
-  elements.video.src = assetUrl(getExerciseVideoPath(currentExercise));
+  elements.video.ontimeupdate = enforceDirectionMediaSegment;
+  elements.video.src = assetUrl(getExerciseVideoPath(
+    currentExercise,
+    currentGroup?.sequenceMediaSegment ?? "Full",
+  ));
   elements.video.load();
 }
 
 function resetVideoElement() {
   elements.video.oncanplay = null;
+  elements.video.onloadedmetadata = null;
   elements.video.onplaying = null;
   elements.video.onwaiting = null;
   elements.video.onstalled = null;
@@ -823,10 +818,10 @@ function setMovementDeadline(remainingMilliseconds) {
   }
   setPlaybackControlsEnabled(true);
   renderPlaybackToggle();
-  const cueAutomaticSetStart = automaticSetStartPending;
-  automaticSetStartPending = false;
+  const cueAutomaticSequenceStart = automaticSequenceStartPending;
+  automaticSequenceStartPending = false;
   updateMovement();
-  if (cueAutomaticSetStart) {
+  if (cueAutomaticSequenceStart) {
     playSound("start");
   }
   movementTimer = setInterval(updateMovement, TIMER_INTERVAL_MS);
@@ -840,8 +835,7 @@ function updateMovement() {
   const movementDuration = getMovementCountdownDurationMs(currentGroup);
   const state = getMovementPhaseState(
     movementRemaining,
-    usesTimedPair(currentExercise),
-    currentGroup?.usesFullSideTiming === true,
+    !session.isSequenceContinuationBlock(currentGroup),
   );
   elements.movementCountdown.value = String(state.secondsRemaining);
   elements.movementCountdown.textContent = String(state.secondsRemaining);
@@ -851,7 +845,7 @@ function updateMovement() {
   if (state.phase !== lastMovementPhase && state.phase !== "Complete") {
     applyMovementPhase(state.phase);
   }
-  enforceDirectionMediaSegment(state.phase);
+  enforceDirectionMediaSegment();
   if (movementRemaining <= 0) {
     completeMovement();
   }
@@ -865,7 +859,7 @@ function applyMovementPhase(phase) {
   lastMovementPhase = phase;
   elements.movePanel.classList.toggle(
     "change",
-    phase === "Preparation" || phase === "ChangeSides",
+    phase === "Preparation",
   );
 
   if (phase === "Preparation") {
@@ -877,24 +871,11 @@ function applyMovementPhase(phase) {
     return;
   }
 
-  const presentation = getMovementPresentation(currentExercise, phase);
-  const description = movementCueDescription(presentation.cue);
-
-  if (phase === "ChangeSides") {
-    setMediaMirrored(false);
-    setFullPhaseSurface("rest");
-    elements.mediaCard.classList.add("resting");
-    elements.video.pause();
-    playSound("side_change");
-    const changeSeconds = currentGroup?.usesFullSideTiming ? 15 : 5;
-    elements.status.textContent =
-      usesTimedLeadStances(currentExercise)
-        ? `Change stance, ${changeSeconds} seconds.`
-        : currentExercise.directionSequence === "None"
-        ? `Change sides, ${changeSeconds} seconds.`
-        : `Change direction, ${changeSeconds} seconds.`;
-    return;
-  }
+  const presentation = getMovementPresentation(currentGroup, phase);
+  const description = movementCueDescription(
+    presentation.sideCue,
+    presentation.directionCue,
+  );
 
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
@@ -903,18 +884,16 @@ function applyMovementPhase(phase) {
   } else {
     setFullPhaseSurface("move");
   }
-  restartMediaForPhase(phase);
+  restartMediaForPhase();
 
-  const segmentSeconds = currentGroup?.usesFullSideTiming ? 45 : 20;
-  elements.status.textContent =
-    phase === "Continuous" ? "Move, 45 seconds." : `${description}, ${segmentSeconds} seconds.`;
+  elements.status.textContent = `${description}, 45 seconds.`;
 
-  if (previousPhase === "Preparation" || phase === "SecondSide") {
+  if (previousPhase === "Preparation") {
     playSound("start");
   }
 }
 
-function restartMediaForPhase(phase) {
+function restartMediaForPhase() {
   if (!currentExercise) {
     return;
   }
@@ -926,28 +905,43 @@ function restartMediaForPhase(phase) {
   elements.holdFrame.hidden = true;
   elements.video.hidden = false;
   elements.video.loop =
-    currentExercise.mode !== "Hold" && currentExercise.directionSequence === "None";
-  try {
-    elements.video.currentTime =
-      currentExercise.directionSequence !== "None" && phase === "SecondSide"
-        ? DIRECTION_SEGMENT_SECONDS
-        : 0;
-  } catch {
-    // The loaded media will seek once its metadata is available.
-  }
+    currentExercise.mode !== "Hold" &&
+    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full";
+  prepareSequenceMediaSegment(true);
   playVideo();
 }
 
-function enforceDirectionMediaSegment(phase) {
+function getSequenceMediaSegmentStart() {
+  return currentGroup?.sequenceMediaSegment === "SecondDirection"
+    ? DIRECTION_SEGMENT_SECONDS
+    : 0;
+}
+
+function prepareSequenceMediaSegment(force = false) {
+  if ((currentGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
+      !Number.isFinite(elements.video.duration)) {
+    return;
+  }
+  const segmentStart = getSequenceMediaSegmentStart();
+  if (!force && Math.abs(elements.video.currentTime - segmentStart) < 0.05) {
+    return;
+  }
+  try {
+    elements.video.currentTime = segmentStart;
+  } catch {
+    // The loaded media will seek again once metadata is available.
+  }
+}
+
+function enforceDirectionMediaSegment() {
   if (
-    currentExercise?.directionSequence === "None" ||
-    !["FirstSide", "SecondSide"].includes(phase) ||
+    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
     !Number.isFinite(elements.video.currentTime)
   ) {
     return;
   }
 
-  const segmentStart = phase === "SecondSide" ? DIRECTION_SEGMENT_SECONDS : 0;
+  const segmentStart = getSequenceMediaSegmentStart();
   const segmentEnd = segmentStart + DIRECTION_SEGMENT_SECONDS;
   if (
     elements.video.currentTime >= segmentStart &&
@@ -966,11 +960,10 @@ function enforceDirectionMediaSegment(phase) {
 
 function handleVideoEnded() {
   if (
-    currentExercise?.directionSequence !== "None" &&
-    ["FirstSide", "SecondSide"].includes(lastMovementPhase) &&
+    (currentGroup?.sequenceMediaSegment ?? "Full") !== "Full" &&
     !elements.movePanel.hidden
   ) {
-    enforceDirectionMediaSegment(lastMovementPhase);
+    enforceDirectionMediaSegment();
     return;
   }
 
@@ -1040,13 +1033,11 @@ function resumePausedMovementWhenVisible() {
 
   const phaseState = getMovementPhaseState(
     movementRemaining,
-    usesTimedPair(currentExercise),
-    currentGroup?.usesFullSideTiming === true,
+    !session.isSequenceContinuationBlock(currentGroup),
   );
   if (
     currentExercise.presentation === "Still" ||
-    phaseState.phase === "Preparation" ||
-    phaseState.phase === "ChangeSides"
+    phaseState.phase === "Preparation"
   ) {
     resumeMovement();
     return;
@@ -1061,9 +1052,9 @@ function resumePausedMovementWhenVisible() {
 }
 
 function restorePausedMovementMedia(phase) {
-  const presentation = getMovementPresentation(currentExercise, phase);
+  const presentation = getMovementPresentation(currentGroup, phase);
   lastMovementPhase = phase;
-  elements.movePanel.classList.toggle("change", phase === "ChangeSides");
+  elements.movePanel.classList.remove("change");
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
   if (presentation.activeScreenSide) {
@@ -1071,7 +1062,7 @@ function restorePausedMovementMedia(phase) {
   } else {
     setFullPhaseSurface("move");
   }
-  restartMediaForPhase(phase);
+  restartMediaForPhase();
 }
 
 function toggleMovementPlayback() {
@@ -1131,7 +1122,7 @@ function goToNextExercise() {
     return;
   }
   stopMovementTimer();
-  session.recordOutcome(currentGroup, false);
+  session.rejectCurrentSequence(currentGroup);
   persistState();
   if (session.state.workoutCompleted) {
     showCompletion(true);
@@ -1165,12 +1156,9 @@ function completeMovement() {
 }
 
 function restStatusMessage() {
-  if (currentGroup?.pairedRoundId && !currentGroup.isPairDecisionRound) {
-    return "Rest, 15 seconds. The other direction is next.";
-  }
-  return currentGroup && session?.isIntermediateSetCompletion(currentGroup)
-    ? "Rest, 15 seconds. The next set starts automatically."
-    : "Rest, 15 seconds. Tap the heart to keep this exercise.";
+  return currentGroup && session?.isIntermediateSequenceBlock(currentGroup)
+    ? "Rest, 15 seconds. The next block starts automatically."
+    : "Rest, 15 seconds. Tap the heart to keep this sequence.";
 }
 
 function startRestTimer() {
@@ -1215,23 +1203,16 @@ function completeRest() {
   restActive = false;
   clearInterval(restTimer);
   restTimer = null;
-  if (currentGroup.pairedRoundId && !currentGroup.isPairDecisionRound) {
-    session.advanceDirectionPair(currentGroup);
+  if (session.isIntermediateSequenceBlock(currentGroup)) {
+    session.advanceSequence(currentGroup);
     session.clearPendingRest();
-    persistState();
-    showNextExercise();
-    return;
-  }
-  if (session.isIntermediateSetCompletion(currentGroup)) {
-    session.advanceRepeatedSet(currentGroup);
-    session.clearPendingRest();
-    const nextSet = session.getNextGroup();
-    if (!nextSet) {
-      throw new Error("An intermediate set has no following set.");
+    const nextBlock = session.getNextGroup();
+    if (!nextBlock) {
+      throw new Error("An intermediate sequence block has no following block.");
     }
     session.pauseMovement(
-      nextSet,
-      getMovementDurationMs(nextSet),
+      nextBlock,
+      getMovementDurationMs(nextBlock),
       false,
     );
     persistState();
@@ -1342,10 +1323,8 @@ function setMediaMirrored(mirrored) {
   elements.holdFrame.style.setProperty("--media-scale-x", scale);
 }
 
-function movementCueDescription(cue) {
-  return {
-    Move: "Move",
-    Switch: "Change",
+function movementCueDescription(sideCue, directionCue) {
+  const labels = {
     ScreenLeft: "Left side",
     ScreenRight: "Right side",
     ShownLeadStance: "Shown lead stance",
@@ -1356,7 +1335,9 @@ function movementCueDescription(cue) {
     Counterclockwise: "Counterclockwise",
     Inward: "Inward",
     Outward: "Outward",
-  }[cue] ?? "Move";
+  };
+  const parts = [labels[sideCue], labels[directionCue]].filter(Boolean);
+  return parts.length > 0 ? parts.join(", ") : "Move";
 }
 
 function playVideo() {

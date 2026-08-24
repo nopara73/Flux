@@ -1867,12 +1867,12 @@
     }
     248 = @{
         RetiredName = 'Standing Palm-Press Hold'
-        Name = 'Side-Tap Palm Pushes'
+        Name = 'Alternating Side-Tap Palm Pushes'
         Practice = 'Low-impact conditioning'
         MotionProfile = 'SideTapPalmPush'
         Primary = 'Chest'
         Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAbductors')
-        SideSequence = 'ScreenRightThenLeft'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3143,7 +3143,7 @@
         MotionProfile = 'HighKneeCrossBodySweep'
         Primary = 'BreathingMuscles'
         Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'DeepAndIntersegmentalBack')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3636,7 +3636,7 @@
         MotionProfile = 'SealJack'
         Primary = 'HipAbductors'
         Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -3792,7 +3792,7 @@
         MotionProfile = 'SplitJack'
         Primary = 'HipFlexors'
         Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'BreathingMuscles')
-        SideSequence = 'ScreenLeftLeadThenRightLead'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -4858,7 +4858,7 @@
         MotionProfile = 'ScarecrowJack'
         Primary = 'RotatorCuff'
         Secondary = @('ShoulderAbductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot')
-        SideSequence = 'ScreenLeftThenRight'
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -7062,7 +7062,7 @@
         MotionProfile = 'OverheadSideStretch'
         Primary = 'ShoulderAdductorsAndExtensors'
         Secondary = @('AbdominalWall', 'ScapularGirdle')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0

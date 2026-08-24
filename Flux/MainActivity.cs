@@ -126,7 +126,6 @@ public class MainActivity : Activity
     private WorkoutCountDownTimer? _restTimer;
     private Android.Media.SoundPool? _whistleSoundPool;
     private int _movementStartWhistleId;
-    private int _sideChangeWhistleId;
     private int _restStartWhistleId;
     private int _workoutCompleteWhistleId;
     private Android.Media.MediaPlayer? _activeMediaPlayer;
@@ -145,7 +144,7 @@ public class MainActivity : Activity
     private bool _mediaReady;
     private bool _countdownPausedForMediaError;
     private bool _countdownPausedByUser;
-    private bool _automaticSetStartPending;
+    private bool _automaticSequenceStartPending;
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
@@ -1101,8 +1100,7 @@ public class MainActivity : Activity
             _appScreen == AppScreen.Workout &&
             (_workoutPhase == WorkoutPhase.Rest ||
              (_workoutPhase == WorkoutPhase.Move &&
-              _lastMovementPhase is MovementPhase.Preparation or
-                  MovementPhase.ChangeSides));
+              _lastMovementPhase == MovementPhase.Preparation));
         _exerciseMediaCard.Alpha = mediaIsResting ? 0.92f : 1f;
         _exerciseMediaCard.ScaleX = mediaIsResting ? 0.985f : 1f;
         _exerciseMediaCard.ScaleY = mediaIsResting ? 0.985f : 1f;
@@ -1740,8 +1738,8 @@ public class MainActivity : Activity
         _exerciseVideo.SetOnInfoListener(_videoInfoListener);
         _exerciseVideo.Completion += (_, _) =>
         {
-            if (_currentExercise?.DirectionSequence !=
-                ExerciseDirectionSequence.None)
+            if (_currentWorkoutGroup?.SequenceMediaSegment !=
+                ExerciseSequenceMediaSegment.Full)
             {
                 if (_workoutPhase == WorkoutPhase.Ready)
                 {
@@ -1751,8 +1749,7 @@ public class MainActivity : Activity
                 }
 
                 if (_workoutPhase == WorkoutPhase.Move &&
-                    _lastMovementPhase is MovementPhase.FirstSide or
-                        MovementPhase.SecondSide)
+                    _lastMovementPhase == MovementPhase.Continuous)
                 {
                     RestartExerciseMediaForPhase(_lastMovementPhase.Value);
                     return;
@@ -1778,7 +1775,8 @@ public class MainActivity : Activity
         _loopExerciseVideo =
             !holdDuringMove &&
             !holdDuringRest &&
-            exercise.DirectionSequence == ExerciseDirectionSequence.None;
+            _currentWorkoutGroup?.SequenceMediaSegment ==
+                ExerciseSequenceMediaSegment.Full;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
 
@@ -1977,9 +1975,10 @@ public class MainActivity : Activity
 #pragma warning restore CS0618
     }
 
-    private static string GetExerciseVideoAssetPath(Exercise exercise)
+    private string GetExerciseVideoAssetPath(Exercise exercise)
     {
-        return exercise.DirectionSequence == ExerciseDirectionSequence.None
+        return _currentWorkoutGroup?.SequenceMediaSegment ==
+                ExerciseSequenceMediaSegment.Full
             ? exercise.Video
             : $"exercise_direction_videos/exercise_{exercise.Id:D4}.mp4";
     }
@@ -2213,10 +2212,8 @@ public class MainActivity : Activity
         _exerciseName.Text = exercise.Name;
         _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}. Hold."
-            : exercise.DirectionSequence != ExerciseDirectionSequence.None
-                ? $"{exercise.Name}. First direction, change, then opposite direction."
-                : $"{exercise.Name}. Repetition.";
-        RenderExecutionSignifier(exercise);
+            : $"{exercise.Name}. Repetition.";
+        RenderExecutionSignifier();
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
@@ -2259,9 +2256,9 @@ public class MainActivity : Activity
         _countdownMillisecondsRemaining = millisecondsRemaining;
         _countdownEndsAtElapsedMilliseconds = 0;
         _countdownPausedByUser = _state.PendingMovementPausedByUser;
-        _automaticSetStartPending =
+        _automaticSequenceStartPending =
             !_countdownPausedByUser &&
-            _sessionService.IsSetContinuationRound(_state, pendingGroup) &&
+            _sessionService.IsSequenceContinuationBlock(_state, pendingGroup) &&
             millisecondsRemaining == GetCurrentMovementDurationMilliseconds();
         _countdownPausedForMediaError =
             !_countdownPausedByUser && !_mediaReady;
@@ -2295,29 +2292,22 @@ public class MainActivity : Activity
         ResumeRestCountdown();
     }
 
-    private void RenderExecutionSignifier(Exercise exercise)
+    private void RenderExecutionSignifier()
     {
-        bool isUnilateral = exercise.SideSequence.UsesTimedSides();
-        bool isBidirectional = exercise.DirectionSequence !=
-            ExerciseDirectionSequence.None;
-        if (!isUnilateral && !isBidirectional)
+        int blockCount = _currentWorkoutGroup.SequenceBlockCount *
+            _currentWorkoutGroup.SetCount;
+        if (blockCount <= 1)
         {
             _executionSignifier.Visibility = ViewStates.Gone;
             _executionSignifier.ContentDescription = null;
             return;
         }
 
-        _executionSignifierIcon.SetImageResource(isUnilateral
-            ? Resource.Drawable.ic_unilateral_asymmetry
-            : Resource.Drawable.ic_bidirectional_execution);
+        _executionSignifierIcon.SetImageResource(
+            Resource.Drawable.ic_exercise_sequence);
         _executionSignifier.ContentDescription =
-            exercise.SideSequence.UsesTimedLeadStances()
-                ? "Unilateral exercise. Match the shown lead stance, change stance, " +
-                    "then repeat from the opposite lead stance."
-                : isUnilateral
-                    ? "Unilateral exercise. Work one side, change, then the other."
-                    : "Bidirectional exercise. Complete the shown direction, change " +
-                        "direction, then complete the opposite direction.";
+            $"Exercise sequence. {blockCount} blocks, 45 seconds each, " +
+            "with 15 seconds between blocks.";
         _executionSignifier.Visibility = ViewStates.Visible;
     }
 
@@ -2352,7 +2342,7 @@ public class MainActivity : Activity
 
     private void ShowStartButton()
     {
-        _automaticSetStartPending = false;
+        _automaticSequenceStartPending = false;
         _countdownPausedByUser = false;
         _startButton.Enabled = true;
         _startButton.Alpha = 1f;
@@ -2487,7 +2477,20 @@ public class MainActivity : Activity
 
         StopCountdownTimer();
         SetPlaybackControlsAvailability(available: false);
-        FinalizeCurrentRound(keep: false);
+        RecordedWorkoutOutcome result =
+            _sessionService.RejectCurrentSequenceWithScoreUpdates(
+                _state,
+                _currentWorkoutGroup);
+        SaveStateAndScores(result.ScoreUpdates);
+        if (_state.WorkoutCompleted)
+        {
+            PlayWhistleCue(_workoutCompleteWhistleId);
+            ShowCongratulations();
+        }
+        else
+        {
+            ShowNextExercise();
+        }
     }
 
     private void CompleteCountdown()
@@ -2576,10 +2579,10 @@ public class MainActivity : Activity
             return;
         }
 
-        bool cueAutomaticSetStart = _automaticSetStartPending;
-        _automaticSetStartPending = false;
+        bool cueAutomaticSequenceStart = _automaticSequenceStartPending;
+        _automaticSequenceStartPending = false;
         StartCountdownTimer(_countdownMillisecondsRemaining);
-        if (cueAutomaticSetStart)
+        if (cueAutomaticSequenceStart)
         {
             CueMovementRestart();
         }
@@ -2633,8 +2636,9 @@ public class MainActivity : Activity
         _countdownMillisecondsRemaining = boundedMilliseconds;
         MovementPhaseState state = MovementPhaseSchedule.GetState(
             boundedMilliseconds,
-            UsesTimedPair(),
-            _currentWorkoutGroup.UsesFullSideTiming);
+            includePreparation: !_sessionService.IsSequenceContinuationBlock(
+                _state,
+                _currentWorkoutGroup));
         string secondsText = state.SecondsRemaining.ToString();
         if (_countdownText.Text != secondsText ||
             state.Phase != _lastMovementPhase)
@@ -2648,23 +2652,14 @@ public class MainActivity : Activity
         EnforceDirectionMediaSegment(state.Phase);
     }
 
-    private bool UsesTimedPair()
-    {
-        Exercise? exercise = _currentExercise;
-        return exercise is not null &&
-            MovementPhasePresentationPolicy.UsesTimedPair(
-                exercise.SideSequence,
-                exercise.DirectionSequence);
-    }
-
     private int GetCurrentMovementDurationMilliseconds() =>
-        (_currentWorkoutGroup?.UsesFullSideTiming == true
-            ? MovementPhaseSchedule.FullSideTotalDurationSeconds
-            : CountdownSeconds) * 1_000;
+        CountdownSeconds * 1_000;
 
     private int GetCurrentCountdownDurationMilliseconds() =>
-        GetCurrentMovementDurationMilliseconds() +
-        MovementPhaseSchedule.PreparationDurationSeconds * 1_000;
+        MovementPhaseSchedule.GetCountdownDurationSeconds(
+            includePreparation: !_sessionService.IsSequenceContinuationBlock(
+                _state,
+                _currentWorkoutGroup)) * 1_000;
 
     private string GetMovementCountdownDescription(
         MovementPhaseState state)
@@ -2674,15 +2669,13 @@ public class MainActivity : Activity
             return $"Prepare, {state.SecondsRemaining} seconds remaining";
         }
 
-        MovementDirectionCue cue = GetCurrentMovementPresentation(state.Phase).Cue;
-        string phaseDescription = state.Phase == MovementPhase.ChangeSides
-            ? GetPairChangeDescription()
-            : GetMovementCueDescription(cue);
         return state.Phase switch
         {
-            MovementPhase.Preparation or MovementPhase.Continuous or MovementPhase.FirstSide or
-                MovementPhase.ChangeSides or MovementPhase.SecondSide =>
-                $"{phaseDescription}, {state.SecondsRemaining} seconds remaining",
+            MovementPhase.Preparation =>
+                $"Prepare, {state.SecondsRemaining} seconds remaining",
+            MovementPhase.Continuous =>
+                $"{GetMovementCueDescription(GetCurrentMovementPresentation(state.Phase))}, " +
+                $"{state.SecondsRemaining} seconds remaining",
             MovementPhase.Complete => "Movement complete",
             _ => throw new ArgumentOutOfRangeException(nameof(state)),
         };
@@ -2712,80 +2705,28 @@ public class MainActivity : Activity
             return;
         }
 
-        MovementPhasePresentation presentation =
-            GetCurrentMovementPresentation(state.Phase);
-        RenderCountdownPhase(presentation.Cue);
-
-        switch (state.Phase)
+        if (state.Phase != MovementPhase.Continuous)
         {
-            case MovementPhase.Continuous:
-                SetExerciseMediaMirrored(mirrored: false);
-                RenderFullWorkoutPhase(Resource.Color.move_surface);
-                AnimateMediaPhase(resting: false);
-                if (previousPhase == MovementPhase.Preparation)
-                {
-                    RestartExerciseMediaForPhase(state.Phase);
-                    CueMovementRestart();
-                }
-                else
-                {
-                    RestartHoldOrResumeRepetition();
-                }
-                break;
-
-            case MovementPhase.FirstSide:
-                SetExerciseMediaMirrored(presentation.MirrorMedia);
-                RenderTimedPairWorkoutPhase(presentation);
-                AnimateMediaPhase(resting: false);
-                RestartExerciseMediaForPhase(state.Phase);
-                if (previousPhase == MovementPhase.Preparation)
-                {
-                    CueMovementRestart();
-                }
-                break;
-
-            case MovementPhase.ChangeSides:
-                _exerciseVideo.Pause();
-                RenderFullWorkoutPhase(Resource.Color.rest_surface);
-                AnimateMediaPhase(resting: true);
-                CueSideChange();
-                break;
-
-            case MovementPhase.SecondSide:
-                SetExerciseMediaMirrored(presentation.MirrorMedia);
-                RenderTimedPairWorkoutPhase(presentation);
-                AnimateMediaPhase(resting: false);
-                RestartExerciseMediaForPhase(state.Phase);
-                CueMovementRestart();
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(state));
+            throw new ArgumentOutOfRangeException(nameof(state));
         }
 
-        int timedPairWorkSeconds = _currentWorkoutGroup?.UsesFullSideTiming == true
-            ? MovementPhaseSchedule.FullSideDurationSeconds
-            : MovementPhaseSchedule.SideDurationSeconds;
-        int timedPairChangeSeconds = _currentWorkoutGroup?.UsesFullSideTiming == true
-            ? MovementPhaseSchedule.FullSideChangeDurationSeconds
-            : MovementPhaseSchedule.SideChangeDurationSeconds;
-        string? announcement = state.Phase switch
+        MovementPhasePresentation presentation =
+            GetCurrentMovementPresentation(state.Phase);
+        RenderCountdownPhase();
+        SetExerciseMediaMirrored(presentation.MirrorMedia);
+        RenderSequenceBlockWorkoutPhase(presentation);
+        AnimateMediaPhase(resting: false);
+        if (previousPhase is null or MovementPhase.Preparation)
         {
-            MovementPhase.Continuous when previousPhase is null or MovementPhase.Preparation =>
-                "Move, 45 seconds.",
-            MovementPhase.FirstSide when previousPhase is null or MovementPhase.Preparation =>
-                $"{GetMovementCueDescription(presentation.Cue)}, " +
-                    $"{timedPairWorkSeconds} seconds.",
-            MovementPhase.ChangeSides =>
-                $"{GetPairChangeDescription()}, {timedPairChangeSeconds} seconds.",
-            MovementPhase.SecondSide =>
-                $"{GetMovementCueDescription(presentation.Cue)}, " +
-                    $"{timedPairWorkSeconds} seconds.",
-            _ => null,
-        };
-        if (announcement is not null)
+            RestartExerciseMediaForPhase(state.Phase);
+            CueMovementRestart();
+            AnnouncePhaseForAccessibility(
+                _countdownPanel,
+                $"{GetMovementCueDescription(presentation)}, 45 seconds.");
+        }
+        else
         {
-            AnnouncePhaseForAccessibility(_countdownPanel, announcement);
+            RestartHoldOrResumeRepetition();
         }
     }
 
@@ -2813,29 +2754,23 @@ public class MainActivity : Activity
 
         ClearHoldFrame();
         _exerciseVideo.Pause();
-        int positionMilliseconds =
-            exercise.DirectionSequence != ExerciseDirectionSequence.None &&
-            phase == MovementPhase.SecondSide
-                ? DirectionSecondPhaseOffsetMilliseconds
-                : 0;
+        int positionMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
         _exerciseVideo.SeekTo(positionMilliseconds);
         RestartHoldOrResumeRepetition();
     }
 
     private void EnforceDirectionMediaSegment(MovementPhase phase)
     {
-        if (_currentExercise?.DirectionSequence ==
-                ExerciseDirectionSequence.None ||
+        if (_currentWorkoutGroup?.SequenceMediaSegment ==
+                ExerciseSequenceMediaSegment.Full ||
             _activeMediaPlayer is null ||
             !_mediaReady ||
-            phase is not (MovementPhase.FirstSide or MovementPhase.SecondSide))
+            phase != MovementPhase.Continuous)
         {
             return;
         }
 
-        int segmentStartMilliseconds = phase == MovementPhase.SecondSide
-            ? DirectionSecondPhaseOffsetMilliseconds
-            : 0;
+        int segmentStartMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
         int segmentEndMilliseconds =
             segmentStartMilliseconds + DirectionSegmentDurationMilliseconds;
         int positionMilliseconds;
@@ -2864,6 +2799,12 @@ public class MainActivity : Activity
         ApplyCurrentMediaPlaybackState();
     }
 
+    private int GetCurrentMediaSegmentStartMilliseconds() =>
+        _currentWorkoutGroup?.SequenceMediaSegment ==
+            ExerciseSequenceMediaSegment.SecondDirection
+            ? DirectionSecondPhaseOffsetMilliseconds
+            : 0;
+
     private void RecoverInvalidMediaPlayerState()
     {
         _mediaReady = false;
@@ -2891,34 +2832,22 @@ public class MainActivity : Activity
         }
     }
 
-    private void CueSideChange()
-    {
-        PlayWhistleCue(_sideChangeWhistleId);
-        _countdownPanel.PerformHapticFeedback(FeedbackConstants.ClockTick);
-    }
-
     private void CueMovementRestart()
     {
         PlayWhistleCue(_movementStartWhistleId);
         _countdownPanel.PerformHapticFeedback(FeedbackConstants.ClockTick);
     }
 
-    private void RenderCountdownPhase(MovementDirectionCue cue)
+    private void RenderCountdownPhase()
     {
-        bool changingPair = cue == MovementDirectionCue.Switch;
-        int textColorResource = changingPair
-            ? Resource.Color.rest_text
-            : Resource.Color.move_text;
-        int progressResource = changingPair
-            ? Resource.Drawable.rest_progress_track
-            : Resource.Drawable.move_progress_track;
-        int actionBackgroundResource = changingPair
-            ? Resource.Drawable.phase_rest_chip_background
-            : Resource.Drawable.phase_move_chip_background;
-        var textColor = new Android.Graphics.Color(GetColor(textColorResource));
+        var textColor = new Android.Graphics.Color(
+            GetColor(Resource.Color.move_text));
         _countdownText.SetTextColor(textColor);
-        StylePlaybackControls(textColor, actionBackgroundResource);
-        _countdownProgress.ProgressDrawable = GetDrawable(progressResource);
+        StylePlaybackControls(
+            textColor,
+            Resource.Drawable.phase_move_chip_background);
+        _countdownProgress.ProgressDrawable =
+            GetDrawable(Resource.Drawable.move_progress_track);
     }
 
     private void RenderPreparationPhase()
@@ -2962,8 +2891,7 @@ public class MainActivity : Activity
         return _workoutPhase == WorkoutPhase.Ready ||
             (_workoutPhase == WorkoutPhase.Move &&
                 _countdownActive &&
-                _lastMovementPhase is (MovementPhase.Continuous or
-                    MovementPhase.FirstSide or MovementPhase.SecondSide));
+                _lastMovementPhase == MovementPhase.Continuous);
     }
 
     private void ApplyCurrentMediaPlaybackState()
@@ -2994,49 +2922,52 @@ public class MainActivity : Activity
     private MovementPhasePresentation GetCurrentMovementPresentation(
         MovementPhase phase)
     {
-        Exercise exercise = _currentExercise
-            ?? throw new InvalidOperationException(
-                "A movement phase requires a current exercise.");
         return MovementPhasePresentationPolicy.GetPresentation(
-            exercise.SideSequence,
-            exercise.DirectionSequence,
+            _currentWorkoutGroup.SequenceSideCue,
+            _currentWorkoutGroup.SequenceDirectionCue,
+            _currentWorkoutGroup.MirrorSequenceMedia,
             phase);
     }
 
-    private string GetPairChangeDescription()
+    private static string GetMovementCueDescription(
+        MovementPhasePresentation presentation)
     {
-        if (_currentExercise?.SideSequence.UsesTimedLeadStances() == true)
+        var parts = new List<string>(2);
+        string? side = presentation.SideCue switch
         {
-            return "Change stance";
-        }
-
-        return _currentExercise?.DirectionSequence == ExerciseDirectionSequence.None
-            ? "Change sides"
-            : "Change direction";
-    }
-
-    private static string GetMovementCueDescription(MovementDirectionCue cue)
-    {
-        return cue switch
-        {
-            MovementDirectionCue.None => "Movement complete",
-            MovementDirectionCue.Move => "Move",
-            MovementDirectionCue.Switch => "Change",
-            MovementDirectionCue.ScreenLeft => "Left side",
-            MovementDirectionCue.ScreenRight => "Right side",
-            MovementDirectionCue.ShownLeadStance => "Shown lead stance",
-            MovementDirectionCue.OppositeLeadStance => "Opposite lead stance",
-            MovementDirectionCue.Forward => "Forward",
-            MovementDirectionCue.Backward => "Backward",
-            MovementDirectionCue.Clockwise => "Clockwise",
-            MovementDirectionCue.Counterclockwise => "Counterclockwise",
-            MovementDirectionCue.Inward => "Inward",
-            MovementDirectionCue.Outward => "Outward",
-            _ => throw new ArgumentOutOfRangeException(nameof(cue), cue, null),
+            ExerciseSequenceSideCue.None => null,
+            ExerciseSequenceSideCue.ScreenLeft => "Left side",
+            ExerciseSequenceSideCue.ScreenRight => "Right side",
+            ExerciseSequenceSideCue.ShownLeadStance => "Shown lead stance",
+            ExerciseSequenceSideCue.OppositeLeadStance => "Opposite lead stance",
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(presentation), presentation.SideCue, null),
         };
+        string? direction = presentation.DirectionCue switch
+        {
+            ExerciseSequenceDirectionCue.None => null,
+            ExerciseSequenceDirectionCue.Forward => "Forward",
+            ExerciseSequenceDirectionCue.Backward => "Backward",
+            ExerciseSequenceDirectionCue.Clockwise => "Clockwise",
+            ExerciseSequenceDirectionCue.Counterclockwise => "Counterclockwise",
+            ExerciseSequenceDirectionCue.Inward => "Inward",
+            ExerciseSequenceDirectionCue.Outward => "Outward",
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(presentation), presentation.DirectionCue, null),
+        };
+        if (side is not null)
+        {
+            parts.Add(side);
+        }
+        if (direction is not null)
+        {
+            parts.Add(direction);
+        }
+        return parts.Count == 0 ? "Move" : string.Join(", ", parts);
     }
 
-    private void RenderTimedPairWorkoutPhase(MovementPhasePresentation presentation)
+    private void RenderSequenceBlockWorkoutPhase(
+        MovementPhasePresentation presentation)
     {
         if (presentation.ActiveScreenSide is ScreenSide activeSide)
         {
@@ -3132,7 +3063,7 @@ public class MainActivity : Activity
     private void ResetMovementVisuals()
     {
         _lastMovementPhase = null;
-        RenderCountdownPhase(MovementDirectionCue.Move);
+        RenderCountdownPhase();
         SetExerciseMediaMirrored(mirrored: false);
         _exerciseMediaCard.Animate()?.Cancel();
         _exerciseMediaCard.Alpha = 1f;
@@ -3164,13 +3095,11 @@ public class MainActivity : Activity
     }
 
     private string GetRestDescription() =>
-        _currentWorkoutGroup.IsDirectionPairLead
-            ? "Rest, 15 seconds. The other direction is next."
-            : _sessionService.IsIntermediateSetCompletion(
-                _state,
-                _currentWorkoutGroup)
-                ? "Rest, 15 seconds. The next set starts automatically."
-            : "Rest, 15 seconds. Tap the heart to keep this exercise.";
+        _sessionService.IsIntermediateSequenceBlock(
+            _state,
+            _currentWorkoutGroup)
+            ? "Rest, 15 seconds. The next block starts automatically."
+            : "Rest, 15 seconds. Tap the heart to keep this sequence.";
 
     private void ShowRestPanel()
     {
@@ -3182,8 +3111,7 @@ public class MainActivity : Activity
 
     private void UpdateKeepButtonState()
     {
-        if (_currentWorkoutGroup.IsDirectionPairLead ||
-            _sessionService.IsIntermediateSetCompletion(
+        if (_sessionService.IsIntermediateSequenceBlock(
                 _state,
                 _currentWorkoutGroup))
         {
@@ -3286,20 +3214,11 @@ public class MainActivity : Activity
 
         _restActive = false;
         PauseRestCountdown();
-        if (_currentWorkoutGroup.IsDirectionPairLead)
-        {
-            _sessionService.AdvanceDirectionPair(_state, _currentWorkoutGroup);
-            _sessionService.ClearPendingRest(_state);
-            _stateStore.Save(_state);
-            ShowNextExercise();
-            return;
-        }
-
-        if (_sessionService.IsIntermediateSetCompletion(
+        if (_sessionService.IsIntermediateSequenceBlock(
                 _state,
                 _currentWorkoutGroup))
         {
-            ContinueWithNextSet();
+            ContinueWithNextSequenceBlock();
             return;
         }
 
@@ -3307,24 +3226,22 @@ public class MainActivity : Activity
         FinalizeCurrentRound(keep);
     }
 
-    private void ContinueWithNextSet()
+    private void ContinueWithNextSequenceBlock()
     {
-        _sessionService.AdvanceRepeatedSet(_state, _currentWorkoutGroup);
+        _sessionService.AdvanceSequence(_state, _currentWorkoutGroup);
         _sessionService.ClearPendingRest(_state);
-        WorkoutGroup nextSet = _sessionService.GetNextGroup(_state)
+        WorkoutGroup nextBlock = _sessionService.GetNextGroup(_state)
             ?? throw new InvalidOperationException(
-                "An intermediate set has no following set.");
+                "An intermediate sequence block has no following block.");
         int movementDurationMilliseconds =
-            (nextSet.UsesFullSideTiming
-                ? MovementPhaseSchedule.FullSideTotalDurationSeconds
-                : MovementPhaseSchedule.TotalDurationSeconds) * 1_000;
+            MovementPhaseSchedule.TotalDurationSeconds * 1_000;
         _sessionService.PauseMovement(
             _state,
-            nextSet,
+            nextBlock,
             movementDurationMilliseconds,
             pausedByUser: false);
         _stateStore.Save(_state);
-        RestorePendingMovement(nextSet);
+        RestorePendingMovement(nextBlock);
         if (_mediaReady && _activityResumed)
         {
             _countdownPausedForMediaError = false;
@@ -3427,7 +3344,6 @@ public class MainActivity : Activity
             _whistleSoundPool?.Dispose();
             _whistleSoundPool = null;
             _movementStartWhistleId = 0;
-            _sideChangeWhistleId = 0;
             _restStartWhistleId = 0;
             _workoutCompleteWhistleId = 0;
         }
@@ -3465,10 +3381,6 @@ public class MainActivity : Activity
         _movementStartWhistleId = soundPool.Load(
             this,
             Resource.Raw.whistle_start,
-            1);
-        _sideChangeWhistleId = soundPool.Load(
-            this,
-            Resource.Raw.whistle_side_change,
             1);
         _restStartWhistleId = soundPool.Load(
             this,

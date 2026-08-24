@@ -11,10 +11,11 @@ namespace Flux.Data;
 public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 {
     private const string DatabaseFileName = "flux_exercises.db";
-    private const int DatabaseVersion = 66;
+    private const int DatabaseVersion = 67;
     private const string ExerciseTable = "exercises";
     private const string CanonicalGroupTable = "canonical_muscle_groups";
     private const string ExerciseCanonicalGroupTable = "exercise_canonical_groups";
+    private const string ExerciseSequenceBlockTable = "exercise_sequence_blocks";
     private const string WorkoutBucketTable = "workout_buckets";
     private const string RollupTable = "canonical_group_rollups";
     private const string CatalogAsset = "exercises.json";
@@ -37,7 +38,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "hold_frame_percent",
         "side_sequence",
         "direction_sequence",
-        "direction_partner_exercise_id",
         "insect_compatibility",
         "mirror_relationship",
         "mirror_coverage",
@@ -67,6 +67,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         ArgumentNullException.ThrowIfNull(database);
 
         CreateExerciseSchema(database);
+        CreateExerciseSequenceSchema(database);
         CreateMassGroupingSchema(database);
         InsertTaxonomy(database);
         InsertCatalog(database, ReadAndValidateBundledCatalog());
@@ -76,7 +77,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         ArgumentNullException.ThrowIfNull(database);
 
-        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58 or 59 or 60 or 61 or 62 or 63 or 64 or 65) ||
+        if (oldVersion is not (14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36 or 37 or 38 or 39 or 40 or 41 or 42 or 43 or 44 or 45 or 46 or 47 or 48 or 49 or 50 or 51 or 52 or 53 or 54 or 55 or 56 or 57 or 58 or 59 or 60 or 61 or 62 or 63 or 64 or 65 or 66) ||
             newVersion != DatabaseVersion)
         {
             throw new NotSupportedException(
@@ -130,7 +131,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
+            database.ExecSQL(
+                $"DROP TABLE IF EXISTS {ExerciseSequenceBlockTable}");
             RebuildExerciseTableForMirrorCoverage(database);
+            CreateExerciseSequenceSchema(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
             InsertTaxonomy(database);
             SynchronizeCatalog(database, catalog, preservedExercises);
@@ -210,8 +214,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'CounterclockwiseThenClockwise',
                         'InwardThenOutward',
                         'OutwardThenInward')),
-                direction_partner_exercise_id INTEGER NOT NULL DEFAULT 0
-                    CHECK (direction_partner_exercise_id >= 0),
                 insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (insect_compatibility IN (
                         'Unreviewed',
@@ -249,12 +251,51 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
 
+    private static void CreateExerciseSequenceSchema(SQLiteDatabase database)
+    {
+        database.ExecSQL(
+            """
+            CREATE TABLE exercise_sequence_blocks (
+                sequence_root_exercise_id INTEGER NOT NULL,
+                sequence_order INTEGER NOT NULL CHECK (sequence_order > 0),
+                exercise_id INTEGER NOT NULL,
+                side_cue TEXT NOT NULL CHECK (side_cue IN (
+                    'None',
+                    'ScreenLeft',
+                    'ScreenRight',
+                    'ShownLeadStance',
+                    'OppositeLeadStance')),
+                direction_cue TEXT NOT NULL CHECK (direction_cue IN (
+                    'None',
+                    'Forward',
+                    'Backward',
+                    'Clockwise',
+                    'Counterclockwise',
+                    'Inward',
+                    'Outward')),
+                mirror_media INTEGER NOT NULL CHECK (mirror_media IN (0, 1)),
+                media_segment TEXT NOT NULL CHECK (media_segment IN (
+                    'Full',
+                    'FirstDirection',
+                    'SecondDirection')),
+                PRIMARY KEY (sequence_root_exercise_id, sequence_order),
+                FOREIGN KEY (sequence_root_exercise_id)
+                    REFERENCES exercises(id) ON DELETE CASCADE,
+                FOREIGN KEY (exercise_id)
+                    REFERENCES exercises(id) ON DELETE CASCADE
+            )
+            """);
+        database.ExecSQL(
+            "CREATE INDEX index_exercise_sequence_blocks_member " +
+            "ON exercise_sequence_blocks (exercise_id)");
+    }
+
     private static void RebuildExerciseTableForMirrorCoverage(
         SQLiteDatabase database)
     {
         database.ExecSQL(
             """
-            CREATE TABLE exercises_v60 (
+            CREATE TABLE exercises_v67 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -296,8 +337,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'CounterclockwiseThenClockwise',
                         'InwardThenOutward',
                         'OutwardThenInward')),
-                direction_partner_exercise_id INTEGER NOT NULL DEFAULT 0
-                    CHECK (direction_partner_exercise_id >= 0),
                 insect_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (insect_compatibility IN (
                         'Unreviewed',
@@ -336,7 +375,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 .CopyExistingExercisesWithNeutralMirrorMetadata);
         database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
         database.ExecSQL("DROP TABLE exercises");
-        database.ExecSQL("ALTER TABLE exercises_v60 RENAME TO exercises");
+        database.ExecSQL("ALTER TABLE exercises_v67 RENAME TO exercises");
         database.ExecSQL(
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
@@ -488,6 +527,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             InsertExercise(database, exercise, exercise.Score);
             InsertCanonicalAssignments(database, exercise);
         }
+
+        InsertExerciseSequenceBlocks(database, catalog);
     }
 
     private static void SynchronizeCatalog(
@@ -507,6 +548,35 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             }
 
             InsertCanonicalAssignments(database, exercise);
+        }
+
+        InsertExerciseSequenceBlocks(database, catalog);
+    }
+
+    private static void InsertExerciseSequenceBlocks(
+        SQLiteDatabase database,
+        IReadOnlyCollection<Exercise> catalog)
+    {
+        database.Delete(ExerciseSequenceBlockTable, null, null);
+        foreach (Exercise root in catalog.Where(exercise =>
+                     exercise.SequenceBlocks.Length > 0))
+        {
+            for (int index = 0; index < root.SequenceBlocks.Length; index++)
+            {
+                ExerciseSequenceBlock block = root.SequenceBlocks[index];
+                using var values = new ContentValues();
+                values.Put("sequence_root_exercise_id", root.Id);
+                values.Put("sequence_order", index + 1);
+                values.Put("exercise_id", block.ExerciseId);
+                values.Put("side_cue", block.SideCue.ToString());
+                values.Put("direction_cue", block.DirectionCue.ToString());
+                values.Put("mirror_media", block.MirrorMedia ? 1 : 0);
+                values.Put("media_segment", block.MediaSegment.ToString());
+                database.InsertOrThrow(
+                    ExerciseSequenceBlockTable,
+                    null,
+                    values);
+            }
         }
     }
 
@@ -570,7 +640,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("hold_frame_percent", exercise.HoldFramePercent);
         values.Put("side_sequence", exercise.SideSequence.ToString());
         values.Put("direction_sequence", exercise.DirectionSequence.ToString());
-        values.Put("direction_partner_exercise_id", exercise.DirectionPartnerExerciseId);
         values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
@@ -672,6 +741,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             ?? throw new InvalidOperationException("Unable to open the exercise database.");
         Dictionary<int, CanonicalAssignments> assignmentsByExerciseId =
             LoadCanonicalAssignments(database);
+        Dictionary<int, ExerciseSequenceBlock[]> sequenceBlocksByRootId =
+            LoadExerciseSequenceBlocks(database);
         var exercises = new List<Exercise>();
 
         using ICursor? cursor = database.Query(
@@ -734,25 +805,86 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(16)
                         ?? throw new InvalidOperationException(
                             "An exercise has no direction sequence.")),
-                DirectionPartnerExerciseId = cursor.GetInt(17),
+                SequenceBlocks = sequenceBlocksByRootId.GetValueOrDefault(
+                    id,
+                    []),
                 InsectCompatibility = Enum.Parse<ExerciseInsectCompatibility>(
-                    cursor.GetString(18)
+                    cursor.GetString(17)
                         ?? throw new InvalidOperationException(
                             "An exercise has no insect compatibility review.")),
                 MirrorRelationship = Enum.Parse<ExerciseMirrorRelationship>(
-                    cursor.GetString(19)
+                    cursor.GetString(18)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror relationship review.")),
                 MinimumMirrorCoverage = Enum.Parse<ExerciseMirrorCoverage>(
-                    cursor.GetString(20)
+                    cursor.GetString(19)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
-                SessionMovementId = cursor.GetInt(21),
+                SessionMovementId = cursor.GetInt(20),
             });
         }
 
         ValidateCatalog(exercises, requireInitialScores: false);
         return exercises.AsReadOnly();
+    }
+
+    private static Dictionary<int, ExerciseSequenceBlock[]>
+        LoadExerciseSequenceBlocks(SQLiteDatabase database)
+    {
+        var blocksByRootId = new Dictionary<int, List<ExerciseSequenceBlock>>();
+        using ICursor? cursor = database.Query(
+            ExerciseSequenceBlockTable,
+            [
+                "sequence_root_exercise_id",
+                "exercise_id",
+                "side_cue",
+                "direction_cue",
+                "mirror_media",
+                "media_segment",
+            ],
+            null,
+            null,
+            null,
+            null,
+            "sequence_root_exercise_id ASC, sequence_order ASC");
+        if (cursor is null)
+        {
+            throw new InvalidOperationException(
+                "Unable to read exercise sequence blocks.");
+        }
+
+        while (cursor.MoveToNext())
+        {
+            int rootId = cursor.GetInt(0);
+            if (!blocksByRootId.TryGetValue(
+                    rootId,
+                    out List<ExerciseSequenceBlock>? blocks))
+            {
+                blocks = [];
+                blocksByRootId.Add(rootId, blocks);
+            }
+
+            blocks.Add(new ExerciseSequenceBlock
+            {
+                ExerciseId = cursor.GetInt(1),
+                SideCue = Enum.Parse<ExerciseSequenceSideCue>(cursor.GetString(2)
+                    ?? throw new InvalidOperationException(
+                        "An exercise sequence block has no side cue.")),
+                DirectionCue = Enum.Parse<ExerciseSequenceDirectionCue>(
+                    cursor.GetString(3)
+                        ?? throw new InvalidOperationException(
+                            "An exercise sequence block has no direction cue.")),
+                MirrorMedia = cursor.GetInt(4) == 1,
+                MediaSegment = Enum.Parse<ExerciseSequenceMediaSegment>(
+                    cursor.GetString(5)
+                        ?? throw new InvalidOperationException(
+                            "An exercise sequence block has no media segment.")),
+            });
+        }
+
+        return blocksByRootId.ToDictionary(
+            entry => entry.Key,
+            entry => entry.Value.ToArray());
     }
 
     private static Dictionary<int, CanonicalAssignments> LoadCanonicalAssignments(
@@ -842,8 +974,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.InsectCompatibility) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
             !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
-            (exercise.SideSequence.UsesTimedSides() &&
-                exercise.DirectionSequence != ExerciseDirectionSequence.None) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&
                 (exercise.Mode != ExerciseMode.Repetition ||
                     exercise.Presentation != ExercisePresentation.Motion)) ||
@@ -871,25 +1001,55 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         !exercise.Trains(root.PrimaryCanonicalGroup) &&
                         !root.Trains(exercise.PrimaryCanonicalGroup) &&
                         !exercise.SecondaryCanonicalGroups.Any(root.Trains)));
-        bool hasInvalidDirectionPartner = exercises.Any(exercise =>
-            exercise.DirectionPartnerExerciseId < 0 ||
-            (exercise.DirectionPartnerExerciseId > 0 &&
-                (!exercisesById.TryGetValue(
-                    exercise.DirectionPartnerExerciseId,
-                    out Exercise? partner) ||
-                partner.Id == exercise.Id ||
-                partner.DirectionPartnerExerciseId != exercise.Id ||
-                exercise.DirectionSequence != ExerciseDirectionSequence.None ||
-                partner.DirectionSequence != ExerciseDirectionSequence.None ||
-                exercise.SideSequence != partner.SideSequence ||
-                exercise.PrimaryCanonicalGroup != partner.PrimaryCanonicalGroup ||
-                !exercise.SecondaryCanonicalGroups.SequenceEqual(
-                    partner.SecondaryCanonicalGroups) ||
-                exercise.InsectCompatibility != partner.InsectCompatibility ||
-                exercise.MirrorRelationship != partner.MirrorRelationship ||
-                exercise.MinimumMirrorCoverage != partner.MinimumMirrorCoverage ||
-                exercise.MuscularDemand != partner.MuscularDemand ||
-                exercise.Silent != partner.Silent)));
+        var sequenceOwnerByExerciseId = new Dictionary<int, int>();
+        bool hasInvalidSequence = false;
+        foreach (Exercise root in exercises.Where(exercise =>
+                     exercise.SequenceBlocks.Length > 0))
+        {
+            if (root.SequenceBlocks[0].ExerciseId != root.Id)
+            {
+                hasInvalidSequence = true;
+            }
+
+            foreach (ExerciseSequenceBlock block in root.SequenceBlocks)
+            {
+                if (!Enum.IsDefined(block.SideCue) ||
+                    !Enum.IsDefined(block.DirectionCue) ||
+                    !Enum.IsDefined(block.MediaSegment) ||
+                    !exercisesById.TryGetValue(
+                        block.ExerciseId,
+                        out Exercise? member))
+                {
+                    hasInvalidSequence = true;
+                    continue;
+                }
+                if (sequenceOwnerByExerciseId.TryGetValue(
+                        member.Id,
+                        out int existingRootId) &&
+                    existingRootId != root.Id)
+                {
+                    hasInvalidSequence = true;
+                }
+                sequenceOwnerByExerciseId[member.Id] = root.Id;
+                if (member.Id != root.Id && member.SequenceBlocks.Length > 0 ||
+                    member.PrimaryCanonicalGroup != root.PrimaryCanonicalGroup ||
+                    !member.SecondaryCanonicalGroups.SequenceEqual(
+                        root.SecondaryCanonicalGroups) ||
+                    member.InsectCompatibility != root.InsectCompatibility ||
+                    member.MirrorRelationship != root.MirrorRelationship ||
+                    member.MinimumMirrorCoverage != root.MinimumMirrorCoverage ||
+                    member.MuscularDemand != root.MuscularDemand ||
+                    member.Silent != root.Silent ||
+                    block.MediaSegment != ExerciseSequenceMediaSegment.Full &&
+                        member.DirectionSequence == ExerciseDirectionSequence.None)
+                {
+                    hasInvalidSequence = true;
+                }
+            }
+        }
+        hasInvalidSequence |= sequenceOwnerByExerciseId.Count != exercises.Count ||
+            exercises.Any(exercise =>
+                !sequenceOwnerByExerciseId.ContainsKey(exercise.Id));
         bool hasInvalidReplacementMetadata = false;
         if (requireInitialScores)
         {
@@ -926,7 +1086,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             violatesRequirements ||
             hasInvalidInitialScore ||
             hasInvalidSessionMovement ||
-            hasInvalidDirectionPartner ||
+            hasInvalidSequence ||
             hasInvalidReplacementMetadata)
         {
             throw new InvalidOperationException(

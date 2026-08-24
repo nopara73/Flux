@@ -3357,7 +3357,7 @@
     }
 
     # Movement-first HANDS additions: full-body striking and blocking drills
-    # plus self-resistance completed on both timed sides, all shown by people.
+    # plus self-resistance completed in both side-specific sequence blocks, all shown by people.
     201 = @{
         File = 'boxing-five-punches.mp4'
         Url = 'https://www.youtube.com/watch?v=UTyKvvBaroU'
@@ -4471,7 +4471,7 @@
     }
 
     # Standing stretching: bilateral holds stay frozen; side-specific sources
-    # use the reviewed 20 / 5 / 20 sequence from ExerciseSideSequences.psd1.
+    # use the reviewed two-block sequence from ExerciseSideSequences.psd1.
     740 = @{
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'

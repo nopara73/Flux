@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -307,7 +307,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -445,6 +445,16 @@ public sealed class WorkoutStateInvariantTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            SequenceBlocks =
+            [
+                new ExerciseSequenceBlock
+                {
+                    ExerciseId = id,
+                    SideCue = ExerciseSequenceSideCue.None,
+                    DirectionCue = ExerciseSequenceDirectionCue.None,
+                    MirrorMedia = false,
+                },
+            ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,

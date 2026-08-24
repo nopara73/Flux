@@ -6,17 +6,24 @@ public sealed record WorkoutGroup(
     int Order,
     IReadOnlySet<CanonicalMuscleGroup> CanonicalGroups,
     string? SelectionGroupId = null,
-    bool UsesFullSideTiming = false,
     int ExerciseOverrideId = 0,
-    string? PairedRoundId = null,
-    bool IsPairDecisionRound = false)
+    int SequenceBlockIndex = 0,
+    int SequenceBlockCount = 1,
+    int SetNumber = 1,
+    int SetCount = 1,
+    ExerciseSequenceSideCue SequenceSideCue = ExerciseSequenceSideCue.None,
+    ExerciseSequenceDirectionCue SequenceDirectionCue =
+        ExerciseSequenceDirectionCue.None,
+    bool MirrorSequenceMedia = false,
+    ExerciseSequenceMediaSegment SequenceMediaSegment =
+        ExerciseSequenceMediaSegment.Full)
 {
     public string SelectionKey => SelectionGroupId ?? Id;
 
-    public bool IsDirectionPairRound => PairedRoundId is not null;
+    public bool IsSequenceRound => SequenceBlockCount > 1;
 
-    public bool IsDirectionPairLead =>
-        IsDirectionPairRound && !IsPairDecisionRound;
+    public bool IsFinalSequenceRound =>
+        SequenceBlockIndex == SequenceBlockCount - 1 && SetNumber == SetCount;
 }
 
 public sealed record WorkoutResolution(

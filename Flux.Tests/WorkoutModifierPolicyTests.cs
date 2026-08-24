@@ -847,6 +847,16 @@ public sealed class WorkoutModifierPolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            SequenceBlocks =
+            [
+                new ExerciseSequenceBlock
+                {
+                    ExerciseId = id,
+                    SideCue = ExerciseSequenceSideCue.None,
+                    DirectionCue = ExerciseSequenceDirectionCue.None,
+                    MirrorMedia = false,
+                },
+            ],
             SessionMovementId = sessionMovementId,
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = mirrorRelationship,

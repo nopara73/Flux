@@ -622,50 +622,20 @@ button.modifier-tile:not(:disabled):active {
   filter: drop-shadow(0 3px 4px rgb(18 20 22 / 16%));
 }
 
-.unilateral-core {
-  fill: var(--graphite);
+.sequence-block-blue {
+  fill: var(--rest-accent);
 }
 
-.unilateral-core-stroke,
-.unilateral-blue,
-.unilateral-red {
+.sequence-block-red {
+  fill: var(--move-accent);
+}
+
+.sequence-arrow {
   fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.unilateral-core-stroke {
   stroke: var(--graphite);
-  stroke-width: 9;
-}
-
-.unilateral-blue,
-.unilateral-red {
-  stroke-width: 7;
-}
-
-.unilateral-blue {
-  stroke: var(--rest-accent);
-}
-
-.unilateral-red {
-  stroke: var(--move-accent);
-}
-
-.bidirectional-blue,
-.bidirectional-red {
-  fill: none;
-  stroke-width: 7;
+  stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.bidirectional-blue {
-  stroke: var(--rest-accent);
-}
-
-.bidirectional-red {
-  stroke: var(--move-accent);
 }
 
 .exercise-media-area {

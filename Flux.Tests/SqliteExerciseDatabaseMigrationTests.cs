@@ -65,7 +65,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Execute(
             connection,
             """
-            CREATE TABLE exercises_v60 (
+            CREATE TABLE exercises_v67 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -85,8 +85,6 @@ public sealed class SqliteExerciseDatabaseMigrationTests
                 hold_frame_percent INTEGER NOT NULL CHECK (hold_frame_percent BETWEEN 0 AND 99),
                 side_sequence TEXT NOT NULL,
                 direction_sequence TEXT NOT NULL,
-                direction_partner_exercise_id INTEGER NOT NULL
-                    CHECK (direction_partner_exercise_id >= 0),
                 insect_compatibility TEXT NOT NULL,
                 mirror_relationship TEXT NOT NULL,
                 mirror_coverage TEXT NOT NULL,
@@ -118,7 +116,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             """
             SELECT name, video, score, equipment,
                 mirror_relationship, mirror_coverage, session_movement_id
-            FROM exercises_v60
+            FROM exercises_v67
             WHERE id = 528
             """;
         using SqliteDataReader reader = command.ExecuteReader();

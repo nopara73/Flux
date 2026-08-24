@@ -78,11 +78,12 @@ choice from consuming the only exercise capable of filling a later group.
 
 ### Personalization stays inside anatomical guardrails
 
-Tap the large **heart** during the final rest for an exercise to retain it. Let
-that decision rest expire, or press **Next** during movement, to reject it.
-Rejection decreases that exercise's local score once and removes saved copies
-of it; keeping creates a durable preference. Repeated sets form one exercise
-unit: their intermediate rests do not score or offer the heart.
+Tap the large **heart** during the final rest for an exercise sequence to retain
+the whole sequence. Let that decision rest expire, or press **Next** during any
+block, to reject it. Rejection decreases each distinct exercise identity in the
+sequence once and removes saved copies of the sequence; keeping creates one
+durable sequence preference. Intermediate block rests do not score or offer the
+heart.
 
 When duration or modifiers change, Flux remaps the whole lineup and maximizes
 the useful saved preferences that can occupy legitimate slots. A kept exercise
@@ -102,9 +103,10 @@ each scheduled primary association counts as 1 unit and each secondary
 association as 0.5.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
 affected muscle; these adjustments exist only while completing that lineup and
-never alter saved scores. A timed side, stance, or direction pair counts once;
-linked opposite-direction exercises count separately, and genuinely repeated
-rounds count again.
+never alter saved scores. Every scheduled 45-second block counts once, including
+opposite sides, opposite directions, integration blocks, and repeated sets. A
+muscle is never counted twice merely because it appears more than once in one
+block's metadata.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -182,60 +184,50 @@ These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
 future modifiers.
 
-### Extra time buys completeness before repetition
+### Atomic exercise sequences
 
-For workouts longer than 30 minutes, Flux allocates each additional minute in
-this order:
+Flux schedules one-block and multi-block exercise sequences as its only workout
+unit. A block is always 45 seconds of the exact named exercise followed by 15
+seconds of rest. Blocks in one sequence are adjacent, cannot be divided between
+sessions, and share one Keep/reject decision after the final block.
 
-1. add an eligible linked opposite-direction exercise;
-2. expand eligible unilateral rounds from 20 / 5 / 20 to 45 / 15 / 45;
-3. add repeated sets only after direction and side opportunities are exhausted.
+Sequence structure is derived from the demonstrated movement:
 
-Within each optional side-expansion or repeated-set pass, selected demand-2
-exercises receive priority over non-hard exercises. Keep status breaks ties,
-followed by later groups in the mass-ordered schedule. This is an intra-session
-dose decision; the 18- and 36-hour recovery preferences apply only when choosing
-the next session's lineup. The allocation is persisted when the workout starts,
-so reopening the app cannot silently change the remaining session.
+- A genuinely simultaneous bilateral or naturally alternating movement remains
+  one block.
+- Side-specific or fixed-lead work uses consecutive side/stance blocks.
+- Direction-specific work uses consecutive direction blocks.
+- A side-by-direction movement may therefore require four blocks.
+- A worthwhile alternating integration may follow the two isolated sides;
+  awkward or redundant variants are omitted.
+- Distinct established exercises that are useful only together may be linked in
+  one sequence.
 
-Opposite directions are separate, plainly named, demonstrated, and scored
-exercise identities connected by reciprocal links. Direction is never hidden
-as another timer phase inside an exercise, avoiding ambiguous four-part drills.
+Multi-block sequences are unavailable in workouts of 30 minutes or less. Longer
+workouts select a globally valid lineup whose complete sequences fit the chosen
+duration. Remaining time is filled by repeating complete sequences, prioritizing
+selected demand-2 work before kept work and balancing set counts where an exact
+fit permits. The allocation is persisted when the workout starts, so reopening
+the app cannot silently change the remaining session. Recovery preferences apply
+between sessions, not when repeating a selected sequence within the current one.
 
 ## What a workout looks like
 
-Every newly presented exercise begins with five seconds of quiet preparation.
-An automatically continued set starts work immediately after its preceding
-15-second rest instead of adding another preparation phase.
+The first block of a sequence begins with five seconds of quiet preparation.
+Every continuation block starts automatically after its preceding 15-second rest
+without another preparation phase or Start action. Every block then runs for the
+full 45 seconds. Intermediate rests hide the heart and remain neutral; only the
+final rest presents the one shared Keep/reject decision.
 
-- Bilateral and continuous movements run for 45 seconds.
-- Naturally alternating movements switch sides inside the same 45-second phase.
-- Unilateral movements run for 20 seconds on the demonstrated side, pause for a
-  five-second change, then run for 20 seconds on the mirrored side.
-- Fixed-lead stance movements use the same timing while cueing the demonstrated
-  lead stance, a stance change, and the opposite lead stance.
-- Bidirectional movements run for 20 seconds in the first direction, pause for a
-  five-second direction change, then run for 20 seconds in the opposite direction.
-- Expanded timed-pair rounds use 45 seconds, a 15-second change, and 45 seconds.
-- A single-set exercise ends with a 15-second rest and keep/discard decision.
-  For repeated sets, each intermediate set ends with a 15-second timer, hides
-  the heart, remains neutral, and starts the next set automatically. Only the
-  final set presents the one shared keep/discard decision.
-  Linked opposite-direction exercises are available only in workouts longer
-  than 30 minutes. They always run consecutively: the first rest advances to
-  the other direction without a Keep action, and the second rest presents one
-  shared heart decision. Rejecting either direction rejects and
-  scores both records together.
-
-Red means movement. Blue means change or rest. A large asymmetric human icon
-marks timed side or lead-stance pairs, while a direction-loop icon identifies
-timed opposite-direction pairs. The workout controls follow a media-player model:
-shuffle rejects an unstarted exercise with the same -1 vote as Next and replaces
-it in place, play starts, pause/resume controls the active timer, repeat restarts
-the current exercise without scoring it, and next rejects it and advances.
-Shuffle preserves the session profile and any linked direction pair, and is
-unavailable after an earlier round from the same paired or repeated unit has
-begun. Repeated shuffles draw without repetition from every remaining session
+Red means movement. Blue means rest or the inactive side of a side-specific
+block. One large sequence icon marks any unit containing multiple blocks. The
+workout controls follow a media-player model: shuffle rejects an unstarted
+sequence with the same -1 vote as Next and replaces it in place, play starts,
+pause/resume controls the active timer, repeat restarts the current block without
+scoring it, and next rejects the sequence and advances.
+Shuffle preserves the session profile and replaces the complete sequence. It is
+unavailable after any earlier block from that sequence has begun. Repeated
+shuffles draw without repetition from every remaining session
 movement valid for that anatomical slot and modifier profile; an alias of the
 rejected movement is not a replacement. They do not re-rank the pool toward the
 normal automatic-selection winner. In long workouts, completed

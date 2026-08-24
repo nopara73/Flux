@@ -39,7 +39,6 @@
     194 = 'ScreenLeftThenRight'
     195 = 'ScreenLeftThenRight'
     196 = 'ScreenLeftThenRight'
-    198 = 'ScreenLeftThenRight'
     211 = 'ScreenLeftThenRight'
     212 = 'ScreenRightThenLeft'
     213 = 'ScreenLeftThenRight'

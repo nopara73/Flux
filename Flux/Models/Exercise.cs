@@ -35,7 +35,7 @@ public sealed class Exercise
     public ExerciseDirectionSequence DirectionSequence { get; init; } =
         ExerciseDirectionSequence.None;
 
-    public int DirectionPartnerExerciseId { get; init; }
+    public ExerciseSequenceBlock[] SequenceBlocks { get; init; } = [];
 
     public int SessionMovementId { get; init; }
 

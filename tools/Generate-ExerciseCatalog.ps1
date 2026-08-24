@@ -203,8 +203,8 @@ $exerciseDirectionSequences = Import-PowerShellDataFile -LiteralPath (
 $retiredDirectionOnlyExerciseIds = @(816)
 $exerciseDirectionMediaTransforms = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseDirectionMediaTransforms.psd1') -SkipLimitCheck
-$exerciseDirectionPartners = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExerciseDirectionPartners.psd1') -SkipLimitCheck
+$exerciseSequenceReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSequences.psd1') -SkipLimitCheck
 $posecodeExerciseMedia = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'PosecodeExerciseMedia.psd1') -SkipLimitCheck
 $exactExerciseMediaCopies = Import-PowerShellDataFile -LiteralPath (
@@ -230,18 +230,28 @@ if ([int]$muscularDemandReview.RubricVersion -ne 1 -or
     throw 'Every retained exercise must have exactly one reviewed muscular-demand score.'
 }
 
-$invalidDirectionPartners = @(
-    $exerciseDirectionPartners.GetEnumerator() | Where-Object {
-        $exerciseId = [int]$_.Key
-        $partnerId = [int]$_.Value
-        $exerciseId -notin $retainedExerciseIds -or
-        $partnerId -notin $retainedExerciseIds -or
-        $exerciseId -eq $partnerId -or
-        -not $exerciseDirectionPartners.ContainsKey($partnerId) -or
-        [int]$exerciseDirectionPartners[$partnerId] -ne $exerciseId
-    })
-if ($invalidDirectionPartners.Count -gt 0) {
-    throw 'Every direction partner must be a reciprocal retained exercise link.'
+$sequenceMembersByRootId = @{}
+$sequenceRootByExerciseId = @{}
+foreach ($entry in $exerciseSequenceReview.Sequences.GetEnumerator()) {
+    $rootId = 0
+    if (-not [int]::TryParse([string]$entry.Key, [ref]$rootId) -or
+        $rootId -le 0) {
+        throw "Invalid exercise-sequence root '$($entry.Key)'."
+    }
+    $memberIds = @($entry.Value | ForEach-Object { [int]$_ })
+    if ($memberIds.Count -lt 2 -or
+        $memberIds[0] -ne $rootId -or
+        @($memberIds | Sort-Object -Unique).Count -ne $memberIds.Count -or
+        @($memberIds | Where-Object { $_ -notin $retainedExerciseIds }).Count -gt 0) {
+        throw "Exercise sequence $rootId must begin with its retained root and contain unique retained members."
+    }
+    foreach ($memberId in $memberIds) {
+        if ($sequenceRootByExerciseId.ContainsKey($memberId)) {
+            throw "Exercise $memberId belongs to more than one mandatory sequence."
+        }
+        $sequenceRootByExerciseId[$memberId] = $rootId
+    }
+    $sequenceMembersByRootId[$rootId] = $memberIds
 }
 
 $replacementExerciseIds = @(
@@ -562,7 +572,6 @@ $invalidDirectionSequences = @(
     $exerciseDirectionSequences.GetEnumerator() | Where-Object {
         [int]$_.Key -notin $retainedExerciseIds -or
         [string]$_.Value -notin $validDirectionSequences -or
-        $exerciseSideSequences.ContainsKey([int]$_.Key) -or
         $holdExerciseFrames.ContainsKey([int]$_.Key) -or
         $stillExercisePresentations.ContainsKey([int]$_.Key)
     })
@@ -3014,6 +3023,83 @@ function New-DirectionSequenceMp4 {
     }
 }
 
+function New-ExerciseSequenceBlocks {
+    param(
+        [int]$ExerciseId,
+        [string]$SideSequence,
+        [string]$DirectionSequence
+    )
+
+    $sideBlocks = @(switch ($SideSequence) {
+        'ScreenLeftThenRight' {
+            @(
+                @{ SideCue = 'ScreenLeft'; MirrorMedia = $false }
+                @{ SideCue = 'ScreenRight'; MirrorMedia = $true }
+            )
+        }
+        'ScreenRightThenLeft' {
+            @(
+                @{ SideCue = 'ScreenRight'; MirrorMedia = $false }
+                @{ SideCue = 'ScreenLeft'; MirrorMedia = $true }
+            )
+        }
+        'ScreenLeftLeadThenRightLead' {
+            @(
+                @{ SideCue = 'ShownLeadStance'; MirrorMedia = $false }
+                @{ SideCue = 'OppositeLeadStance'; MirrorMedia = $true }
+            )
+        }
+        'ScreenRightLeadThenLeftLead' {
+            @(
+                @{ SideCue = 'ShownLeadStance'; MirrorMedia = $false }
+                @{ SideCue = 'OppositeLeadStance'; MirrorMedia = $true }
+            )
+        }
+        default {
+            @(@{ SideCue = 'None'; MirrorMedia = $false })
+        }
+    })
+
+    $directionCues = @(switch ($DirectionSequence) {
+        'ForwardThenBackward' { @('Forward', 'Backward') }
+        'BackwardThenForward' { @('Backward', 'Forward') }
+        'ClockwiseThenCounterclockwise' {
+            @('Clockwise', 'Counterclockwise')
+        }
+        'CounterclockwiseThenClockwise' {
+            @('Counterclockwise', 'Clockwise')
+        }
+        'InwardThenOutward' { @('Inward', 'Outward') }
+        'OutwardThenInward' { @('Outward', 'Inward') }
+        default { @('None') }
+    })
+
+    $blocks = @()
+    foreach ($sideBlock in $sideBlocks) {
+        for ($directionIndex = 0;
+             $directionIndex -lt $directionCues.Count;
+             $directionIndex++) {
+            $blocks += [ordered]@{
+                exerciseId = $ExerciseId
+                sideCue = [string]$sideBlock.SideCue
+                directionCue = [string]$directionCues[$directionIndex]
+                mirrorMedia = [bool]$sideBlock.MirrorMedia
+                mediaSegment = if ($directionCues.Count -eq 1) {
+                    'Full'
+                }
+                elseif ($directionIndex -eq 0) {
+                    'FirstDirection'
+                }
+                else {
+                    'SecondDirection'
+                }
+            }
+        }
+    }
+
+    return @($blocks)
+}
+
 $resolvedOutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 $gifOutputRoot = Join-Path $resolvedOutputRoot 'exercise_gifs'
 $videoOutputRoot = Join-Path $resolvedOutputRoot 'exercise_videos'
@@ -3181,13 +3267,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             holdFramePercent = $holdFramePercent
             sideSequence = $exerciseSideSequence
             directionSequence = $exerciseDirectionSequence
-            directionPartnerExerciseId = if (
-                $exerciseDirectionPartners.ContainsKey($exerciseId)) {
-                [int]$exerciseDirectionPartners[$exerciseId]
-            }
-            else {
-                0
-            }
+            sequenceBlocks = @()
             insectCompatibility = if (
                 $exerciseId -in $insectCompatibleExerciseIds) {
                 'Compatible'
@@ -3472,6 +3552,33 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
     }
 }
 
+$recordsById = @{}
+foreach ($record in $records) {
+    $recordsById[[int]$record.id] = $record
+}
+foreach ($exerciseId in $retainedExerciseIds) {
+    if ($sequenceRootByExerciseId.ContainsKey($exerciseId) -and
+        [int]$sequenceRootByExerciseId[$exerciseId] -ne $exerciseId) {
+        continue
+    }
+
+    $memberIds = if ($sequenceMembersByRootId.ContainsKey($exerciseId)) {
+        @($sequenceMembersByRootId[$exerciseId])
+    }
+    else {
+        @($exerciseId)
+    }
+    $sequenceBlocks = @()
+    foreach ($memberId in $memberIds) {
+        $member = $recordsById[$memberId]
+        $sequenceBlocks += @(New-ExerciseSequenceBlocks `
+            -ExerciseId $memberId `
+            -SideSequence ([string]$member.sideSequence) `
+            -DirectionSequence ([string]$member.directionSequence))
+    }
+    $recordsById[$exerciseId].sequenceBlocks = @($sequenceBlocks)
+}
+
 foreach ($entry in $exerciseDirectionSequences.GetEnumerator()) {
     $exerciseId = [int]$entry.Key
     $sourceVideoPath = Join-Path $videoOutputRoot (
@@ -3547,16 +3654,9 @@ $constraintViolations = $records | Where-Object {
         'CounterclockwiseThenClockwise',
         'InwardThenOutward',
         'OutwardThenInward') -or
-    $_['directionPartnerExerciseId'] -isnot [int] -or
-    $_['directionPartnerExerciseId'] -lt 0 -or
     ($null -ne $_['sessionMovementId'] -and (
         $_['sessionMovementId'] -isnot [int] -or
         $_['sessionMovementId'] -lt 0)) -or
-    ($_['sideSequence'] -in @(
-            'ScreenLeftThenRight', 'ScreenRightThenLeft',
-            'ScreenLeftLeadThenRightLead',
-            'ScreenRightLeadThenLeftLead') -and
-        $_['directionSequence'] -ne 'None') -or
     ($_['directionSequence'] -ne 'None' -and (
         $_['mode'] -ne 'Repetition' -or $_['presentation'] -ne 'Motion')) -or
     ($_['mode'] -eq 'Repetition' -and $_['holdFramePercent'] -ne 0) -or
@@ -3573,28 +3673,64 @@ $recordsById = @{}
 foreach ($record in $records) {
     $recordsById[[int]$record['id']] = $record
 }
-$directionPartnerViolations = @($records | Where-Object {
-    $partnerId = [int]$_['directionPartnerExerciseId']
-    if ($partnerId -eq 0) {
-        return $false
+$validSequenceSideCues = @(
+    'None', 'ScreenLeft', 'ScreenRight', 'ShownLeadStance',
+    'OppositeLeadStance')
+$validSequenceDirectionCues = @(
+    'None', 'Forward', 'Backward', 'Clockwise',
+    'Counterclockwise', 'Inward', 'Outward')
+$validSequenceMediaSegments = @(
+    'Full', 'FirstDirection', 'SecondDirection')
+$sequenceOwnersByExerciseId = @{}
+$sequenceViolations = [System.Collections.Generic.List[int]]::new()
+foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 }) {
+    $rootId = [int]$root['id']
+    $blocks = @($root['sequenceBlocks'])
+    if ([int]$blocks[0].exerciseId -ne $rootId) {
+        $sequenceViolations.Add($rootId)
     }
-    if (-not $recordsById.ContainsKey($partnerId)) {
-        return $true
+    foreach ($block in $blocks) {
+        $memberId = [int]$block.exerciseId
+        if (-not $recordsById.ContainsKey($memberId) -or
+            [string]$block.sideCue -notin $validSequenceSideCues -or
+            [string]$block.directionCue -notin $validSequenceDirectionCues -or
+            $block.mirrorMedia -isnot [bool] -or
+            [string]$block.mediaSegment -notin $validSequenceMediaSegments) {
+            $sequenceViolations.Add($rootId)
+            continue
+        }
+        if (-not $sequenceOwnersByExerciseId.ContainsKey($memberId)) {
+            $sequenceOwnersByExerciseId[$memberId] = $rootId
+        }
+        elseif ([int]$sequenceOwnersByExerciseId[$memberId] -ne $rootId) {
+            $sequenceViolations.Add($rootId)
+        }
     }
-    $partner = $recordsById[$partnerId]
-    return [int]$partner['directionPartnerExerciseId'] -ne [int]$_['id'] -or
-        $_['directionSequence'] -ne 'None' -or
-        $partner['directionSequence'] -ne 'None' -or
-        $_['sideSequence'] -ne $partner['sideSequence'] -or
-        $_['primaryCanonicalGroup'] -ne $partner['primaryCanonicalGroup'] -or
-        (@($_['secondaryCanonicalGroups']) -join "`n") -ne
-            (@($partner['secondaryCanonicalGroups']) -join "`n") -or
-        $_['insectCompatibility'] -ne $partner['insectCompatibility'] -or
-        $_['mirrorRelationship'] -ne $partner['mirrorRelationship'] -or
-        $_['minimumMirrorCoverage'] -ne $partner['minimumMirrorCoverage'] -or
-        $_['silent'] -ne $partner['silent'] -or
-        $_['muscularDemand'] -ne $partner['muscularDemand']
-})
+
+    $members = @($blocks | ForEach-Object { [int]$_.exerciseId } |
+        Sort-Object -Unique)
+    foreach ($memberId in $members) {
+        $member = $recordsById[$memberId]
+        if ($memberId -ne $rootId -and @($member['sequenceBlocks']).Count -ne 0) {
+            $sequenceViolations.Add($rootId)
+        }
+        if ($member['primaryCanonicalGroup'] -ne $root['primaryCanonicalGroup'] -or
+            (@($member['secondaryCanonicalGroups']) -join "`n") -ne
+                (@($root['secondaryCanonicalGroups']) -join "`n") -or
+            $member['insectCompatibility'] -ne $root['insectCompatibility'] -or
+            $member['mirrorRelationship'] -ne $root['mirrorRelationship'] -or
+            $member['minimumMirrorCoverage'] -ne $root['minimumMirrorCoverage'] -or
+            $member['silent'] -ne $root['silent'] -or
+            $member['muscularDemand'] -ne $root['muscularDemand']) {
+            $sequenceViolations.Add($rootId)
+        }
+    }
+}
+if (@(Compare-Object `
+        @($retainedExerciseIds | Sort-Object) `
+        @($sequenceOwnersByExerciseId.Keys | Sort-Object)).Count -gt 0) {
+    $sequenceViolations.Add(0)
+}
 $sessionMovementViolations = @($records | Where-Object {
     $movementId = [int]$_['sessionMovementId']
     if ($movementId -eq 0) {
@@ -3626,7 +3762,7 @@ $syntheticNames = $records | Where-Object {
 
 if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
     $constraintViolations -or
-    $directionPartnerViolations -or
+    $sequenceViolations.Count -gt 0 -or
     $sessionMovementViolations -or
     $syntheticNames) {
     $failureDetails = @(
@@ -3642,9 +3778,9 @@ if ($duplicateNames -or $duplicateVideos -or $duplicateIds -or
         if ($constraintViolations) {
             'constraint IDs: ' + (@($constraintViolations.id) -join ', ')
         }
-        if ($directionPartnerViolations) {
-            'direction-partner IDs: ' +
-                (@($directionPartnerViolations.id) -join ', ')
+        if ($sequenceViolations.Count -gt 0) {
+            'sequence roots: ' +
+                (@($sequenceViolations | Sort-Object -Unique) -join ', ')
         }
         if ($sessionMovementViolations) {
             'session-movement IDs: ' +

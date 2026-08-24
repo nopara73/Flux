@@ -88,6 +88,16 @@ public sealed class WorkoutMuscleBudgetPolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = sideSequence,
+            SequenceBlocks =
+            [
+                new ExerciseSequenceBlock
+                {
+                    ExerciseId = id,
+                    SideCue = ExerciseSequenceSideCue.None,
+                    DirectionCue = ExerciseSequenceDirectionCue.None,
+                    MirrorMedia = false,
+                },
+            ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             OnlyFeetTouchGround = true,

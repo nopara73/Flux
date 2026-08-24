@@ -205,6 +205,8 @@ public static class WorkoutModifierPolicy
             IReadOnlyCollection<Exercise> exercises)
     {
         ArgumentNullException.ThrowIfNull(exercises);
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
         return MassGroupingTaxonomy.SupportedMinutes
             .SelectMany(minutes =>
                 MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
@@ -230,11 +232,11 @@ public static class WorkoutModifierPolicy
                                     MirrorEquipment = GetMirrorEquipment(profile),
                                     Count = exercises
                                         .Where(exercise =>
-                                            exercise.DirectionPartnerExerciseId == 0 &&
                                             Rules.All(rule =>
                                                 rule.IsReviewed(exercise)) &&
-                                            IsSelectable(
+                                            IsSequenceUnitEligible(
                                                 exercise,
+                                                exercisesById,
                                                 group,
                                                 profile) &&
                                             (!requiresMirrorRelevance ||
@@ -307,10 +309,10 @@ public static class WorkoutModifierPolicy
             .GetResolution(MaterialityResolutionMinutes)
             .Groups;
         Exercise[] reviewedExercises = exercises
-            .Where(exercise =>
-                exercise.DirectionPartnerExerciseId == 0 &&
-                Rules.All(rule => rule.IsReviewed(exercise)))
+            .Where(exercise => Rules.All(rule => rule.IsReviewed(exercise)))
             .ToArray();
+        IReadOnlyDictionary<int, Exercise> reviewedExercisesById =
+            reviewedExercises.ToDictionary(exercise => exercise.Id);
 
         return GetMaterialityEdges()
             .Select(edge =>
@@ -331,8 +333,9 @@ public static class WorkoutModifierPolicy
                     ? reviewedExercises
                         .Where(exercise =>
                             IsMirrorPreferred(exercise, modifiedProfile) &&
-                            buckets.Any(bucket => IsSelectable(
+                            buckets.Any(bucket => IsSequenceUnitEligible(
                                 exercise,
+                                reviewedExercisesById,
                                 bucket,
                                 modifiedProfile)))
                         .Select(GetSessionMovementId)
@@ -350,7 +353,11 @@ public static class WorkoutModifierPolicy
                 int affectedBucketCount = buckets.Count(bucket => isMirror
                     ? reviewedExercises.Any(exercise =>
                         IsMirrorPreferred(exercise, modifiedProfile) &&
-                        IsSelectable(exercise, bucket, modifiedProfile))
+                        IsSequenceUnitEligible(
+                            exercise,
+                            reviewedExercisesById,
+                            bucket,
+                            modifiedProfile))
                     : GetSelectableExerciseIds(
                             reviewedExercises,
                             [bucket],
@@ -429,7 +436,7 @@ public static class WorkoutModifierPolicy
             .ToDictionary(exercise => exercise.Id);
         int[][] candidateMovementIdsByGroup = groups
             .Select(group => exercises
-                .Where(exercise => IsSelectionUnitEligible(
+                .Where(exercise => IsRuntimeSelectionUnitEligible(
                     exercise,
                     exercisesById,
                     group,
@@ -460,32 +467,46 @@ public static class WorkoutModifierPolicy
         return matchedGroupCount;
     }
 
-    private static bool IsSelectionUnitEligible(
+    private static bool IsRuntimeSelectionUnitEligible(
         Exercise exercise,
         IReadOnlyDictionary<int, Exercise> exercisesById,
         WorkoutGroup group,
         WorkoutModifiers profile,
         int workoutMinutes)
     {
-        if (!IsSelectable(exercise, group, profile))
-        {
-            return false;
-        }
-        if (exercise.DirectionPartnerExerciseId <= 0)
-        {
-            return true;
-        }
-        if (workoutMinutes <= MaterialityResolutionMinutes ||
-            exercise.Id >= exercise.DirectionPartnerExerciseId ||
-            !exercisesById.TryGetValue(
-                exercise.DirectionPartnerExerciseId,
-                out Exercise? partner))
+        return !(workoutMinutes <= MaterialityResolutionMinutes &&
+                exercise.SequenceBlocks.Length > 1) &&
+            IsSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                profile);
+    }
+
+    private static bool IsSequenceUnitEligible(
+        Exercise exercise,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        WorkoutGroup group,
+        WorkoutModifiers profile)
+    {
+        if (exercise.SequenceBlocks.Length == 0 ||
+            !IsSelectable(exercise, group, profile))
         {
             return false;
         }
 
-        return partner.DirectionPartnerExerciseId == exercise.Id &&
-            IsSelectable(partner, group, profile);
+        return exercise.SequenceBlocks
+            .Select(block => exercisesById.GetValueOrDefault(block.ExerciseId))
+            .Where(member => member is not null)
+            .DistinctBy(member => member!.Id)
+            .Count() == exercise.SequenceBlocks
+                .Select(block => block.ExerciseId)
+                .Distinct()
+                .Count() &&
+            exercise.SequenceBlocks.All(block =>
+                exercisesById.TryGetValue(block.ExerciseId, out Exercise? member) &&
+                Rules.All(rule => rule.IsReviewed(member)) &&
+                IsSelectable(member, group, profile));
     }
 
     private static bool TryAssignDistinctMovement(
@@ -649,9 +670,15 @@ public static class WorkoutModifierPolicy
         IReadOnlyList<WorkoutGroup> buckets,
         WorkoutModifiers profile)
     {
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
         return exercises
             .Where(exercise => buckets.Any(bucket =>
-                IsSelectable(exercise, bucket, profile)))
+                IsSequenceUnitEligible(
+                    exercise,
+                    exercisesById,
+                    bucket,
+                    profile)))
             .Select(GetSessionMovementId)
             .ToHashSet();
     }

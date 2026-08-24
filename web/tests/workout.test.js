@@ -62,6 +62,8 @@ import {
   isPrimaryMuscleRecovering,
   isSelectable,
   isSelectableForWorkoutProfile,
+  isFinalSequenceRound,
+  isSequenceContinuationRound,
   isSessionMovementMetadataValid,
   isCompatibleWithWorkoutModifiers,
   isModifierMetadataComplete,
@@ -69,22 +71,20 @@ import {
   normalizeWorkoutModifiers,
   normalizeMinutes,
   parseStoredState,
-  usesTimedLeadStances,
-  usesTimedSides,
   withMirrorEquipment,
 } from "../workout.js";
 
-test("muscle budget counts unilateral phases once and repeated rounds again", () => {
-  const unilateral = exercise(
+test("muscle budget counts each scheduled block once and repeated blocks again", () => {
+  const sideSpecific = exercise(
     1,
     "HipAbductors",
     ["GlutealExtensors"],
     0,
   );
-  unilateral.sideSequence = "ScreenLeftThenRight";
+  sideSpecific.sideSequence = "ScreenLeftThenRight";
 
-  const oneRound = calculateMuscleLoadHalfUnits([unilateral]);
-  const twoRounds = calculateMuscleLoadHalfUnits([unilateral, unilateral]);
+  const oneRound = calculateMuscleLoadHalfUnits([sideSpecific]);
+  const twoRounds = calculateMuscleLoadHalfUnits([sideSpecific, sideSpecific]);
 
   assert.equal(MUSCLE_SESSION_BUDGET_HALF_UNITS, 10);
   assert.equal(PRIMARY_MUSCLE_LOAD_HALF_UNITS, 2);
@@ -200,9 +200,12 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.equal(hasReviewedMuscularDemand({ muscularDemand: 3 }), false);
   assert.equal(hasReviewedMuscularDemand({}), false);
 
-  for (const exercise of catalog.filter((item) => item.directionPartnerExerciseId > 0)) {
-    const partner = catalog.find((item) => item.id === exercise.directionPartnerExerciseId);
-    assert.equal(exercise.muscularDemand, partner?.muscularDemand);
+  const exercisesById = new Map(catalog.map((item) => [item.id, item]));
+  for (const root of catalog.filter((item) => item.sequenceBlocks.length > 1)) {
+    for (const memberId of new Set(root.sequenceBlocks.map((block) =>
+      block.exerciseId))) {
+      assert.equal(root.muscularDemand, exercisesById.get(memberId)?.muscularDemand);
+    }
   }
 });
 
@@ -383,7 +386,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 13);
+  assert.equal(state.version, 14);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -400,7 +403,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 13);
+  assert.equal(state.version, 14);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -879,8 +882,8 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
           profile,
         )));
       if (minutes <= 30) {
-        assert.ok(session.getActiveGroups().every((group) =>
-          session.getSelectedExercise(group).directionPartnerExerciseId === 0));
+        assert.ok(session.getSelectionGroups().every((group) =>
+          session.getSelectedExercise(group).sequenceBlocks.length === 1));
       }
     }
   }
@@ -1232,6 +1235,43 @@ test("session movement metadata requires an explicit anatomically related root f
   assert.equal(isSessionMovementMetadataValid([
     { ...exercise(3, "A", [], 0), sessionMovementId: -1 },
   ]), false);
+});
+
+test("atomic sequence metadata requires one complete valid owner per exercise", () => {
+  const root = exercise(1, "A", ["B"], 0);
+  const member = exercise(2, "A", ["B"], 0);
+  root.sequenceBlocks = [
+    root.sequenceBlocks[0],
+    {
+      exerciseId: member.id,
+      sideCue: "ScreenRight",
+      directionCue: "Outward",
+      mirrorMedia: true,
+      mediaSegment: "Full",
+    },
+  ];
+  member.sequenceBlocks = [];
+
+  assert.equal(isSessionMovementMetadataValid([root, member]), true);
+  assert.equal(isSessionMovementMetadataValid([
+    root,
+    { ...member, sequenceBlocks: [exercise(2, "A", ["B"], 0).sequenceBlocks[0]] },
+  ]), false);
+  assert.equal(isSessionMovementMetadataValid([
+    {
+      ...root,
+      sequenceBlocks: [
+        root.sequenceBlocks[0],
+        { ...root.sequenceBlocks[1], sideCue: "InventedSide" },
+      ],
+    },
+    member,
+  ]), false);
+  assert.equal(isSessionMovementMetadataValid([
+    { ...root, sequenceBlocks: [root.sequenceBlocks[1]] },
+    member,
+  ]), false);
+  assert.equal(isSessionMovementMetadataValid([root]), false);
 });
 
 test("lineup repair reroutes a saved exercise when preserving it would dead-end", () => {
@@ -2044,7 +2084,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   for (const exerciseId of [395, 507, 577, 618, 654, 834, 915]) {
     const exercise = catalog.find((candidate) => candidate.id === exerciseId);
     assert.match(exercise.name, /^Single-Side /);
-    assert.equal(usesTimedSides(exercise), true);
+    assert.equal(exercise.sequenceBlocks.length, 2);
   }
   const alternatingHighKneePull = catalog.find((exercise) => exercise.id === 219);
   assert.equal(alternatingHighKneePull.name, "Alternating High-Knee Cross-Body Pull");
@@ -2076,266 +2116,98 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     const baseSelections = session.getSelectionGroups()
       .map((group) => session.getSelectedExercise(group));
     assert.equal(new Set(baseSelections.map(getSessionMovementId)).size, 30);
-    assert.equal(
-      session.getActiveGroups().reduce(
-        (total, group) => total + (group.usesFullSideTiming ? 2 : 1),
-        0,
-      ),
-      minutes,
-    );
-    assert.equal(
-      new Set(selected.map((exercise) => exercise.id)).size,
-      30 + Object.keys(session.state.activeDirectionPartnerExerciseIds).length,
-    );
+    assert.equal(session.getActiveGroups().length, minutes);
+    assert.ok(session.getActiveGroups().every((round) => {
+      const rootId = session.state.selectedExerciseIds[getSelectionKey(round)];
+      const root = session.exercisesById.get(rootId);
+      return root.sequenceBlocks[round.sequenceBlockIndex].exerciseId ===
+        session.getSelectedExercise(round).id;
+    }));
   }
 });
 
-test("long workouts repeat the thirty-minute lineup with unique round IDs", () => {
-  for (const [minutes, firstHalfSets, secondHalfSets] of [
-    [45, 1, 2],
-    [60, 2, 2],
-    [90, 3, 3],
-  ]) {
-    const rounds = createWorkoutSchedule(minutes);
-    const selectionGroups = RESOLUTIONS.get(30).groups;
-    assert.equal(rounds.length, minutes);
-    assert.deepEqual(
-      rounds.map((round) => round.order),
-      Array.from({ length: minutes }, (_, index) => index + 1),
-    );
-    assert.equal(new Set(rounds.map((round) => round.id)).size, minutes);
-
-    for (const [index, selectionGroup] of selectionGroups.entries()) {
-      const groupRounds = rounds.filter(
-        (round) => getSelectionKey(round) === selectionGroup.id,
-      );
-      assert.equal(groupRounds.length, index < 15 ? firstHalfSets : secondHalfSets);
-      assert.deepEqual(
-        groupRounds.map((round) => round.id),
-        groupRounds.map((round, setIndex) => `${selectionGroup.id}.set${setIndex + 1}`),
-      );
-    }
-  }
-});
-
-test("long workouts spend extra minutes on full timed pairs before repeated sets", () => {
-  const selectionGroups = RESOLUTIONS.get(30).groups;
-  const exercises = selectionGroups.map((group, index) => ({
-    ...exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0),
-    sideSequence: index < 6 ? "ScreenRightThenLeft" : "Continuous",
-    directionSequence: index >= 6 && index < 12
-      ? "ClockwiseThenCounterclockwise"
-      : "None",
-  }));
+test("long workouts emit adjacent atomic sequence blocks with exact duration", () => {
+  const exercises = directionPairCatalog();
   const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
-
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
 
   const rounds = session.getActiveGroups();
-  assert.equal(rounds.length, 33);
-  assert.equal(rounds.filter((round) => round.usesFullSideTiming).length, 12);
-  assert.equal(rounds.filter((round) =>
-    round.usesFullSideTiming &&
-    session.getSelectedExercise(round).directionSequence !== "None").length, 6);
-  assert.equal(session.state.activeFullSideRoundIds.length, 12);
-  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 3);
-  assert.equal(
-    rounds.reduce((total, round) => total + (round.usesFullSideTiming ? 2 : 1), 0),
-    45,
-  );
-});
-
-test("hard timed pairs receive full-side expansion before non-hard keeps", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const exercises = groups.map((group, index) => ({
-    ...exercise(
-      index + 1,
-      group.canonicalGroups[0],
-      group.canonicalGroups.slice(1),
-      0,
-      EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
-      true,
-      index >= 10 && index < 25 ? HARD_MUSCULAR_DEMAND : 0,
-    ),
-    sideSequence: "ScreenLeftThenRight",
-  }));
-  const state = createDefaultState();
-  state.catalogRevision = CURRENT_CATALOG_REVISION;
-  state.lastKeptExerciseIds = exercises.slice(0, 10).map((item) => item.id);
-  const session = new WorkoutSession(exercises, state, () => 0);
-
-  session.initialize();
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-
-  const expected = groups.slice(10, 25).map((group) => `${group.id}.set1`);
-  assert.deepEqual(
-    [...session.state.activeFullSideRoundIds].sort(),
-    [...expected].sort(),
-  );
-  assert.deepEqual(session.state.activeExtraSetSelectionGroupIds, []);
-  assert.equal(
-    session.state.activeFullSideRoundIds.includes(`${groups[0].id}.set1`),
-    false,
-  );
-
-  const now = Date.UTC(2026, 7, 24, 2, 0, 0);
-  session.beginMovement(session.getNextGroup(), 42_000, now + 42_000);
-  const stored = JSON.parse(JSON.stringify(session.state));
-  stored.lastKeptExerciseIds = [];
-  const restored = new WorkoutSession(
-    exercises,
-    parseStoredState(JSON.stringify(stored)),
-    () => 0,
-    () => now,
-  );
-  restored.initialize();
-  assert.deepEqual(
-    [...restored.state.activeFullSideRoundIds].sort(),
-    [...expected].sort(),
-  );
-});
-
-test("long-workout extra sets prefer hard exercises before non-hard keeps", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const exercises = groups.map((group, index) => exercise(
-    index + 1,
-    group.canonicalGroups[0],
-    group.canonicalGroups.slice(1),
-    0,
-    EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
-    true,
-    index >= 10 && index < 25 ? HARD_MUSCULAR_DEMAND : 0,
-  ));
-  const state = createDefaultState();
-  state.catalogRevision = CURRENT_CATALOG_REVISION;
-  state.lastKeptExerciseIds = exercises.slice(0, 10).map((item) => item.id);
-  const session = new WorkoutSession(exercises, state, () => 0);
-
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-
-  const expected = groups.slice(10, 25).map((group) => group.id);
-  assert.deepEqual(
-    [...session.state.activeExtraSetSelectionGroupIds].sort(),
-    [...expected].sort(),
-  );
-  for (const group of groups.slice(0, 10)) {
-    assert.equal(
-      session.getActiveGroups().filter((round) => getSelectionKey(round) === group.id).length,
-      1,
-    );
-  }
-  for (const group of groups.slice(10, 25)) {
-    assert.equal(
-      session.getActiveGroups().filter((round) => getSelectionKey(round) === group.id).length,
-      2,
-    );
-  }
-});
-
-test("forty-five minutes add linked directions before lengthening sided timers", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const baseExercises = groups.map((group, index) => ({
-    ...exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10),
-    sideSequence: "ScreenLeftThenRight",
-  }));
-  const partners = groups.slice(0, 15).map((group, index) => ({
-    ...exercise(1001 + index, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0),
-    sideSequence: "ScreenLeftThenRight",
-    directionPartnerExerciseId: baseExercises[index].id,
-  }));
-  for (let index = 0; index < partners.length; index += 1) {
-    baseExercises[index].directionPartnerExerciseId = partners[index].id;
-  }
-  const exercises = [...baseExercises, ...partners];
-  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
-
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-
-  const rounds = session.getActiveGroups();
-  const directionRounds = rounds.filter((round) => round.id.endsWith(".direction1"));
-  assert.equal(directionRounds.length, 15);
   assert.equal(rounds.length, 45);
-  assert.equal(session.state.activeFullSideRoundIds.length, 0);
-  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 0);
-  for (const round of directionRounds) {
-    const baseId = session.state.selectedExerciseIds[getSelectionKey(round)];
-    assert.equal(
-      session.getSelectedExercise(round).id,
-      exercises.find((item) => item.id === baseId).directionPartnerExerciseId,
-    );
+  assert.equal(new Set(rounds.map((round) => round.id)).size, 45);
+  assert.deepEqual(
+    rounds.map((round) => round.order),
+    Array.from({ length: 45 }, (_, index) => index + 1),
+  );
+
+  const selectedSequence = session.getSelectionGroups().find((group) =>
+    session.state.selectedExerciseIds[group.id] === 1);
+  assert.ok(selectedSequence);
+  const sequenceRounds = rounds.filter((round) =>
+    getSelectionKey(round) === selectedSequence.id);
+  assert.ok(sequenceRounds.length >= 2);
+  assert.ok(sequenceRounds.every((round) => round.sequenceBlockCount === 2));
+  for (let index = 1; index < sequenceRounds.length; index += 1) {
+    assert.equal(sequenceRounds[index].order, sequenceRounds[index - 1].order + 1);
   }
+  for (const setNumber of new Set(sequenceRounds.map((round) => round.setNumber))) {
+    const setRounds = sequenceRounds.filter((round) =>
+      round.setNumber === setNumber);
+    assert.deepEqual(setRounds.map((round) => round.sequenceBlockIndex), [0, 1]);
+    assert.deepEqual(setRounds.map((round) => round.exerciseOverrideId), [1, 2]);
+    assert.equal(isSequenceContinuationRound(setRounds[0]), setNumber > 1);
+    assert.equal(isSequenceContinuationRound(setRounds[1]), true);
+  }
+  assert.equal(isFinalSequenceRound(sequenceRounds.at(-1)), true);
+  assert.equal(getMovementCountdownDurationMs(sequenceRounds[0]), 50_000);
+  assert.equal(getMovementCountdownDurationMs(sequenceRounds[1]), 45_000);
 });
 
 for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
-  test(`direction pairs are entirely excluded from ${minutes}-minute workouts`, () => {
-    const session = new WorkoutSession(
-      directionPairCatalog(),
-      createDefaultState(),
-      () => 0,
-    );
-
+  test(`multi-block sequences are entirely excluded from ${minutes}-minute workouts`, () => {
+    const exercises = directionPairCatalog();
+    const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
     session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
 
-    assert.ok(session.getActiveGroups().every((group) =>
-      session.getSelectedExercise(group).directionPartnerExerciseId === 0));
+    assert.ok(session.getSelectionGroups().every((group) => {
+      const selected = session.exercisesById.get(
+        session.state.selectedExerciseIds[group.id],
+      );
+      return selected.sequenceBlocks.length === 1;
+    }));
     assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, {});
+    assert.deepEqual(session.state.activeFullSideRoundIds, []);
   });
 }
 
-test("an idle pair selection is kept for long workouts but replaced at thirty minutes", () => {
-  const exercises = directionPairCatalog();
-  const group = RESOLUTIONS.get(30).groups[0];
-  const shortState = createDefaultState();
-  shortState.catalogRevision = CURRENT_CATALOG_REVISION;
-  shortState.selectedExerciseIds[group.id] = 1;
-  const shortSession = new WorkoutSession(exercises, shortState, () => 0);
-  shortSession.initialize();
-  assert.equal(shortSession.state.selectedExerciseIds[group.id], 1);
-
-  shortSession.startWorkout(30, WORKOUT_MODIFIERS.None);
-
-  assert.notEqual(shortSession.state.selectedExerciseIds[group.id], 1);
-  assert.equal(
-    shortSession.getSelectedExercise(group).directionPartnerExerciseId,
-    0,
+test("four-block side-by-direction sequences preserve independent cues", () => {
+  const root = catalog.find((exercise) => exercise.id === 214);
+  assert.deepEqual(
+    root.sequenceBlocks.map((block) => ({
+      exerciseId: block.exerciseId,
+      sideCue: block.sideCue,
+      mirrorMedia: block.mirrorMedia,
+    })),
+    [
+      { exerciseId: 214, sideCue: "ScreenRight", mirrorMedia: false },
+      { exerciseId: 214, sideCue: "ScreenLeft", mirrorMedia: true },
+      { exerciseId: 755, sideCue: "ScreenRight", mirrorMedia: false },
+      { exerciseId: 755, sideCue: "ScreenLeft", mirrorMedia: true },
+    ],
   );
-
-  const longState = createDefaultState();
-  longState.catalogRevision = CURRENT_CATALOG_REVISION;
-  longState.selectedExerciseIds[group.id] = 1;
-  const longSession = new WorkoutSession(exercises, longState, () => 0);
-  longSession.initialize();
-  longSession.startWorkout(45, WORKOUT_MODIFIERS.None);
-
-  assert.equal(longSession.state.selectedExerciseIds[group.id], 1);
-  assert.equal(longSession.state.activeDirectionPartnerExerciseIds[group.id], 2);
+  assert.deepEqual(catalog.find((exercise) => exercise.id === 755).sequenceBlocks, []);
 });
 
-test("every repeated direction pair remains adjacent in ninety minutes", () => {
-  const session = new WorkoutSession(
-    directionPairCatalog(),
-    createDefaultState(),
-    () => 0,
-  );
-  session.startWorkout(90, WORKOUT_MODIFIERS.None);
-
-  const rounds = session.getActiveGroups();
-  const pairLeads = rounds.filter((round) =>
-    round.pairedRoundId && !round.isPairDecisionRound);
-  assert.ok(pairLeads.length >= 2);
-  assert.equal(rounds.reduce(
-    (total, round) => total + (round.usesFullSideTiming ? 2 : 1),
-    0,
-  ), 90);
-  for (const lead of pairLeads) {
-    const decision = rounds[lead.order];
-    assert.equal(decision.isPairDecisionRound, true);
-    assert.equal(lead.pairedRoundId, decision.id);
-    assert.equal(decision.pairedRoundId, lead.id);
-    assert.equal(getSelectionKey(lead), getSelectionKey(decision));
+test("simultaneous and alternating bilateral movements remain one block", () => {
+  for (const exerciseId of [248, 394, 421, 427, 468]) {
+    const item = catalog.find((exercise) => exercise.id === exerciseId);
+    assert.equal(item.sequenceBlocks.length, 1);
+    assert.equal(item.sequenceBlocks[0].exerciseId, exerciseId);
+  }
+  assert.equal(catalog.find((exercise) => exercise.id === 421).sideSequence, "Continuous");
+  for (const exerciseId of [248, 394, 427, 468]) {
     assert.equal(
-      session.getSelectedExercise(lead).directionPartnerExerciseId,
-      session.getSelectedExercise(decision).id,
+      catalog.find((exercise) => exercise.id === exerciseId).sideSequence,
+      "Alternating",
     );
   }
 });
@@ -2473,466 +2345,158 @@ test("shuffle visits every eligible alternative without repeating", () => {
   );
 });
 
-test("direction pair shuffle rejects both and is unavailable after direction one", () => {
+test("sequence shuffle rejects every member once and never starts mid-sequence", () => {
   const exercises = directionPairCatalog();
-  const canonicalGroups = [...new Set(RESOLUTIONS.get(30).groups.flatMap(
-    (group) => group.canonicalGroups,
-  ))];
-  const third = {
-    ...exercise(3, canonicalGroups[0], canonicalGroups.slice(1), -100),
-    directionPartnerExerciseId: 4,
-  };
-  const fourth = {
-    ...exercise(4, canonicalGroups[0], canonicalGroups.slice(1), -100),
-    directionPartnerExerciseId: 3,
-  };
-  const session = new WorkoutSession(
-    [...exercises, third, fourth],
-    createDefaultState(),
-    () => 0,
-  );
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
   const lead = session.getActiveGroups().find((round) =>
-    round.pairedRoundId &&
-    !round.isPairDecisionRound &&
-    session.getSelectedExercise(round).id === 1);
+    session.state.selectedExerciseIds[getSelectionKey(round)] === 1 &&
+    round.sequenceBlockIndex === 0 &&
+    round.setNumber === 1);
   assert.ok(lead);
-  for (const priorRound of session.getActiveGroups()) {
-    if (priorRound.id === lead.id) {
-      break;
-    }
-    session.recordOutcome(priorRound, true);
+  for (const prior of session.getActiveGroups().filter((round) =>
+    round.order < lead.order)) {
+    session.state.outcomes[prior.id] = "tick";
   }
 
   assert.equal(session.canShuffleNextExercise(lead), true);
-  const rejectedLead = session.getSelectedExercise(lead);
-  const rejectedPartner = exercises.find((exercise) =>
-    exercise.id === rejectedLead.directionPartnerExerciseId);
-  const rejectedLeadScore = rejectedLead.score;
-  const rejectedPartnerScore = rejectedPartner.score;
   const result = session.shuffleNextExercise(lead);
+  assert.ok(result);
+  assert.deepEqual(result.scoreUpdates.map((item) => item.id).sort(), [1, 2]);
+  assert.equal(session.state.scores["1"], 99);
+  assert.equal(session.state.scores["2"], 99);
+  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(1));
+  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(2));
 
-  assert.equal(
-    [rejectedLead.id, rejectedPartner.id].includes(result.replacementExercise.id),
-    false,
-  );
-  assert.deepEqual(
-    result.scoreUpdates.map((exercise) => exercise.id),
-    [rejectedLead.id, rejectedPartner.id],
-  );
-  assert.equal(session.state.scores[rejectedLead.id], rejectedLeadScore - 1);
-  assert.equal(session.state.scores[rejectedPartner.id], rejectedPartnerScore - 1);
-  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(rejectedLead.id));
-  assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(rejectedPartner.id));
-  const replacementLead = session.getNextGroup();
-  assert.equal(
-    session.getSelectedExercise(replacementLead).id,
-    result.replacementExercise.id,
-  );
-  assert.equal(
-    session.getActiveGroups().reduce(
-      (minutes, round) => minutes + (round.usesFullSideTiming ? 2 : 1),
-      0,
-    ),
-    45,
-  );
-  assert.equal(session.state.scores[rejectedLead.id], rejectedLeadScore - 1);
-  assert.equal(session.state.scores[rejectedPartner.id], rejectedPartnerScore - 1);
-  assert.equal(session.state.scores[third.id], undefined);
-  assert.equal(session.state.scores[fourth.id], undefined);
-
-  const secondSession = new WorkoutSession(
-    directionPairCatalog(),
-    createDefaultState(),
-    () => 0,
-  );
-  secondSession.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const secondLead = secondSession.getActiveGroups().find((round) =>
-    round.pairedRoundId && !round.isPairDecisionRound);
-  for (const priorRound of secondSession.getActiveGroups()) {
-    if (priorRound.id === secondLead.id) {
-      break;
-    }
-    secondSession.recordOutcome(priorRound, true);
-  }
-  secondSession.advanceDirectionPair(secondLead);
-  const secondDirection = secondSession.getNextGroup();
-
-  assert.equal(secondDirection.isPairDecisionRound, true);
-  assert.equal(secondSession.canShuffleNextExercise(secondDirection), false);
-  assert.equal(secondSession.shuffleNextExercise(secondDirection), null);
+  const continuation = {
+    ...lead,
+    sequenceBlockIndex: 1,
+  };
+  assert.equal(session.canShuffleNextExercise(continuation), false);
+  assert.equal(session.shuffleNextExercise(continuation), null);
 });
 
-test("a direction pair can only be kept after its second direction", () => {
-  const session = new WorkoutSession(
-    directionPairCatalog(),
-    createDefaultState(),
-    () => 0,
-  );
+test("one keep decision is available only after the final sequence block", () => {
+  const exercises = directionPairCatalog();
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const lead = session.getActiveGroups().find((round) =>
-    round.pairedRoundId && !round.isPairDecisionRound);
-  const decision = session.getActiveGroups().find((round) =>
-    round.id === lead.pairedRoundId);
-  for (const priorRound of session.getActiveGroups().slice(0, lead.order - 1)) {
-    session.recordOutcome(priorRound, true);
+  const sequenceGroup = session.getSelectionGroups().find((group) =>
+    session.state.selectedExerciseIds[group.id] === 1);
+  const sequenceRounds = session.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === sequenceGroup.id);
+  for (const prior of session.getActiveGroups().filter((round) =>
+    round.order < sequenceRounds[0].order)) {
+    session.state.outcomes[prior.id] = "tick";
   }
 
   assert.throws(
-    () => session.recordOutcome(lead, true),
-    /only be kept after its second direction/,
+    () => session.recordOutcome(sequenceRounds[0], true),
+    /final block/,
   );
-  assert.equal(session.state.outcomes[lead.id], undefined);
-  session.advanceDirectionPair(lead);
-  assert.equal(session.state.outcomes[lead.id], "neutral");
-  assert.equal(session.getNextGroup().id, decision.id);
-  session.recordOutcome(decision, true);
+  for (const round of sequenceRounds.slice(0, -1)) {
+    assert.equal(session.getNextGroup().id, round.id);
+    assert.equal(session.isIntermediateSequenceBlock(round), true);
+    session.advanceSequence(round);
+  }
+  const decisionRound = sequenceRounds.at(-1);
+  assert.equal(session.getNextGroup().id, decisionRound.id);
+  assert.equal(isFinalSequenceRound(decisionRound), true);
+  session.recordOutcome(decisionRound, true);
 
-  assert.equal(session.state.outcomes[lead.id], "tick");
-  assert.equal(session.state.outcomes[decision.id], "tick");
-  assert.equal(session.getScore(session.getSelectedExercise(lead)), 100);
-  assert.equal(session.getScore(session.getSelectedExercise(decision)), 100);
+  assert.ok(sequenceRounds.slice(0, -1).every((round) =>
+    session.state.outcomes[round.id] === "neutral"));
+  assert.equal(session.state.outcomes[decisionRound.id], "tick");
+  assert.equal(session.state.scores["1"], undefined);
+  assert.equal(session.state.scores["2"], undefined);
 });
 
-test("an intermediate repeated set has no keep and restores as an automatic continuation", () => {
-  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
+test("rejecting any current block rejects the whole sequence with one member vote", () => {
+  const exercises = directionPairCatalog();
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const repeatedRounds = [...Map.groupBy(
-    session.getActiveGroups(),
-    (round) => getSelectionKey(round),
-  ).values()].find((rounds) => rounds.length > 1)
-    .sort((left, right) => left.order - right.order);
-  const firstSet = repeatedRounds[0];
-
-  for (const priorRound of session.getActiveGroups()) {
-    if (priorRound.id === firstSet.id) {
-      break;
-    }
-    session.recordOutcome(priorRound, true);
+  const firstRound = session.getActiveGroups().find((round) =>
+    session.state.selectedExerciseIds[getSelectionKey(round)] === 1);
+  for (const prior of session.getActiveGroups().filter((round) =>
+    round.order < firstRound.order)) {
+    session.state.outcomes[prior.id] = "tick";
   }
 
-  session.beginRest(firstSet, 123456);
+  session.rejectCurrentSequence(firstRound);
 
-  assert.equal(session.isIntermediateSetCompletion(firstSet), true);
-  assert.equal(session.keepPendingRest(), false);
-  assert.equal(session.state.pendingRestKept, false);
-
-  session.advanceRepeatedSet(firstSet);
-  session.clearPendingRest();
-  const nextSet = session.getNextGroup();
-  const movementDuration = getMovementDurationMs(nextSet);
-  session.pauseMovement(nextSet, movementDuration, false);
-
-  const restored = new WorkoutSession(
-    catalog,
-    parseStoredState(JSON.stringify(session.state)),
-    () => 0,
+  const sequenceRounds = session.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === getSelectionKey(firstRound));
+  assert.equal(session.state.scores["1"], 99);
+  assert.equal(session.state.scores["2"], 99);
+  assert.ok(sequenceRounds.slice(0, -1).every((round) =>
+    session.state.outcomes[round.id] === "neutral"));
+  assert.equal(session.state.outcomes[sequenceRounds.at(-1).id], "x");
+  assert.notEqual(
+    getSelectionKey(session.getNextGroup()),
+    getSelectionKey(firstRound),
   );
-  restored.initialize();
-
-  assert.equal(restored.state.outcomes[firstSet.id], "neutral");
-  assert.equal(getSelectionKey(nextSet), getSelectionKey(firstSet));
-  assert.equal(restored.isSetContinuationRound(nextSet), true);
-  assert.equal(restored.getPendingMovementGroup()?.id, nextSet.id);
-  assert.equal(restored.getPendingMovementMillisecondsRemaining(999999), movementDuration);
-  assert.equal(restored.getScore(restored.getSelectedExercise(nextSet)), 0);
-
-  restored.beginRest(nextSet, 234567);
-  assert.equal(restored.isIntermediateSetCompletion(nextSet), false);
-  assert.equal(restored.keepPendingRest(), true);
 });
 
-test("a repeated direction pair defers its shared keep until the final set", () => {
-  const session = new WorkoutSession(
-    directionPairCatalog(),
-    createDefaultState(),
-    () => 0,
-  );
-  session.startWorkout(90, WORKOUT_MODIFIERS.None);
-  const repeatedPairLeads = [...Map.groupBy(
-    session.getActiveGroups().filter((round) =>
-      round.pairedRoundId && !round.isPairDecisionRound),
-    (round) => getSelectionKey(round),
-  ).values()].find((rounds) => rounds.length > 1)
-    .sort((left, right) => left.order - right.order);
-  const firstLead = repeatedPairLeads[0];
-  for (const priorRound of session.getActiveGroups()) {
-    if (priorRound.id === firstLead.id) {
-      break;
-    }
-    session.recordOutcome(priorRound, true);
-  }
+test("legacy in-progress sided movement migrates without resetting its workout", () => {
+  const exercises = directionPairCatalog();
+  exercises[0].sideSequence = "ScreenRightThenLeft";
+  exercises[0].sequenceBlocks = [
+    {
+      exerciseId: 1,
+      sideCue: "ScreenRight",
+      directionCue: "None",
+      mirrorMedia: false,
+      mediaSegment: "Full",
+    },
+    {
+      exerciseId: 1,
+      sideCue: "ScreenLeft",
+      directionCue: "None",
+      mirrorMedia: true,
+      mediaSegment: "Full",
+    },
+  ];
+  exercises[1].sequenceBlocks = [{
+    exerciseId: 2,
+    sideCue: "None",
+    directionCue: "None",
+    mirrorMedia: false,
+    mediaSegment: "Full",
+  }];
+  exercises[1].score = -100;
 
-  session.advanceDirectionPair(firstLead);
-  const firstDecision = session.getNextGroup();
-  session.beginRest(firstDecision, 123456);
-
-  assert.equal(firstDecision.isPairDecisionRound, true);
-  assert.equal(session.isIntermediateSetCompletion(firstDecision), true);
-  assert.equal(session.keepPendingRest(), false);
-
-  session.advanceRepeatedSet(firstDecision);
-  session.clearPendingRest();
-  const nextSet = session.getNextGroup();
-
-  assert.equal(session.state.outcomes[firstLead.id], "neutral");
-  assert.equal(session.state.outcomes[firstDecision.id], "neutral");
-  assert.equal(getSelectionKey(nextSet), getSelectionKey(firstLead));
-  assert.equal(session.isSetContinuationRound(nextSet), true);
-});
-
-test("a linked direction partner is never selected as another base unit", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const allCanonicalGroups = [...new Set(groups.flatMap((group) =>
-    group.canonicalGroups))];
-  const first = {
-    ...exercise(
-      1,
-      groups[0].canonicalGroups[0],
-      allCanonicalGroups.filter((group) => group !== groups[0].canonicalGroups[0]),
-      10,
-    ),
-    directionPartnerExerciseId: 2,
-  };
-  const second = {
-    ...exercise(
-      2,
-      groups[1].canonicalGroups[0],
-      allCanonicalGroups.filter((group) => group !== groups[1].canonicalGroups[0]),
-      10,
-    ),
-    directionPartnerExerciseId: 1,
-  };
-  const remaining = groups.slice(2).map((group, index) =>
-    exercise(3 + index, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10));
-  const filler = exercise(
-    100,
-    groups[1].canonicalGroups[0],
-    allCanonicalGroups.filter((group) => group !== groups[1].canonicalGroups[0]),
-    10,
-  );
-  const session = new WorkoutSession(
-    [first, second, filler, ...remaining],
-    createDefaultState(),
-    () => 0,
-  );
-
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-
-  assert.equal(Object.keys(session.state.activeDirectionPartnerExerciseIds).length, 1);
-  assert.equal(
-    Object.values(session.state.selectedExerciseIds).includes(second.id),
-    false,
-  );
-  assert.equal(session.getActiveGroups().filter((round) =>
-    round.id.endsWith(".direction1") &&
-    session.getSelectedExercise(round).id === second.id).length, 1);
-});
-
-test("rejecting linked directions applies one shared decision to both", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const baseExercises = groups.map((group, index) =>
-    exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10));
-  const partner = {
-    ...exercise(1001, groups[0].canonicalGroups[0], groups[0].canonicalGroups.slice(1), 0),
-    directionPartnerExerciseId: baseExercises[0].id,
-  };
-  baseExercises[0].directionPartnerExerciseId = partner.id;
-  const session = new WorkoutSession(
-    [...baseExercises, partner],
-    createDefaultState(),
-    () => 0,
-  );
-
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const directionRound = session.getActiveGroups().find((round) =>
-    round.id.endsWith(".direction1"));
-  const pairLead = session.getActiveGroups().find((round) =>
-    round.pairedRoundId === directionRound.id);
-  const baseExerciseId = session.state.selectedExerciseIds[getSelectionKey(directionRound)];
-  for (const priorRound of session.getActiveGroups().slice(0, pairLead.order - 1)) {
-    session.recordOutcome(priorRound, true);
-  }
-  session.advanceDirectionPair(pairLead);
-  session.recordOutcome(directionRound, false);
-
-  assert.equal(session.getScore(partner), -1);
-  assert.equal(session.getScore(baseExercises.find((item) =>
-    item.id === baseExerciseId)), 9);
-  assert.equal(session.state.outcomes[pairLead.id], "x");
-  assert.equal(session.state.outcomes[directionRound.id], "x");
-  assert.equal(
-    session.state.selectedExerciseIds[getSelectionKey(directionRound)],
-    baseExerciseId,
-  );
-  assert.notEqual(baseExerciseId, partner.id);
-});
-
-test("version five long workout recomputes direction allocation without enabling silence", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const baseExercises = groups.map((group, index) =>
-    exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10));
-  const partner = {
-    ...exercise(1001, groups[0].canonicalGroups[0], groups[0].canonicalGroups.slice(1), 0),
-    directionPartnerExerciseId: baseExercises[0].id,
-  };
-  baseExercises[0].directionPartnerExerciseId = partner.id;
-  const exercises = [...baseExercises, partner];
   const started = new WorkoutSession(exercises, createDefaultState(), () => 0);
   started.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const sequenceGroup = started.getSelectionGroups().find((group) =>
+    started.state.selectedExerciseIds[group.id] === 1);
+  const sequenceRounds = started.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === sequenceGroup.id);
   const stored = JSON.parse(JSON.stringify(started.state));
-  stored.version = 5;
-  delete stored.activeDirectionPartnerExerciseIds;
-  delete stored.activeFullSideRoundIds;
-  delete stored.activeExtraSetSelectionGroupIds;
-  delete stored.activeSetCountsBySelectionGroupId;
-
-  const restored = new WorkoutSession(
-    exercises,
-    parseStoredState(JSON.stringify(stored)),
-    () => 0,
-  );
-  restored.normalizeActiveLongWorkoutAllocation();
-
-  assert.equal(restored.state.version, 13);
-  assert.equal(restored.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
-  assert.equal(restored.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
-  assert.equal(Object.keys(restored.state.activeDirectionPartnerExerciseIds).length, 1);
-  assert.equal(
-    restored.getActiveGroups().reduce(
-      (total, round) => total + (round.usesFullSideTiming ? 2 : 1),
-      0,
-    ),
-    45,
-  );
-});
-
-test("a rejected repeated round replaces its shared exercise once", () => {
-  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(90, WORKOUT_MODIFIERS.None);
-  const rounds = session.getActiveGroups();
-  const target = rounds.find((round) => round.id.endsWith(".set2"));
-  const selectionKey = getSelectionKey(target);
-  const rejected = session.getSelectedExercise(target);
-
-  for (const round of rounds) {
-    session.recordOutcome(round, round.id !== target.id);
+  stored.version = 13;
+  stored.outcomes = {};
+  for (const selectionKey of new Set(started.getActiveGroups()
+    .filter((round) => round.order < sequenceRounds[0].order)
+    .map(getSelectionKey))) {
+    stored.outcomes[`${selectionKey}.set1`] = "tick";
   }
+  stored.pendingMovementGroupId = `${sequenceGroup.id}.set1`;
+  stored.pendingMovementMillisecondsRemaining = 10_000;
+  stored.pendingMovementEndsAtUnixMilliseconds = 0;
+  stored.pendingMovementPausedByUser = true;
+  stored.activeFullSideRoundIds = [];
+  stored.activeDirectionPartnerExerciseIds = {};
 
-  assert.equal(session.getScore(rejected), -1);
-  assert.equal(session.state.selectedExerciseIds[selectionKey], rejected.id);
-  session.acknowledgeCompletion();
-  assert.notEqual(session.state.selectedExerciseIds[selectionKey], rejected.id);
-  assert.equal(session.state.activeWorkoutMinutes, 0);
-});
-
-test("abandoned long workout settles a pending final repeated round exactly once", () => {
-  const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  started.initialize();
-  started.startWorkout(90, WORKOUT_MODIFIERS.None);
-  const rounds = started.getActiveGroups();
-  const pendingRound = rounds.find((round) => round.id.endsWith(".set2"));
-  const performed = started.getSelectedExercise(pendingRound);
-  for (const round of rounds.slice(0, pendingRound.order - 1)) {
-    started.recordOutcome(round, true);
-  }
-  started.beginRest(pendingRound, Date.now() + 15_000);
-  assert.equal(started.isIntermediateSetCompletion(pendingRound), false);
-
-  const restored = new WorkoutSession(
-    catalog,
-    parseStoredState(JSON.stringify(started.state)),
-    () => 0,
-  );
+  const restored = new WorkoutSession(exercises, stored, () => 0);
   restored.initialize();
-  assert.equal(restored.getPendingRestGroup()?.id, pendingRound.id);
-  assert.equal(restored.getScore(performed), 0);
-  restored.finishInterruptedWorkout();
-  assert.equal(restored.getScore(performed), -1);
-  assert.equal(restored.state.activeWorkoutMinutes, 0);
 
-  const restoredAgain = new WorkoutSession(
-    catalog,
-    parseStoredState(JSON.stringify(restored.state)),
-    () => 0,
-  );
-  restoredAgain.initialize();
-  assert.equal(restoredAgain.getScore(performed), -1);
-});
-
-test("abandoned intermediate set rest does not create a hidden downvote", () => {
-  const started = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  started.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const pendingRound = started.getActiveGroups().find((round) =>
-    started.isIntermediateSetCompletion(round));
-  const performed = started.getSelectedExercise(pendingRound);
-  for (const round of started.getActiveGroups()) {
-    if (round.id === pendingRound.id) {
-      break;
-    }
-    started.recordOutcome(round, true);
-  }
-  started.beginRest(pendingRound, Date.now() + 15_000);
-
-  const restored = new WorkoutSession(
-    catalog,
-    parseStoredState(JSON.stringify(started.state)),
-    () => 0,
-  );
-  restored.initialize();
-  restored.finishInterruptedWorkout();
-
-  assert.equal(restored.getScore(performed), 0);
-  assert.equal(restored.state.activeWorkoutMinutes, 0);
-});
-
-test("persisted pending direction rest cannot recurse through allocation validation", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const baseExercises = groups.map((group, index) =>
-    exercise(
-      index + 1,
-      group.canonicalGroups[0],
-      group.canonicalGroups.slice(1),
-      10,
-      EXERCISE_INSECT_COMPATIBILITY.Compatible,
-    ));
-  const partner = {
-    ...exercise(
-      1001,
-      groups[0].canonicalGroups[0],
-      groups[0].canonicalGroups.slice(1),
-      0,
-      EXERCISE_INSECT_COMPATIBILITY.Compatible,
-      false,
-    ),
-    directionPartnerExerciseId: baseExercises[0].id,
-  };
-  baseExercises[0].directionPartnerExerciseId = partner.id;
-  const allCanonicalGroups = [...new Set(groups.flatMap((group) =>
-    group.canonicalGroups))];
-  const filler = exercise(
-    2001,
-    groups[0].canonicalGroups[0],
-    allCanonicalGroups.filter((group) => group !== groups[0].canonicalGroups[0]),
-    10,
-    EXERCISE_INSECT_COMPATIBILITY.Compatible,
-  );
-  const session = new WorkoutSession(
-    [...baseExercises, partner, filler],
-    createDefaultState(),
-    () => 0,
-  );
-  session.startWorkout(45, WORKOUT_MODIFIERS.Silence);
-  assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, {});
-  session.state.activeDirectionPartnerExerciseIds[groups[0].id] = partner.id;
-  session.state.pendingRestGroupId = `${groups[0].id}.direction1`;
-  session.state.pendingRestEndsAtUnixMilliseconds = 123456;
-
-  session.initialize();
-
-  assert.equal(session.state.activeWorkoutMinutes, 0);
-  assert.equal(session.state.pendingRestGroupId, null);
-  assert.equal(session.getScore(partner), 0);
+  const pending = restored.getPendingMovementGroup();
+  assert.equal(restored.state.activeWorkoutMinutes, 45);
+  assert.equal(restored.state.version, 14);
+  assert.equal(pending.sequenceBlockIndex, 1);
+  assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
+  const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === sequenceGroup.id);
+  assert.equal(restored.state.outcomes[migratedSequenceRounds[0].id], "neutral");
+  assert.equal(restored.state.workoutCompleted, false);
 });
 
 test("selection uses truthful associations and ranks score, primary, then coverage", () => {
@@ -2959,231 +2523,88 @@ test("selection uses truthful associations and ranks score, primary, then covera
   assert.equal(getCanonicalCoverage(broadEqualScore, group), 2);
 });
 
-test("movement countdown uses exact continuous and 20/5/20 boundaries", () => {
-  assert.deepEqual(getMovementPhaseState(50_000, false), {
+test("every block is 45 seconds and only the sequence entrance has preparation", () => {
+  assert.deepEqual(getMovementPhaseState(50_000, true), {
     phase: "Preparation",
     secondsRemaining: 5,
     segmentDurationSeconds: 5,
     isExercise: false,
   });
-  assert.equal(getMovementPhaseState(45_001, false).secondsRemaining, 1);
+  assert.deepEqual(getMovementPhaseState(45_000, true), {
+    phase: "Continuous",
+    secondsRemaining: 45,
+    segmentDurationSeconds: 45,
+    isExercise: true,
+  });
   assert.deepEqual(getMovementPhaseState(45_000, false), {
     phase: "Continuous",
     secondsRemaining: 45,
     segmentDurationSeconds: 45,
     isExercise: true,
   });
-  assert.equal(getMovementPhaseState(1_001, false).secondsRemaining, 2);
-  assert.deepEqual(getMovementPhaseState(25_000, true), {
-    phase: "ChangeSides",
-    secondsRemaining: 5,
-    segmentDurationSeconds: 5,
+  assert.deepEqual(getMovementPhaseState(1, false), {
+    phase: "Continuous",
+    secondsRemaining: 1,
+    segmentDurationSeconds: 45,
+    isExercise: true,
+  });
+  assert.deepEqual(getMovementPhaseState(0, false), {
+    phase: "Complete",
+    secondsRemaining: 0,
+    segmentDurationSeconds: 0,
     isExercise: false,
   });
-  assert.equal(getMovementPhaseState(20_000, true).phase, "SecondSide");
-  assert.equal(getMovementPhaseState(19_999, true).secondsRemaining, 20);
-  assert.equal(getMovementPhaseState(0, true).phase, "Complete");
+  assert.equal(getMovementDurationMs(), 45_000);
+  assert.equal(getMovementCountdownDurationMs({}), 50_000);
+  assert.equal(getMovementCountdownDurationMs({
+    sequenceBlockIndex: 1,
+    setNumber: 1,
+  }), 45_000);
+  assert.equal(getMovementCountdownDurationMs({
+    sequenceBlockIndex: 0,
+    setNumber: 2,
+  }), 45_000);
 });
 
-test("side pairs mirror only phase two and direction pairs never mirror", () => {
-  const side = {
-    sideSequence: "ScreenRightThenLeft",
-    directionSequence: "None",
+test("sequence presentation composes side, direction, and mirroring independently", () => {
+  const group = {
+    sequenceSideCue: "ScreenRight",
+    sequenceDirectionCue: "Inward",
+    mirrorSequenceMedia: true,
   };
-  const direction = {
-    sideSequence: "Continuous",
-    directionSequence: "ForwardThenBackward",
-  };
-  const leadStance = {
-    sideSequence: "ScreenRightLeadThenLeftLead",
-    directionSequence: "None",
-  };
-
-  assert.deepEqual(getMovementPresentation(side, "FirstSide"), {
-    cue: "ScreenRight",
-    mirrorMedia: false,
+  assert.deepEqual(getMovementPresentation(group, "Continuous"), {
+    sideCue: "ScreenRight",
+    directionCue: "Inward",
+    mirrorMedia: true,
     activeScreenSide: "Right",
   });
-  assert.deepEqual(getMovementPresentation(side, "SecondSide"), {
-    cue: "ScreenLeft",
-    mirrorMedia: true,
-    activeScreenSide: "Left",
-  });
-  assert.deepEqual(getMovementPresentation(direction, "SecondSide"), {
-    cue: "Backward",
+  assert.deepEqual(getMovementPresentation(group, "Complete"), {
+    sideCue: "None",
+    directionCue: "None",
     mirrorMedia: false,
     activeScreenSide: null,
   });
-  assert.deepEqual(getMovementPresentation(leadStance, "FirstSide"), {
-    cue: "ShownLeadStance",
-    mirrorMedia: false,
-    activeScreenSide: "Right",
-  });
-  assert.deepEqual(getMovementPresentation(leadStance, "SecondSide"), {
-    cue: "OppositeLeadStance",
-    mirrorMedia: true,
-    activeScreenSide: "Left",
-  });
 });
 
-test("full-side rounds use exact 45/15/45 boundaries", () => {
-  assert.equal(getMovementDurationMs({ usesFullSideTiming: true }), 105_000);
-  assert.equal(getMovementCountdownDurationMs({ usesFullSideTiming: true }), 110_000);
-  assert.deepEqual(getMovementPhaseState(110_000, true, true), {
-    phase: "Preparation",
-    secondsRemaining: 5,
-    segmentDurationSeconds: 5,
-    isExercise: false,
-  });
-  assert.deepEqual(getMovementPhaseState(105_000, true, true), {
-    phase: "FirstSide",
-    secondsRemaining: 45,
-    segmentDurationSeconds: 45,
-    isExercise: true,
-  });
-  assert.deepEqual(getMovementPhaseState(60_000, true, true), {
-    phase: "ChangeSides",
-    secondsRemaining: 15,
-    segmentDurationSeconds: 15,
-    isExercise: false,
-  });
-  assert.deepEqual(getMovementPhaseState(45_000, true, true), {
-    phase: "SecondSide",
-    secondsRemaining: 45,
-    segmentDurationSeconds: 45,
-    isExercise: true,
-  });
-});
-
-test("reviewed sided movements always receive a timed side swap", () => {
-  const sidedIds = [
-    16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
-    213, 220, 225, 234, 239, 241, 242, 248, 256, 258, 269,
-    278, 279, 282, 283, 285, 286, 291, 294, 326, 329,
-    198, 394, 395, 396, 397, 421, 427, 468, 507, 512, 513, 572, 577, 618, 636,
-    685, 745, 834,
-  ];
-  for (const exerciseId of sidedIds) {
-    assert.equal(
-      usesTimedSides(catalog.find((item) => item.id === exerciseId)),
-      true,
-      `exercise ${exerciseId} must receive separate side phases`,
-    );
+test("every catalog exercise has exactly one atomic sequence owner", () => {
+  const ownership = new Map(catalog.map((exercise) => [exercise.id, []]));
+  for (const root of catalog.filter((exercise) =>
+    exercise.sequenceBlocks.length > 0)) {
+    for (const memberId of new Set(root.sequenceBlocks.map((block) =>
+      block.exerciseId))) {
+      ownership.get(memberId)?.push(root.id);
+    }
+  }
+  for (const [exerciseId, ownerIds] of ownership) {
+    assert.equal(ownerIds.length, 1, `exercise ${exerciseId}`);
   }
 
-  const correctedOneSideMedia = new Map([
-    [198, "ScreenLeftThenRight"],
-    [248, "ScreenRightThenLeft"],
-    [282, "ScreenLeftThenRight"],
-    [394, "ScreenLeftThenRight"],
-    [395, "ScreenLeftThenRight"],
-    [397, "ScreenRightThenLeft"],
-    [421, "ScreenLeftThenRight"],
-    [427, "ScreenLeftLeadThenRightLead"],
-    [468, "ScreenLeftThenRight"],
-    [507, "ScreenRightThenLeft"],
-    [512, "ScreenRightThenLeft"],
-    [577, "ScreenRightThenLeft"],
-    [618, "ScreenLeftThenRight"],
-    [834, "ScreenLeftThenRight"],
-    [685, "ScreenLeftThenRight"],
-  ]);
-  for (const [exerciseId, sideSequence] of correctedOneSideMedia) {
-    assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, sideSequence);
+  for (const rootId of [214, 223, 288, 617]) {
+    assert.equal(catalog.find((exercise) => exercise.id === rootId)
+      .sequenceBlocks.length, 4);
   }
-
-  const continuousIds = [
-    15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
-    201, 230, 251, 257, 262, 263, 266,
-    267, 268, 270, 275, 289, 301, 314, 321,
-    391, 413, 425, 516, 615, 677, 683, 687,
-  ];
-  for (const exerciseId of continuousIds) {
-    assert.equal(
-      usesTimedSides(catalog.find((item) => item.id === exerciseId)),
-      false,
-      `exercise ${exerciseId} should remain one uninterrupted movement phase`,
-    );
-  }
-
-  const alternating = catalog.filter((item) => item.sideSequence === "Alternating");
-  assert.equal(alternating.length, 123);
-  for (const exerciseId of [31, 98, 176, 195, 219, 390, 391, 398, 413, 508, 515, 576, 816]) {
-    assert.equal(catalog.find((item) => item.id === exerciseId).sideSequence, "Alternating");
-  }
-  assert.equal(catalog.find((item) => item.id === 15).sideSequence, "Alternating");
-  assert.equal(catalog.find((item) => item.id === 429).sideSequence, "Alternating");
-  assert.equal(getMovementDurationMs(alternating[0]), 45_000);
-  assert.deepEqual(getMovementPhaseState(45_000, usesTimedSides(alternating[0])), {
-    phase: "Continuous",
-    secondsRemaining: 45,
-    segmentDurationSeconds: 45,
-    isExercise: true,
-  });
-
-  const leadStanceSequences = new Map([
-    [265, "ScreenLeftLeadThenRightLead"],
-    [274, "ScreenLeftLeadThenRightLead"],
-    [280, "ScreenLeftLeadThenRightLead"],
-    [287, "ScreenRightLeadThenLeftLead"],
-    [427, "ScreenLeftLeadThenRightLead"],
-    [473, "ScreenLeftLeadThenRightLead"],
-    [591, "ScreenLeftLeadThenRightLead"],
-    [884, "ScreenRightLeadThenLeftLead"],
-    [885, "ScreenRightLeadThenLeftLead"],
-    [886, "ScreenRightLeadThenLeftLead"],
-    [887, "ScreenRightLeadThenLeftLead"],
-  ]);
-  assert.deepEqual(
-    catalog.filter(usesTimedLeadStances).map((exercise) => exercise.id),
-    [...leadStanceSequences.keys()],
-  );
-  for (const [exerciseId, sideSequence] of leadStanceSequences) {
-    const exercise = catalog.find((item) => item.id === exerciseId);
-    assert.equal(exercise.sideSequence, sideSequence);
-    assert.equal(usesTimedSides(exercise), true);
-  }
-});
-
-test("forty-five-minute direction and side allocation remains fixed after start", () => {
-  const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-  session.startWorkout(30, WORKOUT_MODIFIERS.None);
-  const previousRounds = session.getActiveGroups();
-  for (const round of previousRounds) {
-    session.recordOutcome(round, round.order <= 10);
-  }
-  const expectedKeptExerciseIds = previousRounds
-    .slice(0, 10)
-    .map((round) => session.state.selectedExerciseIds[getSelectionKey(round)]);
-  session.acknowledgeCompletion();
-  assert.deepEqual(
-    [...session.state.lastKeptExerciseIds].sort((left, right) => left - right),
-    [...expectedKeptExerciseIds].sort((left, right) => left - right),
-  );
-
-  session.startWorkout(45, WORKOUT_MODIFIERS.None);
-  const rounds = session.getActiveGroups();
-  const expectedDirectionPartners = {
-    ...session.state.activeDirectionPartnerExerciseIds,
-  };
-  const expectedFullSideRoundIds = [...session.state.activeFullSideRoundIds];
-  const expectedExtraSetGroupIds = [...session.state.activeExtraSetSelectionGroupIds];
-  assert.equal(
-    Object.keys(expectedDirectionPartners).length +
-      expectedFullSideRoundIds.length +
-      expectedExtraSetGroupIds.length,
-    15,
-  );
-  assert.equal(
-    rounds.reduce((total, round) => total + (round.usesFullSideTiming ? 2 : 1),
-    0),
-    45,
-  );
-
-  session.state.lastKeptExerciseIds = [];
-  assert.deepEqual(session.state.activeDirectionPartnerExerciseIds, expectedDirectionPartners);
-  assert.deepEqual(session.state.activeFullSideRoundIds, expectedFullSideRoundIds);
-  assert.deepEqual(session.state.activeExtraSetSelectionGroupIds, expectedExtraSetGroupIds);
+  assert.equal(catalog.find((exercise) => exercise.id === 414)
+    .sequenceBlocks.length, 3);
 });
 
 test("kept exercises fill compatible slots after workout duration changes", () => {
@@ -3386,7 +2807,7 @@ test("catalog identity replacement clears inherited score and workout references
 
   assert.equal(restored.state.scores[String(retired.id)], undefined);
   assert.equal(restored.state.pendingRestGroupId, null);
-  assert.equal(restored.state.activeWorkoutMinutes, 0);
+  assert.equal(restored.state.activeWorkoutMinutes, 3);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
   assert.deepEqual(restored.state.lastKeptExerciseIds, [retired.id]);
   assert.equal(restored.getScore(changedCatalog.find((item) => item.id === retired.id)), 0);
@@ -3395,7 +2816,7 @@ test("catalog identity replacement clears inherited score and workout references
 test("approved timed-side name cleanup preserves browser memory", () => {
   const normalized = catalog.find(
     (item) =>
-      usesTimedSides(item) &&
+      item.sequenceBlocks.length > 1 &&
       !item.name.startsWith("Alternating "),
   );
   const group = RESOLUTIONS.get(30).groups.find((candidate) => isSelectable(normalized, candidate));
@@ -3447,12 +2868,10 @@ test("approved clarity corrections preserve browser memory", () => {
     );
     restored.initialize();
 
-    const isDirectionPartnerOnly =
-      currentExercise.directionPartnerExerciseId > 0 &&
-      currentExercise.id > currentExercise.directionPartnerExerciseId;
+    const isSequenceMemberOnly = currentExercise.sequenceBlocks.length === 0;
     assert.equal(
       restored.state.selectedExerciseIds[group.id],
-      isDirectionPartnerOnly ? undefined : exerciseId,
+      isSequenceMemberOnly ? undefined : exerciseId,
     );
     assert.equal(restored.getScore(currentExercise), -3);
   }
@@ -4223,7 +3642,7 @@ test("genuine mirror practice revision retires duplicate and preserves corrected
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
-test("directional circles are complete sequences or explicit side-direction partners", () => {
+test("directional circles belong to complete atomic sequences", () => {
   const expectedDirectionSequences = new Map([
     [264, "BackwardThenForward"],
     [275, "BackwardThenForward"],
@@ -4266,8 +3685,16 @@ test("directional circles are complete sequences or explicit side-direction part
     );
   }
   const oneWayCircleName = /\b(?:clockwise|counterclockwise|forward|backward|inward|outward)\b.*\bcircles\b/i;
-  assert.ok(catalog.every((exercise) =>
-    !oneWayCircleName.test(exercise.name) || exercise.directionPartnerExerciseId > 0));
+  const ownerByExerciseId = new Map(catalog.flatMap((root) =>
+    root.sequenceBlocks.map((block) => [block.exerciseId, root])));
+  assert.ok(catalog.every((exercise) => {
+    if (!oneWayCircleName.test(exercise.name)) {
+      return true;
+    }
+    const owner = ownerByExerciseId.get(exercise.id);
+    return owner?.sequenceBlocks.length > 1 &&
+      owner.sequenceBlocks.some((block) => block.exerciseId === exercise.id);
+  }));
 });
 
 test("complete-direction revision retires duplicates and preserves side-leg scores", () => {
@@ -4418,7 +3845,7 @@ test("deployment migration preserves present keeps and drops missing exercises",
 
   assert.deepEqual(
     restored.state.lastKeptExerciseIds,
-    [present.id, present.directionPartnerExerciseId],
+    [...new Set(present.sequenceBlocks.map((block) => block.exerciseId))],
   );
   assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
@@ -4426,9 +3853,11 @@ test("deployment migration preserves present keeps and drops missing exercises",
   restored.startWorkout(45, WORKOUT_MODIFIERS.None);
 
   assert.equal(restored.state.selectedExerciseIds[group.id], present.id);
-  assert.equal(
-    restored.state.activeDirectionPartnerExerciseIds[group.id],
-    present.directionPartnerExerciseId,
+  assert.deepEqual(
+    restored.getActiveGroups()
+      .filter((round) => getSelectionKey(round) === group.id)
+      .map((round) => restored.getSelectedExercise(round).id),
+    present.sequenceBlocks.map((block) => block.exerciseId),
   );
 });
 
@@ -4472,7 +3901,18 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
 
     if (item.directionSequence !== "None") {
       directionIds.push(item.id);
-      assert.match(videoPath, /^exercise_direction_videos\//);
+      const directionSegments = item.sequenceBlocks
+        .map((block) => block.mediaSegment)
+        .filter((segment) => segment !== "Full");
+      assert.deepEqual(
+        directionSegments,
+        ["FirstDirection", "SecondDirection"],
+      );
+      for (const segment of directionSegments) {
+        const directionVideoPath = getExerciseVideoPath(item, segment);
+        assert.match(directionVideoPath, /^exercise_direction_videos\//);
+        await assertFile(path.join(repositoryRoot, "Flux", "Assets", directionVideoPath));
+      }
     }
     if (item.mode === "Hold") {
       holds.push(item);
@@ -4484,14 +3924,12 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
   }
 
   assert.deepEqual(directionIds, [264, 275, 406, 409, 460, 588, 608, 611, 743]);
-  const linkedDirections = catalog.filter((item) => item.directionPartnerExerciseId > 0);
-  assert.equal(linkedDirections.length, 8);
-  for (const item of linkedDirections) {
-    const partner = catalog.find((candidate) =>
-      candidate.id === item.directionPartnerExerciseId);
-    assert.ok(partner);
-    assert.equal(partner.directionPartnerExerciseId, item.id);
-  }
+  assert.ok(catalog.every((item) =>
+    !Object.hasOwn(item, "directionPartnerExerciseId")));
+  const multiExerciseSequenceRoots = catalog
+    .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
+    .map((root) => root.id);
+  assert.deepEqual(multiExerciseSequenceRoots, [214, 223, 288, 414, 617]);
   assert.ok(holds.length > 0);
   assert.ok(holds.some((item) => item.presentation === "Still"));
 });
@@ -4564,7 +4002,13 @@ function exercise(
     silent,
     sideSequence: "Continuous",
     directionSequence: "None",
-    directionPartnerExerciseId: 0,
+    sequenceBlocks: [{
+      exerciseId: id,
+      sideCue: "None",
+      directionCue: "None",
+      mirrorMedia: false,
+      mediaSegment: "Full",
+    }],
     mode: "Repetition",
     presentation: "Motion",
   };
@@ -4602,11 +4046,26 @@ function directionPairCatalog() {
   ))];
   const first = {
     ...exercise(1, canonicalGroups[0], canonicalGroups.slice(1), 100),
-    directionPartnerExerciseId: 2,
+    sequenceBlocks: [
+      {
+        exerciseId: 1,
+        sideCue: "None",
+        directionCue: "Forward",
+        mirrorMedia: false,
+        mediaSegment: "Full",
+      },
+      {
+        exerciseId: 2,
+        sideCue: "None",
+        directionCue: "Backward",
+        mirrorMedia: false,
+        mediaSegment: "Full",
+      },
+    ],
   };
   const second = {
     ...exercise(2, canonicalGroups[0], canonicalGroups.slice(1), 100),
-    directionPartnerExerciseId: 1,
+    sequenceBlocks: [],
   };
   const fillers = Array.from({ length: 30 }, (_, index) => {
     const primary = canonicalGroups[index % canonicalGroups.length];

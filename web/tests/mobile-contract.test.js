@@ -11,7 +11,6 @@ import {
   DEFAULT_WORKOUT_MODIFIERS,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
-  FULL_SIDE_MOVEMENT_DURATION_MS,
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
@@ -70,10 +69,11 @@ const [
   webBuild,
   mirrorEquipmentModel,
   mirrorCoverageModel,
-  sideSequenceModel,
+  sequenceBlockModel,
   movementPresentationPolicy,
   compactMirrorIcon,
   tallMirrorIcon,
+  exerciseSequenceIcon,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -101,10 +101,11 @@ const [
   source("web", "scripts", "build.mjs"),
   source("Flux", "Models", "MirrorEquipment.cs"),
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
-  source("Flux", "Models", "ExerciseSideSequence.cs"),
+  source("Flux", "Models", "ExerciseSequenceBlock.cs"),
   source("Flux", "Services", "MovementPhasePresentationPolicy.cs"),
   source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
   source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
+  source("Flux", "Resources", "drawable", "ic_exercise_sequence.xml"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -119,18 +120,25 @@ test("web duration choices match the mobile workout contract", () => {
   );
 });
 
-test("web and mobile persist hard-first optional long-workout allocation", () => {
+test("web and mobile persist hard-first block-aware long-workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
-  assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
-  assert.match(workoutState, /HashSet<string> ActiveFullSideRoundIds/);
+  assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
   assert.match(
     sessionService,
-    /OrderByDescending\(IsSelectedHard\)[\s\S]*ThenByDescending\(IsSelectedKept\)[\s\S]*ThenByDescending\(group\s*=>\s*group\.Order\)/,
+    /OrderByDescending\(group =>[\s\S]*IsHardExercise\(Selected\(group\)\)[\s\S]*ThenByDescending\(group =>[\s\S]*LastKeptExerciseIds\.Contains\(Selected\(group\)\.Id\)[\s\S]*ThenByDescending\(group => group\.Order\)/,
   );
   assert.match(
     workoutModule,
-    /return rightHard - leftHard \|\|[\s\S]*rightKept - leftKept \|\|[\s\S]*right\.order - left\.order/,
+    /Number\(rightExercise\.muscularDemand === HARD_MUSCULAR_DEMAND\) -[\s\S]*Number\(leftExercise\.muscularDemand === HARD_MUSCULAR_DEMAND\)[\s\S]*keptExerciseIds\.has\(rightExercise\.id\)[\s\S]*keptExerciseIds\.has\(leftExercise\.id\)[\s\S]*right\.order - left\.order/,
+  );
+  assert.match(
+    sessionService,
+    /blockCostByGroup[\s\S]*SequenceBlocks\.Length[\s\S]*remainingMinutes[\s\S]*CanFill/,
+  );
+  assert.match(
+    workoutModule,
+    /blockCostByGroup[\s\S]*sequenceBlocks\.length[\s\S]*remainingMinutes[\s\S]*canFill/,
   );
   assert.match(
     sessionService,
@@ -210,8 +218,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 13);
-  assert.match(workoutState, /public int Version[^=]*=\s*16/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 14);
+  assert.match(workoutState, /public int Version[^=]*=\s*17/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -226,7 +234,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     sessionService,
-    /ChooseBestDistinctLineup\([\s\S]*IsSelectable\(exercise, group, modifiers\)/,
+    /ChooseBestDistinctLineup\([\s\S]*IsWorkoutSelectionCandidate\(state, exercise, group, modifiers\)/,
   );
   assert.match(exerciseModel, /int SessionMovementId/);
   assert.match(
@@ -420,10 +428,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*66/);
+  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*67/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+65\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+66\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(
@@ -565,10 +573,8 @@ test("movement and rest phases use pronounced accents across the surface, media,
     mainActivity,
     /SetExerciseMediaPhase[\s\S]*media_card_rest_background[\s\S]*media_card_move_background/,
   );
-  assert.match(
-    mainActivity,
-    /phase_rest_chip_background[\s\S]*phase_move_chip_background/,
-  );
+  assert.match(mainActivity, /phase_rest_chip_background/);
+  assert.match(mainActivity, /phase_move_chip_background/);
   assert.match(
     androidStyles,
     /FluxKeepButton[\s\S]*@drawable\/rest_button_background/,
@@ -591,42 +597,22 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("one icon-only signifier identifies unilateral or bidirectional execution", async () => {
+test("one icon-only signifier identifies every multi-block exercise sequence", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");
-  assert.equal(
-    fullNeckCircles.directionSequence,
-    "ClockwiseThenCounterclockwise",
-  );
-  const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
-  const unilateralIcon = await source(
-    "Flux",
-    "Resources",
-    "drawable",
-    "ic_unilateral_asymmetry.xml",
-  );
-  const bidirectionalIcon = await source(
-    "Flux",
-    "Resources",
-    "drawable",
-    "ic_bidirectional_execution.xml",
-  );
+  assert.equal(fullNeckCircles.sequenceBlocks.length, 2);
   assert.match(workoutLayout, /@\+id\/execution_signifier/);
   assert.match(workoutLayout, /@\+id\/execution_signifier_icon/);
-  assert.match(workoutLayout, /@drawable\/ic_unilateral_asymmetry/);
+  assert.match(workoutLayout, /@drawable\/ic_exercise_sequence/);
   assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="execution-signifier"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
   assert.match(webIndex, /id="execution-signifier-icon"/);
-  assert.match(webIndex, /id="unilateral-signifier"/);
-  assert.match(webIndex, /id="bidirectional-signifier"/);
-  assert.match(unilateralIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
-  assert.match(unilateralIcon, /@color\/rest_accent/);
-  assert.match(unilateralIcon, /@color\/move_accent/);
-  assert.match(bidirectionalIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
-  assert.match(bidirectionalIcon, /@color\/rest_accent/);
-  assert.match(bidirectionalIcon, /@color\/move_accent/);
+  assert.doesNotMatch(webIndex, /unilateral-signifier|bidirectional-signifier/);
+  assert.match(exerciseSequenceIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
+  assert.match(exerciseSequenceIcon, /@color\/rest_accent/);
+  assert.match(exerciseSequenceIcon, /@color\/move_accent/);
   assert.match(
     mainActivity,
-    /RenderExecutionSignifier\(exercise\)/,
+    /RenderExecutionSignifier\(\)/,
   );
   const androidSignifier = methodBody(
     mainActivity,
@@ -635,9 +621,9 @@ test("one icon-only signifier identifies unilateral or bidirectional execution",
   );
   assert.match(
     androidSignifier,
-    /SideSequence\.UsesTimedSides\(\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*_executionSignifierIcon\.SetImageResource\(isUnilateral[\s\S]*ic_unilateral_asymmetry[\s\S]*ic_bidirectional_execution/,
+    /SequenceBlockCount \*[\s\S]*SetCount[\s\S]*blockCount <= 1[\s\S]*ic_exercise_sequence/,
   );
-  assert.match(androidSignifier, /Unilateral exercise[\s\S]*Bidirectional exercise/);
+  assert.match(androidSignifier, /Exercise sequence[\s\S]*45 seconds each[\s\S]*15 seconds between blocks/);
   const webSignifier = methodBody(
     webApp,
     "function renderExecutionSignifier(",
@@ -645,20 +631,17 @@ test("one icon-only signifier identifies unilateral or bidirectional execution",
   );
   assert.match(
     webSignifier,
-    /isUnilateral = usesTimedSides\(exercise\)[\s\S]*isBidirectional[\s\S]*if \(!isUnilateral && !isBidirectional\)[\s\S]*unilateralSignifier\.toggleAttribute\("hidden", !isUnilateral\)[\s\S]*bidirectionalSignifier\.toggleAttribute\("hidden", isUnilateral\)/,
+    /sequenceBlockCount[\s\S]*setCount[\s\S]*blockCount <= 1[\s\S]*Exercise sequence/,
   );
-  assert.match(webSignifier, /Unilateral exercise[\s\S]*Bidirectional exercise/);
   assert.match(webStyles, /\.execution-signifier-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
-  assert.match(webStyles, /\.unilateral-blue[\s\S]*var\(--rest-accent\)/);
-  assert.match(webStyles, /\.unilateral-red[\s\S]*var\(--move-accent\)/);
-  assert.match(webStyles, /\.bidirectional-blue[\s\S]*var\(--rest-accent\)/);
-  assert.match(webStyles, /\.bidirectional-red[\s\S]*var\(--move-accent\)/);
+  assert.match(webStyles, /\.sequence-block-blue[\s\S]*var\(--rest-accent\)/);
+  assert.match(webStyles, /\.sequence-block-red[\s\S]*var\(--move-accent\)/);
   assert.doesNotMatch(workoutLayout, /side_phase_label|countdown_phase_icon/);
   assert.doesNotMatch(mainActivity, /_sidePhaseLabel|_countdownPhaseIcon|GetMovementCueIcon/);
-  assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL/);
+  assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL|UNILATERAL/);
   assert.doesNotMatch(
     webApp,
-    /sidePhaseLabel|elements\.movementCue|function cueSymbol|BIDIRECTIONAL/,
+    /sidePhaseLabel|elements\.movementCue|function cueSymbol|BIDIRECTIONAL|UNILATERAL/,
   );
   assert.doesNotMatch(webStyles, /\.side-phase-label|\.movement-cue/);
   assert.doesNotMatch(workoutLayout, /two_sided_badge|ic_two_sides/);
@@ -726,7 +709,10 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(mobilePause, /_countdownPausedByUser = true[\s\S]*PauseCountdown\(\)/);
   assert.match(mobileRepeat, /StopCountdownTimer\(\)[\s\S]*StartCountdownTimer\(GetCurrentCountdownDurationMilliseconds\(\)\)/);
   assert.doesNotMatch(mobileRepeat, /FinalizeCurrentRound|RecordOutcome/);
-  assert.match(mobileNext, /FinalizeCurrentRound\(keep: false\)/);
+  assert.match(
+    mobileNext,
+    /RejectCurrentSequenceWithScoreUpdates[\s\S]*SaveStateAndScores/,
+  );
   assert.match(mobileNext, /!_countdownActive && !_countdownPaused/);
   const mobileAvailability = methodBody(
     mainActivity,
@@ -767,7 +753,7 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(webPause, /pauseMovement\("user"\)/);
   assert.match(webRepeat, /getMovementCountdownDurationMs\(currentGroup\)[\s\S]*setMovementDeadline\(movementRemaining\)/);
   assert.doesNotMatch(webRepeat, /recordOutcome|persistState/);
-  assert.match(webNext, /recordOutcome\(currentGroup, false\)/);
+  assert.match(webNext, /rejectCurrentSequence\(currentGroup\)[\s\S]*persistState/);
   assert.match(webNext, /!movementRunning && !movementPauseReason/);
   const webAvailability = methodBody(
     webApp,
@@ -840,7 +826,7 @@ test("active movement checkpoints and invalid media recovery match across platfo
   const mobileDirectionGuard = methodBody(
     mainActivity,
     "private void EnforceDirectionMediaSegment(MovementPhase phase)",
-    "private void CueSideChange()",
+    "private int GetCurrentMediaSegmentStartMilliseconds()",
   );
   assert.match(
     mobileCreate,
@@ -880,9 +866,9 @@ test("active movement checkpoints and invalid media recovery match across platfo
   assert.match(webApp, /visibilitychange[\s\S]*pagehide/);
 });
 
-test("lead-stance timing and cues are identical on mobile and web", () => {
+test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    265, 274, 280, 287, 427, 473, 591, 884, 885, 886, 887,
+    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
   ];
   assert.deepEqual(
     catalog
@@ -890,27 +876,30 @@ test("lead-stance timing and cues are identical on mobile and web", () => {
       .map((exercise) => exercise.id),
     expectedLeadStanceIds,
   );
+  for (const exercise of catalog.filter((item) => expectedLeadStanceIds.includes(item.id))) {
+    assert.equal(exercise.sequenceBlocks.length, 2);
+    assert.deepEqual(
+      exercise.sequenceBlocks.map((block) => block.sideCue),
+      ["ShownLeadStance", "OppositeLeadStance"],
+    );
+  }
   assert.match(
-    sideSequenceModel,
-    /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead[\s\S]*UsesTimedLeadStances/,
+    sequenceBlockModel,
+    /ShownLeadStance[\s\S]*OppositeLeadStance/,
   );
   assert.match(
     movementPresentationPolicy,
-    /ShownLeadStance[\s\S]*OppositeLeadStance[\s\S]*MirrorMedia: secondDirection/,
-  );
-  assert.match(
-    workoutModule,
-    /ScreenLeftLeadThenRightLead[\s\S]*ScreenRightLeadThenLeftLead[\s\S]*usesTimedLeadStances/,
+    /GetPresentation\([\s\S]*ExerciseSequenceSideCue sideCue[\s\S]*ExerciseSequenceDirectionCue directionCue[\s\S]*bool mirrorMedia[\s\S]*return new MovementPhasePresentation\([\s\S]*sideCue,[\s\S]*directionCue,[\s\S]*mirrorMedia/,
   );
   assert.match(workoutModule, /ShownLeadStance/);
   assert.match(workoutModule, /OppositeLeadStance/);
   assert.match(
     mainActivity,
-    /UsesTimedLeadStances[\s\S]*Change stance[\s\S]*Shown lead stance[\s\S]*Opposite lead stance/,
+    /ShownLeadStance => "Shown lead stance"[\s\S]*OppositeLeadStance => "Opposite lead stance"/,
   );
   assert.match(
     webApp,
-    /usesTimedLeadStances[\s\S]*Change stance[\s\S]*Shown lead stance[\s\S]*Opposite lead stance/,
+    /ShownLeadStance:[\s\S]*"Shown lead stance"[\s\S]*OppositeLeadStance:[\s\S]*"Opposite lead stance"/,
   );
 });
 
@@ -941,25 +930,21 @@ test("web movement and rest timing match the mobile workout contract", () => {
     MOVEMENT_DURATION_MS / 1000,
     integerConstant(movementSchedule, "TotalDurationSeconds"),
   );
-  assert.equal(integerConstant(movementSchedule, "SideDurationSeconds"), 20);
-  assert.equal(integerConstant(movementSchedule, "SideChangeDurationSeconds"), 5);
   assert.equal(
     PREPARATION_DURATION_MS / 1000,
     integerConstant(movementSchedule, "PreparationDurationSeconds"),
   );
-  assert.equal(
-    FULL_SIDE_MOVEMENT_DURATION_MS / 1000,
-    integerConstant(movementSchedule, "FullSideTotalDurationSeconds"),
+  assert.doesNotMatch(
+    movementSchedule,
+    /SideDurationSeconds|SideChangeDurationSeconds|FullSide/,
   );
-  assert.equal(integerConstant(movementSchedule, "FullSideDurationSeconds"), 45);
-  assert.equal(integerConstant(movementSchedule, "FullSideChangeDurationSeconds"), 15);
   assert.match(
     mainActivity,
-    /timedPairWorkSeconds[\s\S]*FullSideDurationSeconds[\s\S]*timedPairChangeSeconds[\s\S]*FullSideChangeDurationSeconds/,
+    /GetCountdownDurationSeconds\([\s\S]*includePreparation: !_sessionService\.IsSequenceContinuationBlock/,
   );
   assert.match(
     webApp,
-    /changeSeconds\s*=\s*currentGroup\?\.usesFullSideTiming\s*\?\s*15\s*:\s*5[\s\S]*Change direction, \$\{changeSeconds\} seconds/,
+    /getMovementPhaseState\([\s\S]*!session\.isSequenceContinuationBlock/,
   );
   assert.equal(
     REST_DURATION_MS / 1000,
@@ -974,11 +959,11 @@ test("web and mobile separate the exercise whistle from the final completion cue
   assert.doesNotMatch(webStart, /playSound/);
   assert.match(
     mainActivity,
-    /previousPhase == MovementPhase\.Preparation[\s\S]*CueMovementRestart\(\)/,
+    /previousPhase is null or MovementPhase\.Preparation[\s\S]*CueMovementRestart\(\)/,
   );
   assert.match(
     webApp,
-    /previousPhase === "Preparation" \|\| phase === "SecondSide"[\s\S]*playSound\("start"\)/,
+    /previousPhase === "Preparation"[\s\S]*playSound\("start"\)/,
   );
   assert.match(
     mainActivity,
@@ -997,7 +982,6 @@ test("web and mobile separate the exercise whistle from the final completion cue
     /function completeRest\(\)[\s\S]*session\.state\.workoutCompleted\)[\s\S]*showCompletion\(true\);/,
   );
   const mobileCueBodies = [
-    methodBody(mainActivity, "private void CueSideChange()", "private void CueMovementRestart()"),
     methodBody(mainActivity, "private void CueMovementRestart()", "private void RenderCountdownPhase("),
     methodBody(mainActivity, "private void CompleteCountdown()", "private void CancelCountdown("),
     methodBody(mainActivity, "private void FinalizeCurrentRound(bool keep)", "private void ShowCongratulations()"),
@@ -1017,69 +1001,83 @@ test("web and mobile separate the exercise whistle from the final completion cue
   }
 });
 
-test("complete direction sequences coexist with linked side-direction exercises", () => {
-  assert.match(exerciseModel, /int DirectionPartnerExerciseId/);
-  assert.match(workoutState, /Dictionary<string, int> ActiveDirectionPartnerExerciseIds/);
+test("all bilateral, directional, linked, and repeated work uses one sequence model", () => {
+  assert.match(exerciseModel, /ExerciseSequenceBlock\[\] SequenceBlocks/);
+  assert.doesNotMatch(exerciseModel, /DirectionPartnerExerciseId/);
   assert.match(
-    sessionService,
-    /directionPartners\.Add\(group\.Id, partner\.Id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRounds[\s\S]*UsesTimedPair/,
+    sequenceBlockModel,
+    /ExerciseSequenceSideCue[\s\S]*ExerciseSequenceDirectionCue[\s\S]*ExerciseSequenceMediaSegment[\s\S]*ExerciseId[\s\S]*MirrorMedia/,
   );
-  assert.match(workoutModule, /directionPartnerExerciseIds\.set\(group\.id, partner\.id\);[\s\S]*remainingExtraMinutes[\s\S]*timedPairRounds[\s\S]*usesTimedPair/);
+  assert.match(
+    workoutGroup,
+    /SequenceBlockIndex[\s\S]*SequenceBlockCount[\s\S]*SetNumber[\s\S]*SetCount[\s\S]*IsFinalSequenceRound/,
+  );
+  assert.doesNotMatch(workoutGroup, /PairedRoundId|IsPairDecisionRound/);
   assert.deepEqual(
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")
       .map((exercise) => exercise.id),
     [264, 275, 406, 409, 460, 588, 608, 611, 743],
   );
-  const linkedDirections = catalog.filter((exercise) =>
-    exercise.directionPartnerExerciseId > 0);
-  assert.equal(linkedDirections.length, 8);
-  for (const exercise of linkedDirections) {
-    const partner = catalog.find((candidate) =>
-      candidate.id === exercise.directionPartnerExerciseId);
-    assert.ok(partner);
-    assert.equal(partner.directionPartnerExerciseId, exercise.id);
+  assert.ok(catalog.every((exercise) =>
+    !Object.hasOwn(exercise, "directionPartnerExerciseId")));
+  const ownerByExerciseId = new Map();
+  for (const root of catalog.filter((exercise) => exercise.sequenceBlocks.length > 0)) {
+    for (const exerciseId of new Set(root.sequenceBlocks.map((block) => block.exerciseId))) {
+      assert.equal(ownerByExerciseId.has(exerciseId), false);
+      ownerByExerciseId.set(exerciseId, root.id);
+    }
   }
+  assert.equal(ownerByExerciseId.size, catalog.length);
+  assert.deepEqual(
+    catalog
+      .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
+      .map((root) => root.id),
+    [214, 223, 288, 414, 617],
+  );
 });
 
-test("linked directions are adjacent indivisible units on mobile and web", () => {
-  assert.match(workoutGroup, /string\? PairedRoundId[\s\S]*bool IsPairDecisionRound/);
+test("sequence blocks are adjacent indivisible units and short workouts exclude them", () => {
   assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
   assert.match(
     sessionService,
-    /ActiveWorkoutMinutes > 30[\s\S]*exercise\.Id < partner\.Id/,
-  );
-  assert.match(
-    sessionService,
-    /PairedRoundId = directionRoundId[\s\S]*IsPairDecisionRound = true/,
-  );
-  assert.match(
-    sessionService,
-    /only be kept after its second direction[\s\S]*ApplyDirectionPairOutcome/,
-  );
-  assert.match(
-    sessionService,
-    /state\.Outcomes\[group\.Id\] = outcome;[\s\S]*state\.Outcomes\[pairedRound\.Id\] = outcome;/,
+    /state\.ActiveWorkoutMinutes <= 30 &&[\s\S]*exercise\.SequenceBlocks\.Length > 1/,
   );
   assert.match(
     workoutModule,
-    /workoutMinutes > 30[\s\S]*exercise\.id < exercise\.directionPartnerExerciseId/,
+    /workoutMinutes !== null && workoutMinutes <= 30[\s\S]*exercise\.sequenceBlocks\.length > 1/,
+  );
+  assert.match(
+    sessionService,
+    /for \(int setNumber = 1;[\s\S]*for \(int blockIndex = 0;[\s\S]*\.set\{setNumber\}\.block\{blockIndex \+ 1\}/,
   );
   assert.match(
     workoutModule,
-    /pairedRoundId: directionRoundId[\s\S]*isPairDecisionRound: true/,
+    /for \(let setNumber = 1;[\s\S]*for \(let blockIndex = 0;[\s\S]*\.set\$\{setNumber\}\.block\$\{blockIndex \+ 1\}/,
+  );
+  assert.match(
+    sessionService,
+    /if \(!group\.IsFinalSequenceRound\)[\s\S]*only be rated after its final block/,
   );
   assert.match(
     workoutModule,
-    /only be kept after its second direction[\s\S]*applyDirectionPairOutcome/,
+    /if \(!isFinalSequenceRound\(group\)\)[\s\S]*only be rated after its final block/,
+  );
+  assert.match(
+    sessionService,
+    /ApplySequenceOutcome[\s\S]*GetSequenceExercises[\s\S]*LastKeptExerciseIds/,
+  );
+  assert.match(
+    workoutModule,
+    /applySequenceOutcome[\s\S]*getSequenceExercises[\s\S]*lastKeptExerciseIds/,
   );
   assert.match(
     mainActivity,
-    /IsDirectionPairLead[\s\S]*Visibility = ViewStates\.Gone[\s\S]*Resource\.String\.keep_exercise_description/,
+    /IsIntermediateSequenceBlock[\s\S]*_keepButton\.Visibility = ViewStates\.Gone/,
   );
   assert.match(
     webApp,
-    /isDirectionPairLead[\s\S]*keepExercise\.hidden[\s\S]*aria-label[\s\S]*Keep exercise/,
+    /isIntermediateSequenceBlock[\s\S]*elements\.keepExercise\.hidden/,
   );
   assert.match(
     webIndex,
@@ -1091,46 +1089,46 @@ test("linked directions are adjacent indivisible units on mobile and web", () =>
   assert.doesNotMatch(strings, /tap_to_keep|Tap to keep/);
 });
 
-test("repeated sets defer keep and continue automatically on mobile and web", () => {
+test("every intermediate block rests 15 seconds and continues automatically", () => {
   assert.match(
     sessionService,
-    /IsIntermediateSetCompletion[\s\S]*IsDirectionPairLead[\s\S]*SelectionKey == group\.SelectionKey/,
+    /IsIntermediateSequenceBlock[\s\S]*activeGroups\[groupIndex \+ 1\]\.SelectionKey == group\.SelectionKey/,
   );
   assert.match(
     workoutModule,
-    /isIntermediateSetCompletion[\s\S]*isPairDecisionRound[\s\S]*getSelectionKey\(activeGroups\[groupIndex \+ 1\]\)/,
+    /isIntermediateSequenceBlock[\s\S]*getSelectionKey\(activeGroups\[groupIndex \+ 1\]\)/,
   );
   assert.match(
     sessionService,
-    /KeepPendingRest[\s\S]*IsIntermediateSetCompletion[\s\S]*PendingRestKept = true/,
+    /KeepPendingRest[\s\S]*IsIntermediateSequenceBlock[\s\S]*return false/,
   );
   assert.match(
     workoutModule,
-    /keepPendingRest\(\)[\s\S]*isIntermediateSetCompletion[\s\S]*pendingRestKept = true/,
+    /keepPendingRest\(\)[\s\S]*isIntermediateSequenceBlock[\s\S]*return false/,
   );
   assert.match(
     sessionService,
-    /AdvanceRepeatedSet[\s\S]*ExerciseOutcome\.Neutral[\s\S]*WorkoutCompleted = false/,
+    /AdvanceSequence[\s\S]*ExerciseOutcome\.Neutral[\s\S]*WorkoutCompleted = false/,
   );
   assert.match(
     workoutModule,
-    /advanceRepeatedSet[\s\S]*"neutral"[\s\S]*workoutCompleted = false/,
+    /advanceSequence[\s\S]*"neutral"[\s\S]*workoutCompleted = false/,
   );
   assert.match(
     mainActivity,
-    /next set starts automatically[\s\S]*ContinueWithNextSet[\s\S]*PauseMovement[\s\S]*RestorePendingMovement/,
+    /next block starts automatically[\s\S]*ContinueWithNextSequenceBlock[\s\S]*PauseMovement[\s\S]*RestorePendingMovement/,
   );
   assert.match(
     webApp,
-    /next set starts automatically[\s\S]*advanceRepeatedSet[\s\S]*pauseMovement[\s\S]*restorePendingMovement/,
+    /next block starts automatically[\s\S]*advanceSequence[\s\S]*pauseMovement[\s\S]*restorePendingMovement/,
   );
   assert.match(
     mainActivity,
-    /FullSideTotalDurationSeconds[\s\S]*TotalDurationSeconds[\s\S]*1_000/,
+    /ContinueWithNextSequenceBlock[\s\S]*TotalDurationSeconds \* 1_000/,
   );
   assert.match(
     webApp,
-    /pauseMovement\([\s\S]*getMovementDurationMs\(nextSet\)[\s\S]*false/,
+    /pauseMovement\([\s\S]*getMovementDurationMs\(nextBlock\)[\s\S]*false/,
   );
 });
 

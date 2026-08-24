@@ -706,6 +706,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(225, "Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch")]
     [InlineData(241, "Hook-Fist Tendon Glide", "Open Hand to Hook Fist")]
     [InlineData(242, "Full-Fist Tendon Glide", "Open Hand to Full Fist")]
+    [InlineData(248, "Side-Tap Palm Pushes", "Alternating Side-Tap Palm Pushes")]
     [InlineData(283, "Straight-Fist Tendon Glide", "Open Hand to Straight Fist")]
     [InlineData(291, "Open-to-Claw Tendon Glide", "Open Hand to Claw Fist")]
     [InlineData(293, "Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches")]

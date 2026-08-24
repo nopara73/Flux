@@ -152,14 +152,14 @@ export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 13;
+export const CURRENT_WORKOUT_STATE_VERSION = 14;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
+const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
-export const FULL_SIDE_MOVEMENT_DURATION_MS = 105_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 47;
+export const CURRENT_CATALOG_REVISION = 48;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -358,6 +358,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [225, ["Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch"]],
   [241, ["Hook-Fist Tendon Glide", "Open Hand to Hook Fist"]],
   [242, ["Full-Fist Tendon Glide", "Open Hand to Full Fist"]],
+  [248, ["Side-Tap Palm Pushes", "Alternating Side-Tap Palm Pushes"]],
   [283, ["Straight-Fist Tendon Glide", "Open Hand to Straight Fist"]],
   [291, ["Open-to-Claw Tendon Glide", "Open Hand to Claw Fist"]],
   [293, ["Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches"]],
@@ -748,8 +749,7 @@ export function getHardRotationStatus(
 
 export function createWorkoutSchedule(
   minutes,
-  directionPartnerExerciseIds = null,
-  fullSideRoundIds = null,
+  sequenceRootsBySelectionGroupId = null,
   setCountsBySelectionGroupId = null,
 ) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
@@ -761,61 +761,49 @@ export function createWorkoutSchedule(
     return resolution.groups;
   }
 
-  const directionPartners = directionPartnerExerciseIds instanceof Map
-    ? directionPartnerExerciseIds
+  const sequenceRoots = sequenceRootsBySelectionGroupId instanceof Map
+    ? sequenceRootsBySelectionGroupId
     : new Map();
-  const fullSideRounds = fullSideRoundIds instanceof Set
-    ? fullSideRoundIds
-    : new Set();
   const setCounts = setCountsBySelectionGroupId instanceof Map
     ? setCountsBySelectionGroupId
     : createDefaultLongWorkoutSetCounts(
       minutes,
       resolution.groups,
-      directionPartners,
-      fullSideRounds,
+      sequenceRoots,
     );
   const rounds = [];
   for (let groupIndex = 0; groupIndex < resolution.groups.length; groupIndex++) {
     const selectionGroup = resolution.groups[groupIndex];
     const setCount = Math.max(1, setCounts.get(selectionGroup.id) ?? 1);
-    const partnerExerciseId = directionPartners.get(selectionGroup.id);
+    const root = sequenceRoots.get(selectionGroup.id);
+    const blocks = root?.sequenceBlocks;
+    if (!Array.isArray(blocks) || blocks.length === 0) {
+      throw new Error(`${selectionGroup.displayName} has no selected sequence.`);
+    }
     for (let setNumber = 1; setNumber <= setCount; setNumber += 1) {
-      const setRoundId = `${selectionGroup.id}.set${setNumber}`;
-      const directionRoundId = partnerExerciseId === undefined
-        ? null
-        : `${selectionGroup.id}.direction${setNumber}`;
-      rounds.push(Object.freeze({
-        ...selectionGroup,
-        id: setRoundId,
-        order: rounds.length + 1,
-        selectionGroupId: selectionGroup.id,
-        usesFullSideTiming: fullSideRounds.has(setRoundId),
-        exerciseOverrideId: 0,
-        pairedRoundId: directionRoundId,
-        isPairDecisionRound: false,
-      }));
-      if (directionRoundId) {
+      for (let blockIndex = 0; blockIndex < blocks.length; blockIndex += 1) {
+        const block = blocks[blockIndex];
         rounds.push(Object.freeze({
           ...selectionGroup,
-          id: directionRoundId,
+          id: `${selectionGroup.id}.set${setNumber}.block${blockIndex + 1}`,
           order: rounds.length + 1,
           selectionGroupId: selectionGroup.id,
-          usesFullSideTiming: fullSideRounds.has(directionRoundId),
-          exerciseOverrideId: partnerExerciseId,
-          pairedRoundId: setRoundId,
-          isPairDecisionRound: true,
+          exerciseOverrideId: block.exerciseId,
+          sequenceBlockIndex: blockIndex,
+          sequenceBlockCount: blocks.length,
+          setNumber,
+          setCount,
+          sequenceSideCue: block.sideCue ?? "None",
+          sequenceDirectionCue: block.directionCue ?? "None",
+          mirrorSequenceMedia: block.mirrorMedia === true,
+          sequenceMediaSegment: block.mediaSegment ?? "Full",
         }));
       }
     }
   }
-  const scheduledMinutes = rounds.reduce(
-    (total, round) => total + (round.usesFullSideTiming ? 2 : 1),
-    0,
-  );
-  if (scheduledMinutes !== minutes) {
+  if (rounds.length !== minutes) {
     throw new Error(
-      `The ${minutes}-minute workout scheduled ${scheduledMinutes} minutes.`,
+      `The ${minutes}-minute workout scheduled ${rounds.length} exercise blocks.`,
     );
   }
   return Object.freeze(rounds);
@@ -824,30 +812,41 @@ export function createWorkoutSchedule(
 function createDefaultLongWorkoutSetCounts(
   minutes,
   groups,
-  directionPartners,
-  fullSideRounds,
+  sequenceRoots,
 ) {
   const setCounts = new Map(groups.map((group) => [group.id, 1]));
-  let remainingMinutes = minutes - groups.length - directionPartners.size -
-    fullSideRounds.size;
+  const blockCosts = new Map(groups.map((group) => {
+    const blocks = sequenceRoots.get(group.id)?.sequenceBlocks;
+    if (!Array.isArray(blocks) || blocks.length === 0) {
+      throw new Error(`${group.displayName} has no selected sequence.`);
+    }
+    return [group.id, blocks.length];
+  }));
+  let remainingMinutes = minutes - [...blockCosts.values()]
+    .reduce((total, cost) => total + cost, 0);
+  if (remainingMinutes < 0) {
+    throw new Error("The selected sequences do not fit this workout duration.");
+  }
   const rankedGroups = [...groups].reverse();
+  const canFill = (remaining) => {
+    const reachable = new Array(remaining + 1).fill(false);
+    reachable[0] = true;
+    for (let value = 1; value <= remaining; value += 1) {
+      reachable[value] = [...blockCosts.values()].some((cost) =>
+        cost <= value && reachable[value - cost]);
+    }
+    return reachable[remaining];
+  };
   while (remainingMinutes > 0) {
-    let allocated = false;
-    for (const group of rankedGroups) {
-      const setCost = directionPartners.has(group.id) ? 2 : 1;
-      if (setCost > remainingMinutes) {
-        continue;
-      }
-      setCounts.set(group.id, setCounts.get(group.id) + 1);
-      remainingMinutes -= setCost;
-      allocated = true;
-      if (remainingMinutes === 0) {
-        break;
-      }
+    const group = rankedGroups.find((candidate) => {
+      const cost = blockCosts.get(candidate.id);
+      return cost <= remainingMinutes && canFill(remainingMinutes - cost);
+    });
+    if (!group) {
+      throw new Error("The selected sequence lengths cannot fill this workout duration.");
     }
-    if (!allocated) {
-      throw new Error("The direction-pair units cannot fill this workout duration.");
-    }
+    setCounts.set(group.id, setCounts.get(group.id) + 1);
+    remainingMinutes -= blockCosts.get(group.id);
   }
   return setCounts;
 }
@@ -940,24 +939,19 @@ export function getAdjustedScoreHalfUnits(realScore, temporaryDownvoteHalfUnits)
   return realScore * SCORE_HALF_UNITS_PER_VOTE - temporaryDownvoteHalfUnits;
 }
 
-export function usesTimedPair(exercise) {
-  return usesTimedSides(exercise) || exercise.directionSequence !== "None";
+export function isSequenceContinuationRound(group) {
+  return (group?.setNumber ?? 1) > 1 ||
+    (group?.sequenceBlockIndex ?? 0) > 0;
 }
 
-export function usesTimedSides(exercise) {
-  return exercise.sideSequence === "ScreenLeftThenRight" ||
-    exercise.sideSequence === "ScreenRightThenLeft" ||
-    exercise.sideSequence === "ScreenLeftLeadThenRightLead" ||
-    exercise.sideSequence === "ScreenRightLeadThenLeftLead";
+export function isFinalSequenceRound(group) {
+  return (group?.sequenceBlockIndex ?? 0) ===
+      (group?.sequenceBlockCount ?? 1) - 1 &&
+    (group?.setNumber ?? 1) === (group?.setCount ?? 1);
 }
 
-export function usesTimedLeadStances(exercise) {
-  return exercise.sideSequence === "ScreenLeftLeadThenRightLead" ||
-    exercise.sideSequence === "ScreenRightLeadThenLeftLead";
-}
-
-export function getMovementDurationMs(group) {
-  return group?.usesFullSideTiming ? FULL_SIDE_MOVEMENT_DURATION_MS : MOVEMENT_DURATION_MS;
+export function getMovementDurationMs() {
+  return MOVEMENT_DURATION_MS;
 }
 
 export function isModifierMetadataComplete(exercises) {
@@ -968,6 +962,61 @@ export function isModifierMetadataComplete(exercises) {
 export function isSessionMovementMetadataValid(exercises) {
   const exercisesById = new Map(exercises.map((exercise) =>
     [exercise.id, exercise]));
+  if (exercisesById.size !== exercises.length) {
+    return false;
+  }
+
+  const validSideCues = new Set([
+    "None", "ScreenLeft", "ScreenRight", "ShownLeadStance", "OppositeLeadStance",
+  ]);
+  const validDirectionCues = new Set([
+    "None", "Forward", "Backward", "Clockwise", "Counterclockwise", "Inward", "Outward",
+  ]);
+  const validMediaSegments = new Set([
+    "Full", "FirstDirection", "SecondDirection",
+  ]);
+  const sequenceOwnerByExerciseId = new Map();
+  for (const root of exercises) {
+    if (!Array.isArray(root.sequenceBlocks)) {
+      return false;
+    }
+    if (root.sequenceBlocks.length === 0) {
+      continue;
+    }
+    const rootMuscles = new Set([
+      root.primaryCanonicalGroup,
+      ...(root.secondaryCanonicalGroups ?? []),
+    ]);
+    const uniqueMemberIds = new Set();
+    for (const block of root.sequenceBlocks) {
+      const member = exercisesById.get(block?.exerciseId);
+      if (!member ||
+          !validSideCues.has(block.sideCue ?? "None") ||
+          !validDirectionCues.has(block.directionCue ?? "None") ||
+          typeof block.mirrorMedia !== "boolean" ||
+          !validMediaSegments.has(block.mediaSegment ?? "Full") ||
+          ![
+            member.primaryCanonicalGroup,
+            ...(member.secondaryCanonicalGroups ?? []),
+          ].some((muscle) => rootMuscles.has(muscle))) {
+        return false;
+      }
+      uniqueMemberIds.add(member.id);
+    }
+    if (!uniqueMemberIds.has(root.id)) {
+      return false;
+    }
+    for (const memberId of uniqueMemberIds) {
+      if (sequenceOwnerByExerciseId.has(memberId)) {
+        return false;
+      }
+      sequenceOwnerByExerciseId.set(memberId, root.id);
+    }
+  }
+  if (sequenceOwnerByExerciseId.size !== exercises.length) {
+    return false;
+  }
+
   const membersByMovementId = new Map();
   for (const exercise of exercises) {
     if (exercise.sessionMovementId === undefined ||
@@ -1034,7 +1083,34 @@ export function isSelectableForWorkoutProfile(exercise, group, modifiers) {
     isCompatibleWithWorkoutModifiers(exercise, modifiers);
 }
 
+function isSequenceUnitEligible(
+  exercise,
+  exercisesById,
+  group,
+  modifiers,
+  workoutMinutes = null,
+) {
+  if (!Array.isArray(exercise?.sequenceBlocks) ||
+      exercise.sequenceBlocks.length === 0 ||
+      (workoutMinutes !== null && workoutMinutes <= 30 &&
+        exercise.sequenceBlocks.length > 1) ||
+      !isSelectableForWorkoutProfile(exercise, group, modifiers)) {
+    return false;
+  }
+
+  const memberIds = [...new Set(exercise.sequenceBlocks.map((block) =>
+    block.exerciseId))];
+  return memberIds.length > 0 && memberIds.every((exerciseId) => {
+    const member = exercisesById.get(exerciseId);
+    return member &&
+      MODIFIER_RULES.every((rule) => rule.isReviewed(member)) &&
+      isSelectableForWorkoutProfile(member, group, modifiers);
+  });
+}
+
 export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
   const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
     MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
       ({ firstRule, secondRule })));
@@ -1058,9 +1134,13 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
               mirrorEquipment,
               matchingExerciseCount: new Set(exercises
                 .filter((exercise) =>
-                  exercise.directionPartnerExerciseId === 0 &&
                   MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
-                  isSelectableForWorkoutProfile(exercise, group, profile) &&
+                  isSequenceUnitEligible(
+                    exercise,
+                    exercisesById,
+                    group,
+                    profile,
+                  ) &&
                   (!requiresMirrorRelevance || isMirrorRelevant(exercise)))
                 .map(getSessionMovementId)).size,
               requiredExerciseCount:
@@ -1099,8 +1179,9 @@ export function findMirrorCategoryDeficiencies(exercises) {
 
 export function findWorkoutModifierMaterialityDeficiencies(exercises) {
   const canonicalGroups = RESOLUTIONS.get(30).groups;
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
   const reviewedExercises = exercises.filter((exercise) =>
-    exercise.directionPartnerExerciseId === 0 &&
     MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
   const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
     MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
@@ -1138,11 +1219,21 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     );
     const beforeExerciseIds = new Set(reviewedExercises
       .filter((exercise) => canonicalGroups.some((group) =>
-        isSelectableForWorkoutProfile(exercise, group, baseProfile)))
+        isSequenceUnitEligible(
+          exercise,
+          exercisesById,
+          group,
+          baseProfile,
+        )))
       .map(getSessionMovementId));
     const afterExerciseIds = new Set(reviewedExercises
       .filter((exercise) => canonicalGroups.some((group) =>
-        isSelectableForWorkoutProfile(exercise, group, enabledProfile)))
+        isSequenceUnitEligible(
+          exercise,
+          exercisesById,
+          group,
+          enabledProfile,
+        )))
       .map(getSessionMovementId));
     const isMirror = enabledModifier === WORKOUT_MODIFIERS.Mirror;
     const materialExerciseIds = isMirror
@@ -1150,7 +1241,12 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
           .filter((exercise) =>
             isMirrorPreferred(exercise, enabledProfile) &&
               canonicalGroups.some((group) =>
-              isSelectableForWorkoutProfile(exercise, group, enabledProfile)))
+              isSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                enabledProfile,
+              )))
           .map(getSessionMovementId))
       : new Set([...beforeExerciseIds].filter((exerciseId) =>
           !afterExerciseIds.has(exerciseId)));
@@ -1165,15 +1261,30 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
       if (isMirror) {
         return reviewedExercises.some((exercise) =>
           isMirrorPreferred(exercise, enabledProfile) &&
-          isSelectableForWorkoutProfile(exercise, group, enabledProfile));
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            enabledProfile,
+          ));
       }
       const baselineMovementIds = new Set(reviewedExercises
         .filter((exercise) =>
-          isSelectableForWorkoutProfile(exercise, group, baseProfile))
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            baseProfile,
+          ))
         .map(getSessionMovementId));
       const modifiedMovementIds = new Set(reviewedExercises
         .filter((exercise) =>
-          isSelectableForWorkoutProfile(exercise, group, enabledProfile))
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            enabledProfile,
+          ))
         .map(getSessionMovementId));
       return [...baselineMovementIds].some((movementId) =>
         !modifiedMovementIds.has(movementId));
@@ -1206,22 +1317,15 @@ export function getMaximumDistinctLineupSize(
 ) {
   const exercisesById = new Map(exercises.map((exercise) =>
     [exercise.id, exercise]));
-  const isSelectionUnitEligible = (exercise, group) => {
-    if (!isSelectableForWorkoutProfile(exercise, group, modifiers)) {
-      return false;
-    }
-    if (exercise.directionPartnerExerciseId === 0) {
-      return true;
-    }
-    const partner = exercisesById.get(exercise.directionPartnerExerciseId);
-    return workoutMinutes > 30 &&
-      exercise.id < exercise.directionPartnerExerciseId &&
-      partner?.directionPartnerExerciseId === exercise.id &&
-      isSelectableForWorkoutProfile(partner, group, modifiers);
-  };
   const candidateMovementIdsByGroup = groups
     .map((group) => [...new Set(exercises
-      .filter((exercise) => isSelectionUnitEligible(exercise, group))
+      .filter((exercise) => isSequenceUnitEligible(
+        exercise,
+        exercisesById,
+        group,
+        modifiers,
+        workoutMinutes,
+      ))
       .map(getSessionMovementId))])
     .sort((left, right) => left.length - right.length);
   const assignedGroupByMovementId = new Map();
@@ -1394,128 +1498,60 @@ export function withMirrorEquipment(modifiers, equipment) {
 }
 
 export function getMovementCountdownDurationMs(group) {
-  return getMovementDurationMs(group) + PREPARATION_DURATION_MS;
+  return MOVEMENT_DURATION_MS +
+    (isSequenceContinuationRound(group) ? 0 : PREPARATION_DURATION_MS);
 }
 
 export function getMovementPhaseState(
   remainingMilliseconds,
-  timedPair,
-  fullSideTiming = false,
+  includePreparation = true,
 ) {
   if (remainingMilliseconds <= 0) {
     return { phase: "Complete", secondsRemaining: 0, segmentDurationSeconds: 0, isExercise: false };
   }
 
-  const movementDuration = fullSideTiming
-    ? FULL_SIDE_MOVEMENT_DURATION_MS
-    : MOVEMENT_DURATION_MS;
-  const totalDuration = movementDuration + PREPARATION_DURATION_MS;
+  const totalDuration = MOVEMENT_DURATION_MS +
+    (includePreparation ? PREPARATION_DURATION_MS : 0);
   const bounded = Math.min(remainingMilliseconds, totalDuration);
-  if (bounded > movementDuration) {
+  if (includePreparation && bounded > MOVEMENT_DURATION_MS) {
     return {
       phase: "Preparation",
-      secondsRemaining: Math.ceil((bounded - movementDuration) / 1000),
+      secondsRemaining: Math.ceil((bounded - MOVEMENT_DURATION_MS) / 1000),
       segmentDurationSeconds: PREPARATION_DURATION_MS / 1000,
       isExercise: false,
     };
   }
 
-  const boundedMovement = Math.min(bounded, movementDuration);
-  if (!timedPair) {
-    return {
-      phase: "Continuous",
-      secondsRemaining: Math.ceil(boundedMovement / 1000),
-      segmentDurationSeconds: 45,
-      isExercise: true,
-    };
-  }
-
-  const sideDuration = fullSideTiming ? 45_000 : 20_000;
-  const changeDuration = fullSideTiming ? 15_000 : 5_000;
-  const firstSideEnd = sideDuration + changeDuration;
-
-  if (boundedMovement > firstSideEnd) {
-    return {
-      phase: "FirstSide",
-      secondsRemaining: Math.ceil((boundedMovement - firstSideEnd) / 1000),
-      segmentDurationSeconds: sideDuration / 1000,
-      isExercise: true,
-    };
-  }
-
-  if (boundedMovement > sideDuration) {
-    return {
-      phase: "ChangeSides",
-      secondsRemaining: Math.ceil((boundedMovement - sideDuration) / 1000),
-      segmentDurationSeconds: changeDuration / 1000,
-      isExercise: false,
-    };
-  }
-
   return {
-    phase: "SecondSide",
-    secondsRemaining: Math.ceil(boundedMovement / 1000),
-    segmentDurationSeconds: sideDuration / 1000,
+    phase: "Continuous",
+    secondsRemaining: Math.ceil(Math.min(bounded, MOVEMENT_DURATION_MS) / 1000),
+    segmentDurationSeconds: MOVEMENT_DURATION_MS / 1000,
     isExercise: true,
   };
 }
 
-export function getMovementPresentation(exercise, phase) {
+export function getMovementPresentation(group, phase) {
   if (phase === "Complete") {
-    return { cue: "None", mirrorMedia: false, activeScreenSide: null };
-  }
-
-  if (!usesTimedPair(exercise)) {
-    if (phase !== "Continuous") {
-      throw new Error(`Continuous exercise cannot use ${phase}.`);
-    }
-    return { cue: "Move", mirrorMedia: false, activeScreenSide: null };
-  }
-
-  if (phase === "ChangeSides") {
-    return { cue: "Switch", mirrorMedia: false, activeScreenSide: null };
-  }
-
-  if (phase !== "FirstSide" && phase !== "SecondSide") {
-    throw new Error(`Timed pair cannot use ${phase}.`);
-  }
-
-  const second = phase === "SecondSide";
-  if (usesTimedSides(exercise)) {
-    const firstScreenSide = exercise.sideSequence === "ScreenLeftThenRight" ||
-      exercise.sideSequence === "ScreenLeftLeadThenRightLead"
-      ? "Left"
-      : "Right";
-    const activeScreenSide = second
-      ? firstScreenSide === "Left" ? "Right" : "Left"
-      : firstScreenSide;
-    const cue = usesTimedLeadStances(exercise)
-      ? second ? "OppositeLeadStance" : "ShownLeadStance"
-      : activeScreenSide === "Left" ? "ScreenLeft" : "ScreenRight";
     return {
-      cue,
-      mirrorMedia: second,
-      activeScreenSide,
+      sideCue: "None",
+      directionCue: "None",
+      mirrorMedia: false,
+      activeScreenSide: null,
     };
   }
-
-  const pairs = {
-    ForwardThenBackward: ["Forward", "Backward"],
-    BackwardThenForward: ["Backward", "Forward"],
-    ClockwiseThenCounterclockwise: ["Clockwise", "Counterclockwise"],
-    CounterclockwiseThenClockwise: ["Counterclockwise", "Clockwise"],
-    InwardThenOutward: ["Inward", "Outward"],
-    OutwardThenInward: ["Outward", "Inward"],
+  const sideCue = group?.sequenceSideCue ?? "None";
+  return {
+    sideCue,
+    directionCue: group?.sequenceDirectionCue ?? "None",
+    mirrorMedia: group?.mirrorSequenceMedia === true,
+    activeScreenSide: sideCue === "ScreenLeft"
+      ? "Left"
+      : sideCue === "ScreenRight" ? "Right" : null,
   };
-  const pair = pairs[exercise.directionSequence];
-  if (!pair) {
-    throw new Error(`Unknown direction sequence ${exercise.directionSequence}.`);
-  }
-  return { cue: pair[second ? 1 : 0], mirrorMedia: false, activeScreenSide: null };
 }
 
-export function getExerciseVideoPath(exercise) {
-  return exercise.directionSequence === "None"
+export function getExerciseVideoPath(exercise, mediaSegment = "Full") {
+  return mediaSegment === "Full"
     ? exercise.video
     : `exercise_direction_videos/exercise_${formatExerciseId(exercise.id)}.mp4`;
 }
@@ -1579,7 +1615,10 @@ function normalizeStateShape(raw) {
 
   // A stored object without a version predates the modifier-profile schema.
   // Treat it as legacy instead of mistaking it for a brand-new state.
-  state.version = Number.isInteger(raw.version) ? raw.version : 0;
+  const sourceVersion = Number.isInteger(raw[SOURCE_STATE_VERSION])
+    ? raw[SOURCE_STATE_VERSION]
+    : Number.isInteger(raw.version) ? raw.version : 0;
+  state.version = sourceVersion;
   state.catalogRevision = Number.isInteger(raw.catalogRevision)
     ? raw.catalogRevision
     : 0;
@@ -1675,6 +1714,10 @@ function normalizeStateShape(raw) {
     migrateExplicitMirrorEquipment(state);
   }
   state.version = CURRENT_WORKOUT_STATE_VERSION;
+  Object.defineProperty(state, SOURCE_STATE_VERSION, {
+    value: sourceVersion,
+    enumerable: false,
+  });
   return state;
 }
 
@@ -1770,7 +1813,23 @@ export class WorkoutSession {
     if (this.exercisesById.size !== exercises.length) {
       throw new Error("Exercise catalog contains duplicate IDs.");
     }
+    this.sequenceRootByExerciseId = new Map();
+    for (const root of exercises.filter((exercise) =>
+      Array.isArray(exercise.sequenceBlocks) && exercise.sequenceBlocks.length > 0)) {
+      for (const memberId of new Set(root.sequenceBlocks.map((block) =>
+        block.exerciseId))) {
+        if (!this.exercisesById.has(memberId) ||
+            this.sequenceRootByExerciseId.has(memberId)) {
+          throw new Error(`Exercise ${memberId} has an invalid sequence owner.`);
+        }
+        this.sequenceRootByExerciseId.set(memberId, root);
+      }
+    }
+    if (this.sequenceRootByExerciseId.size !== exercises.length) {
+      throw new Error("Every exercise must belong to exactly one sequence.");
+    }
     this.state = normalizeStateShape(storedState);
+    this.loadedStateVersion = this.state[SOURCE_STATE_VERSION] ?? this.state.version;
     this.random = random;
     this.nowProvider = nowProvider;
   }
@@ -1784,6 +1843,10 @@ export class WorkoutSession {
   }
 
   initialize() {
+    const atomicSequenceMigration =
+      this.loadedStateVersion === 13 && this.state.activeWorkoutMinutes > 0
+        ? this.captureLegacyActiveProgress()
+        : null;
     this.reconcileCatalog();
     this.normalizeScores();
     this.normalizeSavedLineups();
@@ -1799,58 +1862,20 @@ export class WorkoutSession {
       return;
     }
 
+    this.normalizePendingRest();
+    this.repairActiveLineup();
     this.normalizeActiveLongWorkoutAllocation();
-    const activeGroups = this.getActiveGroups();
-    const activeGroupsById = new Map(activeGroups.map((group) => [group.id, group]));
-    const activeGroupIds = new Set(activeGroupsById.keys());
-    for (const groupId of Object.keys(this.state.outcomes)) {
-      if (!activeGroupIds.has(groupId)) {
-        delete this.state.outcomes[groupId];
-      }
+    if (atomicSequenceMigration) {
+      this.migrateLegacyActiveProgress(atomicSequenceMigration);
     }
-    for (const [groupId, outcome] of Object.entries(this.state.outcomes)) {
-      if (outcome !== "neutral") {
-        continue;
-      }
-      const group = activeGroupsById.get(groupId);
-      if (this.isIntermediateSetCompletion(group)) {
-        continue;
-      }
-      const pairedOutcome = group?.pairedRoundId
-        ? this.state.outcomes[group.pairedRoundId]
-        : undefined;
-      if (group?.pairedRoundId && !group.isPairDecisionRound && pairedOutcome === undefined) {
-        continue;
-      }
-      if (group?.pairedRoundId && !group.isPairDecisionRound &&
-          pairedOutcome === "neutral" &&
-          this.isIntermediateSetCompletion(activeGroupsById.get(group.pairedRoundId))) {
-        continue;
-      }
-      this.state.outcomes[groupId] = pairedOutcome === "x" || pairedOutcome === "tick"
-        ? pairedOutcome
-        : "tick";
-    }
-
-    this.state.workoutCompleted = activeGroups.every(
-      (group) => this.state.outcomes[group.id] !== undefined,
-    );
-    if (this.state.workoutCompleted) {
-      if (this.state.completionAcknowledged) {
-        this.prepareNextSession();
-      }
-      return;
-    }
-
-    this.state.completionAcknowledged = false;
+    this.normalizeOutcomes();
+    this.normalizeCompletionState();
     this.normalizePendingRest();
     this.normalizePendingMovement();
-    this.repairActiveLineup();
-    this.normalizePendingMovement();
-    if (this.getPendingMovementGroup() || this.getPendingRestGroup()) {
-      return;
+    this.normalizeCompletionState();
+    if (this.state.workoutCompleted && this.state.completionAcknowledged) {
+      this.prepareNextSession();
     }
-    this.finishInterruptedWorkout();
   }
 
   startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
@@ -1862,6 +1887,7 @@ export class WorkoutSession {
     }
 
     this.normalizeKeptExerciseIds();
+    this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
     const previousWorkoutMinutes = normalizeMinutes(this.state.lastWorkoutMinutes);
     const previousWorkoutModifiers = normalizeWorkoutModifiers(
@@ -1884,14 +1910,20 @@ export class WorkoutSession {
   }
 
   getActiveGroups() {
-    return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? createWorkoutSchedule(
-          this.state.activeWorkoutMinutes,
-          this.getEffectiveDirectionPartnerExercises(),
-          this.getEffectiveFullSideRounds(),
-          this.getEffectiveSetCounts(),
-        )
-      : [];
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      return [];
+    }
+    const roots = new Map(this.getSelectionGroups().map((group) => [
+      group.id,
+      this.exercisesById.get(this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
+      ]),
+    ]));
+    return createWorkoutSchedule(
+      this.state.activeWorkoutMinutes,
+      roots,
+      this.getEffectiveSetCounts(),
+    );
   }
 
   getSelectionGroups() {
@@ -1906,10 +1938,7 @@ export class WorkoutSession {
     return this.getActiveGroups().find((group) => this.state.outcomes[group.id] === undefined) ?? null;
   }
 
-  isIntermediateSetCompletion(group) {
-    if (group?.pairedRoundId && !group.isPairDecisionRound) {
-      return false;
-    }
+  isIntermediateSequenceBlock(group) {
     const activeGroups = this.getActiveGroups();
     const groupIndex = activeGroups.findIndex((activeGroup) =>
       activeGroup.id === group?.id);
@@ -1918,8 +1947,8 @@ export class WorkoutSession {
       getSelectionKey(activeGroups[groupIndex + 1]) === getSelectionKey(group);
   }
 
-  isSetContinuationRound(group) {
-    if (!group || group.isPairDecisionRound) {
+  isSequenceContinuationBlock(group) {
+    if (!group) {
       return false;
     }
     const activeGroups = this.getActiveGroups();
@@ -1931,12 +1960,16 @@ export class WorkoutSession {
 
   canShuffleNextExercise(group) {
     return this.getNextGroup()?.id === group.id &&
+      !this.isSequenceContinuationBlock(group) &&
       this.getCompatibleShuffleCandidates(group).length > 0;
   }
 
   shuffleNextExercise(group) {
     if (this.getNextGroup()?.id !== group.id) {
       throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+    if (this.isSequenceContinuationBlock(group)) {
+      return null;
     }
 
     const candidates = this.getCompatibleShuffleCandidates(group);
@@ -1945,10 +1978,7 @@ export class WorkoutSession {
     }
 
     const rejectedExercise = this.getSelectedExercise(group);
-    const rejectedPartner = this.getDirectionPartner(rejectedExercise);
-    const scoreUpdates = rejectedPartner?.directionPartnerExerciseId === rejectedExercise.id
-      ? [rejectedExercise, rejectedPartner]
-      : [rejectedExercise];
+    const scoreUpdates = this.getSequenceExercises(rejectedExercise);
 
     this.shuffle(candidates);
     const selectionGroup = this.getSelectionGroups().find((candidate) =>
@@ -1995,12 +2025,12 @@ export class WorkoutSession {
   getSelectedExercise(group) {
     if (Number.isInteger(group.exerciseOverrideId) && group.exerciseOverrideId > 0) {
       const overrideExercise = this.exercisesById.get(group.exerciseOverrideId);
-      if (!overrideExercise || !this.isDirectionPartnerOverrideValid(
+      if (!overrideExercise || !this.isSequenceOverrideValid(
         overrideExercise,
         group,
         this.state.activeWorkoutModifiers,
       )) {
-        throw new Error(`The linked direction exercise for ${group.displayName} is unavailable.`);
+        throw new Error(`The linked sequence block for ${group.displayName} is unavailable.`);
       }
       return overrideExercise;
     }
@@ -2057,11 +2087,8 @@ export class WorkoutSession {
       return [];
     }
 
-    const rejectedExerciseIds = new Set([currentExerciseId]);
-    const currentPartner = this.getDirectionPartner(currentExercise);
-    if (currentPartner?.directionPartnerExerciseId === currentExercise.id) {
-      rejectedExerciseIds.add(currentPartner.id);
-    }
+    const rejectedExerciseIds = new Set(this.getSequenceExercises(currentExercise)
+      .map((exercise) => exercise.id));
     const startedSelectionGroupIds = new Set(activeRounds
       .filter((round) => this.state.outcomes[round.id] !== undefined)
       .map(getSelectionKey));
@@ -2303,8 +2330,7 @@ export class WorkoutSession {
   keepPendingRest() {
     const pendingGroup = this.getPendingRestGroup();
     if (!pendingGroup ||
-        (pendingGroup.pairedRoundId && !pendingGroup.isPairDecisionRound) ||
-        this.isIntermediateSetCompletion(pendingGroup)) {
+        this.isIntermediateSequenceBlock(pendingGroup)) {
       return false;
     }
     this.state.pendingRestKept = true;
@@ -2322,51 +2348,54 @@ export class WorkoutSession {
     if (!nextGroup || nextGroup.id !== group.id) {
       throw new Error(`${group.displayName} is not the next workout group.`);
     }
-    if (keep && group.pairedRoundId && !group.isPairDecisionRound) {
-      throw new Error("A direction pair can only be kept after its second direction.");
+    if (!isFinalSequenceRound(group)) {
+      throw new Error("A sequence can only be rated after its final block.");
     }
 
     this.clearPendingMovement();
-    return group.pairedRoundId
-      ? this.applyDirectionPairOutcome(group, keep)
-      : this.applySingleOutcome(group, keep);
+    return this.applySequenceOutcome(group, keep);
   }
 
-  advanceDirectionPair(group) {
+  rejectCurrentSequence(group) {
     const nextGroup = this.getNextGroup();
     if (!nextGroup || nextGroup.id !== group.id) {
       throw new Error(`${group.displayName} is not the next workout group.`);
     }
-    if (!group.pairedRoundId || group.isPairDecisionRound) {
-      throw new Error(`${group.displayName} is not the first direction of a pair.`);
+
+    const sequenceRounds = this.getActiveGroups()
+      .filter((round) => getSelectionKey(round) === getSelectionKey(group))
+      .sort((left, right) => left.order - right.order);
+    const decisionRound = sequenceRounds.at(-1);
+    for (const round of sequenceRounds) {
+      if (round.id !== decisionRound.id) {
+        this.state.outcomes[round.id] ??= "neutral";
+      }
     }
-    this.getPairedRound(group);
+    this.clearPendingMovement();
+    this.clearPendingRest();
+    return this.applySequenceOutcome(decisionRound, false);
+  }
+
+  advanceSequence(group) {
+    const nextGroup = this.getNextGroup();
+    if (!nextGroup || nextGroup.id !== group.id) {
+      throw new Error(`${group.displayName} is not the next workout group.`);
+    }
+    if (!this.isIntermediateSequenceBlock(group)) {
+      throw new Error(`${group.displayName} is not an intermediate sequence block.`);
+    }
     this.state.outcomes[group.id] = "neutral";
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
   }
 
-  advanceRepeatedSet(group) {
-    const nextGroup = this.getNextGroup();
-    if (!nextGroup || nextGroup.id !== group.id) {
-      throw new Error(`${group.displayName} is not the next workout group.`);
-    }
-    if (!this.isIntermediateSetCompletion(group)) {
-      throw new Error(`${group.displayName} is not the end of an intermediate set.`);
-    }
-    if (group.pairedRoundId) {
-      const pairedRound = this.getPairedRound(group);
-      this.state.outcomes[pairedRound.id] = "neutral";
-    }
-    this.state.outcomes[group.id] = "neutral";
-    this.state.workoutCompleted = false;
-    this.state.completionAcknowledged = false;
-  }
-
-  applySingleOutcome(group, keep) {
+  applySequenceOutcome(group, keep) {
     const exercise = this.getSelectedExercise(group);
+    const sequenceExercises = this.getSequenceExercises(exercise);
     if (!keep) {
-      this.setScore(exercise, this.getScore(exercise) - 1);
+      for (const member of sequenceExercises) {
+        this.setScore(member, this.getScore(member) - 1);
+      }
     }
     this.state.outcomes[group.id] = keep ? "tick" : "x";
     this.state.workoutCompleted = this.getActiveGroups().every(
@@ -2374,45 +2403,6 @@ export class WorkoutSession {
     );
     this.state.completionAcknowledged = false;
     return exercise;
-  }
-
-  applyDirectionPairOutcome(group, keep) {
-    const pairedRound = this.getPairedRound(group);
-    const orderedRounds = [group, pairedRound]
-      .sort((left, right) => left.order - right.order);
-    const exercises = [...new Map(orderedRounds.map((round) => {
-      const exercise = this.getSelectedExercise(round);
-      return [exercise.id, exercise];
-    })).values()];
-    if (exercises.length !== 2) {
-      throw new Error(`${group.displayName} does not resolve to two directions.`);
-    }
-    if (!keep) {
-      for (const exercise of exercises) {
-        this.setScore(exercise, this.getScore(exercise) - 1);
-      }
-    }
-    const outcome = keep ? "tick" : "x";
-    this.state.outcomes[group.id] = outcome;
-    this.state.outcomes[pairedRound.id] = outcome;
-    this.state.workoutCompleted = this.getActiveGroups().every(
-      (activeGroup) => this.state.outcomes[activeGroup.id] !== undefined,
-    );
-    this.state.completionAcknowledged = false;
-    return this.getSelectedExercise(group);
-  }
-
-  getPairedRound(group) {
-    if (!group.pairedRoundId) {
-      throw new Error(`${group.displayName} is not part of a direction pair.`);
-    }
-    const pairedRound = this.getActiveGroups().find(
-      (round) => round.id === group.pairedRoundId,
-    );
-    if (!pairedRound) {
-      throw new Error(`The paired direction for ${group.displayName} is unavailable.`);
-    }
-    return pairedRound;
   }
 
   acknowledgeCompletion() {
@@ -2434,15 +2424,10 @@ export class WorkoutSession {
         (candidate) => candidate.id === this.state.pendingRestGroupId,
       );
       if (group && this.state.outcomes[group.id] === undefined) {
-        if (group.pairedRoundId && !group.isPairDecisionRound) {
-          this.getPairedRound(group);
-          this.state.outcomes[group.id] = "neutral";
-        } else if (this.isIntermediateSetCompletion(group)) {
-          this.advanceRepeatedSet(group);
-        } else if (group.pairedRoundId) {
-          this.applyDirectionPairOutcome(group, this.state.pendingRestKept);
+        if (this.isIntermediateSequenceBlock(group)) {
+          this.advanceSequence(group);
         } else {
-          this.applySingleOutcome(group, this.state.pendingRestKept);
+          this.applySequenceOutcome(group, this.state.pendingRestKept);
         }
       }
       this.clearPendingRest();
@@ -2453,30 +2438,38 @@ export class WorkoutSession {
   prepareNextSession() {
     const activeGroups = this.getActiveGroups();
     const selectionGroups = this.getSelectionGroups();
-    const resolvedGroups = activeGroups
-      .map((group) => ({ group, exercise: this.tryGetSelectedExercise(group) }))
-      .filter(({ exercise }) => exercise);
-    const rejectedSelectionKeys = new Set(
-      activeGroups
-        .filter((group) => this.state.outcomes[group.id] === "x")
-        .map(getSelectionKey),
-    );
-    const newlyKeptExerciseIds = new Set(
-      [...new Set(resolvedGroups.map(({ exercise }) => exercise.id))]
-        .filter((exerciseId) => {
-          const rounds = resolvedGroups.filter(({ exercise }) => exercise.id === exerciseId);
-          return rounds.some(({ group }) => this.state.outcomes[group.id] === "tick") &&
-            rounds.every(({ group }) => this.state.outcomes[group.id] !== "x") &&
-            rounds.filter(({ group }) => this.state.outcomes[group.id] === "tick")
-              .every(({ group }) => !group.pairedRoundId ||
-                this.state.outcomes[group.pairedRoundId] === "tick");
-        }),
-    );
-    const rejectedExerciseIds = new Set(
-      resolvedGroups
-        .filter(({ group }) => this.state.outcomes[group.id] === "x")
-        .map(({ exercise }) => exercise.id),
-    );
+    const rejectedSelectionKeys = new Set();
+    const newlyKeptExerciseIds = new Set();
+    const rejectedExerciseIds = new Set();
+    for (const selectionGroup of selectionGroups) {
+      const decisionRound = activeGroups
+        .filter((round) => getSelectionKey(round) === selectionGroup.id)
+        .sort((left, right) => left.order - right.order)
+        .at(-1);
+      const outcome = decisionRound
+        ? this.state.outcomes[decisionRound.id]
+        : undefined;
+      if (outcome !== "tick" && outcome !== "x") {
+        continue;
+      }
+      const root = this.exercisesById.get(this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(
+          selectionGroup.id,
+          this.state.activeWorkoutModifiers,
+        )
+      ]);
+      if (!root) {
+        continue;
+      }
+      const memberIds = this.getSequenceExercises(root).map((exercise) =>
+        exercise.id);
+      if (outcome === "tick") {
+        memberIds.forEach((exerciseId) => newlyKeptExerciseIds.add(exerciseId));
+      } else {
+        rejectedSelectionKeys.add(selectionGroup.id);
+        memberIds.forEach((exerciseId) => rejectedExerciseIds.add(exerciseId));
+      }
+    }
     this.state.nextWorkoutExcludedExerciseIds = [...new Set([
       ...this.state.nextWorkoutExcludedExerciseIds,
       ...rejectedExerciseIds,
@@ -2532,7 +2525,12 @@ export class WorkoutSession {
 
   repairActiveLineup() {
     const selectionGroups = this.getSelectionGroups();
-    const activeGroups = this.getActiveGroups();
+    let activeGroups = [];
+    try {
+      activeGroups = this.getActiveGroups();
+    } catch {
+      activeGroups = [];
+    }
     const currentExerciseIds = new Map(
       selectionGroups
         .map((group) => [
@@ -2610,19 +2608,13 @@ export class WorkoutSession {
     }
 
     const isAllowed = (exercise, group) => {
-      if (this.state.nextWorkoutExcludedExerciseIds.includes(exercise.id)) {
+      const sequenceExercises = this.getSequenceExercises(exercise);
+      if (sequenceExercises.some((member) =>
+        this.state.nextWorkoutExcludedExerciseIds.includes(member.id))) {
         return false;
       }
-      const nextExcludedPartner = this.getDirectionPartner(exercise);
-      if (nextExcludedPartner &&
-          this.state.nextWorkoutExcludedExerciseIds.includes(nextExcludedPartner.id)) {
-        return false;
-      }
-      if (excludedExerciseIdsByGroup.get(group.id)?.has(exercise.id)) {
-        return false;
-      }
-      const partner = this.getDirectionPartner(exercise);
-      if (partner && excludedExerciseIdsByGroup.get(group.id)?.has(partner.id)) {
+      if (sequenceExercises.some((member) =>
+        excludedExerciseIdsByGroup.get(group.id)?.has(member.id))) {
         return false;
       }
       if (this.isWorkoutSelectionCandidate(exercise, group, modifiers)) {
@@ -2819,6 +2811,54 @@ export class WorkoutSession {
         candidateIndexesByGroupAndMovement[groupIndex][movementIndex];
       lineup.set(groups[groupIndex].id, candidates[candidateIndex].id);
     }
+
+    const scheduledBlockCount = () => [...lineup.values()]
+      .reduce((total, exerciseId) => total +
+        this.exercisesById.get(exerciseId).sequenceBlocks.length, 0);
+    const hasSingleBlockSequence = () => [...lineup.values()].some((exerciseId) =>
+      this.exercisesById.get(exerciseId).sequenceBlocks.length === 1);
+    while (scheduledBlockCount() > this.state.activeWorkoutMinutes ||
+           (this.state.activeWorkoutMinutes > 30 && !hasSingleBlockSequence())) {
+      const selectedMovementIds = new Set([...lineup.values()].map((exerciseId) =>
+        getSessionMovementId(this.exercisesById.get(exerciseId))));
+      let best = null;
+      for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+        const currentExerciseId = lineup.get(groups[groupIndex].id);
+        const currentCandidateIndex = candidates.findIndex((candidate) =>
+          candidate.id === currentExerciseId);
+        const currentExercise = this.exercisesById.get(currentExerciseId);
+        const currentCost = currentExercise.sequenceBlocks.length;
+        const currentMovementId = getSessionMovementId(currentExercise);
+        for (let candidateIndex = 0;
+          candidateIndex < candidates.length;
+          candidateIndex += 1) {
+          if (!allowed[groupIndex][candidateIndex]) {
+            continue;
+          }
+          const alternative = candidates[candidateIndex];
+          const savedBlocks = currentCost - alternative.sequenceBlocks.length;
+          if (savedBlocks <= 0) {
+            continue;
+          }
+          const alternativeMovementId = getSessionMovementId(alternative);
+          if (alternativeMovementId !== currentMovementId &&
+              selectedMovementIds.has(alternativeMovementId)) {
+            continue;
+          }
+          const utilityLoss = utilities[groupIndex][currentCandidateIndex] -
+            utilities[groupIndex][candidateIndex];
+          if (!best || utilityLoss < best.utilityLoss ||
+              (utilityLoss === best.utilityLoss &&
+                savedBlocks < best.savedBlocks)) {
+            best = { groupIndex, candidateIndex, utilityLoss, savedBlocks };
+          }
+        }
+      }
+      if (!best) {
+        throw new Error("No distinct sequence lineup fits the selected workout duration.");
+      }
+      lineup.set(groups[best.groupIndex].id, candidates[best.candidateIndex].id);
+    }
     return lineup;
   }
 
@@ -2898,7 +2938,8 @@ export class WorkoutSession {
     return finalists[Math.max(0, index)];
   }
 
-  applyDistinctLineup(groups, lineup, clearChangedProgress, activeGroups = this.getActiveGroups()) {
+  applyDistinctLineup(groups, lineup, clearChangedProgress, activeGroups = null) {
+    activeGroups ??= clearChangedProgress ? this.getActiveGroups() : [];
     for (const group of groups) {
       const selectionStorageKey = this.getSelectionStorageKey(
         group.id,
@@ -2942,26 +2983,36 @@ export class WorkoutSession {
     return isCompatibleWithWorkoutModifiers(exercise, modifiers);
   }
 
-  getDirectionPartner(exercise) {
-    return exercise?.directionPartnerExerciseId > 0
-      ? this.exercisesById.get(exercise.directionPartnerExerciseId) ?? null
+  getSequenceRoot(exercise) {
+    const root = exercise
+      ? this.sequenceRootByExerciseId.get(exercise.id)
       : null;
+    if (!root) {
+      throw new Error(`Exercise ${exercise?.id ?? "unknown"} has no sequence root.`);
+    }
+    return root;
+  }
+
+  getSequenceExercises(exercise) {
+    const root = this.getSequenceRoot(exercise);
+    return [...new Map(root.sequenceBlocks.map((block) => {
+      const member = this.exercisesById.get(block.exerciseId);
+      return [member.id, member];
+    })).values()];
   }
 
   isWorkoutSelectionCandidate(exercise, group, modifiers) {
-    if (!this.isSelectable(exercise, group, modifiers)) {
+    if (!Array.isArray(exercise?.sequenceBlocks) ||
+        exercise.sequenceBlocks.length === 0 ||
+        this.getSequenceRoot(exercise).id !== exercise.id ||
+        (this.state.activeWorkoutMinutes <= 30 &&
+          exercise.sequenceBlocks.length > 1) ||
+        (this.state.activeWorkoutMinutes > 30 &&
+          exercise.sequenceBlocks.length > this.state.activeWorkoutMinutes - 29)) {
       return false;
     }
-    const partner = this.getDirectionPartner(exercise);
-    if (!partner) {
-      return true;
-    }
-    return (
-      this.state.activeWorkoutMinutes > 30 &&
-      exercise.id < partner.id &&
-      partner.directionPartnerExerciseId === exercise.id &&
-      this.isSelectable(partner, group, modifiers)
-    );
+    return this.getSequenceExercises(exercise).every((member) =>
+      this.isSelectable(member, group, modifiers));
   }
 
   isSelectable(exercise, group, modifiers) {
@@ -3037,16 +3088,14 @@ export class WorkoutSession {
   }
 
   getSelectionScore(exercise) {
-    const partner = this.getDirectionPartner(exercise);
-    return partner
-      ? Math.min(this.getScore(exercise), this.getScore(partner))
-      : this.getScore(exercise);
+    return Math.min(...this.getSequenceExercises(exercise).map((member) =>
+      this.getScore(member)));
   }
 
   normalizeKeptExerciseIds() {
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds.filter((exerciseId) =>
       this.exercisesById.has(exerciseId)));
-    this.expandDirectionPairIds(keptExerciseIds);
+    this.expandSequenceIds(keptExerciseIds);
     this.state.lastKeptExerciseIds = [...keptExerciseIds];
     this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
       this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -3058,15 +3107,17 @@ export class WorkoutSession {
       this.state.nextWorkoutExcludedExerciseIds.filter((exerciseId) =>
         this.exercisesById.has(exerciseId)),
     );
-    this.expandDirectionPairIds(nextExcludedExerciseIds);
+    this.expandSequenceIds(nextExcludedExerciseIds);
     this.state.nextWorkoutExcludedExerciseIds = [...nextExcludedExerciseIds];
   }
 
-  expandDirectionPairIds(exerciseIds) {
+  expandSequenceIds(exerciseIds) {
     for (const exerciseId of [...exerciseIds]) {
-      const partner = this.getDirectionPartner(this.exercisesById.get(exerciseId));
-      if (partner) {
-        exerciseIds.add(partner.id);
+      const exercise = this.exercisesById.get(exerciseId);
+      if (exercise) {
+        for (const member of this.getSequenceExercises(exercise)) {
+          exerciseIds.add(member.id);
+        }
       }
     }
   }
@@ -3078,16 +3129,14 @@ export class WorkoutSession {
     const isLongWorkoutSelectionGroup = RESOLUTIONS.get(30).groups.some(
       (candidate) => candidate.id === group.id,
     );
-    const partner = this.getDirectionPartner(exercise);
     return this.state.activeWorkoutMinutes === 0 &&
       isLongWorkoutSelectionGroup &&
-      Boolean(partner) &&
-      exercise.id < partner.id &&
-      partner.directionPartnerExerciseId === exercise.id &&
-      this.isCompatibleWithModifiers(exercise, modifiers) &&
-      this.isCompatibleWithModifiers(partner, modifiers) &&
-      this.isAssignedToGroup(exercise, group) &&
-      this.isAssignedToGroup(partner, group);
+      Array.isArray(exercise.sequenceBlocks) &&
+      exercise.sequenceBlocks.length > 0 &&
+      this.getSequenceRoot(exercise).id === exercise.id &&
+      this.getSequenceExercises(exercise).every((member) =>
+        this.isCompatibleWithModifiers(member, modifiers) &&
+        this.isAssignedToGroup(member, group));
   }
 
   normalizeActiveLongWorkoutAllocation() {
@@ -3104,138 +3153,99 @@ export class WorkoutSession {
         Object.keys(this.state.activeSetCountsBySelectionGroupId).length === 0;
     }
 
-    const expected = this.chooseLongWorkoutAllocation();
-    const expectedDirections = Object.fromEntries(
-      expected.directionPartnerExerciseIds,
-    );
-    const actualDirectionEntries = Object.entries(
-      this.state.activeDirectionPartnerExerciseIds,
-    );
-    const actualSetCountEntries = Object.entries(
-      this.state.activeSetCountsBySelectionGroupId,
-    );
+    let expected;
+    try {
+      expected = this.chooseLongWorkoutAllocation();
+    } catch {
+      return false;
+    }
+    if (Object.keys(this.state.activeDirectionPartnerExerciseIds).length !== 0 ||
+        this.state.activeFullSideRoundIds.length !== 0) {
+      return false;
+    }
+
     const selectionGroups = this.getSelectionGroups();
-    const expectedExtraSetGroups = actualSetCountEntries
+    const actualSetCounts = new Map(Object.entries(
+      this.state.activeSetCountsBySelectionGroupId,
+    ));
+    if (actualSetCounts.size !== selectionGroups.length ||
+        selectionGroups.some((group) =>
+          !Number.isInteger(actualSetCounts.get(group.id)) ||
+          actualSetCounts.get(group.id) < 1)) {
+      return false;
+    }
+
+    const expectedExtraSetGroups = [...actualSetCounts]
       .filter(([, setCount]) => setCount > 1)
       .map(([groupId]) => groupId);
-    if (
-      actualDirectionEntries.length !== expected.directionPartnerExerciseIds.size ||
-      !actualDirectionEntries.every(([groupId, partnerId]) =>
-        expectedDirections[groupId] === partnerId) ||
-      actualSetCountEntries.length !== selectionGroups.length ||
-      selectionGroups.some((group) =>
-        (this.state.activeSetCountsBySelectionGroupId[group.id] ?? 0) < 1) ||
-      !sameStringSet(
-        this.state.activeExtraSetSelectionGroupIds,
-        expectedExtraSetGroups,
-      )
-    ) {
+    if (!sameStringSet(
+      this.state.activeExtraSetSelectionGroupIds,
+      expectedExtraSetGroups,
+    )) {
       return false;
     }
 
     try {
+      const roots = new Map(selectionGroups.map((group) => [
+        group.id,
+        this.exercisesById.get(this.state.selectedExerciseIds[
+          this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
+        ]),
+      ]));
       const rounds = createWorkoutSchedule(
         this.state.activeWorkoutMinutes,
-        new Map(actualDirectionEntries),
-        new Set(this.state.activeFullSideRoundIds),
-        new Map(actualSetCountEntries),
+        roots,
+        actualSetCounts,
       );
-      return this.state.activeFullSideRoundIds.every((roundId) => {
-        const round = rounds.find((candidate) => candidate.id === roundId);
-        return round && usesTimedPair(this.getSelectedExercise(round));
-      });
+      return rounds.length === this.state.activeWorkoutMinutes &&
+        actualSetCounts.size === expected.setCountsBySelectionGroupId.size &&
+        [...actualSetCounts].every(([groupId, setCount]) =>
+          expected.setCountsBySelectionGroupId.get(groupId) === setCount);
     } catch {
       return false;
     }
   }
 
-  getExtraMinuteCount() {
-    if (this.state.activeWorkoutMinutes <= 30) {
-      return 0;
-    }
-    return this.state.activeWorkoutMinutes - this.getSelectionGroups().length;
-  }
-
   chooseLongWorkoutAllocation(lockedSelectionGroupIds = new Set()) {
-    const extraMinutes = this.getExtraMinuteCount();
-    if (extraMinutes === 0) {
+    if (this.state.activeWorkoutMinutes <= 30) {
       return {
-        directionPartnerExerciseIds: new Map(),
-        fullSideRoundIds: [],
         extraSetSelectionGroupIds: [],
         setCountsBySelectionGroupId: new Map(),
       };
     }
+
+    const selected = (group) => {
+      const exercise = this.exercisesById.get(this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
+      ]);
+      if (!exercise) {
+        throw new Error(`${group.displayName} has no selected sequence.`);
+      }
+      return exercise;
+    };
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    const rankedGroups = [...this.getSelectionGroups()]
-      .sort((left, right) => {
-        const leftExerciseId = this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(left.id, this.state.activeWorkoutModifiers)
-        ];
-        const rightExerciseId = this.state.selectedExerciseIds[
-          this.getSelectionStorageKey(right.id, this.state.activeWorkoutModifiers)
-        ];
-        const leftExercise = this.exercisesById.get(leftExerciseId);
-        const rightExercise = this.exercisesById.get(rightExerciseId);
-        const leftHard = leftExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
-        const rightHard = rightExercise?.muscularDemand === HARD_MUSCULAR_DEMAND ? 1 : 0;
-        const leftKept = keptExerciseIds.has(leftExerciseId) ? 1 : 0;
-        const rightKept = keptExerciseIds.has(rightExerciseId) ? 1 : 0;
-        return rightHard - leftHard ||
-          rightKept - leftKept ||
-          right.order - left.order;
-      });
-    const directionPartnerExerciseIds = new Map();
-    for (const group of rankedGroups) {
-      const selected = this.exercisesById.get(this.state.selectedExerciseIds[
-        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
-      ]);
-      const partner = this.getDirectionPartner(selected);
-      if (!partner) {
-        continue;
-      }
-      directionPartnerExerciseIds.set(group.id, partner.id);
-    }
-    if (directionPartnerExerciseIds.size > extraMinutes) {
-      throw new Error("The selected direction pairs do not fit this workout duration.");
-    }
-    let remainingExtraMinutes = extraMinutes - directionPartnerExerciseIds.size;
-    const timedPairRounds = [];
-    for (const group of rankedGroups) {
-      const selected = this.exercisesById.get(this.state.selectedExerciseIds[
-        this.getSelectionStorageKey(group.id, this.state.activeWorkoutModifiers)
-      ]);
-      if (selected && usesTimedPair(selected)) {
-        timedPairRounds.push({ groupId: group.id, roundId: `${group.id}.set1` });
-      }
-      const partner = this.exercisesById.get(directionPartnerExerciseIds.get(group.id));
-      if (partner && usesTimedPair(partner)) {
-        timedPairRounds.push({
-          groupId: group.id,
-          roundId: `${group.id}.direction1`,
-        });
-      }
-    }
-    const setCountsBySelectionGroupId = new Map(
-      rankedGroups.map((group) => [group.id, 1]),
-    );
-    const fullSideRoundIds = [];
-    const validTimedPairRoundIds = new Set(
-      timedPairRounds.map(({ roundId }) => roundId),
-    );
+    const rankedGroups = [...this.getSelectionGroups()].sort((left, right) => {
+      const leftExercise = selected(left);
+      const rightExercise = selected(right);
+      return Number(rightExercise.muscularDemand === HARD_MUSCULAR_DEMAND) -
+          Number(leftExercise.muscularDemand === HARD_MUSCULAR_DEMAND) ||
+        Number(keptExerciseIds.has(rightExercise.id)) -
+          Number(keptExerciseIds.has(leftExercise.id)) ||
+        right.order - left.order;
+    });
+    const blockCostByGroup = new Map(rankedGroups.map((group) => [
+      group.id,
+      selected(group).sequenceBlocks.length,
+    ]));
+    const setCountsBySelectionGroupId = new Map(rankedGroups.map((group) => [
+      group.id,
+      1,
+    ]));
+    let remainingMinutes = this.state.activeWorkoutMinutes -
+      [...blockCostByGroup.values()].reduce((total, cost) => total + cost, 0);
+
     for (const group of rankedGroups.filter(({ id }) =>
       lockedSelectionGroupIds.has(id))) {
-      const previousPartnerId = this.state.activeDirectionPartnerExerciseIds[group.id];
-      const proposedPartnerId = directionPartnerExerciseIds.get(group.id);
-      const hadDirectionPartner = Number.isInteger(previousPartnerId);
-      const hasDirectionPartner = Number.isInteger(proposedPartnerId);
-      if (hadDirectionPartner !== hasDirectionPartner ||
-          (hadDirectionPartner && previousPartnerId !== proposedPartnerId)) {
-        throw new Error(
-          `The completed direction allocation for ${group.displayName} changed.`,
-        );
-      }
-
       const lockedSetCount =
         this.state.activeSetCountsBySelectionGroupId[group.id] ?? 1;
       if (!Number.isInteger(lockedSetCount) || lockedSetCount < 1) {
@@ -3244,74 +3254,56 @@ export class WorkoutSession {
         );
       }
       setCountsBySelectionGroupId.set(group.id, lockedSetCount);
-      remainingExtraMinutes -=
-        (lockedSetCount - 1) * (hasDirectionPartner ? 2 : 1);
-
-      const roundPrefix = `${group.id}.`;
-      for (const roundId of this.state.activeFullSideRoundIds.filter(
-        (candidate) => candidate.startsWith(roundPrefix),
-      )) {
-        if (!validTimedPairRoundIds.has(roundId)) {
-          throw new Error(
-            `The completed full-side allocation for ${group.displayName} changed.`,
-          );
-        }
-        fullSideRoundIds.push(roundId);
-        remainingExtraMinutes -= 1;
-      }
+      remainingMinutes -=
+        (lockedSetCount - 1) * blockCostByGroup.get(group.id);
+    }
+    if (remainingMinutes < 0) {
+      throw new Error("The selected mandatory sequences exceed the workout duration.");
     }
 
-    if (remainingExtraMinutes < 0) {
-      throw new Error("The completed workout rounds exceed the selected duration.");
-    }
+    const repeatableGroups = rankedGroups.filter(({ id }) =>
+      !lockedSelectionGroupIds.has(id));
+    const repeatableCosts = [...new Set(repeatableGroups.map((group) =>
+      blockCostByGroup.get(group.id)))];
+    const canFill = (minutes) => {
+      const fillable = new Array(minutes + 1).fill(false);
+      fillable[0] = true;
+      for (let value = 1; value <= minutes; value += 1) {
+        fillable[value] = repeatableCosts.some((cost) =>
+          cost <= value && fillable[value - cost]);
+      }
+      return fillable[minutes];
+    };
 
-    for (const { groupId, roundId } of timedPairRounds) {
-      if (remainingExtraMinutes === 0) {
-        break;
-      }
-      if (lockedSelectionGroupIds.has(groupId)) {
-        continue;
-      }
-      fullSideRoundIds.push(roundId);
-      remainingExtraMinutes -= 1;
-    }
-
-    let repeatedMinutes = remainingExtraMinutes;
-    while (repeatedMinutes > 0) {
-      let allocated = false;
-      for (const group of rankedGroups.filter(({ id }) =>
-        !lockedSelectionGroupIds.has(id))) {
-        const setCost = directionPartnerExerciseIds.has(group.id) ? 2 : 1;
-        if (setCost > repeatedMinutes) {
-          continue;
-        }
-        setCountsBySelectionGroupId.set(
-          group.id,
-          setCountsBySelectionGroupId.get(group.id) + 1,
-        );
-        repeatedMinutes -= setCost;
-        allocated = true;
-        if (repeatedMinutes === 0) {
-          break;
-        }
-      }
-      if (!allocated) {
+    while (remainingMinutes > 0) {
+      const selectedGroup = [...repeatableGroups]
+        .sort((left, right) =>
+          setCountsBySelectionGroupId.get(left.id) -
+            setCountsBySelectionGroupId.get(right.id))
+        .find((group) => {
+          const cost = blockCostByGroup.get(group.id);
+          return cost <= remainingMinutes &&
+            canFill(remainingMinutes - cost);
+        });
+      if (!selectedGroup) {
         throw new Error(
-          "The long-workout direction units cannot fill the selected duration.",
+          "The selected sequence lengths cannot fill the workout duration.",
         );
       }
+      setCountsBySelectionGroupId.set(
+        selectedGroup.id,
+        setCountsBySelectionGroupId.get(selectedGroup.id) + 1,
+      );
+      remainingMinutes -= blockCostByGroup.get(selectedGroup.id);
     }
-    const extraSetSelectionGroupIds = [...setCountsBySelectionGroupId]
-      .filter(([, setCount]) => setCount > 1)
-      .map(([groupId]) => groupId);
+
     return {
-      directionPartnerExerciseIds,
-      fullSideRoundIds,
-      extraSetSelectionGroupIds,
+      extraSetSelectionGroupIds: [...setCountsBySelectionGroupId]
+        .filter(([, setCount]) => setCount > 1)
+        .map(([groupId]) => groupId),
       setCountsBySelectionGroupId,
     };
   }
-
   rebalanceNewExercisesByMuscleBudget() {
     const groups = this.getSelectionGroups();
     const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
@@ -3440,10 +3432,18 @@ export class WorkoutSession {
     this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
     try {
       const allocation = this.chooseLongWorkoutAllocation();
+      const roots = new Map(this.getSelectionGroups().map((selectionGroup) => [
+        selectionGroup.id,
+        this.exercisesById.get(this.state.selectedExerciseIds[
+          this.getSelectionStorageKey(
+            selectionGroup.id,
+            this.state.activeWorkoutModifiers,
+          )
+        ]),
+      ]));
       const rounds = createWorkoutSchedule(
         this.state.activeWorkoutMinutes,
-        allocation.directionPartnerExerciseIds,
-        new Set(allocation.fullSideRoundIds),
+        roots,
         allocation.setCountsBySelectionGroupId,
       );
       const scheduledExercises = rounds.map((round) => this.getSelectedExercise(round));
@@ -3558,10 +3558,8 @@ export class WorkoutSession {
   }
 
   applyLongWorkoutAllocation(allocation) {
-    this.state.activeDirectionPartnerExerciseIds = Object.fromEntries(
-      allocation.directionPartnerExerciseIds,
-    );
-    this.state.activeFullSideRoundIds = [...allocation.fullSideRoundIds];
+    this.state.activeDirectionPartnerExerciseIds = {};
+    this.state.activeFullSideRoundIds = [];
     this.state.activeExtraSetSelectionGroupIds = [...allocation.extraSetSelectionGroupIds];
     this.state.activeSetCountsBySelectionGroupId = Object.fromEntries(
       allocation.setCountsBySelectionGroupId,
@@ -3574,23 +3572,284 @@ export class WorkoutSession {
       : this.chooseLongWorkoutAllocation().setCountsBySelectionGroupId;
   }
 
-  getEffectiveDirectionPartnerExercises() {
-    return this.isLongWorkoutAllocationValid()
-      ? new Map(Object.entries(this.state.activeDirectionPartnerExerciseIds))
-      : this.chooseLongWorkoutAllocation().directionPartnerExerciseIds;
+  normalizeOutcomes() {
+    const activeGroups = new Map(this.getActiveGroups().map((group) =>
+      [group.id, group]));
+    for (const groupId of Object.keys(this.state.outcomes)) {
+      if (!activeGroups.has(groupId)) {
+        delete this.state.outcomes[groupId];
+      }
+    }
+    for (const [groupId, outcome] of Object.entries(this.state.outcomes)) {
+      if (outcome === "neutral" &&
+          !this.isIntermediateSequenceBlock(activeGroups.get(groupId))) {
+        this.state.outcomes[groupId] = "tick";
+      }
+    }
   }
 
-  getEffectiveFullSideRounds() {
-    const roundIds = this.isLongWorkoutAllocationValid()
-      ? this.state.activeFullSideRoundIds
-      : this.chooseLongWorkoutAllocation().fullSideRoundIds;
-    return new Set(roundIds);
+  normalizeCompletionState() {
+    const activeGroups = this.getActiveGroups();
+    this.state.workoutCompleted = activeGroups.length > 0 &&
+      activeGroups.every((group) => this.state.outcomes[group.id] !== undefined);
+    if (!this.state.workoutCompleted) {
+      this.state.completionAcknowledged = false;
+    }
+  }
+
+  captureLegacyActiveProgress() {
+    return {
+      outcomes: { ...this.state.outcomes },
+      selectedExerciseIds: { ...this.state.selectedExerciseIds },
+      directionPartnerExerciseIds: {
+        ...this.state.activeDirectionPartnerExerciseIds,
+      },
+      fullSideRoundIds: new Set(this.state.activeFullSideRoundIds),
+      pendingMovementGroupId: this.state.pendingMovementGroupId,
+      pendingMovementMillisecondsRemaining:
+        this.state.pendingMovementMillisecondsRemaining,
+      pendingMovementEndsAtUnixMilliseconds:
+        this.state.pendingMovementEndsAtUnixMilliseconds,
+      pendingMovementPausedByUser: this.state.pendingMovementPausedByUser,
+      pendingRestGroupId: this.state.pendingRestGroupId,
+      pendingRestEndsAtUnixMilliseconds: this.state.pendingRestEndsAtUnixMilliseconds,
+      pendingRestKept: this.state.pendingRestKept,
+    };
+  }
+
+  migrateLegacyActiveProgress(snapshot) {
+    const rounds = [...this.getActiveGroups()].sort((left, right) =>
+      left.order - right.order);
+    this.state.outcomes = {};
+    this.clearPendingMovement();
+    this.clearPendingRest();
+
+    for (const selectionGroup of this.getSelectionGroups()) {
+      const sequenceRounds = rounds.filter((round) =>
+        getSelectionKey(round) === selectionGroup.id);
+      const oldOutcomes = Object.entries(snapshot.outcomes)
+        .filter(([roundId]) =>
+          this.resolveLegacySelectionKey(roundId) === selectionGroup.id);
+      const decision = oldOutcomes
+        .filter(([, outcome]) => outcome === "tick" || outcome === "x")
+        .at(-1)?.[1];
+      if (decision) {
+        for (const round of sequenceRounds.slice(0, -1)) {
+          this.state.outcomes[round.id] = "neutral";
+        }
+        this.state.outcomes[sequenceRounds.at(-1).id] = decision;
+        continue;
+      }
+      for (const [legacyRoundId, outcome] of oldOutcomes
+        .filter(([, value]) => value === "neutral")
+        .sort((left, right) =>
+          this.getLegacyRoundOrdinal(left[0]) - this.getLegacyRoundOrdinal(right[0]))) {
+        if (outcome !== "neutral") {
+          continue;
+        }
+        for (const round of this.resolveLegacyRepresentedRounds(
+          snapshot,
+          sequenceRounds,
+          legacyRoundId,
+        )) {
+          if (!isFinalSequenceRound(round)) {
+            this.state.outcomes[round.id] = "neutral";
+          }
+        }
+      }
+    }
+
+    const legacyPendingRoundId =
+      snapshot.pendingRestGroupId ?? snapshot.pendingMovementGroupId;
+    const pendingSelectionKey = this.resolveLegacySelectionKey(
+      legacyPendingRoundId,
+    );
+    if (!legacyPendingRoundId || !pendingSelectionKey) {
+      return;
+    }
+    const pendingSequenceRounds = rounds.filter((round) =>
+      getSelectionKey(round) === pendingSelectionKey);
+    const representedRounds = this.resolveLegacyRepresentedRounds(
+      snapshot,
+      pendingSequenceRounds,
+      legacyPendingRoundId,
+    );
+    if (representedRounds.length === 0) {
+      return;
+    }
+
+    if (snapshot.pendingRestGroupId &&
+        snapshot.pendingRestEndsAtUnixMilliseconds > 0) {
+      const pendingRound = representedRounds.at(-1);
+      this.markSequenceRoundsBeforePending(pendingSequenceRounds, pendingRound);
+      this.state.pendingRestGroupId = pendingRound.id;
+      this.state.pendingRestEndsAtUnixMilliseconds =
+        snapshot.pendingRestEndsAtUnixMilliseconds;
+      this.state.pendingRestKept = snapshot.pendingRestKept &&
+        isFinalSequenceRound(pendingRound);
+      return;
+    }
+    if (!snapshot.pendingMovementGroupId ||
+        snapshot.pendingMovementMillisecondsRemaining <= 0) {
+      return;
+    }
+
+    const mapped = this.mapLegacyMovementProgress(
+      snapshot,
+      legacyPendingRoundId,
+      representedRounds.length,
+    );
+    const pendingRound = representedRounds[Math.max(
+      0,
+      Math.min(representedRounds.length - 1, mapped.representedRoundIndex),
+    )];
+    this.markSequenceRoundsBeforePending(pendingSequenceRounds, pendingRound);
+    const maximum = getMovementCountdownDurationMs(pendingRound);
+    this.state.pendingMovementGroupId = pendingRound.id;
+    this.state.pendingMovementMillisecondsRemaining = Math.max(
+      1,
+      Math.min(maximum, mapped.remainingMilliseconds),
+    );
+    this.state.pendingMovementEndsAtUnixMilliseconds =
+      representedRounds.length === 1 &&
+        mapped.remainingMilliseconds ===
+          snapshot.pendingMovementMillisecondsRemaining
+        ? snapshot.pendingMovementEndsAtUnixMilliseconds
+        : 0;
+    this.state.pendingMovementPausedByUser = snapshot.pendingMovementPausedByUser;
+  }
+
+  resolveLegacyRepresentedRounds(snapshot, sequenceRounds, legacyRoundId) {
+    const selectionKey = this.resolveLegacySelectionKey(legacyRoundId);
+    if (!selectionKey) {
+      return [];
+    }
+    const setNumber = this.getLegacySetNumber(legacyRoundId);
+    const setRounds = sequenceRounds
+      .filter((round) => (round.setNumber ?? 1) === setNumber)
+      .sort((left, right) =>
+        (left.sequenceBlockIndex ?? 0) - (right.sequenceBlockIndex ?? 0));
+    if (setRounds.length === 0) {
+      return [];
+    }
+    const memberExerciseId = this.resolveLegacyMemberExerciseId(
+      snapshot,
+      selectionKey,
+      legacyRoundId,
+    );
+    const represented = memberExerciseId > 0
+      ? setRounds.filter((round) => this.getSelectedExercise(round).id ===
+        memberExerciseId)
+      : [];
+    return represented.length > 0 ? represented : setRounds;
+  }
+
+  resolveLegacyMemberExerciseId(snapshot, selectionKey, legacyRoundId) {
+    if (legacyRoundId.startsWith(`${selectionKey}.direction`) &&
+        Number.isInteger(snapshot.directionPartnerExerciseIds[selectionKey])) {
+      return snapshot.directionPartnerExerciseIds[selectionKey];
+    }
+    const activeStorageKey = this.getSelectionStorageKey(
+      selectionKey,
+      this.state.activeWorkoutModifiers,
+    );
+    if (Number.isInteger(snapshot.selectedExerciseIds[activeStorageKey])) {
+      return snapshot.selectedExerciseIds[activeStorageKey];
+    }
+    return Object.entries(snapshot.selectedExerciseIds)
+      .find(([storageKey]) => {
+        const parsed = this.parseSelectionStorageKey(storageKey);
+        return parsed.selectionGroupId === selectionKey &&
+          normalizeWorkoutModifiers(parsed.modifiers) ===
+            this.state.activeWorkoutModifiers;
+      })?.[1] ?? 0;
+  }
+
+  mapLegacyMovementProgress(snapshot, legacyRoundId, representedRoundCount) {
+    const remaining = snapshot.pendingMovementMillisecondsRemaining;
+    if (representedRoundCount < 2) {
+      return { representedRoundIndex: 0, remainingMilliseconds: remaining };
+    }
+    const selectionKey = this.resolveLegacySelectionKey(legacyRoundId);
+    const memberExerciseId = selectionKey
+      ? this.resolveLegacyMemberExerciseId(snapshot, selectionKey, legacyRoundId)
+      : 0;
+    const member = this.exercisesById.get(memberExerciseId);
+    const usedTimedPair = member &&
+      ([
+        "ScreenLeftThenRight",
+        "ScreenRightThenLeft",
+        "ScreenLeftLeadThenRightLead",
+        "ScreenRightLeadThenLeftLead",
+      ].includes(member.sideSequence) || member.directionSequence !== "None");
+    if (!usedTimedPair) {
+      return { representedRoundIndex: 0, remainingMilliseconds: remaining };
+    }
+    if (snapshot.fullSideRoundIds.has(legacyRoundId)) {
+      if (remaining > 60_000) {
+        return {
+          representedRoundIndex: 0,
+          remainingMilliseconds: remaining - 60_000,
+        };
+      }
+      return {
+        representedRoundIndex: 1,
+        remainingMilliseconds: remaining > 45_000 ? 45_000 : remaining,
+      };
+    }
+    if (remaining > 25_000) {
+      return { representedRoundIndex: 0, remainingMilliseconds: remaining };
+    }
+    return {
+      representedRoundIndex: 1,
+      remainingMilliseconds: remaining > 20_000 ? 45_000 : remaining + 25_000,
+    };
+  }
+
+  markSequenceRoundsBeforePending(sequenceRounds, pendingRound) {
+    for (const round of sequenceRounds) {
+      if (round.id === pendingRound.id) {
+        break;
+      }
+      this.state.outcomes[round.id] ??= "neutral";
+    }
+  }
+
+  getLegacySetNumber(roundId) {
+    for (const marker of [".set", ".direction"]) {
+      const index = roundId.lastIndexOf(marker);
+      const value = index >= 0 ? Number(roundId.slice(index + marker.length)) : 0;
+      if (Number.isInteger(value) && value > 0) {
+        return value;
+      }
+    }
+    return 1;
+  }
+
+  getLegacyRoundOrdinal(roundId) {
+    return (this.getLegacySetNumber(roundId) - 1) * 2 +
+      (roundId.includes(".direction") ? 1 : 0);
+  }
+
+  resolveLegacySelectionKey(roundId) {
+    if (typeof roundId !== "string" || !roundId) {
+      return null;
+    }
+    return [...ALL_GROUPS.keys()]
+      .filter((groupId) => roundId === groupId ||
+        roundId.startsWith(`${groupId}.`))
+      .sort((left, right) => right.length - left.length)[0] ?? null;
   }
 
   normalizePendingRest() {
-    if (!this.getValidPendingRestGroup()) {
-      this.clearPendingRest();
+    try {
+      if (this.getValidPendingRestGroup()) {
+        return;
+      }
+    } catch {
+      // An obsolete schedule cannot identify a valid current checkpoint.
     }
+    this.clearPendingRest();
   }
 
   normalizePendingMovement() {
@@ -3617,50 +3876,47 @@ export class WorkoutSession {
     }
     if (
       !this.pendingRestMatchesSelectionGroup(getSelectionKey(group)) ||
-      !this.isCompatibleWithModifiers(exercise, modifiers) ||
-      !this.isAssignedToGroup(exercise, group)
+      this.getSequenceRoot(exercise).id !== exercise.id
     ) {
       return false;
     }
-    const partner = this.getDirectionPartner(exercise);
-    if (!partner) {
-      return true;
-    }
-    return (
-      this.state.activeWorkoutMinutes > 30 &&
-      exercise.id < partner.id &&
-      partner.directionPartnerExerciseId === exercise.id &&
-      this.isCompatibleWithModifiers(partner, modifiers) &&
-      this.isAssignedToGroup(partner, group)
-    );
+    return (this.state.activeWorkoutMinutes > 30 ||
+        exercise.sequenceBlocks.length === 1) &&
+      this.getSequenceExercises(exercise).every((member) =>
+        this.isCompatibleWithModifiers(member, modifiers) &&
+        this.isAssignedToGroup(member, group));
   }
 
-  isDirectionPartnerOverrideValid(exercise, group, modifiers) {
-    if (
-      this.state.activeWorkoutMinutes <= 30 ||
-      !isSelectableForWorkoutProfile(exercise, group, modifiers)
-    ) {
+  isSequenceOverrideValid(exercise, group, modifiers) {
+    const blockIndex = group.sequenceBlockIndex ?? -1;
+    const blockCount = group.sequenceBlockCount ?? 0;
+    if (blockIndex < 0 || blockIndex >= blockCount) {
       return false;
     }
-    const baseExercise = this.exercisesById.get(
+    const root = this.exercisesById.get(
       this.state.selectedExerciseIds[this.getSelectionStorageKey(
         getSelectionKey(group),
         modifiers,
       )],
     );
-    return Boolean(
-      baseExercise &&
-      baseExercise.directionPartnerExerciseId === exercise.id &&
-      exercise.directionPartnerExerciseId === baseExercise.id &&
-      this.isWorkoutSelectionCandidate(baseExercise, group, modifiers),
-    );
+    const block = root?.sequenceBlocks?.[blockIndex];
+    return Boolean(root &&
+      root.sequenceBlocks.length === blockCount &&
+      block?.exerciseId === exercise.id &&
+      (block.sideCue ?? "None") === (group.sequenceSideCue ?? "None") &&
+      (block.directionCue ?? "None") ===
+        (group.sequenceDirectionCue ?? "None") &&
+      (block.mirrorMedia === true) === (group.mirrorSequenceMedia === true) &&
+      (block.mediaSegment ?? "Full") ===
+        (group.sequenceMediaSegment ?? "Full") &&
+      this.isWorkoutSelectionCandidate(root, group, modifiers));
   }
 
   pendingRestMatchesSelectionGroup(selectionGroupId) {
     if (!this.state.pendingRestGroupId) {
       return false;
     }
-    const roundMatch = /^(.*)\.(?:direction[1-9]\d*|set[1-9]\d*)$/.exec(
+    const roundMatch = /^(.*)\.set[1-9]\d*\.block[1-9]\d*$/.exec(
       this.state.pendingRestGroupId,
     );
     return (roundMatch?.[1] ?? this.state.pendingRestGroupId) === selectionGroupId;
@@ -3804,13 +4060,19 @@ function isApprovedIdentityPreservingNameChange(exerciseId, previousIdentity, cu
     return false;
   }
 
+  const usesLegacyTimedSides = [
+    "ScreenLeftThenRight",
+    "ScreenRightThenLeft",
+    "ScreenLeftLeadThenRightLead",
+    "ScreenRightLeadThenLeftLead",
+  ].includes(currentExercise.sideSequence);
   const timedSideNormalization =
-    usesTimedSides(currentExercise) &&
+    usesLegacyTimedSides &&
     previousName.startsWith(ALTERNATING_PREFIX) &&
     previousName.slice(ALTERNATING_PREFIX.length) === currentExercise.name;
   const continuousAlternationNormalization =
     CONTINUOUS_ALTERNATION_NORMALIZATION_IDS.has(exerciseId) &&
-    !usesTimedSides(currentExercise) &&
+    !usesLegacyTimedSides &&
     currentExercise.name.startsWith(ALTERNATING_PREFIX) &&
     previousName === currentExercise.name.slice(ALTERNATING_PREFIX.length);
   const correction = APPROVED_EXERCISE_CORRECTIONS.get(exerciseId);

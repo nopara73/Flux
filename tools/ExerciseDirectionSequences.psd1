@@ -1,7 +1,7 @@
 @{
     # Non-sided cyclic movements need both directions. The app presents the
-    # reviewed first direction for 20 seconds, a 5-second change, then the
-    # exact opposite direction for 20 seconds.
+    # reviewed first and opposite directions as adjacent 45-second sequence
+    # blocks using the two exact media segments.
     264 = 'BackwardThenForward'
     275 = 'BackwardThenForward'
     406 = 'ClockwiseThenCounterclockwise'

@@ -431,15 +431,16 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 
 ### 8.5 Scoring, rest, and replacement
 
-- Each round remains 45 seconds of exercise and 15 seconds of rest.
-- “Tap to keep” is the only rest decision, and repeated sets expose it only
-  after their final set.
-- Intermediate repeated-set rests are neutral: they hide Keep, apply no score,
-  and automatically start the next set when their 15-second timer ends.
+- Every atomic sequence block is 45 seconds of exercise and 15 seconds of rest.
+- Keep is the only rest decision, and a sequence exposes it only after its final
+  block and final repeated set.
+- Intermediate sequence rests are neutral: they hide Keep, apply no score, and
+  automatically start the next 45-second block when their 15-second timer ends.
 - If Keep is tapped during the final rest window: score is unchanged and that
   slot retains the exercise.
-- If the final rest resolves without Keep: decrement that exercise's integer
-  score exactly once and mark only that slot for replacement.
+- If the final rest resolves without Keep: decrement every distinct exercise
+  identity in that sequence exactly once and mark only that sequence slot for
+  replacement.
 - On workout completion or interruption finalization, replace every marked slot from the highest-score bucket of the same primary category.
 - Kept/unreached slots remain unchanged. An all-kept workout replaces nothing.
 - Persist score updates before clearing pending-rest state; use `scoreApplied` or an equivalent transaction/idempotency guard so process recreation cannot decrement twice.

@@ -1,12 +1,12 @@
 # Reviewed movements that switch the working side inside one uninterrupted
 # demonstration. They keep the normal 45-second timer and do not receive a
-# 20 / 5 / 20 side split.
+# one continuous 45-second block instead of separate side-specific blocks.
 @{
     Ids = @(
         15, 17, 32, 37, 41, 59, 60, 92, 93, 98,
         116, 118, 119, 121, 122, 124, 125, 126, 127, 128, 129, 130, 131,
         132, 133, 139, 141, 142, 144, 147, 150, 151, 156, 161, 167, 168,
-        169, 170, 171, 173, 174, 185, 192, 194, 199,
+        169, 170, 171, 173, 174, 185, 192, 194, 198, 199,
         262, 281, 284, 295, 303, 311, 314, 315, 321, 340,
         341, 379, 390, 398,
         401, 403, 404, 418, 429, 430, 433, 435, 436, 437, 438, 440, 441,

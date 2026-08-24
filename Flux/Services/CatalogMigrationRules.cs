@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 47;
+    public const int CurrentCatalogRevision = 48;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -183,6 +183,9 @@ public static class CatalogMigrationRules
                 [242] = new(
                     "Full-Fist Tendon Glide",
                     "Open Hand to Full Fist"),
+                [248] = new(
+                    "Side-Tap Palm Pushes",
+                    "Alternating Side-Tap Palm Pushes"),
                 [283] = new(
                     "Straight-Fist Tendon Glide",
                     "Open Hand to Straight Fist"),

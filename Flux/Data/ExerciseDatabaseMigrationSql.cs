@@ -4,13 +4,12 @@ internal static class ExerciseDatabaseMigrationSql
 {
     internal const string CopyExistingExercisesWithNeutralMirrorMetadata =
         """
-        INSERT INTO exercises_v60 (
+        INSERT INTO exercises_v67 (
             id, name, video, practice, motion_profile, score,
             muscular_demand, only_feet_touch_ground, shoe_agnostic,
             max_space_meters,
             equipment, silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
-            direction_partner_exercise_id,
             insect_compatibility, mirror_relationship, mirror_coverage,
             session_movement_id)
         SELECT
@@ -19,7 +18,7 @@ internal static class ExerciseDatabaseMigrationSql
             CASE WHEN max_space_meters BETWEEN 1 AND 2
                 THEN max_space_meters ELSE 2 END,
             'None', silent, exercise_mode, presentation,
-            hold_frame_percent, side_sequence, direction_sequence, 0,
+            hold_frame_percent, side_sequence, direction_sequence,
             insect_compatibility, 'Unreviewed', 'None', 0
         FROM exercises
         """;

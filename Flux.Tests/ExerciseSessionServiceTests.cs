@@ -195,7 +195,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -221,7 +221,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
@@ -456,189 +456,6 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void FortyFiveMinutesUpgradeTimedPairsBeforeAddingRepeatedSets()
-    {
-        WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
-            .GetResolution(30)
-            .Groups
-            .ToArray();
-        Exercise[] exercises = selectionGroups
-            .Select((group, index) => QualifiedForGroup(
-                index + 1,
-                group,
-                sideSequence: index < 6
-                    ? ExerciseSideSequence.ScreenRightThenLeft
-                    : ExerciseSideSequence.Continuous,
-                directionSequence: index is >= 6 and < 12
-                    ? ExerciseDirectionSequence.ClockwiseThenCounterclockwise
-                    : ExerciseDirectionSequence.None))
-            .ToArray();
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 45, WorkoutModifiers.None);
-
-        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
-        Assert.Equal(33, rounds.Length);
-        Assert.Equal(12, rounds.Count(round => round.UsesFullSideTiming));
-        Assert.All(rounds.Where(round => round.UsesFullSideTiming), round =>
-            Assert.True(MovementPhasePresentationPolicy.UsesTimedPair(
-                service.GetSelectedExercise(state, round).SideSequence,
-                service.GetSelectedExercise(state, round).DirectionSequence)));
-        Assert.Equal(
-            6,
-            rounds.Count(round => round.UsesFullSideTiming &&
-                service.GetSelectedExercise(state, round).DirectionSequence !=
-                    ExerciseDirectionSequence.None));
-        Assert.Equal(3, state.ActiveExtraSetSelectionGroupIds.Count);
-        Assert.Equal(12, state.ActiveFullSideRoundIds.Count);
-        Assert.Equal(45, rounds.Sum(round => round.UsesFullSideTiming ? 2 : 1));
-    }
-
-    [Fact]
-    public void FortyFiveMinutesAddLinkedDirectionsBeforeLengtheningSidedTimers()
-    {
-        WorkoutGroup[] groups = MassGroupingTaxonomy
-            .GetResolution(30)
-            .Groups
-            .ToArray();
-        Exercise[] baseExercises = groups
-            .Select((group, index) => QualifiedForGroup(
-                index + 1,
-                group,
-                score: 10,
-                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
-            .ToArray();
-        Exercise[] partners = groups
-            .Take(15)
-            .Select((group, index) => CloneWithDirectionPartner(
-                QualifiedForGroup(
-                    1001 + index,
-                    group,
-                    sideSequence: ExerciseSideSequence.ScreenLeftThenRight),
-                baseExercises[index].Id))
-            .ToArray();
-        for (int index = 0; index < partners.Length; index++)
-        {
-            baseExercises[index] = CloneWithDirectionPartner(
-                baseExercises[index],
-                partners[index].Id);
-        }
-        Exercise[] exercises = [.. baseExercises, .. partners];
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 45, WorkoutModifiers.None);
-
-        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
-        WorkoutGroup[] directionRounds = rounds
-            .Where(round => round.Id.EndsWith(".direction1", StringComparison.Ordinal))
-            .ToArray();
-        Assert.Equal(15, directionRounds.Length);
-        Assert.Equal(45, rounds.Length);
-        Assert.Empty(state.ActiveFullSideRoundIds);
-        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
-        Assert.All(directionRounds, round =>
-        {
-            int baseId = state.SelectedExerciseIds[round.SelectionKey];
-            Exercise selected = exercises.Single(exercise => exercise.Id == baseId);
-            Assert.Equal(
-                selected.DirectionPartnerExerciseId,
-                service.GetSelectedExercise(state, round).Id);
-        });
-    }
-
-    [Theory]
-    [InlineData(3)]
-    [InlineData(5)]
-    [InlineData(7)]
-    [InlineData(10)]
-    [InlineData(15)]
-    [InlineData(20)]
-    [InlineData(30)]
-    public void DirectionPairsAreEntirelyExcludedFromShortWorkouts(int minutes)
-    {
-        Exercise[] exercises = DirectionPairCatalog();
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, minutes, WorkoutModifiers.None);
-
-        Assert.All(service.GetActiveGroups(state), group => Assert.Equal(
-            0,
-            service.GetSelectedExercise(state, group).DirectionPartnerExerciseId));
-        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
-    }
-
-    [Fact]
-    public void IdlePairSelectionIsPreservedForLongWorkoutsButReplacedForThirtyMinutes()
-    {
-        Exercise[] exercises = DirectionPairCatalog();
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        var shortState = new WorkoutState
-        {
-            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [group.Id] = 1,
-            },
-        };
-        service.Initialize(shortState);
-        Assert.Equal(1, shortState.SelectedExerciseIds[group.Id]);
-
-        service.StartWorkout(shortState, 30, WorkoutModifiers.None);
-
-        Assert.NotEqual(1, shortState.SelectedExerciseIds[group.Id]);
-        Assert.Equal(
-            0,
-            service.GetSelectedExercise(shortState, group)
-                .DirectionPartnerExerciseId);
-
-        var longState = new WorkoutState
-        {
-            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [group.Id] = 1,
-            },
-        };
-        service.Initialize(longState);
-        service.StartWorkout(longState, 45, WorkoutModifiers.None);
-
-        Assert.Equal(1, longState.SelectedExerciseIds[group.Id]);
-        Assert.Equal(2, longState.ActiveDirectionPartnerExerciseIds[group.Id]);
-    }
-
-    [Fact]
-    public void EveryRepeatedDirectionPairRemainsAdjacentInNinetyMinutes()
-    {
-        Exercise[] exercises = DirectionPairCatalog();
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 90, WorkoutModifiers.None);
-
-        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
-        WorkoutGroup[] pairLeads = rounds
-            .Where(round => round.IsDirectionPairLead)
-            .ToArray();
-        Assert.True(pairLeads.Length >= 2);
-        Assert.Equal(90, rounds.Sum(round => round.UsesFullSideTiming ? 2 : 1));
-        Assert.All(pairLeads, lead =>
-        {
-            WorkoutGroup decision = rounds[lead.Order];
-            Assert.True(decision.IsPairDecisionRound);
-            Assert.Equal(lead.PairedRoundId, decision.Id);
-            Assert.Equal(lead.Id, decision.PairedRoundId);
-            Assert.Equal(lead.SelectionKey, decision.SelectionKey);
-            Assert.Equal(
-                service.GetSelectedExercise(state, lead).DirectionPartnerExerciseId,
-                service.GetSelectedExercise(state, decision).Id);
-        });
-    }
-
-    [Fact]
     public void ShuffleRejectsTheCurrentExerciseAndReplacesOnlyItsSlot()
     {
         Exercise[] exercises = ThreeGroupCatalog();
@@ -756,14 +573,14 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void DirectionPairShuffleRejectsBothAndIsUnavailableAfterDirectionOne()
+    public void SequenceShuffleRejectsEveryMemberAndStopsAfterBlockOne()
     {
         const CanonicalMuscleGroup primary =
             CanonicalMuscleGroup.ForearmFlexorsAndPronators;
-        Exercise third = CloneWithDirectionPartner(
+        Exercise third = CloneWithLinkedSequenceMember(
             FullyCoveredExercise(3, primary, -100),
             4);
-        Exercise fourth = CloneWithDirectionPartner(
+        Exercise fourth = CloneWithLinkedSequenceMember(
             FullyCoveredExercise(4, primary, -100),
             3);
         Exercise[] exercises = [.. DirectionPairCatalog(), third, fourth];
@@ -771,18 +588,13 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState();
         service.StartWorkout(state, 45, WorkoutModifiers.None);
         WorkoutGroup lead = service.GetActiveGroups(state).Single(round =>
-            round.IsDirectionPairLead &&
+            round.SequenceBlockIndex == 0 &&
             service.GetSelectedExercise(state, round).Id == 1);
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != lead.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
+        CompleteRoundsBefore(service, state, lead);
 
         Assert.True(service.CanShuffleNextExercise(state, lead));
         Exercise rejectedLead = service.GetSelectedExercise(state, lead);
-        Exercise rejectedPartner = exercises.Single(exercise =>
-            exercise.Id == rejectedLead.DirectionPartnerExerciseId);
+        Exercise rejectedPartner = exercises.Single(exercise => exercise.Id == 2);
         int rejectedLeadScore = rejectedLead.Score;
         int rejectedPartnerScore = rejectedPartner.Score;
         ShuffledExerciseResult? result = service.ShuffleNextExercise(state, lead);
@@ -802,10 +614,7 @@ public sealed class ExerciseSessionServiceTests
         Assert.Same(
             result.ReplacementExercise,
             service.GetSelectedExercise(state, replacementLead));
-        Assert.Equal(
-            45,
-            service.GetActiveGroups(state).Sum(round =>
-                round.UsesFullSideTiming ? 2 : 1));
+        Assert.Equal(45, service.GetActiveGroups(state).Count);
         Assert.Equal(-100, third.Score);
         Assert.Equal(-100, fourth.Score);
 
@@ -816,46 +625,41 @@ public sealed class ExerciseSessionServiceTests
         var secondState = new WorkoutState();
         secondService.StartWorkout(secondState, 45, WorkoutModifiers.None);
         WorkoutGroup secondLead = secondService.GetActiveGroups(secondState)
-            .Single(round => round.IsDirectionPairLead);
-        foreach (WorkoutGroup priorRound in secondService.GetActiveGroups(secondState)
-                     .TakeWhile(round => round.Id != secondLead.Id))
-        {
-            secondService.RecordOutcome(secondState, priorRound, keep: true);
-        }
-        secondService.AdvanceDirectionPair(secondState, secondLead);
-        WorkoutGroup secondDirection = secondService.GetNextGroup(secondState)!;
+            .Single(round => round.SequenceBlockIndex == 0 &&
+                secondService.GetSelectedExercise(secondState, round).Id == 1);
+        CompleteRoundsBefore(secondService, secondState, secondLead);
+        secondService.AdvanceSequence(secondState, secondLead);
+        WorkoutGroup secondBlock = secondService.GetNextGroup(secondState)!;
 
-        Assert.True(secondDirection.IsPairDecisionRound);
+        Assert.Equal(secondLead.SelectionKey, secondBlock.SelectionKey);
         Assert.False(secondService.CanShuffleNextExercise(
             secondState,
-            secondDirection));
+            secondBlock));
         Assert.Null(secondService.ShuffleNextExercise(
             secondState,
-            secondDirection));
+            secondBlock));
     }
 
     [Fact]
-    public void DirectionPairCanOnlyBeKeptAfterItsSecondDirection()
+    public void SequenceCanOnlyBeKeptAfterItsFinalBlock()
     {
         Exercise[] exercises = DirectionPairCatalog();
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
         service.StartWorkout(state, 45, WorkoutModifiers.None);
         WorkoutGroup lead = service.GetActiveGroups(state).Single(round =>
-            round.IsDirectionPairLead);
+            round.SequenceBlockIndex == 0 &&
+            service.GetSelectedExercise(state, round).Id == 1);
         WorkoutGroup decision = service.GetActiveGroups(state).Single(round =>
-            round.Id == lead.PairedRoundId);
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != lead.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
+            round.SelectionKey == lead.SelectionKey &&
+            round.IsFinalSequenceRound);
+        CompleteRoundsBefore(service, state, lead);
 
         Assert.Throws<InvalidOperationException>(() =>
             service.RecordOutcome(state, lead, keep: true));
         Assert.DoesNotContain(lead.Id, state.Outcomes.Keys);
 
-        service.AdvanceDirectionPair(state, lead);
+        service.AdvanceSequence(state, lead);
         Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[lead.Id]);
         Assert.Equal(decision.Id, service.GetNextGroup(state)?.Id);
         RecordedWorkoutOutcome result = service.RecordOutcomeWithScoreUpdates(
@@ -864,14 +668,14 @@ public sealed class ExerciseSessionServiceTests
             keep: true);
 
         Assert.Empty(result.ScoreUpdates);
-        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[lead.Id]);
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[lead.Id]);
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[decision.Id]);
         Assert.Equal(100, service.GetSelectedExercise(state, lead).Score);
         Assert.Equal(100, service.GetSelectedExercise(state, decision).Score);
     }
 
     [Fact]
-    public void IntermediateRepeatedSetHasNoKeepAndRestoresAsAutomaticContinuation()
+    public void IntermediateSequenceBlockHasNoKeepAndRestoresAutomaticContinuation()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -893,25 +697,19 @@ public sealed class ExerciseSessionServiceTests
             .ToArray();
         WorkoutGroup firstSet = repeatedRounds[0];
 
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != firstSet.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
+        CompleteRoundsBefore(service, state, firstSet);
 
         service.BeginRest(state, firstSet, 123456);
 
-        Assert.True(service.IsIntermediateSetCompletion(state, firstSet));
+        Assert.True(service.IsIntermediateSequenceBlock(state, firstSet));
         Assert.False(service.KeepPendingRest(state));
         Assert.False(state.PendingRestKept);
 
-        service.AdvanceRepeatedSet(state, firstSet);
+        service.AdvanceSequence(state, firstSet);
         service.ClearPendingRest(state);
         WorkoutGroup nextSet = service.GetNextGroup(state)!;
         int movementDurationMilliseconds =
-            (nextSet.UsesFullSideTiming
-                ? MovementPhaseSchedule.FullSideTotalDurationSeconds
-                : MovementPhaseSchedule.TotalDurationSeconds) * 1_000;
+            MovementPhaseSchedule.TotalDurationSeconds * 1_000;
         service.PauseMovement(
             state,
             nextSet,
@@ -925,7 +723,7 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.Equal(ExerciseOutcome.Neutral, restored.Outcomes[firstSet.Id]);
         Assert.Equal(firstSet.SelectionKey, nextSet.SelectionKey);
-        Assert.True(service.IsSetContinuationRound(restored, nextSet));
+        Assert.True(service.IsSequenceContinuationBlock(restored, nextSet));
         Assert.Equal(nextSet.Id, service.GetPendingMovementGroup(restored)?.Id);
         Assert.Equal(
             movementDurationMilliseconds,
@@ -933,12 +731,12 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(10, service.GetSelectedExercise(restored, nextSet).Score);
 
         service.BeginRest(restored, nextSet, 234567);
-        Assert.False(service.IsIntermediateSetCompletion(restored, nextSet));
+        Assert.False(service.IsIntermediateSequenceBlock(restored, nextSet));
         Assert.True(service.KeepPendingRest(restored));
     }
 
     [Fact]
-    public void RepeatedDirectionPairDefersItsSharedKeepUntilTheFinalSet()
+    public void RepeatedSequenceDefersItsSharedKeepUntilTheFinalBlock()
     {
         Exercise[] exercises = DirectionPairCatalog();
         var service = new ExerciseSessionService(exercises, new Random(1));
@@ -948,47 +746,40 @@ public sealed class ExerciseSessionServiceTests
         };
         service.StartWorkout(state, 90, WorkoutModifiers.None);
         WorkoutGroup firstLead = service.GetActiveGroups(state)
-            .Where(round => round.IsDirectionPairLead)
-            .GroupBy(round => round.SelectionKey)
-            .First(rounds => rounds.Count() > 1)
-            .OrderBy(round => round.Order)
-            .First();
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != firstLead.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
+            .First(round => round.SequenceBlockIndex == 0 &&
+                round.SetCount > 1 &&
+                service.GetSelectedExercise(state, round).Id == 1);
+        CompleteRoundsBefore(service, state, firstLead);
 
-        service.AdvanceDirectionPair(state, firstLead);
-        WorkoutGroup firstDecision = service.GetNextGroup(state)!;
-        service.BeginRest(state, firstDecision, 123456);
+        service.AdvanceSequence(state, firstLead);
+        WorkoutGroup secondBlock = service.GetNextGroup(state)!;
+        service.BeginRest(state, secondBlock, 123456);
 
-        Assert.True(firstDecision.IsPairDecisionRound);
-        Assert.True(service.IsIntermediateSetCompletion(state, firstDecision));
+        Assert.True(service.IsIntermediateSequenceBlock(state, secondBlock));
         Assert.False(service.KeepPendingRest(state));
 
-        service.AdvanceRepeatedSet(state, firstDecision);
+        service.AdvanceSequence(state, secondBlock);
         service.ClearPendingRest(state);
         WorkoutGroup nextSet = service.GetNextGroup(state)!;
 
         Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[firstLead.Id]);
-        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[firstDecision.Id]);
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[secondBlock.Id]);
         Assert.Equal(firstLead.SelectionKey, nextSet.SelectionKey);
-        Assert.True(service.IsSetContinuationRound(state, nextSet));
+        Assert.True(service.IsSequenceContinuationBlock(state, nextSet));
     }
 
     [Fact]
-    public void LinkedDirectionPartnerIsNeverSelectedAsAnotherBaseUnit()
+    public void SequenceMemberIsNeverSelectedAsAnotherBaseUnit()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
             .GetResolution(30)
             .Groups
             .ToArray();
-        Exercise first = CloneWithDirectionPartner(
+        Exercise first = CloneWithLinkedSequenceMember(
             FullyCoveredExercise(1, groups[0].CanonicalGroups.Order().First(), 10),
             2);
-        Exercise second = CloneWithDirectionPartner(
-            FullyCoveredExercise(2, groups[1].CanonicalGroups.Order().First(), 10),
+        Exercise second = CloneWithLinkedSequenceMember(
+            FullyCoveredExercise(2, groups[0].CanonicalGroups.Order().First(), 10),
             1);
         Exercise[] remaining = groups
             .Skip(2)
@@ -1005,17 +796,20 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 45, WorkoutModifiers.None);
 
-        Assert.Single(state.ActiveDirectionPartnerExerciseIds);
+        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
         Assert.DoesNotContain(
             state.SelectedExerciseIds.Values,
             exerciseId => exerciseId == second.Id);
-        Assert.Single(service.GetActiveGroups(state), round =>
-            round.Id.EndsWith(".direction1", StringComparison.Ordinal) &&
-            service.GetSelectedExercise(state, round).Id == second.Id);
+        WorkoutGroup[] sequence = service.GetActiveGroups(state)
+            .Where(round => round.SelectionKey == groups[0].Id)
+            .Take(2)
+            .ToArray();
+        Assert.Equal([first.Id, second.Id], sequence
+            .Select(round => service.GetSelectedExercise(state, round).Id));
     }
 
     [Fact]
-    public void RejectingLinkedDirectionsAppliesOneSharedDecisionToBoth()
+    public void RejectingSequenceAppliesOneSharedDecisionToEveryMember()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -1024,30 +818,28 @@ public sealed class ExerciseSessionServiceTests
         Exercise[] baseExercises = groups
             .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
             .ToArray();
-        Exercise partner = CloneWithDirectionPartner(
+        Exercise partner = CloneWithLinkedSequenceMember(
             QualifiedForGroup(1001, groups[0]),
             baseExercises[0].Id);
-        baseExercises[0] = CloneWithDirectionPartner(baseExercises[0], partner.Id);
+        baseExercises[0] = CloneWithLinkedSequenceMember(baseExercises[0], partner.Id);
         var service = new ExerciseSessionService(
             [.. baseExercises, partner],
             new Random(1));
         var state = new WorkoutState();
 
         service.StartWorkout(state, 45, WorkoutModifiers.None);
-        WorkoutGroup directionRound = service.GetActiveGroups(state).Single(round =>
-            round.Id.EndsWith(".direction1", StringComparison.Ordinal));
-        WorkoutGroup pairLead = service.GetActiveGroups(state).Single(round =>
-            round.PairedRoundId == directionRound.Id);
-        int baseExerciseId = state.SelectedExerciseIds[directionRound.SelectionKey];
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != pairLead.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
-        service.AdvanceDirectionPair(state, pairLead);
+        WorkoutGroup[] sequence = service.GetActiveGroups(state)
+            .Where(round => round.SelectionKey == groups[0].Id)
+            .Take(2)
+            .ToArray();
+        WorkoutGroup firstBlock = sequence[0];
+        WorkoutGroup finalBlock = sequence[1];
+        int baseExerciseId = state.SelectedExerciseIds[firstBlock.SelectionKey];
+        CompleteRoundsBefore(service, state, firstBlock);
+        service.AdvanceSequence(state, firstBlock);
         RecordedWorkoutOutcome result = service.RecordOutcomeWithScoreUpdates(
             state,
-            directionRound,
+            finalBlock,
             keep: false);
 
         Assert.Equal(-1, partner.Score);
@@ -1056,14 +848,14 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(
             new[] { baseExerciseId, partner.Id }.Order(),
             result.ScoreUpdates.Select(exercise => exercise.Id).Order());
-        Assert.Equal(ExerciseOutcome.X, state.Outcomes[pairLead.Id]);
-        Assert.Equal(ExerciseOutcome.X, state.Outcomes[directionRound.Id]);
-        Assert.Equal(baseExerciseId, state.SelectedExerciseIds[directionRound.SelectionKey]);
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[firstBlock.Id]);
+        Assert.Equal(ExerciseOutcome.X, state.Outcomes[finalBlock.Id]);
+        Assert.Equal(baseExerciseId, state.SelectedExerciseIds[finalBlock.SelectionKey]);
         Assert.NotEqual(baseExerciseId, partner.Id);
     }
 
     [Fact]
-    public void VersionEightLongWorkoutRecomputesDirectionAllocationWithoutEnablingSilence()
+    public void VersionEightLongWorkoutRecomputesSequenceAllocationWithoutEnablingSilence()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -1072,10 +864,10 @@ public sealed class ExerciseSessionServiceTests
         Exercise[] baseExercises = groups
             .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
             .ToArray();
-        Exercise partner = CloneWithDirectionPartner(
+        Exercise partner = CloneWithLinkedSequenceMember(
             QualifiedForGroup(1001, groups[0]),
             baseExercises[0].Id);
-        baseExercises[0] = CloneWithDirectionPartner(baseExercises[0], partner.Id);
+        baseExercises[0] = CloneWithLinkedSequenceMember(baseExercises[0], partner.Id);
         var service = new ExerciseSessionService(
             [.. baseExercises, partner],
             new Random(1));
@@ -1089,88 +881,76 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
-        Assert.Single(state.ActiveDirectionPartnerExerciseIds);
-        Assert.Equal(45, service.GetActiveGroups(state).Sum(round =>
-            round.UsesFullSideTiming ? 2 : 1));
+        Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
+        Assert.Empty(state.ActiveFullSideRoundIds);
+        Assert.Equal(45, service.GetActiveGroups(state).Count);
     }
 
     [Fact]
-    public void KeptSidedExercisesReceiveFullSideTimingBeforeLargerUnkeptMuscles()
+    public void VersionSixteenInProgressSplitMovementMigratesIntoAtomicSequence()
     {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
         Exercise[] exercises = groups
             .Select((group, index) => QualifiedForGroup(
                 index + 1,
                 group,
-                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
+                10,
+                index == 0
+                    ? ExerciseSideSequence.ScreenRightThenLeft
+                    : ExerciseSideSequence.Continuous))
             .ToArray();
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState
         {
             CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            LastKeptExerciseIds = exercises.Take(4).Select(exercise => exercise.Id).ToHashSet(),
         };
-
         service.StartWorkout(state, 45, WorkoutModifiers.None);
-
-        string[] expected = groups.Take(4)
-            .Concat(groups.TakeLast(11))
-            .Select(group => $"{group.Id}.set1")
+        WorkoutGroup sequenceLead = service.GetActiveGroups(state)
+            .First(round =>
+                round.SelectionKey == groups[0].Id &&
+                round.SetNumber == 1 &&
+                round.SequenceBlockIndex == 0);
+        string[] completedSelectionKeys = service.GetActiveGroups(state)
+            .Where(round => round.Order < sequenceLead.Order)
+            .Select(round => round.SelectionKey)
+            .Distinct(StringComparer.Ordinal)
             .ToArray();
-        Assert.True(
-            expected.Order().SequenceEqual(state.ActiveFullSideRoundIds.Order()),
-            $"Expected: {string.Join(",", expected.Order())}; " +
-            $"actual: {string.Join(",", state.ActiveFullSideRoundIds.Order())}");
-        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
-        Assert.Equal(30, service.GetActiveGroups(state).Count);
 
-        state.LastKeptExerciseIds.Clear();
-        service.Initialize(state);
-        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
-    }
-
-    [Fact]
-    public void HardSidedExercisesReceiveFullSideTimingBeforeNonHardKeeps()
-    {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
-        Exercise[] exercises = groups
-            .Select((group, index) => QualifiedForGroup(
-                index + 1,
-                group,
-                sideSequence: ExerciseSideSequence.ScreenLeftThenRight))
-            .Select((exercise, index) => index is >= 10 and < 25
-                ? CloneWithMuscularDemand(
-                    exercise,
-                    WorkoutRecoveryPolicy.HardMuscularDemand)
-                : exercise)
-            .ToArray();
-        var service = new ExerciseSessionService(exercises, new Random(1));
-        var state = new WorkoutState
+        state.Version = 16;
+        state.Outcomes.Clear();
+        foreach (string selectionKey in completedSelectionKeys)
         {
-            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            LastKeptExerciseIds = exercises.Take(10)
-                .Select(exercise => exercise.Id)
-                .ToHashSet(),
-        };
+            state.Outcomes[$"{selectionKey}.set1"] = ExerciseOutcome.Tick;
+        }
+        state.PendingMovementGroupId = $"{sequenceLead.SelectionKey}.set1";
+        state.PendingMovementMillisecondsRemaining = 10_000;
+        state.PendingMovementEndsAtUnixMilliseconds = 0;
+        state.PendingMovementPausedByUser = true;
+        state.ActiveDirectionPartnerExerciseIds.Clear();
+        state.ActiveFullSideRoundIds.Clear();
 
-        service.StartWorkout(state, 45, WorkoutModifiers.None);
-
-        string[] expected = groups.Skip(10)
-            .Take(15)
-            .Select(group => $"{group.Id}.set1")
-            .ToArray();
-        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
-        Assert.Empty(state.ActiveExtraSetSelectionGroupIds);
-        Assert.DoesNotContain(
-            $"{groups[0].Id}.set1",
-            state.ActiveFullSideRoundIds);
-
-        state.LastKeptExerciseIds.Clear();
         service.Initialize(state);
-        Assert.Equal(expected.Order(), state.ActiveFullSideRoundIds.Order());
+
+        WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
+        Assert.Equal(17, state.Version);
+        Assert.Equal(45, state.ActiveWorkoutMinutes);
+        Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
+        Assert.Equal(1, pending.SequenceBlockIndex);
+        Assert.Equal(35_000, state.PendingMovementMillisecondsRemaining);
+        Assert.True(state.PendingMovementPausedByUser);
+        WorkoutGroup migratedLead = service.GetActiveGroups(state)
+            .Single(round =>
+                round.SelectionKey == sequenceLead.SelectionKey &&
+                round.SetNumber == 1 &&
+                round.SequenceBlockIndex == 0);
+        Assert.Equal(ExerciseOutcome.Neutral, state.Outcomes[migratedLead.Id]);
+        Assert.False(state.WorkoutCompleted);
     }
 
     [Fact]
@@ -1387,11 +1167,9 @@ public sealed class ExerciseSessionServiceTests
             .Where(round => round.SelectionKey == target.Id)
             .ToArray();
 
-        foreach (WorkoutGroup round in service.GetActiveGroups(state))
-        {
-            bool keep = round.Id != targetRounds[0].Id;
-            service.RecordOutcome(state, round, keep);
-        }
+        CompleteRoundsBefore(service, state, targetRounds[0]);
+        service.RejectCurrentSequenceWithScoreUpdates(state, targetRounds[0]);
+        CompleteRemainingRounds(service, state);
 
         Assert.Equal(9, original.Score);
         Assert.Equal(original.Id, state.SelectedExerciseIds[target.Id]);
@@ -1474,7 +1252,7 @@ public sealed class ExerciseSessionServiceTests
         }
         state.PendingRestGroupId = pendingRound.Id;
         state.PendingRestEndsAtUnixMilliseconds = 123456;
-        Assert.True(service.IsIntermediateSetCompletion(state, pendingRound));
+        Assert.True(service.IsIntermediateSequenceBlock(state, pendingRound));
 
         Exercise? firstResult = service.FinishInterruptedWorkout(state);
         Exercise? repeatedResult = service.FinishInterruptedWorkout(state);
@@ -1506,16 +1284,11 @@ public sealed class ExerciseSessionServiceTests
         service.StartWorkout(state, 90, WorkoutModifiers.None);
         WorkoutGroup pendingRound = service.GetActiveGroups(state)
             .First(round =>
-                service.IsSetContinuationRound(state, round) &&
-                !service.IsIntermediateSetCompletion(state, round) &&
-                !round.IsDirectionPairRound);
+                service.IsSequenceContinuationBlock(state, round) &&
+                !service.IsIntermediateSequenceBlock(state, round));
         Exercise original = service.GetSelectedExercise(state, pendingRound);
 
-        foreach (WorkoutGroup priorRound in service.GetActiveGroups(state)
-                     .TakeWhile(round => round.Id != pendingRound.Id))
-        {
-            service.RecordOutcome(state, priorRound, keep: true);
-        }
+        CompleteRoundsBefore(service, state, pendingRound);
         service.BeginRest(state, pendingRound, 123456);
 
         Exercise? firstResult = service.FinishInterruptedWorkout(state);
@@ -1540,11 +1313,11 @@ public sealed class ExerciseSessionServiceTests
         Exercise[] baseExercises = groups
             .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
             .ToArray();
-        Exercise partner = CloneWithDirectionPartner(
+        Exercise partner = CloneWithLinkedSequenceMember(
             QualifiedForGroup(1001, groups[0]),
             baseExercises[0].Id,
             silent: false);
-        baseExercises[0] = CloneWithDirectionPartner(
+        baseExercises[0] = CloneWithLinkedSequenceMember(
             baseExercises[0],
             partner.Id);
         Exercise filler = FullyCoveredExercise(
@@ -1589,7 +1362,14 @@ public sealed class ExerciseSessionServiceTests
         foreach (WorkoutGroup round in rounds[..^1])
         {
             Assert.False(service.IsFinalPendingGroup(state, round));
-            service.RecordOutcome(state, round, keep: true);
+            if (service.IsIntermediateSequenceBlock(state, round))
+            {
+                service.AdvanceSequence(state, round);
+            }
+            else
+            {
+                service.RecordOutcome(state, round, keep: true);
+            }
         }
 
         Assert.True(service.IsFinalPendingGroup(state, rounds[^1]));
@@ -2922,7 +2702,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(16, state.Version);
+        Assert.Equal(17, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -3111,13 +2891,13 @@ public sealed class ExerciseSessionServiceTests
 
     private static Exercise[] DirectionPairCatalog()
     {
-        Exercise first = CloneWithDirectionPartner(
+        Exercise first = CloneWithLinkedSequenceMember(
             FullyCoveredExercise(
                 1,
                 CanonicalMuscleGroup.ForearmFlexorsAndPronators,
                 100),
             2);
-        Exercise second = CloneWithDirectionPartner(
+        Exercise second = CloneWithLinkedSequenceMember(
             FullyCoveredExercise(
                 2,
                 CanonicalMuscleGroup.ForearmFlexorsAndPronators,
@@ -3225,9 +3005,9 @@ public sealed class ExerciseSessionServiceTests
                 .ToArray());
     }
 
-    private static Exercise CloneWithDirectionPartner(
+    private static Exercise CloneWithLinkedSequenceMember(
         Exercise source,
-        int directionPartnerExerciseId,
+        int linkedMemberExerciseId,
         bool? silent = null)
     {
         return new Exercise
@@ -3245,7 +3025,12 @@ public sealed class ExerciseSessionServiceTests
             HoldFramePercent = source.HoldFramePercent,
             SideSequence = source.SideSequence,
             DirectionSequence = source.DirectionSequence,
-            DirectionPartnerExerciseId = directionPartnerExerciseId,
+            SequenceBlocks = source.Id < linkedMemberExerciseId
+                ? BuildLinkedSequenceBlocks(
+                    source.Id,
+                    linkedMemberExerciseId,
+                    source.SideSequence)
+                : [],
             SessionMovementId = source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
@@ -3280,7 +3065,7 @@ public sealed class ExerciseSessionServiceTests
             HoldFramePercent = source.HoldFramePercent,
             SideSequence = source.SideSequence,
             DirectionSequence = source.DirectionSequence,
-            DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
+            SequenceBlocks = source.SequenceBlocks,
             SessionMovementId = sessionMovementId ?? source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = source.MirrorRelationship,
@@ -3315,7 +3100,13 @@ public sealed class ExerciseSessionServiceTests
             HoldFramePercent = source.HoldFramePercent,
             SideSequence = source.SideSequence,
             DirectionSequence = source.DirectionSequence,
-            DirectionPartnerExerciseId = source.DirectionPartnerExerciseId,
+            SequenceBlocks = source.SequenceBlocks.Length == 0
+                ? []
+                : source.SequenceBlocks
+                    .Select(block => block.ExerciseId == source.Id
+                        ? block with { ExerciseId = id }
+                        : block)
+                    .ToArray(),
             InsectCompatibility = source.InsectCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = mirrorRelationship is
@@ -3395,6 +3186,10 @@ public sealed class ExerciseSessionServiceTests
             HoldFramePercent = 0,
             SideSequence = sideSequence,
             DirectionSequence = directionSequence,
+            SequenceBlocks = BuildSequenceBlocks(
+                id,
+                sideSequence,
+                directionSequence),
             InsectCompatibility = insectCompatibility,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
@@ -3404,6 +3199,152 @@ public sealed class ExerciseSessionServiceTests
             Equipment = "None",
             Silent = true,
         };
+    }
+
+    private static ExerciseSequenceBlock[] BuildSequenceBlocks(
+        int exerciseId,
+        ExerciseSideSequence sideSequence,
+        ExerciseDirectionSequence directionSequence)
+    {
+        (ExerciseSequenceSideCue Cue, bool Mirror)[] sides = sideSequence switch
+        {
+            ExerciseSideSequence.ScreenLeftThenRight =>
+            [
+                (ExerciseSequenceSideCue.ScreenLeft, false),
+                (ExerciseSequenceSideCue.ScreenRight, true),
+            ],
+            ExerciseSideSequence.ScreenRightThenLeft =>
+            [
+                (ExerciseSequenceSideCue.ScreenRight, false),
+                (ExerciseSequenceSideCue.ScreenLeft, true),
+            ],
+            ExerciseSideSequence.ScreenLeftLeadThenRightLead =>
+            [
+                (ExerciseSequenceSideCue.ShownLeadStance, false),
+                (ExerciseSequenceSideCue.OppositeLeadStance, true),
+            ],
+            ExerciseSideSequence.ScreenRightLeadThenLeftLead =>
+            [
+                (ExerciseSequenceSideCue.ShownLeadStance, false),
+                (ExerciseSequenceSideCue.OppositeLeadStance, true),
+            ],
+            _ => [(ExerciseSequenceSideCue.None, false)],
+        };
+        (ExerciseSequenceDirectionCue Cue, ExerciseSequenceMediaSegment Segment)[] directions =
+            directionSequence switch
+            {
+                ExerciseDirectionSequence.ForwardThenBackward =>
+                [
+                    (ExerciseSequenceDirectionCue.Forward,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Backward,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                ExerciseDirectionSequence.BackwardThenForward =>
+                [
+                    (ExerciseSequenceDirectionCue.Backward,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Forward,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                ExerciseDirectionSequence.ClockwiseThenCounterclockwise =>
+                [
+                    (ExerciseSequenceDirectionCue.Clockwise,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Counterclockwise,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                ExerciseDirectionSequence.CounterclockwiseThenClockwise =>
+                [
+                    (ExerciseSequenceDirectionCue.Counterclockwise,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Clockwise,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                ExerciseDirectionSequence.InwardThenOutward =>
+                [
+                    (ExerciseSequenceDirectionCue.Inward,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Outward,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                ExerciseDirectionSequence.OutwardThenInward =>
+                [
+                    (ExerciseSequenceDirectionCue.Outward,
+                        ExerciseSequenceMediaSegment.FirstDirection),
+                    (ExerciseSequenceDirectionCue.Inward,
+                        ExerciseSequenceMediaSegment.SecondDirection),
+                ],
+                _ =>
+                [
+                    (ExerciseSequenceDirectionCue.None,
+                        ExerciseSequenceMediaSegment.Full),
+                ],
+            };
+
+        return sides
+            .SelectMany(side => directions.Select(direction =>
+                new ExerciseSequenceBlock
+                {
+                    ExerciseId = exerciseId,
+                    SideCue = side.Cue,
+                    DirectionCue = direction.Cue,
+                    MirrorMedia = side.Mirror,
+                    MediaSegment = direction.Segment,
+                }))
+            .ToArray();
+    }
+
+    private static ExerciseSequenceBlock[] BuildLinkedSequenceBlocks(
+        int firstExerciseId,
+        int secondExerciseId,
+        ExerciseSideSequence sideSequence)
+    {
+        ExerciseSequenceBlock[] first = BuildSequenceBlocks(
+            firstExerciseId,
+            sideSequence,
+            ExerciseDirectionSequence.None);
+        ExerciseSequenceBlock[] second = BuildSequenceBlocks(
+            secondExerciseId,
+            sideSequence,
+            ExerciseDirectionSequence.None);
+        return [.. first, .. second];
+    }
+
+    private static void CompleteRoundsBefore(
+        ExerciseSessionService service,
+        WorkoutState state,
+        WorkoutGroup target)
+    {
+        foreach (WorkoutGroup round in service.GetActiveGroups(state)
+                     .TakeWhile(round => round.Id != target.Id))
+        {
+            if (service.IsIntermediateSequenceBlock(state, round))
+            {
+                service.AdvanceSequence(state, round);
+            }
+            else
+            {
+                service.RecordOutcome(state, round, keep: true);
+            }
+        }
+    }
+
+    private static void CompleteRemainingRounds(
+        ExerciseSessionService service,
+        WorkoutState state)
+    {
+        while (service.GetNextGroup(state) is WorkoutGroup round)
+        {
+            if (service.IsIntermediateSequenceBlock(state, round))
+            {
+                service.AdvanceSequence(state, round);
+            }
+            else
+            {
+                service.RecordOutcome(state, round, keep: true);
+            }
+        }
     }
 
     private sealed class AlwaysZeroRandom : Random
