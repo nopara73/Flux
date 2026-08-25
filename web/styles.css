@@ -612,6 +612,7 @@ button.modifier-tile:not(:disabled):active {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 2px;
 }
 
 .execution-signifier-icon {
@@ -636,6 +637,23 @@ button.modifier-tile:not(:disabled):active {
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.set-card {
+  stroke: var(--graphite);
+  stroke-width: 2;
+}
+
+.set-card-back {
+  fill: var(--route-inactive);
+}
+
+.set-card-middle {
+  fill: var(--surface);
+}
+
+.set-card-front {
+  fill: var(--chartreuse);
 }
 
 .exercise-media-area {

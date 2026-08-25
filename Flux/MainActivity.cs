@@ -93,8 +93,9 @@ public class MainActivity : Activity
     private FrameLayout _completionActionBar = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
-    private FrameLayout _executionSignifier = null!;
-    private ImageView _executionSignifierIcon = null!;
+    private LinearLayout _executionSignifier = null!;
+    private ImageView _sequenceSignifierIcon = null!;
+    private ImageView _setSignifierIcon = null!;
     private FrameLayout _exerciseMediaArea = null!;
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
@@ -337,10 +338,12 @@ public class MainActivity : Activity
             Resource.Id.completion_action_bar);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
-        _executionSignifier = FindRequiredView<FrameLayout>(
+        _executionSignifier = FindRequiredView<LinearLayout>(
             Resource.Id.execution_signifier);
-        _executionSignifierIcon = FindRequiredView<ImageView>(
-            Resource.Id.execution_signifier_icon);
+        _sequenceSignifierIcon = FindRequiredView<ImageView>(
+            Resource.Id.sequence_signifier_icon);
+        _setSignifierIcon = FindRequiredView<ImageView>(
+            Resource.Id.set_signifier_icon);
         _exerciseMediaArea = FindRequiredView<FrameLayout>(
             Resource.Id.exercise_media_area);
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
@@ -2294,20 +2297,40 @@ public class MainActivity : Activity
 
     private void RenderExecutionSignifier()
     {
-        int blockCount = _currentWorkoutGroup.SequenceBlockCount *
-            _currentWorkoutGroup.SetCount;
-        if (blockCount <= 1)
+        int sequenceBlockCount = _currentWorkoutGroup.SequenceBlockCount;
+        int setCount = _currentWorkoutGroup.SetCount;
+        bool hasSequence = _currentWorkoutGroup.IsSequenceRound;
+        bool hasRepeatedSets = _currentWorkoutGroup.HasRepeatedSets;
+        if (!hasSequence && !hasRepeatedSets)
         {
             _executionSignifier.Visibility = ViewStates.Gone;
             _executionSignifier.ContentDescription = null;
             return;
         }
 
-        _executionSignifierIcon.SetImageResource(
-            Resource.Drawable.ic_exercise_sequence);
-        _executionSignifier.ContentDescription =
-            $"Exercise sequence. {blockCount} blocks, 45 seconds each, " +
-            "with 15 seconds between blocks.";
+        _sequenceSignifierIcon.Visibility = hasSequence
+            ? ViewStates.Visible
+            : ViewStates.Gone;
+        _setSignifierIcon.Visibility = hasRepeatedSets
+            ? ViewStates.Visible
+            : ViewStates.Gone;
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _sequenceSignifierIcon.TooltipText = hasSequence
+                ? $"{sequenceBlockCount}-block exercise sequence"
+                : null;
+            _setSignifierIcon.TooltipText = hasRepeatedSets
+                ? $"{setCount} sets"
+                : null;
+        }
+        _executionSignifier.ContentDescription = hasSequence && hasRepeatedSets
+            ? $"{sequenceBlockCount}-block exercise sequence, {setCount} sets. " +
+                "Each block is 45 seconds, with 15 seconds between blocks."
+            : hasSequence
+                ? $"Exercise sequence. {sequenceBlockCount} blocks, " +
+                    "45 seconds each, with 15 seconds between blocks."
+                : $"Repeated exercise. {setCount} sets, 45 seconds each, " +
+                    "with 15 seconds between sets.";
         _executionSignifier.Visibility = ViewStates.Visible;
     }
 

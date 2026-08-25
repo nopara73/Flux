@@ -16,7 +16,9 @@ import {
   getMovementPhaseState,
   getMovementPresentation,
   getMirrorEquipment,
+  hasRepeatedSets,
   isModifierMetadataComplete,
+  isSequenceRound,
   isSessionMovementMetadataValid,
   parseStoredState,
   withMirrorEquipment,
@@ -62,6 +64,8 @@ const elements = {
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
   executionSignifier: byId("execution-signifier"),
+  sequenceSignifierIcon: byId("sequence-signifier-icon"),
+  setSignifierIcon: byId("set-signifier-icon"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
@@ -159,6 +163,16 @@ async function bootstrap() {
     }
     session = new WorkoutSession(exercises, loadState());
     session.initialize();
+    const pendingRestGroup = session.getPendingRestGroup();
+    const pendingMovementGroup = session.getPendingMovementGroup();
+    if (
+      !session.state.workoutCompleted &&
+      session.state.activeWorkoutMinutes !== 0 &&
+      !pendingRestGroup &&
+      !pendingMovementGroup
+    ) {
+      session.finishInterruptedWorkout();
+    }
     persistState();
     selectedMinutes = session.state.lastWorkoutMinutes;
     selectedModifiers = session.state.lastWorkoutModifiers;
@@ -167,9 +181,9 @@ async function bootstrap() {
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       showCompletion(false);
-    } else if (session.getPendingRestGroup()) {
+    } else if (pendingRestGroup) {
       restorePendingRest();
-    } else if (session.getPendingMovementGroup()) {
+    } else if (pendingMovementGroup) {
       restorePendingMovement();
     } else {
       showDuration();
@@ -517,17 +531,35 @@ function renderPersistedMovementCountdown() {
 }
 
 function renderExecutionSignifier(group) {
-  const blockCount = (group?.sequenceBlockCount ?? 1) *
-    (group?.setCount ?? 1);
-  if (blockCount <= 1) {
+  const sequenceBlockCount = group?.sequenceBlockCount ?? 1;
+  const setCount = group?.setCount ?? 1;
+  const hasSequence = isSequenceRound(group);
+  const repeatsExercise = hasRepeatedSets(group);
+  if (!hasSequence && !repeatsExercise) {
     elements.executionSignifier.hidden = true;
     elements.executionSignifier.setAttribute("aria-label", "");
     return;
   }
+
+  elements.sequenceSignifierIcon.toggleAttribute("hidden", !hasSequence);
+  elements.setSignifierIcon.toggleAttribute("hidden", !repeatsExercise);
+  elements.sequenceSignifierIcon.title = hasSequence
+    ? `${sequenceBlockCount}-block exercise sequence`
+    : "";
+  elements.setSignifierIcon.title = repeatsExercise
+    ? `${setCount} sets`
+    : "";
+  const description = hasSequence && repeatsExercise
+    ? `${sequenceBlockCount}-block exercise sequence, ${setCount} sets. ` +
+      "Each block is 45 seconds, with 15 seconds between blocks."
+    : hasSequence
+      ? `Exercise sequence. ${sequenceBlockCount} blocks, 45 seconds each, ` +
+        "with 15 seconds between blocks."
+      : `Repeated exercise. ${setCount} sets, 45 seconds each, ` +
+        "with 15 seconds between sets.";
   elements.executionSignifier.setAttribute(
     "aria-label",
-    `Exercise sequence. ${blockCount} blocks, 45 seconds each, ` +
-      "with 15 seconds between blocks.",
+    description,
   );
   elements.executionSignifier.hidden = false;
 }

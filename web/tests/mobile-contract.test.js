@@ -74,6 +74,7 @@ const [
   compactMirrorIcon,
   tallMirrorIcon,
   exerciseSequenceIcon,
+  exerciseSetsIcon,
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
 ] = await Promise.all([
@@ -108,6 +109,7 @@ const [
   source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
   source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
   source("Flux", "Resources", "drawable", "ic_exercise_sequence.xml"),
+  source("Flux", "Resources", "drawable", "ic_exercise_sets.xml"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
 ]);
@@ -607,19 +609,23 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("one icon-only signifier identifies every multi-block exercise sequence", () => {
+test("separate icon-only signifiers distinguish sequences from repeated sets", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");
   assert.equal(fullNeckCircles.sequenceBlocks.length, 2);
   assert.match(workoutLayout, /@\+id\/execution_signifier/);
-  assert.match(workoutLayout, /@\+id\/execution_signifier_icon/);
+  assert.match(workoutLayout, /@\+id\/sequence_signifier_icon/);
+  assert.match(workoutLayout, /@\+id\/set_signifier_icon/);
   assert.match(workoutLayout, /@drawable\/ic_exercise_sequence/);
+  assert.match(workoutLayout, /@drawable\/ic_exercise_sets/);
   assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="execution-signifier"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
-  assert.match(webIndex, /id="execution-signifier-icon"/);
+  assert.match(webIndex, /id="sequence-signifier-icon"[\s\S]*id="set-signifier-icon"/);
   assert.doesNotMatch(webIndex, /unilateral-signifier|bidirectional-signifier/);
   assert.match(exerciseSequenceIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
   assert.match(exerciseSequenceIcon, /@color\/rest_accent/);
   assert.match(exerciseSequenceIcon, /@color\/move_accent/);
+  assert.match(exerciseSetsIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
+  assert.match(exerciseSetsIcon, /@color\/brand_chartreuse/);
   assert.match(
     mainActivity,
     /RenderExecutionSignifier\(\)/,
@@ -631,9 +637,11 @@ test("one icon-only signifier identifies every multi-block exercise sequence", (
   );
   assert.match(
     androidSignifier,
-    /SequenceBlockCount \*[\s\S]*SetCount[\s\S]*blockCount <= 1[\s\S]*ic_exercise_sequence/,
+    /SequenceBlockCount[\s\S]*SetCount[\s\S]*IsSequenceRound[\s\S]*HasRepeatedSets/,
   );
-  assert.match(androidSignifier, /Exercise sequence[\s\S]*45 seconds each[\s\S]*15 seconds between blocks/);
+  assert.doesNotMatch(androidSignifier, /SequenceBlockCount \*|sequenceBlockCount \*/);
+  assert.match(androidSignifier, /Repeated exercise[\s\S]*sets[\s\S]*15 seconds between sets/);
+  assert.match(androidSignifier, /Exercise sequence[\s\S]*45 seconds[\s\S]*15 seconds between blocks/);
   const webSignifier = methodBody(
     webApp,
     "function renderExecutionSignifier(",
@@ -641,11 +649,17 @@ test("one icon-only signifier identifies every multi-block exercise sequence", (
   );
   assert.match(
     webSignifier,
-    /sequenceBlockCount[\s\S]*setCount[\s\S]*blockCount <= 1[\s\S]*Exercise sequence/,
+    /sequenceBlockCount[\s\S]*setCount[\s\S]*isSequenceRound\(group\)[\s\S]*hasRepeatedSets\(group\)/,
   );
+  assert.match(webSignifier, /sequenceSignifierIcon\.toggleAttribute\("hidden", !hasSequence\)/);
+  assert.match(webSignifier, /setSignifierIcon\.toggleAttribute\("hidden", !repeatsExercise\)/);
+  assert.doesNotMatch(webSignifier, /sequenceBlockCount \*|SequenceBlockCount \*/);
+  assert.match(webSignifier, /Repeated exercise[\s\S]*sets[\s\S]*15 seconds between sets/);
+  assert.match(webSignifier, /Exercise sequence[\s\S]*45 seconds[\s\S]*15 seconds between blocks/);
   assert.match(webStyles, /\.execution-signifier-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
   assert.match(webStyles, /\.sequence-block-blue[\s\S]*var\(--rest-accent\)/);
   assert.match(webStyles, /\.sequence-block-red[\s\S]*var\(--move-accent\)/);
+  assert.match(webStyles, /\.set-card-front[\s\S]*var\(--chartreuse\)/);
   assert.doesNotMatch(workoutLayout, /side_phase_label|countdown_phase_icon/);
   assert.doesNotMatch(mainActivity, /_sidePhaseLabel|_countdownPhaseIcon|GetMovementCueIcon/);
   assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL|UNILATERAL/);
@@ -856,6 +870,10 @@ test("active movement checkpoints and invalid media recovery match across platfo
   assert.match(
     webApp,
     /getPendingRestGroup\(\)[\s\S]*restorePendingRest\(\)[\s\S]*getPendingMovementGroup\(\)[\s\S]*restorePendingMovement\(\)/,
+  );
+  assert.match(
+    webApp,
+    /pendingRestGroup = session\.getPendingRestGroup\(\)[\s\S]*pendingMovementGroup = session\.getPendingMovementGroup\(\)[\s\S]*activeWorkoutMinutes !== 0[\s\S]*!pendingRestGroup[\s\S]*!pendingMovementGroup[\s\S]*session\.finishInterruptedWorkout\(\)/,
   );
   assert.match(
     mainActivity,

@@ -251,11 +251,13 @@ full 45 seconds. Intermediate rests hide the heart and remain neutral; only the
 final rest presents the one shared Keep/reject decision.
 
 Red means movement. Blue means rest or the inactive side of a side-specific
-block. One large sequence icon marks any unit containing multiple blocks. The
-workout controls follow a media-player model: shuffle rejects an unstarted
-sequence with the same -1 vote as Next and replaces it in place, play starts,
-pause/resume controls the active timer, repeat restarts the current block without
-scoring it, and next rejects the sequence and advances.
+block. The linked blue/red blocks icon marks a true multi-block sequence. A
+stacked-card icon separately marks repeated sets; both appear when a multi-block
+sequence itself repeats. A standalone exercise receiving extra sets never gets
+the sequence icon. The workout controls follow a media-player model: shuffle
+rejects an unstarted sequence with the same -1 vote as Next and replaces it in
+place, play starts, pause/resume controls the active timer, repeat restarts the
+current block without scoring it, and next rejects the sequence and advances.
 Shuffle preserves the session profile and replaces the complete sequence. It is
 unavailable after any earlier block from that sequence has begun. Repeated
 shuffles draw without repetition from every remaining session

@@ -22,6 +22,8 @@ public sealed record WorkoutGroup(
 
     public bool IsSequenceRound => SequenceBlockCount > 1;
 
+    public bool HasRepeatedSets => SetCount > 1;
+
     public bool IsFinalSequenceRound =>
         SequenceBlockIndex == SequenceBlockCount - 1 && SetNumber == SetCount;
 }

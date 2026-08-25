@@ -56,6 +56,7 @@ import {
   getMuscleBudgetTemporaryDownvoteHalfUnits,
   getSelectionKey,
   getSessionMovementId,
+  hasRepeatedSets,
   hasReviewedMuscularDemand,
   isModerateExerciseRecovering,
   isPrimaryMuscleInModerateRecovery,
@@ -64,6 +65,7 @@ import {
   isSelectableForWorkoutProfile,
   isFinalSequenceRound,
   isSequenceContinuationRound,
+  isSequenceRound,
   isSessionMovementMetadataValid,
   isCompatibleWithWorkoutModifiers,
   isModifierMetadataComplete,
@@ -73,6 +75,20 @@ import {
   parseStoredState,
   withMirrorEquipment,
 } from "../workout.js";
+
+test("exercise sequences and repeated sets are distinct presentation states", () => {
+  const cases = [
+    [{ sequenceBlockCount: 1, setCount: 1 }, false, false],
+    [{ sequenceBlockCount: 2, setCount: 1 }, true, false],
+    [{ sequenceBlockCount: 1, setCount: 2 }, false, true],
+    [{ sequenceBlockCount: 3, setCount: 2 }, true, true],
+  ];
+
+  for (const [group, expectedSequence, expectedRepeatedSets] of cases) {
+    assert.equal(isSequenceRound(group), expectedSequence);
+    assert.equal(hasRepeatedSets(group), expectedRepeatedSets);
+  }
+});
 
 test("muscle budget counts an exercise once and actual repeated sets again", () => {
   const sideSpecific = exercise(

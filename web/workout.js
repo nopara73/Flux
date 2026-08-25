@@ -1089,6 +1089,14 @@ export function isSequenceContinuationRound(group) {
     (group?.sequenceBlockIndex ?? 0) > 0;
 }
 
+export function isSequenceRound(group) {
+  return (group?.sequenceBlockCount ?? 1) > 1;
+}
+
+export function hasRepeatedSets(group) {
+  return (group?.setCount ?? 1) > 1;
+}
+
 export function isFinalSequenceRound(group) {
   return (group?.sequenceBlockIndex ?? 0) ===
       (group?.sequenceBlockCount ?? 1) - 1 &&
