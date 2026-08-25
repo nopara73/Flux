@@ -251,10 +251,15 @@ full 45 seconds. Intermediate rests hide the heart and remain neutral; only the
 final rest presents the one shared Keep/reject decision.
 
 Red means movement. Blue means rest or the inactive side of a side-specific
-block. The linked blue/red blocks icon marks a true multi-block sequence. A
-stacked-card icon separately marks repeated sets; both appear when a multi-block
-sequence itself repeats. A standalone exercise receiving extra sets never gets
-the sequence icon. The workout controls follow a media-player model: shuffle
+block. The workout header uses one literal execution timeline for every
+exercise sequence: each equal segment is one real 45-second work block, its
+blue/red/chartreuse accent comes from that block's actual side or direction
+cue, and an external playhead marks the current block without changing the
+segment. Repeated sets repeat their real segment pattern; the 15-second rests
+remain in the separate rest timer and never appear as timeline segments or
+gaps. The main header counter counts each selected sequence once, so it remains
+unchanged across that sequence's sides, directions, linked exercises, and
+repeated sets. The workout controls follow a media-player model: shuffle
 rejects an unstarted sequence with the same -1 vote as Next and replaces it in
 place, play starts, pause/resume controls the active timer, repeat restarts the
 current block without scoring it, and next rejects the sequence and advances.

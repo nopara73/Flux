@@ -10,6 +10,7 @@ const manifestPath = path.join(webRoot, "mobile-parity.json");
 const sourceTargets = [
   "Flux/Flux.csproj",
   "Flux/MainActivity.cs",
+  "Flux/WorkoutBlockTimelineView.cs",
   "Flux/Data",
   "Flux/Models",
   "Flux/Services",

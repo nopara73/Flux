@@ -490,7 +490,9 @@ Unqualified/removed exercises retain their historical database identity only for
 - Replace “muscle group” with **capacity** in code-facing concepts and user-visible accessibility text.
 - User labels are exactly Balance, Strength, Stamina, Stepping, and Mobility; explanations belong in documentation/onboarding only if later requested, not on the focused workout screen.
 - Duration remains 3–20 minutes, defaulting to the last valid value or 10.
-- Show `Round x of n` and the current capacity immediately and accessibly.
+- Show logical exercise progress immediately and accessibly. A multi-block
+  sequence and all of its repeated sets count once while their individual
+  45-second work blocks remain visible in the execution timeline.
 - Keep the human demonstration as the primary visual; preserve existing Ready, Move, Rest, and Done states, testing shortcut, hold/repetition playback behavior, one rest action, and one Done action.
 - Do not imply clinical efficacy, “years added,” or a personalized prescription.
 

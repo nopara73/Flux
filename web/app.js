@@ -16,9 +16,9 @@ import {
   getMovementPhaseState,
   getMovementPresentation,
   getMirrorEquipment,
-  hasRepeatedSets,
+  getWorkoutDisplayProgress,
+  getWorkoutExecutionTimeline,
   isModifierMetadataComplete,
-  isSequenceRound,
   isSessionMovementMetadataValid,
   parseStoredState,
   withMirrorEquipment,
@@ -64,8 +64,8 @@ const elements = {
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
   executionSignifier: byId("execution-signifier"),
-  sequenceSignifierIcon: byId("sequence-signifier-icon"),
-  setSignifierIcon: byId("set-signifier-icon"),
+  executionPlayhead: byId("execution-playhead"),
+  executionBlockTrack: byId("execution-block-track"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
   mediaRetry: byId("media-retry"),
@@ -432,18 +432,24 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
 
   currentGroup = nextGroup;
   currentExercise = session.getSelectedExercise(nextGroup);
-  const total = session.getActiveGroups().length;
-  const position = nextGroup.order;
+  const activeGroups = session.getActiveGroups();
+  const { position, total } = getWorkoutDisplayProgress(
+    activeGroups,
+    nextGroup,
+  );
 
   elements.workoutProgressText.textContent =
     `${String(position).padStart(2, "0")}  /  ${String(total).padStart(2, "0")}`;
-  elements.workoutProgressText.setAttribute("aria-label", `Round ${position} of ${total}`);
+  elements.workoutProgressText.setAttribute(
+    "aria-label",
+    `Exercise ${position} of ${total}`,
+  );
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
   elements.exerciseName.textContent = currentExercise.name;
-  renderExecutionSignifier(currentGroup);
+  renderExecutionTimeline(currentGroup);
   elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
-    `Round ${position} of ${total}. ${currentExercise.name}.`;
+    `Exercise ${position} of ${total}. ${currentExercise.name}.`;
 
   stopRuntimeTimers(preservePendingMovement);
   resetMovementVisuals();
@@ -530,38 +536,47 @@ function renderPersistedMovementCountdown() {
     `scaleX(${movementRemaining / movementDuration})`;
 }
 
-function renderExecutionSignifier(group) {
-  const sequenceBlockCount = group?.sequenceBlockCount ?? 1;
-  const setCount = group?.setCount ?? 1;
-  const hasSequence = isSequenceRound(group);
-  const repeatsExercise = hasRepeatedSets(group);
-  if (!hasSequence && !repeatsExercise) {
-    elements.executionSignifier.hidden = true;
-    elements.executionSignifier.setAttribute("aria-label", "");
+function renderExecutionTimeline(group, selectUpcomingBlock = false) {
+  if (!session || !group) {
     return;
   }
-
-  elements.sequenceSignifierIcon.toggleAttribute("hidden", !hasSequence);
-  elements.setSignifierIcon.toggleAttribute("hidden", !repeatsExercise);
-  elements.sequenceSignifierIcon.title = hasSequence
-    ? `${sequenceBlockCount}-block exercise sequence`
-    : "";
-  elements.setSignifierIcon.title = repeatsExercise
-    ? `${setCount} sets`
-    : "";
-  const description = hasSequence && repeatsExercise
-    ? `${sequenceBlockCount}-block exercise sequence, ${setCount} sets. ` +
-      "Each block is 45 seconds, with 15 seconds between blocks."
-    : hasSequence
-      ? `Exercise sequence. ${sequenceBlockCount} blocks, 45 seconds each, ` +
-        "with 15 seconds between blocks."
-      : `Repeated exercise. ${setCount} sets, 45 seconds each, ` +
-        "with 15 seconds between sets.";
-  elements.executionSignifier.setAttribute(
-    "aria-label",
-    description,
+  const timeline = getWorkoutExecutionTimeline(
+    session.getActiveGroups(),
+    group,
+    selectUpcomingBlock,
   );
-  elements.executionSignifier.hidden = false;
+  const blockCount = timeline.blocks.length;
+  const currentPosition = timeline.currentBlockIndex + 1;
+  elements.executionBlockTrack.replaceChildren(
+    ...timeline.blocks.map((accent) => {
+      const block = document.createElement("span");
+      block.className = `execution-work-block ${accent}`;
+      return block;
+    }),
+  );
+  elements.executionBlockTrack.style.setProperty(
+    "--execution-block-count",
+    String(blockCount),
+  );
+  const timelineWidth = Math.min(166, Math.max(42, 28 + blockCount * 21));
+  const trackContentWidth = timelineWidth - 12;
+  const trackGap = blockCount === 1
+    ? 0
+    : Math.min(3, trackContentWidth / (blockCount * 2));
+  const blockWidth =
+    (trackContentWidth - trackGap * (blockCount - 1)) / blockCount;
+  const playheadCenter = 6 +
+    timeline.currentBlockIndex * (blockWidth + trackGap) +
+    blockWidth / 2;
+  elements.executionSignifier.style.width = `${timelineWidth}px`;
+  elements.executionPlayhead.style.left = `${playheadCenter}px`;
+  const description =
+    `Work block ${currentPosition} of ${blockCount}. ` +
+    "Each colored segment is one 45-second work block. " +
+    "The 15-second transitions are shown separately.";
+  elements.executionSignifier.setAttribute("aria-label", description);
+  elements.executionSignifier.title =
+    `Work block ${currentPosition} of ${blockCount}`;
 }
 
 function showReadyPanel() {
@@ -626,6 +641,9 @@ function showRestPanel() {
   const isIntermediateBlock = Boolean(
     currentGroup && session?.isIntermediateSequenceBlock(currentGroup),
   );
+  if (currentGroup) {
+    renderExecutionTimeline(currentGroup, isIntermediateBlock);
+  }
   elements.keepExercise.hidden = isIntermediateBlock;
   elements.keepExercise.disabled = false;
   elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");

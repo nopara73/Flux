@@ -68,33 +68,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/execution_signifier"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_marginStart="12dp"
                     android:gravity="center"
-                    android:importantForAccessibility="yes"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/sequence_signifier_icon"
-                        android:layout_width="72dp"
-                        android:layout_height="52dp"
-                        android:importantForAccessibility="no"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_exercise_sequence" />
-
-                    <ImageView
-                        android:id="@+id/set_signifier_icon"
-                        android:layout_width="72dp"
-                        android:layout_height="52dp"
-                        android:layout_marginStart="2dp"
-                        android:importantForAccessibility="no"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_exercise_sets" />
-                </LinearLayout>
+                    android:importantForAccessibility="no"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <ProgressBar

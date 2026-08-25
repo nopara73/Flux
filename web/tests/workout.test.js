@@ -56,6 +56,9 @@ import {
   getMuscleBudgetTemporaryDownvoteHalfUnits,
   getSelectionKey,
   getSessionMovementId,
+  getWorkoutBlockAccent,
+  getWorkoutDisplayProgress,
+  getWorkoutExecutionTimeline,
   hasRepeatedSets,
   hasReviewedMuscularDemand,
   isModerateExerciseRecovering,
@@ -88,6 +91,93 @@ test("exercise sequences and repeated sets are distinct presentation states", ()
     assert.equal(isSequenceRound(group), expectedSequence);
     assert.equal(hasRepeatedSets(group), expectedRepeatedSets);
   }
+});
+
+test("display progress counts each logical selection once", () => {
+  const groups = [
+    { id: "punch.set1.block1", order: 1, selectionGroupId: "punch" },
+    { id: "punch.set1.block2", order: 2, selectionGroupId: "punch" },
+    { id: "punch.set2.block1", order: 3, selectionGroupId: "punch" },
+    { id: "punch.set2.block2", order: 4, selectionGroupId: "punch" },
+    { id: "squat", order: 5 },
+  ];
+
+  assert.deepEqual(
+    getWorkoutDisplayProgress(groups, groups[0]),
+    { position: 1, total: 2 },
+  );
+  assert.deepEqual(
+    getWorkoutDisplayProgress(groups, groups[3]),
+    { position: 1, total: 2 },
+  );
+  assert.deepEqual(
+    getWorkoutDisplayProgress(groups, groups[4]),
+    { position: 2, total: 2 },
+  );
+});
+
+test("execution timeline contains only real work blocks", () => {
+  const groups = [
+    {
+      id: "punch.set1.block1",
+      order: 1,
+      selectionGroupId: "punch",
+      sequenceSideCue: "ScreenRight",
+    },
+    {
+      id: "punch.set1.block2",
+      order: 2,
+      selectionGroupId: "punch",
+      sequenceSideCue: "ScreenLeft",
+    },
+    {
+      id: "punch.set2.block1",
+      order: 3,
+      selectionGroupId: "punch",
+      sequenceSideCue: "ScreenRight",
+    },
+    {
+      id: "punch.set2.block2",
+      order: 4,
+      selectionGroupId: "punch",
+      sequenceSideCue: "ScreenLeft",
+    },
+  ];
+
+  assert.deepEqual(
+    getWorkoutExecutionTimeline(groups, groups[2]),
+    {
+      blocks: ["blue", "red", "blue", "red"],
+      currentBlockIndex: 2,
+    },
+  );
+  assert.deepEqual(
+    getWorkoutExecutionTimeline(groups, groups[0], true),
+    {
+      blocks: ["blue", "red", "blue", "red"],
+      currentBlockIndex: 1,
+    },
+  );
+});
+
+test("work-block colors come from the real side and direction cues", () => {
+  assert.equal(getWorkoutBlockAccent({}), "neutral");
+  assert.equal(
+    getWorkoutBlockAccent({ sequenceSideCue: "ScreenRight" }),
+    "blue",
+  );
+  assert.equal(
+    getWorkoutBlockAccent({ sequenceSideCue: "ScreenLeft" }),
+    "red",
+  );
+  assert.equal(
+    getWorkoutBlockAccent({ sequenceDirectionCue: "Clockwise" }),
+    "blue",
+  );
+  assert.equal(
+    getWorkoutBlockAccent({ sequenceDirectionCue: "Counterclockwise" }),
+    "red",
+  );
 });
 
 test("muscle budget counts an exercise once and actual repeated sets again", () => {

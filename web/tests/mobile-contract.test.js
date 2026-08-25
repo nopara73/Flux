@@ -71,10 +71,10 @@ const [
   mirrorCoverageModel,
   sequenceBlockModel,
   movementPresentationPolicy,
+  workoutDisplayPolicy,
+  workoutTimelineView,
   compactMirrorIcon,
   tallMirrorIcon,
-  exerciseSequenceIcon,
-  exerciseSetsIcon,
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
 ] = await Promise.all([
@@ -106,10 +106,10 @@ const [
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
   source("Flux", "Models", "ExerciseSequenceBlock.cs"),
   source("Flux", "Services", "MovementPhasePresentationPolicy.cs"),
+  source("Flux", "Services", "WorkoutDisplayPolicy.cs"),
+  source("Flux", "WorkoutBlockTimelineView.cs"),
   source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
   source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
-  source("Flux", "Resources", "drawable", "ic_exercise_sequence.xml"),
-  source("Flux", "Resources", "drawable", "ic_exercise_sets.xml"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
 ]);
@@ -609,57 +609,64 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
-test("separate icon-only signifiers distinguish sequences from repeated sets", () => {
+test("literal work-block timelines and logical exercise progress match", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");
   assert.equal(fullNeckCircles.sequenceBlocks.length, 2);
   assert.match(workoutLayout, /@\+id\/execution_signifier/);
-  assert.match(workoutLayout, /@\+id\/sequence_signifier_icon/);
-  assert.match(workoutLayout, /@\+id\/set_signifier_icon/);
-  assert.match(workoutLayout, /@drawable\/ic_exercise_sequence/);
-  assert.match(workoutLayout, /@drawable\/ic_exercise_sets/);
+  assert.doesNotMatch(workoutLayout, /sequence_signifier_icon|set_signifier_icon/);
   assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="execution-signifier"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
-  assert.match(webIndex, /id="sequence-signifier-icon"[\s\S]*id="set-signifier-icon"/);
+  assert.match(webIndex, /id="execution-playhead"[\s\S]*id="execution-block-track"/);
+  assert.doesNotMatch(webIndex, /sequence-signifier-icon|set-signifier-icon/);
   assert.doesNotMatch(webIndex, /unilateral-signifier|bidirectional-signifier/);
-  assert.match(exerciseSequenceIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
-  assert.match(exerciseSequenceIcon, /@color\/rest_accent/);
-  assert.match(exerciseSequenceIcon, /@color\/move_accent/);
-  assert.match(exerciseSetsIcon, /android:width="72dp"[\s\S]*android:height="52dp"/);
-  assert.match(exerciseSetsIcon, /@color\/brand_chartreuse/);
   assert.match(
     mainActivity,
-    /RenderExecutionSignifier\(\)/,
+    /WorkoutDisplayPolicy\.GetProgress[\s\S]*RenderExecutionTimeline\(\)/,
   );
-  const androidSignifier = methodBody(
+  const androidTimeline = methodBody(
     mainActivity,
-    "private void RenderExecutionSignifier(",
+    "private void RenderExecutionTimeline(",
     "private void AnimateExerciseChange(",
   );
   assert.match(
-    androidSignifier,
-    /SequenceBlockCount[\s\S]*SetCount[\s\S]*IsSequenceRound[\s\S]*HasRepeatedSets/,
+    androidTimeline,
+    /WorkoutDisplayPolicy\.GetTimeline[\s\S]*SetTimeline[\s\S]*Work block/,
   );
-  assert.doesNotMatch(androidSignifier, /SequenceBlockCount \*|sequenceBlockCount \*/);
-  assert.match(androidSignifier, /Repeated exercise[\s\S]*sets[\s\S]*15 seconds between sets/);
-  assert.match(androidSignifier, /Exercise sequence[\s\S]*45 seconds[\s\S]*15 seconds between blocks/);
-  const webSignifier = methodBody(
+  assert.match(
+    mainActivity,
+    /ShowRestPanel\(\)[\s\S]*RenderExecutionTimeline\([\s\S]*selectUpcomingBlock/,
+  );
+  assert.match(
+    workoutDisplayPolicy,
+    /Distinct\(StringComparer\.Ordinal\)[\s\S]*GetTimeline[\s\S]*Select\(GetAccent\)/,
+  );
+  assert.match(
+    workoutDisplayPolicy,
+    /ScreenRight[\s\S]*Blue[\s\S]*ScreenLeft[\s\S]*Red[\s\S]*Neutral/,
+  );
+  assert.match(
+    workoutTimelineView,
+    /for \(int index = 0; index < _blocks\.Length; index\+\+\)[\s\S]*DrawRoundRect[\s\S]*_currentBlockIndex[\s\S]*DrawPath/,
+  );
+  const webTimeline = methodBody(
     webApp,
-    "function renderExecutionSignifier(",
+    "function renderExecutionTimeline(",
     "function showReadyPanel()",
   );
   assert.match(
-    webSignifier,
-    /sequenceBlockCount[\s\S]*setCount[\s\S]*isSequenceRound\(group\)[\s\S]*hasRepeatedSets\(group\)/,
+    webTimeline,
+    /getWorkoutExecutionTimeline[\s\S]*execution-work-block[\s\S]*executionPlayhead\.style\.left/,
   );
-  assert.match(webSignifier, /sequenceSignifierIcon\.toggleAttribute\("hidden", !hasSequence\)/);
-  assert.match(webSignifier, /setSignifierIcon\.toggleAttribute\("hidden", !repeatsExercise\)/);
-  assert.doesNotMatch(webSignifier, /sequenceBlockCount \*|SequenceBlockCount \*/);
-  assert.match(webSignifier, /Repeated exercise[\s\S]*sets[\s\S]*15 seconds between sets/);
-  assert.match(webSignifier, /Exercise sequence[\s\S]*45 seconds[\s\S]*15 seconds between blocks/);
-  assert.match(webStyles, /\.execution-signifier-icon[\s\S]*width: 72px[\s\S]*height: 52px/);
-  assert.match(webStyles, /\.sequence-block-blue[\s\S]*var\(--rest-accent\)/);
-  assert.match(webStyles, /\.sequence-block-red[\s\S]*var\(--move-accent\)/);
-  assert.match(webStyles, /\.set-card-front[\s\S]*var\(--chartreuse\)/);
+  assert.match(
+    webApp,
+    /getWorkoutDisplayProgress\([\s\S]*Exercise \$\{position\} of \$\{total\}/,
+  );
+  assert.match(
+    workoutModule,
+    /getWorkoutDisplayProgress[\s\S]*getWorkoutExecutionTimeline[\s\S]*getWorkoutBlockAccent/,
+  );
+  assert.match(webStyles, /\.execution-block-track[\s\S]*grid-template-columns[\s\S]*\.execution-work-block\.blue[\s\S]*var\(--rest-accent\)[\s\S]*\.execution-work-block\.red[\s\S]*var\(--move-accent\)[\s\S]*\.execution-work-block\.neutral[\s\S]*var\(--chartreuse\)/);
+  assert.match(webStyles, /\.execution-playhead[\s\S]*border-top: 7px solid var\(--graphite\)/);
   assert.doesNotMatch(workoutLayout, /side_phase_label|countdown_phase_icon/);
   assert.doesNotMatch(mainActivity, /_sidePhaseLabel|_countdownPhaseIcon|GetMovementCueIcon/);
   assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL|UNILATERAL/);

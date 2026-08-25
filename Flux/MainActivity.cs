@@ -93,9 +93,8 @@ public class MainActivity : Activity
     private FrameLayout _completionActionBar = null!;
     private TextView _exerciseName = null!;
     private TextView _exerciseModeBadge = null!;
-    private LinearLayout _executionSignifier = null!;
-    private ImageView _sequenceSignifierIcon = null!;
-    private ImageView _setSignifierIcon = null!;
+    private FrameLayout _executionSignifierHost = null!;
+    private WorkoutBlockTimelineView _executionTimeline = null!;
     private FrameLayout _exerciseMediaArea = null!;
     private View _exerciseMediaCard = null!;
     private VideoView _exerciseVideo = null!;
@@ -338,12 +337,15 @@ public class MainActivity : Activity
             Resource.Id.completion_action_bar);
         _exerciseName = FindRequiredView<TextView>(Resource.Id.exercise_name);
         _exerciseModeBadge = FindRequiredView<TextView>(Resource.Id.exercise_mode_badge);
-        _executionSignifier = FindRequiredView<LinearLayout>(
+        _executionSignifierHost = FindRequiredView<FrameLayout>(
             Resource.Id.execution_signifier);
-        _sequenceSignifierIcon = FindRequiredView<ImageView>(
-            Resource.Id.sequence_signifier_icon);
-        _setSignifierIcon = FindRequiredView<ImageView>(
-            Resource.Id.set_signifier_icon);
+        _executionTimeline = new WorkoutBlockTimelineView(this);
+        _executionSignifierHost.AddView(
+            _executionTimeline,
+            new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WrapContent,
+                ViewGroup.LayoutParams.MatchParent,
+                GravityFlags.Center));
         _exerciseMediaArea = FindRequiredView<FrameLayout>(
             Resource.Id.exercise_media_area);
         _exerciseMediaCard = FindRequiredView<View>(Resource.Id.exercise_media_card);
@@ -2201,14 +2203,20 @@ public class MainActivity : Activity
         _currentExercise = exercise;
         _lastMovementPhase = null;
         SetExerciseMediaMirrored(mirrored: false);
-        int position = _currentWorkoutGroup.Order;
-        int totalRounds = _sessionService.GetActiveGroups(_state).Count;
+        IReadOnlyList<WorkoutGroup> activeGroups =
+            _sessionService.GetActiveGroups(_state);
+        WorkoutDisplayProgress displayProgress =
+            WorkoutDisplayPolicy.GetProgress(
+                activeGroups,
+                _currentWorkoutGroup);
+        int position = displayProgress.Position;
+        int totalExercises = displayProgress.Total;
         int countdownDurationMilliseconds = GetCurrentCountdownDurationMilliseconds();
 
-        _workoutProgressText.Text = $"{position:D2}  /  {totalRounds:D2}";
+        _workoutProgressText.Text = $"{position:D2}  /  {totalExercises:D2}";
         _workoutProgressText.ContentDescription =
-            $"Round {position} of {totalRounds}";
-        _workoutProgressBar.Max = totalRounds;
+            $"Exercise {position} of {totalExercises}";
+        _workoutProgressBar.Max = totalExercises;
         _workoutProgressBar.SetProgress(position, continuingWorkout);
         _countdownProgress.Max = countdownDurationMilliseconds;
         _countdownProgress.Progress = countdownDurationMilliseconds;
@@ -2216,7 +2224,7 @@ public class MainActivity : Activity
         _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
             ? $"{exercise.Name}. Hold."
             : $"{exercise.Name}. Repetition.";
-        RenderExecutionSignifier();
+        RenderExecutionTimeline();
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
@@ -2230,7 +2238,7 @@ public class MainActivity : Activity
         }
         AnnouncePhaseForAccessibility(
             _workoutHeader,
-            $"Round {position} of {totalRounds}. " +
+            $"Exercise {position} of {totalExercises}. " +
             $"{exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
     }
@@ -2295,43 +2303,28 @@ public class MainActivity : Activity
         ResumeRestCountdown();
     }
 
-    private void RenderExecutionSignifier()
+    private void RenderExecutionTimeline(bool selectUpcomingBlock = false)
     {
-        int sequenceBlockCount = _currentWorkoutGroup.SequenceBlockCount;
-        int setCount = _currentWorkoutGroup.SetCount;
-        bool hasSequence = _currentWorkoutGroup.IsSequenceRound;
-        bool hasRepeatedSets = _currentWorkoutGroup.HasRepeatedSets;
-        if (!hasSequence && !hasRepeatedSets)
-        {
-            _executionSignifier.Visibility = ViewStates.Gone;
-            _executionSignifier.ContentDescription = null;
-            return;
-        }
-
-        _sequenceSignifierIcon.Visibility = hasSequence
-            ? ViewStates.Visible
-            : ViewStates.Gone;
-        _setSignifierIcon.Visibility = hasRepeatedSets
-            ? ViewStates.Visible
-            : ViewStates.Gone;
+        WorkoutExecutionTimeline timeline = WorkoutDisplayPolicy.GetTimeline(
+            _sessionService.GetActiveGroups(_state),
+            _currentWorkoutGroup,
+            selectUpcomingBlock);
+        _executionTimeline.SetTimeline(
+            timeline.Blocks,
+            timeline.CurrentBlockIndex);
+        int position = timeline.CurrentBlockIndex + 1;
+        int total = timeline.Blocks.Count;
+        string description =
+            $"Work block {position} of {total}. " +
+            "Each colored segment is one 45-second work block. " +
+            "The 15-second transitions are shown separately.";
+        _executionTimeline.ContentDescription = description;
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
-            _sequenceSignifierIcon.TooltipText = hasSequence
-                ? $"{sequenceBlockCount}-block exercise sequence"
-                : null;
-            _setSignifierIcon.TooltipText = hasRepeatedSets
-                ? $"{setCount} sets"
-                : null;
+            _executionTimeline.TooltipText =
+                $"Work block {position} of {total}";
         }
-        _executionSignifier.ContentDescription = hasSequence && hasRepeatedSets
-            ? $"{sequenceBlockCount}-block exercise sequence, {setCount} sets. " +
-                "Each block is 45 seconds, with 15 seconds between blocks."
-            : hasSequence
-                ? $"Exercise sequence. {sequenceBlockCount} blocks, " +
-                    "45 seconds each, with 15 seconds between blocks."
-                : $"Repeated exercise. {setCount} sets, 45 seconds each, " +
-                    "with 15 seconds between sets.";
-        _executionSignifier.Visibility = ViewStates.Visible;
+        _executionSignifierHost.Visibility = ViewStates.Visible;
     }
 
     private void AnimateExerciseChange()
@@ -3127,6 +3120,10 @@ public class MainActivity : Activity
     private void ShowRestPanel()
     {
         RenderRestVisuals();
+        RenderExecutionTimeline(
+            selectUpcomingBlock: _sessionService.IsIntermediateSequenceBlock(
+                _state,
+                _currentWorkoutGroup));
         ShowWorkoutPhase(WorkoutPhase.Rest);
         UpdateKeepButtonState();
         UpdateRestCountdownText();

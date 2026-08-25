@@ -607,53 +607,56 @@ button.modifier-tile:not(:disabled):active {
 }
 
 .execution-signifier {
-  min-height: 52px;
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 2px;
-}
-
-.execution-signifier-icon {
-  width: 72px;
+  width: 42px;
   height: 52px;
-  display: block;
-  overflow: visible;
+  margin-left: auto;
+  position: relative;
+  flex: 0 0 auto;
   filter: drop-shadow(0 3px 4px rgb(18 20 22 / 16%));
 }
 
-.sequence-block-blue {
-  fill: var(--rest-accent);
+.execution-block-track {
+  --execution-block-count: 1;
+  height: 32px;
+  padding: 3px;
+  position: absolute;
+  inset: 12px 0 auto;
+  display: grid;
+  grid-template-columns: repeat(var(--execution-block-count), minmax(0, 1fr));
+  gap: 3px;
+  border: 3px solid var(--graphite);
+  border-radius: 11px;
+  background: var(--surface);
 }
 
-.sequence-block-red {
-  fill: var(--move-accent);
+.execution-work-block {
+  min-width: 0;
+  border-radius: 4px;
 }
 
-.sequence-arrow {
-  fill: none;
-  stroke: var(--graphite);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.execution-work-block.blue {
+  background: var(--rest-accent);
 }
 
-.set-card {
-  stroke: var(--graphite);
-  stroke-width: 2;
+.execution-work-block.red {
+  background: var(--move-accent);
 }
 
-.set-card-back {
-  fill: var(--route-inactive);
+.execution-work-block.neutral {
+  background: var(--chartreuse);
 }
 
-.set-card-middle {
-  fill: var(--surface);
-}
-
-.set-card-front {
-  fill: var(--chartreuse);
+.execution-playhead {
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-top: 7px solid var(--graphite);
+  transform: translateX(-50%);
+  transition: left 160ms ease;
 }
 
 .exercise-media-area {
@@ -1570,11 +1573,6 @@ input:focus-visible {
 
   .execution-signifier {
     min-height: 60px;
-  }
-
-  .execution-signifier-icon {
-    width: 88px;
-    height: 60px;
   }
 
   .exercise-media-area {

@@ -667,6 +667,78 @@ export function getSelectionKey(group) {
   return group.selectionGroupId ?? group.id;
 }
 
+export function getWorkoutDisplayProgress(activeGroups, currentGroup) {
+  if (!Array.isArray(activeGroups) || !currentGroup) {
+    throw new TypeError("Workout progress requires active and current groups.");
+  }
+  const selectionKeys = [];
+  const seen = new Set();
+  for (const group of [...activeGroups].sort((left, right) => left.order - right.order)) {
+    const key = getSelectionKey(group);
+    if (!seen.has(key)) {
+      seen.add(key);
+      selectionKeys.push(key);
+    }
+  }
+  const position = selectionKeys.indexOf(getSelectionKey(currentGroup));
+  if (position < 0 || selectionKeys.length === 0) {
+    throw new Error("The current workout group is not in the active workout.");
+  }
+  return { position: position + 1, total: selectionKeys.length };
+}
+
+export function getWorkoutBlockAccent(group) {
+  switch (group?.sequenceSideCue ?? "None") {
+    case "ScreenRight":
+    case "ShownLeadStance":
+      return "blue";
+    case "ScreenLeft":
+    case "OppositeLeadStance":
+      return "red";
+    default:
+      break;
+  }
+
+  switch (group?.sequenceDirectionCue ?? "None") {
+    case "Forward":
+    case "Clockwise":
+    case "Inward":
+      return "blue";
+    case "Backward":
+    case "Counterclockwise":
+    case "Outward":
+      return "red";
+    default:
+      return "neutral";
+  }
+}
+
+export function getWorkoutExecutionTimeline(
+  activeGroups,
+  currentGroup,
+  selectUpcomingBlock = false,
+) {
+  if (!Array.isArray(activeGroups) || !currentGroup) {
+    throw new TypeError("An execution timeline requires active and current groups.");
+  }
+  const selectionKey = getSelectionKey(currentGroup);
+  const timelineGroups = activeGroups
+    .filter((group) => getSelectionKey(group) === selectionKey)
+    .sort((left, right) => left.order - right.order);
+  let currentBlockIndex = timelineGroups.findIndex((group) =>
+    group.id === currentGroup.id);
+  if (currentBlockIndex < 0 || timelineGroups.length === 0) {
+    throw new Error("The current workout group has no active execution timeline.");
+  }
+  if (selectUpcomingBlock && currentBlockIndex + 1 < timelineGroups.length) {
+    currentBlockIndex += 1;
+  }
+  return {
+    blocks: timelineGroups.map(getWorkoutBlockAccent),
+    currentBlockIndex,
+  };
+}
+
 export function hasReviewedMuscularDemand(exercise) {
   return Number.isInteger(exercise?.muscularDemand) &&
     exercise.muscularDemand >= MINIMUM_MUSCULAR_DEMAND &&
