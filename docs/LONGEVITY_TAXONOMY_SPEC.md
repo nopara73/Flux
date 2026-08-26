@@ -446,7 +446,11 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 - The soft muscle-workload budget counts each distinct exercise identity once
   per sequence set. Side or direction blocks of the same identity do not
   double-count bilateral muscle work; different linked identities do, and a
-  later repeated set counts again.
+  later repeated set counts again. Demand-`0` identities add no load;
+  demand-`1` identities add 0.5 only to their primary muscle; demand-`2`
+  identities add 1 to their primary and 0.5 to each distinct secondary. The
+  accumulated excess is applied temporarily when comparing candidates
+  associated with that muscle.
 - Keep is the only rest decision, and a sequence exposes it only after its final
   block and final repeated set.
 - Intermediate sequence rests are neutral: they hide Keep, apply no score, and

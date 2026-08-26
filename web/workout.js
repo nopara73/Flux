@@ -147,8 +147,9 @@ export const HARD_ROTATION_STATUS = Object.freeze({
   Neutral: "Neutral",
   FreshHard: "FreshHard",
 });
-export const PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
-export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
+export const MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS = 1;
+export const HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
+export const HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
@@ -1101,19 +1102,50 @@ export function isPrimaryForGroup(exercise, group) {
 export function calculateMuscleLoadHalfUnits(scheduledExercises) {
   const result = new Map();
   for (const exercise of scheduledExercises) {
-    result.set(
-      exercise.primaryCanonicalGroup,
-      (result.get(exercise.primaryCanonicalGroup) ?? 0) +
-        PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-    );
-    for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+    const primaryLoadHalfUnits = getPrimaryMuscleLoadHalfUnits(exercise);
+    if (primaryLoadHalfUnits > 0) {
       result.set(
-        secondary,
-        (result.get(secondary) ?? 0) + SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+        exercise.primaryCanonicalGroup,
+        (result.get(exercise.primaryCanonicalGroup) ?? 0) + primaryLoadHalfUnits,
       );
+    }
+
+    const secondaryLoadHalfUnits = getSecondaryMuscleLoadHalfUnits(exercise);
+    if (secondaryLoadHalfUnits > 0) {
+      for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+        result.set(
+          secondary,
+          (result.get(secondary) ?? 0) + secondaryLoadHalfUnits,
+        );
+      }
     }
   }
   return result;
+}
+
+export function getPrimaryMuscleLoadHalfUnits(exercise) {
+  switch (exercise?.muscularDemand) {
+    case MINIMUM_MUSCULAR_DEMAND:
+      return 0;
+    case MODERATE_MUSCULAR_DEMAND:
+      return MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS;
+    case HARD_MUSCULAR_DEMAND:
+      return HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS;
+    default:
+      throw new RangeError("Muscular demand must be between 0 and 2.");
+  }
+}
+
+export function getSecondaryMuscleLoadHalfUnits(exercise) {
+  switch (exercise?.muscularDemand) {
+    case MINIMUM_MUSCULAR_DEMAND:
+    case MODERATE_MUSCULAR_DEMAND:
+      return 0;
+    case HARD_MUSCULAR_DEMAND:
+      return HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS;
+    default:
+      throw new RangeError("Muscular demand must be between 0 and 2.");
+  }
 }
 
 export function getMuscleBudgetTemporaryDownvoteHalfUnits(
@@ -1133,14 +1165,19 @@ export function getTemporaryDownvoteHalfUnitsAfterAddingExercise(
   existingLoadHalfUnits,
   exercise,
 ) {
-  const addedLoad = new Map([
-    [exercise.primaryCanonicalGroup, PRIMARY_MUSCLE_LOAD_HALF_UNITS],
-  ]);
-  for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
-    addedLoad.set(
-      secondary,
-      (addedLoad.get(secondary) ?? 0) + SECONDARY_MUSCLE_LOAD_HALF_UNITS,
-    );
+  const addedLoad = new Map();
+  const primaryLoadHalfUnits = getPrimaryMuscleLoadHalfUnits(exercise);
+  if (primaryLoadHalfUnits > 0) {
+    addedLoad.set(exercise.primaryCanonicalGroup, primaryLoadHalfUnits);
+  }
+  const secondaryLoadHalfUnits = getSecondaryMuscleLoadHalfUnits(exercise);
+  if (secondaryLoadHalfUnits > 0) {
+    for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+      addedLoad.set(
+        secondary,
+        (addedLoad.get(secondary) ?? 0) + secondaryLoadHalfUnits,
+      );
+    }
   }
   return [...addedLoad].reduce(
     (total, [group, addedHalfUnits]) => total + Math.max(
@@ -4226,17 +4263,23 @@ export class WorkoutSession {
         placement.anchor.id,
       ) ?? 1;
       for (const exercise of this.getSequenceExercises(placement.root)) {
-        loadHalfUnits.set(
-          exercise.primaryCanonicalGroup,
-          (loadHalfUnits.get(exercise.primaryCanonicalGroup) ?? 0) +
-            PRIMARY_MUSCLE_LOAD_HALF_UNITS * setCount,
-        );
-        for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+        const primaryLoadHalfUnits = getPrimaryMuscleLoadHalfUnits(exercise);
+        if (primaryLoadHalfUnits > 0) {
           loadHalfUnits.set(
-            secondary,
-            (loadHalfUnits.get(secondary) ?? 0) +
-              SECONDARY_MUSCLE_LOAD_HALF_UNITS * setCount,
+            exercise.primaryCanonicalGroup,
+            (loadHalfUnits.get(exercise.primaryCanonicalGroup) ?? 0) +
+              primaryLoadHalfUnits * setCount,
           );
+        }
+        const secondaryLoadHalfUnits = getSecondaryMuscleLoadHalfUnits(exercise);
+        if (secondaryLoadHalfUnits > 0) {
+          for (const secondary of new Set(exercise.secondaryCanonicalGroups ?? [])) {
+            loadHalfUnits.set(
+              secondary,
+              (loadHalfUnits.get(secondary) ?? 0) +
+                secondaryLoadHalfUnits * setCount,
+            );
+          }
         }
       }
     }

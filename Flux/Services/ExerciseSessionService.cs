@@ -3173,15 +3173,26 @@ public sealed class ExerciseSessionService
                 .GetValueOrDefault(placement.Anchor.Id, 1);
             foreach (Exercise exercise in GetSequenceExercises(placement.Root))
             {
-                loadHalfUnits[exercise.PrimaryCanonicalGroup] =
-                    loadHalfUnits.GetValueOrDefault(exercise.PrimaryCanonicalGroup) +
-                    WorkoutMuscleBudgetPolicy.PrimaryLoadHalfUnits * setCount;
-                foreach (CanonicalMuscleGroup secondary in
-                         exercise.SecondaryCanonicalGroups.Distinct())
+                int primaryLoadHalfUnits =
+                    WorkoutMuscleBudgetPolicy.GetPrimaryLoadHalfUnits(exercise);
+                if (primaryLoadHalfUnits > 0)
                 {
-                    loadHalfUnits[secondary] =
-                        loadHalfUnits.GetValueOrDefault(secondary) +
-                        WorkoutMuscleBudgetPolicy.SecondaryLoadHalfUnits * setCount;
+                    loadHalfUnits[exercise.PrimaryCanonicalGroup] =
+                        loadHalfUnits.GetValueOrDefault(exercise.PrimaryCanonicalGroup) +
+                        primaryLoadHalfUnits * setCount;
+                }
+
+                int secondaryLoadHalfUnits =
+                    WorkoutMuscleBudgetPolicy.GetSecondaryLoadHalfUnits(exercise);
+                if (secondaryLoadHalfUnits > 0)
+                {
+                    foreach (CanonicalMuscleGroup secondary in
+                             exercise.SecondaryCanonicalGroups.Distinct())
+                    {
+                        loadHalfUnits[secondary] =
+                            loadHalfUnits.GetValueOrDefault(secondary) +
+                            secondaryLoadHalfUnits * setCount;
+                    }
                 }
             }
         }

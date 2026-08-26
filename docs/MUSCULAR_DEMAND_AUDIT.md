@@ -40,3 +40,11 @@ and their keeps remain saved for later; a higher user score still wins. Among
 otherwise equivalent fresh hard choices, the longest-rested primary muscle is
 preferred. Mirror relevance is a lower-order tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
+
+The separate within-session muscle-workload budget uses the same reviewed
+rating without changing it. Rating `0` contributes no load. Rating `1`
+contributes 0.5 unit only to the primary canonical muscle. Rating `2`
+contributes 1 unit to the primary and 0.5 to each distinct secondary canonical
+muscle. Consequently, incidental work and moderate secondary associations do
+not increase accumulated load. Candidate comparison still applies any existing
+excess temporarily across the candidate's truthful muscle associations.

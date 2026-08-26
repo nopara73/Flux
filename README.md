@@ -102,9 +102,13 @@ the highest available score bucket for that slot, gets an opportunity ahead of
 a non-hard keep. During recovery, an affected demand-`1` or demand-`2` keep
 loses only its current lineup preference and remains saved; ordinary score
 ordering continues to prevent a rejected lower-score exercise from returning.
-A separate soft per-muscle workload budget may rebalance unkept selections:
-each scheduled primary association counts as 1 unit and each secondary
-association as 0.5.
+A separate soft per-muscle workload budget may rebalance unkept selections.
+Demand-`0` exercises consume no muscular budget. Demand-`1` exercises add 0.5
+unit to their primary muscle and nothing to secondary associations. Demand-`2`
+exercises add 1 unit to their primary muscle and 0.5 to each distinct secondary
+association. These weights determine accumulated load; the resulting excess is
+then applied temporarily while comparing candidates associated with that
+muscle.
 Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
 affected muscle; these adjustments exist only while completing that lineup and
 never alter saved scores. Each distinct exercise identity counts once per

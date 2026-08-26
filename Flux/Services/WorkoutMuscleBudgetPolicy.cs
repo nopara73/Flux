@@ -6,9 +6,11 @@ public static class WorkoutMuscleBudgetPolicy
 {
     public const int MaximumLoadHalfUnits = 10;
 
-    public const int PrimaryLoadHalfUnits = 2;
+    public const int ModeratePrimaryLoadHalfUnits = 1;
 
-    public const int SecondaryLoadHalfUnits = 1;
+    public const int HardPrimaryLoadHalfUnits = 2;
+
+    public const int HardSecondaryLoadHalfUnits = 1;
 
     public const int ScoreHalfUnitsPerVote = 2;
 
@@ -23,18 +25,59 @@ public static class WorkoutMuscleBudgetPolicy
         foreach (Exercise exercise in scheduledExercises)
         {
             ArgumentNullException.ThrowIfNull(exercise);
-            result[exercise.PrimaryCanonicalGroup] =
-                result.GetValueOrDefault(exercise.PrimaryCanonicalGroup) +
-                PrimaryLoadHalfUnits;
-            foreach (CanonicalMuscleGroup secondary in
-                     exercise.SecondaryCanonicalGroups.Distinct())
+            int primaryLoadHalfUnits = GetPrimaryLoadHalfUnits(exercise);
+            if (primaryLoadHalfUnits > 0)
             {
-                result[secondary] = result.GetValueOrDefault(secondary) +
-                    SecondaryLoadHalfUnits;
+                result[exercise.PrimaryCanonicalGroup] =
+                    result.GetValueOrDefault(exercise.PrimaryCanonicalGroup) +
+                    primaryLoadHalfUnits;
+            }
+
+            int secondaryLoadHalfUnits = GetSecondaryLoadHalfUnits(exercise);
+            if (secondaryLoadHalfUnits > 0)
+            {
+                foreach (CanonicalMuscleGroup secondary in
+                         exercise.SecondaryCanonicalGroups.Distinct())
+                {
+                    result[secondary] = result.GetValueOrDefault(secondary) +
+                        secondaryLoadHalfUnits;
+                }
             }
         }
 
         return result;
+    }
+
+    public static int GetPrimaryLoadHalfUnits(Exercise exercise)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+
+        return exercise.MuscularDemand switch
+        {
+            Exercise.MinimumMuscularDemand => 0,
+            Exercise.ModerateMuscularDemand => ModeratePrimaryLoadHalfUnits,
+            Exercise.MaximumMuscularDemand => HardPrimaryLoadHalfUnits,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(exercise.MuscularDemand),
+                exercise.MuscularDemand,
+                "Muscular demand must be between 0 and 2."),
+        };
+    }
+
+    public static int GetSecondaryLoadHalfUnits(Exercise exercise)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+
+        return exercise.MuscularDemand switch
+        {
+            Exercise.MinimumMuscularDemand => 0,
+            Exercise.ModerateMuscularDemand => 0,
+            Exercise.MaximumMuscularDemand => HardSecondaryLoadHalfUnits,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(exercise.MuscularDemand),
+                exercise.MuscularDemand,
+                "Muscular demand must be between 0 and 2."),
+        };
     }
 
     public static int GetTemporaryDownvoteHalfUnits(
@@ -58,15 +101,22 @@ public static class WorkoutMuscleBudgetPolicy
         ArgumentNullException.ThrowIfNull(existingLoadHalfUnits);
         ArgumentNullException.ThrowIfNull(exercise);
 
-        var addedLoad = new Dictionary<CanonicalMuscleGroup, int>
+        var addedLoad = new Dictionary<CanonicalMuscleGroup, int>();
+        int primaryLoadHalfUnits = GetPrimaryLoadHalfUnits(exercise);
+        if (primaryLoadHalfUnits > 0)
         {
-            [exercise.PrimaryCanonicalGroup] = PrimaryLoadHalfUnits,
-        };
-        foreach (CanonicalMuscleGroup secondary in
-                 exercise.SecondaryCanonicalGroups.Distinct())
+            addedLoad[exercise.PrimaryCanonicalGroup] = primaryLoadHalfUnits;
+        }
+
+        int secondaryLoadHalfUnits = GetSecondaryLoadHalfUnits(exercise);
+        if (secondaryLoadHalfUnits > 0)
         {
-            addedLoad[secondary] = addedLoad.GetValueOrDefault(secondary) +
-                SecondaryLoadHalfUnits;
+            foreach (CanonicalMuscleGroup secondary in
+                     exercise.SecondaryCanonicalGroups.Distinct())
+            {
+                addedLoad[secondary] = addedLoad.GetValueOrDefault(secondary) +
+                    secondaryLoadHalfUnits;
+            }
         }
 
         return addedLoad.Sum(entry => Math.Max(

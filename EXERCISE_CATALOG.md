@@ -28,14 +28,16 @@ score/keep priority, never a reason to discard a truthful secondary association
 or admit a weak quota-filler.
 
 At session construction, keeps remain saved but are preferred contextually. The
-remaining choices use a soft per-muscle workload budget of 5: each scheduled
-primary association counts 1 and each distinct secondary counts 0.5. Every
-excess 0.5 becomes a 0.5 temporary downvote for candidates training that muscle.
-The adjustment is deterministic, is never persisted, and replaces the current
-candidate only on a strictly higher adjusted score. Each distinct exercise
-identity counts once per sequence set, so the two sides or directions of one
-identity do not double-count bilateral muscle work. Different linked exercise
-identities count separately, and an actual repeated set counts again.
+remaining choices use a soft per-muscle workload budget of 5. Demand-`0` work
+does not consume it. Demand-`1` work counts 0.5 for its primary muscle and zero
+for secondaries. Demand-`2` work counts 1 for its primary and 0.5 for each
+distinct secondary. Every excess 0.5 becomes a 0.5 temporary downvote while
+comparing candidates associated with that muscle. The adjustment is
+deterministic, is never persisted, and replaces the current candidate only on a
+strictly higher adjusted score. Each distinct exercise identity counts once per
+sequence set, so the two sides or directions of one identity do not double-count
+bilateral muscle work. Different linked exercise identities count separately,
+and an actual repeated set counts again.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,

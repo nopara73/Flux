@@ -11,6 +11,8 @@ import {
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
   EXERCISE_MIRROR_RELATIONSHIP,
+  HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
@@ -21,10 +23,9 @@ import {
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_MUSCULAR_DEMAND,
   MUSCLE_SESSION_BUDGET_HALF_UNITS,
-  PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
   REST_DURATION_MS,
   SCORE_HALF_UNITS_PER_VOTE,
-  SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
@@ -54,6 +55,7 @@ import {
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
   getMuscleBudgetTemporaryDownvoteHalfUnits,
+  getTemporaryDownvoteHalfUnitsAfterAddingExercise,
   getSelectionKey,
   getSessionMovementId,
   getWorkoutBlockAccent,
@@ -180,7 +182,31 @@ test("work-block colors come from the real side and direction cues", () => {
   );
 });
 
-test("muscle budget counts an exercise once and actual repeated sets again", () => {
+test("muscular demand controls which associations consume muscle budget", () => {
+  const incidental = exercise(1, "HipAbductors", ["GlutealExtensors"], 0);
+  const moderate = exercise(2, "AbdominalWall", ["GlutealExtensors"], 0);
+  moderate.muscularDemand = MODERATE_MUSCULAR_DEMAND;
+  const hard = exercise(
+    3,
+    "ElbowFlexors",
+    ["GlutealExtensors", "GlutealExtensors"],
+    0,
+  );
+  hard.muscularDemand = HARD_MUSCULAR_DEMAND;
+
+  const load = calculateMuscleLoadHalfUnits([incidental, moderate, hard]);
+
+  assert.equal(MUSCLE_SESSION_BUDGET_HALF_UNITS, 10);
+  assert.equal(MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS, 1);
+  assert.equal(HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS, 2);
+  assert.equal(HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS, 1);
+  assert.equal(load.has("HipAbductors"), false);
+  assert.equal(load.get("AbdominalWall"), 1);
+  assert.equal(load.get("ElbowFlexors"), 2);
+  assert.equal(load.get("GlutealExtensors"), 1);
+});
+
+test("hard muscle budget counts an exercise once and actual repeated sets again", () => {
   const sideSpecific = exercise(
     1,
     "HipAbductors",
@@ -188,13 +214,11 @@ test("muscle budget counts an exercise once and actual repeated sets again", () 
     0,
   );
   sideSpecific.sideSequence = "ScreenLeftThenRight";
+  sideSpecific.muscularDemand = HARD_MUSCULAR_DEMAND;
 
   const oneRound = calculateMuscleLoadHalfUnits([sideSpecific]);
   const twoRounds = calculateMuscleLoadHalfUnits([sideSpecific, sideSpecific]);
 
-  assert.equal(MUSCLE_SESSION_BUDGET_HALF_UNITS, 10);
-  assert.equal(PRIMARY_MUSCLE_LOAD_HALF_UNITS, 2);
-  assert.equal(SECONDARY_MUSCLE_LOAD_HALF_UNITS, 1);
   assert.equal(oneRound.get("HipAbductors"), 2);
   assert.equal(oneRound.get("GlutealExtensors"), 1);
   assert.equal(twoRounds.get("HipAbductors"), 4);
@@ -203,6 +227,7 @@ test("muscle budget counts an exercise once and actual repeated sets again", () 
 
 test("scheduled load does not double-count side blocks within one set", () => {
   const sideSpecific = exercise(1, "HipAbductors", ["GlutealExtensors"], 0);
+  sideSpecific.muscularDemand = HARD_MUSCULAR_DEMAND;
   sideSpecific.sequenceBlocks = [
     { ...sideSpecific.sequenceBlocks[0], sideCue: "ScreenLeft" },
     { ...sideSpecific.sequenceBlocks[0], sideCue: "ScreenRight" },
@@ -220,6 +245,31 @@ test("scheduled load does not double-count side blocks within one set", () => {
   assert.equal(oneSet.get("GlutealExtensors"), 1);
   assert.equal(twoSets.get("HipAbductors"), 4);
   assert.equal(twoSets.get("GlutealExtensors"), 2);
+});
+
+test("adding an exercise uses only its demand-weighted load", () => {
+  const existingLoad = new Map([
+    ["AbdominalWall", 11],
+    ["GlutealExtensors", 13],
+  ]);
+  const incidental = exercise(1, "AbdominalWall", ["GlutealExtensors"], 0);
+  const moderate = exercise(2, "AbdominalWall", ["GlutealExtensors"], 0);
+  moderate.muscularDemand = MODERATE_MUSCULAR_DEMAND;
+  const hard = exercise(3, "AbdominalWall", ["GlutealExtensors"], 0);
+  hard.muscularDemand = HARD_MUSCULAR_DEMAND;
+
+  assert.equal(
+    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, incidental),
+    0,
+  );
+  assert.equal(
+    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, moderate),
+    2,
+  );
+  assert.equal(
+    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, hard),
+    7,
+  );
 });
 
 test("every overloaded half unit adds one temporary downvote half unit", () => {
@@ -254,6 +304,9 @@ test("muscle budget prefers a once-downvoted alternative to an overloaded zero",
   ));
   const overloadedZero = exercises[10];
   overloadedZero.secondaryCanonicalGroups = [overloadedMuscle];
+  exercises.forEach((item) => {
+    item.muscularDemand = HARD_MUSCULAR_DEMAND;
+  });
   const downvotedOnce = exercise(
     1_001,
     targetGroup.canonicalGroups[0],
@@ -266,6 +319,8 @@ test("muscle budget prefers a once-downvoted alternative to an overloaded zero",
     [],
     -2,
   );
+  downvotedOnce.muscularDemand = HARD_MUSCULAR_DEMAND;
+  downvotedTwice.muscularDemand = HARD_MUSCULAR_DEMAND;
   exercises.push(downvotedOnce, downvotedTwice);
   const state = createDefaultState();
   state.lastWorkoutMinutes = 30;
@@ -290,6 +345,7 @@ test("muscle budget prefers a once-downvoted alternative to an overloaded zero",
     [],
     0,
   );
+  reducedLoadExercise.muscularDemand = HARD_MUSCULAR_DEMAND;
   const tieSession = new WorkoutSession(
     exercises
       .filter((item) =>
@@ -304,6 +360,47 @@ test("muscle budget prefers a once-downvoted alternative to an overloaded zero",
   assert.equal(tieSession.state.selectedExerciseIds[targetGroup.id], overloadedZero.id);
 });
 
+test("muscle budget ignores incidental primary and moderate secondary load", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const overloadedMuscle = groups[0].canonicalGroups[0];
+  const targetGroup = groups[10];
+  const selected = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    (index >= 1 && index <= 9) || index === 11 ? [overloadedMuscle] : [],
+    0,
+  ));
+  selected.forEach((item, index) => {
+    item.muscularDemand = (index >= 1 && index <= 9) || index === 11
+      ? MODERATE_MUSCULAR_DEMAND
+      : MINIMUM_MUSCULAR_DEMAND;
+  });
+  const current = selected[10];
+  current.secondaryCanonicalGroups = [overloadedMuscle];
+  current.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const downvotedAlternative = exercise(
+    1_001,
+    targetGroup.canonicalGroups[0],
+    [],
+    -1,
+  );
+  downvotedAlternative.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 30;
+  for (let index = 0; index < groups.length; index += 1) {
+    state.selectedExerciseIds[groups[index].id] = selected[index].id;
+  }
+  const session = new WorkoutSession(
+    [...selected, downvotedAlternative],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], current.id);
+});
+
 test("long-workout muscle budget counts the extra set before replacing a choice", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const overloadedMuscle = groups[0].canonicalGroups[0];
@@ -314,6 +411,9 @@ test("long-workout muscle budget counts the extra set before replacing a choice"
     index >= 1 && index <= 7 ? [overloadedMuscle] : [],
     0,
   ));
+  selected.forEach((item) => {
+    item.muscularDemand = HARD_MUSCULAR_DEMAND;
+  });
   const overloaded = selected.at(-1);
   overloaded.secondaryCanonicalGroups = [overloadedMuscle];
   overloaded.muscularDemand = HARD_MUSCULAR_DEMAND;

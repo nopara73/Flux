@@ -11,6 +11,8 @@ import {
   DEFAULT_WORKOUT_MODIFIERS,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
+  HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
@@ -29,13 +31,12 @@ import {
   MIRROR_EQUIPMENT,
   MOVEMENT_DURATION_MS,
   PREPARATION_DURATION_MS,
-  PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
   SCORE_HALF_UNITS_PER_VOTE,
   RESOLUTIONS,
   REST_DURATION_MS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
-  SECONDARY_MUSCLE_LOAD_HALF_UNITS,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
 } from "../workout.js";
@@ -169,12 +170,16 @@ test("web and mobile apply the same temporary muscle workload budget", () => {
     integerConstant(muscleBudgetPolicy, "MaximumLoadHalfUnits"),
   );
   assert.equal(
-    PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "PrimaryLoadHalfUnits"),
+    MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "ModeratePrimaryLoadHalfUnits"),
   );
   assert.equal(
-    SECONDARY_MUSCLE_LOAD_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "SecondaryLoadHalfUnits"),
+    HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "HardPrimaryLoadHalfUnits"),
+  );
+  assert.equal(
+    HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+    integerConstant(muscleBudgetPolicy, "HardSecondaryLoadHalfUnits"),
   );
   assert.equal(
     SCORE_HALF_UNITS_PER_VOTE,
@@ -194,7 +199,23 @@ test("web and mobile apply the same temporary muscle workload budget", () => {
   );
   assert.match(
     muscleBudgetPolicy,
-    /SecondaryCanonicalGroups\.Distinct\(\)[\s\S]*GetTemporaryDownvoteHalfUnits[\s\S]*MaximumLoadHalfUnits/,
+    /MinimumMuscularDemand => 0[\s\S]*ModerateMuscularDemand => ModeratePrimaryLoadHalfUnits[\s\S]*MaximumMuscularDemand => HardPrimaryLoadHalfUnits/,
+  );
+  assert.match(
+    muscleBudgetPolicy,
+    /ModerateMuscularDemand => 0[\s\S]*MaximumMuscularDemand => HardSecondaryLoadHalfUnits/,
+  );
+  assert.match(
+    workoutModule,
+    /case MINIMUM_MUSCULAR_DEMAND:[\s\S]*case MODERATE_MUSCULAR_DEMAND:[\s\S]*MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS[\s\S]*case HARD_MUSCULAR_DEMAND:[\s\S]*HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS/,
+  );
+  assert.match(
+    sessionService,
+    /CalculateScheduledLoadHalfUnits[\s\S]*GetPrimaryLoadHalfUnits\(exercise\)[\s\S]*GetSecondaryLoadHalfUnits\(exercise\)/,
+  );
+  assert.match(
+    workoutModule,
+    /calculateScheduledLoadHalfUnits[\s\S]*getPrimaryMuscleLoadHalfUnits\(exercise\)[\s\S]*getSecondaryMuscleLoadHalfUnits\(exercise\)/,
   );
   assert.match(
     sessionService,

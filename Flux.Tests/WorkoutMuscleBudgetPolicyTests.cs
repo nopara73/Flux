@@ -6,11 +6,45 @@ namespace Flux.Tests;
 public sealed class WorkoutMuscleBudgetPolicyTests
 {
     [Fact]
-    public void UnilateralPhasesCountOnceButRepeatedRoundsCountAgain()
+    public void MuscularDemandControlsWhichAssociationsConsumeBudget()
+    {
+        Exercise incidental = CreateExercise(
+            1,
+            CanonicalMuscleGroup.HipAbductors,
+            Exercise.MinimumMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors);
+        Exercise moderate = CreateExercise(
+            2,
+            CanonicalMuscleGroup.AbdominalWall,
+            Exercise.ModerateMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors);
+        Exercise hard = CreateExercise(
+            3,
+            CanonicalMuscleGroup.ElbowFlexors,
+            Exercise.MaximumMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors,
+            CanonicalMuscleGroup.GlutealExtensors);
+
+        IReadOnlyDictionary<CanonicalMuscleGroup, int> loadHalfUnits =
+            WorkoutMuscleBudgetPolicy.CalculateLoadHalfUnits(
+                [incidental, moderate, hard]);
+
+        Assert.DoesNotContain(CanonicalMuscleGroup.HipAbductors, loadHalfUnits.Keys);
+        Assert.Equal(1, loadHalfUnits[CanonicalMuscleGroup.AbdominalWall]);
+        Assert.Equal(2, loadHalfUnits[CanonicalMuscleGroup.ElbowFlexors]);
+        Assert.Equal(1, loadHalfUnits[CanonicalMuscleGroup.GlutealExtensors]);
+    }
+
+    [Fact]
+    public void HardUnilateralPhasesCountOnceButRepeatedRoundsCountAgain()
     {
         Exercise unilateral = CreateExercise(
             1,
             CanonicalMuscleGroup.HipAbductors,
+            Exercise.MaximumMuscularDemand,
             ExerciseSideSequence.ScreenLeftThenRight,
             CanonicalMuscleGroup.GlutealExtensors);
 
@@ -24,6 +58,50 @@ public sealed class WorkoutMuscleBudgetPolicyTests
         Assert.Equal(1, oneRound[CanonicalMuscleGroup.GlutealExtensors]);
         Assert.Equal(4, twoRounds[CanonicalMuscleGroup.HipAbductors]);
         Assert.Equal(2, twoRounds[CanonicalMuscleGroup.GlutealExtensors]);
+    }
+
+    [Fact]
+    public void AddingAnExerciseUsesOnlyItsDemandWeightedLoad()
+    {
+        var existingLoadHalfUnits = new Dictionary<CanonicalMuscleGroup, int>
+        {
+            [CanonicalMuscleGroup.AbdominalWall] = 11,
+            [CanonicalMuscleGroup.GlutealExtensors] = 13,
+        };
+        Exercise incidental = CreateExercise(
+            1,
+            CanonicalMuscleGroup.AbdominalWall,
+            Exercise.MinimumMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors);
+        Exercise moderate = CreateExercise(
+            2,
+            CanonicalMuscleGroup.AbdominalWall,
+            Exercise.ModerateMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors);
+        Exercise hard = CreateExercise(
+            3,
+            CanonicalMuscleGroup.AbdominalWall,
+            Exercise.MaximumMuscularDemand,
+            ExerciseSideSequence.Continuous,
+            CanonicalMuscleGroup.GlutealExtensors);
+
+        Assert.Equal(
+            0,
+            WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
+                existingLoadHalfUnits,
+                incidental));
+        Assert.Equal(
+            2,
+            WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
+                existingLoadHalfUnits,
+                moderate));
+        Assert.Equal(
+            7,
+            WorkoutMuscleBudgetPolicy.GetTemporaryDownvoteHalfUnitsAfterAddingExercise(
+                existingLoadHalfUnits,
+                hard));
     }
 
     [Fact]
@@ -72,6 +150,7 @@ public sealed class WorkoutMuscleBudgetPolicyTests
     private static Exercise CreateExercise(
         int id,
         CanonicalMuscleGroup primary,
+        int muscularDemand,
         ExerciseSideSequence sideSequence,
         params CanonicalMuscleGroup[] secondary)
     {
@@ -100,6 +179,7 @@ public sealed class WorkoutMuscleBudgetPolicyTests
             ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
+            MuscularDemand = muscularDemand,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,

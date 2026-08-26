@@ -19,26 +19,28 @@ public sealed class ExerciseSessionServiceTests
             CanonicalMuscleGroup[] secondary = index is >= 1 and <= 9 or 11
                 ? [overloadedMuscle]
                 : [];
-            Exercise selected = Exercise(1 + index, primary, 0, secondary);
+            Exercise selected = CloneWithMuscularDemand(
+                Exercise(1 + index, primary, 0, secondary),
+                WorkoutRecoveryPolicy.HardMuscularDemand);
             exercises.Add(selected);
             selectedByGroup[groups[index].Id] = selected.Id;
         }
 
-        Exercise overloadedZero = Exercise(
-            selectedByGroup[targetGroup.Id],
-            targetGroup.CanonicalGroups.Single(),
-            0,
-            overloadedMuscle);
+        Exercise overloadedZero = CloneWithMuscularDemand(
+            Exercise(
+                selectedByGroup[targetGroup.Id],
+                targetGroup.CanonicalGroups.Single(),
+                0,
+                overloadedMuscle),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
         exercises.RemoveAll(exercise => exercise.Id == overloadedZero.Id);
         exercises.Add(overloadedZero);
-        Exercise downvotedOnce = Exercise(
-            1_001,
-            targetGroup.CanonicalGroups.Single(),
-            -1);
-        Exercise downvotedTwice = Exercise(
-            1_002,
-            targetGroup.CanonicalGroups.Single(),
-            -2);
+        Exercise downvotedOnce = CloneWithMuscularDemand(
+            Exercise(1_001, targetGroup.CanonicalGroups.Single(), -1),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        Exercise downvotedTwice = CloneWithMuscularDemand(
+            Exercise(1_002, targetGroup.CanonicalGroups.Single(), -2),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
         exercises.Add(downvotedOnce);
         exercises.Add(downvotedTwice);
         var state = new WorkoutState
@@ -66,10 +68,12 @@ public sealed class ExerciseSessionServiceTests
             LastWorkoutMinutes = 30,
             SelectedExerciseIds = tieSelectedExerciseIds,
         };
-        Exercise reducedLoadExercise = Exercise(
-            selectedByGroup[groups[11].Id],
-            groups[11].CanonicalGroups.Single(),
-            0);
+        Exercise reducedLoadExercise = CloneWithMuscularDemand(
+            Exercise(
+                selectedByGroup[groups[11].Id],
+                groups[11].CanonicalGroups.Single(),
+                0),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
         var tieService = new ExerciseSessionService(
             exercises
                 .Where(exercise =>
@@ -85,17 +89,67 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void MuscleBudgetIgnoresIncidentalPrimaryAndModerateSecondaryLoad()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
+        WorkoutGroup targetGroup = groups[10];
+        var selectedByGroup = new Dictionary<string, int>(StringComparer.Ordinal);
+        var exercises = new List<Exercise>();
+        for (int index = 0; index < groups.Length; index++)
+        {
+            Exercise selected = Exercise(
+                index + 1,
+                groups[index].CanonicalGroups.Single(),
+                0,
+                index is >= 1 and <= 9 or 11 ? [overloadedMuscle] : []);
+            int muscularDemand = index is >= 1 and <= 9 or 11
+                ? Flux.Models.Exercise.ModerateMuscularDemand
+                : Flux.Models.Exercise.MinimumMuscularDemand;
+            selected = CloneWithMuscularDemand(selected, muscularDemand);
+            exercises.Add(selected);
+            selectedByGroup[groups[index].Id] = selected.Id;
+        }
+
+        Exercise current = CloneWithMuscularDemand(
+            Exercise(
+                selectedByGroup[targetGroup.Id],
+                targetGroup.CanonicalGroups.Single(),
+                0,
+                overloadedMuscle),
+            Flux.Models.Exercise.MaximumMuscularDemand);
+        exercises.RemoveAll(exercise => exercise.Id == current.Id);
+        exercises.Add(current);
+        Exercise downvotedAlternative = CloneWithMuscularDemand(
+            Exercise(1_001, targetGroup.CanonicalGroups.Single(), -1),
+            Flux.Models.Exercise.MaximumMuscularDemand);
+        exercises.Add(downvotedAlternative);
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 30,
+            SelectedExerciseIds = selectedByGroup,
+        };
+        var service = new ExerciseSessionService(exercises, new Random(1));
+
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+
+        Assert.Equal(current.Id, state.SelectedExerciseIds[targetGroup.Id]);
+    }
+
+    [Fact]
     public void LongWorkoutMuscleBudgetCountsExtraSetBeforeReplacingAChoice()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
         CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
         WorkoutGroup targetGroup = groups[^1];
         Exercise[] selected = groups
-            .Select((group, index) => Exercise(
-                index + 1,
-                group.CanonicalGroups.Single(),
-                0,
-                index is >= 1 and <= 7 ? [overloadedMuscle] : []))
+            .Select((group, index) => CloneWithMuscularDemand(
+                Exercise(
+                    index + 1,
+                    group.CanonicalGroups.Single(),
+                    0,
+                    index is >= 1 and <= 7 ? [overloadedMuscle] : []),
+                WorkoutRecoveryPolicy.HardMuscularDemand))
             .ToArray();
         Exercise overloaded = CloneWithMuscularDemand(
             Exercise(
@@ -139,11 +193,13 @@ public sealed class ExerciseSessionServiceTests
         CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
         WorkoutGroup targetGroup = groups[^1];
         Exercise[] selected = groups
-            .Select((group, index) => Exercise(
-                index + 1,
-                group.CanonicalGroups.Single(),
-                0,
-                index is >= 1 and <= 6 ? [overloadedMuscle] : []))
+            .Select((group, index) => CloneWithMuscularDemand(
+                Exercise(
+                    index + 1,
+                    group.CanonicalGroups.Single(),
+                    0,
+                    index is >= 1 and <= 6 ? [overloadedMuscle] : []),
+                WorkoutRecoveryPolicy.HardMuscularDemand))
             .ToArray();
         Exercise unilateral = CloneWithMuscularDemand(
             Exercise(
