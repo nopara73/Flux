@@ -51,6 +51,9 @@ public class MainActivity : Activity
     private WorkoutState _state = null!;
     private WorkoutGroup _currentWorkoutGroup = null!;
     private Exercise? _currentExercise;
+    private WorkoutGroup? _mediaWorkoutGroup;
+    private Exercise? _mediaExercise;
+    private bool _previewingUpcomingSequenceBlock;
     private int _selectedWorkoutMinutes = ExerciseSessionService.DefaultWorkoutMinutes;
     private WorkoutModifiers _selectedWorkoutModifiers =
         ExerciseSessionService.DefaultWorkoutModifiers;
@@ -230,7 +233,7 @@ public class MainActivity : Activity
             _countdownPausedForMediaError = false;
             ResumeCountdown();
         }
-        else if (_currentExercise is not null && ShouldExerciseVideoBePlaying())
+        else if (_mediaExercise is not null && ShouldExerciseVideoBePlaying())
         {
             _exerciseVideo?.Start();
         }
@@ -454,9 +457,13 @@ public class MainActivity : Activity
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _mediaRetryButton.Click += (_, _) =>
         {
-            if (_currentExercise is not null)
+            if (_mediaExercise is not null && _mediaWorkoutGroup is not null)
             {
-                LoadExerciseMedia(_currentExercise, forceCacheRefresh: true);
+                LoadExerciseMedia(
+                    _mediaExercise,
+                    _mediaWorkoutGroup,
+                    _previewingUpcomingSequenceBlock,
+                    forceCacheRefresh: true);
             }
         };
         _doneButton.Click += (_, _) => CloseCompletedWorkout();
@@ -1747,12 +1754,14 @@ public class MainActivity : Activity
         _exerciseVideo.SetOnInfoListener(_videoInfoListener);
         _exerciseVideo.Completion += (_, _) =>
         {
-            if (_currentWorkoutGroup?.SequenceMediaSegment !=
+            if (_mediaWorkoutGroup?.SequenceMediaSegment !=
                 ExerciseSequenceMediaSegment.Full)
             {
-                if (_workoutPhase == WorkoutPhase.Ready)
+                if (_workoutPhase == WorkoutPhase.Ready ||
+                    (_workoutPhase == WorkoutPhase.Rest &&
+                        _previewingUpcomingSequenceBlock))
                 {
-                    _exerciseVideo.SeekTo(0);
+                    _exerciseVideo.SeekTo(GetCurrentMediaSegmentStartMilliseconds());
                     ApplyCurrentMediaPlaybackState();
                     return;
                 }
@@ -1772,19 +1781,28 @@ public class MainActivity : Activity
         };
     }
 
-    private void LoadExerciseMedia(Exercise exercise, bool forceCacheRefresh = false)
+    private void LoadExerciseMedia(
+        Exercise exercise,
+        WorkoutGroup workoutGroup,
+        bool previewingUpcomingSequenceBlock = false,
+        bool forceCacheRefresh = false)
     {
+        _mediaExercise = exercise;
+        _mediaWorkoutGroup = workoutGroup;
+        _previewingUpcomingSequenceBlock = previewingUpcomingSequenceBlock;
         bool usesStill = exercise.Presentation == ExercisePresentation.Still;
         bool holdDuringMove =
             exercise.Mode == ExerciseMode.Hold && _workoutPhase == WorkoutPhase.Move;
         bool holdDuringRest =
-            exercise.Mode == ExerciseMode.Hold && _workoutPhase == WorkoutPhase.Rest;
+            exercise.Mode == ExerciseMode.Hold &&
+            _workoutPhase == WorkoutPhase.Rest &&
+            !previewingUpcomingSequenceBlock;
         _mediaLoadGeneration++;
         _mediaReady = false;
         _loopExerciseVideo =
             !holdDuringMove &&
             !holdDuringRest &&
-            _currentWorkoutGroup?.SequenceMediaSegment ==
+            workoutGroup.SequenceMediaSegment ==
                 ExerciseSequenceMediaSegment.Full;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
@@ -1986,7 +2004,7 @@ public class MainActivity : Activity
 
     private string GetExerciseVideoAssetPath(Exercise exercise)
     {
-        return _currentWorkoutGroup?.SequenceMediaSegment ==
+        return _mediaWorkoutGroup?.SequenceMediaSegment ==
                 ExerciseSequenceMediaSegment.Full
             ? exercise.Video
             : $"exercise_direction_videos/exercise_{exercise.Id:D4}.mp4";
@@ -2224,17 +2242,11 @@ public class MainActivity : Activity
         _workoutProgressBar.SetProgress(position, continuingWorkout);
         _countdownProgress.Max = countdownDurationMilliseconds;
         _countdownProgress.Progress = countdownDurationMilliseconds;
-        _exerciseName.Text = exercise.Name;
-        _exerciseName.ContentDescription = exercise.Mode == ExerciseMode.Hold
-            ? $"{exercise.Name}. Hold."
-            : $"{exercise.Name}. Repetition.";
+        RenderExerciseIdentity(exercise);
         RenderExecutionTimeline();
-        _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
-            ? ViewStates.Visible
-            : ViewStates.Gone;
         ShowAppScreen(AppScreen.Workout);
         ShowStartButton();
-        LoadExerciseMedia(exercise);
+        LoadExerciseMedia(exercise, _currentWorkoutGroup);
         ResizeMediaCard();
         if (continuingWorkout)
         {
@@ -2245,6 +2257,20 @@ public class MainActivity : Activity
             $"Exercise {position} of {totalExercises}. " +
             $"{exercise.Name}. " +
             (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
+    }
+
+    private void RenderExerciseIdentity(Exercise exercise, bool upcoming = false)
+    {
+        _exerciseName.Text = exercise.Name;
+        string modeDescription = exercise.Mode == ExerciseMode.Hold
+            ? "Hold."
+            : "Repetition.";
+        _exerciseName.ContentDescription = upcoming
+            ? $"Next block: {exercise.Name}. {modeDescription}"
+            : $"{exercise.Name}. {modeDescription}";
+        _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
+            ? ViewStates.Visible
+            : ViewStates.Gone;
     }
 
     private void RestorePendingMovement(WorkoutGroup pendingGroup)
@@ -2544,7 +2570,7 @@ public class MainActivity : Activity
         {
             if (_currentExercise?.Mode == ExerciseMode.Hold)
             {
-                LoadExerciseMedia(_currentExercise);
+                LoadExerciseMedia(_currentExercise, _currentWorkoutGroup);
             }
             ShowStartButton();
         }
@@ -2781,7 +2807,7 @@ public class MainActivity : Activity
 
     private void EnforceDirectionMediaSegment(MovementPhase phase)
     {
-        if (_currentWorkoutGroup?.SequenceMediaSegment ==
+        if (_mediaWorkoutGroup?.SequenceMediaSegment ==
                 ExerciseSequenceMediaSegment.Full ||
             _activeMediaPlayer is null ||
             !_mediaReady ||
@@ -2820,7 +2846,7 @@ public class MainActivity : Activity
     }
 
     private int GetCurrentMediaSegmentStartMilliseconds() =>
-        _currentWorkoutGroup?.SequenceMediaSegment ==
+        _mediaWorkoutGroup?.SequenceMediaSegment ==
             ExerciseSequenceMediaSegment.SecondDirection
             ? DirectionSecondPhaseOffsetMilliseconds
             : 0;
@@ -2842,9 +2868,12 @@ public class MainActivity : Activity
 
         SetStartAvailability(available: false);
         SetPlaybackControlsAvailability(available: false);
-        if (_currentExercise is not null)
+        if (_mediaExercise is not null && _mediaWorkoutGroup is not null)
         {
-            LoadExerciseMedia(_currentExercise);
+            LoadExerciseMedia(
+                _mediaExercise,
+                _mediaWorkoutGroup,
+                _previewingUpcomingSequenceBlock);
         }
         else
         {
@@ -2909,6 +2938,8 @@ public class MainActivity : Activity
         }
 
         return _workoutPhase == WorkoutPhase.Ready ||
+            (_workoutPhase == WorkoutPhase.Rest &&
+                _previewingUpcomingSequenceBlock) ||
             (_workoutPhase == WorkoutPhase.Move &&
                 _countdownActive &&
                 _lastMovementPhase == MovementPhase.Continuous);
@@ -2916,10 +2947,18 @@ public class MainActivity : Activity
 
     private void ApplyCurrentMediaPlaybackState()
     {
-        bool mirrorMedia = _workoutPhase == WorkoutPhase.Move &&
-            _lastMovementPhase is MovementPhase phase &&
-            phase != MovementPhase.Preparation &&
-            GetCurrentMovementPresentation(phase).MirrorMedia;
+        bool mirrorMedia = _workoutPhase switch
+        {
+            WorkoutPhase.Rest when _previewingUpcomingSequenceBlock &&
+                _mediaWorkoutGroup is not null =>
+                GetMovementPresentation(
+                    _mediaWorkoutGroup,
+                    MovementPhase.Continuous).MirrorMedia,
+            WorkoutPhase.Move when _lastMovementPhase is MovementPhase phase &&
+                phase != MovementPhase.Preparation =>
+                GetCurrentMovementPresentation(phase).MirrorMedia,
+            _ => false,
+        };
         SetExerciseMediaMirrored(mirrorMedia);
 
         if (ShouldExerciseVideoBePlaying())
@@ -2942,12 +2981,17 @@ public class MainActivity : Activity
     private MovementPhasePresentation GetCurrentMovementPresentation(
         MovementPhase phase)
     {
-        return MovementPhasePresentationPolicy.GetPresentation(
-            _currentWorkoutGroup.SequenceSideCue,
-            _currentWorkoutGroup.SequenceDirectionCue,
-            _currentWorkoutGroup.MirrorSequenceMedia,
-            phase);
+        return GetMovementPresentation(_currentWorkoutGroup, phase);
     }
+
+    private static MovementPhasePresentation GetMovementPresentation(
+        WorkoutGroup workoutGroup,
+        MovementPhase phase) =>
+        MovementPhasePresentationPolicy.GetPresentation(
+            workoutGroup.SequenceSideCue,
+            workoutGroup.SequenceDirectionCue,
+            workoutGroup.MirrorSequenceMedia,
+            phase);
 
     private static string GetMovementCueDescription(
         MovementPhasePresentation presentation)
@@ -3126,26 +3170,58 @@ public class MainActivity : Activity
             return $"Rest paused, {secondsRemaining} seconds remaining.";
         }
 
-        return _sessionService.IsIntermediateSequenceBlock(
+        WorkoutGroup? nextBlock = _sessionService.GetNextSequenceBlock(
             _state,
-            _currentWorkoutGroup)
-            ? $"Rest, {secondsRemaining} seconds. " +
-                "The next block starts automatically."
-            : $"Rest, {secondsRemaining} seconds. " +
-                "Tap the heart to keep this sequence.";
+            _currentWorkoutGroup);
+        if (nextBlock is not null)
+        {
+            Exercise nextExercise = _sessionService.GetSelectedExercise(
+                _state,
+                nextBlock);
+            return $"Rest, {secondsRemaining} seconds. " +
+                $"Next block: {nextExercise.Name}. It starts automatically.";
+        }
+
+        return $"Rest, {secondsRemaining} seconds. " +
+            "Tap the heart to keep this sequence.";
     }
 
     private void ShowRestPanel()
     {
+        WorkoutGroup? nextBlock = _sessionService.GetNextSequenceBlock(
+            _state,
+            _currentWorkoutGroup);
         RenderRestVisuals();
-        RenderExecutionTimeline(
-            selectUpcomingBlock: _sessionService.IsIntermediateSequenceBlock(
-                _state,
-                _currentWorkoutGroup));
         ShowWorkoutPhase(WorkoutPhase.Rest);
+        if (nextBlock is not null)
+        {
+            ShowUpcomingSequenceBlockPreview(nextBlock);
+        }
+        else
+        {
+            _previewingUpcomingSequenceBlock = false;
+        }
+        RenderExecutionTimeline(
+            selectUpcomingBlock: nextBlock is not null);
         UpdateRestPlaybackActionVisual();
         UpdateKeepButtonState();
         UpdateRestCountdownText();
+    }
+
+    private void ShowUpcomingSequenceBlockPreview(WorkoutGroup nextBlock)
+    {
+        Exercise nextExercise = _sessionService.GetSelectedExercise(
+            _state,
+            nextBlock);
+        RenderExerciseIdentity(nextExercise, upcoming: true);
+        LoadExerciseMedia(
+            nextExercise,
+            nextBlock,
+            previewingUpcomingSequenceBlock: true);
+        SetExerciseMediaMirrored(
+            GetMovementPresentation(
+                nextBlock,
+                MovementPhase.Continuous).MirrorMedia);
     }
 
     private void UpdateKeepButtonState()

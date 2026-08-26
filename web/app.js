@@ -102,6 +102,9 @@ let selectedMinutes = 10;
 let selectedModifiers = DEFAULT_WORKOUT_MODIFIERS;
 let currentGroup = null;
 let currentExercise = null;
+let mediaGroup = null;
+let mediaExercise = null;
+let previewingUpcomingSequenceBlock = false;
 let mediaGeneration = 0;
 let mediaReady = false;
 let mediaRecoveryTimer = null;
@@ -447,9 +450,8 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
     `Exercise ${position} of ${total}`,
   );
   elements.workoutProgressFill.style.transform = `scaleX(${position / total})`;
-  elements.exerciseName.textContent = currentExercise.name;
+  renderExerciseIdentity(currentExercise);
   renderExecutionTimeline(currentGroup);
-  elements.holdBadge.hidden = currentExercise.mode !== "Hold";
   elements.status.textContent =
     `Exercise ${position} of ${total}. ${currentExercise.name}.`;
 
@@ -458,7 +460,17 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
   showReadyPanel();
   showScreen("workout");
   requestWakeLock();
-  loadExerciseMedia();
+  loadExerciseMedia(currentExercise, currentGroup);
+}
+
+function renderExerciseIdentity(exercise, upcoming = false) {
+  elements.exerciseName.textContent = exercise.name;
+  const mode = exercise.mode === "Hold" ? "Hold" : "Repetition";
+  elements.exerciseName.setAttribute(
+    "aria-label",
+    `${upcoming ? "Next block: " : ""}${exercise.name}. ${mode}.`,
+  );
+  elements.holdBadge.hidden = exercise.mode !== "Hold";
 }
 
 function restorePendingMovement() {
@@ -640,9 +652,15 @@ function showRestPanel() {
   elements.readyPanel.hidden = true;
   elements.movePanel.hidden = true;
   elements.restPanel.hidden = false;
-  const isIntermediateBlock = Boolean(
-    currentGroup && session?.isIntermediateSequenceBlock(currentGroup),
-  );
+  const nextBlock = currentGroup
+    ? session?.getNextSequenceBlock(currentGroup) ?? null
+    : null;
+  const isIntermediateBlock = nextBlock !== null;
+  if (nextBlock) {
+    showUpcomingSequenceBlockPreview(nextBlock);
+  } else {
+    previewingUpcomingSequenceBlock = false;
+  }
   if (currentGroup) {
     renderExecutionTimeline(currentGroup, isIntermediateBlock);
   }
@@ -651,6 +669,15 @@ function showRestPanel() {
   elements.keepExercise.disabled = false;
   elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");
   elements.keepExercise.title = "Keep exercise";
+}
+
+function showUpcomingSequenceBlockPreview(nextBlock) {
+  const nextExercise = session.getSelectedExercise(nextBlock);
+  renderExerciseIdentity(nextExercise, true);
+  loadExerciseMedia(nextExercise, nextBlock, true);
+  setMediaMirrored(
+    getMovementPresentation(nextBlock, "Continuous").mirrorMedia,
+  );
 }
 
 function assetUrl(path) {
@@ -662,10 +689,18 @@ function assetUrl(path) {
   return url.href;
 }
 
-function loadExerciseMedia() {
-  if (!currentExercise) {
+function loadExerciseMedia(
+  exercise = currentExercise,
+  group = currentGroup,
+  isUpcomingSequencePreview = false,
+) {
+  if (!exercise || !group) {
     return;
   }
+
+  mediaExercise = exercise;
+  mediaGroup = group;
+  previewingUpcomingSequenceBlock = isUpcomingSequencePreview;
 
   const generation = ++mediaGeneration;
   clearMediaRecoveryTimer();
@@ -678,13 +713,13 @@ function loadExerciseMedia() {
   elements.holdFrame.hidden = true;
   elements.holdFrame.removeAttribute("src");
   resetVideoElement();
-  setMediaMirrored(currentGroup?.mirrorSequenceMedia === true);
+  setMediaMirrored(group.mirrorSequenceMedia === true);
 
-  if (currentExercise.presentation === "Still") {
+  if (exercise.presentation === "Still") {
     elements.video.hidden = true;
     elements.holdFrame.onload = () => markMediaReady(generation);
     elements.holdFrame.onerror = () => showMediaError(generation);
-    elements.holdFrame.src = assetUrl(getHoldFramePath(currentExercise));
+    elements.holdFrame.src = assetUrl(getHoldFramePath(exercise));
     elements.holdFrame.hidden = false;
     return;
   }
@@ -692,7 +727,7 @@ function loadExerciseMedia() {
   elements.video.hidden = false;
   elements.video.preload = "auto";
   elements.video.loop =
-    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full";
+    (group.sequenceMediaSegment ?? "Full") === "Full";
   elements.video.onloadedmetadata = () => prepareSequenceMediaSegment();
   elements.video.oncanplay = () => {
     prepareSequenceMediaSegment();
@@ -714,8 +749,8 @@ function loadExerciseMedia() {
   elements.video.onended = handleVideoEnded;
   elements.video.ontimeupdate = enforceDirectionMediaSegment;
   elements.video.src = assetUrl(getExerciseVideoPath(
-    currentExercise,
-    currentGroup?.sequenceMediaSegment ?? "Full",
+    exercise,
+    group.sequenceMediaSegment ?? "Full",
   ));
   elements.video.load();
 }
@@ -771,15 +806,16 @@ function markMediaReady(generation, playbackConfirmed = false) {
   if (
     newlyReady &&
     !document.hidden &&
-    !elements.readyPanel.hidden &&
-    currentExercise?.presentation !== "Still"
+    (!elements.readyPanel.hidden ||
+      (restActive && previewingUpcomingSequenceBlock)) &&
+    mediaExercise?.presentation !== "Still"
   ) {
     playVideo();
   }
 }
 
 function handleVideoWaiting(generation) {
-  if (generation !== mediaGeneration || currentExercise?.presentation === "Still") {
+  if (generation !== mediaGeneration || mediaExercise?.presentation === "Still") {
     return;
   }
   mediaReady = false;
@@ -818,10 +854,14 @@ function showMediaError(generation = mediaGeneration) {
 }
 
 function retryMedia() {
-  if (!currentExercise) {
+  if (!mediaExercise || !mediaGroup) {
     return;
   }
-  loadExerciseMedia();
+  loadExerciseMedia(
+    mediaExercise,
+    mediaGroup,
+    previewingUpcomingSequenceBlock,
+  );
 }
 
 function clearExerciseMedia() {
@@ -834,6 +874,9 @@ function clearExerciseMedia() {
   elements.holdFrame.hidden = true;
   elements.holdFrame.removeAttribute("src");
   elements.mediaError.hidden = true;
+  mediaExercise = null;
+  mediaGroup = null;
+  previewingUpcomingSequenceBlock = false;
 }
 
 function startMovement() {
@@ -947,10 +990,10 @@ function applyMovementPhase(phase) {
 }
 
 function restartMediaForPhase() {
-  if (!currentExercise) {
+  if (!mediaExercise) {
     return;
   }
-  if (currentExercise.presentation === "Still") {
+  if (mediaExercise.presentation === "Still") {
     elements.holdFrame.hidden = false;
     return;
   }
@@ -958,20 +1001,20 @@ function restartMediaForPhase() {
   elements.holdFrame.hidden = true;
   elements.video.hidden = false;
   elements.video.loop =
-    currentExercise.mode !== "Hold" &&
-    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full";
+    mediaExercise.mode !== "Hold" &&
+    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full";
   prepareSequenceMediaSegment(true);
   playVideo();
 }
 
 function getSequenceMediaSegmentStart() {
-  return currentGroup?.sequenceMediaSegment === "SecondDirection"
+  return mediaGroup?.sequenceMediaSegment === "SecondDirection"
     ? DIRECTION_SEGMENT_SECONDS
     : 0;
 }
 
 function prepareSequenceMediaSegment(force = false) {
-  if ((currentGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
+  if ((mediaGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
       !Number.isFinite(elements.video.duration)) {
     return;
   }
@@ -988,7 +1031,7 @@ function prepareSequenceMediaSegment(force = false) {
 
 function enforceDirectionMediaSegment() {
   if (
-    (currentGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
+    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
     !Number.isFinite(elements.video.currentTime)
   ) {
     return;
@@ -1013,20 +1056,21 @@ function enforceDirectionMediaSegment() {
 
 function handleVideoEnded() {
   if (
-    (currentGroup?.sequenceMediaSegment ?? "Full") !== "Full" &&
-    !elements.movePanel.hidden
+    (mediaGroup?.sequenceMediaSegment ?? "Full") !== "Full" &&
+    (!elements.movePanel.hidden ||
+      (restActive && previewingUpcomingSequenceBlock))
   ) {
     enforceDirectionMediaSegment();
     return;
   }
 
-  if (currentExercise?.mode === "Hold" && !elements.movePanel.hidden) {
+  if (mediaExercise?.mode === "Hold" && !elements.movePanel.hidden) {
     showReviewedHoldFrame();
   }
 }
 
 function showReviewedHoldFrame() {
-  if (!currentExercise || currentExercise.mode !== "Hold") {
+  if (!mediaExercise || mediaExercise.mode !== "Hold") {
     return;
   }
   const generation = mediaGeneration;
@@ -1038,7 +1082,7 @@ function showReviewedHoldFrame() {
   };
   elements.holdFrame.onerror = () => showMediaError(generation);
   if (!elements.holdFrame.src) {
-    elements.holdFrame.src = assetUrl(getHoldFramePath(currentExercise));
+    elements.holdFrame.src = assetUrl(getHoldFramePath(mediaExercise));
   } else if (elements.holdFrame.complete && elements.holdFrame.naturalWidth > 0) {
     elements.holdFrame.hidden = false;
     elements.video.pause();
@@ -1215,9 +1259,15 @@ function restStatusMessage() {
   if (session?.state.pendingRestPausedByUser) {
     return `Rest paused, ${seconds} seconds remaining.`;
   }
-  return currentGroup && session?.isIntermediateSequenceBlock(currentGroup)
-    ? `Rest, ${seconds} seconds. The next block starts automatically.`
-    : `Rest, ${seconds} seconds. Tap the heart to keep this sequence.`;
+  const nextBlock = currentGroup
+    ? session?.getNextSequenceBlock(currentGroup) ?? null
+    : null;
+  if (nextBlock) {
+    const nextExercise = session.getSelectedExercise(nextBlock);
+    return `Rest, ${seconds} seconds. Next block: ${nextExercise.name}. ` +
+      "It starts automatically.";
+  }
+  return `Rest, ${seconds} seconds. Tap the heart to keep this sequence.`;
 }
 
 function startRestTimer() {
@@ -1482,9 +1532,16 @@ function handleVisibilityChange() {
 
   if (restActive) {
     startRestTimer();
+    if (
+      previewingUpcomingSequenceBlock &&
+      mediaReady &&
+      mediaExercise?.presentation !== "Still"
+    ) {
+      playVideo();
+    }
   } else if (movementPauseReason && movementPauseReason !== "user") {
     resumePausedMovementWhenVisible();
-  } else if (!elements.readyPanel.hidden && mediaReady && currentExercise?.presentation !== "Still") {
+  } else if (!elements.readyPanel.hidden && mediaReady && mediaExercise?.presentation !== "Still") {
     playVideo();
   }
   if (!elements.workoutScreen.hidden) {

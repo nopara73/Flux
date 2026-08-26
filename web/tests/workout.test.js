@@ -2823,10 +2823,15 @@ test("one keep decision is available only after the final sequence block", () =>
   for (const round of sequenceRounds.slice(0, -1)) {
     assert.equal(session.getNextGroup().id, round.id);
     assert.equal(session.isIntermediateSequenceBlock(round), true);
+    assert.equal(
+      session.getNextSequenceBlock(round).id,
+      sequenceRounds[sequenceRounds.indexOf(round) + 1].id,
+    );
     session.advanceSequence(round);
   }
   const decisionRound = sequenceRounds.at(-1);
   assert.equal(session.getNextGroup().id, decisionRound.id);
+  assert.equal(session.getNextSequenceBlock(decisionRound), null);
   assert.equal(isFinalSequenceRound(decisionRound), true);
   session.recordOutcome(decisionRound, true);
 
@@ -2835,6 +2840,36 @@ test("one keep decision is available only after the final sequence block", () =>
   assert.equal(session.state.outcomes[decisionRound.id], "tick");
   assert.equal(session.state.scores["1"], undefined);
   assert.equal(session.state.scores["2"], undefined);
+});
+
+test("pending intermediate rest restores the upcoming block without advancing", () => {
+  const exercises = directionPairCatalog();
+  const started = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  started.startWorkout(45, WORKOUT_MODIFIERS.None);
+  const sequenceGroup = started.getSelectionGroups().find((group) =>
+    started.state.selectedExerciseIds[group.id] === 1);
+  const sequenceRounds = started.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === sequenceGroup.id);
+  const completedBlock = sequenceRounds[0];
+  for (const prior of started.getActiveGroups().filter((round) =>
+    round.order < completedBlock.order)) {
+    started.state.outcomes[prior.id] = "tick";
+  }
+  started.beginRest(completedBlock, Date.now() + 60_000);
+
+  const restored = new WorkoutSession(
+    exercises,
+    parseStoredState(JSON.stringify(started.state)),
+    () => 0,
+  );
+  restored.initialize();
+
+  const pendingBlock = restored.getPendingRestGroup();
+  const upcomingBlock = restored.getNextSequenceBlock(pendingBlock);
+  assert.equal(pendingBlock.id, completedBlock.id);
+  assert.equal(upcomingBlock.id, sequenceRounds[1].id);
+  assert.equal(restored.getNextGroup().id, completedBlock.id);
+  assert.equal(restored.state.outcomes[completedBlock.id], undefined);
 });
 
 test("rejecting any current block rejects the whole sequence with one member vote", () => {

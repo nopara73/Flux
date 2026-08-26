@@ -290,8 +290,11 @@ checkpoint instead of crediting unseen exercise time. Running Rest uses an
 absolute deadline and also restores after process death, advancing normally if
 its deadline already passed. Tapping its pause control instead persists the
 exact remaining Rest time with no deadline; reopening keeps it paused until the
-user explicitly resumes it. Closing during Ready still leaves the unreached
-exercise neutral.
+user explicitly resumes it. During the 15-second transition inside an atomic
+sequence, Rest previews the upcoming block's exact exercise, side, direction,
+and media segment without advancing the saved workout; final decision Rest
+continues to show the sequence that was just completed. Closing during Ready
+still leaves the unreached exercise neutral.
 
 ## Exercise catalog
 

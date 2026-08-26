@@ -1161,7 +1161,7 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     webApp,
-    /isIntermediateSequenceBlock[\s\S]*elements\.keepExercise\.hidden/,
+    /getNextSequenceBlock[\s\S]*elements\.keepExercise\.hidden = isIntermediateBlock/,
   );
   assert.match(
     webIndex,
@@ -1176,11 +1176,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
 test("every intermediate block rests 15 seconds and continues automatically", () => {
   assert.match(
     sessionService,
-    /IsIntermediateSequenceBlock[\s\S]*activeGroups\[groupIndex \+ 1\]\.SelectionKey == group\.SelectionKey/,
+    /GetNextSequenceBlock[\s\S]*activeGroups\[groupIndex \+ 1\][\s\S]*nextGroup\.SelectionKey == group\.SelectionKey/,
   );
   assert.match(
     workoutModule,
-    /isIntermediateSequenceBlock[\s\S]*getSelectionKey\(activeGroups\[groupIndex \+ 1\]\)/,
+    /getNextSequenceBlock[\s\S]*activeGroups\[groupIndex \+ 1\][\s\S]*getSelectionKey\(nextGroup\)/,
   );
   assert.match(
     sessionService,
@@ -1200,11 +1200,11 @@ test("every intermediate block rests 15 seconds and continues automatically", ()
   );
   assert.match(
     mainActivity,
-    /next block starts automatically[\s\S]*ContinueWithNextSequenceBlock[\s\S]*PauseMovement[\s\S]*RestorePendingMovement/,
+    /Next block:[\s\S]*starts automatically[\s\S]*ContinueWithNextSequenceBlock[\s\S]*PauseMovement[\s\S]*RestorePendingMovement/i,
   );
   assert.match(
     webApp,
-    /next block starts automatically[\s\S]*advanceSequence[\s\S]*pauseMovement[\s\S]*restorePendingMovement/,
+    /Next block:[\s\S]*starts automatically[\s\S]*advanceSequence[\s\S]*pauseMovement[\s\S]*restorePendingMovement/i,
   );
   assert.match(
     mainActivity,
@@ -1213,6 +1213,33 @@ test("every intermediate block rests 15 seconds and continues automatically", ()
   assert.match(
     webApp,
     /pauseMovement\([\s\S]*getMovementDurationMs\(nextBlock\)[\s\S]*false/,
+  );
+});
+
+test("intermediate Rest previews the exact upcoming block without advancing it", () => {
+  assert.match(
+    mainActivity,
+    /ShowRestPanel[\s\S]*GetNextSequenceBlock[\s\S]*ShowUpcomingSequenceBlockPreview/,
+  );
+  assert.match(
+    mainActivity,
+    /ShowUpcomingSequenceBlockPreview[\s\S]*GetSelectedExercise[\s\S]*RenderExerciseIdentity\(nextExercise, upcoming: true\)[\s\S]*LoadExerciseMedia\([\s\S]*nextExercise,[\s\S]*nextBlock,[\s\S]*previewingUpcomingSequenceBlock: true/,
+  );
+  assert.match(
+    webApp,
+    /showRestPanel[\s\S]*getNextSequenceBlock[\s\S]*showUpcomingSequenceBlockPreview/,
+  );
+  assert.match(
+    webApp,
+    /showUpcomingSequenceBlockPreview[\s\S]*getSelectedExercise[\s\S]*renderExerciseIdentity\(nextExercise, true\)[\s\S]*loadExerciseMedia\(nextExercise, nextBlock, true\)/,
+  );
+  assert.match(
+    mainActivity,
+    /WorkoutPhase\.Rest when _previewingUpcomingSequenceBlock[\s\S]*_mediaWorkoutGroup/,
+  );
+  assert.match(
+    webApp,
+    /restActive && previewingUpcomingSequenceBlock[\s\S]*mediaExercise\?\.presentation !== "Still"/,
   );
 });
 

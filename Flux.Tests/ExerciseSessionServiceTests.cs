@@ -975,6 +975,9 @@ public sealed class ExerciseSessionServiceTests
         service.BeginRest(state, firstSet, 123456);
 
         Assert.True(service.IsIntermediateSequenceBlock(state, firstSet));
+        Assert.Equal(
+            repeatedRounds[1].Id,
+            service.GetNextSequenceBlock(state, firstSet)?.Id);
         Assert.False(service.KeepPendingRest(state));
         Assert.False(state.PendingRestKept);
 
@@ -1005,7 +1008,51 @@ public sealed class ExerciseSessionServiceTests
 
         service.BeginRest(restored, nextSet, 234567);
         Assert.False(service.IsIntermediateSequenceBlock(restored, nextSet));
+        Assert.Null(service.GetNextSequenceBlock(restored, nextSet));
         Assert.True(service.KeepPendingRest(restored));
+    }
+
+    [Fact]
+    public void PendingIntermediateRestRestoresItsUpcomingBlockWithoutAdvancing()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group, 10))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+        };
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+        WorkoutGroup[] repeatedRounds = service.GetActiveGroups(state)
+            .GroupBy(round => round.SelectionKey)
+            .First(rounds => rounds.Count() > 1)
+            .OrderBy(round => round.Order)
+            .ToArray();
+        WorkoutGroup completedBlock = repeatedRounds[0];
+        CompleteRoundsBefore(service, state, completedBlock);
+        service.BeginRest(
+            state,
+            completedBlock,
+            DateTimeOffset.UtcNow.AddMinutes(1).ToUnixTimeMilliseconds());
+
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        service.Initialize(restored);
+
+        WorkoutGroup pendingBlock = service.GetPendingRestGroup(restored)!;
+        WorkoutGroup upcomingBlock = service.GetNextSequenceBlock(
+            restored,
+            pendingBlock)!;
+        Assert.Equal(completedBlock.Id, pendingBlock.Id);
+        Assert.Equal(repeatedRounds[1].Id, upcomingBlock.Id);
+        Assert.Equal(completedBlock.Id, service.GetNextGroup(restored)?.Id);
+        Assert.DoesNotContain(completedBlock.Id, restored.Outcomes.Keys);
     }
 
     [Fact]

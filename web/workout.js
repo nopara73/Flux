@@ -2497,12 +2497,20 @@ export class WorkoutSession {
   }
 
   isIntermediateSequenceBlock(group) {
+    return this.getNextSequenceBlock(group) !== null;
+  }
+
+  getNextSequenceBlock(group) {
     const activeGroups = this.getActiveGroups();
     const groupIndex = activeGroups.findIndex((activeGroup) =>
       activeGroup.id === group?.id);
-    return groupIndex >= 0 &&
-      groupIndex + 1 < activeGroups.length &&
-      getSelectionKey(activeGroups[groupIndex + 1]) === getSelectionKey(group);
+    if (groupIndex < 0 || groupIndex + 1 >= activeGroups.length) {
+      return null;
+    }
+    const nextGroup = activeGroups[groupIndex + 1];
+    return getSelectionKey(nextGroup) === getSelectionKey(group)
+      ? nextGroup
+      : null;
   }
 
   isSequenceContinuationBlock(group) {

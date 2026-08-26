@@ -266,6 +266,13 @@ public sealed class ExerciseSessionService
         WorkoutState state,
         WorkoutGroup group)
     {
+        return GetNextSequenceBlock(state, group) is not null;
+    }
+
+    public WorkoutGroup? GetNextSequenceBlock(
+        WorkoutState state,
+        WorkoutGroup group)
+    {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(group);
 
@@ -276,9 +283,15 @@ public sealed class ExerciseSessionService
             .Select(entry => entry.index)
             .DefaultIfEmpty(-1)
             .Single();
-        return groupIndex >= 0 &&
-            groupIndex + 1 < activeGroups.Count &&
-            activeGroups[groupIndex + 1].SelectionKey == group.SelectionKey;
+        if (groupIndex < 0 || groupIndex + 1 >= activeGroups.Count)
+        {
+            return null;
+        }
+
+        WorkoutGroup nextGroup = activeGroups[groupIndex + 1];
+        return nextGroup.SelectionKey == group.SelectionKey
+            ? nextGroup
+            : null;
     }
 
     public bool IsSequenceContinuationBlock(
