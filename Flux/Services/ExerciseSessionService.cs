@@ -2845,6 +2845,8 @@ public sealed class ExerciseSessionService
         {
             SelectedSequencePlacement? selectedPlacement = repeatablePlacements
                 .OrderBy(placement => setCounts[placement.Anchor.Id])
+                .ThenByDescending(placement =>
+                    blockCostByGroup[placement.Anchor.Id] == 1)
                 .FirstOrDefault(placement =>
                 {
                     int cost = blockCostByGroup[placement.Anchor.Id];

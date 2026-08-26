@@ -202,6 +202,13 @@ unit. A block is always 45 seconds of the exact named exercise followed by 15
 seconds of rest. Blocks in one sequence are adjacent, cannot be divided between
 sessions, and share one Keep/reject decision after the final block.
 
+Long-workout extra sets are allocated in set-count rounds. Within the same
+round, one-block sequences are preferred before multi-block sequences; hard
+work, Keep status, and workout order then break ties. This gives standalone
+movements their second-set opportunity first without allowing third sets to
+starve a multi-block sequence that still has only one set. Exact remaining
+duration remains mandatory.
+
 Sequence structure is derived from the demonstrated movement:
 
 - A genuinely simultaneous bilateral or naturally alternating movement remains

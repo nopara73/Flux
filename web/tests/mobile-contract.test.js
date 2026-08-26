@@ -1146,6 +1146,14 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
+    /OrderBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
+  );
+  assert.match(
+    workoutModule,
+    /setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*setCountsBySelectionGroupId\.get\(right\.anchor\.id\) \|\|[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1[\s\S]*blockCostByGroup\.get\(left\.anchor\.id\) === 1/,
+  );
+  assert.match(
+    sessionService,
     /selectedGroupsByRootId[\s\S]*GetSequencePlacementOptions[\s\S]*CoveredGroups/,
   );
   assert.match(

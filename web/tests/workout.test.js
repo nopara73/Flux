@@ -2525,6 +2525,59 @@ test("long workouts emit adjacent atomic sequence blocks with exact duration", (
   assert.equal(getMovementCountdownDurationMs(sequenceRounds[1]), 45_000);
 });
 
+for (const [minutes, expectedMultiBlockSets, expectedRepeatedSingles] of [
+  [45, 1, 15],
+  [60, 2, 28],
+]) {
+  test(`${minutes}-minute extra sets prefer single blocks within each set round`, () => {
+    const groups = RESOLUTIONS.get(30).groups;
+    const first = exercise(
+      1,
+      groups[0].canonicalGroups[0],
+      groups[0].canonicalGroups.slice(1),
+      100,
+    );
+    const second = exercise(
+      2,
+      groups[1].canonicalGroups[0],
+      groups[1].canonicalGroups.slice(1),
+      100,
+    );
+    first.muscularDemand = HARD_MUSCULAR_DEMAND;
+    second.muscularDemand = HARD_MUSCULAR_DEMAND;
+    first.sequenceBlocks = [
+      { ...first.sequenceBlocks[0] },
+      { ...second.sequenceBlocks[0] },
+    ];
+    second.sequenceBlocks = [];
+    const singleBlockExercises = groups.slice(2).map((group, index) => exercise(
+      100 + index,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      100,
+    ));
+    const session = new WorkoutSession(
+      [first, second, ...singleBlockExercises],
+      createDefaultState(),
+      () => 0,
+    );
+
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
+
+    assert.equal(
+      session.state.activeSetCountsBySelectionGroupId[groups[0].id],
+      expectedMultiBlockSets,
+    );
+    assert.equal(
+      groups.slice(2).filter((group) =>
+        session.state.activeSetCountsBySelectionGroupId[group.id] === 2).length,
+      expectedRepeatedSingles,
+    );
+    assert.ok(Object.values(session.state.activeSetCountsBySelectionGroupId)
+      .every((setCount) => setCount >= 1 && setCount <= 2));
+  });
+}
+
 for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
   test(`same-primary sequences yield to exact ${minutes}-minute block capacity`, () => {
     const exercises = directionPairCatalog();

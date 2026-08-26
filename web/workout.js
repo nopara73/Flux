@@ -3998,7 +3998,9 @@ export class WorkoutSession {
       const selectedPlacement = [...repeatablePlacements]
         .sort((left, right) =>
           setCountsBySelectionGroupId.get(left.anchor.id) -
-            setCountsBySelectionGroupId.get(right.anchor.id))
+            setCountsBySelectionGroupId.get(right.anchor.id) ||
+          Number(blockCostByGroup.get(right.anchor.id) === 1) -
+            Number(blockCostByGroup.get(left.anchor.id) === 1))
         .find((placement) => {
           const cost = blockCostByGroup.get(placement.anchor.id);
           return cost <= remainingMinutes &&

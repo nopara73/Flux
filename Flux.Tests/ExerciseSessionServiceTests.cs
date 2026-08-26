@@ -198,7 +198,7 @@ public sealed class ExerciseSessionServiceTests
                     index + 1,
                     group.CanonicalGroups.Single(),
                     0,
-                    index is >= 1 and <= 6 ? [overloadedMuscle] : []),
+                    index == 1 ? [overloadedMuscle] : []),
                 WorkoutRecoveryPolicy.HardMuscularDemand))
             .ToArray();
         Exercise unilateral = CloneWithMuscularDemand(
@@ -215,7 +215,7 @@ public sealed class ExerciseSessionServiceTests
             WorkoutRecoveryPolicy.HardMuscularDemand);
         var state = new WorkoutState
         {
-            LastWorkoutMinutes = 45,
+            LastWorkoutMinutes = 90,
             SelectedExerciseIds = groups
                 .Select((group, index) => (
                     GroupId: group.Id,
@@ -226,7 +226,7 @@ public sealed class ExerciseSessionServiceTests
             [.. selected, replacement],
             new AlwaysZeroRandom());
 
-        service.StartWorkout(state, 45, WorkoutModifiers.None);
+        service.StartWorkout(state, 90, WorkoutModifiers.None);
 
         Assert.Equal(unilateral.Id, state.SelectedExerciseIds[targetGroup.Id]);
         Assert.Equal(
@@ -1482,6 +1482,54 @@ public sealed class ExerciseSessionServiceTests
             2,
             service.GetActiveGroups(state)
                 .Count(round => round.SelectionKey == group.Id)));
+    }
+
+    [Theory]
+    [InlineData(45, 1, 15)]
+    [InlineData(60, 2, 28)]
+    public void LongWorkoutExtraSetsPreferSingleBlockSequencesWithinEachSetRound(
+        int minutes,
+        int expectedMultiBlockSetCount,
+        int expectedRepeatedSingleBlockCount)
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise first = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(1, groups[0], score: 100),
+                2),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        Exercise second = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(2, groups[1], score: 100),
+                1),
+            WorkoutRecoveryPolicy.HardMuscularDemand);
+        Exercise[] singleBlockExercises = groups
+            .Skip(2)
+            .Select((group, index) => QualifiedForGroup(
+                100 + index,
+                group,
+                score: 100))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [first, second, .. singleBlockExercises],
+            new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+        };
+
+        service.StartWorkout(state, minutes, WorkoutModifiers.None);
+
+        Assert.Equal(
+            expectedMultiBlockSetCount,
+            state.ActiveSetCountsBySelectionGroupId[groups[0].Id]);
+        Assert.Equal(
+            expectedRepeatedSingleBlockCount,
+            groups.Skip(2).Count(group =>
+                state.ActiveSetCountsBySelectionGroupId[group.Id] == 2));
+        Assert.All(
+            state.ActiveSetCountsBySelectionGroupId.Values,
+            setCount => Assert.InRange(setCount, 1, 2));
     }
 
     [Theory]
