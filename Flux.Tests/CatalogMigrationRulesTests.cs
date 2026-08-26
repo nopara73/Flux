@@ -812,6 +812,8 @@ public sealed class CatalogMigrationRulesTests
             },
             PendingRestGroupId = replacedGroup,
             PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestMillisecondsRemaining = 8_000,
+            PendingRestPausedByUser = true,
             PendingRestKept = true,
             PendingScoreExerciseId = replacedId,
             PendingScoreValue = -2,
@@ -826,6 +828,8 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
         Assert.Null(state.PendingRestGroupId);
         Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(0, state.PendingRestMillisecondsRemaining);
+        Assert.False(state.PendingRestPausedByUser);
         Assert.False(state.PendingRestKept);
         Assert.Equal(0, state.PendingScoreExerciseId);
         Assert.Equal(0, state.PendingScoreValue);

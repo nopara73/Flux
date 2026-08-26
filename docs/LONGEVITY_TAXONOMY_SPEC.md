@@ -398,7 +398,7 @@ lastWorkoutMinutes
 activeWorkoutMinutes
 selectedSlots: [{ slotIndex, exerciseId }]
 outcomes: [{ slotIndex, kept }]
-pendingRest: { slotIndex, exerciseId, endsAt, kept, scoreApplied } | null
+pendingRest: { slotIndex, exerciseId, endsAt, remaining, pausedByUser, kept, scoreApplied } | null
 workoutCompleted
 completionAcknowledged
 ```
@@ -465,7 +465,8 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 An actively timed movement or pending rest resumes after process recreation:
 
 - Completed rest decisions remain persisted.
-- If the app closes during a pending rest, restore that rest using its persisted absolute deadline. If the deadline already passed, resolve its persisted `kept` value immediately: tapped means keep; not tapped means one decrement/replacement.
+- If the app closes during a running pending rest, restore that rest using its persisted absolute deadline. If the deadline already passed, resolve its persisted `kept` value immediately: tapped means keep; not tapped means one decrement/replacement.
+- If the user pauses a pending rest, replace its deadline with the exact remaining duration and persist the user-pause state. Process recreation must keep Rest paused until the user explicitly resumes it; resuming creates a new deadline from that stored duration.
 - When movement starts or resumes, persist its round, remaining duration, and a wall-clock deadline. On backgrounding or user pause, replace the deadline with the exact paused remaining duration and persist whether the pause was user initiated.
 - If the process dies during Move, restore that same round and remaining time. A still-valid foreground deadline may account for time before the crash; an expired deadline falls back to the last safe stored duration so unseen background time is never credited. Do not score the restored movement.
 - If it closes during Ready before movement begins, record no outcome for that unfinished round and return to duration selection under the existing interruption-finalization path.

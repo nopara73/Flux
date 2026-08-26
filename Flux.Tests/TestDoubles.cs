@@ -87,6 +87,9 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             PendingMovementPausedByUser = state.PendingMovementPausedByUser,
             PendingRestGroupId = state.PendingRestGroupId,
             PendingRestEndsAtUnixMilliseconds = state.PendingRestEndsAtUnixMilliseconds,
+            PendingRestMillisecondsRemaining =
+                state.PendingRestMillisecondsRemaining,
+            PendingRestPausedByUser = state.PendingRestPausedByUser,
             PendingRestKept = state.PendingRestKept,
             PendingScoreExerciseId = state.PendingScoreExerciseId,
             PendingScoreValue = state.PendingScoreValue,

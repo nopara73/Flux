@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -63,6 +63,8 @@ public sealed class WorkoutStateInvariantTests
             },
             PendingRestGroupId = savedGroupId,
             PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestMillisecondsRemaining = 8_000,
+            PendingRestPausedByUser = true,
             PendingRestKept = true,
             PendingMovementGroupId = savedGroupId,
             PendingMovementMillisecondsRemaining = 12_345,
@@ -84,6 +86,8 @@ public sealed class WorkoutStateInvariantTests
         Assert.Empty(state.Outcomes);
         Assert.Null(state.PendingRestGroupId);
         Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(0, state.PendingRestMillisecondsRemaining);
+        Assert.False(state.PendingRestPausedByUser);
         Assert.False(state.PendingRestKept);
         Assert.Null(state.PendingMovementGroupId);
         Assert.Equal(0, state.PendingMovementMillisecondsRemaining);
@@ -307,7 +311,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -422,6 +426,33 @@ public sealed class WorkoutStateInvariantTests
             state.PendingMovementEndsAtUnixMilliseconds,
             restored.PendingMovementEndsAtUnixMilliseconds);
         Assert.True(restored.PendingMovementPausedByUser);
+    }
+
+    [Fact]
+    public void RestPauseCheckpointRoundTripsWithWorkoutState()
+    {
+        var state = new WorkoutState
+        {
+            ActiveWorkoutMinutes = 3,
+            PendingRestGroupId = "3.LowerBody",
+            PendingRestMillisecondsRemaining = 8_765,
+            PendingRestPausedByUser = true,
+            PendingRestKept = true,
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal(state.PendingRestGroupId, restored.PendingRestGroupId);
+        Assert.Equal(0, restored.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(
+            state.PendingRestMillisecondsRemaining,
+            restored.PendingRestMillisecondsRemaining);
+        Assert.True(restored.PendingRestPausedByUser);
+        Assert.True(restored.PendingRestKept);
     }
 
     private static Exercise Exercise(

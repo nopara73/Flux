@@ -365,12 +365,15 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/rest_playback_action"
                         android:layout_width="0dp"
-                        android:layout_height="32dp"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:contentDescription="@string/rest_label"
-                        android:importantForAccessibility="no"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/pause_rest_description"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
                         android:scaleType="fitStart"
                         android:src="@drawable/ic_phase_pause"
                         android:tint="@color/rest_text" />

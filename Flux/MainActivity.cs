@@ -114,6 +114,7 @@ public class MainActivity : Activity
     private ImageButton _playbackAction = null!;
     private ImageButton _nextAction = null!;
     private LinearLayout _restPanel = null!;
+    private ImageButton _restPlaybackAction = null!;
     private TextView _restCountdownText = null!;
     private ProgressBar _restProgress = null!;
     private ImageButton _keepButton = null!;
@@ -368,6 +369,8 @@ public class MainActivity : Activity
         _playbackAction = FindRequiredView<ImageButton>(Resource.Id.playback_action);
         _nextAction = FindRequiredView<ImageButton>(Resource.Id.next_action);
         _restPanel = FindRequiredView<LinearLayout>(Resource.Id.rest_panel);
+        _restPlaybackAction = FindRequiredView<ImageButton>(
+            Resource.Id.rest_playback_action);
         _restCountdownText = FindRequiredView<TextView>(Resource.Id.rest_countdown_text);
         _restProgress = FindRequiredView<ProgressBar>(Resource.Id.rest_progress);
         _keepButton = FindRequiredView<ImageButton>(Resource.Id.keep_button);
@@ -447,6 +450,7 @@ public class MainActivity : Activity
         _repeatAction.Click += (_, _) => RepeatExercise();
         _playbackAction.Click += (_, _) => TogglePlayback();
         _nextAction.Click += (_, _) => GoToNextExercise();
+        _restPlaybackAction.Click += (_, _) => ToggleRestPlayback();
         _keepButton.Click += (_, _) => KeepCurrentExercise();
         _mediaRetryButton.Click += (_, _) =>
         {
@@ -3110,12 +3114,26 @@ public class MainActivity : Activity
         ResumeRestCountdown();
     }
 
-    private string GetRestDescription() =>
-        _sessionService.IsIntermediateSequenceBlock(
+    private string GetRestDescription()
+    {
+        long millisecondsRemaining = _sessionService
+            .GetPendingRestMillisecondsRemaining(
+                _state,
+                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        int secondsRemaining = (int)Math.Ceiling(millisecondsRemaining / 1000d);
+        if (_state.PendingRestPausedByUser)
+        {
+            return $"Rest paused, {secondsRemaining} seconds remaining.";
+        }
+
+        return _sessionService.IsIntermediateSequenceBlock(
             _state,
             _currentWorkoutGroup)
-            ? "Rest, 15 seconds. The next block starts automatically."
-            : "Rest, 15 seconds. Tap the heart to keep this sequence.";
+            ? $"Rest, {secondsRemaining} seconds. " +
+                "The next block starts automatically."
+            : $"Rest, {secondsRemaining} seconds. " +
+                "Tap the heart to keep this sequence.";
+    }
 
     private void ShowRestPanel()
     {
@@ -3125,6 +3143,7 @@ public class MainActivity : Activity
                 _state,
                 _currentWorkoutGroup));
         ShowWorkoutPhase(WorkoutPhase.Rest);
+        UpdateRestPlaybackActionVisual();
         UpdateKeepButtonState();
         UpdateRestCountdownText();
     }
@@ -3166,16 +3185,22 @@ public class MainActivity : Activity
         _restTimer?.Dispose();
         _restTimer = null;
 
-        long millisecondsRemaining =
-            _state.PendingRestEndsAtUnixMilliseconds -
-            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long millisecondsRemaining = _sessionService
+            .GetPendingRestMillisecondsRemaining(
+                _state,
+                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        UpdateRestCountdownText();
+        UpdateRestPlaybackActionVisual();
+        if (_state.PendingRestPausedByUser)
+        {
+            return;
+        }
         if (millisecondsRemaining <= 0)
         {
             CompleteRest();
             return;
         }
 
-        UpdateRestCountdownText();
         _restTimer = new WorkoutCountDownTimer(
             millisecondsRemaining,
             250L,
@@ -3186,9 +3211,9 @@ public class MainActivity : Activity
 
     private void UpdateRestCountdownText()
     {
-        long millisecondsRemaining = Math.Max(
-            0,
-            _state.PendingRestEndsAtUnixMilliseconds -
+        long millisecondsRemaining = _sessionService
+            .GetPendingRestMillisecondsRemaining(
+                _state,
                 DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
         int secondsRemaining = (int)Math.Ceiling(millisecondsRemaining / 1000d);
         string secondsText = secondsRemaining.ToString();
@@ -3201,6 +3226,76 @@ public class MainActivity : Activity
         _restProgress.Progress = (int)Math.Min(
             millisecondsRemaining,
             RestSeconds * 1000L);
+    }
+
+    private void ToggleRestPlayback()
+    {
+        if (!_restActive ||
+            _state.PendingRestGroupId != _currentWorkoutGroup.Id)
+        {
+            return;
+        }
+
+        long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long millisecondsRemaining = _sessionService
+            .GetPendingRestMillisecondsRemaining(_state, nowUnixMilliseconds);
+        if (millisecondsRemaining <= 0)
+        {
+            CompleteRest();
+            return;
+        }
+
+        if (_state.PendingRestPausedByUser)
+        {
+            _sessionService.ResumeRest(
+                _state,
+                _currentWorkoutGroup,
+                nowUnixMilliseconds + millisecondsRemaining);
+            _stateStore.Save(_state);
+            _restPlaybackAction.PerformHapticFeedback(
+                FeedbackConstants.KeyboardTap);
+            ResumeRestCountdown();
+            int secondsRemaining =
+                (int)Math.Ceiling(millisecondsRemaining / 1000d);
+            AnnouncePhaseForAccessibility(
+                _restPlaybackAction,
+                $"Rest resumed, {secondsRemaining} seconds remaining.");
+            return;
+        }
+
+        _sessionService.PauseRest(
+            _state,
+            _currentWorkoutGroup,
+            millisecondsRemaining);
+        _stateStore.Save(_state);
+        PauseRestCountdown();
+        UpdateRestCountdownText();
+        UpdateRestPlaybackActionVisual();
+        _restPlaybackAction.PerformHapticFeedback(
+            FeedbackConstants.KeyboardTap);
+        int pausedSecondsRemaining =
+            (int)Math.Ceiling(millisecondsRemaining / 1000d);
+        AnnouncePhaseForAccessibility(
+            _restPlaybackAction,
+            $"Rest paused, {pausedSecondsRemaining} seconds remaining.");
+    }
+
+    private void UpdateRestPlaybackActionVisual()
+    {
+        bool paused = _state.PendingRestPausedByUser;
+        _restPlaybackAction.SetImageResource(
+            paused
+                ? Resource.Drawable.ic_phase_active
+                : Resource.Drawable.ic_phase_pause);
+        _restPlaybackAction.ContentDescription = GetString(
+            paused
+                ? Resource.String.resume_rest_description
+                : Resource.String.pause_rest_description);
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _restPlaybackAction.TooltipText =
+                _restPlaybackAction.ContentDescription;
+        }
     }
 
     private void PauseRestCountdown()

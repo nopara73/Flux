@@ -964,19 +964,35 @@ button.modifier-tile:not(:disabled):active {
   min-height: 44px;
 }
 
-.pause-icon {
+.rest-playback-control {
   flex: 1;
   display: flex;
-  gap: 5px;
   align-items: center;
+  align-self: stretch;
+  min-width: 48px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
 }
 
-.pause-icon i {
-  width: 5px;
-  height: 22px;
-  display: block;
-  border-radius: 1px;
-  background: var(--rest-text);
+.rest-playback-control svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.rest-playback-control[data-state="playing"] .rest-play-icon,
+.rest-playback-control[data-state="paused"] .rest-pause-icon {
+  display: none;
+}
+
+.rest-playback-control:focus-visible {
+  outline: 3px solid var(--rest-accent);
+  outline-offset: 3px;
+  border-radius: 8px;
 }
 
 .rest-countdown {
@@ -1676,9 +1692,9 @@ input:focus-visible {
     min-height: 72px;
   }
 
-  .pause-icon i {
-    width: 7px;
-    height: 32px;
+  .rest-playback-control svg {
+    width: 44px;
+    height: 44px;
   }
 
   .rest-countdown {

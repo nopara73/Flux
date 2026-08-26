@@ -224,8 +224,12 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 15);
-  assert.match(workoutState, /public int Version[^=]*=\s*18/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 16);
+  assert.match(workoutState, /public int Version[^=]*=\s*19/);
+  assert.match(workoutState, /PendingRestMillisecondsRemaining/);
+  assert.match(workoutState, /PendingRestPausedByUser/);
+  assert.match(workoutModule, /pendingRestMillisecondsRemaining/);
+  assert.match(workoutModule, /pendingRestPausedByUser/);
   assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
   assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
@@ -595,6 +599,22 @@ test("movement and rest phases use pronounced accents across the surface, media,
     workoutLayout,
     /<ImageButton[\s\S]*@\+id\/keep_button[\s\S]*@drawable\/ic_love[\s\S]*@color\/white/,
   );
+  assert.match(
+    workoutLayout,
+    /<ImageButton[\s\S]*@\+id\/rest_playback_action[\s\S]*@string\/pause_rest_description[\s\S]*@drawable\/ic_phase_pause/,
+  );
+  assert.match(
+    webIndex,
+    /<button[\s\S]*id="toggle-rest"[\s\S]*data-state="playing"[\s\S]*rest-pause-icon[\s\S]*rest-play-icon/,
+  );
+  assert.match(mainActivity, /ToggleRestPlayback/);
+  assert.match(mainActivity, /_sessionService\.PauseRest/);
+  assert.match(mainActivity, /_sessionService\.ResumeRest/);
+  assert.match(mainActivity, /UpdateRestPlaybackActionVisual/);
+  assert.match(webApp, /toggleRestPlayback/);
+  assert.match(webApp, /session\.pauseRest/);
+  assert.match(webApp, /session\.resumeRest/);
+  assert.match(webApp, /renderRestPlaybackToggle/);
   assert.match(
     mainActivity,
     /PendingRestKept[\s\S]*rest_button_background[\s\S]*SetColorFilter[\s\S]*Resource\.Color\.white/,

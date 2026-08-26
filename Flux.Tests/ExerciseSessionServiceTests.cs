@@ -290,7 +290,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -316,7 +316,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
@@ -1154,7 +1154,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1211,7 +1211,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -3007,6 +3007,75 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void UserPausedRestFreezesAndSurvivesPersistenceUntilResumed()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup group = service.GetNextGroup(state)
+            ?? throw new InvalidOperationException("Workout has no first group.");
+        long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        service.BeginRest(state, group, now + 15_000);
+
+        service.PauseRest(state, group, 9_876);
+
+        Assert.True(state.PendingRestPausedByUser);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(9_876, state.PendingRestMillisecondsRemaining);
+        Assert.Equal(
+            9_876,
+            service.GetPendingRestMillisecondsRemaining(
+                state,
+                now + (long)TimeSpan.FromHours(4).TotalMilliseconds));
+
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        service.Initialize(restored);
+
+        Assert.Equal(group.Id, service.GetPendingRestGroup(restored)?.Id);
+        Assert.True(restored.PendingRestPausedByUser);
+        Assert.Equal(
+            9_876,
+            service.GetPendingRestMillisecondsRemaining(
+                restored,
+                now + (long)TimeSpan.FromDays(1).TotalMilliseconds));
+
+        long resumedAt = now + (long)TimeSpan.FromDays(1).TotalMilliseconds;
+        service.ResumeRest(restored, group, resumedAt + 9_876);
+
+        Assert.False(restored.PendingRestPausedByUser);
+        Assert.Equal(0, restored.PendingRestMillisecondsRemaining);
+        Assert.Equal(resumedAt + 9_876, restored.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(
+            7_876,
+            service.GetPendingRestMillisecondsRemaining(restored, resumedAt + 2_000));
+    }
+
+    [Fact]
+    public void ClearingPausedRestClearsEveryPauseCheckpointField()
+    {
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup group = service.GetNextGroup(state)
+            ?? throw new InvalidOperationException("Workout has no first group.");
+        long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        service.BeginRest(state, group, now + 15_000);
+        service.PauseRest(state, group, 8_000);
+
+        service.ClearPendingRest(state);
+
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.Equal(0, state.PendingRestMillisecondsRemaining);
+        Assert.False(state.PendingRestPausedByUser);
+        Assert.False(state.PendingRestKept);
+    }
+
+    [Fact]
     public void CompletingMovementClearsResumeCheckpointBeforeRest()
     {
         Exercise[] exercises = ThreeGroupCatalog();
@@ -3072,7 +3141,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(18, state.Version);
+        Assert.Equal(19, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(

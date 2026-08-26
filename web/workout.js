@@ -152,7 +152,7 @@ export const SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 15;
+export const CURRENT_WORKOUT_STATE_VERSION = 16;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
@@ -2104,6 +2104,8 @@ export function createDefaultState() {
     pendingMovementPausedByUser: false,
     pendingRestGroupId: null,
     pendingRestEndsAtUnixMilliseconds: 0,
+    pendingRestMillisecondsRemaining: 0,
+    pendingRestPausedByUser: false,
     pendingRestKept: false,
     lastWorkoutMinutes: 10,
     lastWorkoutModifiers: DEFAULT_WORKOUT_MODIFIERS,
@@ -2157,6 +2159,12 @@ function normalizeStateShape(raw) {
   state.pendingRestEndsAtUnixMilliseconds = Number.isFinite(raw.pendingRestEndsAtUnixMilliseconds)
     ? Math.trunc(raw.pendingRestEndsAtUnixMilliseconds)
     : 0;
+  state.pendingRestMillisecondsRemaining = Number.isFinite(
+    raw.pendingRestMillisecondsRemaining,
+  )
+    ? Math.trunc(raw.pendingRestMillisecondsRemaining)
+    : 0;
+  state.pendingRestPausedByUser = raw.pendingRestPausedByUser === true;
   state.pendingRestKept = raw.pendingRestKept === true;
   state.pendingMovementGroupId = typeof raw.pendingMovementGroupId === "string"
     ? raw.pendingMovementGroupId
@@ -2782,7 +2790,7 @@ export class WorkoutSession {
       (group) => group.id === this.state.pendingRestGroupId,
     );
     if (!pendingGroup ||
-        this.state.pendingRestEndsAtUnixMilliseconds <= 0 ||
+        !this.hasValidPendingRestTiming() ||
         this.state.outcomes[pendingGroup.id] !== undefined) {
       return null;
     }
@@ -2798,6 +2806,17 @@ export class WorkoutSession {
     } catch {
       return null;
     }
+  }
+
+  hasValidPendingRestTiming() {
+    return this.state.pendingRestPausedByUser
+      ? this.state.pendingRestEndsAtUnixMilliseconds === 0 &&
+          Number.isSafeInteger(this.state.pendingRestMillisecondsRemaining) &&
+          this.state.pendingRestMillisecondsRemaining > 0 &&
+          this.state.pendingRestMillisecondsRemaining <= REST_DURATION_MS
+      : Number.isSafeInteger(this.state.pendingRestEndsAtUnixMilliseconds) &&
+          this.state.pendingRestEndsAtUnixMilliseconds > 0 &&
+          this.state.pendingRestMillisecondsRemaining === 0;
   }
 
   getPendingMovementMillisecondsRemaining(nowUnixMilliseconds) {
@@ -2864,6 +2883,8 @@ export class WorkoutSession {
     this.clearPendingMovement();
     this.state.pendingRestGroupId = group.id;
     this.state.pendingRestEndsAtUnixMilliseconds = Math.trunc(endsAtUnixMilliseconds);
+    this.state.pendingRestMillisecondsRemaining = 0;
+    this.state.pendingRestPausedByUser = false;
     this.state.pendingRestKept = false;
     const exercise = this.getSelectedExercise(group);
     if (exercise.muscularDemand === MODERATE_MUSCULAR_DEMAND ||
@@ -2901,9 +2922,58 @@ export class WorkoutSession {
     return true;
   }
 
+  pauseRest(group, millisecondsRemaining) {
+    const pendingGroup = this.getPendingRestGroup();
+    if (!pendingGroup || pendingGroup.id !== group.id ||
+        this.state.pendingRestPausedByUser) {
+      throw new Error(`${group.displayName} does not have a running rest.`);
+    }
+    if (!Number.isSafeInteger(millisecondsRemaining) ||
+        millisecondsRemaining <= 0 ||
+        millisecondsRemaining > REST_DURATION_MS) {
+      throw new RangeError("Rest time remaining is invalid.");
+    }
+
+    this.state.pendingRestEndsAtUnixMilliseconds = 0;
+    this.state.pendingRestMillisecondsRemaining = millisecondsRemaining;
+    this.state.pendingRestPausedByUser = true;
+  }
+
+  resumeRest(group, endsAtUnixMilliseconds) {
+    const pendingGroup = this.getPendingRestGroup();
+    if (!pendingGroup || pendingGroup.id !== group.id ||
+        !this.state.pendingRestPausedByUser) {
+      throw new Error(`${group.displayName} does not have a paused rest.`);
+    }
+    if (!Number.isSafeInteger(endsAtUnixMilliseconds) ||
+        endsAtUnixMilliseconds <= 0) {
+      throw new RangeError("Rest deadline must be positive Unix milliseconds.");
+    }
+
+    this.state.pendingRestEndsAtUnixMilliseconds = endsAtUnixMilliseconds;
+    this.state.pendingRestMillisecondsRemaining = 0;
+    this.state.pendingRestPausedByUser = false;
+  }
+
+  getPendingRestMillisecondsRemaining(nowUnixMilliseconds) {
+    if (!Number.isSafeInteger(nowUnixMilliseconds) || nowUnixMilliseconds <= 0) {
+      throw new RangeError("Current time must be positive Unix milliseconds.");
+    }
+    if (!this.getPendingRestGroup()) {
+      return 0;
+    }
+
+    const remaining = this.state.pendingRestPausedByUser
+      ? this.state.pendingRestMillisecondsRemaining
+      : this.state.pendingRestEndsAtUnixMilliseconds - nowUnixMilliseconds;
+    return Math.max(0, Math.min(remaining, REST_DURATION_MS));
+  }
+
   clearPendingRest() {
     this.state.pendingRestGroupId = null;
     this.state.pendingRestEndsAtUnixMilliseconds = 0;
+    this.state.pendingRestMillisecondsRemaining = 0;
+    this.state.pendingRestPausedByUser = false;
     this.state.pendingRestKept = false;
   }
 
@@ -4500,7 +4570,7 @@ export class WorkoutSession {
         ])
       : null;
     if (pendingBaseGroup && pendingRoot &&
-        this.state.pendingRestEndsAtUnixMilliseconds > 0 &&
+        this.hasValidPendingRestTiming() &&
         this.isSavedSelectionValid(
           pendingRoot,
           pendingBaseGroup,
@@ -4530,7 +4600,7 @@ export class WorkoutSession {
       (group) => group.id === this.state.pendingRestGroupId,
     );
     if (pendingRest &&
-        this.state.pendingRestEndsAtUnixMilliseconds > 0 &&
+        this.hasValidPendingRestTiming() &&
         this.state.outcomes[pendingRest.id] === undefined) {
       this.clearPendingMovement();
     }

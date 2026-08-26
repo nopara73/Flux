@@ -12,7 +12,8 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 18;
+    private const int CurrentStateVersion = 19;
+    private const long RestDurationMilliseconds = 15_000L;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
@@ -391,6 +392,8 @@ public sealed class ExerciseSessionService
         ClearPendingMovement(state);
         state.PendingRestGroupId = group.Id;
         state.PendingRestEndsAtUnixMilliseconds = endsAtUnixMilliseconds;
+        state.PendingRestMillisecondsRemaining = 0;
+        state.PendingRestPausedByUser = false;
         state.PendingRestKept = false;
         WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
             state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
@@ -472,6 +475,75 @@ public sealed class ExerciseSessionService
 
         state.PendingRestKept = true;
         return true;
+    }
+
+    public void PauseRest(
+        WorkoutState state,
+        WorkoutGroup group,
+        long millisecondsRemaining)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        WorkoutGroup? pendingGroup = GetPendingRestGroup(state);
+        if (pendingGroup?.Id != group.Id || state.PendingRestPausedByUser)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} does not have a running rest.");
+        }
+        if (millisecondsRemaining <= 0 ||
+            millisecondsRemaining > RestDurationMilliseconds)
+        {
+            throw new ArgumentOutOfRangeException(nameof(millisecondsRemaining));
+        }
+
+        state.PendingRestEndsAtUnixMilliseconds = 0;
+        state.PendingRestMillisecondsRemaining = millisecondsRemaining;
+        state.PendingRestPausedByUser = true;
+    }
+
+    public void ResumeRest(
+        WorkoutState state,
+        WorkoutGroup group,
+        long endsAtUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(group);
+
+        WorkoutGroup? pendingGroup = GetPendingRestGroup(state);
+        if (pendingGroup?.Id != group.Id || !state.PendingRestPausedByUser)
+        {
+            throw new InvalidOperationException(
+                $"{group.DisplayName} does not have a paused rest.");
+        }
+        if (endsAtUnixMilliseconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(endsAtUnixMilliseconds));
+        }
+
+        state.PendingRestEndsAtUnixMilliseconds = endsAtUnixMilliseconds;
+        state.PendingRestMillisecondsRemaining = 0;
+        state.PendingRestPausedByUser = false;
+    }
+
+    public long GetPendingRestMillisecondsRemaining(
+        WorkoutState state,
+        long nowUnixMilliseconds)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        if (nowUnixMilliseconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(nowUnixMilliseconds));
+        }
+        if (GetPendingRestGroup(state) is null)
+        {
+            return 0;
+        }
+
+        long remaining = state.PendingRestPausedByUser
+            ? state.PendingRestMillisecondsRemaining
+            : state.PendingRestEndsAtUnixMilliseconds - nowUnixMilliseconds;
+        return Math.Clamp(remaining, 0L, RestDurationMilliseconds);
     }
 
     public long GetPendingMovementMillisecondsRemaining(
@@ -739,6 +811,8 @@ public sealed class ExerciseSessionService
 
         state.PendingRestGroupId = null;
         state.PendingRestEndsAtUnixMilliseconds = 0;
+        state.PendingRestMillisecondsRemaining = 0;
+        state.PendingRestPausedByUser = false;
         state.PendingRestKept = false;
     }
 
@@ -1966,7 +2040,7 @@ public sealed class ExerciseSessionService
     private void NormalizePendingRest(WorkoutState state)
     {
         if (state.PendingRestGroupId is string pendingGroupId &&
-            state.PendingRestEndsAtUnixMilliseconds > 0 &&
+            HasValidPendingRestTiming(state) &&
             KnownWorkoutGroups.TryGetValue(
                 pendingGroupId,
                 out WorkoutGroup? pendingBaseGroup) &&
@@ -2456,7 +2530,7 @@ public sealed class ExerciseSessionService
     private WorkoutGroup? GetValidPendingRestGroup(WorkoutState state)
     {
         if (state.PendingRestGroupId is not string pendingGroupId ||
-            state.PendingRestEndsAtUnixMilliseconds <= 0 ||
+            !HasValidPendingRestTiming(state) ||
             state.Outcomes.ContainsKey(pendingGroupId))
         {
             return null;
@@ -2480,6 +2554,14 @@ public sealed class ExerciseSessionService
 
         return pendingGroup;
     }
+
+    private static bool HasValidPendingRestTiming(WorkoutState state) =>
+        state.PendingRestPausedByUser
+            ? state.PendingRestEndsAtUnixMilliseconds == 0 &&
+                state.PendingRestMillisecondsRemaining > 0 &&
+                state.PendingRestMillisecondsRemaining <= RestDurationMilliseconds
+            : state.PendingRestEndsAtUnixMilliseconds > 0 &&
+                state.PendingRestMillisecondsRemaining == 0;
 
     private void NormalizeCompletionState(WorkoutState state)
     {
@@ -2517,6 +2599,8 @@ public sealed class ExerciseSessionService
         state.PendingMovementPausedByUser = false;
         state.PendingRestGroupId = null;
         state.PendingRestEndsAtUnixMilliseconds = 0;
+        state.PendingRestMillisecondsRemaining = 0;
+        state.PendingRestPausedByUser = false;
         state.PendingRestKept = false;
     }
 

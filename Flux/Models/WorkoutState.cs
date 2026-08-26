@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 18;
+    public int Version { get; set; } = 19;
 
     public int CatalogRevision { get; set; }
 
@@ -42,6 +42,10 @@ public sealed class WorkoutState
     public string? PendingRestGroupId { get; set; }
 
     public long PendingRestEndsAtUnixMilliseconds { get; set; }
+
+    public long PendingRestMillisecondsRemaining { get; set; }
+
+    public bool PendingRestPausedByUser { get; set; }
 
     public bool PendingRestKept { get; set; }
 

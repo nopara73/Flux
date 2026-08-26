@@ -79,6 +79,7 @@ const elements = {
   movementCountdown: byId("movement-countdown"),
   movementProgressFill: byId("movement-progress-fill"),
   restPanel: byId("rest-panel"),
+  restPlaybackToggle: byId("toggle-rest"),
   restCountdown: byId("rest-countdown"),
   restProgressFill: byId("rest-progress-fill"),
   keepExercise: byId("keep-exercise"),
@@ -211,6 +212,7 @@ function bindEvents() {
   elements.repeatExercise.addEventListener("click", repeatMovement);
   elements.playbackToggle.addEventListener("click", toggleMovementPlayback);
   elements.nextExercise.addEventListener("click", goToNextExercise);
+  elements.restPlaybackToggle.addEventListener("click", toggleRestPlayback);
   elements.keepExercise.addEventListener("click", keepExercise);
   elements.mediaRetry.addEventListener("click", retryMedia);
   elements.doneButton.addEventListener("click", closeCompletion);
@@ -644,6 +646,7 @@ function showRestPanel() {
   if (currentGroup) {
     renderExecutionTimeline(currentGroup, isIntermediateBlock);
   }
+  renderRestPlaybackToggle();
   elements.keepExercise.hidden = isIntermediateBlock;
   elements.keepExercise.disabled = false;
   elements.keepExercise.setAttribute("aria-label", "Keep exercise for the next session");
@@ -1206,15 +1209,22 @@ function completeMovement() {
 }
 
 function restStatusMessage() {
+  const seconds = session
+    ? Math.ceil(session.getPendingRestMillisecondsRemaining(Date.now()) / 1000)
+    : 15;
+  if (session?.state.pendingRestPausedByUser) {
+    return `Rest paused, ${seconds} seconds remaining.`;
+  }
   return currentGroup && session?.isIntermediateSequenceBlock(currentGroup)
-    ? "Rest, 15 seconds. The next block starts automatically."
-    : "Rest, 15 seconds. Tap the heart to keep this sequence.";
+    ? `Rest, ${seconds} seconds. The next block starts automatically.`
+    : `Rest, ${seconds} seconds. Tap the heart to keep this sequence.`;
 }
 
 function startRestTimer() {
   clearInterval(restTimer);
+  restTimer = null;
   updateRest();
-  if (restActive) {
+  if (restActive && !session?.state.pendingRestPausedByUser) {
     restTimer = setInterval(updateRest, TIMER_INTERVAL_MS);
   }
 }
@@ -1223,10 +1233,7 @@ function updateRest() {
   if (!restActive || !session) {
     return;
   }
-  const remaining = Math.max(
-    0,
-    session.state.pendingRestEndsAtUnixMilliseconds - Date.now(),
-  );
+  const remaining = session.getPendingRestMillisecondsRemaining(Date.now());
   const seconds = Math.ceil(remaining / 1000);
   elements.restCountdown.value = String(seconds);
   elements.restCountdown.textContent = String(seconds);
@@ -1234,6 +1241,47 @@ function updateRest() {
   if (remaining <= 0) {
     completeRest();
   }
+}
+
+function toggleRestPlayback() {
+  if (!restActive || !session || !currentGroup ||
+      session.state.pendingRestGroupId !== currentGroup.id) {
+    return;
+  }
+
+  const now = Date.now();
+  const remaining = session.getPendingRestMillisecondsRemaining(now);
+  if (remaining <= 0) {
+    completeRest();
+    return;
+  }
+
+  if (session.state.pendingRestPausedByUser) {
+    session.resumeRest(currentGroup, now + remaining);
+    persistState();
+    renderRestPlaybackToggle();
+    elements.status.textContent =
+      `Rest resumed, ${Math.ceil(remaining / 1000)} seconds remaining.`;
+    startRestTimer();
+    return;
+  }
+
+  session.pauseRest(currentGroup, remaining);
+  persistState();
+  clearInterval(restTimer);
+  restTimer = null;
+  updateRest();
+  renderRestPlaybackToggle();
+  elements.status.textContent =
+    `Rest paused, ${Math.ceil(remaining / 1000)} seconds remaining.`;
+}
+
+function renderRestPlaybackToggle() {
+  const paused = session?.state.pendingRestPausedByUser === true;
+  const label = paused ? "Resume rest" : "Pause rest";
+  elements.restPlaybackToggle.dataset.state = paused ? "paused" : "playing";
+  elements.restPlaybackToggle.setAttribute("aria-label", label);
+  elements.restPlaybackToggle.title = label;
 }
 
 function keepExercise() {

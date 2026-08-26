@@ -552,7 +552,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 15);
+  assert.equal(state.version, 16);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -569,7 +569,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 15);
+  assert.equal(state.version, 16);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -2917,7 +2917,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 15);
+  assert.equal(restored.state.version, 16);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -3366,6 +3366,66 @@ test("a pending rest remains resumable after state restoration", () => {
   assert.equal(restored.getPendingRestGroup()?.id, group.id);
   assert.equal(restored.state.pendingRestEndsAtUnixMilliseconds, now + REST_DURATION_MS);
   assert.equal(restored.state.activeWorkoutMinutes, 3);
+});
+
+test("a user-paused rest freezes across persistence until explicitly resumed", () => {
+  const now = Date.UTC(2026, 7, 23, 2, 0, 0);
+  const started = new WorkoutSession(catalog, createDefaultState(), () => now);
+  started.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = started.getNextGroup();
+  started.beginRest(group, now + REST_DURATION_MS);
+
+  started.pauseRest(group, 9_876);
+
+  assert.equal(started.state.pendingRestPausedByUser, true);
+  assert.equal(started.state.pendingRestEndsAtUnixMilliseconds, 0);
+  assert.equal(started.state.pendingRestMillisecondsRemaining, 9_876);
+  assert.equal(
+    started.getPendingRestMillisecondsRemaining(now + 14_400_000),
+    9_876,
+  );
+
+  const restored = new WorkoutSession(
+    catalog,
+    parseStoredState(JSON.stringify(started.state)),
+    () => now,
+  );
+  restored.initialize();
+
+  assert.equal(restored.getPendingRestGroup()?.id, group.id);
+  assert.equal(restored.state.pendingRestPausedByUser, true);
+  assert.equal(
+    restored.getPendingRestMillisecondsRemaining(now + 86_400_000),
+    9_876,
+  );
+
+  const resumedAt = now + 86_400_000;
+  restored.resumeRest(group, resumedAt + 9_876);
+
+  assert.equal(restored.state.pendingRestPausedByUser, false);
+  assert.equal(restored.state.pendingRestMillisecondsRemaining, 0);
+  assert.equal(restored.state.pendingRestEndsAtUnixMilliseconds, resumedAt + 9_876);
+  assert.equal(
+    restored.getPendingRestMillisecondsRemaining(resumedAt + 2_000),
+    7_876,
+  );
+});
+
+test("clearing a paused rest clears every pause checkpoint field", () => {
+  const now = Date.UTC(2026, 7, 23, 2, 0, 0);
+  const session = new WorkoutSession(catalog, createDefaultState(), () => now);
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const group = session.getNextGroup();
+  session.beginRest(group, now + REST_DURATION_MS);
+  session.pauseRest(group, 8_000);
+
+  session.clearPendingRest();
+
+  assert.equal(session.state.pendingRestGroupId, null);
+  assert.equal(session.state.pendingRestEndsAtUnixMilliseconds, 0);
+  assert.equal(session.state.pendingRestMillisecondsRemaining, 0);
+  assert.equal(session.state.pendingRestPausedByUser, false);
+  assert.equal(session.state.pendingRestKept, false);
 });
 
 test("beginning rest clears the completed movement resume checkpoint", () => {

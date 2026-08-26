@@ -261,8 +261,9 @@ gaps. The main header counter counts each selected sequence once, so it remains
 unchanged across that sequence's sides, directions, linked exercises, and
 repeated sets. The workout controls follow a media-player model: shuffle
 rejects an unstarted sequence with the same -1 vote as Next and replaces it in
-place, play starts, pause/resume controls the active timer, repeat restarts the
-current block without scoring it, and next rejects the sequence and advances.
+place, play starts, pause/resume controls the active movement or rest timer,
+repeat restarts the current block without scoring it, and next rejects the
+sequence and advances.
 Shuffle preserves the session profile and replaces the complete sequence. It is
 unavailable after any earlier block from that sequence has begun. Repeated
 shuffles draw without repetition from every remaining session
@@ -285,9 +286,11 @@ active round, exact remaining movement time, and user-pause state are committed
 locally; reopening after process death returns to that movement instead of
 discarding the workout. A live foreground deadline preserves elapsed time; if
 that deadline expired while Flux was absent, restoration uses the last safe
-checkpoint instead of crediting unseen exercise time. Rest uses an absolute
-deadline and also restores after process death, advancing normally if its
-deadline already passed. Closing during Ready still leaves the unreached
+checkpoint instead of crediting unseen exercise time. Running Rest uses an
+absolute deadline and also restores after process death, advancing normally if
+its deadline already passed. Tapping its pause control instead persists the
+exact remaining Rest time with no deadline; reopening keeps it paused until the
+user explicitly resumes it. Closing during Ready still leaves the unreached
 exercise neutral.
 
 ## Exercise catalog

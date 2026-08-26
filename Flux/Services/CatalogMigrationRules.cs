@@ -1428,6 +1428,8 @@ public static class CatalogMigrationRules
         {
             state.PendingRestGroupId = null;
             state.PendingRestEndsAtUnixMilliseconds = 0;
+            state.PendingRestMillisecondsRemaining = 0;
+            state.PendingRestPausedByUser = false;
             state.PendingRestKept = false;
         }
 
