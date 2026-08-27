@@ -382,10 +382,18 @@ test("web and mobile persist one combined duration and modifier selection contex
     workoutModule,
     /findWorkoutProfileLineupDeficiencies[\s\S]*getMaximumDistinctLineupSize/,
   );
-  assert.match(
-    webApp,
-    /findWorkoutModifierPairCoverageDeficiencies[\s\S]*findWorkoutModifierMaterialityDeficiencies[\s\S]*findMirrorCategoryDeficiencies[\s\S]*findWorkoutProfileLineupDeficiencies/,
-  );
+  for (const heavyCatalogInvariant of [
+    "findWorkoutModifierPairCoverageDeficiencies",
+    "findWorkoutModifierMaterialityDeficiencies",
+    "findWorkoutProfileLineupDeficiencies",
+  ]) {
+    assert.match(webBuild, new RegExp(heavyCatalogInvariant));
+    assert.doesNotMatch(webApp, new RegExp(heavyCatalogInvariant));
+  }
+  assert.match(webBuild, /failedCatalogInvariants[\s\S]*Catalog failed build-time invariants/);
+  assert.match(webApp, /findMirrorCategoryDeficiencies/);
+  assert.match(webApp, /isModifierMetadataComplete/);
+  assert.match(webApp, /isSessionMovementMetadataValid/);
   assert.match(
     exerciseDatabase,
     /FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*hasUndersizedModifierPairState/,

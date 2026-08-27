@@ -3,6 +3,15 @@ import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promi
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  findMirrorCategoryDeficiencies,
+  findWorkoutModifierMaterialityDeficiencies,
+  findWorkoutModifierPairCoverageDeficiencies,
+  findWorkoutProfileLineupDeficiencies,
+  isModifierMetadataComplete,
+  isSessionMovementMetadataValid,
+} from "../workout.js";
+
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.resolve(scriptDirectory, "..");
 const repositoryRoot = path.resolve(webRoot, "..");
@@ -77,6 +86,32 @@ const catalog = JSON.parse(
 
 if (!Array.isArray(catalog) || catalog.length !== 448) {
   throw new Error(`Expected 448 exercises, found ${catalog?.length ?? "invalid data"}.`);
+}
+
+const catalogInvariantChecks = [
+  ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
+  ["session movement metadata", isSessionMovementMetadataValid(catalog)],
+  [
+    "modifier pair coverage",
+    findWorkoutModifierPairCoverageDeficiencies(catalog).length === 0,
+  ],
+  [
+    "modifier materiality",
+    findWorkoutModifierMaterialityDeficiencies(catalog).length === 0,
+  ],
+  ["mirror categories", findMirrorCategoryDeficiencies(catalog).length === 0],
+  [
+    "distinct workout lineups",
+    findWorkoutProfileLineupDeficiencies(catalog).length === 0,
+  ],
+];
+const failedCatalogInvariants = catalogInvariantChecks
+  .filter(([, valid]) => !valid)
+  .map(([name]) => name);
+if (failedCatalogInvariants.length > 0) {
+  throw new Error(
+    `Catalog failed build-time invariants: ${failedCatalogInvariants.join(", ")}.`,
+  );
 }
 
 for (const exercise of catalog) {

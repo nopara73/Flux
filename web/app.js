@@ -5,10 +5,7 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
-  findWorkoutModifierMaterialityDeficiencies,
-  findWorkoutModifierPairCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
-  findWorkoutProfileLineupDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
@@ -151,19 +148,10 @@ async function bootstrap() {
       throw new Error("Asset-version manifest is invalid.");
     }
     assetVersions = Object.freeze({ ...loadedAssetVersions });
-    const pairwiseCoverageDeficiencies =
-      findWorkoutModifierPairCoverageDeficiencies(exercises);
-    const modifierMaterialityDeficiencies =
-      findWorkoutModifierMaterialityDeficiencies(exercises);
     const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
-    const lineupDeficiencies =
-      findWorkoutProfileLineupDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
         !isSessionMovementMetadataValid(exercises) ||
-        pairwiseCoverageDeficiencies.length > 0 ||
-        modifierMaterialityDeficiencies.length > 0 ||
-        mirrorCategoryDeficiencies.length > 0 ||
-        lineupDeficiencies.length > 0) {
+        mirrorCategoryDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
