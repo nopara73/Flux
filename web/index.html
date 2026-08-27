@@ -8,6 +8,8 @@
     <title>Flux</title>
     <link rel="icon" href="./assets/flux_appicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="preload" href="./data/exercises.json" as="fetch" crossorigin />
+    <link rel="preload" href="./data/asset-versions.json" as="fetch" crossorigin />
     <script type="module" src="./app.js"></script>
   </head>
   <body>
@@ -114,7 +116,7 @@
         </div>
 
         <div class="duration-action-bar">
-          <button id="begin-workout" class="primary-button begin-workout" type="button" disabled>
+          <button id="begin-workout" class="primary-button begin-workout" type="button">
             <span class="forward-arrow" aria-hidden="true"></span>
           </button>
         </div>
@@ -301,5 +303,6 @@
       </section>
     </main>
     <div id="status" class="visually-hidden" aria-live="polite"></div>
+    <script src="./instant-controls.js"></script>
   </body>
 </html>

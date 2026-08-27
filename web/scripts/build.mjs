@@ -28,32 +28,15 @@ const workoutSource = await readFile(path.join(webRoot, "workout.js"), "utf8");
 const workoutOutputName = fingerprintedName("workout", "js", workoutSource);
 await writeFile(path.join(outputRoot, workoutOutputName), workoutSource, "utf8");
 
-const appSource = await readFile(path.join(webRoot, "app.js"), "utf8");
-const fingerprintedAppSource = appSource.replace(
-  'from "./workout.js";',
-  `from "./${workoutOutputName}";`,
-);
-if (fingerprintedAppSource === appSource) {
-  throw new Error("Could not fingerprint the workout module import.");
-}
-const appOutputName = fingerprintedName("app", "js", fingerprintedAppSource);
-await writeFile(path.join(outputRoot, appOutputName), fingerprintedAppSource, "utf8");
-
 const stylesSource = await readFile(path.join(webRoot, "styles.css"), "utf8");
 const stylesOutputName = fingerprintedName("styles", "css", stylesSource);
 await writeFile(path.join(outputRoot, stylesOutputName), stylesSource, "utf8");
 
-const indexSource = await readFile(path.join(webRoot, "index.html"), "utf8");
-const fingerprintedIndex = indexSource
-  .replace('./styles.css', `./${stylesOutputName}`)
-  .replace('./app.js', `./${appOutputName}`);
-if (fingerprintedIndex === indexSource ||
-    !fingerprintedIndex.includes(stylesOutputName) ||
-    !fingerprintedIndex.includes(appOutputName)) {
-  throw new Error("Could not fingerprint the web shell references.");
-}
-await writeFile(path.join(outputRoot, "index.html"), fingerprintedIndex, "utf8");
-
+const catalogSource = await readFile(
+  path.join(repositoryRoot, "Flux", "Assets", "exercises.json"),
+  "utf8",
+);
+const catalogVersion = contentFingerprint(catalogSource);
 await copyInto(
   path.join(repositoryRoot, "Flux", "Assets", "exercises.json"),
   path.join(outputRoot, "data", "exercises.json"),
@@ -150,11 +133,71 @@ for (const file of await walk(path.join(outputRoot, "assets"))) {
     .update(await readFile(file))
     .digest("hex");
 }
+const assetVersionsSource = `${JSON.stringify(assetVersions, null, 2)}\n`;
+const assetVersionsVersion = contentFingerprint(assetVersionsSource);
 await writeFile(
   path.join(outputRoot, "data", "asset-versions.json"),
-  `${JSON.stringify(assetVersions, null, 2)}\n`,
+  assetVersionsSource,
   "utf8",
 );
+
+const appSource = await readFile(path.join(webRoot, "app.js"), "utf8");
+const fingerprintedAppSource = appSource
+  .replace(
+    'from "./workout.js";',
+    `from "./${workoutOutputName}";`,
+  )
+  .replace(
+    '"data/exercises.json"',
+    `"data/exercises.json?v=${catalogVersion}"`,
+  )
+  .replace(
+    '"data/asset-versions.json"',
+    `"data/asset-versions.json?v=${assetVersionsVersion}"`,
+  );
+if (fingerprintedAppSource === appSource ||
+    !fingerprintedAppSource.includes(workoutOutputName) ||
+    !fingerprintedAppSource.includes(`exercises.json?v=${catalogVersion}`) ||
+    !fingerprintedAppSource.includes(
+      `asset-versions.json?v=${assetVersionsVersion}`)) {
+  throw new Error("Could not content-address the web runtime dependencies.");
+}
+const appOutputName = fingerprintedName("app", "js", fingerprintedAppSource);
+await writeFile(path.join(outputRoot, appOutputName), fingerprintedAppSource, "utf8");
+
+const indexSource = await readFile(path.join(webRoot, "index.html"), "utf8");
+const instantControlsSource = await readFile(
+  path.join(webRoot, "instant-controls.js"),
+  "utf8",
+);
+if (instantControlsSource.includes("</script")) {
+  throw new Error("The inline startup controls contain a closing script tag.");
+}
+const fingerprintedIndex = indexSource
+  .replace('./styles.css', `./${stylesOutputName}`)
+  .replace('./app.js', `./${appOutputName}`)
+  .replace(
+    './data/exercises.json',
+    `./data/exercises.json?v=${catalogVersion}`,
+  )
+  .replace(
+    './data/asset-versions.json',
+    `./data/asset-versions.json?v=${assetVersionsVersion}`,
+  )
+  .replace(
+    '<script src="./instant-controls.js"></script>',
+    `<script>\n${instantControlsSource}\n</script>`,
+  );
+if (fingerprintedIndex === indexSource ||
+    !fingerprintedIndex.includes(stylesOutputName) ||
+    !fingerprintedIndex.includes(appOutputName) ||
+    !fingerprintedIndex.includes(`exercises.json?v=${catalogVersion}`) ||
+    !fingerprintedIndex.includes(
+      `asset-versions.json?v=${assetVersionsVersion}`) ||
+    fingerprintedIndex.includes('./instant-controls.js')) {
+  throw new Error("Could not fingerprint the web shell references.");
+}
+await writeFile(path.join(outputRoot, "index.html"), fingerprintedIndex, "utf8");
 
 const outputFiles = await walk(outputRoot);
 const forbiddenGifs = outputFiles.filter((file) => file.toLowerCase().endsWith(".gif"));
@@ -200,8 +243,11 @@ async function requireFile(file) {
 }
 
 function fingerprintedName(stem, extension, content) {
-  const fingerprint = createHash("sha256").update(content).digest("hex").slice(0, 12);
-  return `${stem}.${fingerprint}.${extension}`;
+  return `${stem}.${contentFingerprint(content)}.${extension}`;
+}
+
+function contentFingerprint(content) {
+  return createHash("sha256").update(content).digest("hex").slice(0, 12);
 }
 
 async function walk(directory) {

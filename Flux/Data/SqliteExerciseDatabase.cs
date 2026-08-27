@@ -943,14 +943,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasUndersizedModifierPairState =
-            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).Count > 0;
-        bool hasImmaterialModifier =
-            WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).Count > 0;
         bool hasUndersizedMirrorCategory =
             WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises).Count > 0;
-        bool hasInfeasibleWorkoutProfileLineup =
-            WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -1068,10 +1062,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                             StringComparison.Ordinal)));
         }
 
-        if (hasUndersizedModifierPairState ||
-            hasImmaterialModifier ||
-            hasUndersizedMirrorCategory ||
-            hasInfeasibleWorkoutProfileLineup ||
+        if (hasUndersizedMirrorCategory ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||

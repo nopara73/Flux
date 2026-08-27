@@ -94,10 +94,14 @@ const sounds = Object.fromEntries(
   }),
 );
 
+const startupControls = window.fluxStartupControls ?? null;
 let session = null;
 let assetVersions = Object.freeze({});
-let selectedMinutes = 10;
-let selectedModifiers = DEFAULT_WORKOUT_MODIFIERS;
+let selectedMinutes = startupControls?.selectedMinutes ?? 10;
+let selectedModifiers = startupControls?.selectedModifiers ??
+  DEFAULT_WORKOUT_MODIFIERS;
+let startupSelectionChanged = startupControls?.selectionChanged ?? false;
+let startWorkoutWhenReady = false;
 let currentGroup = null;
 let currentExercise = null;
 let mediaGroup = null;
@@ -128,8 +132,8 @@ bootstrap();
 async function bootstrap() {
   try {
     const [catalogResponse, assetVersionsResponse] = await Promise.all([
-      fetch(new URL("data/exercises.json", document.baseURI), { cache: "no-store" }),
-      fetch(new URL("data/asset-versions.json", document.baseURI), { cache: "no-store" }),
+      fetch(new URL("data/exercises.json", document.baseURI)),
+      fetch(new URL("data/asset-versions.json", document.baseURI)),
     ]);
     if (!catalogResponse.ok) {
       throw new Error(`Catalog request failed with ${catalogResponse.status}.`);
@@ -167,38 +171,59 @@ async function bootstrap() {
       session.finishInterruptedWorkout();
     }
     persistState();
-    selectedMinutes = session.state.lastWorkoutMinutes;
-    selectedModifiers = session.state.lastWorkoutModifiers;
+    if (!startupSelectionChanged) {
+      selectedMinutes = session.state.lastWorkoutMinutes;
+      selectedModifiers = session.state.lastWorkoutModifiers;
+    }
     renderDuration(selectedMinutes, false);
     renderWorkoutModifiers();
+    startupControls?.setSelection(selectedMinutes, selectedModifiers);
+    performance.mark?.("flux-session-ready");
 
     if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
+      cancelQueuedWorkoutStart();
       showCompletion(false);
     } else if (pendingRestGroup) {
+      cancelQueuedWorkoutStart();
       restorePendingRest();
     } else if (pendingMovementGroup) {
+      cancelQueuedWorkoutStart();
       restorePendingMovement();
     } else {
-      showDuration();
+      showDuration({ preserveSelection: startupSelectionChanged });
     }
   } catch (error) {
     console.error(error);
     elements.beginWorkout.disabled = true;
     elements.status.textContent = "Flux is unavailable.";
+    startupControls?.fail("Flux is unavailable.");
   }
 }
 
 function bindEvents() {
-  elements.durationDecrease.addEventListener("click", () => stepDuration(-1));
-  elements.durationIncrease.addEventListener("click", () => stepDuration(1));
-  elements.durationRange.addEventListener("input", () => {
-    selectDurationByIndex(Number(elements.durationRange.value), true);
-  });
-  elements.beginWorkout.addEventListener("click", startWorkout);
-  for (const { element, flag } of workoutModifierTiles()) {
-    element.addEventListener("click", () => toggleWorkoutModifier(flag));
+  if (startupControls) {
+    startupControls.connect({
+      selectionChanged(nextSelection, userInitiated) {
+        selectedMinutes = nextSelection.selectedMinutes;
+        selectedModifiers = nextSelection.selectedModifiers;
+        if (userInitiated && !session) {
+          startupSelectionChanged = true;
+        }
+      },
+      startRequested: startWorkout,
+    });
+  } else {
+    elements.durationDecrease.addEventListener("click", () => stepDuration(-1));
+    elements.durationIncrease.addEventListener("click", () => stepDuration(1));
+    elements.durationRange.addEventListener("input", () => {
+      selectDurationByIndex(Number(elements.durationRange.value), true);
+    });
+    elements.beginWorkout.addEventListener("click", startWorkout);
+    for (const { element, flag } of workoutModifierTiles()) {
+      element.addEventListener("click", () => toggleWorkoutModifier(flag));
+    }
+    elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
   }
-  elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
   elements.shuffleExercise.addEventListener("click", shuffleCurrentExercise);
   elements.startMovement.addEventListener("click", startMovement);
   elements.repeatExercise.addEventListener("click", repeatMovement);
@@ -278,6 +303,9 @@ function renderDuration(minutes, userInitiated) {
   });
 
   if (userInitiated && previousMinutes !== minutes) {
+    if (!session) {
+      startupSelectionChanged = true;
+    }
     elements.durationDial.classList.remove("pulse");
     requestAnimationFrame(() => elements.durationDial.classList.add("pulse"));
   }
@@ -297,6 +325,9 @@ function workoutModifierTiles() {
 
 function toggleWorkoutModifier(flag) {
   selectedModifiers ^= flag;
+  if (!session) {
+    startupSelectionChanged = true;
+  }
   renderWorkoutModifiers();
   const enabled = (selectedModifiers & flag) !== 0;
   showWorkoutModifierFeedback(workoutModifierFeedbackLabel(flag, enabled));
@@ -323,6 +354,9 @@ function cycleMirrorEquipment() {
       ? MIRROR_EQUIPMENT.Tall
       : MIRROR_EQUIPMENT.None;
   selectedModifiers = withMirrorEquipment(selectedModifiers, nextEquipment);
+  if (!session) {
+    startupSelectionChanged = true;
+  }
   renderWorkoutModifiers();
   showWorkoutModifierFeedback(mirrorEquipmentFeedbackLabel(nextEquipment));
 }
@@ -384,23 +418,40 @@ function showScreen(screen) {
   elements.completionScreen.hidden = screen !== "completion";
 }
 
-function showDuration() {
+function showDuration({ preserveSelection = false } = {}) {
   releaseWakeLock();
   stopRuntimeTimers();
   clearExerciseMedia();
   resetMovementVisuals();
   currentGroup = null;
   currentExercise = null;
-  selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
-  selectedModifiers = session?.state.lastWorkoutModifiers ?? selectedModifiers;
+  if (!preserveSelection) {
+    selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
+    selectedModifiers = session?.state.lastWorkoutModifiers ?? selectedModifiers;
+  }
   renderDuration(selectedMinutes, false);
   renderWorkoutModifiers();
-  elements.beginWorkout.disabled = !session;
+  startupControls?.setSelection(selectedMinutes, selectedModifiers);
+  elements.beginWorkout.disabled = false;
+  startupControls?.markReady();
   showScreen("duration");
+  if (startWorkoutWhenReady) {
+    startWorkoutWhenReady = false;
+    startupControls?.consumeStartRequest();
+    elements.beginWorkout.disabled = false;
+    startWorkout();
+  }
 }
 
 function startWorkout() {
-  if (!session || elements.beginWorkout.disabled) {
+  if (!session) {
+    startWorkoutWhenReady = true;
+    elements.beginWorkout.disabled = true;
+    return;
+  }
+  const queuedByStartupControls =
+    startupControls?.consumeStartRequest() ?? false;
+  if (elements.beginWorkout.disabled && !queuedByStartupControls) {
     return;
   }
   elements.beginWorkout.disabled = true;
@@ -411,7 +462,13 @@ function startWorkout() {
   } catch (error) {
     console.error(error);
     elements.beginWorkout.disabled = false;
+    startupControls?.markReady();
   }
+}
+
+function cancelQueuedWorkoutStart() {
+  startWorkoutWhenReady = false;
+  startupControls?.cancelStartRequest();
 }
 
 function showNextExercise({ preservePendingMovement = false } = {}) {

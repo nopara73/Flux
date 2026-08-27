@@ -51,6 +51,7 @@ const [
   movementSchedule,
   mainActivity,
   webApp,
+  instantControls,
   workoutModule,
   catalogMigrationRules,
   catalogJson,
@@ -60,6 +61,7 @@ const [
   muscleBudgetPolicy,
   recoveryPolicy,
   exerciseDatabase,
+  catalogInvariantTests,
   exerciseDatabaseVersionPolicy,
   workoutSessionLog,
   durationLayout,
@@ -88,6 +90,7 @@ const [
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
   source("web", "app.js"),
+  source("web", "instant-controls.js"),
   source("web", "workout.js"),
   source("Flux", "Services", "CatalogMigrationRules.cs"),
   source("Flux", "Assets", "exercises.json"),
@@ -97,6 +100,7 @@ const [
   source("Flux", "Services", "WorkoutMuscleBudgetPolicy.cs"),
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
+  source("Flux.Tests", "CatalogInvariantTests.cs"),
   source("Flux", "Data", "ExerciseDatabaseVersionPolicy.cs"),
   source("Flux", "Models", "WorkoutSessionLog.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
@@ -394,10 +398,15 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webApp, /findMirrorCategoryDeficiencies/);
   assert.match(webApp, /isModifierMetadataComplete/);
   assert.match(webApp, /isSessionMovementMetadataValid/);
-  assert.match(
-    exerciseDatabase,
-    /FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies[\s\S]*FindDistinctLineupDeficiencies[\s\S]*hasUndersizedModifierPairState/,
-  );
+  for (const heavyCatalogInvariant of [
+    "FindPairwiseCoverageDeficiencies",
+    "FindMaterialityDeficiencies",
+    "FindDistinctLineupDeficiencies",
+  ]) {
+    assert.match(catalogInvariantTests, new RegExp(heavyCatalogInvariant));
+    assert.doesNotMatch(exerciseDatabase, new RegExp(heavyCatalogInvariant));
+  }
+  assert.match(exerciseDatabase, /FindMirrorCategoryDeficiencies/);
   assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
   assert.match(exerciseModel, /ExerciseMirrorRelationship MirrorRelationship/);
   assert.match(exerciseModel, /ExerciseMirrorCoverage MinimumMirrorCoverage/);
@@ -635,16 +644,24 @@ test("web and mobile apply rolling muscular recovery by primary muscle", () => {
 test("runtime media and the deployable web shell are content-addressed", () => {
   assert.match(mainActivity, /SHA256\.HashData/);
   assert.match(mainActivity, /assetFingerprint/);
-  assert.match(webApp, /data\/asset-versions\.json[\s\S]*cache:\s*"no-store"/);
+  assert.match(webApp, /data\/exercises\.json[\s\S]*data\/asset-versions\.json/);
+  assert.doesNotMatch(webApp, /cache:\s*"no-store"/);
   assert.match(webApp, /assetVersions\[path\][\s\S]*searchParams\.set\("v", fingerprint\)/);
   assert.match(webBuild, /createHash\("sha256"\)/);
-  assert.match(webBuild, /asset-versions\.json/);
+  assert.match(
+    webBuild,
+    /catalogVersion[\s\S]*assetVersionsVersion[\s\S]*exercises\.json\?v=\$\{catalogVersion\}[\s\S]*asset-versions\.json\?v=\$\{assetVersionsVersion\}/,
+  );
   assert.match(webBuild, /fingerprintedName\("workout", "js"/);
   assert.match(webBuild, /fingerprintedName\("app", "js"/);
   assert.match(webBuild, /fingerprintedName\("styles", "css"/);
   assert.match(webBuild, /from \"\.\/\$\{workoutOutputName\}\"/);
   assert.match(webBuild, /replace\('\.\/styles\.css'/);
   assert.match(webBuild, /replace\('\.\/app\.js'/);
+  assert.match(
+    webIndex,
+    /rel="preload" href="\.\/data\/exercises\.json"[\s\S]*rel="preload" href="\.\/data\/asset-versions\.json"/,
+  );
 });
 
 test("movement and rest phases use pronounced accents across the surface, media, and actions", () => {
@@ -786,6 +803,54 @@ test("literal work-block timelines and logical exercise progress match", () => {
 test("Android device builds embed their managed assemblies", async () => {
   const project = await source("Flux", "Flux.csproj");
   assert.match(project, /<EmbedAssembliesIntoApk>true<\/EmbedAssembliesIntoApk>/);
+});
+
+test("duration controls do not wait for catalog startup on either platform", () => {
+  const mobileCreate = methodBody(
+    mainActivity,
+    "protected override void OnCreate(Bundle? savedInstanceState)",
+    "private async Task InitializeApplicationAsync()",
+  );
+  const mobileStart = methodBody(
+    mainActivity,
+    "private void StartSelectedWorkout()",
+    "private static void RecoverPendingScoreUpdate(",
+  );
+  assert.match(
+    mobileCreate,
+    /_stateStore\s*=\s*new SharedPreferencesWorkoutStateStore[\s\S]*_state\s*=\s*_stateStore\.Load\(\)[\s\S]*ShowDurationSelection\(\)[\s\S]*InitializeApplicationAsync\(\)/,
+  );
+  assert.doesNotMatch(mobileCreate, /new SqliteExerciseDatabase|\.Exercises/);
+  assert.match(
+    mainActivity,
+    /Task\.Run\(\(\) => InitializeApplication\(context\)\)[\s\S]*CompleteApplicationStartup/,
+  );
+  assert.match(
+    mobileStart,
+    /!_applicationStartupCompleted[\s\S]*_startWorkoutWhenReady\s*=\s*true[\s\S]*_beginWorkoutButton\.Enabled\s*=\s*false/,
+  );
+
+  assert.match(
+    webIndex,
+    /id="begin-workout"(?:(?!disabled)[\s\S])*?<\/button>/,
+  );
+  assert.match(webIndex, /<script src="\.\/instant-controls\.js"><\/script>/);
+  assert.match(
+    instantControls,
+    /flux-controls-ready[\s\S]*durationDecrease|duration-decrease[\s\S]*requestStart/,
+  );
+  assert.match(
+    instantControls,
+    /startQueued\s*=\s*true[\s\S]*elements\.begin\.disabled\s*=\s*true[\s\S]*startRequested/,
+  );
+  assert.match(
+    webApp,
+    /startupControls\.connect[\s\S]*startRequested:\s*startWorkout[\s\S]*if \(!session\)[\s\S]*startWorkoutWhenReady\s*=\s*true/,
+  );
+  assert.match(
+    webBuild,
+    /instant-controls\.js[\s\S]*instantControlsSource[\s\S]*<script>/,
+  );
 });
 
 test("Android persistence rejects malformed stored shapes without crashing launch", async () => {

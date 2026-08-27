@@ -151,6 +151,10 @@ public class MainActivity : Activity
     private bool _countdownPausedForMediaError;
     private bool _countdownPausedByUser;
     private bool _automaticSequenceStartPending;
+    private bool _applicationStartupCompleted;
+    private bool _startWorkoutWhenReady;
+    private bool _durationSelectionChangedDuringStartup;
+    private bool _activityDestroyed;
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
@@ -174,49 +178,152 @@ public class MainActivity : Activity
         ConfigureVideoView();
         ConfigureWhistleCues();
 
-        _exerciseDatabase = new SqliteExerciseDatabase(this);
-        _sessionService = new ExerciseSessionService(_exerciseDatabase.Exercises);
         _stateStore = new SharedPreferencesWorkoutStateStore(this);
         _state = _stateStore.Load();
-        _sessionService.Initialize(_state);
-        RecoverPendingScoreUpdate();
-
-        WorkoutGroup? pendingMovementGroup =
-            _sessionService.GetPendingMovementGroup(_state);
-        WorkoutGroup? pendingRestGroup =
-            _sessionService.GetPendingRestGroup(_state);
-
-        if (!_state.WorkoutCompleted &&
-            _state.ActiveWorkoutMinutes != 0 &&
-            pendingMovementGroup is null &&
-            pendingRestGroup is null)
-        {
-            FinishInterruptedWorkout();
-        }
-        else
-        {
-            _stateStore.Save(_state);
-        }
-
         _selectedWorkoutMinutes = _state.LastWorkoutMinutes;
         _selectedWorkoutModifiers = _state.LastWorkoutModifiers;
+        ShowDurationSelection();
+        _ = InitializeApplicationAsync();
+    }
+
+    private async Task InitializeApplicationAsync()
+    {
+        Android.Content.Context context = ApplicationContext ?? this;
+        ApplicationStartupResult startup;
+        try
+        {
+            startup = await Task.Run(() => InitializeApplication(context))
+                .ConfigureAwait(false);
+        }
+        catch (Exception error)
+        {
+            if (!_activityDestroyed)
+            {
+                RunOnUiThread(() => ShowApplicationStartupFailure(error));
+            }
+            return;
+        }
+
+        if (_activityDestroyed)
+        {
+            startup.Database.Dispose();
+            return;
+        }
+
+        RunOnUiThread(() => CompleteApplicationStartup(startup));
+    }
+
+    private ApplicationStartupResult InitializeApplication(
+        Android.Content.Context context)
+    {
+        var database = new SqliteExerciseDatabase(context);
+        try
+        {
+            var sessionService = new ExerciseSessionService(database.Exercises);
+            sessionService.Initialize(_state);
+            RecoverPendingScoreUpdate(database, _state);
+
+            WorkoutGroup? pendingMovementGroup =
+                sessionService.GetPendingMovementGroup(_state);
+            WorkoutGroup? pendingRestGroup =
+                sessionService.GetPendingRestGroup(_state);
+
+            if (!_state.WorkoutCompleted &&
+                _state.ActiveWorkoutMinutes != 0 &&
+                pendingMovementGroup is null &&
+                pendingRestGroup is null)
+            {
+                IReadOnlyList<Exercise> scoreUpdates = sessionService
+                    .FinishInterruptedWorkoutWithScoreUpdates(_state);
+                SaveStateAndScores(
+                    database,
+                    _stateStore,
+                    _state,
+                    scoreUpdates);
+            }
+            else
+            {
+                _stateStore.Save(_state);
+            }
+
+            return new ApplicationStartupResult(
+                database,
+                sessionService,
+                pendingMovementGroup,
+                pendingRestGroup);
+        }
+        catch
+        {
+            database.Dispose();
+            throw;
+        }
+    }
+
+    private void CompleteApplicationStartup(ApplicationStartupResult startup)
+    {
+        if (_activityDestroyed)
+        {
+            startup.Database.Dispose();
+            return;
+        }
+
+        _exerciseDatabase = startup.Database;
+        _sessionService = startup.SessionService;
+        _applicationStartupCompleted = true;
 
         if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
+            CancelQueuedWorkoutStart();
             ShowCongratulations();
         }
-        else if (pendingMovementGroup is not null)
+        else if (startup.PendingMovementGroup is not null)
         {
-            RestorePendingMovement(pendingMovementGroup);
+            CancelQueuedWorkoutStart();
+            RestorePendingMovement(startup.PendingMovementGroup);
         }
-        else if (pendingRestGroup is not null)
+        else if (startup.PendingRestGroup is not null)
         {
-            RestorePendingRest(pendingRestGroup);
+            CancelQueuedWorkoutStart();
+            RestorePendingRest(startup.PendingRestGroup);
         }
         else
         {
-            ShowDurationSelection();
+            if (!_durationSelectionChangedDuringStartup)
+            {
+                ShowDurationSelection();
+            }
+
+            if (_startWorkoutWhenReady)
+            {
+                _startWorkoutWhenReady = false;
+                _beginWorkoutButton.Enabled = true;
+                _beginWorkoutButton.Alpha = 1f;
+                StartSelectedWorkout();
+            }
         }
+    }
+
+    private void CancelQueuedWorkoutStart()
+    {
+        _startWorkoutWhenReady = false;
+        _beginWorkoutButton.Enabled = true;
+        _beginWorkoutButton.Alpha = 1f;
+    }
+
+    private void ShowApplicationStartupFailure(Exception error)
+    {
+        if (_activityDestroyed)
+        {
+            return;
+        }
+
+        Android.Util.Log.Error("Flux", error.ToString());
+        _startWorkoutWhenReady = false;
+        _beginWorkoutButton.Enabled = false;
+        _beginWorkoutButton.Alpha = 0.6f;
+        _durationModifierFeedback.Text = "Flux is unavailable.";
+        _durationModifierFeedback.Alpha = 1f;
+        _durationModifierFeedback.Visibility = ViewStates.Visible;
     }
 
     protected override void OnResume()
@@ -263,6 +370,7 @@ public class MainActivity : Activity
 
     protected override void OnDestroy()
     {
+        _activityDestroyed = true;
         _mediaReady = false;
         _mediaLoadGeneration++;
         CancelCountdown(resetToStart: false);
@@ -1339,6 +1447,8 @@ public class MainActivity : Activity
             return;
         }
 
+        _durationSelectionChangedDuringStartup |=
+            !_applicationStartupCompleted;
         AnimateModifierTile(button);
     }
 
@@ -1373,6 +1483,8 @@ public class MainActivity : Activity
 
         if (userInitiated)
         {
+            _durationSelectionChangedDuringStartup |=
+                !_applicationStartupCompleted;
             AnimateModifierTile(_mirrorModifierButton);
         }
     }
@@ -1495,6 +1607,8 @@ public class MainActivity : Activity
 
         if (userInitiated)
         {
+            _durationSelectionChangedDuringStartup |=
+                !_applicationStartupCompleted;
             _durationMinutesValue.PerformHapticFeedback(FeedbackConstants.ClockTick);
         }
 
@@ -1603,6 +1717,14 @@ public class MainActivity : Activity
 
     private void StartSelectedWorkout()
     {
+        if (!_applicationStartupCompleted)
+        {
+            _startWorkoutWhenReady = true;
+            _beginWorkoutButton.Enabled = false;
+            _beginWorkoutButton.Alpha = 0.6f;
+            return;
+        }
+
         if (!_beginWorkoutButton.Enabled)
         {
             return;
@@ -1627,55 +1749,61 @@ public class MainActivity : Activity
         }
     }
 
-    private void FinishInterruptedWorkout()
+    private static void RecoverPendingScoreUpdate(
+        SqliteExerciseDatabase database,
+        WorkoutState state)
     {
-        IReadOnlyList<Exercise> scoreUpdates =
-            _sessionService.FinishInterruptedWorkoutWithScoreUpdates(_state);
-        SaveStateAndScores(scoreUpdates);
-    }
-
-    private void RecoverPendingScoreUpdate()
-    {
-        if (_state.PendingScoreExerciseId > 0)
+        if (state.PendingScoreExerciseId > 0)
         {
-            _state.PendingScoreUpdates.TryAdd(
-                _state.PendingScoreExerciseId,
-                _state.PendingScoreValue);
+            state.PendingScoreUpdates.TryAdd(
+                state.PendingScoreExerciseId,
+                state.PendingScoreValue);
         }
 
         foreach ((int exerciseId, int score) in
-                 _state.PendingScoreUpdates.ToArray())
+                 state.PendingScoreUpdates.ToArray())
         {
-            Exercise? exercise = _exerciseDatabase.Exercises.SingleOrDefault(
+            Exercise? exercise = database.Exercises.SingleOrDefault(
                 candidate => candidate.Id == exerciseId);
             if (exercise is not null)
             {
                 exercise.Score = score;
-                _exerciseDatabase.UpdateScore(exercise);
+                database.UpdateScore(exercise);
             }
 
-            _state.PendingScoreUpdates.Remove(exerciseId);
+            state.PendingScoreUpdates.Remove(exerciseId);
         }
 
-        _state.PendingScoreExerciseId = 0;
-        _state.PendingScoreValue = 0;
+        state.PendingScoreExerciseId = 0;
+        state.PendingScoreValue = 0;
         // OnCreate saves after legacy conversion/interruption finalization. Saving
         // here would serialize away the compatibility-only legacy fields.
     }
 
-    private void SaveStateAndScores(IReadOnlyList<Exercise> scoreUpdates)
+    private void SaveStateAndScores(IReadOnlyList<Exercise> scoreUpdates) =>
+        SaveStateAndScores(
+            _exerciseDatabase,
+            _stateStore,
+            _state,
+            scoreUpdates);
+
+    private static void SaveStateAndScores(
+        SqliteExerciseDatabase database,
+        IWorkoutStateStore stateStore,
+        WorkoutState state,
+        IReadOnlyList<Exercise> scoreUpdates)
     {
         Exercise[] distinctUpdates = scoreUpdates
             .DistinctBy(exercise => exercise.Id)
             .ToArray();
         foreach (Exercise exercise in distinctUpdates)
         {
-            _state.PendingScoreUpdates[exercise.Id] = exercise.Score;
+            state.PendingScoreUpdates[exercise.Id] = exercise.Score;
         }
-        _state.PendingScoreExerciseId = 0;
-        _state.PendingScoreValue = 0;
+        state.PendingScoreExerciseId = 0;
+        state.PendingScoreValue = 0;
 
-        _stateStore.Save(_state);
+        stateStore.Save(state);
 
         if (distinctUpdates.Length == 0)
         {
@@ -1684,10 +1812,10 @@ public class MainActivity : Activity
 
         foreach (Exercise exercise in distinctUpdates)
         {
-            _exerciseDatabase.UpdateScore(exercise);
+            database.UpdateScore(exercise);
         }
-        _state.PendingScoreUpdates.Clear();
-        _stateStore.Save(_state);
+        state.PendingScoreUpdates.Clear();
+        stateStore.Save(state);
     }
 
     private void ConfigureVideoView()
@@ -3705,6 +3833,12 @@ public class MainActivity : Activity
             return onInfo(what);
         }
     }
+
+    private sealed record ApplicationStartupResult(
+        SqliteExerciseDatabase Database,
+        ExerciseSessionService SessionService,
+        WorkoutGroup? PendingMovementGroup,
+        WorkoutGroup? PendingRestGroup);
 
     private sealed class DurationSeekAccessibilityDelegate(
         Func<int> getMinutes,
