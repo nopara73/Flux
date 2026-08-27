@@ -418,7 +418,7 @@ button.modifier-tile:not(:disabled):active {
 }
 
 .modifier-feedback.show {
-  animation: modifier-feedback-blink 1400ms ease-out both;
+  animation: modifier-feedback-blink 2040ms ease-out both;
 }
 
 @keyframes modifier-feedback-blink {
@@ -427,13 +427,13 @@ button.modifier-tile:not(:disabled):active {
     transform: translate(-50%, -50%) scale(0.82);
   }
 
-  10% {
+  7% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.04);
   }
 
-  16%,
-  50% {
+  11%,
+  66% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }

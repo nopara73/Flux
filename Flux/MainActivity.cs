@@ -28,7 +28,7 @@ public class MainActivity : Activity
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
     private const long ModifierFeedbackEnterDurationMilliseconds = 140L;
-    private const long ModifierFeedbackHoldMilliseconds = 560L;
+    private const long ModifierFeedbackHoldMilliseconds = 1_200L;
     private const long ModifierFeedbackFadeDurationMilliseconds = 700L;
     private const float PlaybackControlEnabledAlpha = 1f;
     private const float PlaybackControlDisabledAlpha = 0.35f;
