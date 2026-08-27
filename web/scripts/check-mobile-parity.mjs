@@ -16,6 +16,7 @@ const sourceTargets = [
   "Flux/Services",
   "Flux/Resources/color",
   "Flux/Resources/drawable",
+  "Flux/Resources/drawable-xxhdpi",
   "Flux/Resources/layout",
   "Flux/Resources/values",
 ];
@@ -28,10 +29,12 @@ sourceFiles.sort();
 
 const hash = createHash("sha256");
 for (const relativePath of sourceFiles) {
-  const contents = await readFile(path.join(repositoryRoot, relativePath), "utf8");
+  const contents = await readFile(path.join(repositoryRoot, relativePath));
   hash.update(relativePath.replaceAll(path.sep, "/"));
   hash.update("\0");
-  hash.update(contents.replaceAll("\r\n", "\n"));
+  hash.update(isTextSource(relativePath)
+    ? contents.toString("utf8").replaceAll("\r\n", "\n")
+    : contents);
   hash.update("\0");
 }
 
@@ -64,7 +67,7 @@ console.log(`Mobile parity locked to ${actual.sourceCount} source files (${actua
 async function collectSourceFiles(target) {
   const information = await stat(target);
   if (information.isFile()) {
-    if (/\.(?:cs|csproj|xml)$/i.test(target)) {
+    if (isParitySource(target)) {
       sourceFiles.push(path.relative(repositoryRoot, target));
     }
     return;
@@ -75,8 +78,16 @@ async function collectSourceFiles(target) {
     const child = path.join(target, entry.name);
     if (entry.isDirectory()) {
       await collectSourceFiles(child);
-    } else if (entry.isFile() && /\.(?:cs|csproj|xml)$/i.test(entry.name)) {
+    } else if (entry.isFile() && isParitySource(entry.name)) {
       sourceFiles.push(path.relative(repositoryRoot, child));
     }
   }
+}
+
+function isParitySource(file) {
+  return /\.(?:cs|csproj|png|xml)$/i.test(file);
+}
+
+function isTextSource(file) {
+  return /\.(?:cs|csproj|xml)$/i.test(file);
 }

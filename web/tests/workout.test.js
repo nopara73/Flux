@@ -8,6 +8,7 @@ import {
   ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
   CURRENT_CATALOG_REVISION,
+  EXERCISE_HARD_FLOOR_COMPATIBILITY,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
   EXERCISE_MIRROR_RELATIONSHIP,
@@ -455,7 +456,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [117, 197, 134],
+    [118, 198, 134],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -569,37 +570,50 @@ test("duration inventory and legacy normalization match Flux", () => {
   assert.equal(normalizeMinutes(undefined), 10);
 });
 
-test("pre-silence modifier state migrates to quiet by default", () => {
+test("pre-silence modifier state migrates to hard floor and quiet by default", () => {
   const state = parseStoredState(JSON.stringify({
     version: 4,
     lastWorkoutMinutes: 10,
     activeWorkoutMinutes: 0,
   }));
-  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(
+    state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence,
+  );
   assert.equal(state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
-test("versionless stored state also migrates to quiet without losing its lineup", () => {
+test("versionless stored state migrates to default modifiers without losing its lineup", () => {
   const state = parseStoredState(JSON.stringify({
     lastWorkoutMinutes: 3,
     activeWorkoutMinutes: 0,
     selectedExerciseIds: { "r3.lower-limbs": 101 },
   }));
 
-  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(
+    state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence,
+  );
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
   assert.equal(state.selectedExerciseIds["p2|r3.lower-limbs"], 101);
+  assert.equal(state.selectedExerciseIds["p18|r3.lower-limbs"], 101);
 });
 
-test("fresh workouts use silence unless the caller explicitly relaxes it", () => {
+test("fresh workouts use hard floor and silence unless the caller explicitly relaxes them", () => {
   const session = new WorkoutSession(reviewedInsectCatalog(), createDefaultState(), () => 0);
 
   session.startWorkout(3);
 
-  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
-  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(
+    session.state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence,
+  );
+  assert.equal(
+    session.state.activeWorkoutModifiers,
+    WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence,
+  );
   for (const group of session.getActiveGroups()) {
-    assert.ok(session.state.selectedExerciseIds[`p2|${getSelectionKey(group)}`]);
+    assert.ok(session.state.selectedExerciseIds[`p18|${getSelectionKey(group)}`]);
   }
 });
 
@@ -629,7 +643,8 @@ test("version four active workout migrates to silence without losing progress", 
 
   assert.equal(
     session.state.lastWorkoutModifiers,
-    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence |
+      WORKOUT_MODIFIERS.HardFloor,
   );
   assert.equal(
     session.state.activeWorkoutModifiers,
@@ -641,10 +656,12 @@ test("version four active workout migrates to silence without losing progress", 
   for (const group of groups) {
     assert.ok(session.state.selectedExerciseIds[`p1|${getSelectionKey(group)}`]);
     assert.ok(session.state.selectedExerciseIds[`p3|${getSelectionKey(group)}`]);
+    assert.ok(session.state.selectedExerciseIds[`p17|${getSelectionKey(group)}`]);
+    assert.ok(session.state.selectedExerciseIds[`p19|${getSelectionKey(group)}`]);
   }
 });
 
-test("current pre-direction state keeps an explicitly relaxed silence modifier", () => {
+test("pre-hard-floor state keeps silence relaxed while adding the hard-floor default", () => {
   const state = parseStoredState(JSON.stringify({
     version: 5,
     lastWorkoutMinutes: 10,
@@ -652,8 +669,8 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 17);
-  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(state.version, 18);
+  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.HardFloor);
 });
 
 test("binary mirror state does not guess mirror height during migration", () => {
@@ -669,8 +686,11 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 17);
-  assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
+  assert.equal(state.version, 18);
+  assert.equal(
+    state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor,
+  );
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
   assert.equal(state.selectedExerciseIds["p4|r3.lower-limbs"], undefined);
@@ -721,6 +741,27 @@ test("neutral profile includes both compatible and explicitly excluded exercises
     isCompatibleWithWorkoutModifiers(excluded, WORKOUT_MODIFIERS.Insect),
     false,
   );
+});
+
+test("hard floor filters incompatible exercises only while enabled", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const compatible = {
+    ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    hardFloorCompatibility: EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
+  };
+  const incompatible = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    hardFloorCompatibility: EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+  };
+
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    compatible, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    incompatible, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    compatible, WORKOUT_MODIFIERS.HardFloor), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    incompatible, WORKOUT_MODIFIERS.HardFloor), false);
 });
 
 test("silence and insect compose as independent positive requirements", () => {
@@ -948,7 +989,7 @@ test("mirror relevance breaks score ties but never overrides a real vote", () =>
 });
 
 test("validation profiles remain pairwise with compact and tall mirror states", () => {
-  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 10);
+  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 15);
   assert.equal(
     new Set(WORKOUT_MODIFIER_VALIDATION_PROFILES).size,
     WORKOUT_MODIFIER_VALIDATION_PROFILES.length,
@@ -1101,7 +1142,7 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 71);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 367);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 369);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 10);
@@ -1334,7 +1375,7 @@ test("modifier materiality rejects token and pairwise-redundant filters", () => 
       true,
     ));
   const tokenDeficiencies = findWorkoutModifierMaterialityDeficiencies(tokenCatalog);
-  assert.equal(tokenDeficiencies.length, 14);
+  assert.equal(tokenDeficiencies.length, 23);
   assert.ok(tokenDeficiencies.every((deficiency) =>
     deficiency.materialExerciseCount === 0));
 
@@ -2382,9 +2423,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 448);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 448);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 448);
+  assert.equal(catalog.length, 450);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 450);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 450);
   assert.equal(isSessionMovementMetadataValid(catalog), true);
   const actualSessionMovements = {};
   for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
@@ -3120,7 +3161,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 17);
+  assert.equal(restored.state.version, 18);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -4883,6 +4924,7 @@ function exercise(
   minimumMirrorCoverage = mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic
     ? EXERCISE_MIRROR_COVERAGE.None
     : EXERCISE_MIRROR_COVERAGE.UpperBody,
+  hardFloorCompatibility = EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
 ) {
   return {
     id,
@@ -4893,6 +4935,7 @@ function exercise(
     score,
     muscularDemand,
     insectCompatibility,
+    hardFloorCompatibility,
     mirrorRelationship,
     minimumMirrorCoverage,
     equipment: mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly

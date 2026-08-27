@@ -231,6 +231,10 @@
     element.setAttribute("title", modifierFeedbackLabel(name));
     if (name === "hardFloor") {
       element.dataset.hardFloor = enabled ? "hard" : "soft";
+      element.setAttribute(
+        "aria-label",
+        enabled ? "Floor surface: hard floor" : "Floor surface: soft floor",
+      );
     }
     if (name === "silence") {
       element.setAttribute(

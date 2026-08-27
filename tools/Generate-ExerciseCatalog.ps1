@@ -72,6 +72,15 @@ $insectCompatibleExerciseIds = @(
     $insectCompatibilityReview.Compatible | ForEach-Object { [int]$_ })
 $insectIncompatibleExerciseIds = @(
     $insectCompatibilityReview.Incompatible | ForEach-Object { [int]$_ })
+$hardFloorCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseHardFloorCompatibility.psd1') -SkipLimitCheck
+$hardFloorCompatibleExerciseIds = @(
+    $hardFloorCompatibilityReview.Compatible |
+        ForEach-Object { [int]$_ })
+$hardFloorIncompatibleExerciseIds = @(
+    $hardFloorCompatibilityReview.IncompatibleByReason.Values |
+        ForEach-Object { $_ } |
+        ForEach-Object { [int]$_ })
 $silenceCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseSilenceCompatibility.psd1') -SkipLimitCheck
 $silentExerciseIds = @(
@@ -222,6 +231,17 @@ $retainedExerciseIds = @(
         ForEach-Object { [int]$_ } |
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
+
+$allHardFloorReviewedExerciseIds = @(
+    $hardFloorCompatibleExerciseIds +
+    $hardFloorIncompatibleExerciseIds)
+if ($allHardFloorReviewedExerciseIds.Count -ne
+        @($allHardFloorReviewedExerciseIds | Sort-Object -Unique).Count -or
+    @(Compare-Object `
+            @($allHardFloorReviewedExerciseIds | Sort-Object) `
+            @($retainedExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one reviewed hard-floor classification.'
+}
 
 if ([int]$muscularDemandReview.RubricVersion -ne 1 -or
     $muscularDemandByExerciseId.Count -ne $expectedExerciseCount -or
@@ -3296,6 +3316,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             else {
                 'Incompatible'
             }
+            hardFloorCompatibility = if (
+                $exerciseId -in $hardFloorCompatibleExerciseIds) {
+                'Compatible'
+            }
+            else {
+                'Incompatible'
+            }
             mirrorRelationship = if (
                 $exerciseId -in $mirrorOnlyExerciseIds) {
                 'MirrorOnly'
@@ -3648,6 +3675,8 @@ $constraintViolations = $records | Where-Object {
         $_['minimumMirrorCoverage'] -notin @('UpperBody', 'FullBody')) -or
     ($_['mirrorRelationship'] -eq 'Agnostic' -and
         $_['minimumMirrorCoverage'] -ne 'None') -or
+    $_['hardFloorCompatibility'] -notin @(
+        'Compatible', 'Incompatible') -or
     -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or

@@ -71,6 +71,7 @@ public class MainActivity : Activity
     private LinearLayout _durationStepRow = null!;
     private FrameLayout _durationOptionLabels = null!;
     private GridLayout _durationModifierGrid = null!;
+    private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
@@ -412,6 +413,8 @@ public class MainActivity : Activity
             Resource.Id.duration_option_labels);
         _durationModifierGrid = FindRequiredView<GridLayout>(
             Resource.Id.duration_modifier_grid);
+        _hardFloorModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.hard_floor_modifier_button);
         _insectModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
@@ -511,6 +514,21 @@ public class MainActivity : Activity
                     ExerciseSessionService.SupportedWorkoutMinutes[eventArgs.Progress],
                     userInitiated: true);
             }
+        };
+        _hardFloorModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _hardFloorModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.HardFloor,
+                enabled,
+                _hardFloorModifierButton,
+                Resource.String.hard_floor_modifier_description,
+                Resource.String.hard_floor_modifier_on,
+                Resource.String.hard_floor_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.HardFloor,
+                enabled));
         };
         _insectModifierButton.Click += (_, _) =>
         {
@@ -814,7 +832,7 @@ public class MainActivity : Activity
             };
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGrid.LayoutParameters = modifierGridLayout;
-            _durationModifierGrid.ColumnCount = 3;
+            _durationModifierGrid.ColumnCount = 4;
             SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
@@ -875,7 +893,7 @@ public class MainActivity : Activity
         };
         portraitModifierGridLayout.TopMargin = DpInt(32);
         _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
-        _durationModifierGrid.ColumnCount = 3;
+        _durationModifierGrid.ColumnCount = 4;
         SetModifierTileSizes(DpInt(64));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
@@ -1301,6 +1319,9 @@ public class MainActivity : Activity
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _selectedWorkoutModifiers),
             size);
+        UpdateHardFloorModifierPresentation(
+            _selectedWorkoutModifiers.HasFlag(WorkoutModifiers.HardFloor),
+            size);
     }
 
     private int GetModifierTilePadding(int size) =>
@@ -1332,6 +1353,30 @@ public class MainActivity : Activity
             ?? DpInt(64);
         int padding = GetModifierTilePadding(size);
         _mirrorModifierButton.SetPadding(
+            padding,
+            padding,
+            padding,
+            padding);
+    }
+
+    private void UpdateHardFloorModifierPresentation(
+        bool hardFloorEnabled,
+        int? tileSize = null)
+    {
+        _hardFloorModifierButton.SetCompoundDrawablesWithIntrinsicBounds(
+            0,
+            hardFloorEnabled
+                ? Resource.Drawable.ic_hard_floor
+                : Resource.Drawable.ic_soft_floor,
+            0,
+            0);
+        _hardFloorModifierButton.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            0f);
+        int size = tileSize ?? _hardFloorModifierButton.LayoutParameters?.Width
+            ?? DpInt(64);
+        int padding = GetModifierTilePadding(size);
+        _hardFloorModifierButton.SetPadding(
             padding,
             padding,
             padding,
@@ -1396,6 +1441,13 @@ public class MainActivity : Activity
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
         SetSelectedWorkoutModifier(
+            WorkoutModifiers.HardFloor,
+            (_state.LastWorkoutModifiers & WorkoutModifiers.HardFloor) != 0,
+            _hardFloorModifierButton,
+            Resource.String.hard_floor_modifier_description,
+            Resource.String.hard_floor_modifier_on,
+            Resource.String.hard_floor_modifier_off);
+        SetSelectedWorkoutModifier(
             WorkoutModifiers.Insect,
             (_state.LastWorkoutModifiers & WorkoutModifiers.Insect) != 0,
             _insectModifierButton,
@@ -1429,6 +1481,10 @@ public class MainActivity : Activity
         _selectedWorkoutModifiers =
             WorkoutModifierPolicy.Normalize(_selectedWorkoutModifiers);
         button.Checked = enabled;
+        if (modifier == WorkoutModifiers.HardFloor)
+        {
+            UpdateHardFloorModifierPresentation(enabled);
+        }
         button.ContentDescription = GetString(descriptionResourceId);
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
@@ -1522,6 +1578,9 @@ public class MainActivity : Activity
         WorkoutModifiers modifier,
         bool enabled) => modifier switch
     {
+        WorkoutModifiers.HardFloor => enabled
+            ? Resource.String.hard_floor_enabled_feedback
+            : Resource.String.hard_floor_disabled_feedback,
         WorkoutModifiers.Insect => enabled
             ? Resource.String.insect_mode_enabled_feedback
             : Resource.String.insect_mode_disabled_feedback,

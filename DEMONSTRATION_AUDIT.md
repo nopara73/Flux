@@ -1,7 +1,7 @@
 # Flux demonstration quality audit
 
 Flux now ships a strictly human-demonstrated exercise catalog.
-All **448** bundled exercises show an actual person performing the movement.
+All **450** bundled exercises show an actual person performing the movement.
 Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
 both the runtime catalog and the application package.
 
@@ -15,19 +15,19 @@ both the runtime catalog and the application package.
 | Spinal extensors | 14 | 44 |
 | Calf, deep posterior leg and plantar foot | 20 | 133 |
 | Soleus | 9 | 91 |
-| Scapular girdle | 10 | 131 |
-| Shoulder adductors and extensors | 14 | 50 |
-| Abdominal wall | 12 | 179 |
+| Scapular girdle | 10 | 134 |
+| Shoulder adductors and extensors | 14 | 53 |
+| Abdominal wall | 12 | 181 |
 | Hip abductors | 25 | 98 |
-| Chest | 12 | 57 |
+| Chest | 12 | 58 |
 | Elbow extensors | 14 | 35 |
-| Hip flexors | 28 | 92 |
+| Hip flexors | 29 | 94 |
 | Anterior/lateral lower leg and dorsal foot | 11 | 64 |
 | Deep hip rotators | 16 | 48 |
-| Shoulder abductors | 16 | 117 |
+| Shoulder abductors | 16 | 120 |
 | Forearm flexors and pronators | 10 | 66 |
-| Deep and intersegmental back | 16 | 78 |
-| Elbow flexors | 16 | 36 |
+| Deep and intersegmental back | 17 | 80 |
+| Elbow flexors | 16 | 39 |
 | Breathing muscles | 15 | 67 |
 | Forearm extensors and supinators | 11 | 46 |
 | Rotator cuff | 13 | 68 |

@@ -42,6 +42,9 @@ public sealed class Exercise
     public ExerciseInsectCompatibility InsectCompatibility { get; init; } =
         ExerciseInsectCompatibility.Unreviewed;
 
+    public ExerciseHardFloorCompatibility HardFloorCompatibility { get; init; } =
+        ExerciseHardFloorCompatibility.Unreviewed;
+
     public ExerciseMirrorRelationship MirrorRelationship { get; init; } =
         ExerciseMirrorRelationship.Unreviewed;
 

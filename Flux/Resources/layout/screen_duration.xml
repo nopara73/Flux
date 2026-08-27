@@ -217,10 +217,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:alignmentMode="alignMargins"
-                    android:columnCount="3"
+                    android:columnCount="4"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:useDefaultMargins="false">
+
+                    <CheckBox
+                        android:id="@+id/hard_floor_modifier_button"
+                        style="@style/DurationModifierTile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_margin="6dp"
+                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:checked="true"
+                        android:contentDescription="@string/hard_floor_modifier_description"
+                        android:drawableTint="@color/duration_modifier_icon_tint"
+                        android:drawableTop="@drawable/ic_hard_floor"
+                        android:gravity="center"
+                        android:text=""
+                        android:tooltipText="@string/hard_floor_enabled_feedback" />
 
                     <CheckBox
                         android:id="@+id/insect_modifier_button"

@@ -1,14 +1,14 @@
 # Muscular-demand audit
 
-The 448 selectable exercises were individually reviewed against one frozen,
+The 450 selectable exercises were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 117 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 197 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 118 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 198 |
 | `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 134 |
 
 Ratings were assigned exercise by exercise. There is no desired distribution,

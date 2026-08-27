@@ -39,6 +39,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "side_sequence",
         "direction_sequence",
         "insect_compatibility",
+        "hard_floor_compatibility",
         "mirror_relationship",
         "mirror_coverage",
         "session_movement_id",
@@ -128,13 +129,21 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     "ALTER TABLE exercises ADD COLUMN insect_compatibility " +
                     "TEXT NOT NULL DEFAULT 'Unreviewed' CHECK " +
                     "(insect_compatibility IN " +
+                        "('Unreviewed', 'Compatible', 'Incompatible'))");
+            }
+            if (oldVersion < 69)
+            {
+                database.ExecSQL(
+                    "ALTER TABLE exercises ADD COLUMN hard_floor_compatibility " +
+                    "TEXT NOT NULL DEFAULT 'Unreviewed' CHECK " +
+                    "(hard_floor_compatibility IN " +
                     "('Unreviewed', 'Compatible', 'Incompatible'))");
             }
             CreateMassGroupingSchema(database);
             ClearMassGroupingReferenceData(database);
             database.ExecSQL(
                 $"DROP TABLE IF EXISTS {ExerciseSequenceBlockTable}");
-            RebuildExerciseTableForMirrorCoverage(database);
+            RebuildExerciseTableForCurrentMetadata(database);
             CreateExerciseSequenceSchema(database);
             DeleteReplacedExercises(database, existingExercises.Keys, preservedExerciseIds);
             InsertTaxonomy(database);
@@ -220,6 +229,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'Unreviewed',
                         'Compatible',
                         'Incompatible')),
+                hard_floor_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (hard_floor_compatibility IN (
+                        'Unreviewed',
+                        'Compatible',
+                        'Incompatible')),
                 mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (mirror_relationship IN (
                         'Unreviewed',
@@ -291,12 +305,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             "ON exercise_sequence_blocks (exercise_id)");
     }
 
-    private static void RebuildExerciseTableForMirrorCoverage(
+    private static void RebuildExerciseTableForCurrentMetadata(
         SQLiteDatabase database)
     {
         database.ExecSQL(
             """
-            CREATE TABLE exercises_v67 (
+            CREATE TABLE exercises_v69 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -343,6 +357,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'Unreviewed',
                         'Compatible',
                         'Incompatible')),
+                hard_floor_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (hard_floor_compatibility IN (
+                        'Unreviewed',
+                        'Compatible',
+                        'Incompatible')),
                 mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (mirror_relationship IN (
                         'Unreviewed',
@@ -373,10 +392,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             """);
         database.ExecSQL(
             ExerciseDatabaseMigrationSql
-                .CopyExistingExercisesWithNeutralMirrorMetadata);
+                .CopyExistingExercisesWithNeutralCatalogMetadata);
         database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
         database.ExecSQL("DROP TABLE exercises");
-        database.ExecSQL("ALTER TABLE exercises_v67 RENAME TO exercises");
+        database.ExecSQL("ALTER TABLE exercises_v69 RENAME TO exercises");
         database.ExecSQL(
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }
@@ -642,6 +661,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("side_sequence", exercise.SideSequence.ToString());
         values.Put("direction_sequence", exercise.DirectionSequence.ToString());
         values.Put("insect_compatibility", exercise.InsectCompatibility.ToString());
+        values.Put(
+            "hard_floor_compatibility",
+            exercise.HardFloorCompatibility.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
         values.Put("session_movement_id", exercise.SessionMovementId);
@@ -813,15 +835,20 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     cursor.GetString(17)
                         ?? throw new InvalidOperationException(
                             "An exercise has no insect compatibility review.")),
+                HardFloorCompatibility =
+                    Enum.Parse<ExerciseHardFloorCompatibility>(
+                        cursor.GetString(18)
+                            ?? throw new InvalidOperationException(
+                                "An exercise has no hard-floor compatibility review.")),
                 MirrorRelationship = Enum.Parse<ExerciseMirrorRelationship>(
-                    cursor.GetString(18)
+                    cursor.GetString(19)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror relationship review.")),
                 MinimumMirrorCoverage = Enum.Parse<ExerciseMirrorCoverage>(
-                    cursor.GetString(19)
+                    cursor.GetString(20)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
-                SessionMovementId = cursor.GetInt(20),
+                SessionMovementId = cursor.GetInt(21),
             });
         }
 
@@ -967,6 +994,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.SideSequence) ||
             !Enum.IsDefined(exercise.DirectionSequence) ||
             !Enum.IsDefined(exercise.InsectCompatibility) ||
+            !Enum.IsDefined(exercise.HardFloorCompatibility) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
             !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&

@@ -9,6 +9,7 @@ import {
   CURRENT_CATALOG_REVISION,
   CURRENT_WORKOUT_STATE_VERSION,
   DEFAULT_WORKOUT_MODIFIERS,
+  EXERCISE_HARD_FLOOR_COMPATIBILITY,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
   HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
@@ -74,12 +75,15 @@ const [
   webBuild,
   mirrorEquipmentModel,
   mirrorCoverageModel,
+  hardFloorCompatibilityModel,
   sequenceBlockModel,
   movementPresentationPolicy,
   workoutDisplayPolicy,
   workoutTimelineView,
   compactMirrorIcon,
   tallMirrorIcon,
+  hardFloorIcon,
+  softFloorIcon,
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
 ] = await Promise.all([
@@ -113,12 +117,15 @@ const [
   source("web", "scripts", "build.mjs"),
   source("Flux", "Models", "MirrorEquipment.cs"),
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
+  source("Flux", "Models", "ExerciseHardFloorCompatibility.cs"),
   source("Flux", "Models", "ExerciseSequenceBlock.cs"),
   source("Flux", "Services", "MovementPhasePresentationPolicy.cs"),
   source("Flux", "Services", "WorkoutDisplayPolicy.cs"),
   source("Flux", "WorkoutBlockTimelineView.cs"),
   source("Flux", "Resources", "drawable", "ic_mirror_compact.xml"),
   source("Flux", "Resources", "drawable", "ic_mirror_tall.xml"),
+  binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_hard_floor.png"),
+  binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
 ]);
@@ -271,26 +278,46 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.equal(WORKOUT_MODIFIERS.Silence, 2);
   assert.equal(WORKOUT_MODIFIERS.Mirror, 4);
   assert.equal(WORKOUT_MODIFIERS.TallMirror, 8);
+  assert.equal(WORKOUT_MODIFIERS.HardFloor, 16);
   assert.deepEqual(MIRROR_EQUIPMENT, {
     None: "None",
     Compact: "Compact",
     Tall: "Tall",
   });
-  assert.equal(DEFAULT_WORKOUT_MODIFIERS, WORKOUT_MODIFIERS.Silence);
+  assert.equal(
+    DEFAULT_WORKOUT_MODIFIERS,
+    WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence,
+  );
   assert.match(workoutModifiers, /Insect\s*=\s*1/);
   assert.match(workoutModifiers, /Silence\s*=\s*2/);
   assert.match(workoutModifiers, /Mirror\s*=\s*4/);
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
+  assert.match(workoutModifiers, /HardFloor\s*=\s*16/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 17);
-  assert.match(workoutState, /public int Version[^=]*=\s*20/);
+  assert.deepEqual(EXERCISE_HARD_FLOOR_COMPATIBILITY, {
+    Unreviewed: "Unreviewed",
+    Compatible: "Compatible",
+    Incompatible: "Incompatible",
+  });
+  assert.match(
+    hardFloorCompatibilityModel,
+    /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
+  );
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 18);
+  assert.match(workoutState, /public int Version[^=]*=\s*21/);
   assert.match(workoutState, /PendingRestMillisecondsRemaining/);
   assert.match(workoutState, /PendingRestPausedByUser/);
   assert.match(workoutModule, /pendingRestMillisecondsRemaining/);
   assert.match(workoutModule, /pendingRestPausedByUser/);
-  assert.match(workoutState, /LastWorkoutModifiers[^=]*=\s*WorkoutModifiers\.Silence/);
-  assert.match(sessionService, /DefaultWorkoutModifiers\s*=\s*WorkoutModifiers\.Silence/);
+  assert.match(
+    workoutState,
+    /LastWorkoutModifiers[^=]*=[\s\S]*WorkoutModifiers\.HardFloor\s*\|\s*WorkoutModifiers\.Silence/,
+  );
+  assert.match(
+    sessionService,
+    /DefaultWorkoutModifiers\s*=[\s\S]*WorkoutModifiers\.HardFloor\s*\|\s*WorkoutModifiers\.Silence/,
+  );
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
   assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
   assert.match(
@@ -306,6 +333,14 @@ test("web and mobile persist one combined duration and modifier selection contex
     /ChooseBestDistinctLineup\([\s\S]*IsWorkoutSelectionCandidate\(state, exercise, group, modifiers\)/,
   );
   assert.match(exerciseModel, /int SessionMovementId/);
+  assert.match(
+    exerciseModel,
+    /ExerciseHardFloorCompatibility HardFloorCompatibility/,
+  );
+  assert.match(
+    modifierPolicy,
+    /WorkoutModifiers\.HardFloor[\s\S]*HardFloorCompatibility[\s\S]*Compatible/,
+  );
   assert.match(
     modifierPolicy,
     /GetSessionMovementId[\s\S]*SessionMovementId > 0[\s\S]*exercise\.Id/,
@@ -428,11 +463,38 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.mirrorRelationship === "Agnostic"
       ? exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.None
       : exercise.minimumMirrorCoverage !== EXERCISE_MIRROR_COVERAGE.None));
+  assert.ok(catalog.every((exercise) =>
+    exercise.hardFloorCompatibility === "Compatible" ||
+    exercise.hardFloorCompatibility === "Incompatible"));
   assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
+  assert.match(durationLayout, /@\+id\/hard_floor_modifier_button/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);
   assert.match(durationLayout, /@\+id\/mirror_modifier_button/);
   assert.match(durationLayout, /@drawable\/ic_mirror/);
+  assert.ok(
+    durationLayout.indexOf("@+id/hard_floor_modifier_button") <
+      durationLayout.indexOf("@+id/insect_modifier_button"),
+  );
+  assert.ok(
+    webIndex.indexOf('id="hard-floor-modifier"') <
+      webIndex.indexOf('id="insect-modifier"'),
+  );
+  assert.match(durationLayout, /@drawable\/ic_hard_floor/);
+  assert.notDeepEqual(hardFloorIcon, softFloorIcon);
+  assert.deepEqual([...hardFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.deepEqual([...softFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.match(
+    mainActivity,
+    /UpdateHardFloorModifierPresentation[\s\S]*Resource\.Drawable\.ic_hard_floor[\s\S]*Resource\.Drawable\.ic_soft_floor/,
+  );
+  assert.match(webIndex, /class="floor-glyph floor-glyph-hard"/);
+  assert.match(webIndex, /class="floor-glyph floor-glyph-soft"/);
+  assert.match(webStyles, /data-hard-floor="hard"[\s\S]*floor-glyph-hard[\s\S]*data-hard-floor="soft"[\s\S]*floor-glyph-soft/);
+  assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_hard_floor\.png"\)/);
+  assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_soft_floor\.png"\)/);
+  assert.match(webBuild, /drawable-xxhdpi[\s\S]*ic_hard_floor\.png[\s\S]*ic_soft_floor\.png/);
+  assert.match(webBuild, /fingerprintedName\([\s\S]*"ic_hard_floor"[\s\S]*"ic_soft_floor"/);
   assert.match(
     durationLayout,
     /mirror_modifier_button(?:(?!\/>)[\s\S])*drawableTop="@drawable\/ic_mirror"/,
@@ -470,6 +532,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.doesNotMatch(durationLayout, /@drawable\/ic_quiet_movement/);
   assert.match(strings, /<string name="silence_modifier_description">Quiet exercise filter<\/string>/);
   assert.match(webIndex, /id="insect-modifier"/);
+  assert.match(webIndex, /id="hard-floor-modifier"/);
   assert.match(webIndex, /id="silence-modifier"/);
   assert.match(webIndex, /id="mirror-modifier"/);
   assert.match(webIndex, /class="mirror-glyph mirror-glyph-compact"/);
@@ -487,7 +550,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="compact_mirror_equipment_enabled_feedback">equipment ON: compact mirror<\/string>/);
   assert.match(strings, /<string name="tall_mirror_equipment_enabled_feedback">equipment ON: tall mirror<\/string>/);
   assert.match(strings, /<string name="mirror_equipment_disabled_feedback">equipment OFF: mirror<\/string>/);
+  assert.match(strings, /<string name="hard_floor_enabled_feedback">hard floor ON<\/string>/);
+  assert.match(strings, /<string name="hard_floor_disabled_feedback">hard floor OFF<\/string>/);
   for (const label of [
+    "hard floor ON",
+    "hard floor OFF",
     "insect mode ON",
     "insect mode OFF",
     "noisy exercises ENABLED",
@@ -502,10 +569,15 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(mainActivity, /GetMirrorFeedbackResourceId[\s\S]*MirrorEquipment\.Compact[\s\S]*compact_mirror_equipment_enabled_feedback[\s\S]*MirrorEquipment\.Tall[\s\S]*tall_mirror_equipment_enabled_feedback/);
   assert.match(mainActivity, /MirrorEquipment\.None\s*=>\s*MirrorEquipment\.Compact[\s\S]*MirrorEquipment\.Compact\s*=>\s*MirrorEquipment\.Tall[\s\S]*MirrorEquipment\.Tall\s*=>\s*MirrorEquipment\.None/);
   assert.match(durationLayout, /insect_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/insect_mode_disabled_feedback"/);
+  assert.match(durationLayout, /hard_floor_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/hard_floor_enabled_feedback"/);
   assert.match(durationLayout, /silence_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/noisy_exercises_disabled_feedback"/);
   assert.match(durationLayout, /mirror_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/mirror_equipment_disabled_feedback"/);
   assert.match(webApp, /showWorkoutModifierFeedback\(workoutModifierFeedbackLabel\(flag, enabled\)\)/);
   assert.match(webApp, /setAttribute\("title", workoutModifierFeedbackLabel\(flag, enabled\)\)/);
+  assert.match(
+    instantControls,
+    /name === "hardFloor"[\s\S]*Floor surface: hard floor[\s\S]*Floor surface: soft floor/,
+  );
   assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Compact[\s\S]*MIRROR_EQUIPMENT\.Tall/);
   assert.match(
     mainActivity,
@@ -528,12 +600,16 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*68/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*69/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
+  assert.match(
+    exerciseDatabase,
+    /hard_floor_compatibility TEXT NOT NULL[\s\S]*Compatible[\s\S]*Incompatible/,
+  );
   assert.match(
     exerciseDatabase,
     /muscular_demand INTEGER NOT NULL[\s\S]*CHECK \(muscular_demand BETWEEN 0 AND 2\)/,
@@ -1462,6 +1538,10 @@ test("web catalog migration matches the mobile workout contract", () => {
 
 async function source(...segments) {
   return readFile(path.join(repositoryRoot, ...segments), "utf8");
+}
+
+async function binarySource(...segments) {
+  return readFile(path.join(repositoryRoot, ...segments));
 }
 
 function methodBody(contents, startMarker, endMarker) {

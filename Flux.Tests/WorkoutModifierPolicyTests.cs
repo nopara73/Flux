@@ -32,6 +32,34 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void HardFloorFiltersOnlyReviewedIncompatibleExercises()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise compatible = Exercise(
+            1,
+            group,
+            hardFloorCompatibility: ExerciseHardFloorCompatibility.Compatible);
+        Exercise incompatible = Exercise(
+            2,
+            group,
+            hardFloorCompatibility: ExerciseHardFloorCompatibility.Incompatible);
+
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            compatible,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            incompatible,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            compatible,
+            WorkoutModifiers.HardFloor));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            incompatible,
+            WorkoutModifiers.HardFloor));
+    }
+
+    [Fact]
     public void SilenceAndInsectComposeAsIndependentPositiveRequirements()
     {
         Exercise quietBug = Exercise(
@@ -423,7 +451,8 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(WorkoutModifierPolicy.ValidationProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.ValidationProfiles);
-        Assert.Equal(10, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Equal(15, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Contains(WorkoutModifiers.HardFloor, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
@@ -554,11 +583,11 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void MaterialityChecksGrowQuadratically()
     {
-        // Four single-state checks (Insect, Silence, compact Mirror, tall
-        // Mirror), two binary/binary pair edges, and four edges for each of
-        // the two binary/Mirror pairs.
+        // Five single-state checks (Hard Floor, Insect, Silence, compact
+        // Mirror, tall Mirror), six directed binary/binary pair edges, and
+        // four edges for each of the three binary/Mirror pairs.
         Assert.Equal(
-            14,
+            23,
             WorkoutModifierPolicy.FindMaterialityDeficiencies([]).Count);
     }
 
@@ -899,7 +928,9 @@ public sealed class WorkoutModifierPolicyTests
         string? equipment = null,
         ExerciseMirrorCoverage? minimumMirrorCoverage = null,
         int sessionMovementId = 0,
-        ExerciseSequenceBlock[]? sequenceBlocks = null)
+        ExerciseSequenceBlock[]? sequenceBlocks = null,
+        ExerciseHardFloorCompatibility hardFloorCompatibility =
+            ExerciseHardFloorCompatibility.Compatible)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -930,6 +961,7 @@ public sealed class WorkoutModifierPolicyTests
                 ],
             SessionMovementId = sessionMovementId,
             InsectCompatibility = insectCompatibility,
+            HardFloorCompatibility = hardFloorCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = minimumMirrorCoverage ??
                 (mirrorRelationship is ExerciseMirrorRelationship.MirrorOnly or

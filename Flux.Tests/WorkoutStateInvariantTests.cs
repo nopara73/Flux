@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(20, state.Version);
+        Assert.Equal(21, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -250,12 +250,14 @@ public sealed class WorkoutStateInvariantTests
         WorkoutState state = JsonSerializer.Deserialize<WorkoutState>(json, JsonOptions)
             ?? throw new InvalidOperationException("Workout state did not deserialize.");
 
-        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
     }
 
     [Fact]
-    public void FreshWorkoutUsesSilenceUnlessCallerExplicitlyRelaxesIt()
+    public void FreshWorkoutUsesHardFloorAndSilenceUnlessCallerExplicitlyRelaxesThem()
     {
         Exercise[] exercises =
         [
@@ -266,16 +268,22 @@ public sealed class WorkoutStateInvariantTests
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
 
-        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            state.LastWorkoutModifiers);
         Assert.False(state.LastWorkoutModifiers.HasFlag(WorkoutModifiers.Mirror));
 
         service.StartWorkout(state, 3);
 
-        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
-        Assert.Equal(WorkoutModifiers.Silence, state.ActiveWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            state.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            state.ActiveWorkoutModifiers);
         Assert.All(service.GetActiveGroups(state), group =>
             Assert.True(state.SelectedExerciseIds.ContainsKey(
-                $"p2|{group.SelectionKey}")));
+                $"p18|{group.SelectionKey}")));
     }
 
     [Fact]
@@ -311,9 +319,10 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(20, state.Version);
+        Assert.Equal(21, state.Version);
         Assert.Equal(
-            WorkoutModifiers.Insect | WorkoutModifiers.Silence,
+            WorkoutModifiers.Insect | WorkoutModifiers.Silence |
+            WorkoutModifiers.HardFloor,
             state.LastWorkoutModifiers);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
@@ -327,6 +336,10 @@ public sealed class WorkoutStateInvariantTests
                 $"p1|{group.SelectionKey}"));
             Assert.True(state.SelectedExerciseIds.ContainsKey(
                 $"p3|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p17|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p19|{group.SelectionKey}"));
         });
     }
 
@@ -576,6 +589,7 @@ public sealed class WorkoutStateInvariantTests
                 },
             ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
+            HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

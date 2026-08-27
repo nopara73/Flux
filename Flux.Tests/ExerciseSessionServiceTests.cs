@@ -335,7 +335,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void CurrentPreDirectionStateKeepsExplicitlyRelaxedSilenceModifier()
+    public void PreHardFloorStateKeepsSilenceRelaxedWhileAddingHardFloorDefault()
     {
         var service = new ExerciseSessionService(ReviewedInsectCatalog(), new Random(1));
         var state = new WorkoutState
@@ -346,8 +346,8 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(20, state.Version);
-        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(21, state.Version);
+        Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
     }
 
     [Fact]
@@ -372,8 +372,10 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(20, state.Version);
-        Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
+        Assert.Equal(21, state.Version);
+        Assert.Equal(
+            WorkoutModifiers.Insect | WorkoutModifiers.HardFloor,
+            state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
         Assert.DoesNotContain(state.SelectedExerciseIds.Keys,
@@ -1264,8 +1266,8 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(20, state.Version);
-        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(21, state.Version);
+        Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
         Assert.Empty(state.ActiveFullSideRoundIds);
@@ -1321,7 +1323,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(20, state.Version);
+        Assert.Equal(21, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -3424,7 +3426,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(20, state.Version);
+        Assert.Equal(21, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -3755,6 +3757,7 @@ public sealed class ExerciseSessionServiceTests
                 : [],
             SessionMovementId = source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
+            HardFloorCompatibility = source.HardFloorCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             MuscularDemand = source.MuscularDemand,
@@ -3790,6 +3793,7 @@ public sealed class ExerciseSessionServiceTests
             SequenceBlocks = source.SequenceBlocks,
             SessionMovementId = sessionMovementId ?? source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
+            HardFloorCompatibility = source.HardFloorCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             MuscularDemand = muscularDemand,
@@ -3830,6 +3834,7 @@ public sealed class ExerciseSessionServiceTests
                         : block)
                     .ToArray(),
             InsectCompatibility = source.InsectCompatibility,
+            HardFloorCompatibility = source.HardFloorCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = mirrorRelationship is
                 ExerciseMirrorRelationship.MirrorOnly or
@@ -3913,6 +3918,7 @@ public sealed class ExerciseSessionServiceTests
                 sideSequence,
                 directionSequence),
             InsectCompatibility = insectCompatibility,
+            HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

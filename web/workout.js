@@ -5,6 +5,7 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   Silence: 2,
   Mirror: 4,
   TallMirror: 8,
+  HardFloor: 16,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
@@ -12,6 +13,11 @@ export const MIRROR_EQUIPMENT = Object.freeze({
   Tall: "Tall",
 });
 export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
+  Unreviewed: "Unreviewed",
+  Compatible: "Compatible",
+  Incompatible: "Incompatible",
+});
+export const EXERCISE_HARD_FLOOR_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
   Compatible: "Compatible",
   Incompatible: "Incompatible",
@@ -36,6 +42,18 @@ export function getSessionMovementId(exercise) {
 }
 
 const MODIFIER_RULES = Object.freeze([
+  Object.freeze({
+    flag: WORKOUT_MODIFIERS.HardFloor,
+    isReviewed: (exercise) =>
+      exercise.hardFloorCompatibility ===
+        EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible ||
+      exercise.hardFloorCompatibility ===
+        EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+    isCompatibleForProfile: (exercise, profile) =>
+      (profile & WORKOUT_MODIFIERS.HardFloor) === 0 ||
+      exercise.hardFloorCompatibility ===
+        EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
+  }),
   Object.freeze({
     flag: WORKOUT_MODIFIERS.Insect,
     isReviewed: (exercise) =>
@@ -152,15 +170,17 @@ export const HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS = 2;
 export const HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
-export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 17;
+export const DEFAULT_WORKOUT_MODIFIERS =
+  WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
+export const CURRENT_WORKOUT_STATE_VERSION = 18;
+const IMPLICIT_HARD_FLOOR_STATE_VERSION = 18;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 49;
+export const CURRENT_CATALOG_REVISION = 50;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -246,6 +266,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
     538, 539, 540, 541, 542, 543, 545, 546,
   ])],
+  [50, new Set([31, 169, 219, 547, 548])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -312,6 +333,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     520, 521, 529, 530, 531, 532, 533, 534, 535, 536, 537,
     538, 539, 540, 541, 542, 543, 545, 546,
   ])],
+  [50, new Set([547, 548])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -2283,6 +2305,9 @@ function normalizeStateShape(raw) {
   if (state.version < EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION) {
     migrateExplicitMirrorEquipment(state);
   }
+  if (state.version < IMPLICIT_HARD_FLOOR_STATE_VERSION) {
+    migrateImplicitHardFloorModifier(state);
+  }
   state.version = CURRENT_WORKOUT_STATE_VERSION;
   Object.defineProperty(state, SOURCE_STATE_VERSION, {
     value: sourceVersion,
@@ -2340,6 +2365,31 @@ function migrateExplicitMirrorEquipment(state) {
     state.activeWorkoutModifiers,
     MIRROR_EQUIPMENT.None,
   );
+}
+
+function migrateImplicitHardFloorModifier(state) {
+  for (const [selectionStorageKey, exerciseId] of
+    Object.entries(state.selectedExerciseIds)) {
+    const match = /^p(\d+)\|(.+)$/.exec(selectionStorageKey);
+    const modifierValue = match ? Number(match[1]) : WORKOUT_MODIFIERS.None;
+    const selectionGroupId = match ? match[2] : selectionStorageKey;
+    if (!selectionGroupId || normalizeWorkoutModifiers(modifierValue) !== modifierValue) {
+      continue;
+    }
+    const hardFloorProfile = normalizeWorkoutModifiers(
+      modifierValue | WORKOUT_MODIFIERS.HardFloor,
+    );
+    const hardFloorKey = `${SELECTION_PROFILE_PREFIX}${hardFloorProfile}` +
+      `${SELECTION_PROFILE_SEPARATOR}${selectionGroupId}`;
+    if (state.selectedExerciseIds[hardFloorKey] === undefined) {
+      state.selectedExerciseIds[hardFloorKey] = exerciseId;
+    }
+  }
+  state.lastWorkoutModifiers = normalizeWorkoutModifiers(
+    state.lastWorkoutModifiers | WORKOUT_MODIFIERS.HardFloor,
+  );
+
+  // Do not alter an in-progress workout's modifier profile during upgrade.
 }
 
 function uniquePositiveIntegers(value) {

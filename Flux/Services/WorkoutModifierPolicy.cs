@@ -56,6 +56,14 @@ public static class WorkoutModifierPolicy
     private static readonly ModifierRule[] Rules =
     [
         new(
+            WorkoutModifiers.HardFloor,
+            exercise => exercise.HardFloorCompatibility !=
+                ExerciseHardFloorCompatibility.Unreviewed,
+            (exercise, profile) =>
+                !profile.HasFlag(WorkoutModifiers.HardFloor) ||
+                exercise.HardFloorCompatibility ==
+                    ExerciseHardFloorCompatibility.Compatible),
+        new(
             WorkoutModifiers.Insect,
             exercise => exercise.InsectCompatibility !=
                 ExerciseInsectCompatibility.Unreviewed,

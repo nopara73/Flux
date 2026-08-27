@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 448 human-demonstrated standing movements. Exercises are chosen
+Flux contains 450 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -86,8 +86,8 @@ the sequence's internal order.
 `tools/ExerciseSequences.psd1` exhaustively partitions the retained inventory:
 every record is either in exactly one mandatory sequence or is explicitly
 standalone. Generation rejects implicit defaults, overlaps, orphans, and hidden
-members scheduled as roots. The current reviewed inventory has 393 schedulable
-roots: 243 one-block, 107 two-block, 26 three-block, 16 four-block, and one
+members scheduled as roots. The current reviewed inventory has 395 schedulable
+roots: 245 one-block, 107 two-block, 26 three-block, 16 four-block, and one
 five-block root. Forty-seven roots couple multiple named records, including
 17 exact alternating integrations added after the side/integration audit.
 These numbers are audit outputs rather than coverage targets.
@@ -135,7 +135,7 @@ mirror-category floor.
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 448 included
+movements. All 450 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the

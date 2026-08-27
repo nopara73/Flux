@@ -137,7 +137,7 @@
         Practice = 'Low-impact conditioning'
         MotionProfile = 'KneeRaiseTwoArmPulldown'
         Primary = 'HipFlexors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -625,7 +625,7 @@
         Practice = 'Low-impact conditioning'
         MotionProfile = 'HighKneePulldown'
         Primary = 'HipFlexors'
-        Secondary = @('AbdominalWall')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -1351,7 +1351,7 @@
         Practice = 'Low-impact conditioning'
         MotionProfile = 'HighKneeCrossBodyPull'
         Primary = 'ShoulderAdductorsAndExtensors'
-        Secondary = @('AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'HipFlexors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8211,6 +8211,56 @@
             DurationSeconds = 5.75
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    547 = @{
+        RetiredName = 'Bent-Elbow Shoulder Figure Eight'
+        Name = 'Alternating Standing Rotation Claps'
+        Practice = 'Aerobics'
+        MotionProfile = 'StandingRotationClap'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'physitrack-clap-with-rotation.mp4'
+            Url = 'https://media.physitrack.com/exercises/effe9dc0-0dfc-4910-b350-45bc7c7730e8/en/video_1280x720.mp4'
+            SourcePage = 'https://us.physitrack.com/home-exercise-video/clap-with-rotation'
+            Human = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 20
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:200:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    548 = @{
+        RetiredName = 'Bilateral Shoulder Pendulum'
+        Name = 'Marching Cross-Body Knee Taps'
+        Practice = 'Coordination training'
+        MotionProfile = 'CrossBodyKneeTap'
+        Primary = 'HipFlexors'
+        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'physitrack-cross-body-knee-taps.mp4'
+            Url = 'https://media.physitrack.com/exercises/63d88e72-51da-48c9-9854-0be891d2597d/en/video_1280x720.mp4'
+            SourcePage = 'https://us.physitrack.com/home-exercise-video/marching-with-high-knees-and-knee-taps'
+            Human = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 20
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:200:0'
             PingPong = $false
             MirrorForAlternation = $false
         }

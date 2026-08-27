@@ -19,19 +19,20 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(14)]
     [InlineData(66)]
     [InlineData(67)]
+    [InlineData(68)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(68, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(69, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 68)]
-    [InlineData(67, 67)]
+    [InlineData(13, 69)]
     [InlineData(68, 68)]
-    [InlineData(68, 69)]
+    [InlineData(69, 69)]
+    [InlineData(69, 70)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -54,7 +55,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         int[] addedExerciseIds =
         [
             529, 530, 531, 532, 533, 534, 535, 536, 537,
-            538, 539, 540, 541, 542, 543, 545, 546,
+            538, 539, 540, 541, 542, 543, 545, 546, 547, 548,
         ];
         HashSet<int> added = addedExerciseIds.ToHashSet();
         var storedVersion67 = catalog
@@ -75,7 +76,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion67);
 
-        Assert.Equal(448, catalog.Length);
+        Assert.Equal(450, catalog.Length);
         Assert.Equal(431, storedVersion67.Count);
         Assert.Equal(429, preserved.Count);
         Assert.DoesNotContain(520, preserved);
@@ -153,7 +154,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Execute(
             connection,
             """
-            CREATE TABLE exercises_v67 (
+            CREATE TABLE exercises_v69 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -174,6 +175,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
                 side_sequence TEXT NOT NULL,
                 direction_sequence TEXT NOT NULL,
                 insect_compatibility TEXT NOT NULL,
+                hard_floor_compatibility TEXT NOT NULL,
                 mirror_relationship TEXT NOT NULL,
                 mirror_coverage TEXT NOT NULL,
                 session_movement_id INTEGER NOT NULL DEFAULT 0
@@ -197,14 +199,15 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Execute(
             connection,
             ExerciseDatabaseMigrationSql
-                .CopyExistingExercisesWithNeutralMirrorMetadata);
+                .CopyExistingExercisesWithNeutralCatalogMetadata);
 
         using SqliteCommand command = connection.CreateCommand();
         command.CommandText =
             """
             SELECT name, video, score, equipment,
-                mirror_relationship, mirror_coverage, session_movement_id
-            FROM exercises_v67
+                hard_floor_compatibility, mirror_relationship,
+                mirror_coverage, session_movement_id
+            FROM exercises_v69
             WHERE id = 528
             """;
         using SqliteDataReader reader = command.ExecuteReader();
@@ -215,8 +218,9 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.Equal(7, reader.GetInt32(2));
         Assert.Equal("None", reader.GetString(3));
         Assert.Equal("Unreviewed", reader.GetString(4));
-        Assert.Equal("None", reader.GetString(5));
-        Assert.Equal(0, reader.GetInt32(6));
+        Assert.Equal("Unreviewed", reader.GetString(5));
+        Assert.Equal("None", reader.GetString(6));
+        Assert.Equal(0, reader.GetInt32(7));
         Assert.False(reader.Read());
     }
 

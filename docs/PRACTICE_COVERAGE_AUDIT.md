@@ -4,7 +4,7 @@ Generated from the runtime catalog and the supplementary movement-practices DAG.
 
 ## Outcome
 
-- Runtime catalog: **448** exercises. The frozen supplementary practice-coverage delta below contains **5** additions.
+- Runtime catalog: **450** exercises. The frozen supplementary practice-coverage delta below contains **5** additions.
 - Exact practice-node provenance: **246**; family-only: **104**; domain-only: **98**; intentionally unmapped: **0**.
 - Primary DAG coverage: **8/18** domains. Including honest cross-links: **11/18** domains and **23/71** families.
 - Newly represented families: **2** — Bipedal locomotion cultures, South Asian dance traditions.

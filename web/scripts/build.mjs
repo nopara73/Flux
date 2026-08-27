@@ -28,9 +28,51 @@ const workoutSource = await readFile(path.join(webRoot, "workout.js"), "utf8");
 const workoutOutputName = fingerprintedName("workout", "js", workoutSource);
 await writeFile(path.join(outputRoot, workoutOutputName), workoutSource, "utf8");
 
-const stylesSource = await readFile(path.join(webRoot, "styles.css"), "utf8");
+const hardFloorIconPath = path.join(
+  repositoryRoot,
+  "Flux",
+  "Resources",
+  "drawable-xxhdpi",
+  "ic_hard_floor.png",
+);
+const softFloorIconPath = path.join(
+  repositoryRoot,
+  "Flux",
+  "Resources",
+  "drawable-xxhdpi",
+  "ic_soft_floor.png",
+);
+const hardFloorIconSource = await readFile(hardFloorIconPath);
+const softFloorIconSource = await readFile(softFloorIconPath);
+const hardFloorIconName = fingerprintedName(
+  "ic_hard_floor",
+  "png",
+  hardFloorIconSource,
+);
+const softFloorIconName = fingerprintedName(
+  "ic_soft_floor",
+  "png",
+  softFloorIconSource,
+);
+const stylesTemplate = await readFile(path.join(webRoot, "styles.css"), "utf8");
+const stylesSource = stylesTemplate
+  .replaceAll("./assets/ic_hard_floor.png", `./assets/${hardFloorIconName}`)
+  .replaceAll("./assets/ic_soft_floor.png", `./assets/${softFloorIconName}`);
+if (stylesSource === stylesTemplate ||
+    stylesSource.includes("./assets/ic_hard_floor.png") ||
+    stylesSource.includes("./assets/ic_soft_floor.png")) {
+  throw new Error("Could not fingerprint the floor modifier icons.");
+}
 const stylesOutputName = fingerprintedName("styles", "css", stylesSource);
 await writeFile(path.join(outputRoot, stylesOutputName), stylesSource, "utf8");
+await copyInto(
+  hardFloorIconPath,
+  path.join(outputRoot, "assets", hardFloorIconName),
+);
+await copyInto(
+  softFloorIconPath,
+  path.join(outputRoot, "assets", softFloorIconName),
+);
 
 const catalogSource = await readFile(
   path.join(repositoryRoot, "Flux", "Assets", "exercises.json"),
@@ -67,8 +109,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 448) {
-  throw new Error(`Expected 448 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 450) {
+  throw new Error(`Expected 450 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 const catalogInvariantChecks = [

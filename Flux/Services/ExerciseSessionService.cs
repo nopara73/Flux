@@ -10,10 +10,11 @@ public sealed class ExerciseSessionService
     public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
     public const WorkoutModifiers DefaultWorkoutModifiers =
-        WorkoutModifiers.Silence;
+        WorkoutModifiers.HardFloor | WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 20;
+    private const int CurrentStateVersion = 21;
     private const long RestDurationMilliseconds = 15_000L;
+    private const int ImplicitHardFloorStateVersion = 21;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
     private const int LegacyLineupStateVersion = 7;
@@ -97,6 +98,11 @@ public sealed class ExerciseSessionService
         if (state.Version < ExplicitMirrorEquipmentStateVersion)
         {
             MigrateExplicitMirrorEquipment(state);
+        }
+
+        if (state.Version < ImplicitHardFloorStateVersion)
+        {
+            MigrateImplicitHardFloorModifier(state);
         }
 
         state.Version = CurrentStateVersion;
@@ -2419,6 +2425,33 @@ public sealed class ExerciseSessionService
         state.ActiveWorkoutModifiers = WorkoutModifierPolicy.WithMirrorEquipment(
             state.ActiveWorkoutModifiers,
             MirrorEquipment.None);
+    }
+
+    private void MigrateImplicitHardFloorModifier(WorkoutState state)
+    {
+        foreach ((string selectionStorageKey, int exerciseId) in
+                 state.SelectedExerciseIds.ToArray())
+        {
+            if (!TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out string selectionGroupId,
+                    out WorkoutModifiers modifiers))
+            {
+                continue;
+            }
+
+            WorkoutModifiers hardFloorProfile = NormalizeWorkoutModifiers(
+                modifiers | WorkoutModifiers.HardFloor);
+            state.SelectedExerciseIds.TryAdd(
+                GetSelectionStorageKey(selectionGroupId, hardFloorProfile),
+                exerciseId);
+        }
+
+        state.LastWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.LastWorkoutModifiers | WorkoutModifiers.HardFloor);
+
+        // Preserve the exact profile of a workout already in progress. The new
+        // default takes effect when the user next reaches duration selection.
     }
 
     private void NormalizeSavedLineups(WorkoutState state)

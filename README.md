@@ -144,8 +144,11 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
-Flux currently provides three composable modifiers:
+Flux currently provides four composable modifiers:
 
+- **Hard Floor**, enabled by default and shown first, admits only movements
+  reviewed as ergonomic on an ordinary rigid floor. Turning it off selects a
+  stable soft floor and relaxes that restriction;
 - **Silence**, enabled by default, admits only naturally quiet movements;
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
@@ -159,8 +162,8 @@ Mirror availability affects exercise eligibility and selection only. It never
 horizontally flips demonstration media; reviewed atomic side blocks remain a
 separate exercise-sequence behavior.
 
-Turning Insect or Silence off relaxes its requirement. Mirror behavior is
-coverage-aware:
+Turning Hard Floor, Insect, or Silence off relaxes its requirement. Mirror
+behavior is coverage-aware:
 
 - upper-body `MirrorOnly` exercises accept compact or tall mirrors;
 - full-body `MirrorOnly` exercises require a tall mirror;
@@ -181,15 +184,16 @@ Relationship labels are never promoted to hide a genuine gap. Every supported
 duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
 
-A separate materiality test prevents placebo modifiers. Insect and Silence must
-remove at least five exercises or 5% of the previous candidate pool, whichever
-is larger. Mirror must actually prefer at least that many compatible exercises
-for compact and tall equipment independently. Each modifier must affect at
-least 10% of the canonical buckets, both alone and with its paired modifier
-enabled. The current 71 `BenefitsGreatly` assignments are an audited result,
-not a target or ceiling. Ordinary form checking never qualifies, and
-relationship labels cannot be promoted to satisfy coverage or materiality
-checks.
+A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
+and Silence must remove at least five exercises or 5% of the previous candidate
+pool, whichever is larger. Mirror must actually prefer at least that many
+compatible exercises for compact and tall equipment independently. Each
+modifier must affect at least 10% of the canonical buckets, both alone and with
+its paired modifier enabled. The current 71 `BenefitsGreatly` assignments are
+an audited result, not a target or ceiling. Ordinary form checking never
+qualifies, and relationship labels cannot be promoted to satisfy coverage or
+materiality checks. Hard-floor classifications and their review criteria are
+recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
 
 These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
@@ -225,8 +229,8 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 393 schedulable roots from 448 exercise records:
-243 one-block, 107 two-block, 26 three-block, 16 four-block, and one five-block
+current semantic audit yields 395 schedulable roots from 450 exercise records:
+245 one-block, 107 two-block, 26 three-block, 16 four-block, and one five-block
 root. Forty-seven roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
@@ -309,7 +313,7 @@ still leaves the unreached exercise neutral.
 
 ## Exercise catalog
 
-Flux ships with 448 reviewed movements spanning compound strength and
+Flux ships with 450 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.

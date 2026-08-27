@@ -11,4 +11,5 @@ public enum WorkoutModifiers
     // represented by Mirror; a tall mirror by Mirror | TallMirror. The
     // qualifier is never valid without Mirror.
     TallMirror = 8,
+    HardFloor = 16,
 }

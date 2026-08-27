@@ -27,6 +27,8 @@ const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
 const DIRECTION_SEGMENT_SECONDS = 20;
 const MODIFIER_FEEDBACK_DURATION_MS = 2_040;
 const MODIFIER_FEEDBACK_LABELS = Object.freeze({
+  hardFloorEnabled: "hard floor ON",
+  hardFloorDisabled: "hard floor OFF",
   insectEnabled: "insect mode ON",
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
@@ -45,6 +47,7 @@ const elements = {
   durationRange: byId("duration-range"),
   durationLabels: [...byId("duration-labels").children],
   beginWorkout: byId("begin-workout"),
+  hardFloorModifier: byId("hard-floor-modifier"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
   mirrorModifier: byId("mirror-modifier"),
@@ -313,6 +316,10 @@ function renderDuration(minutes, userInitiated) {
 
 function workoutModifierTiles() {
   return [
+    {
+      element: elements.hardFloorModifier,
+      flag: WORKOUT_MODIFIERS.HardFloor,
+    },
     { element: elements.insectModifier, flag: WORKOUT_MODIFIERS.Insect },
     {
       element: elements.silenceModifier,
@@ -334,6 +341,11 @@ function toggleWorkoutModifier(flag) {
 }
 
 function workoutModifierFeedbackLabel(flag, enabled) {
+  if (flag === WORKOUT_MODIFIERS.HardFloor) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "hardFloorEnabled" : "hardFloorDisabled"
+    ];
+  }
   if (flag === WORKOUT_MODIFIERS.Insect) {
     return MODIFIER_FEEDBACK_LABELS[
       enabled ? "insectEnabled" : "insectDisabled"
@@ -391,7 +403,13 @@ function renderWorkoutModifiers() {
     const enabled = (selectedModifiers & flag) !== 0;
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", workoutModifierFeedbackLabel(flag, enabled));
-    if (enabledLabel && disabledLabel) {
+    if (flag === WORKOUT_MODIFIERS.HardFloor) {
+      element.dataset.hardFloor = enabled ? "hard" : "soft";
+      element.setAttribute(
+        "aria-label",
+        enabled ? "Floor surface: hard floor" : "Floor surface: soft floor",
+      );
+    } else if (enabledLabel && disabledLabel) {
       element.setAttribute("aria-label", enabled ? enabledLabel : disabledLabel);
     }
   }
