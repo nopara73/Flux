@@ -346,7 +346,19 @@ Duration, modifier profile, lineups, keeps, scores, active progress, active
 movement checkpoints, and pending rest are stored locally. Modifier combinations
 retain separate stable lineups while sharing durable keeps.
 
-The Android catalog uses SQLite schema version 66. Catalog migrations distinguish
+Every workout started after audit logging was introduced also has one durable,
+append-only local session record. It snapshots the start/end time, duration,
+modifiers, starting Keep set and lineup, every pre-start Shuffle, every actually
+completed 45-second block, and every final Keep/reject decision. Block snapshots
+include the exercise name, demand, primary and secondary canonical muscles,
+side/direction/media cues, and sequence/set position; decisions include the
+starting score and completed versus planned block count. Completed and
+interrupted records are finalized idempotently and never mutate scores. Because
+history stores snapshots as well as IDs, later catalog edits cannot rewrite what
+happened. This makes exact hard-block and prior-session Keep-repeat comparisons
+possible; sessions completed before this version cannot be reconstructed.
+
+The Android catalog uses SQLite schema version 68. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

@@ -652,7 +652,7 @@ test("current pre-direction state keeps an explicitly relaxed silence modifier",
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 16);
+  assert.equal(state.version, 17);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
 });
 
@@ -669,7 +669,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 16);
+  assert.equal(state.version, 17);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Insect);
   assert.equal(getMirrorEquipment(state.lastWorkoutModifiers), MIRROR_EQUIPMENT.None);
   assert.equal(state.selectedExerciseIds["r3.lower-limbs"], 101);
@@ -2838,6 +2838,21 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
     .every((item) => item.score === originalScores.get(item.id)));
   assert.ok(activeGroups.slice(1).every((group) =>
     session.getSelectedExercise(group).id === otherSelections.get(group.id)));
+  assert.equal(session.state.activeWorkoutSession.selectionChanges.length, 1);
+  const change = session.state.activeWorkoutSession.selectionChanges[0];
+  assert.equal(change.kind, "Shuffle");
+  assert.ok(change.changedAtUnixMilliseconds > 0);
+  assert.equal(change.selectionGroupId, getSelectionKey(current));
+  assert.equal(change.rejectedRootExerciseId, originalId);
+  assert.equal(change.rejectedRootExerciseName, result.rejectedExercise.name);
+  assert.equal(change.rejectedSelectionScoreBeforeChange, originalScores.get(originalId));
+  assert.equal(change.rejectedSelectionWasKeptAtWorkoutStart, false);
+  assert.equal(change.replacementRootExerciseId, result.replacementExercise.id);
+  assert.equal(change.replacementRootExerciseName, result.replacementExercise.name);
+  assert.equal(
+    change.replacementSelectionScore,
+    originalScores.get(result.replacementExercise.id),
+  );
 });
 
 test("shuffle does not offer another alias of the rejected movement", () => {
@@ -3105,7 +3120,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 16);
+  assert.equal(restored.state.version, 17);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -4657,6 +4672,113 @@ test("legacy browser state without a catalog revision migrates like Android", ()
 test("corrupt local state resets safely", () => {
   assert.deepEqual(parseStoredState("not json"), createDefaultState());
   assert.equal(parseStoredState('{"lastWorkoutMinutes":6}').lastWorkoutMinutes, 7);
+});
+
+test("completed workout history preserves exact blocks decisions and prior keeps", () => {
+  let now = Date.UTC(2026, 7, 27, 8);
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    20_000 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    10,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    true,
+    [HARD_MUSCULAR_DEMAND, MINIMUM_MUSCULAR_DEMAND, MODERATE_MUSCULAR_DEMAND][index],
+  ));
+  const state = createDefaultState();
+  state.lastKeptExerciseIds = [exercises[0].id];
+  const session = new WorkoutSession(
+    exercises,
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.activeWorkoutSession.status, "InProgress");
+  assert.deepEqual(
+    session.state.activeWorkoutSession.keptExerciseIdsAtStart,
+    [exercises[0].id],
+  );
+  assert.equal(session.state.activeWorkoutSession.initialSelections.length, 3);
+
+  while (session.getNextGroup()) {
+    const group = session.getNextGroup();
+    now += 60_000;
+    session.beginRest(group, now + REST_DURATION_MS);
+    now += 1_000;
+    session.recordOutcome(group, true);
+    session.clearPendingRest();
+  }
+  session.initialize();
+
+  assert.equal(session.state.activeWorkoutSession, null);
+  assert.equal(session.state.workoutHistory.length, 1);
+  session.acknowledgeCompletion();
+
+  assert.equal(session.state.activeWorkoutSession, null);
+  assert.equal(session.state.workoutHistory.length, 1);
+  const completed = session.state.workoutHistory[0];
+  assert.equal(completed.status, "Completed");
+  assert.equal(completed.blocks.length, 3);
+  assert.equal(completed.decisions.length, 3);
+  assert.equal(
+    completed.blocks.filter((block) =>
+      block.muscularDemand === HARD_MUSCULAR_DEMAND).length,
+    1,
+  );
+  assert.deepEqual(completed.blocks.map((block) => block.order), [1, 2, 3]);
+  assert.ok(completed.blocks.every((block) =>
+    block.sequenceBlockNumber === 1 &&
+    block.sequenceBlockCount === 1 &&
+    block.setNumber === 1 &&
+    block.setCount === 1));
+  assert.equal(
+    completed.blocks.find((block) => block.exerciseId === exercises[0].id)
+      .wasSequenceKeptAtWorkoutStart,
+    true,
+  );
+
+  const persisted = parseStoredState(JSON.stringify(session.state));
+  assert.deepEqual(persisted.workoutHistory, session.state.workoutHistory);
+  assert.deepEqual(
+    persisted.workoutHistory[0].keptExerciseIdsAtStart,
+    [exercises[0].id],
+  );
+});
+
+test("interrupted workout history archives only actually completed blocks once", () => {
+  let now = Date.UTC(2026, 7, 27, 9);
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    21_000 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    10,
+  ));
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const first = session.getNextGroup();
+  now += 60_000;
+  session.beginRest(first, now + REST_DURATION_MS);
+  session.keepPendingRest();
+  now += 1_000;
+
+  session.finishInterruptedWorkout();
+  session.finishInterruptedWorkout();
+
+  assert.equal(session.state.workoutHistory.length, 1);
+  assert.equal(session.state.workoutHistory[0].status, "Interrupted");
+  assert.equal(session.state.workoutHistory[0].blocks.length, 1);
+  assert.equal(session.state.workoutHistory[0].blocks[0].exerciseId,
+    session.state.workoutHistory[0].decisions[0].rootExerciseId);
+  assert.equal(session.state.workoutHistory[0].decisions.length, 1);
 });
 
 test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async () => {

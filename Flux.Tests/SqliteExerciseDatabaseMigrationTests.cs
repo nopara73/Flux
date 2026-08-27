@@ -1,10 +1,98 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Flux.Data;
+using Flux.Models;
+using Flux.Services;
 using Microsoft.Data.Sqlite;
 
 namespace Flux.Tests;
 
 public sealed class SqliteExerciseDatabaseMigrationTests
 {
+    private static readonly JsonSerializerOptions CatalogJsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter() },
+    };
+
+    [Theory]
+    [InlineData(14)]
+    [InlineData(66)]
+    [InlineData(67)]
+    public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
+    {
+        Assert.Equal(68, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
+            oldVersion,
+            ExerciseDatabaseVersionPolicy.CurrentVersion));
+    }
+
+    [Theory]
+    [InlineData(13, 68)]
+    [InlineData(67, 67)]
+    [InlineData(68, 68)]
+    [InlineData(68, 69)]
+    public void UnsupportedDatabaseTransitionsRemainRejected(
+        int oldVersion,
+        int newVersion)
+    {
+        Assert.False(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
+            oldVersion,
+            newVersion));
+    }
+
+    [Fact]
+    public void Version67UpgradeAddsSequenceRecordsAndPreservesEveryUnchangedScore()
+    {
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "exercises.json")),
+                CatalogJsonOptions)
+            ?? throw new InvalidOperationException("The test catalog is missing.");
+        int[] addedExerciseIds =
+        [
+            529, 530, 531, 532, 533, 534, 535, 536, 537,
+            538, 539, 540, 541, 542, 543, 545, 546,
+        ];
+        HashSet<int> added = addedExerciseIds.ToHashSet();
+        var storedVersion67 = catalog
+            .Where(exercise => !added.Contains(exercise.Id))
+            .ToDictionary(
+                exercise => exercise.Id,
+                exercise => new StoredExerciseSnapshot(
+                    exercise.Id switch
+                    {
+                        520 => "Silent Vowel-Shape Sequence",
+                        521 => "Smile-to-Neutral Transitions",
+                        _ => exercise.Name,
+                    },
+                    exercise.Video,
+                    Score: exercise.Id % 17 - 8));
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            catalog,
+            storedVersion67);
+
+        Assert.Equal(448, catalog.Length);
+        Assert.Equal(431, storedVersion67.Count);
+        Assert.Equal(429, preserved.Count);
+        Assert.DoesNotContain(520, preserved);
+        Assert.DoesNotContain(521, preserved);
+        Assert.Equal(
+            storedVersion67.Keys.Except([520, 521]).Order(),
+            preserved.Order());
+        Assert.All(storedVersion67, entry =>
+            Assert.Equal(entry.Key % 17 - 8, entry.Value.Score));
+        Assert.Equal(5, catalog.Count(exercise =>
+            added.Contains(exercise.Id) &&
+            exercise.MuscularDemand == Exercise.MaximumMuscularDemand));
+        Assert.All(addedExerciseIds, exerciseId =>
+            Assert.Contains(catalog, root => root.SequenceBlocks.Any(block =>
+                block.ExerciseId == exerciseId)));
+    }
+
     [Fact]
     public void LegacyMirrorOnlyRowCanBeCopiedIntoCurrentSchema()
     {

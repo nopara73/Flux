@@ -573,6 +573,12 @@ public static class CatalogMigrationRules
                 [513] = new(
                     "Standing Unilateral SCM Stretch",
                     "Scapular Retraction"),
+                [520] = new(
+                    "Silent Vowel-Shape Sequence",
+                    "Scapular Clock"),
+                [521] = new(
+                    "Smile-to-Neutral Transitions",
+                    "Scapular Figure Eight"),
                 [572] = new(
                     "Wide-Stance Bent-Knee Rotational Stretch",
                     "Tai Chi White Crane Opens Wings"),

@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -311,7 +311,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
@@ -398,6 +398,95 @@ public sealed class WorkoutStateInvariantTests
             restored.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[
                 CanonicalMuscleGroup.Chest.ToString()]);
         Assert.Equal([101, 202], restored.LastKeptExerciseIds.Order());
+    }
+
+    [Fact]
+    public void FullWorkoutHistoryRoundTripsWithoutDependingOnCurrentCatalog()
+    {
+        var state = new WorkoutState
+        {
+            NextWorkoutSessionId = 8,
+            WorkoutHistory =
+            [
+                new WorkoutSessionLog
+                {
+                    SessionId = 7,
+                    StartedAtUnixMilliseconds = 1_777_000_000_000,
+                    EndedAtUnixMilliseconds = 1_777_000_180_000,
+                    WorkoutMinutes = 3,
+                    Modifiers = WorkoutModifiers.Silence | WorkoutModifiers.Mirror,
+                    Status = WorkoutSessionStatus.Completed,
+                    KeptExerciseIdsAtStart = [101],
+                    InitialSelections =
+                    [
+                        new WorkoutSelectionSnapshot
+                        {
+                            SelectionGroupId = "3.LowerBody",
+                            CoveredWorkoutGroupIds = ["3.LowerBody"],
+                            RootExerciseId = 101,
+                            RootExerciseName = "Historic Squat Name",
+                            SelectionScoreAtStart = -2,
+                            SequenceBlockCount = 1,
+                            SetCount = 1,
+                            WasKeptAtWorkoutStart = true,
+                        },
+                    ],
+                    Blocks =
+                    [
+                        new WorkoutBlockLog
+                        {
+                            CompletedAtUnixMilliseconds = 1_777_000_060_000,
+                            WorkoutGroupId = "3.LowerBody",
+                            SelectionGroupId = "3.LowerBody",
+                            Order = 1,
+                            RootExerciseId = 101,
+                            RootExerciseName = "Historic Squat Name",
+                            ExerciseId = 101,
+                            ExerciseName = "Historic Squat Name",
+                            SequenceBlockNumber = 1,
+                            SequenceBlockCount = 1,
+                            SetNumber = 1,
+                            SetCount = 1,
+                            MuscularDemand = 2,
+                            PrimaryCanonicalGroup =
+                                CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+                            SecondaryCanonicalGroups =
+                                [CanonicalMuscleGroup.GlutealExtensors],
+                            WasSequenceKeptAtWorkoutStart = true,
+                        },
+                    ],
+                    Decisions =
+                    [
+                        new WorkoutDecisionLog
+                        {
+                            DecidedAtUnixMilliseconds = 1_777_000_075_000,
+                            SelectionGroupId = "3.LowerBody",
+                            RootExerciseId = 101,
+                            RootExerciseName = "Historic Squat Name",
+                            SequenceExerciseIds = [101],
+                            Outcome = ExerciseOutcome.Tick,
+                            SelectionScoreBeforeDecision = -2,
+                            CompletedBlockCount = 1,
+                            PlannedBlockCount = 1,
+                            WasKeptAtWorkoutStart = true,
+                        },
+                    ],
+                },
+            ],
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        WorkoutSessionLog session = Assert.Single(restored.WorkoutHistory);
+        Assert.Equal(WorkoutSessionStatus.Completed, session.Status);
+        Assert.Equal("Historic Squat Name", Assert.Single(session.Blocks).ExerciseName);
+        Assert.Equal(2, session.Blocks[0].MuscularDemand);
+        Assert.Equal(ExerciseOutcome.Tick, Assert.Single(session.Decisions).Outcome);
+        Assert.Equal(8, restored.NextWorkoutSessionId);
     }
 
     [Fact]

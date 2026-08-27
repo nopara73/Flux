@@ -12,7 +12,7 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 19;
+    private const int CurrentStateVersion = 20;
     private const long RestDurationMilliseconds = 15_000L;
     private const int ExplicitMirrorEquipmentStateVersion = 12;
     private const int ImplicitSilenceStateVersion = 8;
@@ -76,6 +76,7 @@ public sealed class ExerciseSessionService
         ArgumentNullException.ThrowIfNull(state);
 
         NormalizeCollections(state);
+        NormalizeWorkoutHistory(state);
         LegacyActiveProgressSnapshot? atomicSequenceMigration =
             state.Version is 16 or 17 && state.ActiveWorkoutMinutes > 0
                 ? CaptureLegacyActiveProgress(state)
@@ -120,6 +121,9 @@ public sealed class ExerciseSessionService
 
         if (state.ActiveWorkoutMinutes == 0)
         {
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Interrupted);
             ResetToDurationSelection(state);
             ClearLegacyMigrationState(state);
             return;
@@ -127,6 +131,9 @@ public sealed class ExerciseSessionService
 
         if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
         {
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Interrupted);
             ResetToDurationSelection(state);
             ClearLegacyMigrationState(state);
             return;
@@ -146,6 +153,17 @@ public sealed class ExerciseSessionService
         NormalizePendingRest(state);
         NormalizePendingMovement(state);
         NormalizeCompletionState(state);
+
+        if (state.WorkoutCompleted)
+        {
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Completed);
+        }
+        else
+        {
+            EnsureActiveWorkoutSession(state, startedBeforeLogging: true);
+        }
 
         if (state.WorkoutCompleted && state.CompletionAcknowledged)
         {
@@ -174,7 +192,17 @@ public sealed class ExerciseSessionService
         }
 
         NormalizeCollections(state);
+        NormalizeWorkoutHistory(state);
         NormalizeKeptExerciseIds(state);
+        long workoutStartedAtUnixMilliseconds =
+            GetCurrentUnixTimeMilliseconds();
+        FinalizeActiveWorkoutSession(
+            state,
+            WorkoutSessionStatus.Interrupted,
+            workoutStartedAtUnixMilliseconds);
+        int[] keptExerciseIdsAtStart = state.LastKeptExerciseIds
+            .Order()
+            .ToArray();
         state.Version = CurrentStateVersion;
         modifiers = NormalizeWorkoutModifiers(modifiers);
         int previousWorkoutMinutes = NormalizeLastWorkoutMinutes(
@@ -199,6 +227,11 @@ public sealed class ExerciseSessionService
         RebalanceNewExercisesByMuscleBudget(state);
         SetActiveLongWorkoutAllocation(state);
         state.NextWorkoutExcludedExerciseIds.Clear();
+        CreateActiveWorkoutSession(
+            state,
+            workoutStartedAtUnixMilliseconds,
+            keptExerciseIdsAtStart,
+            startedBeforeLogging: false);
     }
 
     public IReadOnlyList<WorkoutGroup> GetActiveGroups(WorkoutState state)
@@ -351,6 +384,7 @@ public sealed class ExerciseSessionService
         Exercise rejectedExercise = GetSelectedExercise(state, group);
         Exercise rejectedRoot = GetSequenceRoot(rejectedExercise);
         Exercise[] scoreUpdates = GetSequenceExercises(rejectedRoot);
+        int rejectedSelectionScore = GetSelectionScore(rejectedRoot);
 
         Shuffle(candidates);
         ShuffleCandidate selected = candidates[0];
@@ -361,6 +395,12 @@ public sealed class ExerciseSessionService
                 coveredGroup.Id,
                 state.ActiveWorkoutModifiers)] = selected.Exercise.Id;
         }
+        RecordWorkoutSelectionChange(
+            state,
+            group.SelectionKey,
+            rejectedRoot,
+            rejectedSelectionScore,
+            selected.Exercise);
         ApplyShuffleRejection(state, scoreUpdates);
         ApplyLongWorkoutAllocation(state, selected.Allocation);
 
@@ -408,11 +448,16 @@ public sealed class ExerciseSessionService
         state.PendingRestMillisecondsRemaining = 0;
         state.PendingRestPausedByUser = false;
         state.PendingRestKept = false;
+        long completedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds();
+        RecordCompletedWorkoutBlock(
+            state,
+            group,
+            completedAtUnixMilliseconds);
         WorkoutRecoveryPolicy.RecordCompletedMuscularWork(
             state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
             state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
             GetSelectedExercise(state, group),
-            GetCurrentUnixTimeMilliseconds());
+            completedAtUnixMilliseconds);
     }
 
     public void BeginMovement(
@@ -695,6 +740,7 @@ public sealed class ExerciseSessionService
         Exercise root = GetSequenceRoot(exercise);
         Exercise[] sequenceExercises = GetSequenceExercises(root);
         ExerciseOutcome outcome = keep ? ExerciseOutcome.Tick : ExerciseOutcome.X;
+        int selectionScoreBeforeDecision = GetSelectionScore(root);
         if (!keep)
         {
             foreach (Exercise sequenceExercise in sequenceExercises)
@@ -703,10 +749,25 @@ public sealed class ExerciseSessionService
             }
         }
 
+        long decidedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds();
+        RecordWorkoutDecision(
+            state,
+            group,
+            root,
+            outcome,
+            selectionScoreBeforeDecision,
+            decidedAtUnixMilliseconds);
         state.Outcomes[group.Id] = outcome;
         state.WorkoutCompleted = GetActiveGroups(state)
             .All(activeGroup => state.Outcomes.ContainsKey(activeGroup.Id));
         state.CompletionAcknowledged = false;
+        if (state.WorkoutCompleted)
+        {
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Completed,
+                decidedAtUnixMilliseconds);
+        }
         return new RecordedWorkoutOutcome(
             exercise,
             keep ? [] : Array.AsReadOnly(sequenceExercises));
@@ -760,6 +821,9 @@ public sealed class ExerciseSessionService
         if (state.LegacySelectedExerciseNames.Count > 0)
         {
             Exercise? legacyPenalty = ResolveLegacyPendingRest(state);
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Interrupted);
             ResetToDurationSelection(state);
             ClearLegacyMigrationState(state);
             return legacyPenalty is null
@@ -769,6 +833,9 @@ public sealed class ExerciseSessionService
 
         if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
         {
+            FinalizeActiveWorkoutSession(
+                state,
+                WorkoutSessionStatus.Interrupted);
             ResetToDurationSelection(state);
             return [];
         }
@@ -927,6 +994,11 @@ public sealed class ExerciseSessionService
             nextLineup,
             clearChangedProgress: false);
 
+        FinalizeActiveWorkoutSession(
+            state,
+            state.WorkoutCompleted
+                ? WorkoutSessionStatus.Completed
+                : WorkoutSessionStatus.Interrupted);
         ResetToDurationSelection(state);
     }
 
@@ -1781,6 +1853,7 @@ public sealed class ExerciseSessionService
         state.LastKeptExerciseIds ??= [];
         state.LastHardWorkUnixMillisecondsByPrimaryMuscle ??= [];
         state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle ??= [];
+        state.WorkoutHistory ??= [];
         state.NextWorkoutExcludedExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
         state.ActiveSetCountsBySelectionGroupId ??= [];
@@ -1789,6 +1862,351 @@ public sealed class ExerciseSessionService
         state.PendingScoreUpdates ??= [];
         state.LegacySelectedExerciseNames ??= [];
         state.LegacyOutcomes ??= [];
+    }
+
+    private static void NormalizeWorkoutHistory(WorkoutState state)
+    {
+        state.WorkoutHistory = state.WorkoutHistory
+            .OfType<WorkoutSessionLog>()
+            .ToList();
+        var usedSessionIds = new HashSet<long>();
+        long nextSessionId = Math.Max(1L, state.NextWorkoutSessionId);
+        foreach (WorkoutSessionLog session in state.WorkoutHistory)
+        {
+            NormalizeWorkoutSession(session);
+            if (session.SessionId <= 0 || !usedSessionIds.Add(session.SessionId))
+            {
+                while (!usedSessionIds.Add(nextSessionId))
+                {
+                    nextSessionId++;
+                }
+                session.SessionId = nextSessionId++;
+            }
+            nextSessionId = Math.Max(nextSessionId, session.SessionId + 1L);
+            if (session.Status == WorkoutSessionStatus.InProgress)
+            {
+                session.Status = WorkoutSessionStatus.Interrupted;
+            }
+        }
+
+        if (state.ActiveWorkoutSession is { } activeSession)
+        {
+            NormalizeWorkoutSession(activeSession);
+            if (activeSession.SessionId <= 0 ||
+                !usedSessionIds.Add(activeSession.SessionId))
+            {
+                while (!usedSessionIds.Add(nextSessionId))
+                {
+                    nextSessionId++;
+                }
+                activeSession.SessionId = nextSessionId++;
+            }
+            nextSessionId = Math.Max(nextSessionId, activeSession.SessionId + 1L);
+            activeSession.Status = WorkoutSessionStatus.InProgress;
+            activeSession.EndedAtUnixMilliseconds = 0;
+        }
+
+        state.NextWorkoutSessionId = Math.Max(1L, nextSessionId);
+    }
+
+    private static void NormalizeWorkoutSession(WorkoutSessionLog session)
+    {
+        session.KeptExerciseIdsAtStart =
+        [
+            .. (session.KeptExerciseIdsAtStart ?? [])
+                .Where(exerciseId => exerciseId > 0)
+                .Distinct()
+                .Order(),
+        ];
+        session.InitialSelections = session.InitialSelections?
+            .OfType<WorkoutSelectionSnapshot>()
+            .ToList() ?? [];
+        foreach (WorkoutSelectionSnapshot selection in session.InitialSelections)
+        {
+            selection.SelectionGroupId ??= string.Empty;
+            selection.RootExerciseName ??= string.Empty;
+            selection.CoveredWorkoutGroupIds = selection.CoveredWorkoutGroupIds?
+                .Where(groupId => !string.IsNullOrWhiteSpace(groupId))
+                .Distinct(StringComparer.Ordinal)
+                .ToArray() ?? [];
+        }
+
+        session.SelectionChanges = session.SelectionChanges?
+            .OfType<WorkoutSelectionChangeLog>()
+            .ToList() ?? [];
+        foreach (WorkoutSelectionChangeLog change in session.SelectionChanges)
+        {
+            change.SelectionGroupId ??= string.Empty;
+            change.RejectedRootExerciseName ??= string.Empty;
+            change.ReplacementRootExerciseName ??= string.Empty;
+        }
+
+        session.Blocks = session.Blocks?
+            .OfType<WorkoutBlockLog>()
+            .ToList() ?? [];
+        foreach (WorkoutBlockLog block in session.Blocks)
+        {
+            block.WorkoutGroupId ??= string.Empty;
+            block.SelectionGroupId ??= string.Empty;
+            block.RootExerciseName ??= string.Empty;
+            block.ExerciseName ??= string.Empty;
+            block.SecondaryCanonicalGroups ??= [];
+        }
+
+        session.Decisions = session.Decisions?
+            .OfType<WorkoutDecisionLog>()
+            .ToList() ?? [];
+        foreach (WorkoutDecisionLog decision in session.Decisions)
+        {
+            decision.SelectionGroupId ??= string.Empty;
+            decision.RootExerciseName ??= string.Empty;
+            decision.SequenceExerciseIds = decision.SequenceExerciseIds?
+                .Where(exerciseId => exerciseId > 0)
+                .Distinct()
+                .ToArray() ?? [];
+        }
+    }
+
+    private WorkoutSessionLog EnsureActiveWorkoutSession(
+        WorkoutState state,
+        bool startedBeforeLogging)
+    {
+        return state.ActiveWorkoutSession ?? CreateActiveWorkoutSession(
+            state,
+            GetCurrentUnixTimeMilliseconds(),
+            state.LastKeptExerciseIds.Order().ToArray(),
+            startedBeforeLogging);
+    }
+
+    private WorkoutSessionLog CreateActiveWorkoutSession(
+        WorkoutState state,
+        long startedAtUnixMilliseconds,
+        IReadOnlyCollection<int> keptExerciseIdsAtStart,
+        bool startedBeforeLogging)
+    {
+        if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes))
+        {
+            throw new InvalidOperationException(
+                "Cannot log a workout without a valid active duration.");
+        }
+        if (startedAtUnixMilliseconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(startedAtUnixMilliseconds));
+        }
+        if (state.ActiveWorkoutSession is not null)
+        {
+            return state.ActiveWorkoutSession;
+        }
+
+        long sessionId = Math.Max(1L, state.NextWorkoutSessionId);
+        if (sessionId == long.MaxValue)
+        {
+            throw new InvalidOperationException("Workout session IDs are exhausted.");
+        }
+        state.NextWorkoutSessionId = sessionId + 1L;
+        var session = new WorkoutSessionLog
+        {
+            SessionId = sessionId,
+            StartedAtUnixMilliseconds = startedAtUnixMilliseconds,
+            WorkoutMinutes = state.ActiveWorkoutMinutes,
+            Modifiers = state.ActiveWorkoutModifiers,
+            Status = WorkoutSessionStatus.InProgress,
+            StartedBeforeLogging = startedBeforeLogging,
+            KeptExerciseIdsAtStart = keptExerciseIdsAtStart
+                .Where(exerciseId => exerciseId > 0)
+                .Distinct()
+                .Order()
+                .ToArray(),
+        };
+        HashSet<int> keptAtStart = session.KeptExerciseIdsAtStart.ToHashSet();
+        IReadOnlyDictionary<string, int> setCounts = GetEffectiveSetCounts(state);
+        session.InitialSelections = GetSelectedSequencePlacements(state)
+            .Select(placement => new WorkoutSelectionSnapshot
+            {
+                SelectionGroupId = placement.Anchor.Id,
+                CoveredWorkoutGroupIds = placement.CoveredGroups
+                    .OrderBy(group => group.Order)
+                    .Select(group => group.Id)
+                    .ToArray(),
+                RootExerciseId = placement.Root.Id,
+                RootExerciseName = placement.Root.Name,
+                SelectionScoreAtStart = GetSelectionScore(placement.Root),
+                SequenceBlockCount = placement.Root.SequenceBlocks.Length,
+                SetCount = Math.Max(
+                    1,
+                    setCounts.GetValueOrDefault(placement.Anchor.Id, 1)),
+                WasKeptAtWorkoutStart = GetSequenceExercises(placement.Root)
+                    .All(member => keptAtStart.Contains(member.Id)),
+            })
+            .OrderBy(selection => selection.CoveredWorkoutGroupIds
+                .Select(groupId => KnownWorkoutGroups.GetValueOrDefault(groupId)?.Order ??
+                    int.MaxValue)
+                .DefaultIfEmpty(int.MaxValue)
+                .Min())
+            .ToList();
+        state.ActiveWorkoutSession = session;
+        return session;
+    }
+
+    private void RecordWorkoutSelectionChange(
+        WorkoutState state,
+        string selectionGroupId,
+        Exercise rejectedRoot,
+        int rejectedSelectionScore,
+        Exercise replacementRoot)
+    {
+        WorkoutSessionLog session = EnsureActiveWorkoutSession(
+            state,
+            startedBeforeLogging: true);
+        session.SelectionChanges.Add(new WorkoutSelectionChangeLog
+        {
+            Kind = WorkoutSelectionChangeKind.Shuffle,
+            ChangedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds(),
+            SelectionGroupId = selectionGroupId,
+            RejectedRootExerciseId = rejectedRoot.Id,
+            RejectedRootExerciseName = rejectedRoot.Name,
+            RejectedSelectionScoreBeforeChange = rejectedSelectionScore,
+            RejectedSelectionWasKeptAtWorkoutStart = WasSequenceKeptAtWorkoutStart(
+                session,
+                rejectedRoot),
+            ReplacementRootExerciseId = replacementRoot.Id,
+            ReplacementRootExerciseName = replacementRoot.Name,
+            ReplacementSelectionScore = GetSelectionScore(replacementRoot),
+        });
+    }
+
+    private void RecordCompletedWorkoutBlock(
+        WorkoutState state,
+        WorkoutGroup group,
+        long completedAtUnixMilliseconds)
+    {
+        WorkoutSessionLog session = EnsureActiveWorkoutSession(
+            state,
+            startedBeforeLogging: true);
+        if (session.Blocks.Any(block =>
+                string.Equals(
+                    block.WorkoutGroupId,
+                    group.Id,
+                    StringComparison.Ordinal)))
+        {
+            return;
+        }
+
+        Exercise exercise = GetSelectedExercise(state, group);
+        Exercise root = GetSequenceRoot(exercise);
+        session.Blocks.Add(new WorkoutBlockLog
+        {
+            CompletedAtUnixMilliseconds = completedAtUnixMilliseconds,
+            WorkoutGroupId = group.Id,
+            SelectionGroupId = group.SelectionKey,
+            Order = group.Order,
+            RootExerciseId = root.Id,
+            RootExerciseName = root.Name,
+            ExerciseId = exercise.Id,
+            ExerciseName = exercise.Name,
+            SequenceBlockNumber = group.SequenceBlockIndex + 1,
+            SequenceBlockCount = group.SequenceBlockCount,
+            SetNumber = group.SetNumber,
+            SetCount = group.SetCount,
+            SideCue = group.SequenceSideCue,
+            DirectionCue = group.SequenceDirectionCue,
+            MirrorMedia = group.MirrorSequenceMedia,
+            MediaSegment = group.SequenceMediaSegment,
+            MuscularDemand = exercise.MuscularDemand,
+            PrimaryCanonicalGroup = exercise.PrimaryCanonicalGroup,
+            SecondaryCanonicalGroups = [.. exercise.SecondaryCanonicalGroups],
+            WasSequenceKeptAtWorkoutStart = WasSequenceKeptAtWorkoutStart(
+                session,
+                root),
+        });
+    }
+
+    private void RecordWorkoutDecision(
+        WorkoutState state,
+        WorkoutGroup group,
+        Exercise root,
+        ExerciseOutcome outcome,
+        int selectionScoreBeforeDecision,
+        long decidedAtUnixMilliseconds)
+    {
+        WorkoutSessionLog session = EnsureActiveWorkoutSession(
+            state,
+            startedBeforeLogging: true);
+        WorkoutDecisionLog? existing = session.Decisions.SingleOrDefault(decision =>
+            string.Equals(
+                decision.SelectionGroupId,
+                group.SelectionKey,
+                StringComparison.Ordinal));
+        if (existing is not null)
+        {
+            if (existing.RootExerciseId != root.Id || existing.Outcome != outcome)
+            {
+                throw new InvalidOperationException(
+                    $"Workout selection {group.SelectionKey} was decided twice.");
+            }
+            return;
+        }
+
+        session.Decisions.Add(new WorkoutDecisionLog
+        {
+            DecidedAtUnixMilliseconds = decidedAtUnixMilliseconds,
+            SelectionGroupId = group.SelectionKey,
+            RootExerciseId = root.Id,
+            RootExerciseName = root.Name,
+            SequenceExerciseIds = GetSequenceExercises(root)
+                .Select(exercise => exercise.Id)
+                .Order()
+                .ToArray(),
+            Outcome = outcome,
+            SelectionScoreBeforeDecision = selectionScoreBeforeDecision,
+            CompletedBlockCount = session.Blocks.Count(block => string.Equals(
+                block.SelectionGroupId,
+                group.SelectionKey,
+                StringComparison.Ordinal)),
+            PlannedBlockCount = group.SequenceBlockCount * group.SetCount,
+            WasKeptAtWorkoutStart = WasSequenceKeptAtWorkoutStart(session, root),
+        });
+    }
+
+    private bool WasSequenceKeptAtWorkoutStart(
+        WorkoutSessionLog session,
+        Exercise root)
+    {
+        HashSet<int> keptExerciseIds = session.KeptExerciseIdsAtStart.ToHashSet();
+        return GetSequenceExercises(root)
+            .All(member => keptExerciseIds.Contains(member.Id));
+    }
+
+    private void FinalizeActiveWorkoutSession(
+        WorkoutState state,
+        WorkoutSessionStatus status,
+        long? endedAtUnixMilliseconds = null)
+    {
+        if (state.ActiveWorkoutSession is not { } session)
+        {
+            return;
+        }
+        if (status == WorkoutSessionStatus.InProgress)
+        {
+            throw new ArgumentOutOfRangeException(nameof(status));
+        }
+
+        long endedAt = endedAtUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds();
+        session.EndedAtUnixMilliseconds = Math.Max(
+            session.StartedAtUnixMilliseconds,
+            endedAt);
+        session.Status = status;
+        int existingIndex = state.WorkoutHistory.FindIndex(candidate =>
+            candidate.SessionId == session.SessionId);
+        if (existingIndex >= 0)
+        {
+            state.WorkoutHistory[existingIndex] = session;
+        }
+        else
+        {
+            state.WorkoutHistory.Add(session);
+        }
+        state.ActiveWorkoutSession = null;
     }
 
     private void NormalizeActiveLongWorkoutAllocation(WorkoutState state)
@@ -2597,6 +3015,7 @@ public sealed class ExerciseSessionService
 
     private static void ResetToDurationSelection(WorkoutState state)
     {
+        state.ActiveWorkoutSession = null;
         state.ActiveWorkoutMinutes = 0;
         state.ActiveWorkoutModifiers = WorkoutModifiers.None;
         state.Outcomes.Clear();

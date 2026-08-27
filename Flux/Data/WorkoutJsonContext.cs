@@ -7,5 +7,6 @@ namespace Flux.Data;
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     UseStringEnumConverter = true)]
 [JsonSerializable(typeof(WorkoutState))]
+[JsonSerializable(typeof(WorkoutSessionLog))]
 [JsonSerializable(typeof(LegacyWorkoutState))]
 internal partial class WorkoutJsonContext : JsonSerializerContext;

@@ -153,7 +153,7 @@ export const HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS = 1;
 export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS = WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 16;
+export const CURRENT_WORKOUT_STATE_VERSION = 17;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
 const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
@@ -2130,6 +2130,9 @@ export function createDefaultState() {
     lastKeptExerciseIds: [],
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
     lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {},
+    nextWorkoutSessionId: 1,
+    activeWorkoutSession: null,
+    workoutHistory: [],
     nextWorkoutExcludedExerciseIds: [],
     activeExtraSetSelectionGroupIds: [],
     activeSetCountsBySelectionGroupId: {},
@@ -2245,6 +2248,10 @@ function normalizeStateShape(raw) {
   state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
     raw.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
   );
+  const normalizedWorkoutHistory = normalizeWorkoutHistoryShape(raw);
+  state.nextWorkoutSessionId = normalizedWorkoutHistory.nextWorkoutSessionId;
+  state.activeWorkoutSession = normalizedWorkoutHistory.activeWorkoutSession;
+  state.workoutHistory = normalizedWorkoutHistory.workoutHistory;
   state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
     raw.nextWorkoutExcludedExerciseIds,
   );
@@ -2354,6 +2361,190 @@ function normalizeWorkHistory(value) {
       completedAtUnixMilliseconds > 0));
 }
 
+function normalizeWorkoutHistoryShape(rawState) {
+  const usedSessionIds = new Set();
+  let nextWorkoutSessionId = Number.isSafeInteger(rawState.nextWorkoutSessionId) &&
+      rawState.nextWorkoutSessionId > 0
+    ? rawState.nextWorkoutSessionId
+    : 1;
+
+  const claimSessionId = (requestedId) => {
+    if (Number.isSafeInteger(requestedId) && requestedId > 0 &&
+        !usedSessionIds.has(requestedId)) {
+      usedSessionIds.add(requestedId);
+      nextWorkoutSessionId = Math.max(nextWorkoutSessionId, requestedId + 1);
+      return requestedId;
+    }
+    while (usedSessionIds.has(nextWorkoutSessionId)) {
+      nextWorkoutSessionId += 1;
+    }
+    if (!Number.isSafeInteger(nextWorkoutSessionId) || nextWorkoutSessionId <= 0) {
+      throw new Error("Workout session IDs are exhausted.");
+    }
+    const assignedId = nextWorkoutSessionId;
+    usedSessionIds.add(assignedId);
+    nextWorkoutSessionId += 1;
+    return assignedId;
+  };
+
+  const workoutHistory = Array.isArray(rawState.workoutHistory)
+    ? rawState.workoutHistory
+        .filter((session) => session && typeof session === "object" &&
+          !Array.isArray(session))
+        .map((session) => {
+          const normalized = normalizeWorkoutSessionLog(session);
+          normalized.sessionId = claimSessionId(normalized.sessionId);
+          if (normalized.status === "InProgress") {
+            normalized.status = "Interrupted";
+          }
+          return normalized;
+        })
+    : [];
+
+  let activeWorkoutSession = null;
+  if (rawState.activeWorkoutSession &&
+      typeof rawState.activeWorkoutSession === "object" &&
+      !Array.isArray(rawState.activeWorkoutSession)) {
+    activeWorkoutSession = normalizeWorkoutSessionLog(rawState.activeWorkoutSession);
+    activeWorkoutSession.sessionId = claimSessionId(activeWorkoutSession.sessionId);
+    activeWorkoutSession.status = "InProgress";
+    activeWorkoutSession.endedAtUnixMilliseconds = 0;
+  }
+
+  return {
+    nextWorkoutSessionId: Math.max(1, nextWorkoutSessionId),
+    activeWorkoutSession,
+    workoutHistory,
+  };
+}
+
+function normalizeWorkoutSessionLog(raw) {
+  const session = objectOrEmpty(raw);
+  return {
+    sessionId: positiveSafeIntegerOrZero(session.sessionId),
+    startedAtUnixMilliseconds: positiveSafeIntegerOrZero(
+      session.startedAtUnixMilliseconds,
+    ),
+    endedAtUnixMilliseconds: positiveSafeIntegerOrZero(
+      session.endedAtUnixMilliseconds,
+    ),
+    workoutMinutes: Number.isInteger(session.workoutMinutes)
+      ? session.workoutMinutes
+      : 0,
+    modifiers: normalizeWorkoutModifiers(session.modifiers),
+    status: session.status === "Completed" || session.status === "Interrupted"
+      ? session.status
+      : "InProgress",
+    startedBeforeLogging: session.startedBeforeLogging === true,
+    keptExerciseIdsAtStart: uniquePositiveIntegers(session.keptExerciseIdsAtStart)
+      .sort((left, right) => left - right),
+    initialSelections: normalizeObjectArray(session.initialSelections).map((selection) => ({
+      selectionGroupId: stringOrEmpty(selection.selectionGroupId),
+      coveredWorkoutGroupIds: uniqueStrings(selection.coveredWorkoutGroupIds),
+      rootExerciseId: positiveIntegerOrZero(selection.rootExerciseId),
+      rootExerciseName: stringOrEmpty(selection.rootExerciseName),
+      selectionScoreAtStart: integerOrZero(selection.selectionScoreAtStart),
+      sequenceBlockCount: positiveIntegerOrZero(selection.sequenceBlockCount),
+      setCount: positiveIntegerOrZero(selection.setCount),
+      wasKeptAtWorkoutStart: selection.wasKeptAtWorkoutStart === true,
+    })),
+    selectionChanges: normalizeObjectArray(session.selectionChanges).map((change) => ({
+      kind: "Shuffle",
+      changedAtUnixMilliseconds: positiveSafeIntegerOrZero(
+        change.changedAtUnixMilliseconds,
+      ),
+      selectionGroupId: stringOrEmpty(change.selectionGroupId),
+      rejectedRootExerciseId: positiveIntegerOrZero(change.rejectedRootExerciseId),
+      rejectedRootExerciseName: stringOrEmpty(change.rejectedRootExerciseName),
+      rejectedSelectionScoreBeforeChange: integerOrZero(
+        change.rejectedSelectionScoreBeforeChange,
+      ),
+      rejectedSelectionWasKeptAtWorkoutStart:
+        change.rejectedSelectionWasKeptAtWorkoutStart === true,
+      replacementRootExerciseId: positiveIntegerOrZero(
+        change.replacementRootExerciseId,
+      ),
+      replacementRootExerciseName: stringOrEmpty(change.replacementRootExerciseName),
+      replacementSelectionScore: integerOrZero(change.replacementSelectionScore),
+    })),
+    blocks: normalizeObjectArray(session.blocks).map((block) => ({
+      completedAtUnixMilliseconds: positiveSafeIntegerOrZero(
+        block.completedAtUnixMilliseconds,
+      ),
+      workoutGroupId: stringOrEmpty(block.workoutGroupId),
+      selectionGroupId: stringOrEmpty(block.selectionGroupId),
+      order: integerOrZero(block.order),
+      rootExerciseId: positiveIntegerOrZero(block.rootExerciseId),
+      rootExerciseName: stringOrEmpty(block.rootExerciseName),
+      exerciseId: positiveIntegerOrZero(block.exerciseId),
+      exerciseName: stringOrEmpty(block.exerciseName),
+      sequenceBlockNumber: positiveIntegerOrZero(block.sequenceBlockNumber),
+      sequenceBlockCount: positiveIntegerOrZero(block.sequenceBlockCount),
+      setNumber: positiveIntegerOrZero(block.setNumber),
+      setCount: positiveIntegerOrZero(block.setCount),
+      sideCue: stringOrDefault(block.sideCue, "None"),
+      directionCue: stringOrDefault(block.directionCue, "None"),
+      mirrorMedia: block.mirrorMedia === true,
+      mediaSegment: stringOrDefault(block.mediaSegment, "Full"),
+      muscularDemand: integerOrZero(block.muscularDemand),
+      primaryCanonicalGroup: stringOrEmpty(block.primaryCanonicalGroup),
+      secondaryCanonicalGroups: uniqueStrings(block.secondaryCanonicalGroups),
+      wasSequenceKeptAtWorkoutStart: block.wasSequenceKeptAtWorkoutStart === true,
+    })),
+    decisions: normalizeObjectArray(session.decisions).map((decision) => ({
+      decidedAtUnixMilliseconds: positiveSafeIntegerOrZero(
+        decision.decidedAtUnixMilliseconds,
+      ),
+      selectionGroupId: stringOrEmpty(decision.selectionGroupId),
+      rootExerciseId: positiveIntegerOrZero(decision.rootExerciseId),
+      rootExerciseName: stringOrEmpty(decision.rootExerciseName),
+      sequenceExerciseIds: uniquePositiveIntegers(decision.sequenceExerciseIds)
+        .sort((left, right) => left - right),
+      outcome: decision.outcome === "tick" || decision.outcome === "x"
+        ? decision.outcome
+        : "neutral",
+      selectionScoreBeforeDecision: integerOrZero(
+        decision.selectionScoreBeforeDecision,
+      ),
+      completedBlockCount: positiveIntegerOrZero(decision.completedBlockCount),
+      plannedBlockCount: positiveIntegerOrZero(decision.plannedBlockCount),
+      wasKeptAtWorkoutStart: decision.wasKeptAtWorkoutStart === true,
+    })),
+  };
+}
+
+function normalizeObjectArray(value) {
+  return Array.isArray(value)
+    ? value.filter((item) => item && typeof item === "object" && !Array.isArray(item))
+    : [];
+}
+
+function uniqueStrings(value) {
+  return Array.isArray(value)
+    ? [...new Set(value.filter((item) => typeof item === "string" && item.length > 0))]
+    : [];
+}
+
+function stringOrEmpty(value) {
+  return typeof value === "string" ? value : "";
+}
+
+function stringOrDefault(value, fallback) {
+  return typeof value === "string" && value.length > 0 ? value : fallback;
+}
+
+function integerOrZero(value) {
+  return Number.isInteger(value) ? value : 0;
+}
+
+function positiveIntegerOrZero(value) {
+  return Number.isInteger(value) && value > 0 ? value : 0;
+}
+
+function positiveSafeIntegerOrZero(value) {
+  return Number.isSafeInteger(value) && value > 0 ? value : 0;
+}
+
 function sameStringSet(left, right) {
   const leftSet = new Set(left);
   const rightSet = new Set(right);
@@ -2417,11 +2608,13 @@ export class WorkoutSession {
     this.normalizeKeptExerciseIds();
 
     if (this.state.activeWorkoutMinutes === 0) {
+      this.finalizeActiveWorkoutSession("Interrupted");
       this.resetTransientState();
       return;
     }
 
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      this.finalizeActiveWorkoutSession("Interrupted");
       this.resetTransientState();
       return;
     }
@@ -2437,6 +2630,11 @@ export class WorkoutSession {
     this.normalizePendingRest();
     this.normalizePendingMovement();
     this.normalizeCompletionState();
+    if (this.state.workoutCompleted) {
+      this.finalizeActiveWorkoutSession("Completed");
+    } else {
+      this.ensureActiveWorkoutSession(true);
+    }
     if (this.state.workoutCompleted && this.state.completionAcknowledged) {
       this.prepareNextSession();
     }
@@ -2451,6 +2649,13 @@ export class WorkoutSession {
     }
 
     this.normalizeKeptExerciseIds();
+    const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    this.finalizeActiveWorkoutSession(
+      "Interrupted",
+      workoutStartedAtUnixMilliseconds,
+    );
+    const keptExerciseIdsAtStart = [...this.state.lastKeptExerciseIds]
+      .sort((left, right) => left - right);
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
     const previousWorkoutMinutes = normalizeMinutes(this.state.lastWorkoutMinutes);
@@ -2471,6 +2676,11 @@ export class WorkoutSession {
     this.rebalanceNewExercisesByMuscleBudget();
     this.setActiveLongWorkoutAllocation();
     this.state.nextWorkoutExcludedExerciseIds = [];
+    this.createActiveWorkoutSession(
+      workoutStartedAtUnixMilliseconds,
+      keptExerciseIdsAtStart,
+      false,
+    );
   }
 
   getActiveGroups() {
@@ -2581,7 +2791,9 @@ export class WorkoutSession {
     }
 
     const rejectedExercise = this.getSelectedExercise(group);
-    const scoreUpdates = this.getSequenceExercises(rejectedExercise);
+    const rejectedRoot = this.getSequenceRoot(rejectedExercise);
+    const scoreUpdates = this.getSequenceExercises(rejectedRoot);
+    const rejectedSelectionScore = this.getSelectionScore(rejectedRoot);
 
     this.shuffle(candidates);
     const selected = candidates[0];
@@ -2592,6 +2804,12 @@ export class WorkoutSession {
         this.state.activeWorkoutModifiers,
       )] = selected.exercise.id;
     }
+    this.recordWorkoutSelectionChange(
+      getSelectionKey(group),
+      rejectedRoot,
+      rejectedSelectionScore,
+      selected.exercise,
+    );
     this.applyShuffleRejection(scoreUpdates);
     this.applyLongWorkoutAllocation(selected.allocation);
     return {
@@ -2932,10 +3150,11 @@ export class WorkoutSession {
     this.state.pendingRestPausedByUser = false;
     this.state.pendingRestKept = false;
     const exercise = this.getSelectedExercise(group);
+    const completedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    this.recordCompletedWorkoutBlock(group, completedAtUnixMilliseconds);
     if (exercise.muscularDemand === MODERATE_MUSCULAR_DEMAND ||
         exercise.muscularDemand === HARD_MUSCULAR_DEMAND) {
       const primaryMuscle = exercise.primaryCanonicalGroup;
-      const completedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
       this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[primaryMuscle] =
         Math.max(
           completedAtUnixMilliseconds,
@@ -3070,17 +3289,30 @@ export class WorkoutSession {
 
   applySequenceOutcome(group, keep) {
     const exercise = this.getSelectedExercise(group);
-    const sequenceExercises = this.getSequenceExercises(exercise);
+    const root = this.getSequenceRoot(exercise);
+    const sequenceExercises = this.getSequenceExercises(root);
+    const selectionScoreBeforeDecision = this.getSelectionScore(root);
     if (!keep) {
       for (const member of sequenceExercises) {
         this.setScore(member, this.getScore(member) - 1);
       }
     }
+    const decidedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    this.recordWorkoutDecision(
+      group,
+      root,
+      keep ? "tick" : "x",
+      selectionScoreBeforeDecision,
+      decidedAtUnixMilliseconds,
+    );
     this.state.outcomes[group.id] = keep ? "tick" : "x";
     this.state.workoutCompleted = this.getActiveGroups().every(
       (activeGroup) => this.state.outcomes[activeGroup.id] !== undefined,
     );
     this.state.completionAcknowledged = false;
+    if (this.state.workoutCompleted) {
+      this.finalizeActiveWorkoutSession("Completed", decidedAtUnixMilliseconds);
+    }
     return exercise;
   }
 
@@ -3094,6 +3326,7 @@ export class WorkoutSession {
 
   finishInterruptedWorkout() {
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      this.finalizeActiveWorkoutSession("Interrupted");
       this.resetTransientState();
       return;
     }
@@ -3199,6 +3432,9 @@ export class WorkoutSession {
     );
     this.applyDistinctLineup(selectionGroups, nextLineup, false);
 
+    this.finalizeActiveWorkoutSession(
+      this.state.workoutCompleted ? "Completed" : "Interrupted",
+    );
     this.resetTransientState();
   }
 
@@ -4787,7 +5023,202 @@ export class WorkoutSession {
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
   }
 
+  ensureActiveWorkoutSession(startedBeforeLogging) {
+    return this.state.activeWorkoutSession ?? this.createActiveWorkoutSession(
+      this.getCurrentUnixTimeMilliseconds(),
+      [...this.state.lastKeptExerciseIds].sort((left, right) => left - right),
+      startedBeforeLogging,
+    );
+  }
+
+  createActiveWorkoutSession(
+    startedAtUnixMilliseconds,
+    keptExerciseIdsAtStart,
+    startedBeforeLogging,
+  ) {
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) {
+      throw new Error("Cannot log a workout without a valid active duration.");
+    }
+    if (!Number.isSafeInteger(startedAtUnixMilliseconds) ||
+        startedAtUnixMilliseconds <= 0) {
+      throw new RangeError("Workout start time must be positive Unix milliseconds.");
+    }
+    if (this.state.activeWorkoutSession) {
+      return this.state.activeWorkoutSession;
+    }
+
+    const sessionId = Math.max(1, this.state.nextWorkoutSessionId);
+    if (!Number.isSafeInteger(sessionId) || sessionId >= Number.MAX_SAFE_INTEGER) {
+      throw new Error("Workout session IDs are exhausted.");
+    }
+    this.state.nextWorkoutSessionId = sessionId + 1;
+    const normalizedKeptExerciseIdsAtStart = uniquePositiveIntegers(
+      keptExerciseIdsAtStart,
+    ).sort((left, right) => left - right);
+    const keptAtStart = new Set(normalizedKeptExerciseIdsAtStart);
+    const setCounts = this.getEffectiveSetCounts();
+    const session = {
+      sessionId,
+      startedAtUnixMilliseconds,
+      endedAtUnixMilliseconds: 0,
+      workoutMinutes: this.state.activeWorkoutMinutes,
+      modifiers: this.state.activeWorkoutModifiers,
+      status: "InProgress",
+      startedBeforeLogging: startedBeforeLogging === true,
+      keptExerciseIdsAtStart: normalizedKeptExerciseIdsAtStart,
+      initialSelections: this.getSelectedSequencePlacements()
+        .map((placement) => ({
+          selectionGroupId: placement.anchor.id,
+          coveredWorkoutGroupIds: [...placement.coveredGroups]
+            .sort((left, right) => left.order - right.order)
+            .map((group) => group.id),
+          rootExerciseId: placement.root.id,
+          rootExerciseName: placement.root.name,
+          selectionScoreAtStart: this.getSelectionScore(placement.root),
+          sequenceBlockCount: placement.root.sequenceBlocks.length,
+          setCount: Math.max(1, setCounts.get(placement.anchor.id) ?? 1),
+          wasKeptAtWorkoutStart: this.getSequenceExercises(placement.root)
+            .every((member) => keptAtStart.has(member.id)),
+        }))
+        .sort((left, right) => {
+          const leftOrder = Math.min(...left.coveredWorkoutGroupIds.map((groupId) =>
+            ALL_GROUPS.get(groupId)?.order ?? Number.MAX_SAFE_INTEGER));
+          const rightOrder = Math.min(...right.coveredWorkoutGroupIds.map((groupId) =>
+            ALL_GROUPS.get(groupId)?.order ?? Number.MAX_SAFE_INTEGER));
+          return leftOrder - rightOrder;
+        }),
+      selectionChanges: [],
+      blocks: [],
+      decisions: [],
+    };
+    this.state.activeWorkoutSession = session;
+    return session;
+  }
+
+  recordWorkoutSelectionChange(
+    selectionGroupId,
+    rejectedRoot,
+    rejectedSelectionScore,
+    replacementRoot,
+  ) {
+    const session = this.ensureActiveWorkoutSession(true);
+    session.selectionChanges.push({
+      kind: "Shuffle",
+      changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(),
+      selectionGroupId,
+      rejectedRootExerciseId: rejectedRoot.id,
+      rejectedRootExerciseName: rejectedRoot.name,
+      rejectedSelectionScoreBeforeChange: rejectedSelectionScore,
+      rejectedSelectionWasKeptAtWorkoutStart:
+        this.wasSequenceKeptAtWorkoutStart(session, rejectedRoot),
+      replacementRootExerciseId: replacementRoot.id,
+      replacementRootExerciseName: replacementRoot.name,
+      replacementSelectionScore: this.getSelectionScore(replacementRoot),
+    });
+  }
+
+  recordCompletedWorkoutBlock(group, completedAtUnixMilliseconds) {
+    const session = this.ensureActiveWorkoutSession(true);
+    if (session.blocks.some((block) => block.workoutGroupId === group.id)) {
+      return;
+    }
+
+    const exercise = this.getSelectedExercise(group);
+    const root = this.getSequenceRoot(exercise);
+    session.blocks.push({
+      completedAtUnixMilliseconds,
+      workoutGroupId: group.id,
+      selectionGroupId: getSelectionKey(group),
+      order: group.order,
+      rootExerciseId: root.id,
+      rootExerciseName: root.name,
+      exerciseId: exercise.id,
+      exerciseName: exercise.name,
+      sequenceBlockNumber: (group.sequenceBlockIndex ?? 0) + 1,
+      sequenceBlockCount: group.sequenceBlockCount ?? 1,
+      setNumber: group.setNumber ?? 1,
+      setCount: group.setCount ?? 1,
+      sideCue: group.sequenceSideCue ?? "None",
+      directionCue: group.sequenceDirectionCue ?? "None",
+      mirrorMedia: group.mirrorSequenceMedia === true,
+      mediaSegment: group.sequenceMediaSegment ?? "Full",
+      muscularDemand: exercise.muscularDemand,
+      primaryCanonicalGroup: exercise.primaryCanonicalGroup,
+      secondaryCanonicalGroups: [...exercise.secondaryCanonicalGroups],
+      wasSequenceKeptAtWorkoutStart:
+        this.wasSequenceKeptAtWorkoutStart(session, root),
+    });
+  }
+
+  recordWorkoutDecision(
+    group,
+    root,
+    outcome,
+    selectionScoreBeforeDecision,
+    decidedAtUnixMilliseconds,
+  ) {
+    const session = this.ensureActiveWorkoutSession(true);
+    const selectionGroupId = getSelectionKey(group);
+    const existing = session.decisions.find((decision) =>
+      decision.selectionGroupId === selectionGroupId);
+    if (existing) {
+      if (existing.rootExerciseId !== root.id || existing.outcome !== outcome) {
+        throw new Error(`Workout selection ${selectionGroupId} was decided twice.`);
+      }
+      return;
+    }
+
+    session.decisions.push({
+      decidedAtUnixMilliseconds,
+      selectionGroupId,
+      rootExerciseId: root.id,
+      rootExerciseName: root.name,
+      sequenceExerciseIds: this.getSequenceExercises(root)
+        .map((exercise) => exercise.id)
+        .sort((left, right) => left - right),
+      outcome,
+      selectionScoreBeforeDecision,
+      completedBlockCount: session.blocks.filter((block) =>
+        block.selectionGroupId === selectionGroupId).length,
+      plannedBlockCount:
+        (group.sequenceBlockCount ?? 1) * (group.setCount ?? 1),
+      wasKeptAtWorkoutStart: this.wasSequenceKeptAtWorkoutStart(session, root),
+    });
+  }
+
+  wasSequenceKeptAtWorkoutStart(session, root) {
+    const keptExerciseIds = new Set(session.keptExerciseIdsAtStart);
+    return this.getSequenceExercises(root).every((member) =>
+      keptExerciseIds.has(member.id));
+  }
+
+  finalizeActiveWorkoutSession(status, endedAtUnixMilliseconds = null) {
+    const session = this.state.activeWorkoutSession;
+    if (!session) {
+      return;
+    }
+    if (status === "InProgress") {
+      throw new RangeError("An active workout cannot be finalized as in progress.");
+    }
+
+    const endedAt = endedAtUnixMilliseconds ?? this.getCurrentUnixTimeMilliseconds();
+    session.endedAtUnixMilliseconds = Math.max(
+      session.startedAtUnixMilliseconds,
+      endedAt,
+    );
+    session.status = status;
+    const existingIndex = this.state.workoutHistory.findIndex((candidate) =>
+      candidate.sessionId === session.sessionId);
+    if (existingIndex >= 0) {
+      this.state.workoutHistory[existingIndex] = session;
+    } else {
+      this.state.workoutHistory.push(session);
+    }
+    this.state.activeWorkoutSession = null;
+  }
+
   resetTransientState() {
+    this.state.activeWorkoutSession = null;
     this.state.activeWorkoutMinutes = 0;
     this.state.activeWorkoutModifiers = WORKOUT_MODIFIERS.None;
     this.state.outcomes = {};

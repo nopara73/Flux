@@ -60,6 +60,8 @@ const [
   muscleBudgetPolicy,
   recoveryPolicy,
   exerciseDatabase,
+  exerciseDatabaseVersionPolicy,
+  workoutSessionLog,
   durationLayout,
   workoutLayout,
   androidColors,
@@ -95,6 +97,8 @@ const [
   source("Flux", "Services", "WorkoutMuscleBudgetPolicy.cs"),
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
+  source("Flux", "Data", "ExerciseDatabaseVersionPolicy.cs"),
+  source("Flux", "Models", "WorkoutSessionLog.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
   source("Flux", "Resources", "layout", "screen_workout.xml"),
   source("Flux", "Resources", "values", "colors.xml"),
@@ -124,6 +128,36 @@ test("web duration choices match the mobile workout contract", () => {
   assert.deepEqual(
     [...RESOLUTIONS.keys()],
     integerArray(taxonomy, "SupportedMinutes"),
+  );
+});
+
+test("web and mobile persist the same complete workout audit trail", () => {
+  for (const field of [
+    "SessionId",
+    "StartedAtUnixMilliseconds",
+    "EndedAtUnixMilliseconds",
+    "WorkoutMinutes",
+    "Modifiers",
+    "KeptExerciseIdsAtStart",
+    "InitialSelections",
+    "SelectionChanges",
+    "Blocks",
+    "Decisions",
+  ]) {
+    assert.match(workoutSessionLog, new RegExp(`\\b${field}\\b`));
+  }
+  assert.match(workoutState, /NextWorkoutSessionId[\s\S]*ActiveWorkoutSession[\s\S]*WorkoutHistory/);
+  assert.match(
+    sessionService,
+    /RecordCompletedWorkoutBlock[\s\S]*RecordWorkoutDecision[\s\S]*FinalizeActiveWorkoutSession/,
+  );
+  assert.match(
+    workoutModule,
+    /recordCompletedWorkoutBlock[\s\S]*recordWorkoutDecision[\s\S]*finalizeActiveWorkoutSession/,
+  );
+  assert.match(
+    workoutModule,
+    /workoutHistory[\s\S]*activeWorkoutSession[\s\S]*selectionChanges[\s\S]*blocks[\s\S]*decisions/,
   );
 });
 
@@ -245,8 +279,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutModifiers, /TallMirror\s*=\s*8/);
   assert.match(mirrorEquipmentModel, /None[\s\S]*Compact[\s\S]*Tall/);
   assert.match(mirrorCoverageModel, /None[\s\S]*UpperBody[\s\S]*FullBody/);
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 16);
-  assert.match(workoutState, /public int Version[^=]*=\s*19/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 17);
+  assert.match(workoutState, /public int Version[^=]*=\s*20/);
   assert.match(workoutState, /PendingRestMillisecondsRemaining/);
   assert.match(workoutState, /PendingRestPausedByUser/);
   assert.match(workoutModule, /pendingRestMillisecondsRemaining/);
@@ -459,10 +493,14 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
-  assert.match(exerciseDatabase, /DatabaseVersion\s*=\s*67/);
   assert.match(
     exerciseDatabase,
-    /oldVersion\s+is\s+not\s+\([\s\S]*\bor\s+66\)[\s\S]*newVersion\s*!=\s*DatabaseVersion/,
+    /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
+  );
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*68/);
+  assert.match(
+    exerciseDatabase,
+    /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
   );
   assert.match(exerciseDatabase, /CHECK \(silent IN \(0, 1\)\)/);
   assert.match(

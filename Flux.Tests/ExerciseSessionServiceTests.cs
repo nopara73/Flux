@@ -346,7 +346,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
     }
 
@@ -372,7 +372,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(WorkoutModifiers.Insect, state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
@@ -871,6 +871,13 @@ public sealed class ExerciseSessionServiceTests
             [replacementFirst.Id, replacementSecond.Id, third.Id],
             service.GetActiveGroups(state)
                 .Select(round => service.GetSelectedExercise(state, round).Id));
+        WorkoutSelectionChangeLog change = Assert.Single(
+            state.ActiveWorkoutSession!.SelectionChanges);
+        Assert.Equal(WorkoutSelectionChangeKind.Shuffle, change.Kind);
+        Assert.Equal(first.Id, change.RejectedRootExerciseId);
+        Assert.Equal(replacementFirst.Id, change.ReplacementRootExerciseId);
+        Assert.Equal(100, change.RejectedSelectionScoreBeforeChange);
+        Assert.Equal(0, change.ReplacementSelectionScore);
     }
 
     [Fact]
@@ -1257,7 +1264,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1314,7 +1321,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -2988,6 +2995,131 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void CompletedWorkoutArchivesExactBlocksDecisionsAndPriorKeeps()
+    {
+        DateTimeOffset now = new(2026, 8, 27, 1, 0, 0, TimeSpan.Zero);
+        Exercise[] exercises = ThreeGroupCatalog();
+        exercises[0] = CloneWithMuscularDemand(exercises[0], muscularDemand: 2);
+        var service = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now);
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastKeptExerciseIds = [exercises[0].Id],
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.NotNull(state.ActiveWorkoutSession);
+        Assert.Equal(3, state.ActiveWorkoutSession.InitialSelections.Count);
+        Assert.Contains(
+            state.ActiveWorkoutSession.InitialSelections,
+            selection => selection.RootExerciseId == exercises[0].Id &&
+                selection.WasKeptAtWorkoutStart);
+
+        while (service.GetNextGroup(state) is { } group)
+        {
+            now = now.AddMinutes(1);
+            service.BeginRest(
+                state,
+                group,
+                now.AddSeconds(15).ToUnixTimeMilliseconds());
+            service.RecordOutcome(state, group, keep: true);
+            service.ClearPendingRest(state);
+        }
+
+        Assert.True(state.WorkoutCompleted);
+        Assert.Null(state.ActiveWorkoutSession);
+        service.Initialize(state);
+        Assert.Null(state.ActiveWorkoutSession);
+        Assert.Single(state.WorkoutHistory);
+        WorkoutSessionLog completed = Assert.Single(state.WorkoutHistory);
+        Assert.Equal(WorkoutSessionStatus.Completed, completed.Status);
+        Assert.Equal(3, completed.WorkoutMinutes);
+        Assert.Equal(WorkoutModifiers.None, completed.Modifiers);
+        Assert.False(completed.StartedBeforeLogging);
+        Assert.Equal(3, completed.Blocks.Count);
+        Assert.Equal(3, completed.Decisions.Count);
+        Assert.Single(
+            completed.Blocks,
+            block => block.MuscularDemand == Flux.Models.Exercise.MaximumMuscularDemand);
+        Assert.Equal(
+            [1, 2, 3],
+            completed.Blocks.Select(block => block.Order));
+        Assert.All(completed.Blocks, block =>
+        {
+            Assert.Equal(1, block.SequenceBlockNumber);
+            Assert.Equal(1, block.SequenceBlockCount);
+            Assert.Equal(1, block.SetNumber);
+            Assert.Equal(1, block.SetCount);
+            Assert.True(block.CompletedAtUnixMilliseconds > 0);
+        });
+        Assert.All(completed.Decisions, decision =>
+        {
+            Assert.Equal(ExerciseOutcome.Tick, decision.Outcome);
+            Assert.Equal(1, decision.CompletedBlockCount);
+            Assert.Equal(1, decision.PlannedBlockCount);
+        });
+
+        service.AcknowledgeCompletion(state);
+        Assert.Single(state.WorkoutHistory);
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        service.Initialize(restored);
+
+        Assert.Single(restored.WorkoutHistory);
+        Assert.Equal(3, restored.WorkoutHistory[0].Blocks.Count);
+        service.StartWorkout(restored, 3, WorkoutModifiers.None);
+        Assert.NotNull(restored.ActiveWorkoutSession);
+        Assert.Contains(
+            restored.ActiveWorkoutSession.InitialSelections,
+            selection => selection.RootExerciseId == exercises[3].Id &&
+                selection.WasKeptAtWorkoutStart);
+        Assert.Contains(
+            exercises[3].Id,
+            restored.ActiveWorkoutSession.KeptExerciseIdsAtStart);
+    }
+
+    [Fact]
+    public void InterruptedWorkoutArchivesItsCompletedSubsetExactlyOnce()
+    {
+        DateTimeOffset now = new(2026, 8, 27, 2, 0, 0, TimeSpan.Zero);
+        Exercise[] exercises = ThreeGroupCatalog();
+        var service = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now);
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+        };
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup first = service.GetNextGroup(state)!;
+        now = now.AddMinutes(1);
+        service.BeginRest(
+            state,
+            first,
+            now.AddSeconds(15).ToUnixTimeMilliseconds());
+        service.RecordOutcome(state, first, keep: false);
+        service.ClearPendingRest(state);
+
+        service.FinishInterruptedWorkout(state);
+        service.FinishInterruptedWorkout(state);
+
+        WorkoutSessionLog interrupted = Assert.Single(state.WorkoutHistory);
+        Assert.Equal(WorkoutSessionStatus.Interrupted, interrupted.Status);
+        Assert.Single(interrupted.Blocks);
+        WorkoutDecisionLog decision = Assert.Single(interrupted.Decisions);
+        Assert.Equal(ExerciseOutcome.X, decision.Outcome);
+        Assert.Equal(first.SelectionKey, decision.SelectionGroupId);
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        Assert.Null(state.ActiveWorkoutSession);
+    }
+
+    [Fact]
     public void PreparingRejectedReplacementsUsesGlobalMatchingInsteadOfGreedyOrder()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -3292,7 +3424,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(19, state.Version);
+        Assert.Equal(20, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(

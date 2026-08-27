@@ -408,6 +408,13 @@ completionAcknowledged
 - Build/repair all 20 slots even when a shorter duration is selected. An active workout uses the prefix matching its duration.
 - A slot is valid only if its exercise's `PrimaryCapacity` equals that slot's scheduled capacity.
 - Preserve `lastWorkoutMinutes`, defaulting to 10 only when absent/invalid.
+- Persist one active audit record plus append-only completed/interrupted workout
+  history. Each record snapshots the starting lineup and Keep set, every
+  Shuffle, every completed block (including demand, canonical muscles, cues,
+  sequence position, and set position), and every final Keep/reject decision.
+  Preserve names and anatomical metadata as historical snapshots so later
+  catalog edits cannot rewrite prior sessions. Finalization is idempotent and
+  must never apply or alter scores itself.
 
 ### 8.4 Selection and duplicate prevention
 

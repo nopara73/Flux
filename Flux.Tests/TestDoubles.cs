@@ -65,6 +65,13 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 new Dictionary<string, long>(
                     state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
                     StringComparer.Ordinal),
+            NextWorkoutSessionId = state.NextWorkoutSessionId,
+            ActiveWorkoutSession = state.ActiveWorkoutSession is null
+                ? null
+                : Clone(state.ActiveWorkoutSession),
+            WorkoutHistory = state.WorkoutHistory
+                .Select(Clone)
+                .ToList(),
             NextWorkoutExcludedExerciseIds = new HashSet<int>(
                 state.NextWorkoutExcludedExerciseIds),
             ActiveExtraSetSelectionGroupIds = new HashSet<string>(
@@ -108,6 +115,93 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 state.LegacyOutcomes,
                 StringComparer.Ordinal),
             LegacyPendingRestGroup = state.LegacyPendingRestGroup,
+        };
+    }
+
+    private static WorkoutSessionLog Clone(WorkoutSessionLog session)
+    {
+        return new WorkoutSessionLog
+        {
+            SessionId = session.SessionId,
+            StartedAtUnixMilliseconds = session.StartedAtUnixMilliseconds,
+            EndedAtUnixMilliseconds = session.EndedAtUnixMilliseconds,
+            WorkoutMinutes = session.WorkoutMinutes,
+            Modifiers = session.Modifiers,
+            Status = session.Status,
+            StartedBeforeLogging = session.StartedBeforeLogging,
+            KeptExerciseIdsAtStart = [.. session.KeptExerciseIdsAtStart],
+            InitialSelections = session.InitialSelections
+                .Select(selection => new WorkoutSelectionSnapshot
+                {
+                    SelectionGroupId = selection.SelectionGroupId,
+                    CoveredWorkoutGroupIds = [.. selection.CoveredWorkoutGroupIds],
+                    RootExerciseId = selection.RootExerciseId,
+                    RootExerciseName = selection.RootExerciseName,
+                    SelectionScoreAtStart = selection.SelectionScoreAtStart,
+                    SequenceBlockCount = selection.SequenceBlockCount,
+                    SetCount = selection.SetCount,
+                    WasKeptAtWorkoutStart = selection.WasKeptAtWorkoutStart,
+                })
+                .ToList(),
+            SelectionChanges = session.SelectionChanges
+                .Select(change => new WorkoutSelectionChangeLog
+                {
+                    Kind = change.Kind,
+                    ChangedAtUnixMilliseconds = change.ChangedAtUnixMilliseconds,
+                    SelectionGroupId = change.SelectionGroupId,
+                    RejectedRootExerciseId = change.RejectedRootExerciseId,
+                    RejectedRootExerciseName = change.RejectedRootExerciseName,
+                    RejectedSelectionScoreBeforeChange =
+                        change.RejectedSelectionScoreBeforeChange,
+                    RejectedSelectionWasKeptAtWorkoutStart =
+                        change.RejectedSelectionWasKeptAtWorkoutStart,
+                    ReplacementRootExerciseId = change.ReplacementRootExerciseId,
+                    ReplacementRootExerciseName = change.ReplacementRootExerciseName,
+                    ReplacementSelectionScore = change.ReplacementSelectionScore,
+                })
+                .ToList(),
+            Blocks = session.Blocks
+                .Select(block => new WorkoutBlockLog
+                {
+                    CompletedAtUnixMilliseconds = block.CompletedAtUnixMilliseconds,
+                    WorkoutGroupId = block.WorkoutGroupId,
+                    SelectionGroupId = block.SelectionGroupId,
+                    Order = block.Order,
+                    RootExerciseId = block.RootExerciseId,
+                    RootExerciseName = block.RootExerciseName,
+                    ExerciseId = block.ExerciseId,
+                    ExerciseName = block.ExerciseName,
+                    SequenceBlockNumber = block.SequenceBlockNumber,
+                    SequenceBlockCount = block.SequenceBlockCount,
+                    SetNumber = block.SetNumber,
+                    SetCount = block.SetCount,
+                    SideCue = block.SideCue,
+                    DirectionCue = block.DirectionCue,
+                    MirrorMedia = block.MirrorMedia,
+                    MediaSegment = block.MediaSegment,
+                    MuscularDemand = block.MuscularDemand,
+                    PrimaryCanonicalGroup = block.PrimaryCanonicalGroup,
+                    SecondaryCanonicalGroups = [.. block.SecondaryCanonicalGroups],
+                    WasSequenceKeptAtWorkoutStart =
+                        block.WasSequenceKeptAtWorkoutStart,
+                })
+                .ToList(),
+            Decisions = session.Decisions
+                .Select(decision => new WorkoutDecisionLog
+                {
+                    DecidedAtUnixMilliseconds = decision.DecidedAtUnixMilliseconds,
+                    SelectionGroupId = decision.SelectionGroupId,
+                    RootExerciseId = decision.RootExerciseId,
+                    RootExerciseName = decision.RootExerciseName,
+                    SequenceExerciseIds = [.. decision.SequenceExerciseIds],
+                    Outcome = decision.Outcome,
+                    SelectionScoreBeforeDecision =
+                        decision.SelectionScoreBeforeDecision,
+                    CompletedBlockCount = decision.CompletedBlockCount,
+                    PlannedBlockCount = decision.PlannedBlockCount,
+                    WasKeptAtWorkoutStart = decision.WasKeptAtWorkoutStart,
+                })
+                .ToList(),
         };
     }
 }

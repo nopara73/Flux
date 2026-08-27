@@ -170,6 +170,43 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(-7, stored[replacedId].Score);
     }
 
+    [Theory]
+    [InlineData(
+        520,
+        "Silent Vowel-Shape Sequence",
+        "Mirror Facial-Expression Practice",
+        "Scapular Clock")]
+    [InlineData(
+        521,
+        "Smile-to-Neutral Transitions",
+        "Smile at Yourself in the Mirror",
+        "Scapular Figure Eight")]
+    public void Version67MirrorReplacementsDiscardThePriorIdentityAndScore(
+        int exerciseId,
+        string storedName,
+        string replacementName,
+        string baselineRetiredName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:0000}.mp4";
+        Exercise replacement = Exercise(
+            exerciseId,
+            replacementName,
+            video,
+            retiredName: baselineRetiredName);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(storedName, video, -7),
+        };
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
+    }
+
     [Fact]
     public void ReplacingRestoredExerciseAcceptsEveryReviewedIdentityWithoutItsScore()
     {
