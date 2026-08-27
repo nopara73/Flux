@@ -513,6 +513,53 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void HardFloorCategoryCoverageDoesNotLetCompatibleExercisesHideTheReleasedSet()
+    {
+        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
+        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        Exercise[] compatible = Enumerable.Range(1, 5)
+            .Select(id => Exercise(
+                id,
+                primary,
+                hardFloorCompatibility:
+                    ExerciseHardFloorCompatibility.Compatible))
+            .ToArray();
+        Exercise[] incompatible = Enumerable.Range(6, 4)
+            .Select(id => Exercise(
+                id,
+                primary,
+                hardFloorCompatibility:
+                    ExerciseHardFloorCompatibility.Incompatible))
+            .ToArray();
+
+        WorkoutHardFloorCategoryCoverageDeficiency[] deficiencies =
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
+                    compatible.Concat(incompatible).ToArray())
+                .Where(result => result.Minutes == 30 &&
+                    result.GroupId == group.Id)
+                .ToArray();
+
+        Assert.Equal(5, deficiencies.Length);
+        Assert.All(deficiencies, deficiency =>
+        {
+            Assert.Equal(
+                ExerciseHardFloorCompatibility.Incompatible,
+                deficiency.HardFloorCompatibility);
+            Assert.Equal(4, deficiency.MatchingExerciseCount);
+        });
+
+        Exercise fifthIncompatible = Exercise(
+            10,
+            primary,
+            hardFloorCompatibility:
+                ExerciseHardFloorCompatibility.Incompatible);
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
+                [.. compatible, .. incompatible, fifthIncompatible]),
+            result => result.Minutes == 30 && result.GroupId == group.Id);
+    }
+
+    [Fact]
     public void PairwiseAvailabilityCountsTheActualNestedCandidateSets()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];

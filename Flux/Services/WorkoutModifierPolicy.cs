@@ -15,6 +15,16 @@ public sealed record WorkoutModifierPairCoverageDeficiency(
     int MatchingExerciseCount,
     int RequiredExerciseCount);
 
+public sealed record WorkoutHardFloorCategoryCoverageDeficiency(
+    int Minutes,
+    string GroupId,
+    string GroupName,
+    ExerciseHardFloorCompatibility HardFloorCompatibility,
+    WorkoutModifiers PartnerModifier,
+    bool PartnerModifierEnabled,
+    int MatchingExerciseCount,
+    int RequiredExerciseCount);
+
 public sealed record WorkoutMirrorCategoryDeficiency(
     ExerciseMirrorRelationship Relationship,
     ExerciseMirrorCoverage MinimumCoverage,
@@ -267,6 +277,74 @@ public static class WorkoutModifierPolicy
                 result.MirrorEquipment,
                 result.Count,
                 MinimumExercisesPerPairStatePerGroup))
+            .ToArray();
+    }
+
+    public static IReadOnlyList<WorkoutHardFloorCategoryCoverageDeficiency>
+        FindHardFloorCategoryCoverageDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
+        ExerciseHardFloorCompatibility[] requiredCategories =
+        [
+            ExerciseHardFloorCompatibility.Compatible,
+            ExerciseHardFloorCompatibility.Incompatible,
+        ];
+        (WorkoutModifiers Modifier, bool Enabled)[] partnerStates =
+        [
+            (WorkoutModifiers.Insect, false),
+            (WorkoutModifiers.Insect, true),
+            (WorkoutModifiers.Silence, false),
+            (WorkoutModifiers.Silence, true),
+            (WorkoutModifiers.Mirror, false),
+        ];
+
+        return MassGroupingTaxonomy.SupportedMinutes
+            .SelectMany(minutes =>
+                MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
+                    requiredCategories.SelectMany(category =>
+                        partnerStates.Select(partnerState =>
+                        {
+                            WorkoutModifiers profile = category ==
+                                ExerciseHardFloorCompatibility.Compatible
+                                    ? WorkoutModifiers.HardFloor
+                                    : WorkoutModifiers.None;
+                            if (partnerState.Enabled)
+                            {
+                                profile |= partnerState.Modifier;
+                            }
+                            profile = Normalize(profile);
+
+                            int matchingExerciseCount = exercises
+                                .Where(exercise =>
+                                    exercise.HardFloorCompatibility == category &&
+                                    IsSequenceHardFloorCategory(
+                                        exercise,
+                                        exercisesById,
+                                        category) &&
+                                    IsSequenceUnitEligible(
+                                        exercise,
+                                        exercisesById,
+                                        group,
+                                        profile))
+                                .Select(GetSessionMovementId)
+                                .Distinct()
+                                .Count();
+                            return new WorkoutHardFloorCategoryCoverageDeficiency(
+                                minutes,
+                                group.Id,
+                                group.DisplayName,
+                                category,
+                                partnerState.Modifier,
+                                partnerState.Enabled,
+                                matchingExerciseCount,
+                                MinimumExercisesPerPairStatePerGroup);
+                        }))))
+            .Where(deficiency =>
+                deficiency.MatchingExerciseCount <
+                    deficiency.RequiredExerciseCount)
             .ToArray();
     }
 
@@ -625,6 +703,20 @@ public static class WorkoutModifierPolicy
         }
 
         return IsSequenceCompatible(exercise, exercisesById, profile);
+    }
+
+    private static bool IsSequenceHardFloorCategory(
+        Exercise exercise,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        ExerciseHardFloorCompatibility category)
+    {
+        return exercise.SequenceBlocks.Length > 0 &&
+            exercise.SequenceBlocks
+                .Select(block => block.ExerciseId)
+                .Distinct()
+                .All(exerciseId =>
+                    exercisesById.TryGetValue(exerciseId, out Exercise? member) &&
+                    member.HardFloorCompatibility == category);
     }
 
     private static WorkoutModifiers[] CreatePairwiseValidationProfiles()

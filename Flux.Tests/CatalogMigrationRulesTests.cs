@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(329, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(358, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -1967,6 +1967,63 @@ public sealed class CatalogMigrationRulesTests
         Assert.Null(state.PendingRestGroupId);
         Assert.Equal(512, state.PendingScoreExerciseId);
         Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void HardFloorCoverageRevisionResetsOnlyChangedExerciseProgressAndScores()
+    {
+        int[] changedIds =
+        [
+            439, 442, 444, 478,
+            549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+            559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+            569, 570, 571, 574, 575, 578, 581, 582, 583,
+        ];
+        HashSet<int> expectedIds = changedIds.ToHashSet();
+        Assert.Equal(
+            expectedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[51]);
+        Assert.Equal(
+            expectedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[51]);
+        Assert.All(changedIds, exerciseId =>
+            Assert.Contains(exerciseId, CatalogMigrationRules.ReplacedExerciseIds));
+
+        const string changedGroup = "hard-floor.changed";
+        const string retainedGroup = "hard-floor.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 50,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 550,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 550,
+            PendingScoreValue = -4,
+            LastKeptExerciseIds = [550, 15],
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Assert.Contains(550, state.LastKeptExerciseIds);
+        Assert.Contains(15, state.LastKeptExerciseIds);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 

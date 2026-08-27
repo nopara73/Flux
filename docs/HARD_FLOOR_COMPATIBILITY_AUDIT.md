@@ -35,11 +35,18 @@ must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 378 exercises
-- `Incompatible`: 72 exercises
+- `Compatible`: 382 exercises
+- `Incompatible`: 97 exercises
 - `Unreviewed`: 0 exercises
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,
 Silence, and Mirror UI states. The validation remains quadratic in the number
 of modifiers; it does not require every state in the full modifier power set.
+
+In addition to ordinary pairwise viability, every workout group must retain at
+least five exercises from each exact floor category—`Compatible` and
+`Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
+Floor off still admits both categories at runtime; the category-specific audit
+exists so the larger combined pool cannot conceal a missing soft-floor-only or
+hard-floor-suitable side of a pair.

@@ -184,12 +184,20 @@ Relationship labels are never promoted to hide a genuine gap. Every supported
 duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
 
+Hard Floor also has an explicit category-preservation check. For every workout
+group, at least five hard-floor-compatible and five hard-floor-incompatible
+sequences must remain available with Insect off/on, Silence off/on, and Mirror
+off. This prevents the relaxed soft-floor state from passing merely because it
+contains five exercises in total while one floor category is effectively
+absent. The check uses the same pairwise state model; it does not enumerate
+three- or four-modifier combinations.
+
 A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
 and Silence must remove at least five exercises or 5% of the previous candidate
 pool, whichever is larger. Mirror must actually prefer at least that many
 compatible exercises for compact and tall equipment independently. Each
 modifier must affect at least 10% of the canonical buckets, both alone and with
-its paired modifier enabled. The current 71 `BenefitsGreatly` assignments are
+its paired modifier enabled. The current 79 `BenefitsGreatly` assignments are
 an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
 materiality checks. Hard-floor classifications and their review criteria are

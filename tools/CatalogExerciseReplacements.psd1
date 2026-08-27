@@ -4099,17 +4099,17 @@
     }
     439 = @{
         RetiredName = 'Bidirectional Triangle-Path Saccades'
-        Name = 'Pogo Bounces with Fixed-Gaze Head Turns'
-        Practice = 'Vestibular and neck conditioning'
-        MotionProfile = 'PogoHeadTurn'
+        Name = 'Feet-Together Fixed-Gaze Head Turns'
+        Practice = 'Gaze stabilization and neck mobility'
+        MotionProfile = 'FixedGazeHeadTurn'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'pogo-bounces-head-turns.mp4'
+            File = 'feet-together-fixed-gaze-head-turns.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true
@@ -4177,17 +4177,17 @@
     }
     442 = @{
         RetiredName = 'Near-Point Convergence'
-        Name = 'Pogo Bounces with Fixed-Gaze Head Nods'
-        Practice = 'Vestibular and neck conditioning'
-        MotionProfile = 'PogoHeadNod'
+        Name = 'Feet-Together Fixed-Gaze Head Nods'
+        Practice = 'Gaze stabilization and neck mobility'
+        MotionProfile = 'FixedGazeHeadNod'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
-        Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'pogo-bounces-head-nods.mp4'
+            File = 'feet-together-fixed-gaze-head-nods.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true
@@ -4229,17 +4229,17 @@
     }
     444 = @{
         RetiredName = 'Vertical Gaze Stabilization'
-        Name = 'Pogo Bounces with Fixed-Gaze Head Tilts'
-        Practice = 'Vestibular and neck conditioning'
-        MotionProfile = 'PogoHeadTilt'
+        Name = 'Feet-Together Fixed-Gaze Head Tilts'
+        Practice = 'Gaze stabilization and neck mobility'
+        MotionProfile = 'FixedGazeHeadTilt'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'pogo-bounces-head-tilts.mp4'
+            File = 'feet-together-fixed-gaze-head-tilts.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true
@@ -5113,17 +5113,17 @@
     }
     478 = @{
         RetiredName = 'Dance Head Accent Front'
-        Name = 'Eye-Tracking Rotational Jumps'
+        Name = 'Step-Out Pivot with Thumb Tracking'
         Practice = 'Vestibular and visual-motor conditioning'
-        MotionProfile = 'EyeTrackingRotationalJump'
+        MotionProfile = 'StepOutPivotThumbTracking'
         Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'DeepHipRotators', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'DeepHipRotators', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'eye-tracking-rotational-jumps.mp4'
+            File = 'step-out-pivot-thumb-tracking.mp4'
             Url = 'https://www.youtube.com/watch?v=Y17g4tnSjok'
             SourcePage = 'https://www.youtube.com/watch?v=Y17g4tnSjok'
             Human = $true
@@ -8263,6 +8263,756 @@
             Crop = 'crop=ih:ih:200:0'
             PingPong = $false
             MirrorForAlternation = $false
+        }
+    }
+    549 = @{
+        RetiredName = 'Cross-Body Arm Swing'
+        Name = 'Calf Raise with Arm Swings'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'CalfRaiseArmSwing'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'calf-raise-arm-swings.mp4'
+            Url = 'https://www.youtube.com/watch?v=gTQWY2DwS6g'
+            SourcePage = 'https://www.youtube.com/watch?v=gTQWY2DwS6g'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0.6
+            DurationSeconds = 8.8
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    550 = @{
+        RetiredName = 'Overhead Elbow Reach'
+        Name = 'Squat to Calf Raise with Overhead Reach'
+        Practice = 'Full-body strength training'
+        MotionProfile = 'SquatCalfRaiseOverheadReach'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'squat-calf-raise-overhead-reach.mp4'
+            Url = 'https://www.youtube.com/watch?v=moPjeXxsJws'
+            SourcePage = 'https://www.youtube.com/watch?v=moPjeXxsJws'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 25.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    551 = @{
+        RetiredName = 'Eagle-Arm Wrap'
+        Name = 'Squat to Overhead Reach and Calf Raise'
+        Practice = 'Full-body strength training'
+        MotionProfile = 'SquatOverheadReachCalfRaise'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'squat-overhead-reach-calf-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=JETeV01hdmo'
+            SourcePage = 'https://www.youtube.com/watch?v=JETeV01hdmo'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 1.5
+            DurationSeconds = 14.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    552 = @{
+        RetiredName = 'Cow-Face Arm Reach'
+        Name = 'Lateral Arm Raise to Calf Raise'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'LateralArmRaiseCalfRaise'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors', 'DeepHipRotators')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'lateral-arm-raise-calf-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=7UMWzT4lnek'
+            SourcePage = 'https://www.youtube.com/watch?v=7UMWzT4lnek'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 6
+            DurationSeconds = 16
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    553 = @{
+        RetiredName = 'Garudasana Arm Flow'
+        Name = 'T-Raise to Calf Raise'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'TRaiseCalfRaise'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 't-raise-calf-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=mDE1fqtioVA'
+            SourcePage = 'https://www.youtube.com/watch?v=mDE1fqtioVA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 4.4
+            FramesPerSecond = 12
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    554 = @{
+        RetiredName = 'Gomukhasana Arm Flow'
+        Name = 'Half Squat Arm Swing to Heel Raise'
+        Practice = 'Full-body strength training'
+        MotionProfile = 'HalfSquatArmSwingHeelRaise'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'half-squat-arm-swing-heel-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=zYFBEhHsEDU'
+            SourcePage = 'https://www.youtube.com/watch?v=zYFBEhHsEDU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 9.2
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    555 = @{
+        RetiredName = 'Cactus-to-Y Flow'
+        Name = 'Heel Raise with Walking Arms'
+        Practice = 'Coordination training'
+        MotionProfile = 'HeelRaiseWalkingArms'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors', 'ElbowExtensors', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipFlexors', 'HipAbductors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'heel-raise-walking-arms.mp4'
+            Url = 'https://www.youtube.com/watch?v=cIQRdaQTG8A'
+            SourcePage = 'https://www.youtube.com/watch?v=cIQRdaQTG8A'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 24
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    556 = @{
+        RetiredName = 'Prayer-to-Overhead Flow'
+        Name = 'Tiptoe Raises with Fist Clenches'
+        Practice = 'Lymphatic exercise'
+        MotionProfile = 'TiptoeFistClench'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-raises-fist-clenches.mp4'
+            Url = 'https://www.youtube.com/watch?v=dynisIQLRzo'
+            SourcePage = 'https://www.youtube.com/watch?v=dynisIQLRzo'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 72
+            DurationSeconds = 12
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    557 = @{
+        RetiredName = 'Reverse-Prayer Shoulder Hold'
+        Name = 'Tiptoe Forward Punches'
+        Practice = 'Tai chi'
+        MotionProfile = 'TiptoeForwardPunch'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-forward-punches.mp4'
+            Url = 'https://www.youtube.com/watch?v=il1xexaJv5k'
+            SourcePage = 'https://www.youtube.com/watch?v=il1xexaJv5k'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 23
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    558 = @{
+        RetiredName = 'Hands-Behind-Back Shoulder Lift'
+        Name = 'Tiptoe One-Leg Circular Arm-and-Torso Sweep'
+        Practice = 'Ballet'
+        MotionProfile = 'TiptoeCircularPortDeBras'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-circular-arm-torso-sweep.mp4'
+            Url = 'https://www.youtube.com/watch?v=u5BoOGzjGuo'
+            SourcePage = 'https://www.youtube.com/watch?v=u5BoOGzjGuo'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 2
+            DurationSeconds = 22
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
+    559 = @{
+        RetiredName = 'Standing Scapular Push'
+        Name = 'Tiptoe High Side-Leg Hold with Circular Arm Sweep'
+        Practice = 'Ballet'
+        MotionProfile = 'TiptoeOneLegPortDeBras'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-one-leg-circular-arm-sweep.mp4'
+            Url = 'https://www.youtube.com/watch?v=EgVjTLGp5BU'
+            SourcePage = 'https://www.youtube.com/watch?v=EgVjTLGp5BU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 3.8
+            DurationSeconds = 29
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
+    560 = @{
+        RetiredName = 'Bear-Hug Shoulder Sweep'
+        Name = 'Tiptoe Forward-and-Back Torso-and-Arm Sweep'
+        Practice = 'Ballet'
+        MotionProfile = 'TiptoeForwardBackPortDeBras'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'HipAbductors', 'DeepHipRotators', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-forward-back-arm-sweep.mp4'
+            Url = 'https://www.youtube.com/watch?v=sdi-zVwgQgY'
+            SourcePage = 'https://www.youtube.com/watch?v=sdi-zVwgQgY'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 48
+            FramesPerSecond = 8
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    561 = @{
+        RetiredName = 'Boxing Shoulder Roll'
+        Name = 'Tiptoe Bourree Steps with Head Spot'
+        Practice = 'Ballet'
+        MotionProfile = 'BourreeHeadSpot'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-bourree-head-spot.mp4'
+            Url = 'https://www.youtube.com/watch?v=ogyy02GN2nU'
+            SourcePage = 'https://www.youtube.com/watch?v=ogyy02GN2nU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 7.7
+            FramesPerSecond = 12
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    562 = @{
+        RetiredName = 'Symmetric Boxing-Guard Shoulder Roll'
+        Name = 'Ballet Rises with Arm Movement'
+        Practice = 'Ballet'
+        MotionProfile = 'BalletRiseArmMovement'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'ballet-rises-arm-movement.mp4'
+            Url = 'https://www.youtube.com/watch?v=0Z0iQTjS0vM'
+            SourcePage = 'https://www.youtube.com/watch?v=0Z0iQTjS0vM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 28.8
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    563 = @{
+        RetiredName = 'Peekaboo-Guard Shoulder Rhythm'
+        Name = 'Single-Leg Calf Raise with Head Turns'
+        Practice = 'Balance training'
+        MotionProfile = 'SingleLegCalfRaiseHeadTurn'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'single-leg-calf-raise-head-turns.mp4'
+            Url = 'https://www.youtube.com/watch?v=jM--1N7PTV0'
+            SourcePage = 'https://www.youtube.com/watch?v=jM--1N7PTV0'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 18.4
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
+    564 = @{
+        RetiredName = 'Straight-Punch Shoulder Protraction'
+        Name = 'Calf Raise with Pelvic Floor Contraction'
+        Practice = 'Pelvic floor training'
+        MotionProfile = 'CalfRaisePelvicFloorContraction'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'calf-raise-pelvic-floor-contraction.mp4'
+            Url = 'https://www.youtube.com/watch?v=3YDz7hGIYyU'
+            SourcePage = 'https://www.youtube.com/watch?v=3YDz7hGIYyU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 24
+            DurationSeconds = 10.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    565 = @{
+        RetiredName = 'Jab-Cross Shoulder Rotation'
+        Name = 'Pelvic-Floor Mini Squat to Calf Raise'
+        Practice = 'Pelvic floor training'
+        MotionProfile = 'PelvicFloorMiniSquatCalfRaise'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'pelvic-floor-mini-squat-calf-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=bE198klNNsk'
+            SourcePage = 'https://www.youtube.com/watch?v=bE198klNNsk'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 74
+            DurationSeconds = 18
+            FramesPerSecond = 8
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    566 = @{
+        RetiredName = 'Hook Shoulder Rotation'
+        Name = 'Parallel Calf Raises for Pelvic-Floor Support'
+        Practice = 'Pelvic floor training'
+        MotionProfile = 'ParallelPelvicFloorCalfRaise'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'parallel-pelvic-floor-calf-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            SourcePage = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 24
+            DurationSeconds = 24
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    567 = @{
+        RetiredName = 'Uppercut Shoulder Drive'
+        Name = 'Breathing Calf Raises with Arm Folds'
+        Practice = 'Breathing exercise'
+        MotionProfile = 'BreathingCalfRaiseFoldedHands'
+        Primary = 'BreathingMuscles'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'PelvicFloorAndPerineum', 'Chest', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'breathing-calf-raises-folded-hands.mp4'
+            Url = 'https://www.youtube.com/watch?v=e_9vvxdTQ8Y'
+            SourcePage = 'https://www.youtube.com/watch?v=e_9vvxdTQ8Y'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 9
+            DurationSeconds = 16.5
+            FramesPerSecond = 8
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    568 = @{
+        RetiredName = 'Karate Age-Uke'
+        Name = 'Chest-Expansion Breathing Calf Raises'
+        Practice = 'Breathing exercise'
+        MotionProfile = 'ChestExpansionBreathingCalfRaise'
+        Primary = 'BreathingMuscles'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'Chest', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'RotatorCuff', 'ElbowFlexors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'chest-expansion-breathing-calf-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=Uoz03pwS3es'
+            SourcePage = 'https://www.youtube.com/watch?v=Uoz03pwS3es'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 12
+            DurationSeconds = 30
+            FramesPerSecond = 8
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    569 = @{
+        RetiredName = 'Karate Soto-Uke'
+        Name = 'Tiptoe Hip Hinge'
+        Practice = 'Full-body strength training'
+        MotionProfile = 'TiptoeHipHinge'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'PelvicFloorAndPerineum')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-hip-hinge.mp4'
+            Url = 'https://www.youtube.com/watch?v=U1UGFtMUG20'
+            SourcePage = 'https://www.youtube.com/watch?v=U1UGFtMUG20'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 28
+            DurationSeconds = 24
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    570 = @{
+        RetiredName = 'Wing Chun Bong Sau'
+        Name = 'Tiptoe Torso Twists'
+        Practice = 'Coordination training'
+        MotionProfile = 'TiptoeTorsoTwist'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'SpinalExtensors', 'DeepHipRotators', 'HipAbductors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-torso-twists.mp4'
+            Url = 'https://www.youtube.com/watch?v=MaBli7NOByg'
+            SourcePage = 'https://www.youtube.com/watch?v=MaBli7NOByg'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 10
+            DurationSeconds = 24
+            FramesPerSecond = 8
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    571 = @{
+        RetiredName = 'Wing Chun Tan Sau'
+        Name = 'Hip Hinge to Squat and Calf Raise'
+        Practice = 'Full-body strength training'
+        MotionProfile = 'HipHingeSquatCalfRaise'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'PelvicFloorAndPerineum')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'hip-hinge-squat-calf-raise.mp4'
+            Url = 'https://www.youtube.com/watch?v=iPRff6HYIu8'
+            SourcePage = 'https://www.youtube.com/watch?v=iPRff6HYIu8'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 4
+            DurationSeconds = 34
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    574 = @{
+        RetiredName = 'Tai Chi Cloud-Hands Shoulder Flow'
+        Name = 'Tiptoe Overhead Side Bends'
+        Practice = 'Yoga'
+        MotionProfile = 'TiptoeOverheadSideBend'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowExtensors', 'HipAbductors', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'PelvicFloorAndPerineum', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'tiptoe-overhead-side-bends.mp4'
+            Url = 'https://www.youtube.com/watch?v=6WhxifoUOEQ'
+            SourcePage = 'https://www.youtube.com/watch?v=6WhxifoUOEQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 51
+            DurationSeconds = 28
+            FramesPerSecond = 8
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    575 = @{
+        RetiredName = 'Qigong Shoulder Shaking'
+        Name = 'Boxer Bounce to Jab-Cross'
+        Practice = 'Boxing'
+        MotionProfile = 'BoxerBounceJabCross'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ElbowExtensors', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        SideSequence = 'ScreenLeftLeadThenRightLead'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'boxer-bounce-jab-cross.mp4'
+            Url = 'https://www.youtube.com/watch?v=iIGYGFJdCBQ'
+            SourcePage = 'https://www.youtube.com/watch?v=iIGYGFJdCBQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 16
+            DurationSeconds = 38
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
+    578 = @{
+        RetiredName = 'Eight Brocades Two Hands Hold the Heavens'
+        Name = 'Bounce-Step Jab'
+        Practice = 'Boxing'
+        MotionProfile = 'BounceStepJab'
+        Primary = 'ElbowExtensors'
+        Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        SideSequence = 'ScreenLeftLeadThenRightLead'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'bounce-step-jab.mp4'
+            Url = 'https://www.youtube.com/watch?v=4pSjBHXMCtA'
+            SourcePage = 'https://www.youtube.com/watch?v=4pSjBHXMCtA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 70
+            DurationSeconds = 25
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
+        }
+    }
+    581 = @{
+        RetiredName = 'Ballet Epaulement Croise'
+        Name = 'Toes-In Calf Raises for Pelvic-Floor Support'
+        Practice = 'Pelvic floor training'
+        MotionProfile = 'ToesInPelvicFloorCalfRaise'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'toes-in-pelvic-floor-calf-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            SourcePage = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 64
+            DurationSeconds = 24
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    582 = @{
+        RetiredName = 'Ballet Epaulement Efface'
+        Name = 'Toes-Out Calf Raises for Pelvic-Floor Support'
+        Practice = 'Pelvic floor training'
+        MotionProfile = 'ToesOutPelvicFloorCalfRaise'
+        Primary = 'PelvicFloorAndPerineum'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'toes-out-pelvic-floor-calf-raises.mp4'
+            Url = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            SourcePage = 'https://www.youtube.com/watch?v=wXzNpx3kzPU'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 96
+            DurationSeconds = 28
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    583 = @{
+        RetiredName = 'Ballet Epaulement Ecarte'
+        Name = 'Bounce-Step Cross'
+        Practice = 'Boxing'
+        MotionProfile = 'BounceStepCross'
+        Primary = 'Chest'
+        Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        SideSequence = 'ScreenLeftLeadThenRightLead'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'bounce-step-cross.mp4'
+            Url = 'https://www.youtube.com/watch?v=4pSjBHXMCtA'
+            SourcePage = 'https://www.youtube.com/watch?v=4pSjBHXMCtA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 103
+            DurationSeconds = 24
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $true
         }
     }
 }

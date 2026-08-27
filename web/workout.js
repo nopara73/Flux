@@ -180,7 +180,7 @@ const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 50;
+export const CURRENT_CATALOG_REVISION = 51;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -267,6 +267,12 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     538, 539, 540, 541, 542, 543, 545, 546,
   ])],
   [50, new Set([31, 169, 219, 547, 548])],
+  [51, new Set([
+    439, 442, 444, 478,
+    549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+    559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+    569, 570, 571, 574, 575, 578, 581, 582, 583,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -334,6 +340,12 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     538, 539, 540, 541, 542, 543, 545, 546,
   ])],
   [50, new Set([547, 548])],
+  [51, new Set([
+    439, 442, 444, 478,
+    549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+    559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+    569, 570, 571, 574, 575, 578, 581, 582, 583,
+  ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -1431,6 +1443,78 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
           })))
         .filter((result) =>
           result.matchingExerciseCount < result.requiredExerciseCount)));
+}
+
+export function findHardFloorCategoryCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const requiredCategories = [
+    EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
+    EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+  ];
+  const partnerStates = [
+    [WORKOUT_MODIFIERS.Insect, false],
+    [WORKOUT_MODIFIERS.Insect, true],
+    [WORKOUT_MODIFIERS.Silence, false],
+    [WORKOUT_MODIFIERS.Silence, true],
+    [WORKOUT_MODIFIERS.Mirror, false],
+  ];
+
+  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
+    resolution.groups.flatMap((group) =>
+      requiredCategories.flatMap((hardFloorCompatibility) =>
+        partnerStates.map(([partnerModifier, partnerModifierEnabled]) => {
+          let profile = hardFloorCompatibility ===
+              EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible
+            ? WORKOUT_MODIFIERS.HardFloor
+            : WORKOUT_MODIFIERS.None;
+          if (partnerModifierEnabled) {
+            profile |= partnerModifier;
+          }
+          profile = normalizeWorkoutModifiers(profile);
+
+          const matchingExerciseCount = new Set(exercises
+            .filter((exercise) =>
+              exercise.hardFloorCompatibility === hardFloorCompatibility &&
+              isSequenceHardFloorCategory(
+                exercise,
+                exercisesById,
+                hardFloorCompatibility,
+              ) &&
+              isSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                profile,
+              ))
+            .map(getSessionMovementId)).size;
+          return {
+            minutes,
+            groupId: group.id,
+            groupName: group.displayName,
+            hardFloorCompatibility,
+            partnerModifier,
+            partnerModifierEnabled,
+            matchingExerciseCount,
+            requiredExerciseCount:
+              MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+          };
+        }))
+      .filter((result) =>
+        result.matchingExerciseCount < result.requiredExerciseCount)));
+}
+
+function isSequenceHardFloorCategory(
+  exercise,
+  exercisesById,
+  hardFloorCompatibility,
+) {
+  return Array.isArray(exercise?.sequenceBlocks) &&
+    exercise.sequenceBlocks.length > 0 &&
+    [...new Set(exercise.sequenceBlocks.map((block) => block.exerciseId))]
+      .every((exerciseId) =>
+        exercisesById.get(exerciseId)?.hardFloorCompatibility ===
+          hardFloorCompatibility);
 }
 
 export function findMirrorCategoryDeficiencies(exercises) {

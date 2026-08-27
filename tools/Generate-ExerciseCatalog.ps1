@@ -1687,7 +1687,28 @@ function New-ExternalExerciseGif {
 
                 if ($LASTEXITCODE -ne 0 -or
                     -not (Test-Path -LiteralPath $sourcePath)) {
-                    throw "Could not download reviewed video for $ExerciseName."
+                    # Some reviewed sources expose their stable progressive MP4
+                    # only to YouTube's mobile-web client. Keep this as an
+                    # explicit final transport fallback; the exact reviewed trim
+                    # is still decoded and validated below before acceptance.
+                    & $ytDlpPath `
+                        --no-playlist `
+                        --no-warnings `
+                        --no-progress `
+                        --impersonate chrome `
+                        --extractor-args 'youtube:player_client=mweb' `
+                        --retries 5 `
+                        --fragment-retries 5 `
+                        --retry-sleep 1 `
+                        --force-overwrites `
+                        --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
+                        --output $sourcePath `
+                        $sourceUrl
+
+                    if ($LASTEXITCODE -ne 0 -or
+                        -not (Test-Path -LiteralPath $sourcePath)) {
+                        throw "Could not download reviewed video for $ExerciseName."
+                    }
                 }
             }
         }
@@ -1736,7 +1757,22 @@ function New-ExternalExerciseGif {
                 --output $sourcePath `
                 $sourceUrl
             if ($LASTEXITCODE -ne 0) {
-                throw "Could not redownload decodable video for $ExerciseName."
+                & $ytDlpPath `
+                    --no-playlist `
+                    --no-warnings `
+                    --no-progress `
+                    --impersonate chrome `
+                    --extractor-args 'youtube:player_client=mweb' `
+                    --retries 5 `
+                    --fragment-retries 5 `
+                    --retry-sleep 1 `
+                    --force-overwrites `
+                    --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
+                    --output $sourcePath `
+                    $sourceUrl
+                if ($LASTEXITCODE -ne 0) {
+                    throw "Could not redownload decodable video for $ExerciseName."
+                }
             }
             & ffmpeg `
                 -hide_banner `

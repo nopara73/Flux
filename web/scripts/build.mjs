@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
@@ -109,8 +110,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 450) {
-  throw new Error(`Expected 450 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 479) {
+  throw new Error(`Expected 479 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 const catalogInvariantChecks = [
@@ -119,6 +120,10 @@ const catalogInvariantChecks = [
   [
     "modifier pair coverage",
     findWorkoutModifierPairCoverageDeficiencies(catalog).length === 0,
+  ],
+  [
+    "hard-floor category coverage",
+    findHardFloorCategoryCoverageDeficiencies(catalog).length === 0,
   ],
   [
     "modifier materiality",

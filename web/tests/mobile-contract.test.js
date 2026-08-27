@@ -600,7 +600,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*69/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*70/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
@@ -1161,7 +1161,7 @@ test("active movement checkpoints and invalid media recovery match across platfo
 
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
+    265, 274, 280, 287, 473, 575, 578, 583, 591, 884, 885, 886, 887,
   ];
   assert.deepEqual(
     catalog
@@ -1329,7 +1329,7 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
     [
       96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
       211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
-      367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 610, 612,
+      367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
       617, 742, 784, 834, 845, 910, 948, 996,
     ],
   );

@@ -310,7 +310,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
     {
         database.ExecSQL(
             """
-            CREATE TABLE exercises_v69 (
+            CREATE TABLE exercises_v70 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -395,7 +395,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 .CopyExistingExercisesWithNeutralCatalogMetadata);
         database.ExecSQL("DROP INDEX IF EXISTS index_exercises_score");
         database.ExecSQL("DROP TABLE exercises");
-        database.ExecSQL("ALTER TABLE exercises_v69 RENAME TO exercises");
+        database.ExecSQL("ALTER TABLE exercises_v70 RENAME TO exercises");
         database.ExecSQL(
             "CREATE INDEX index_exercises_score ON exercises (score DESC)");
     }

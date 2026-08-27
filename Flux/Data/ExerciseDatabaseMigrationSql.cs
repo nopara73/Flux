@@ -4,7 +4,7 @@ internal static class ExerciseDatabaseMigrationSql
 {
     internal const string CopyExistingExercisesWithNeutralCatalogMetadata =
         """
-        INSERT INTO exercises_v69 (
+        INSERT INTO exercises_v70 (
             id, name, video, practice, motion_profile, score,
             muscular_demand, only_feet_touch_ground, shoe_agnostic,
             max_space_meters,

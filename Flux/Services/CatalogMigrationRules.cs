@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 50;
+    public const int CurrentCatalogRevision = 51;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -842,8 +842,10 @@ public static class CatalogMigrationRules
         490, 491, 492, 493, 495, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508,
         509, 510, 511, 512, 513, 514, 515, 516, 520, 521, 522, 523, 524, 525, 526, 527, 528,
         529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 545, 546,
-        547, 548,
-        572, 573, 576, 577, 588, 591, 608, 609, 610, 611, 612, 613, 614,
+        547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+        559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571,
+        572, 573, 574, 575, 576, 577, 578, 581, 582, 583, 588, 591,
+        608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
         816, 834, 843, 845, 886, 887, 971, 986, 987, 996, 997, 998, 999,
@@ -965,6 +967,13 @@ public static class CatalogMigrationRules
                     538, 539, 540, 541, 542, 543, 545, 546,
                 },
                 [50] = new HashSet<int> { 31, 169, 219, 547, 548 },
+                [51] = new HashSet<int>
+                {
+                    439, 442, 444, 478,
+                    549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+                    559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+                    569, 570, 571, 574, 575, 578, 581, 582, 583,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1049,6 +1058,13 @@ public static class CatalogMigrationRules
                     538, 539, 540, 541, 542, 543, 545, 546,
                 },
                 [50] = new HashSet<int> { 547, 548 },
+                [51] = new HashSet<int>
+                {
+                    439, 442, 444, 478,
+                    549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+                    559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+                    569, 570, 571, 574, 575, 578, 581, 582, 583,
+                },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

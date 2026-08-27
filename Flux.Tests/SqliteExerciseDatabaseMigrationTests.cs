@@ -20,19 +20,21 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(66)]
     [InlineData(67)]
     [InlineData(68)]
+    [InlineData(69)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(69, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(70, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 69)]
+    [InlineData(13, 70)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
-    [InlineData(69, 70)]
+    [InlineData(70, 70)]
+    [InlineData(70, 71)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -58,8 +60,16 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             538, 539, 540, 541, 542, 543, 545, 546, 547, 548,
         ];
         HashSet<int> added = addedExerciseIds.ToHashSet();
+        HashSet<int> laterHardFloorCoverageIds = new int[]
+        {
+            549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+            559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+            569, 570, 571, 574, 575, 578, 581, 582, 583,
+        }.ToHashSet();
         var storedVersion67 = catalog
-            .Where(exercise => !added.Contains(exercise.Id))
+            .Where(exercise =>
+                !added.Contains(exercise.Id) &&
+                !laterHardFloorCoverageIds.Contains(exercise.Id))
             .ToDictionary(
                 exercise => exercise.Id,
                 exercise => new StoredExerciseSnapshot(
@@ -76,7 +86,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion67);
 
-        Assert.Equal(450, catalog.Length);
+        Assert.Equal(479, catalog.Length);
         Assert.Equal(431, storedVersion67.Count);
         Assert.Equal(429, preserved.Count);
         Assert.DoesNotContain(520, preserved);
@@ -92,6 +102,53 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.All(addedExerciseIds, exerciseId =>
             Assert.Contains(catalog, root => root.SequenceBlocks.Any(block =>
                 block.ExerciseId == exerciseId)));
+    }
+
+    [Fact]
+    public void Version69UpgradeAddsHardFloorCoverageRecordsAndPreservesUnchangedScores()
+    {
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "exercises.json")),
+                CatalogJsonOptions)
+            ?? throw new InvalidOperationException("The test catalog is missing.");
+        int[] addedExerciseIds =
+        [
+            549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+            559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+            569, 570, 571, 574, 575, 578, 581, 582, 583,
+        ];
+        HashSet<int> added = addedExerciseIds.ToHashSet();
+        Dictionary<int, StoredExerciseSnapshot> storedVersion69 = catalog
+            .Where(exercise => !added.Contains(exercise.Id))
+            .ToDictionary(
+                exercise => exercise.Id,
+                exercise => new StoredExerciseSnapshot(
+                    exercise.Name,
+                    exercise.Video,
+                    Score: exercise.Id % 19 - 9));
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            catalog,
+            storedVersion69);
+
+        Assert.Equal(479, catalog.Length);
+        Assert.Equal(450, storedVersion69.Count);
+        Assert.Equal(storedVersion69.Keys.Order(), preserved.Order());
+        Assert.All(storedVersion69, entry =>
+            Assert.Equal(entry.Key % 19 - 9, entry.Value.Score));
+        Assert.All(addedExerciseIds, exerciseId =>
+        {
+            Exercise addedExercise = Assert.Single(
+                catalog,
+                exercise => exercise.Id == exerciseId);
+            Assert.Equal(
+                ExerciseHardFloorCompatibility.Incompatible,
+                addedExercise.HardFloorCompatibility);
+            Assert.DoesNotContain(exerciseId, preserved);
+        });
     }
 
     [Fact]
@@ -154,7 +211,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Execute(
             connection,
             """
-            CREATE TABLE exercises_v69 (
+            CREATE TABLE exercises_v70 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -207,7 +264,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             SELECT name, video, score, equipment,
                 hard_floor_compatibility, mirror_relationship,
                 mirror_coverage, session_movement_id
-            FROM exercises_v69
+            FROM exercises_v70
             WHERE id = 528
             """;
         using SqliteDataReader reader = command.ExecuteReader();

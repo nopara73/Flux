@@ -38,6 +38,7 @@ import {
   calculateMuscleLoadHalfUnits,
   createWorkoutSchedule,
   createDefaultState,
+  findHardFloorCategoryCoverageDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
@@ -456,7 +457,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [118, 198, 134],
+    [121, 217, 141],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -1140,9 +1141,9 @@ test("insect profile carries keeps into a long workout", () => {
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
-      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 71);
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 79);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 369);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 390);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 10);
@@ -1157,7 +1158,7 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody).length, 27);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
-    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 44);
+    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 52);
   assert.deepEqual(new Set(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly &&
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody)
@@ -1176,6 +1177,7 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
   assert.equal(isModifierMetadataComplete(catalog), true);
   assert.deepEqual(findMirrorCategoryDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutModifierPairCoverageDeficiencies(catalog), []);
+  assert.deepEqual(findHardFloorCategoryCoverageDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
   for (const profile of WORKOUT_MODIFIER_VALIDATION_PROFILES) {
@@ -1259,6 +1261,67 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
       result.minutes === 30 && result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Silence),
+    [],
+  );
+});
+
+test("hard-floor pairwise floor counts compatible and incompatible categories separately", () => {
+  const targetGroup = RESOLUTIONS.get(30).groups[0];
+  const compatible = Array.from({ length: 5 }, (_, index) => ({
+    ...exercise(
+      index + 1,
+      targetGroup.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+    ),
+    hardFloorCompatibility:
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
+  }));
+  const incompatible = Array.from({ length: 4 }, (_, index) => ({
+    ...exercise(
+      index + 6,
+      targetGroup.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+    ),
+    hardFloorCompatibility:
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+  }));
+
+  const deficiencies = findHardFloorCategoryCoverageDeficiencies([
+    ...compatible,
+    ...incompatible,
+  ]).filter((result) =>
+    result.minutes === 30 && result.groupId === targetGroup.id);
+
+  assert.equal(deficiencies.length, 5);
+  assert.ok(deficiencies.every((deficiency) =>
+    deficiency.hardFloorCompatibility ===
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible &&
+    deficiency.matchingExerciseCount === 4));
+
+  incompatible.push({
+    ...exercise(
+      10,
+      targetGroup.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+    ),
+    hardFloorCompatibility:
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+  });
+  assert.deepEqual(
+    findHardFloorCategoryCoverageDeficiencies([
+      ...compatible,
+      ...incompatible,
+    ]).filter((result) =>
+      result.minutes === 30 && result.groupId === targetGroup.id),
     [],
   );
 });
@@ -2423,9 +2486,9 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 450);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 450);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 450);
+  assert.equal(catalog.length, 479);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 479);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 479);
   assert.equal(isSessionMovementMetadataValid(catalog), true);
   const actualSessionMovements = {};
   for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
@@ -2459,7 +2522,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
-  assert.equal(breathingExercises.length, 15);
+  assert.equal(breathingExercises.length, 17);
   for (const exercise of breathingExercises) {
     assert.match(exercise.name, /\b(?:inhale|exhale|breath|laugh|laughter)/i);
   }
@@ -4532,6 +4595,47 @@ test("unilateral setup correction rebuilds workouts without resetting scores", (
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
+test("hard-floor coverage revision resets only changed exercise progress and scores", () => {
+  const changedIds = [
+    439, 442, 444, 478,
+    549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+    559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+    569, 570, 571, 574, 575, 578, 581, 582, 583,
+  ];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(51)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(51)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  const [changedGroup, retainedGroup] = RESOLUTIONS.get(3).groups;
+  state.catalogRevision = 50;
+  state.selectedExerciseIds[changedGroup.id] = 550;
+  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.outcomes[changedGroup.id] = "x";
+  state.outcomes[retainedGroup.id] = "tick";
+  state.pendingRestGroupId = changedGroup.id;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+  state.lastKeptExerciseIds = [550, 15];
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.outcomes[retainedGroup.id], "tick");
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.lastKeptExerciseIds.includes(550), true);
+  assert.equal(restored.state.lastKeptExerciseIds.includes(15), true);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
 test("unclear exercise replacement revision resets every changed score", () => {
   const changedIds = [
     211, 213, 214, 215, 218, 223, 224,
@@ -4867,7 +4971,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
   assert.deepEqual(multiExerciseSequenceRoots, [
     96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
     211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
-    367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 610, 612,
+    367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
     617, 742, 784, 834, 845, 910, 948, 996,
   ]);
   assert.ok(holds.length > 0);
