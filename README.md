@@ -357,6 +357,9 @@ interrupted records are finalized idempotently and never mutate scores. Because
 history stores snapshots as well as IDs, later catalog edits cannot rewrite what
 happened. This makes exact hard-block and prior-session Keep-repeat comparisons
 possible; sessions completed before this version cannot be reconstructed.
+Movement start and resume checkpoints use Android's non-blocking preference
+apply so the Play control responds without waiting for a disk flush; pausing,
+finishing, and score-changing actions still commit synchronously.
 
 The Android catalog uses SQLite schema version 68. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.

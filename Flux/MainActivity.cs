@@ -2649,7 +2649,7 @@ public class MainActivity : Activity
             _currentWorkoutGroup,
             millisecondsRemaining,
             DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + millisecondsRemaining);
-        _stateStore.Save(_state);
+        _stateStore.SaveDeferred(_state);
         _countdownActive = true;
         _countdownPaused = false;
         _countdownMillisecondsRemaining = millisecondsRemaining;

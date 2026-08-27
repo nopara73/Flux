@@ -908,7 +908,11 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.doesNotMatch(webApp, /workoutGroupName/);
 });
 
-test("active movement checkpoints and invalid media recovery match across platforms", () => {
+test("active movement checkpoints and invalid media recovery match across platforms", async () => {
+  const [stateStoreContract, stateStore] = await Promise.all([
+    source("Flux", "Data", "IWorkoutStateStore.cs"),
+    source("Flux", "Data", "SharedPreferencesWorkoutStateStore.cs"),
+  ]);
   assert.match(workoutState, /PendingMovementGroupId/);
   assert.match(workoutState, /PendingMovementMillisecondsRemaining/);
   assert.match(workoutState, /PendingMovementEndsAtUnixMilliseconds/);
@@ -942,8 +946,20 @@ test("active movement checkpoints and invalid media recovery match across platfo
     mobileCreate,
     /GetPendingMovementGroup[\s\S]*GetPendingRestGroup[\s\S]*pendingMovementGroup is null[\s\S]*pendingRestGroup is null[\s\S]*FinishInterruptedWorkout[\s\S]*RestorePendingMovement[\s\S]*RestorePendingRest/,
   );
-  assert.match(mobilePause, /PauseMovement[\s\S]*_stateStore\.Save/);
-  assert.match(mobileStart, /BeginMovement[\s\S]*_stateStore\.Save/);
+  assert.match(stateStoreContract, /void SaveDeferred\(WorkoutState state\)/);
+  assert.match(
+    stateStore,
+    /SaveDeferred\(WorkoutState state\)[\s\S]*CreateEditor\(state\)\.Apply\(\)/,
+  );
+  assert.match(
+    stateStore,
+    /public void Save\(WorkoutState state\)[\s\S]*editor\.Commit\(\)/,
+  );
+  assert.match(mobilePause, /PauseMovement[\s\S]*_stateStore\.Save\(_state\)/);
+  assert.match(
+    mobileStart,
+    /BeginMovement[\s\S]*_stateStore\.SaveDeferred\(_state\)/,
+  );
   assert.match(
     mobileDirectionGuard,
     /CurrentPosition[\s\S]*catch \(Java\.Lang\.IllegalStateException\)[\s\S]*RecoverInvalidMediaPlayerState/,

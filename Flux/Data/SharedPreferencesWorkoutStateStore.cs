@@ -67,15 +67,32 @@ public sealed class SharedPreferencesWorkoutStateStore : IWorkoutStateStore
 
     public void Save(WorkoutState state)
     {
-        string json = JsonSerializer.Serialize(state, WorkoutJsonContext.Default.WorkoutState);
-        ISharedPreferencesEditor editor = _preferences.Edit()
-            ?? throw new InvalidOperationException("Unable to edit workout preferences.");
-
-        editor.PutString(StateKey, json);
+        ISharedPreferencesEditor editor = CreateEditor(state);
 
         if (!editor.Commit())
         {
             throw new InvalidOperationException("Unable to save workout progress.");
         }
+    }
+
+    public void SaveDeferred(WorkoutState state)
+    {
+        // Movement start/resume checkpoints are followed by a synchronous save
+        // whenever the activity pauses. Apply updates the in-process preference
+        // immediately while keeping the tap-to-frame path free of a disk fsync.
+        CreateEditor(state).Apply();
+    }
+
+    private ISharedPreferencesEditor CreateEditor(WorkoutState state)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+
+        string json = JsonSerializer.Serialize(
+            state,
+            WorkoutJsonContext.Default.WorkoutState);
+        ISharedPreferencesEditor editor = _preferences.Edit()
+            ?? throw new InvalidOperationException("Unable to edit workout preferences.");
+        editor.PutString(StateKey, json);
+        return editor;
     }
 }

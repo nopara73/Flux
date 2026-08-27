@@ -36,12 +36,20 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
 
     public int SaveCalls { get; private set; }
 
+    public int DeferredSaveCalls { get; private set; }
+
     public WorkoutState Load() => Clone(_storedState);
 
     public void Save(WorkoutState state)
     {
         _storedState = Clone(state);
         SaveCalls++;
+    }
+
+    public void SaveDeferred(WorkoutState state)
+    {
+        _storedState = Clone(state);
+        DeferredSaveCalls++;
     }
 
     private static WorkoutState Clone(WorkoutState state)
