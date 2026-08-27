@@ -490,7 +490,21 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webApp, /showWorkoutModifierFeedback\(workoutModifierFeedbackLabel\(flag, enabled\)\)/);
   assert.match(webApp, /setAttribute\("title", workoutModifierFeedbackLabel\(flag, enabled\)\)/);
   assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Compact[\s\S]*MIRROR_EQUIPMENT\.Tall/);
-  assert.match(webStyles, /@keyframes modifier-feedback-blink[\s\S]*scale\(0\.82\)[\s\S]*scale\(1\.08\)/);
+  assert.match(
+    mainActivity,
+    /ModifierFeedbackEnterDurationMilliseconds\s*=\s*140L[\s\S]*ModifierFeedbackHoldMilliseconds\s*=\s*560L[\s\S]*ModifierFeedbackFadeDurationMilliseconds\s*=\s*700L/,
+  );
+  assert.match(mainActivity, /SetDuration\(ModifierFeedbackEnterDurationMilliseconds\)/);
+  assert.match(mainActivity, /SetDuration\(ModifierFeedbackFadeDurationMilliseconds\)/);
+  assert.match(mainActivity, /PostDelayed\([\s\S]*ModifierFeedbackHoldMilliseconds/);
+  assert.match(
+    webApp,
+    /MODIFIER_FEEDBACK_DURATION_MS\s*=\s*1_400[\s\S]*setTimeout\([\s\S]*MODIFIER_FEEDBACK_DURATION_MS/,
+  );
+  assert.match(
+    webStyles,
+    /\.modifier-feedback\.show[\s\S]*1400ms[\s\S]*@keyframes modifier-feedback-blink[\s\S]*10%[\s\S]*16%[\s\S]*50%[\s\S]*100%[\s\S]*opacity:\s*0[\s\S]*scale\(1\.08\)/,
+  );
   assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(

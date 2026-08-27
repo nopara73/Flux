@@ -28,6 +28,7 @@ const STORAGE_KEY = "flux.workout.state.v1";
 const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
 const DIRECTION_SEGMENT_SECONDS = 20;
+const MODIFIER_FEEDBACK_DURATION_MS = 1_400;
 const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectEnabled: "insect mode ON",
   insectDisabled: "insect mode OFF",
@@ -359,7 +360,7 @@ function showWorkoutModifierFeedback(message) {
     elements.modifierFeedback.classList.remove("show");
     elements.modifierFeedback.hidden = true;
     modifierFeedbackTimer = null;
-  }, 900);
+  }, MODIFIER_FEEDBACK_DURATION_MS);
 }
 
 function renderWorkoutModifiers() {

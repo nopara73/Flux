@@ -27,7 +27,9 @@ public class MainActivity : Activity
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
+    private const long ModifierFeedbackEnterDurationMilliseconds = 140L;
     private const long ModifierFeedbackHoldMilliseconds = 560L;
+    private const long ModifierFeedbackFadeDurationMilliseconds = 700L;
     private const float PlaybackControlEnabledAlpha = 1f;
     private const float PlaybackControlDisabledAlpha = 0.35f;
 
@@ -1432,7 +1434,7 @@ public class MainActivity : Activity
             .Alpha(1f)
             .ScaleX(1f)
             .ScaleY(1f)
-            .SetDuration(140L)
+            .SetDuration(ModifierFeedbackEnterDurationMilliseconds)
             .WithEndAction(new Java.Lang.Runnable(() =>
                 _ = feedback.PostDelayed(
                     new Java.Lang.Runnable(() =>
@@ -1446,7 +1448,7 @@ public class MainActivity : Activity
                             .Alpha(0f)
                             .ScaleX(1.08f)
                             .ScaleY(1.08f)
-                            .SetDuration(180L)
+                            .SetDuration(ModifierFeedbackFadeDurationMilliseconds)
                             .WithEndAction(new Java.Lang.Runnable(() =>
                             {
                                 if (generation == _modifierFeedbackGeneration)
