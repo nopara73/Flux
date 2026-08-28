@@ -115,6 +115,83 @@ public sealed class WorkoutDisplayPolicyTests
         Assert.Equal(1, transition.CurrentBlockIndex);
     }
 
+    [Fact]
+    public void Three_distinct_exercises_use_the_neutral_repeated_set_accent()
+    {
+        WorkoutGroup[] groups =
+        [
+            Group(
+                "circuit.set1.block1",
+                1,
+                "circuit",
+                0,
+                3,
+                1,
+                2,
+                ExerciseSequenceSideCue.ScreenRight,
+                exerciseOverrideId: 101),
+            Group(
+                "circuit.set1.block2",
+                2,
+                "circuit",
+                1,
+                3,
+                1,
+                2,
+                ExerciseSequenceSideCue.ScreenLeft,
+                exerciseOverrideId: 102),
+            Group(
+                "circuit.set1.block3",
+                3,
+                "circuit",
+                2,
+                3,
+                1,
+                2,
+                directionCue: ExerciseSequenceDirectionCue.Forward,
+                exerciseOverrideId: 103),
+            Group(
+                "circuit.set2.block1",
+                4,
+                "circuit",
+                0,
+                3,
+                2,
+                2,
+                ExerciseSequenceSideCue.ScreenRight,
+                exerciseOverrideId: 101),
+            Group(
+                "circuit.set2.block2",
+                5,
+                "circuit",
+                1,
+                3,
+                2,
+                2,
+                ExerciseSequenceSideCue.ScreenLeft,
+                exerciseOverrideId: 102),
+            Group(
+                "circuit.set2.block3",
+                6,
+                "circuit",
+                2,
+                3,
+                2,
+                2,
+                directionCue: ExerciseSequenceDirectionCue.Forward,
+                exerciseOverrideId: 103),
+        ];
+
+        WorkoutExecutionTimeline timeline = WorkoutDisplayPolicy.GetTimeline(
+            groups,
+            groups[4]);
+
+        Assert.Equal(
+            Enumerable.Repeat(WorkoutBlockAccent.Neutral, 6),
+            timeline.Blocks);
+        Assert.Equal(4, timeline.CurrentBlockIndex);
+    }
+
     [Theory]
     [InlineData(
         ExerciseSequenceSideCue.None,
@@ -165,13 +242,15 @@ public sealed class WorkoutDisplayPolicyTests
         int setCount,
         ExerciseSequenceSideCue sideCue = ExerciseSequenceSideCue.None,
         ExerciseSequenceDirectionCue directionCue =
-            ExerciseSequenceDirectionCue.None) =>
+            ExerciseSequenceDirectionCue.None,
+        int exerciseOverrideId = 0) =>
         new(
             id,
             id,
             order,
             Chest,
             SelectionGroupId: selectionGroupId,
+            ExerciseOverrideId: exerciseOverrideId,
             SequenceBlockIndex: sequenceBlockIndex,
             SequenceBlockCount: sequenceBlockCount,
             SetNumber: setNumber,

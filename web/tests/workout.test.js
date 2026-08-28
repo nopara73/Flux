@@ -164,6 +164,46 @@ test("execution timeline contains only real work blocks", () => {
   );
 });
 
+test("three distinct exercises use the neutral repeated-set accent", () => {
+  const groups = [1, 2].flatMap((setNumber) => [
+    {
+      id: `circuit.set${setNumber}.block1`,
+      order: (setNumber - 1) * 3 + 1,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      setNumber,
+      exerciseOverrideId: 101,
+      sequenceSideCue: "ScreenRight",
+    },
+    {
+      id: `circuit.set${setNumber}.block2`,
+      order: (setNumber - 1) * 3 + 2,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      setNumber,
+      exerciseOverrideId: 102,
+      sequenceSideCue: "ScreenLeft",
+    },
+    {
+      id: `circuit.set${setNumber}.block3`,
+      order: (setNumber - 1) * 3 + 3,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      setNumber,
+      exerciseOverrideId: 103,
+      sequenceDirectionCue: "Forward",
+    },
+  ]);
+
+  assert.deepEqual(
+    getWorkoutExecutionTimeline(groups, groups[4]),
+    {
+      blocks: Array(6).fill("neutral"),
+      currentBlockIndex: 4,
+    },
+  );
+});
+
 test("work-block colors come from the real side and direction cues", () => {
   assert.equal(getWorkoutBlockAccent({}), "neutral");
   assert.equal(

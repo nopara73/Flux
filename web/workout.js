@@ -748,6 +748,25 @@ export function getWorkoutBlockAccent(group) {
   }
 }
 
+function usesNeutralThreeExerciseAccent(groups) {
+  if (groups.length === 0 || !groups.every((group) =>
+    group.sequenceBlockCount === 3 &&
+    Number.isInteger(group.exerciseOverrideId) &&
+    group.exerciseOverrideId > 0)) {
+    return false;
+  }
+
+  const exerciseIdsBySet = new Map();
+  for (const group of groups) {
+    const setNumber = group.setNumber ?? 1;
+    const exerciseIds = exerciseIdsBySet.get(setNumber) ?? [];
+    exerciseIds.push(group.exerciseOverrideId);
+    exerciseIdsBySet.set(setNumber, exerciseIds);
+  }
+  return [...exerciseIdsBySet.values()].every((exerciseIds) =>
+    exerciseIds.length === 3 && new Set(exerciseIds).size === 3);
+}
+
 export function getWorkoutExecutionTimeline(
   activeGroups,
   currentGroup,
@@ -768,8 +787,12 @@ export function getWorkoutExecutionTimeline(
   if (selectUpcomingBlock && currentBlockIndex + 1 < timelineGroups.length) {
     currentBlockIndex += 1;
   }
+  const usesNeutralAccent = usesNeutralThreeExerciseAccent(timelineGroups);
   return {
-    blocks: timelineGroups.map(getWorkoutBlockAccent),
+    blocks: timelineGroups.map((group) =>
+      usesNeutralAccent
+        ? "neutral"
+        : getWorkoutBlockAccent(group)),
     currentBlockIndex,
   };
 }

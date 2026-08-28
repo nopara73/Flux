@@ -75,10 +75,30 @@ public static class WorkoutDisplayPolicy
             currentBlockIndex++;
         }
 
+        bool usesNeutralThreeExerciseAccent =
+            UsesNeutralThreeExerciseAccent(blocks);
         return new WorkoutExecutionTimeline(
-            blocks.Select(GetAccent).ToArray(),
+            blocks
+                .Select(group => usesNeutralThreeExerciseAccent
+                    ? WorkoutBlockAccent.Neutral
+                    : GetAccent(group))
+                .ToArray(),
             currentBlockIndex);
     }
+
+    private static bool UsesNeutralThreeExerciseAccent(
+        IReadOnlyList<WorkoutGroup> blocks) =>
+        blocks.Count > 0 &&
+        blocks.All(group =>
+            group.SequenceBlockCount == 3 &&
+            group.ExerciseOverrideId > 0) &&
+        blocks
+            .GroupBy(group => group.SetNumber)
+            .All(set =>
+                set.Count() == 3 &&
+                set.Select(group => group.ExerciseOverrideId)
+                    .Distinct()
+                    .Count() == 3);
 
     public static WorkoutBlockAccent GetAccent(WorkoutGroup group)
     {
