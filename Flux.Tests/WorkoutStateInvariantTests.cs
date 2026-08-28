@@ -33,7 +33,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -127,7 +127,11 @@ public sealed class WorkoutStateInvariantTests
 
         Assert.Same(rejected, recorded);
         Assert.Null(unexpectedPenalty);
-        Assert.Equal(10, rejected.Score);
+        Assert.Equal(11, rejected.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[target.Id][
+                rejected.Id]);
         Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
         Assert.Equal(untouchedCurrentExerciseId, state.SelectedExerciseIds[untouched.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
@@ -136,7 +140,7 @@ public sealed class WorkoutStateInvariantTests
     }
 
     [Fact]
-    public void RejectionPurgesExerciseFromEverySavedResolutionBucket()
+    public void RejectionPurgesOnlyTheRejectedSlotAcrossModifierProfiles()
     {
         Exercise rejected = Exercise(
             1,
@@ -162,6 +166,9 @@ public sealed class WorkoutStateInvariantTests
         {
             state.SelectedExerciseIds[groupId] = rejected.Id;
         }
+        string insectTargetKey =
+            $"p{(int)WorkoutModifiers.Insect}|{rejectedGroupIds[0]}";
+        state.SelectedExerciseIds[insectTargetKey] = rejected.Id;
 
         string unrelatedGroupId = MassGroupingTaxonomy.GetGroup(
             30,
@@ -180,12 +187,18 @@ public sealed class WorkoutStateInvariantTests
         }
         service.FinishInterruptedWorkout(state);
 
-        Assert.DoesNotContain(rejected.Id, state.SelectedExerciseIds.Values);
         Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(insectTargetKey));
         Assert.Equal(unrelated.Id, state.SelectedExerciseIds[unrelatedGroupId]);
         Assert.All(
             rejectedGroupIds.Where(groupId => groupId != target.Id),
-            groupId => Assert.False(state.SelectedExerciseIds.ContainsKey(groupId)));
+            groupId => Assert.Equal(
+                rejected.Id,
+                state.SelectedExerciseIds[groupId]));
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[target.Id][
+                rejected.Id]);
     }
 
     [Fact]
@@ -205,6 +218,7 @@ public sealed class WorkoutStateInvariantTests
             present.PrimaryCanonicalGroup).Id;
         var priorState = new WorkoutState
         {
+            Version = 21,
             CatalogRevision = 12,
             SelectedExerciseIds = new Dictionary<string, int>
             {
@@ -319,7 +333,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
             WorkoutModifiers.HardFloor,

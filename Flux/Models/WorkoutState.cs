@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 21;
+    public int Version { get; set; } = 22;
 
     public int CatalogRevision { get; set; }
 
@@ -11,6 +11,19 @@ public sealed class WorkoutState
     public Dictionary<string, ExerciseOutcome> Outcomes { get; set; } = [];
 
     public HashSet<int> LastKeptExerciseIds { get; set; } = [];
+
+    // Preferences are keyed by the stable logical selection slot (for example,
+    // r10.upper-limbs), never by modifier profile. Values are sequence-root IDs:
+    // one Keep/reject decision therefore remains one preference even when the
+    // selected sequence contains several exercise blocks or repeated sets.
+    public Dictionary<string, HashSet<int>>
+        KeptExerciseRootIdsBySelectionGroupId { get; set; } = [];
+
+    // New downvotes are stored as per-slot adjustments to the legacy catalog
+    // score. The immutable legacy score remains the migration baseline, while
+    // every post-migration vote affects only the slot where it was made.
+    public Dictionary<string, Dictionary<int, int>>
+        ExerciseScoreAdjustmentsBySelectionGroupId { get; set; } = [];
 
     public Dictionary<string, long>
         LastHardWorkUnixMillisecondsByPrimaryMuscle { get; set; } = [];

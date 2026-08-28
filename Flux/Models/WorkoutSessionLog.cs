@@ -31,6 +31,9 @@ public sealed class WorkoutSessionLog
 
     public int[] KeptExerciseIdsAtStart { get; set; } = [];
 
+    public Dictionary<string, int[]>
+        KeptExerciseRootIdsBySelectionGroupIdAtStart { get; set; } = [];
+
     public List<WorkoutSelectionSnapshot> InitialSelections { get; set; } = [];
 
     public List<WorkoutSelectionChangeLog> SelectionChanges { get; set; } = [];

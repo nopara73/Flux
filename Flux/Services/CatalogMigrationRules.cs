@@ -1408,7 +1408,9 @@ public static class CatalogMigrationRules
         return invalidatedExerciseIds;
     }
 
-    public static bool ReconcileWorkoutState(WorkoutState state)
+    public static bool ReconcileWorkoutState(
+        WorkoutState state,
+        IReadOnlyDictionary<int, Exercise>? exercisesById = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -1420,6 +1422,8 @@ public static class CatalogMigrationRules
         state.SelectedExerciseIds ??= [];
         state.Outcomes ??= [];
         state.LastKeptExerciseIds ??= [];
+        state.KeptExerciseRootIdsBySelectionGroupId ??= [];
+        state.ExerciseScoreAdjustmentsBySelectionGroupId ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
         state.ActiveSetCountsBySelectionGroupId ??= [];
         state.ActiveDirectionPartnerExerciseIds ??= [];
@@ -1482,8 +1486,49 @@ public static class CatalogMigrationRules
             state.PendingScoreUpdates.Remove(exerciseId);
         }
 
+        foreach (string selectionGroupId in
+                 state.ExerciseScoreAdjustmentsBySelectionGroupId.Keys.ToArray())
+        {
+            foreach (int exerciseId in state
+                         .ExerciseScoreAdjustmentsBySelectionGroupId[
+                             selectionGroupId]
+                         .Keys
+                         .Where(exerciseId =>
+                             IsScorePreferenceRootInvalidated(
+                                 exerciseId,
+                                 scoreInvalidatedExerciseIds,
+                                 exercisesById))
+                         .ToArray())
+            {
+                state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                    selectionGroupId].Remove(exerciseId);
+            }
+            if (state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                    selectionGroupId].Count == 0)
+            {
+                state.ExerciseScoreAdjustmentsBySelectionGroupId.Remove(
+                    selectionGroupId);
+            }
+        }
+
         state.CatalogRevision = CurrentCatalogRevision;
         return true;
+    }
+
+    private static bool IsScorePreferenceRootInvalidated(
+        int rootExerciseId,
+        IReadOnlySet<int> scoreInvalidatedExerciseIds,
+        IReadOnlyDictionary<int, Exercise>? exercisesById)
+    {
+        if (scoreInvalidatedExerciseIds.Contains(rootExerciseId))
+        {
+            return true;
+        }
+
+        return exercisesById is not null &&
+            exercisesById.TryGetValue(rootExerciseId, out Exercise? root) &&
+            root.SequenceBlocks.Any(block =>
+                scoreInvalidatedExerciseIds.Contains(block.ExerciseId));
     }
 
     private static (string SelectionGroupId, WorkoutModifiers Modifiers)

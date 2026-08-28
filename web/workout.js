@@ -172,7 +172,8 @@ export const SCORE_HALF_UNITS_PER_VOTE = 2;
 export const MUSCLE_BUDGET_MAX_REBALANCE_PASSES = 12;
 export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 18;
+export const CURRENT_WORKOUT_STATE_VERSION = 19;
+const SLOT_SCOPED_PREFERENCE_STATE_VERSION = 19;
 const IMPLICIT_HARD_FLOOR_STATE_VERSION = 18;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
 const IMPLICIT_SILENCE_STATE_VERSION = 5;
@@ -2274,6 +2275,8 @@ export function createDefaultState() {
     scores: {},
     outcomes: {},
     lastKeptExerciseIds: [],
+    keptExerciseRootIdsBySelectionGroupId: {},
+    exerciseScoreAdjustmentsBySelectionGroupId: {},
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
     lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {},
     nextWorkoutSessionId: 1,
@@ -2388,6 +2391,30 @@ function normalizeStateShape(raw) {
     }
   }
   state.lastKeptExerciseIds = uniquePositiveIntegers(raw.lastKeptExerciseIds);
+  for (const [selectionGroupId, rootIds] of Object.entries(objectOrEmpty(
+    raw.keptExerciseRootIdsBySelectionGroupId,
+  ))) {
+    if (typeof selectionGroupId === "string" && selectionGroupId.length > 0) {
+      state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] =
+        uniquePositiveIntegers(rootIds);
+    }
+  }
+  for (const [selectionGroupId, adjustments] of Object.entries(objectOrEmpty(
+    raw.exerciseScoreAdjustmentsBySelectionGroupId,
+  ))) {
+    if (typeof selectionGroupId !== "string" || selectionGroupId.length === 0) {
+      continue;
+    }
+    const normalized = {};
+    for (const [rootId, adjustment] of Object.entries(objectOrEmpty(adjustments))) {
+      if (/^\d+$/.test(rootId) && Number.isInteger(adjustment) && adjustment !== 0) {
+        normalized[rootId] = adjustment;
+      }
+    }
+    if (Object.keys(normalized).length > 0) {
+      state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] = normalized;
+    }
+  }
   state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
     raw.lastHardWorkUnixMillisecondsByPrimaryMuscle,
   );
@@ -2612,6 +2639,16 @@ function normalizeWorkoutSessionLog(raw) {
     startedBeforeLogging: session.startedBeforeLogging === true,
     keptExerciseIdsAtStart: uniquePositiveIntegers(session.keptExerciseIdsAtStart)
       .sort((left, right) => left - right),
+    keptExerciseRootIdsBySelectionGroupIdAtStart: Object.fromEntries(
+      Object.entries(objectOrEmpty(
+        session.keptExerciseRootIdsBySelectionGroupIdAtStart,
+      ))
+        .filter(([selectionGroupId]) => selectionGroupId.length > 0)
+        .map(([selectionGroupId, rootIds]) => [
+          selectionGroupId,
+          uniquePositiveIntegers(rootIds).sort((left, right) => left - right),
+        ]),
+    ),
     initialSelections: normalizeObjectArray(session.initialSelections).map((selection) => ({
       selectionGroupId: stringOrEmpty(selection.selectionGroupId),
       coveredWorkoutGroupIds: uniqueStrings(selection.coveredWorkoutGroupIds),
@@ -2760,6 +2797,10 @@ export class WorkoutSession {
     this.loadedStateVersion = this.state[SOURCE_STATE_VERSION] ?? this.state.version;
     this.random = random;
     this.nowProvider = nowProvider;
+    if (this.loadedStateVersion < SLOT_SCOPED_PREFERENCE_STATE_VERSION) {
+      this.migrateSlotScopedPreferences();
+    }
+    this.normalizeSlotPreferences();
   }
 
   getCurrentUnixTimeMilliseconds() {
@@ -2779,7 +2820,7 @@ export class WorkoutSession {
     this.reconcileCatalog();
     this.normalizeScores();
     this.normalizeSavedLineups();
-    this.normalizeKeptExerciseIds();
+    this.normalizeSlotPreferences();
 
     if (this.state.activeWorkoutMinutes === 0) {
       this.finalizeActiveWorkoutSession("Interrupted");
@@ -2822,7 +2863,7 @@ export class WorkoutSession {
       throw new Error("A workout is already active.");
     }
 
-    this.normalizeKeptExerciseIds();
+    this.normalizeSlotPreferences();
     const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     this.finalizeActiveWorkoutSession(
       "Interrupted",
@@ -2832,10 +2873,6 @@ export class WorkoutSession {
       .sort((left, right) => left - right);
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
-    const previousWorkoutMinutes = normalizeMinutes(this.state.lastWorkoutMinutes);
-    const previousWorkoutModifiers = normalizeWorkoutModifiers(
-      this.state.lastWorkoutModifiers,
-    );
     this.state.lastWorkoutMinutes = minutes;
     this.state.lastWorkoutModifiers = modifiers;
     this.state.activeWorkoutMinutes = minutes;
@@ -2845,11 +2882,13 @@ export class WorkoutSession {
     this.state.completionAcknowledged = false;
     this.clearPendingMovement();
     this.clearPendingRest();
-    this.carryKeptExercisesForward(previousWorkoutMinutes, previousWorkoutModifiers);
+    // Shuffle exclusions belong only to the workout being shuffled. The
+    // durable preference is the score adjustment for that exact slot.
+    this.state.nextWorkoutExcludedExerciseIds = [];
+    this.carrySlotPreferencesForward();
     this.repairActiveLineup();
     this.rebalanceNewExercisesByMuscleBudget();
     this.setActiveLongWorkoutAllocation();
-    this.state.nextWorkoutExcludedExerciseIds = [];
     this.createActiveWorkoutSession(
       workoutStartedAtUnixMilliseconds,
       keptExerciseIdsAtStart,
@@ -2967,7 +3006,11 @@ export class WorkoutSession {
     const rejectedExercise = this.getSelectedExercise(group);
     const rejectedRoot = this.getSequenceRoot(rejectedExercise);
     const scoreUpdates = this.getSequenceExercises(rejectedRoot);
-    const rejectedSelectionScore = this.getSelectionScore(rejectedRoot);
+    const selectionGroupId = getSelectionKey(group);
+    const rejectedSelectionScore = this.getSelectionScore(
+      rejectedRoot,
+      selectionGroupId,
+    );
 
     this.shuffle(candidates);
     const selected = candidates[0];
@@ -2979,12 +3022,12 @@ export class WorkoutSession {
       )] = selected.exercise.id;
     }
     this.recordWorkoutSelectionChange(
-      getSelectionKey(group),
+      selectionGroupId,
       rejectedRoot,
       rejectedSelectionScore,
       selected.exercise,
     );
-    this.applyShuffleRejection(scoreUpdates);
+    this.applyShuffleRejection(selectionGroupId, rejectedRoot, scoreUpdates);
     this.applyLongWorkoutAllocation(selected.allocation);
     return {
       rejectedExercise,
@@ -2993,25 +3036,14 @@ export class WorkoutSession {
     };
   }
 
-  applyShuffleRejection(exercises) {
+  applyShuffleRejection(selectionGroupId, rejectedRoot, exercises) {
     const rejectedExerciseIds = new Set(exercises.map((exercise) => exercise.id));
-    for (const exercise of exercises) {
-      this.setScore(exercise, this.getScore(exercise) - 1);
-    }
+    this.downvoteSequenceInSlot(selectionGroupId, rejectedRoot);
     this.state.nextWorkoutExcludedExerciseIds = [...new Set([
       ...this.state.nextWorkoutExcludedExerciseIds,
       ...rejectedExerciseIds,
     ])];
-    this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter(
-      (exerciseId) => !rejectedExerciseIds.has(exerciseId),
-    );
-    for (const [savedGroupId, exerciseId] of Object.entries(
-      this.state.selectedExerciseIds,
-    )) {
-      if (rejectedExerciseIds.has(exerciseId)) {
-        delete this.state.selectedExerciseIds[savedGroupId];
-      }
-    }
+    this.removeSavedSequenceCopiesForSlot(selectionGroupId, rejectedRoot.id);
   }
 
   getSelectedExercise(group) {
@@ -3147,12 +3179,16 @@ export class WorkoutSession {
       );
       return [selectionStorageKey, this.state.selectedExerciseIds[selectionStorageKey]];
     }));
-    const previousLastKeptExerciseIds = this.state.lastKeptExerciseIds;
+    const selectionGroupId = [...coveredGroups]
+      .sort((left, right) => left.order - right.order)[0].id;
+    const previousSlotKeeps = this.getKeptRootIdsForSlot(selectionGroupId);
     for (const selectionStorageKey of previousExerciseIds.keys()) {
       this.state.selectedExerciseIds[selectionStorageKey] = candidate.id;
     }
-    this.state.lastKeptExerciseIds = previousLastKeptExerciseIds
-      .filter((exerciseId) => !rejectedExerciseIds.has(exerciseId));
+    this.removeSequenceKeep(
+      selectionGroupId,
+      this.exercisesById.get([...rejectedExerciseIds][0]),
+    );
     try {
       return this.chooseLongWorkoutAllocation(startedSelectionGroupIds);
     } catch {
@@ -3161,7 +3197,12 @@ export class WorkoutSession {
       for (const [selectionStorageKey, previousExerciseId] of previousExerciseIds) {
         this.state.selectedExerciseIds[selectionStorageKey] = previousExerciseId;
       }
-      this.state.lastKeptExerciseIds = previousLastKeptExerciseIds;
+      if (previousSlotKeeps.size === 0) {
+        delete this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId];
+      } else {
+        this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] =
+          [...previousSlotKeeps];
+      }
     }
   }
 
@@ -3464,12 +3505,13 @@ export class WorkoutSession {
   applySequenceOutcome(group, keep) {
     const exercise = this.getSelectedExercise(group);
     const root = this.getSequenceRoot(exercise);
-    const sequenceExercises = this.getSequenceExercises(root);
-    const selectionScoreBeforeDecision = this.getSelectionScore(root);
+    const selectionGroupId = getSelectionKey(group);
+    const selectionScoreBeforeDecision = this.getSelectionScore(
+      root,
+      selectionGroupId,
+    );
     if (!keep) {
-      for (const member of sequenceExercises) {
-        this.setScore(member, this.getScore(member) - 1);
-      }
+      this.downvoteSequenceInSlot(selectionGroupId, root);
     }
     const decidedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     this.recordWorkoutDecision(
@@ -3525,8 +3567,6 @@ export class WorkoutSession {
     const activeGroups = this.getActiveGroups();
     const selectionGroups = this.getSelectionGroups();
     const rejectedSelectionKeys = new Set();
-    const newlyKeptExerciseIds = new Set();
-    const rejectedExerciseIds = new Set();
     for (const selectionGroup of selectionGroups) {
       const decisionRound = activeGroups
         .filter((round) => getSelectionKey(round) === selectionGroup.id)
@@ -3547,25 +3587,15 @@ export class WorkoutSession {
       if (!root) {
         continue;
       }
-      const memberIds = this.getSequenceExercises(root).map((exercise) =>
-        exercise.id);
       if (outcome === "tick") {
-        memberIds.forEach((exerciseId) => newlyKeptExerciseIds.add(exerciseId));
+        this.keepSequenceInSlot(selectionGroup.id, root);
       } else {
         rejectedSelectionKeys.add(selectionGroup.id);
-        memberIds.forEach((exerciseId) => rejectedExerciseIds.add(exerciseId));
+        this.removeSequenceKeep(selectionGroup.id, root);
       }
     }
-    this.state.nextWorkoutExcludedExerciseIds = [...new Set([
-      ...this.state.nextWorkoutExcludedExerciseIds,
-      ...rejectedExerciseIds,
-    ])];
-    this.state.lastKeptExerciseIds = [...new Set([
-      ...this.state.lastKeptExerciseIds.filter(
-        (exerciseId) => !rejectedExerciseIds.has(exerciseId),
-      ),
-      ...newlyKeptExerciseIds,
-    ])];
+    this.state.nextWorkoutExcludedExerciseIds = [];
+    this.syncLegacyKeptExerciseIds();
     const currentExerciseIds = new Map(
       selectionGroups
         .filter((group) => !rejectedSelectionKeys.has(group.id))
@@ -3588,18 +3618,13 @@ export class WorkoutSession {
       );
       const rejectedExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
       excludedExerciseIdsByGroup.set(group.id, new Set([rejectedExerciseId]));
-      for (const [savedGroupId, savedExerciseId] of Object.entries(this.state.selectedExerciseIds)) {
-        if (savedGroupId !== selectionStorageKey && savedExerciseId === rejectedExerciseId) {
-          delete this.state.selectedExerciseIds[savedGroupId];
-        }
-      }
+      this.removeSavedSequenceCopiesForSlot(group.id, rejectedExerciseId);
     }
 
     const nextLineup = this.chooseBestDistinctLineup(
       selectionGroups,
       this.state.activeWorkoutModifiers,
       {
-        preferredExerciseIds: new Set(this.state.lastKeptExerciseIds),
         currentExerciseIds,
         excludedExerciseIdsByGroup,
       },
@@ -3642,21 +3667,12 @@ export class WorkoutSession {
     this.applyDistinctLineup(selectionGroups, repairedLineup, true, activeGroups);
   }
 
-  carryKeptExercisesForward(previousWorkoutMinutes, previousWorkoutModifiers) {
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    if (keptExerciseIds.size === 0) {
+  carrySlotPreferencesForward() {
+    if (Object.values(this.state.keptExerciseRootIdsBySelectionGroupId)
+      .every((rootIds) => rootIds.length === 0)) {
       return;
     }
 
-    const previousGroups = getResolution(
-      previousWorkoutMinutes > 30 ? 30 : previousWorkoutMinutes,
-    ).groups;
-    const orderedKeptExerciseIds = [...new Set([
-      ...previousGroups.map((group) => this.state.selectedExerciseIds[
-        this.getSelectionStorageKey(group.id, previousWorkoutModifiers)
-      ]),
-      ...[...keptExerciseIds].sort((left, right) => left - right),
-    ].filter((exerciseId) => keptExerciseIds.has(exerciseId)))];
     const targetGroups = this.getSelectionGroups();
     const currentExerciseIds = new Map(
       targetGroups
@@ -3673,9 +3689,7 @@ export class WorkoutSession {
       targetGroups,
       this.state.activeWorkoutModifiers,
       {
-        preferredExerciseIds: keptExerciseIds,
         currentExerciseIds,
-        preferredTieOrder: orderedKeptExerciseIds,
       },
     );
     this.applyDistinctLineup(targetGroups, carriedLineup, false);
@@ -3685,10 +3699,8 @@ export class WorkoutSession {
     groups,
     modifiers = this.state.activeWorkoutModifiers,
     {
-      preferredExerciseIds = new Set(),
       currentExerciseIds = new Map(),
       excludedExerciseIdsByGroup = new Map(),
-      preferredTieOrder = [],
       allowSavedSelectionException = false,
     } = {},
   ) {
@@ -3698,10 +3710,6 @@ export class WorkoutSession {
 
     const isAllowed = (exercise, group) => {
       const sequenceExercises = this.getSequenceExercises(exercise);
-      if (sequenceExercises.some((member) =>
-        this.state.nextWorkoutExcludedExerciseIds.includes(member.id))) {
-        return false;
-      }
       if (sequenceExercises.some((member) =>
         excludedExerciseIdsByGroup.get(group.id)?.has(member.id))) {
         return false;
@@ -3716,26 +3724,15 @@ export class WorkoutSession {
     let candidates = this.exercises.filter((exercise) =>
       groups.some((group) => isAllowed(exercise, group)));
     this.shuffle(candidates);
-    const tieOrder = new Map();
-    for (const exerciseId of preferredTieOrder) {
-      if (!tieOrder.has(exerciseId)) {
-        tieOrder.set(exerciseId, tieOrder.size);
-      }
-    }
-    candidates = candidates
-      .map((exercise, shuffledIndex) => ({ exercise, shuffledIndex }))
-      .sort((left, right) =>
-        (tieOrder.get(left.exercise.id) ?? Number.MAX_SAFE_INTEGER) -
-          (tieOrder.get(right.exercise.id) ?? Number.MAX_SAFE_INTEGER) ||
-        left.shuffledIndex - right.shuffledIndex)
-      .map(({ exercise }) => exercise);
-    const orderedScores = [...new Set(candidates.map((exercise) =>
-      this.getSelectionScore(exercise)))].sort((left, right) => left - right);
+    const orderedScores = [...new Set(candidates.flatMap((exercise) => groups
+      .filter((group) => isAllowed(exercise, group))
+      .map((group) => this.getSelectionScore(exercise, group.id))))]
+      .sort((left, right) => left - right);
     const scoreRanks = new Map(orderedScores.map((score, rank) => [score, rank]));
     const highestScoreByGroup = new Map(groups.map((group) => {
       const allowedScores = candidates
         .filter((exercise) => isAllowed(exercise, group))
-        .map((exercise) => this.getSelectionScore(exercise));
+        .map((exercise) => this.getSelectionScore(exercise, group.id));
       return [
         group.id,
         allowedScores.length > 0
@@ -3792,8 +3789,72 @@ export class WorkoutSession {
       ? totalLowerPriorityRange + 1n
       : 0n;
 
+    const calculateUtility = (exercise, evaluationGroup, includeSlotPreference) => {
+      const selectionExercise = this.getSequenceSelectionExerciseForGroup(
+        exercise,
+        evaluationGroup,
+      );
+      const hardRotationStatus = getHardRotationStatus(
+        selectionExercise,
+        evaluationGroup,
+        this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      );
+      const isRecoveringModerate = isModerateExerciseRecovering(
+        selectionExercise,
+        this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+        selectionTimeUnixMilliseconds,
+      );
+      const hardMuscleAgeRank = hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
+        ? freshHardMuscleRanks.get(getLastHardWorkUnixMilliseconds(
+            this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+            selectionExercise.primaryCanonicalGroup,
+          )) ?? 0
+        : 0;
+      const isKept = includeSlotPreference &&
+        this.isSequenceKept(evaluationGroup.id, exercise);
+      const selectionScore = includeSlotPreference
+        ? this.getSelectionScore(exercise, evaluationGroup.id)
+        : 0;
+      const hasHardOpportunity = includeSlotPreference &&
+        hardRotationStatus === HARD_ROTATION_STATUS.FreshHard &&
+        (isKept || selectionScore === highestScoreByGroup.get(evaluationGroup.id));
+      const hasContextualKeepPreference = includeSlotPreference && isKept &&
+        hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard &&
+        !isRecoveringModerate;
+      const isCurrentSelection = includeSlotPreference &&
+        currentExerciseIds.get(evaluationGroup.id) === exercise.id;
+      return (allowSavedSelectionException && isCurrentSelection
+        ? preservedActiveSelectionWeight
+        : 0n) +
+        (hasHardOpportunity ? hardOpportunityWeight : 0n) +
+        (hasContextualKeepPreference ? keptExerciseWeight : 0n) +
+        (includeSlotPreference
+          ? BigInt(scoreRanks.get(selectionScore)) * scoreWeight
+          : 0n) +
+        (hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard
+          ? hardRecoveryAvoidanceWeight
+          : 0n) +
+        (!isRecoveringModerate ? moderateRecoveryAvoidanceWeight : 0n) +
+        (hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
+          ? freshHardWeight
+          : 0n) +
+        BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
+        (isCurrentSelection ? currentSelectionWeight : 0n) +
+        (isMirrorPreferred(selectionExercise, modifiers)
+          ? mirrorPreferenceWeight
+          : 0n) +
+        (isPrimaryForGroup(selectionExercise, evaluationGroup) ? primaryWeight : 0n) +
+        BigInt(getSequenceCanonicalCoverage(
+          exercise,
+          this.exercisesById,
+          evaluationGroup,
+        ));
+    };
+
     const allowed = groups.map(() => candidates.map(() => false));
-    const utilities = groups.map(() => candidates.map(() => 0n));
+    const baseUtilities = groups.map(() => candidates.map(() => 0n));
+    const anchorUtilities = groups.map(() => candidates.map(() => 0n));
     for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
       const group = groups[groupIndex];
       for (let exerciseIndex = 0; exerciseIndex < candidates.length; exerciseIndex += 1) {
@@ -3802,66 +3863,16 @@ export class WorkoutSession {
           continue;
         }
         allowed[groupIndex][exerciseIndex] = true;
-        const selectionExercise = this.getSequenceSelectionExerciseForGroup(
+        baseUtilities[groupIndex][exerciseIndex] = calculateUtility(
           exercise,
           group,
+          false,
         );
-        const hardRotationStatus = getHardRotationStatus(
-          selectionExercise,
+        anchorUtilities[groupIndex][exerciseIndex] = calculateUtility(
+          exercise,
           group,
-          this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-          selectionTimeUnixMilliseconds,
+          true,
         );
-        const isRecoveringModerate = isModerateExerciseRecovering(
-          selectionExercise,
-          this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
-          selectionTimeUnixMilliseconds,
-        );
-        const hardMuscleAgeRank = hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
-          ? freshHardMuscleRanks.get(getLastHardWorkUnixMilliseconds(
-              this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
-              selectionExercise.primaryCanonicalGroup,
-            )) ?? 0
-          : 0;
-        const isKept = this.getSequenceExercises(exercise).every((member) =>
-          preferredExerciseIds.has(member.id));
-        // A non-kept hard exercise can displace a keep only while it is fresh,
-        // primary for this slot, and already in that slot's top saved-score
-        // bucket. A fresh hard keep is the explicit second path.
-        const hasHardOpportunity =
-          hardRotationStatus === HARD_ROTATION_STATUS.FreshHard &&
-          (isKept ||
-            this.getSelectionScore(exercise) === highestScoreByGroup.get(group.id));
-        const hasContextualKeepPreference = isKept &&
-          hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard &&
-          !isRecoveringModerate;
-        const utility =
-          (allowSavedSelectionException &&
-            currentExerciseIds.get(group.id) === exercise.id
-            ? preservedActiveSelectionWeight
-            : 0n) +
-          (hasHardOpportunity ? hardOpportunityWeight : 0n) +
-          (hasContextualKeepPreference ? keptExerciseWeight : 0n) +
-          BigInt(scoreRanks.get(this.getSelectionScore(exercise))) * scoreWeight +
-          (hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard
-            ? hardRecoveryAvoidanceWeight
-            : 0n) +
-          (!isRecoveringModerate ? moderateRecoveryAvoidanceWeight : 0n) +
-          (hardRotationStatus === HARD_ROTATION_STATUS.FreshHard
-            ? freshHardWeight
-            : 0n) +
-          BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
-          (currentExerciseIds.get(group.id) === exercise.id ? currentSelectionWeight : 0n) +
-          (isMirrorPreferred(selectionExercise, modifiers)
-            ? mirrorPreferenceWeight
-            : 0n) +
-          (isPrimaryForGroup(selectionExercise, group) ? primaryWeight : 0n) +
-          BigInt(getSequenceCanonicalCoverage(
-            exercise,
-            this.exercisesById,
-            group,
-          ));
-        utilities[groupIndex][exerciseIndex] = utility;
       }
     }
 
@@ -3906,12 +3917,21 @@ export class WorkoutSession {
         if (!placementAllowed) {
           continue;
         }
+        const preferenceSlot = [...placementGroups]
+          .sort((left, right) => left.order - right.order)[0];
+        const preferenceSlotIndex = groupIndexById.get(preferenceSlot.id);
+        const utilitiesByGroup = groups.map((evaluationGroup, groupIndex) =>
+          (coverageMask & (1n << BigInt(groupIndex))) !== 0n
+            ? groupIndex === preferenceSlotIndex
+              ? anchorUtilities[groupIndex][candidateIndex]
+              : baseUtilities[groupIndex][candidateIndex]
+            : 0n);
         atomicCandidates.push({
           exerciseId: candidate.id,
           movementId: getSessionMovementId(candidate),
           coverageMask,
           blockCount: candidate.sequenceBlocks.length,
-          utilitiesByGroup: utilities.map((row) => row[candidateIndex]),
+          utilitiesByGroup,
           tieOrder: candidateIndex,
         });
       }
@@ -3945,9 +3965,9 @@ export class WorkoutSession {
     }
 
     const highestScore = Math.max(...candidates.map((exercise) =>
-      this.getSelectionScore(exercise)));
+      this.getSelectionScore(exercise, group.id)));
     const highestScored = candidates.filter((exercise) =>
-      this.getSelectionScore(exercise) === highestScore);
+      this.getSelectionScore(exercise, group.id) === highestScore);
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     const rotationStatusByExercise = new Map(highestScored.map((exercise) => [
       exercise.id,
@@ -3977,8 +3997,8 @@ export class WorkoutSession {
         rotationStatusByExercise.get(exercise.id) === HARD_ROTATION_STATUS.RecoveringHard),
     ];
     const rotationPreferred = rotationTiers.find((tier) => tier.length > 0);
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    const kept = rotationPreferred.filter((exercise) => keptExerciseIds.has(exercise.id));
+    const kept = rotationPreferred.filter((exercise) =>
+      this.isSequenceKept(group.id, exercise));
     let keepPreferred = kept.length > 0 ? kept : rotationPreferred;
     if (rotationPreferred.every((exercise) =>
       rotationStatusByExercise.get(exercise.id) === HARD_ROTATION_STATUS.FreshHard)) {
@@ -4191,16 +4211,125 @@ export class WorkoutSession {
     }
   }
 
-  getSelectionScore(exercise) {
-    return Math.min(...this.getSequenceExercises(exercise).map((member) =>
+  getSelectionScore(exercise, selectionGroupId) {
+    const root = this.getSequenceRoot(exercise);
+    const legacyScore = Math.min(...this.getSequenceExercises(root).map((member) =>
       this.getScore(member)));
+    const adjustment = this.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      selectionGroupId
+    ]?.[String(root.id)];
+    return legacyScore + (Number.isInteger(adjustment) ? adjustment : 0);
   }
 
-  normalizeKeptExerciseIds() {
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds.filter((exerciseId) =>
-      this.exercisesById.has(exerciseId)));
-    this.removePartialSequenceIds(keptExerciseIds);
-    this.state.lastKeptExerciseIds = [...keptExerciseIds];
+  downvoteSequenceInSlot(selectionGroupId, exercise) {
+    const root = this.getSequenceRoot(exercise);
+    const adjustments = this.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      selectionGroupId
+    ] ?? {};
+    adjustments[String(root.id)] = (adjustments[String(root.id)] ?? 0) - 1;
+    this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] =
+      adjustments;
+    this.removeSequenceKeep(selectionGroupId, root);
+    this.syncLegacyKeptExerciseIds();
+  }
+
+  migrateSlotScopedPreferences() {
+    const sessions = [
+      ...this.state.workoutHistory,
+      ...(this.state.activeWorkoutSession ? [this.state.activeWorkoutSession] : []),
+    ].sort((left, right) =>
+      left.startedAtUnixMilliseconds - right.startedAtUnixMilliseconds ||
+      left.sessionId - right.sessionId);
+    for (const session of sessions) {
+      for (const selection of session.initialSelections.filter((item) =>
+        item.wasKeptAtWorkoutStart)) {
+        const root = this.exercisesById.get(selection.rootExerciseId);
+        if (root) {
+          this.keepSequenceInSlot(selection.selectionGroupId, root);
+        }
+      }
+      for (const change of [...session.selectionChanges].sort((left, right) =>
+        left.changedAtUnixMilliseconds - right.changedAtUnixMilliseconds)) {
+        const root = this.exercisesById.get(change.rejectedRootExerciseId);
+        if (root) {
+          this.removeSequenceKeep(change.selectionGroupId, root);
+        }
+      }
+      for (const decision of [...session.decisions].sort((left, right) =>
+        left.decidedAtUnixMilliseconds - right.decidedAtUnixMilliseconds)) {
+        const root = this.exercisesById.get(decision.rootExerciseId);
+        if (!root) {
+          continue;
+        }
+        if (decision.outcome === "tick") {
+          this.keepSequenceInSlot(decision.selectionGroupId, root);
+        } else if (decision.outcome === "x") {
+          this.removeSequenceKeep(decision.selectionGroupId, root);
+        }
+      }
+    }
+
+    const legacyKeeps = new Set(this.state.lastKeptExerciseIds);
+    const savedPlacements = new Map();
+    for (const [storageKey, exerciseId] of Object.entries(
+      this.state.selectedExerciseIds,
+    )) {
+      const { selectionGroupId, modifiers } = this.parseSelectionStorageKey(storageKey);
+      const selected = this.exercisesById.get(exerciseId);
+      const group = ALL_GROUPS.get(selectionGroupId);
+      if (!selected || !group) {
+        continue;
+      }
+      const root = this.getSequenceRoot(selected);
+      const resolution = selectionGroupId.split(".")[0];
+      const key = `${modifiers}|${resolution}|${root.id}`;
+      const placement = savedPlacements.get(key) ?? { root, groupIds: [] };
+      placement.groupIds.push(selectionGroupId);
+      savedPlacements.set(key, placement);
+    }
+    for (const { root, groupIds } of savedPlacements.values()) {
+      if (!this.getSequenceExercises(root).every((member) =>
+        legacyKeeps.has(member.id))) {
+        continue;
+      }
+      const anchorId = [...new Set(groupIds)].sort((left, right) =>
+        ALL_GROUPS.get(left).order - ALL_GROUPS.get(right).order)[0];
+      this.keepSequenceInSlot(anchorId, root);
+    }
+
+    // Historical global scores are retained as a read-only baseline: older
+    // state did not record enough information to invent exact original slots.
+    // Every vote after this migration is represented only by a slot delta.
+    this.state.exerciseScoreAdjustmentsBySelectionGroupId = {};
+    this.syncLegacyKeptExerciseIds();
+  }
+
+  normalizeSlotPreferences() {
+    for (const [selectionGroupId, rootIds] of Object.entries(
+      this.state.keptExerciseRootIdsBySelectionGroupId,
+    )) {
+      const normalized = uniquePositiveIntegers(rootIds).filter((rootId) =>
+        this.isValidPreferenceRoot(selectionGroupId, rootId));
+      if (normalized.length === 0) {
+        delete this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId];
+      } else {
+        this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] = normalized;
+      }
+    }
+    for (const [selectionGroupId, adjustments] of Object.entries(
+      this.state.exerciseScoreAdjustmentsBySelectionGroupId,
+    )) {
+      const normalized = Object.fromEntries(Object.entries(objectOrEmpty(adjustments))
+        .filter(([rootId, adjustment]) => /^\d+$/.test(rootId) &&
+          Number.isInteger(adjustment) && adjustment !== 0 &&
+          this.isValidPreferenceRoot(selectionGroupId, Number(rootId))));
+      if (Object.keys(normalized).length === 0) {
+        delete this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId];
+      } else {
+        this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] = normalized;
+      }
+    }
+    this.syncLegacyKeptExerciseIds();
     this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
       this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
     );
@@ -4213,6 +4342,90 @@ export class WorkoutSession {
     );
     this.expandSequenceIds(nextExcludedExerciseIds);
     this.state.nextWorkoutExcludedExerciseIds = [...nextExcludedExerciseIds];
+  }
+
+  isValidPreferenceRoot(selectionGroupId, rootId) {
+    const group = ALL_GROUPS.get(selectionGroupId);
+    const root = this.exercisesById.get(rootId);
+    if (!group || !root || this.getSequenceRoot(root).id !== rootId) {
+      return false;
+    }
+    return this.getSequencePlacementOptions(
+      root,
+      this.getResolutionGroupsForGroup(group),
+    ).some((option) => [...option].sort((left, right) => left.order - right.order)[0]
+      ?.id === selectionGroupId);
+  }
+
+  getKeptRootIdsForSlot(selectionGroupId) {
+    return new Set(this.state.keptExerciseRootIdsBySelectionGroupId[
+      selectionGroupId
+    ] ?? []);
+  }
+
+  isSequenceKept(selectionGroupId, exercise) {
+    return this.getKeptRootIdsForSlot(selectionGroupId)
+      .has(this.getSequenceRoot(exercise).id);
+  }
+
+  keepSequenceInSlot(selectionGroupId, exercise) {
+    const keptRootIds = this.getKeptRootIdsForSlot(selectionGroupId);
+    keptRootIds.add(this.getSequenceRoot(exercise).id);
+    this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] =
+      [...keptRootIds];
+  }
+
+  removeSequenceKeep(selectionGroupId, exercise) {
+    const keptRootIds = this.getKeptRootIdsForSlot(selectionGroupId);
+    keptRootIds.delete(this.getSequenceRoot(exercise).id);
+    if (keptRootIds.size === 0) {
+      delete this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId];
+    } else {
+      this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] =
+        [...keptRootIds];
+    }
+  }
+
+  syncLegacyKeptExerciseIds() {
+    const keptExerciseIds = new Set();
+    for (const rootId of new Set(Object.values(
+      this.state.keptExerciseRootIdsBySelectionGroupId,
+    ).flat())) {
+      const root = this.exercisesById.get(rootId);
+      if (root) {
+        for (const member of this.getSequenceExercises(root)) {
+          keptExerciseIds.add(member.id);
+        }
+      }
+    }
+    this.state.lastKeptExerciseIds = [...keptExerciseIds];
+  }
+
+  removeSavedSequenceCopiesForSlot(selectionGroupId, rootId) {
+    const matchingByProfileAndResolution = new Map();
+    for (const [storageKey, exerciseId] of Object.entries(
+      this.state.selectedExerciseIds,
+    )) {
+      const parsed = this.parseSelectionStorageKey(storageKey);
+      if (exerciseId !== rootId || !ALL_GROUPS.has(parsed.selectionGroupId)) {
+        continue;
+      }
+      const resolution = parsed.selectionGroupId.split(".")[0];
+      const key = `${parsed.modifiers}|${resolution}`;
+      const entries = matchingByProfileAndResolution.get(key) ?? [];
+      entries.push({ storageKey, selectionGroupId: parsed.selectionGroupId });
+      matchingByProfileAndResolution.set(key, entries);
+    }
+    for (const entries of matchingByProfileAndResolution.values()) {
+      const anchorId = [...new Set(entries.map((entry) => entry.selectionGroupId))]
+        .sort((left, right) => ALL_GROUPS.get(left).order - ALL_GROUPS.get(right).order)[0];
+      if (anchorId !== selectionGroupId) {
+        continue;
+      }
+      for (const { storageKey } of entries) {
+        delete this.state.selectedExerciseIds[storageKey];
+      }
+    }
   }
 
   removePartialSequenceIds(exerciseIds) {
@@ -4234,12 +4447,6 @@ export class WorkoutSession {
         exerciseIds.delete(exerciseId);
       }
     }
-  }
-
-  isSequenceKept(exercise) {
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
-    return this.getSequenceExercises(exercise).every((member) =>
-      keptExerciseIds.has(member.id));
   }
 
   expandSequenceIds(exerciseIds) {
@@ -4348,7 +4555,6 @@ export class WorkoutSession {
     lockedSelectionGroupIds = new Set(),
     selectedPlacements = null,
   ) {
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
     const rankedPlacements = [...(selectedPlacements ??
       this.getSelectedSequencePlacements())]
       .sort((left, right) => {
@@ -4358,8 +4564,8 @@ export class WorkoutSession {
           member.muscularDemand === HARD_MUSCULAR_DEMAND)) -
             Number(leftMembers.some((member) =>
               member.muscularDemand === HARD_MUSCULAR_DEMAND)) ||
-          Number(rightMembers.every((member) => keptExerciseIds.has(member.id))) -
-            Number(leftMembers.every((member) => keptExerciseIds.has(member.id))) ||
+          Number(this.isSequenceKept(right.anchor.id, right.root)) -
+            Number(this.isSequenceKept(left.anchor.id, left.root)) ||
           right.anchor.order - left.anchor.order;
       });
     const blockCostByGroup = new Map(rankedPlacements.map((placement) => [
@@ -4437,7 +4643,9 @@ export class WorkoutSession {
   }
   rebalanceNewExercisesByMuscleBudget() {
     const groups = this.getSelectionGroups();
-    const keptExerciseIds = new Set(this.state.lastKeptExerciseIds);
+    const keptExerciseIds = new Set(Object.values(
+      this.state.keptExerciseRootIdsBySelectionGroupId,
+    ).flat());
     if (groups.length === 0) {
       return;
     }
@@ -4462,7 +4670,7 @@ export class WorkoutSession {
         );
         const currentExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
         const currentExercise = this.exercisesById.get(currentExerciseId);
-        if (!currentExercise || this.isSequenceKept(currentExercise) ||
+        if (!currentExercise || this.isSequenceKept(group.id, currentExercise) ||
             groups.filter((candidateGroup) =>
               this.state.selectedExerciseIds[this.getSelectionStorageKey(
                 candidateGroup.id,
@@ -4502,7 +4710,7 @@ export class WorkoutSession {
         const alternatives = this.exercises
           .filter((exercise) =>
             exercise.id !== currentExerciseId &&
-            getAdjustedScoreHalfUnits(this.getSelectionScore(exercise), 0) >
+            getAdjustedScoreHalfUnits(this.getSelectionScore(exercise, group.id), 0) >
               current.adjustedScoreHalfUnits &&
             !unavailableExerciseIds.has(exercise.id) &&
             !unavailableMovementIds.has(getSessionMovementId(exercise)) &&
@@ -4578,7 +4786,7 @@ export class WorkoutSession {
         loadHalfUnits,
         candidateMuscleGroups,
       );
-      const realScore = this.getSelectionScore(candidate);
+      const realScore = this.getSelectionScore(candidate, group.id);
       const selectionExercise = this.getSequenceSelectionExerciseForGroup(
         candidate,
         group,
@@ -4604,7 +4812,7 @@ export class WorkoutSession {
         isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
         isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
         isRecoveringModerate,
-        isKept: this.isSequenceKept(candidate),
+        isKept: this.isSequenceKept(group.id, candidate),
         lastHardWorkUnixMilliseconds:
           rotationStatus === HARD_ROTATION_STATUS.FreshHard
             ? getLastHardWorkUnixMilliseconds(
@@ -4626,7 +4834,7 @@ export class WorkoutSession {
     } catch {
       return {
         exerciseId: candidate.id,
-        realScore: this.getSelectionScore(candidate),
+        realScore: this.getSelectionScore(candidate, group.id),
         adjustedScoreHalfUnits: Number.MIN_SAFE_INTEGER,
         isFreshHard: false,
         isRecoveringHard: false,
@@ -4648,7 +4856,7 @@ export class WorkoutSession {
         placement.root.sequenceBlocks.length,
         this.getSequenceExercises(placement.root).some((member) =>
           member.muscularDemand === HARD_MUSCULAR_DEMAND),
-        this.isSequenceKept(placement.root),
+        this.isSequenceKept(placement.anchor.id, placement.root),
       ].join(":"))
       .join("|");
     if (allocationCache.has(signature)) {
@@ -5187,7 +5395,20 @@ export class WorkoutSession {
       delete this.state.scores[String(exerciseId)];
     }
 
-    this.normalizeKeptExerciseIds();
+    const scoreResetPreferenceRoots = new Set(this.exercises
+      .filter((exercise) => this.getSequenceRoot(exercise).id === exercise.id)
+      .filter((root) => this.getSequenceExercises(root).some((member) =>
+        scoreResetExerciseIds.has(member.id)))
+      .map((root) => root.id));
+    for (const adjustments of Object.values(
+      this.state.exerciseScoreAdjustmentsBySelectionGroupId,
+    )) {
+      for (const rootId of scoreResetPreferenceRoots) {
+        delete adjustments[String(rootId)];
+      }
+    }
+
+    this.normalizeSlotPreferences();
 
     this.state.catalogIdentities = currentIdentities;
     this.state.catalogRevision = Math.max(
@@ -5229,7 +5450,6 @@ export class WorkoutSession {
     const normalizedKeptExerciseIdsAtStart = uniquePositiveIntegers(
       keptExerciseIdsAtStart,
     ).sort((left, right) => left - right);
-    const keptAtStart = new Set(normalizedKeptExerciseIdsAtStart);
     const setCounts = this.getEffectiveSetCounts();
     const session = {
       sessionId,
@@ -5240,6 +5460,14 @@ export class WorkoutSession {
       status: "InProgress",
       startedBeforeLogging: startedBeforeLogging === true,
       keptExerciseIdsAtStart: normalizedKeptExerciseIdsAtStart,
+      keptExerciseRootIdsBySelectionGroupIdAtStart: Object.fromEntries(
+        Object.entries(this.state.keptExerciseRootIdsBySelectionGroupId)
+          .filter(([, rootIds]) => rootIds.length > 0)
+          .map(([selectionGroupId, rootIds]) => [
+            selectionGroupId,
+            [...rootIds].sort((left, right) => left - right),
+          ]),
+      ),
       initialSelections: this.getSelectedSequencePlacements()
         .map((placement) => ({
           selectionGroupId: placement.anchor.id,
@@ -5248,11 +5476,16 @@ export class WorkoutSession {
             .map((group) => group.id),
           rootExerciseId: placement.root.id,
           rootExerciseName: placement.root.name,
-          selectionScoreAtStart: this.getSelectionScore(placement.root),
+          selectionScoreAtStart: this.getSelectionScore(
+            placement.root,
+            placement.anchor.id,
+          ),
           sequenceBlockCount: placement.root.sequenceBlocks.length,
           setCount: Math.max(1, setCounts.get(placement.anchor.id) ?? 1),
-          wasKeptAtWorkoutStart: this.getSequenceExercises(placement.root)
-            .every((member) => keptAtStart.has(member.id)),
+          wasKeptAtWorkoutStart: this.isSequenceKept(
+            placement.anchor.id,
+            placement.root,
+          ),
         }))
         .sort((left, right) => {
           const leftOrder = Math.min(...left.coveredWorkoutGroupIds.map((groupId) =>
@@ -5284,10 +5517,17 @@ export class WorkoutSession {
       rejectedRootExerciseName: rejectedRoot.name,
       rejectedSelectionScoreBeforeChange: rejectedSelectionScore,
       rejectedSelectionWasKeptAtWorkoutStart:
-        this.wasSequenceKeptAtWorkoutStart(session, rejectedRoot),
+        this.wasSequenceKeptAtWorkoutStart(
+          session,
+          selectionGroupId,
+          rejectedRoot,
+        ),
       replacementRootExerciseId: replacementRoot.id,
       replacementRootExerciseName: replacementRoot.name,
-      replacementSelectionScore: this.getSelectionScore(replacementRoot),
+      replacementSelectionScore: this.getSelectionScore(
+        replacementRoot,
+        selectionGroupId,
+      ),
     });
   }
 
@@ -5320,7 +5560,11 @@ export class WorkoutSession {
       primaryCanonicalGroup: exercise.primaryCanonicalGroup,
       secondaryCanonicalGroups: [...exercise.secondaryCanonicalGroups],
       wasSequenceKeptAtWorkoutStart:
-        this.wasSequenceKeptAtWorkoutStart(session, root),
+        this.wasSequenceKeptAtWorkoutStart(
+          session,
+          getSelectionKey(group),
+          root,
+        ),
     });
   }
 
@@ -5356,14 +5600,24 @@ export class WorkoutSession {
         block.selectionGroupId === selectionGroupId).length,
       plannedBlockCount:
         (group.sequenceBlockCount ?? 1) * (group.setCount ?? 1),
-      wasKeptAtWorkoutStart: this.wasSequenceKeptAtWorkoutStart(session, root),
+      wasKeptAtWorkoutStart: this.wasSequenceKeptAtWorkoutStart(
+        session,
+        selectionGroupId,
+        root,
+      ),
     });
   }
 
-  wasSequenceKeptAtWorkoutStart(session, root) {
-    const keptExerciseIds = new Set(session.keptExerciseIdsAtStart);
-    return this.getSequenceExercises(root).every((member) =>
-      keptExerciseIds.has(member.id));
+  wasSequenceKeptAtWorkoutStart(session, selectionGroupId, root) {
+    if ((session.keptExerciseRootIdsBySelectionGroupIdAtStart[
+      selectionGroupId
+    ] ?? []).includes(root.id)) {
+      return true;
+    }
+    return session.initialSelections.some((selection) =>
+      selection.selectionGroupId === selectionGroupId &&
+      selection.rootExerciseId === root.id &&
+      selection.wasKeptAtWorkoutStart);
   }
 
   finalizeActiveWorkoutSession(status, endedAtUnixMilliseconds = null) {

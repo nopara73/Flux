@@ -750,7 +750,7 @@ test("pre-hard-floor state keeps silence relaxed while adding the hard-floor def
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 18);
+  assert.equal(state.version, 19);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.HardFloor);
 });
 
@@ -767,7 +767,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 18);
+  assert.equal(state.version, 19);
   assert.equal(
     state.lastWorkoutModifiers,
     WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor,
@@ -1165,13 +1165,13 @@ test("modifier profiles share keeps without forgetting excluded exercises", () =
   );
 });
 
-test("neutral modifier profile does not reselect a rejected exercise", () => {
+test("a slot downvote reselects an alternative without global exclusion", () => {
   const exercises = RESOLUTIONS.get(3).groups.flatMap((group, index) => [
-    exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 10,
+    exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible),
-    exercise(2 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 7,
+    exercise(2 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible),
-    exercise(3 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 5,
+    exercise(3 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible),
   ]);
   const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
@@ -1189,13 +1189,17 @@ test("neutral modifier profile does not reselect a rejected exercise", () => {
     Object.values(session.state.selectedExerciseIds).includes(rejectedId),
     false,
   );
-  assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, [rejectedId]);
+  assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, []);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[0].id][rejectedId],
+    -1,
+  );
   session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
   assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, []);
   assert.notEqual(session.getSelectedExercise(session.getActiveGroups()[0]).id, rejectedId);
 });
 
-test("insect profile carries keeps into a long workout", () => {
+test("short-workout keeps do not become long-workout slot preferences", () => {
   const session = new WorkoutSession(
     reviewedInsectCatalog(),
     createDefaultState(),
@@ -1211,11 +1215,87 @@ test("insect profile carries keeps into a long workout", () => {
 
   session.startWorkout(45, WORKOUT_MODIFIERS.Insect);
 
-  const keptGroups = session.getSelectionGroups().filter((group) =>
-    keptExerciseIds.includes(session.getSelectedExercise(group).id));
-  assert.equal(keptGroups.length, keptExerciseIds.length);
-  assert.ok(keptGroups.every((group) =>
-    session.state.selectedExerciseIds[`p1|${group.id}`] !== undefined));
+  assert.deepEqual(
+    [...session.state.lastKeptExerciseIds].sort((left, right) => left - right),
+    [...keptExerciseIds].sort((left, right) => left - right),
+  );
+  assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
+    .every((selectionGroupId) => selectionGroupId.startsWith("r3.")));
+  assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
+    .every((selectionGroupId) => !selectionGroupId.startsWith("r30.")));
+  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 15);
+});
+
+test("the same exercise can be kept in one slot and downvoted in another", () => {
+  const shortGroups = RESOLUTIONS.get(3).groups;
+  const longGroups = RESOLUTIONS.get(5).groups;
+  const primary = shortGroups[0].canonicalGroups[0];
+  const shortSlot = shortGroups.find((group) =>
+    group.canonicalGroups.includes(primary));
+  const longSlot = longGroups.find((group) =>
+    group.canonicalGroups.includes(primary));
+  const allCanonicalGroups = RESOLUTIONS.get(30).groups
+    .flatMap((group) => group.canonicalGroups);
+  const shared = exercise(
+    1,
+    primary,
+    allCanonicalGroups.filter((group) => group !== primary),
+    10,
+  );
+  const longAlternatives = longGroups.map((group, index) => exercise(
+    100 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const shortAlternatives = shortGroups.map((group, index) => exercise(
+    200 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const state = createDefaultState();
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [shortSlot.id]: [shared.id],
+  };
+  const session = new WorkoutSession(
+    [shared, ...longAlternatives, ...shortAlternatives],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(5, WORKOUT_MODIFIERS.None);
+  const longRound = session.getActiveGroups().find((round) =>
+    getSelectionKey(round) === longSlot.id);
+  assert.equal(session.getSelectedExercise(longRound).id, shared.id);
+
+  session.recordOutcome(longRound, false);
+
+  assert.equal(
+    session.state.keptExerciseRootIdsBySelectionGroupId[shortSlot.id]
+      .includes(shared.id),
+    true,
+  );
+  assert.equal(
+    session.state.keptExerciseRootIdsBySelectionGroupId[longSlot.id]
+      ?.includes(shared.id) ?? false,
+    false,
+  );
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[longSlot.id][shared.id],
+    -1,
+  );
+  assert.equal(session.state.lastKeptExerciseIds.includes(shared.id), true);
+  assert.equal(session.getScore(shared), 10);
+
+  session.finishInterruptedWorkout();
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[shortSlot.id], shared.id);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[longSlot.id][shared.id],
+    -1,
+  );
 });
 
 test("reviewed production catalog satisfies every muscle and modifier combination", () => {
@@ -1874,7 +1954,7 @@ test("global lineup and repair allow only one alias of a session movement", () =
   assert.equal(new Set(selected.map(getSessionMovementId)).size, selected.length);
 });
 
-test("carrying keeps maximizes kept count across the whole lineup", () => {
+test("a keep preference does not move to another compatible slot", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const allCanonicalGroups = RESOLUTIONS.get(30).groups
     .flatMap((group) => group.canonicalGroups);
@@ -1884,36 +1964,45 @@ test("carrying keeps maximizes kept count across the whole lineup", () => {
     allCanonicalGroups.slice(1),
     100,
   );
-  const firstOnlyKept = exercise(
+  const firstAlternative = exercise(
     2,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
-    0,
+    100,
   );
-  const lastOnly = exercise(
+  const middle = exercise(
     3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    100,
+  );
+  const last = exercise(
+    4,
     groups[2].canonicalGroups[0],
     groups[2].canonicalGroups.slice(1),
-    0,
+    100,
   );
   const state = createDefaultState();
   state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [sharedKept.id, firstOnlyKept.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [sharedKept.id],
+  };
   state.selectedExerciseIds = { [groups[0].id]: sharedKept.id };
   const session = new WorkoutSession(
-    [sharedKept, firstOnlyKept, lastOnly],
+    [sharedKept, firstAlternative, middle, last],
     state,
     () => 0,
   );
 
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
 
-  const selectedIds = groups.map((group) =>
-    session.state.selectedExerciseIds[group.id]);
-  assert.ok(selectedIds.includes(sharedKept.id));
-  assert.ok(selectedIds.includes(firstOnlyKept.id));
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], firstOnlyKept.id);
-  assert.equal(session.state.selectedExerciseIds[groups[1].id], sharedKept.id);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], sharedKept.id);
+  assert.equal(session.state.selectedExerciseIds[groups[1].id], middle.id);
+  assert.equal(
+    session.state.keptExerciseRootIdsBySelectionGroupId[groups[1].id]
+      ?.includes(sharedKept.id) ?? false,
+    false,
+  );
 });
 
 test("fresh hard work outranks a non-hard keep and soft mirror preference", () => {
@@ -1952,7 +2041,9 @@ test("fresh hard work outranks a non-hard keep and soft mirror preference", () =
   );
   const state = createDefaultState();
   state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [nonHardKeep.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [nonHardKeep.id],
+  };
   state.selectedExerciseIds = { [groups[0].id]: nonHardKeep.id };
   const session = new WorkoutSession(
     [hard, nonHardKeep, middle, last],
@@ -1990,7 +2081,9 @@ test("a same-muscle sequence is ranked by its hardest primary block", () => {
   ));
   const state = createDefaultState();
   state.lastWorkoutMinutes = 45;
-  state.lastKeptExerciseIds = [nonHardKeep.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [nonHardKeep.id],
+  };
   state.selectedExerciseIds[groups[0].id] = nonHardKeep.id;
   const session = new WorkoutSession(
     [root, hardMember, nonHardKeep, ...fillers],
@@ -2038,7 +2131,9 @@ test("fresh hard keep gets an opportunity despite a lower saved score", () => {
     0,
   );
   const state = createDefaultState();
-  state.lastKeptExerciseIds = [hardKeep.id, nonHardKeep.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [hardKeep.id, nonHardKeep.id],
+  };
   const session = new WorkoutSession(
     [hardKeep, nonHardKeep, middle, last],
     state,
@@ -2086,7 +2181,9 @@ test("recovering hard keep yields to a non-hard keep without being forgotten", (
   );
   const state = createDefaultState();
   state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [hardKeep.id, nonHardKeep.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [hardKeep.id, nonHardKeep.id],
+  };
   state.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
     [hardKeep.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
   };
@@ -2140,7 +2237,9 @@ test("recovering moderate keep yields to easy work without being forgotten", () 
   );
   const state = createDefaultState();
   state.lastWorkoutMinutes = 3;
-  state.lastKeptExerciseIds = [moderateKeep.id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [moderateKeep.id],
+  };
   state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = {
     [moderateKeep.primaryCanonicalGroup]: now - 4 * 60 * 60 * 1000,
   };
@@ -2871,8 +2970,16 @@ test("cross-primary shuffle replaces every covered slot atomically", () => {
   assert.equal(result.replacementExercise.id, replacementFirst.id);
   assert.equal(session.state.selectedExerciseIds[groups[0].id], replacementFirst.id);
   assert.equal(session.state.selectedExerciseIds[groups[1].id], replacementFirst.id);
-  assert.equal(session.getScore(first), 99);
-  assert.equal(session.getScore(second), 99);
+  assert.equal(session.getScore(first), 100);
+  assert.equal(session.getScore(second), 100);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[0].id][first.id],
+    -1,
+  );
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[1].id],
+    undefined,
+  );
   assert.deepEqual(
     session.getActiveGroups().map((round) => session.getSelectedExercise(round).id),
     [replacementFirst.id, replacementSecond.id, third.id],
@@ -2993,7 +3100,10 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
     session.getSelectedExercise(group).id,
   ]));
   const originalScores = new Map(exercises.map((item) => [item.id, item.score]));
-  session.state.lastKeptExerciseIds = [originalId];
+  session.state.keptExerciseRootIdsBySelectionGroupId = {
+    [getSelectionKey(current)]: [originalId],
+  };
+  session.syncLegacyKeptExerciseIds();
   session.state.selectedExerciseIds[
     `p${WORKOUT_MODIFIERS.Insect}|${getSelectionKey(current)}`
   ] = originalId;
@@ -3010,7 +3120,13 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
   );
   assert.deepEqual(session.state.outcomes, {});
   assert.deepEqual(result.scoreUpdates.map((item) => item.id), [originalId]);
-  assert.equal(session.state.scores[originalId], originalScores.get(originalId) - 1);
+  assert.equal(session.getScore(result.rejectedExercise), originalScores.get(originalId));
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(current)
+    ][originalId],
+    -1,
+  );
   assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(originalId));
   assert.equal(session.state.lastKeptExerciseIds.includes(originalId), false);
   assert.equal(
@@ -3142,8 +3258,14 @@ test("sequence shuffle rejects every member once and never starts mid-sequence",
   const result = session.shuffleNextExercise(lead);
   assert.ok(result);
   assert.deepEqual(result.scoreUpdates.map((item) => item.id).sort(), [1, 2]);
-  assert.equal(session.state.scores["1"], 99);
-  assert.equal(session.state.scores["2"], 99);
+  assert.equal(session.getScore(exercises[0]), 100);
+  assert.equal(session.getScore(exercises[1]), 100);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(lead)
+    ]["1"],
+    -1,
+  );
   assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(1));
   assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(2));
 
@@ -3239,8 +3361,14 @@ test("rejecting any current block rejects the whole sequence with one member vot
 
   const sequenceRounds = session.getActiveGroups().filter((round) =>
     getSelectionKey(round) === getSelectionKey(firstRound));
-  assert.equal(session.state.scores["1"], 99);
-  assert.equal(session.state.scores["2"], 99);
+  assert.equal(session.getScore(exercises[0]), 100);
+  assert.equal(session.getScore(exercises[1]), 100);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(firstRound)
+    ]["1"],
+    -1,
+  );
   assert.ok(sequenceRounds.slice(0, -1).every((round) =>
     session.state.outcomes[round.id] === "neutral"));
   assert.equal(session.state.outcomes[sequenceRounds.at(-1).id], "x");
@@ -3304,7 +3432,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 18);
+  assert.equal(restored.state.version, 19);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -3421,13 +3549,13 @@ test("every catalog exercise has exactly one atomic sequence owner", () => {
     .sequenceBlocks.length, 3);
 });
 
-test("kept exercises fill compatible slots after workout duration changes", () => {
+test("keeps remain bound to their original duration slots", () => {
   const allCanonicalGroups = RESOLUTIONS.get(30).groups
     .flatMap((group) => group.canonicalGroups);
 
-  for (const [previousMinutes, nextMinutes, expectedCarriedCount] of [
-    [3, 5, 3],
-    [5, 3, 3],
+  for (const [previousMinutes, nextMinutes] of [
+    [3, 5],
+    [5, 3],
   ]) {
     const previousGroups = RESOLUTIONS.get(previousMinutes).groups;
     const nextGroups = RESOLUTIONS.get(nextMinutes).groups;
@@ -3453,7 +3581,6 @@ test("kept exercises fill compatible slots after workout duration changes", () =
     for (const [index, group] of previousGroups.entries()) {
       state.selectedExerciseIds[group.id] = keptExercises[index].id;
     }
-    state.lastKeptExerciseIds = keptExercises.map((item) => item.id);
     const session = new WorkoutSession(
       [...keptExercises, ...nextDurationAlternatives],
       state,
@@ -3478,8 +3605,16 @@ test("kept exercises fill compatible slots after workout duration changes", () =
     assert.equal(session.state.lastKeptExerciseIds.length, previousMinutes);
     assert.equal(
       selectedExerciseIds.filter((exerciseId) => keptExerciseIds.has(exerciseId)).length,
-      expectedCarriedCount,
+      0,
     );
+    assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
+      .every((selectionGroupId) => selectionGroupId.startsWith(
+        `r${previousMinutes}.`,
+      )));
+    assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
+      .every((selectionGroupId) => !selectionGroupId.startsWith(
+        `r${nextMinutes}.`,
+      )));
     assert.equal(new Set(selectedExerciseIds).size, nextMinutes);
   }
 });
@@ -3487,8 +3622,12 @@ test("kept exercises fill compatible slots after workout duration changes", () =
 test("an interrupted workout preserves unreviewed keeps until explicit rejection", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
-  const kept = session.getSelectedExercise(session.getActiveGroups().at(-1));
-  session.state.lastKeptExerciseIds = [kept.id];
+  const keptRound = session.getActiveGroups().at(-1);
+  const kept = session.getSelectedExercise(keptRound);
+  session.state.keptExerciseRootIdsBySelectionGroupId = {
+    [getSelectionKey(keptRound)]: [session.getSequenceRoot(kept).id],
+  };
+  session.syncLegacyKeptExerciseIds();
 
   session.finishInterruptedWorkout();
 
@@ -3503,7 +3642,7 @@ test("an interrupted workout preserves unreviewed keeps until explicit rejection
   assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), false);
 });
 
-test("rejection decrements once, purges saved copies, and replaces only rejected slots", () => {
+test("rejection downvotes and purges only its exact slot", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const groups = session.getActiveGroups();
@@ -3516,15 +3655,26 @@ test("rejection decrements once, purges saved copies, and replaces only rejected
     group.canonicalGroups.includes(rejected.primaryCanonicalGroup),
   );
   session.state.selectedExerciseIds[canonicalGroup.id] = rejected.id;
+  const rejectedSlotId = getSelectionKey(rejectedGroup);
+  const insectRejectedSlotKey =
+    `p${WORKOUT_MODIFIERS.Insect}|${rejectedSlotId}`;
+  session.state.selectedExerciseIds[insectRejectedSlotKey] = rejected.id;
 
   session.recordOutcome(rejectedGroup, false);
   for (const group of groups.slice(1)) {
     session.recordOutcome(group, true);
   }
-  assert.equal(session.getScore(rejected), -1);
+  assert.equal(session.getScore(rejected), 0);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      rejectedSlotId
+    ][rejected.id],
+    -1,
+  );
   session.acknowledgeCompletion();
 
-  assert.equal(Object.values(session.state.selectedExerciseIds).includes(rejected.id), false);
+  assert.equal(session.state.selectedExerciseIds[insectRejectedSlotKey], undefined);
+  assert.equal(session.state.selectedExerciseIds[canonicalGroup.id], rejected.id);
   for (const [groupId, exerciseId] of keptIds) {
     assert.equal(session.state.selectedExerciseIds[groupId], exerciseId);
   }
@@ -3552,7 +3702,13 @@ test("interrupted movement is neutral while an explicitly abandoned rest settles
   assert.equal(restored.getPendingRestGroup()?.id, rejectedGroup.id);
   assert.equal(restored.getScore(rejectedExercise), 0);
   restored.finishInterruptedWorkout();
-  assert.equal(restored.getScore(rejectedExercise), -1);
+  assert.equal(restored.getScore(rejectedExercise), 0);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(rejectedGroup)
+    ][rejectedExercise.id],
+    -1,
+  );
   assert.equal(restored.state.activeWorkoutMinutes, 0);
 
   const restoredAgain = new WorkoutSession(
@@ -3561,7 +3717,13 @@ test("interrupted movement is neutral while an explicitly abandoned rest settles
     () => 0,
   );
   restoredAgain.initialize();
-  assert.equal(restoredAgain.getScore(rejectedExercise), -1);
+  assert.equal(restoredAgain.getScore(rejectedExercise), 0);
+  assert.equal(
+    restoredAgain.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(rejectedGroup)
+    ][rejectedExercise.id],
+    -1,
+  );
 });
 
 test("pending rest survives schedule order and coverage changes for the performed exercise", () => {
@@ -3593,7 +3755,13 @@ test("pending rest survives schedule order and coverage changes for the performe
   assert.equal(restored.getPendingRestGroup()?.id, pendingGroup.id);
   assert.equal(restored.getScore(performed), 0);
   restored.finishInterruptedWorkout();
-  assert.equal(restored.getScore(performed), -1);
+  assert.equal(restored.getScore(performed), 0);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
+      getSelectionKey(pendingGroup)
+    ][performed.id],
+    -1,
+  );
   assert.equal(restored.state.activeWorkoutMinutes, 0);
 });
 
@@ -3603,9 +3771,16 @@ test("catalog identity replacement clears inherited score and workout references
   started.startWorkout(3, WORKOUT_MODIFIERS.None);
   const group = started.getNextGroup();
   const retired = started.getSelectedExercise(group);
+  const retiredRoot = started.getSequenceRoot(retired);
+  const keptExerciseIds = started.getSequenceExercises(retiredRoot)
+    .map((exercise) => exercise.id)
+    .sort((left, right) => left - right);
   started.setScore(retired, -4);
   started.beginRest(group, Date.now() + 15_000);
-  started.state.lastKeptExerciseIds = [retired.id];
+  started.state.keptExerciseRootIdsBySelectionGroupId = {
+    [getSelectionKey(group)]: [retiredRoot.id],
+  };
+  started.syncLegacyKeptExerciseIds();
 
   const changedCatalog = catalog.map((item) =>
     item.id === retired.id
@@ -3623,7 +3798,10 @@ test("catalog identity replacement clears inherited score and workout references
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.activeWorkoutMinutes, 3);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
-  assert.deepEqual(restored.state.lastKeptExerciseIds, [retired.id]);
+  assert.deepEqual(
+    [...restored.state.lastKeptExerciseIds].sort((left, right) => left - right),
+    keptExerciseIds,
+  );
   assert.equal(restored.getScore(changedCatalog.find((item) => item.id === retired.id)), 0);
 });
 
@@ -4077,10 +4255,10 @@ test("reactivated replacement revision drops only changed progress and scores", 
   state.pendingRestGroupId = changedGroup.id;
   state.pendingRestEndsAtUnixMilliseconds = Date.now() + 15_000;
   state.pendingRestKept = true;
-  state.lastKeptExerciseIds = [
-    changedExercise.id,
-    ...retainedSequenceExerciseIds,
-  ];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [changedSelectionKey]: [changedExercise.id],
+    [retainedSelectionKey]: [retainedExercise.id],
+  };
   for (const exerciseId of changedIds) {
     state.scores[String(exerciseId)] = -4;
   }
@@ -4104,8 +4282,8 @@ test("reactivated replacement revision drops only changed progress and scores", 
   }
   assert.equal(restored.state.scores[String(retainedExercise.id)], -7);
   assert.deepEqual(
-    restored.state.lastKeptExerciseIds,
-    [changedExercise.id, ...retainedSequenceExerciseIds],
+    new Set(restored.state.lastKeptExerciseIds),
+    new Set([changedExercise.id, ...retainedSequenceExerciseIds]),
   );
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
@@ -4692,27 +4870,34 @@ test("hard-floor coverage revision resets only changed exercise progress and sco
   );
 
   const state = createDefaultState();
-  const [changedGroup, retainedGroup] = RESOLUTIONS.get(3).groups;
+  const changedGroup = RESOLUTIONS.get(3).groups.find((group) =>
+    isSelectable(catalog.find((exercise) => exercise.id === 550), group));
+  const retainedGroup = RESOLUTIONS.get(3).groups.find((group) =>
+    group.id !== changedGroup.id &&
+    isSelectable(catalog.find((exercise) => exercise.id === 220), group));
   state.catalogRevision = 50;
   state.selectedExerciseIds[changedGroup.id] = 550;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 220;
   state.outcomes[changedGroup.id] = "x";
   state.outcomes[retainedGroup.id] = "tick";
   state.pendingRestGroupId = changedGroup.id;
   state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
   state.pendingRestKept = true;
-  state.lastKeptExerciseIds = [550, 15];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [changedGroup.id]: [550],
+    [retainedGroup.id]: [220],
+  };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
   restored.reconcileCatalog();
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 220);
   assert.equal(restored.state.outcomes[retainedGroup.id], "tick");
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.lastKeptExerciseIds.includes(550), true);
-  assert.equal(restored.state.lastKeptExerciseIds.includes(15), true);
+  assert.equal(restored.state.lastKeptExerciseIds.includes(220), true);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -4760,6 +4945,7 @@ test("deployment migration preserves present keeps and drops missing exercises",
     isSelectable(present, candidate),
   );
   const state = createDefaultState();
+  state.version = 18;
   state.catalogRevision = 12;
   state.selectedExerciseIds[group.id] = present.id;
   state.lastKeptExerciseIds = [
@@ -4797,7 +4983,11 @@ test("a legacy partial sequence keep is removed instead of promoted", () => {
   const memberIds = [...new Set(root.sequenceBlocks.map((block) => block.exerciseId))];
   assert.ok(memberIds.length > 1);
   const partialState = createDefaultState();
+  partialState.version = 18;
   partialState.lastKeptExerciseIds = [memberIds[0]];
+  const group = RESOLUTIONS.get(30).groups.find((candidate) =>
+    isSelectable(root, candidate));
+  partialState.selectedExerciseIds[group.id] = root.id;
   const partial = new WorkoutSession(catalog, partialState, () => 0);
 
   partial.initialize();
@@ -4805,7 +4995,9 @@ test("a legacy partial sequence keep is removed instead of promoted", () => {
   assert.deepEqual(partial.state.lastKeptExerciseIds, []);
 
   const completeState = createDefaultState();
+  completeState.version = 18;
   completeState.lastKeptExerciseIds = memberIds;
+  completeState.selectedExerciseIds[group.id] = root.id;
   const complete = new WorkoutSession(catalog, completeState, () => 0);
 
   complete.initialize();
@@ -4912,7 +5104,9 @@ test("completed workout history preserves exact blocks decisions and prior keeps
     [HARD_MUSCULAR_DEMAND, MINIMUM_MUSCULAR_DEMAND, MODERATE_MUSCULAR_DEMAND][index],
   ));
   const state = createDefaultState();
-  state.lastKeptExerciseIds = [exercises[0].id];
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [exercises[0].id],
+  };
   const session = new WorkoutSession(
     exercises,
     state,
@@ -4925,6 +5119,11 @@ test("completed workout history preserves exact blocks decisions and prior keeps
   assert.deepEqual(
     session.state.activeWorkoutSession.keptExerciseIdsAtStart,
     [exercises[0].id],
+  );
+  assert.deepEqual(
+    session.state.activeWorkoutSession
+      .keptExerciseRootIdsBySelectionGroupIdAtStart,
+    { [groups[0].id]: [exercises[0].id] },
   );
   assert.equal(session.state.activeWorkoutSession.initialSelections.length, 3);
 
@@ -4970,6 +5169,10 @@ test("completed workout history preserves exact blocks decisions and prior keeps
   assert.deepEqual(
     persisted.workoutHistory[0].keptExerciseIdsAtStart,
     [exercises[0].id],
+  );
+  assert.deepEqual(
+    persisted.workoutHistory[0].keptExerciseRootIdsBySelectionGroupIdAtStart,
+    { [groups[0].id]: [exercises[0].id] },
   );
 });
 

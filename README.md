@@ -84,24 +84,29 @@ choice from consuming the only exercise capable of filling a later group.
 
 Tap the large **heart** during the final rest for an exercise sequence to retain
 the whole sequence. Let that decision rest expire, or press **Next** during any
-block, to reject it. Rejection decreases each distinct exercise identity in the
-sequence once and removes saved copies of the sequence; keeping creates one
-durable sequence preference. Intermediate block rests do not score or offer the
-heart.
+block, to reject it. Keeping stores the sequence root against that exact stable
+workout slot. Rejection applies one `-1` adjustment to the sequence root in that
+same slot and removes saved copies only for that logical slot; it does not alter
+the sequence members' catalog scores or penalize the movement elsewhere.
+Intermediate block rests do not score or offer the heart.
 
-When duration or modifiers change, Flux remaps the whole lineup and maximizes
-the useful saved preferences that can occupy legitimate slots. A kept exercise
-is preserved across Android and web deployments as long as that exercise still
-exists in the catalog. Explicit rejection or semantic removal from the catalog
-is what releases it, but a keep is a contextual preference rather than a lock.
-It never changes the exercise's saved user score.
+Modifier profiles share a logical slot, so a Keep made with Insect off remains
+the Keep for that same slot with Insect on whenever the exercise is eligible.
+Different duration resolutions have different slots: Flux does not move a Keep
+or downvote from a 3-minute bucket into a 5-minute or 30-minute bucket. A
+multi-block sequence stores one preference at its anchor slot; the other groups
+it covers cannot borrow that preference. Keeps survive Android and web
+deployments while their exercise and exact slot remain valid, but remain soft
+preferences rather than locks.
 
-At the start of every session, the global assignment carries keeps
-contextually. A fresh hard keep, or a fresh suitable hard exercise already in
-the highest available score bucket for that slot, gets an opportunity ahead of
-a non-hard keep. During recovery, an affected demand-`1` or demand-`2` keep
-loses only its current lineup preference and remains saved; ordinary score
-ordering continues to prevent a rejected lower-score exercise from returning.
+At the start of every session, the global assignment evaluates each slot's own
+keeps and score adjustments. A fresh hard keep, or a fresh suitable hard
+exercise already in the highest available score bucket for that slot, gets an
+opportunity ahead of a non-hard keep. During recovery, an affected demand-`1`
+or demand-`2` keep loses only its current lineup preference and remains saved;
+ordinary score ordering continues to prevent a rejected lower-score exercise
+from returning in that slot. Historical global scores remain a read-only
+migration baseline because old releases did not record truthful slot provenance.
 A separate soft per-muscle workload budget may rebalance unkept selections.
 Demand-`0` exercises consume no muscular budget. Demand-`1` exercises add 0.5
 unit to their primary muscle and nothing to secondary associations. Demand-`2`
@@ -216,7 +221,7 @@ sessions, and share one Keep/reject decision after the final block.
 
 Long-workout extra sets are allocated in set-count rounds. Within the same
 round, one-block sequences are preferred before multi-block sequences; hard
-work, Keep status, and workout order then break ties. This gives standalone
+work, exact-slot Keep status, and workout order then break ties. This gives standalone
 movements their second-set opportunity first without allowing third sets to
 starve a multi-block sequence that still has only one set. Exact remaining
 duration remains mandatory.
@@ -285,8 +290,8 @@ timer and never appear as timeline segments or gaps. The main header counter
 counts each selected sequence once, so it remains
 unchanged across that sequence's sides, directions, linked exercises, and
 repeated sets. The workout controls follow a media-player model: shuffle
-rejects an unstarted sequence with the same -1 vote as Next and replaces it in
-place, play starts, pause/resume controls the active movement or rest timer,
+rejects an unstarted sequence with the same exact-slot `-1` vote as Next and
+replaces it in place, play starts, pause/resume controls the active movement or rest timer,
 repeat restarts the current block without scoring it, and next rejects the
 sequence and advances.
 Shuffle preserves the session profile and replaces the complete sequence. It is

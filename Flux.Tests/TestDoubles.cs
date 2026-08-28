@@ -65,6 +65,18 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 state.Outcomes,
                 StringComparer.Ordinal),
             LastKeptExerciseIds = new HashSet<int>(state.LastKeptExerciseIds),
+            KeptExerciseRootIdsBySelectionGroupId = state
+                .KeptExerciseRootIdsBySelectionGroupId
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => new HashSet<int>(entry.Value),
+                    StringComparer.Ordinal),
+            ExerciseScoreAdjustmentsBySelectionGroupId = state
+                .ExerciseScoreAdjustmentsBySelectionGroupId
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => new Dictionary<int, int>(entry.Value),
+                    StringComparer.Ordinal),
             LastHardWorkUnixMillisecondsByPrimaryMuscle =
                 new Dictionary<string, long>(
                     state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -138,6 +150,12 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             Status = session.Status,
             StartedBeforeLogging = session.StartedBeforeLogging,
             KeptExerciseIdsAtStart = [.. session.KeptExerciseIdsAtStart],
+            KeptExerciseRootIdsBySelectionGroupIdAtStart = session
+                .KeptExerciseRootIdsBySelectionGroupIdAtStart
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => entry.Value.ToArray(),
+                    StringComparer.Ordinal),
             InitialSelections = session.InitialSelections
                 .Select(selection => new WorkoutSelectionSnapshot
                 {

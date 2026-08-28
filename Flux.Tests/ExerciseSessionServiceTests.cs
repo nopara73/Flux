@@ -346,7 +346,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
     }
 
@@ -372,7 +372,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.HardFloor,
             state.LastWorkoutModifiers);
@@ -419,10 +419,14 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void NeutralModifierProfileDoesNotReselectRejectedExercise()
+    public void SlotDownvoteReselectsAlternativeWithoutGlobalExclusion()
     {
         Exercise[] exercises = ThreeGroupCatalog(
             ExerciseInsectCompatibility.Compatible);
+        foreach (Exercise exercise in exercises)
+        {
+            exercise.Score = 0;
+        }
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
         service.StartWorkout(state, 3, WorkoutModifiers.Insect);
@@ -437,7 +441,11 @@ public sealed class ExerciseSessionServiceTests
         service.AcknowledgeCompletion(state);
 
         Assert.DoesNotContain(rejectedExerciseId, state.SelectedExerciseIds.Values);
-        Assert.Contains(rejectedExerciseId, state.NextWorkoutExcludedExerciseIds);
+        Assert.Empty(state.NextWorkoutExcludedExerciseIds);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[groups[0].Id][
+                rejectedExerciseId]);
         service.StartWorkout(state, 3, WorkoutModifiers.Insect);
 
         Assert.Empty(state.NextWorkoutExcludedExerciseIds);
@@ -447,7 +455,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void InsectProfileCarriesKeepsIntoLongWorkoutBeforeAllocatingExtraSets()
+    public void ShortWorkoutKeepsDoNotBecomeLongWorkoutSlotPreferences()
     {
         var service = new ExerciseSessionService(
             ReviewedInsectCatalog(),
@@ -465,20 +473,86 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 45, WorkoutModifiers.Insect);
 
-        WorkoutGroup[] keptGroups = service.GetActiveGroups(state)
-            .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
-            .Select(rounds => rounds.First())
-            .Where(group => keptExerciseIds.Contains(
-                service.GetSelectedExercise(state, group).Id))
+        Assert.Equal(keptExerciseIds.Order(), state.LastKeptExerciseIds.Order());
+        Assert.All(
+            state.KeptExerciseRootIdsBySelectionGroupId.Keys,
+            selectionGroupId => Assert.StartsWith(
+                "r3.",
+                selectionGroupId,
+                StringComparison.Ordinal));
+        Assert.DoesNotContain(
+            state.KeptExerciseRootIdsBySelectionGroupId.Keys,
+            selectionGroupId => selectionGroupId.StartsWith(
+                "r30.",
+                StringComparison.Ordinal));
+        Assert.Equal(15, state.ActiveExtraSetSelectionGroupIds.Count);
+    }
+
+    [Fact]
+    public void KeepAndDownvoteForSameExerciseRemainIndependentAcrossSlots()
+    {
+        WorkoutGroup[] shortGroups = MassGroupingTaxonomy
+            .GetResolution(3)
+            .Groups
             .ToArray();
-        Assert.Equal(keptExerciseIds.Length, keptGroups.Length);
-        Assert.All(keptGroups, group =>
-            Assert.Contains(
-                group.SelectionKey,
-                state.ActiveExtraSetSelectionGroupIds));
-        Assert.All(keptGroups, group =>
-            Assert.True(state.SelectedExerciseIds.ContainsKey(
-                $"p1|{group.SelectionKey}")));
+        WorkoutGroup[] longGroups = MassGroupingTaxonomy
+            .GetResolution(5)
+            .Groups
+            .ToArray();
+        CanonicalMuscleGroup primary = shortGroups[0].CanonicalGroups.First();
+        WorkoutGroup shortSlot = MassGroupingTaxonomy.GetGroup(3, primary);
+        WorkoutGroup longSlot = MassGroupingTaxonomy.GetGroup(5, primary);
+        Exercise shared = FullyCoveredExercise(1, primary, score: 10);
+        Exercise[] longAlternatives = longGroups
+            .Select((group, index) => QualifiedForGroup(
+                100 + index,
+                group))
+            .ToArray();
+        Exercise[] shortAlternatives = shortGroups
+            .Select((group, index) => QualifiedForGroup(
+                200 + index,
+                group))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [shared, .. longAlternatives, .. shortAlternatives],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState
+        {
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [shortSlot.Id] = [shared.Id],
+            },
+        };
+
+        service.StartWorkout(state, 5, WorkoutModifiers.None);
+        WorkoutGroup longRound = service.GetActiveGroups(state)
+            .Single(round => round.SelectionKey == longSlot.Id);
+        Assert.Equal(shared.Id, service.GetSelectedExercise(state, longRound).Id);
+
+        service.RecordOutcome(state, longRound, keep: false);
+
+        Assert.Contains(
+            shared.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[shortSlot.Id]);
+        Assert.DoesNotContain(
+            shared.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId.GetValueOrDefault(
+                longSlot.Id) ?? []);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[longSlot.Id][
+                shared.Id]);
+        Assert.Contains(shared.Id, state.LastKeptExerciseIds);
+        Assert.Equal(10, shared.Score);
+
+        service.FinishInterruptedWorkout(state);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal(shared.Id, state.SelectedExerciseIds[shortSlot.Id]);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[longSlot.Id][
+                shared.Id]);
     }
 
     [Theory]
@@ -627,7 +701,8 @@ public sealed class ExerciseSessionServiceTests
         Dictionary<int, int> originalScores = exercises.ToDictionary(
             exercise => exercise.Id,
             exercise => exercise.Score);
-        state.LastKeptExerciseIds.Add(originalExerciseId);
+        state.KeptExerciseRootIdsBySelectionGroupId[current.SelectionKey] =
+            [originalExerciseId];
         state.SelectedExerciseIds[
             $"p{(int)WorkoutModifiers.Insect}|{current.SelectionKey}"] =
             originalExerciseId;
@@ -646,8 +721,12 @@ public sealed class ExerciseSessionServiceTests
             [originalExerciseId],
             result.ScoreUpdates.Select(exercise => exercise.Id));
         Assert.Equal(
-            originalScores[originalExerciseId] - 1,
+            originalScores[originalExerciseId],
             result.RejectedExercise.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                current.SelectionKey][originalExerciseId]);
         Assert.Contains(originalExerciseId, state.NextWorkoutExcludedExerciseIds);
         Assert.DoesNotContain(originalExerciseId, state.LastKeptExerciseIds);
         Assert.DoesNotContain(originalExerciseId, state.SelectedExerciseIds.Values);
@@ -759,8 +838,12 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(
             [rejectedLead.Id, rejectedPartner.Id],
             result.ScoreUpdates.Select(exercise => exercise.Id));
-        Assert.Equal(rejectedLeadScore - 1, rejectedLead.Score);
-        Assert.Equal(rejectedPartnerScore - 1, rejectedPartner.Score);
+        Assert.Equal(rejectedLeadScore, rejectedLead.Score);
+        Assert.Equal(rejectedPartnerScore, rejectedPartner.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                lead.SelectionKey][rejectedLead.Id]);
         Assert.Contains(rejectedLead.Id, state.NextWorkoutExcludedExerciseIds);
         Assert.Contains(rejectedPartner.Id, state.NextWorkoutExcludedExerciseIds);
         WorkoutGroup replacementLead = service.GetNextGroup(state)!;
@@ -867,8 +950,12 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(replacementFirst.Id, result.ReplacementExercise.Id);
         Assert.Equal(replacementFirst.Id, state.SelectedExerciseIds[groups[0].Id]);
         Assert.Equal(replacementFirst.Id, state.SelectedExerciseIds[groups[1].Id]);
-        Assert.Equal(99, first.Score);
-        Assert.Equal(99, second.Score);
+        Assert.Equal(100, first.Score);
+        Assert.Equal(100, second.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                lead.SelectionKey][first.Id]);
         Assert.Equal(
             [replacementFirst.Id, replacementSecond.Id, third.Id],
             service.GetActiveGroups(state)
@@ -991,7 +1078,12 @@ public sealed class ExerciseSessionServiceTests
         var service = new ExerciseSessionService(exercises, new AlwaysZeroRandom());
         var partial = new WorkoutState
         {
+            Version = 21,
             CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = root.Id,
+            },
             LastKeptExerciseIds = [root.Id],
         };
 
@@ -1001,7 +1093,12 @@ public sealed class ExerciseSessionServiceTests
 
         var complete = new WorkoutState
         {
+            Version = 21,
             CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [groups[0].Id] = root.Id,
+            },
             LastKeptExerciseIds = [root.Id, member.Id],
         };
 
@@ -1010,6 +1107,9 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(
             new[] { root.Id, member.Id }.Order(),
             complete.LastKeptExerciseIds.Order());
+        Assert.Contains(
+            root.Id,
+            complete.KeptExerciseRootIdsBySelectionGroupId[groups[0].Id]);
     }
 
     [Fact]
@@ -1227,9 +1327,13 @@ public sealed class ExerciseSessionServiceTests
             finalBlock,
             keep: false);
 
-        Assert.Equal(-1, partner.Score);
-        Assert.Equal(9, baseExercises.Single(exercise =>
+        Assert.Equal(0, partner.Score);
+        Assert.Equal(10, baseExercises.Single(exercise =>
             exercise.Id == baseExerciseId).Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                firstBlock.SelectionKey][baseExerciseId]);
         Assert.Equal(
             new[] { baseExerciseId, partner.Id }.Order(),
             result.ScoreUpdates.Select(exercise => exercise.Id).Order());
@@ -1266,7 +1370,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1323,7 +1427,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -1470,9 +1574,12 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            LastKeptExerciseIds = exercises.Take(10)
-                .Select(exercise => exercise.Id)
-                .ToHashSet(),
+            KeptExerciseRootIdsBySelectionGroupId = groups.Take(10)
+                .Select((group, index) => (group, index))
+                .ToDictionary(
+                    entry => entry.group.Id,
+                    entry => new HashSet<int> { exercises[entry.index].Id },
+                    StringComparer.Ordinal),
         };
 
         service.StartWorkout(state, 45, WorkoutModifiers.None);
@@ -1542,12 +1649,11 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Theory]
-    [InlineData(3, 5, 3)]
-    [InlineData(5, 3, 3)]
-    public void KeptExercisesFillCompatibleSlotsAfterWorkoutDurationChanges(
+    [InlineData(3, 5)]
+    [InlineData(5, 3)]
+    public void KeepsRemainBoundToTheirOriginalDurationSlots(
         int previousMinutes,
-        int nextMinutes,
-        int expectedCarriedCount)
+        int nextMinutes)
     {
         WorkoutGroup[] previousGroups = MassGroupingTaxonomy
             .GetResolution(previousMinutes)
@@ -1573,20 +1679,18 @@ public sealed class ExerciseSessionServiceTests
             new Random(1));
         var state = new WorkoutState
         {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
             SelectedExerciseIds = previousGroups
                 .Zip(keptExercises)
                 .ToDictionary(pair => pair.First.Id, pair => pair.Second.Id),
-            LastKeptExerciseIds = keptExercises
-                .Select(exercise => exercise.Id)
-                .ToHashSet(),
+            KeptExerciseRootIdsBySelectionGroupId = previousGroups
+                .Zip(keptExercises)
+                .ToDictionary(
+                    pair => pair.First.Id,
+                    pair => new HashSet<int> { pair.Second.Id },
+                    StringComparer.Ordinal),
         };
 
-        service.StartWorkout(state, previousMinutes, WorkoutModifiers.None);
-        foreach (WorkoutGroup round in service.GetActiveGroups(state))
-        {
-            service.RecordOutcome(state, round, keep: true);
-        }
-        service.AcknowledgeCompletion(state);
         service.Initialize(state);
 
         foreach ((WorkoutGroup group, Exercise alternative) in
@@ -1604,9 +1708,12 @@ public sealed class ExerciseSessionServiceTests
             .Select(group => state.SelectedExerciseIds[group.Id])
             .ToArray();
         Assert.Equal(previousMinutes, state.LastKeptExerciseIds.Count);
-        Assert.Equal(
-            expectedCarriedCount,
-            selectedExerciseIds.Count(keptExerciseIds.Contains));
+        Assert.DoesNotContain(selectedExerciseIds, keptExerciseIds.Contains);
+        Assert.All(
+            previousGroups.Zip(keptExercises),
+            pair => Assert.Contains(
+                pair.Second.Id,
+                state.KeptExerciseRootIdsBySelectionGroupId[pair.First.Id]));
         Assert.Equal(nextMinutes, selectedExerciseIds.Distinct().Count());
     }
 
@@ -1616,9 +1723,15 @@ public sealed class ExerciseSessionServiceTests
         Exercise[] exercises = ThreeGroupCatalog();
         Exercise kept = exercises[0];
         var service = new ExerciseSessionService(exercises, new Random(1));
+        string keptSlotId = MassGroupingTaxonomy.GetGroup(
+            3,
+            kept.PrimaryCanonicalGroup).Id;
         var state = new WorkoutState
         {
-            LastKeptExerciseIds = [kept.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [keptSlotId] = [kept.Id],
+            },
         };
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
@@ -1663,7 +1776,11 @@ public sealed class ExerciseSessionServiceTests
         service.RejectCurrentSequenceWithScoreUpdates(state, targetRounds[0]);
         CompleteRemainingRounds(service, state);
 
-        Assert.Equal(9, original.Score);
+        Assert.Equal(10, original.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[target.Id][
+                original.Id]);
         Assert.Equal(original.Id, state.SelectedExerciseIds[target.Id]);
         service.AcknowledgeCompletion(state);
         service.Initialize(state);
@@ -1788,7 +1905,11 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.Same(original, firstResult);
         Assert.Null(repeatedResult);
-        Assert.Equal(9, original.Score);
+        Assert.Equal(10, original.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                pendingRound.SelectionKey][original.Id]);
         Assert.NotEqual(
             original.Id,
             state.SelectedExerciseIds[pendingRound.SelectionKey]);
@@ -2336,7 +2457,11 @@ public sealed class ExerciseSessionServiceTests
         Exercise? penalized = service.FinishInterruptedWorkout(state);
 
         Assert.Same(performedBelowThreshold, penalized);
-        Assert.Equal(-1, performedBelowThreshold.Score);
+        Assert.Equal(0, performedBelowThreshold.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[lower.Id][
+                performedBelowThreshold.Id]);
         Assert.Equal(qualifyingReplacement.Id, state.SelectedExerciseIds[lower.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -2450,7 +2575,11 @@ public sealed class ExerciseSessionServiceTests
         Exercise? pendingPenalty = service.FinishInterruptedWorkout(state);
 
         Assert.Null(pendingPenalty);
-        Assert.Equal(9, rejected.Score);
+        Assert.Equal(10, rejected.Score);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[lower.Id][
+                rejected.Id]);
         Assert.Equal(7, state.SelectedExerciseIds[lower.Id]);
         Assert.All(
             groups.Where(group => group.Id != lower.Id),
@@ -2574,22 +2703,26 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void CarryKeptExercisesForwardMaximizesKeptCountAcrossTheWholeLineup()
+    public void KeepPreferenceDoesNotMoveToAnotherCompatibleSlot()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
         Exercise sharedKept = FullyCoveredExercise(
             1,
             groups[0].CanonicalGroups.First(),
             100);
-        Exercise firstOnlyKept = QualifiedForGroup(2, groups[0]);
-        Exercise lastOnly = QualifiedForGroup(3, groups[2]);
+        Exercise firstAlternative = QualifiedForGroup(2, groups[0], score: 100);
+        Exercise middle = QualifiedForGroup(3, groups[1], score: 100);
+        Exercise last = QualifiedForGroup(4, groups[2], score: 100);
         var service = new ExerciseSessionService(
-            [sharedKept, firstOnlyKept, lastOnly],
+            [sharedKept, firstAlternative, middle, last],
             new Random(1));
         var state = new WorkoutState
         {
             LastWorkoutMinutes = 3,
-            LastKeptExerciseIds = [sharedKept.Id, firstOnlyKept.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [sharedKept.Id],
+            },
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [groups[0].Id] = sharedKept.Id,
@@ -2598,13 +2731,12 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
 
-        int[] selectedIds = groups
-            .Select(group => state.SelectedExerciseIds[group.Id])
-            .ToArray();
-        Assert.Contains(sharedKept.Id, selectedIds);
-        Assert.Contains(firstOnlyKept.Id, selectedIds);
-        Assert.Equal(firstOnlyKept.Id, state.SelectedExerciseIds[groups[0].Id]);
-        Assert.Equal(sharedKept.Id, state.SelectedExerciseIds[groups[1].Id]);
+        Assert.Equal(sharedKept.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Equal(middle.Id, state.SelectedExerciseIds[groups[1].Id]);
+        Assert.DoesNotContain(
+            sharedKept.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId.GetValueOrDefault(
+                groups[1].Id) ?? []);
     }
 
     [Fact]
@@ -2630,7 +2762,10 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             LastWorkoutMinutes = 3,
-            LastKeptExerciseIds = [nonHardKeep.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [nonHardKeep.Id],
+            },
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [groups[0].Id] = nonHardKeep.Id,
@@ -2669,7 +2804,10 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             LastWorkoutMinutes = 45,
-            LastKeptExerciseIds = [nonHardKeep.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [nonHardKeep.Id],
+            },
             SelectedExerciseIds = new Dictionary<string, int>
             {
                 [groups[0].Id] = nonHardKeep.Id,
@@ -2701,7 +2839,10 @@ public sealed class ExerciseSessionServiceTests
             () => now);
         var state = new WorkoutState
         {
-            LastKeptExerciseIds = [hardKeep.Id, nonHardKeep.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [hardKeep.Id, nonHardKeep.Id],
+            },
         };
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
@@ -2729,7 +2870,10 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             LastWorkoutMinutes = 3,
-            LastKeptExerciseIds = [hardKeep.Id, nonHardKeep.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [hardKeep.Id, nonHardKeep.Id],
+            },
             LastHardWorkUnixMillisecondsByPrimaryMuscle =
                 new Dictionary<string, long>
                 {
@@ -2769,7 +2913,10 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             LastWorkoutMinutes = 3,
-            LastKeptExerciseIds = [moderateKeep.Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [moderateKeep.Id],
+            },
             LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle =
                 new Dictionary<string, long>
                 {
@@ -3002,6 +3149,9 @@ public sealed class ExerciseSessionServiceTests
         DateTimeOffset now = new(2026, 8, 27, 1, 0, 0, TimeSpan.Zero);
         Exercise[] exercises = ThreeGroupCatalog();
         exercises[0] = CloneWithMuscularDemand(exercises[0], muscularDemand: 2);
+        string keptSlotId = MassGroupingTaxonomy.GetGroup(
+            3,
+            exercises[0].PrimaryCanonicalGroup).Id;
         var service = new ExerciseSessionService(
             exercises,
             new AlwaysZeroRandom(),
@@ -3009,7 +3159,10 @@ public sealed class ExerciseSessionServiceTests
         var state = new WorkoutState
         {
             CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
-            LastKeptExerciseIds = [exercises[0].Id],
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [keptSlotId] = [exercises[0].Id],
+            },
         };
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
@@ -3020,6 +3173,10 @@ public sealed class ExerciseSessionServiceTests
             state.ActiveWorkoutSession.InitialSelections,
             selection => selection.RootExerciseId == exercises[0].Id &&
                 selection.WasKeptAtWorkoutStart);
+        Assert.Equal(
+            [exercises[0].Id],
+            state.ActiveWorkoutSession
+                .KeptExerciseRootIdsBySelectionGroupIdAtStart[keptSlotId]);
 
         while (service.GetNextGroup(state) is { } group)
         {
@@ -3074,6 +3231,10 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.Single(restored.WorkoutHistory);
         Assert.Equal(3, restored.WorkoutHistory[0].Blocks.Count);
+        Assert.Equal(
+            [exercises[0].Id],
+            restored.WorkoutHistory[0]
+                .KeptExerciseRootIdsBySelectionGroupIdAtStart[keptSlotId]);
         service.StartWorkout(restored, 3, WorkoutModifiers.None);
         Assert.NotNull(restored.ActiveWorkoutSession);
         Assert.Contains(
@@ -3192,8 +3353,16 @@ public sealed class ExerciseSessionServiceTests
         stateStore.Save(restored);
 
         Assert.Equal(initial[2], pendingPenalty.Id);
-        Assert.Equal(9, completedRejection.Score);
-        Assert.Equal(9, pendingPenalty.Score);
+        Assert.Equal(10, completedRejection.Score);
+        Assert.Equal(10, pendingPenalty.Score);
+        Assert.Equal(
+            -1,
+            restored.ExerciseScoreAdjustmentsBySelectionGroupId[groups[0].Id][
+                completedRejection.Id]);
+        Assert.Equal(
+            -1,
+            restored.ExerciseScoreAdjustmentsBySelectionGroupId[groups[2].Id][
+                pendingPenalty.Id]);
         Assert.NotEqual(initial[0], restored.SelectedExerciseIds[groups[0].Id]);
         Assert.Equal(initial[1], restored.SelectedExerciseIds[groups[1].Id]);
         Assert.NotEqual(initial[2], restored.SelectedExerciseIds[groups[2].Id]);
@@ -3202,8 +3371,8 @@ public sealed class ExerciseSessionServiceTests
 
         Exercise? repeated = service.FinishInterruptedWorkout(stateStore.Load());
         Assert.Null(repeated);
-        Assert.Equal(9, completedRejection.Score);
-        Assert.Equal(9, pendingPenalty.Score);
+        Assert.Equal(10, completedRejection.Score);
+        Assert.Equal(10, pendingPenalty.Score);
         Assert.Equal(2, database.Updates.Count);
     }
 
@@ -3426,7 +3595,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(21, state.Version);
+        Assert.Equal(22, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -3492,7 +3661,14 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.Same(exercise, penalty);
         Assert.Null(repeated);
-        Assert.Equal(-1, exercise.Score);
+        Assert.Equal(0, exercise.Score);
+        string selectionGroupId = MassGroupingTaxonomy.GetGroup(
+            10,
+            exercise.PrimaryCanonicalGroup).Id;
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId][
+                exercise.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
         Assert.Empty(state.LegacySelectedExerciseNames);
         Assert.Null(state.LegacyPendingRestGroup);

@@ -150,6 +150,7 @@ test("web and mobile persist the same complete workout audit trail", () => {
     "WorkoutMinutes",
     "Modifiers",
     "KeptExerciseIdsAtStart",
+    "KeptExerciseRootIdsBySelectionGroupIdAtStart",
     "InitialSelections",
     "SelectionChanges",
     "Blocks",
@@ -174,15 +175,19 @@ test("web and mobile persist the same complete workout audit trail", () => {
 
 test("web and mobile persist hard-first block-aware workout allocation", () => {
   assert.match(workoutState, /HashSet<int> LastKeptExerciseIds/);
+  assert.match(
+    workoutState,
+    /Dictionary<string, HashSet<int>>[\s\S]*KeptExerciseRootIdsBySelectionGroupId/,
+  );
   assert.match(workoutState, /HashSet<string> ActiveExtraSetSelectionGroupIds/);
   assert.match(workoutState, /Dictionary<string, int> ActiveSetCountsBySelectionGroupId/);
   assert.match(
     sessionService,
-    /OrderByDescending\(placement =>[\s\S]*GetSequenceExercises\(placement\.Root\)[\s\S]*Any\(WorkoutRecoveryPolicy\.IsHardExercise\)[\s\S]*ThenByDescending\(placement => IsSequenceKept\(state, placement\.Root\)\)[\s\S]*ThenByDescending\(placement => placement\.Anchor\.Order\)/,
+    /OrderByDescending\(placement =>[\s\S]*GetSequenceExercises\(placement\.Root\)[\s\S]*Any\(WorkoutRecoveryPolicy\.IsHardExercise\)[\s\S]*ThenByDescending\(placement => IsSequenceKept\([\s\S]*state,[\s\S]*placement\.Anchor\.Id,[\s\S]*placement\.Root\)\)[\s\S]*ThenByDescending\(placement => placement\.Anchor\.Order\)/,
   );
   assert.match(
     workoutModule,
-    /rightMembers\.some\(\(member\) =>[\s\S]*HARD_MUSCULAR_DEMAND[\s\S]*leftMembers\.some[\s\S]*keptExerciseIds\.has\(member\.id\)[\s\S]*right\.anchor\.order - left\.anchor\.order/,
+    /rightMembers\.some\(\(member\) =>[\s\S]*HARD_MUSCULAR_DEMAND[\s\S]*leftMembers\.some[\s\S]*isSequenceKept\(right\.anchor\.id, right\.root\)[\s\S]*isSequenceKept\(left\.anchor\.id, left\.root\)[\s\S]*right\.anchor\.order - left\.anchor\.order/,
   );
   assert.match(
     sessionService,
@@ -194,18 +199,22 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
   );
   assert.match(
     sessionService,
-    /LastKeptExerciseIds\.ExceptWith\(rejectedExerciseIds\);[\s\S]*LastKeptExerciseIds\.UnionWith\(newlyKeptExerciseIds\);/,
+    /KeepSequenceInSlot\(state, selectionGroup\.Id, root\)[\s\S]*RemoveSequenceKeep\(state, selectionGroup\.Id, root\)[\s\S]*SyncLegacyKeptExerciseIds\(state\)/,
   );
 });
 
-test("web and mobile carry kept exercises across workout durations", () => {
+test("web and mobile preserve exact slot preferences without duration remapping", () => {
   assert.match(
     sessionService,
-    /StartWorkout\([\s\S]*CarryKeptExercisesForward\([\s\S]*previousWorkoutMinutes,[\s\S]*previousWorkoutModifiers\);[\s\S]*RepairActiveLineup\(state\);/,
+    /StartWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(state\);/,
   );
   assert.match(
     sessionService,
-    /CarryKeptExercisesForward\([\s\S]*LastKeptExerciseIds[\s\S]*ChooseBestDistinctLineup\([\s\S]*preferredTieOrder: orderedKeptExerciseIds/,
+    /CarrySlotPreferencesForward\([\s\S]*KeptExerciseRootIdsBySelectionGroupId[\s\S]*ChooseBestDistinctLineup/,
+  );
+  assert.match(
+    workoutModule,
+    /carrySlotPreferencesForward\(\)[\s\S]*keptExerciseRootIdsBySelectionGroupId[\s\S]*chooseBestDistinctLineup/,
   );
 });
 
@@ -264,11 +273,11 @@ test("web and mobile apply the same temporary muscle workload budget", () => {
   );
   assert.match(
     sessionService,
-    /IsSequenceKept\(state, currentExercise\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
+    /IsSequenceKept\(state, group\.Id, currentExercise\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
   );
   assert.match(
     workoutModule,
-    /this\.isSequenceKept\(currentExercise\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
+    /this\.isSequenceKept\(group\.id, currentExercise\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
   );
   assert.match(workoutState, /HashSet<int> NextWorkoutExcludedExerciseIds/);
 });
@@ -304,8 +313,10 @@ test("web and mobile persist one combined duration and modifier selection contex
     hardFloorCompatibilityModel,
     /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 18);
-  assert.match(workoutState, /public int Version[^=]*=\s*21/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 19);
+  assert.match(workoutState, /public int Version[^=]*=\s*22/);
+  assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
+  assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /PendingRestMillisecondsRemaining/);
   assert.match(workoutState, /PendingRestPausedByUser/);
   assert.match(workoutModule, /pendingRestMillisecondsRemaining/);
@@ -709,11 +720,11 @@ test("web and mobile apply rolling muscular recovery by primary muscle", () => {
   );
   assert.match(
     sessionService,
-    /var utilities = new BigInteger\[groups\.Count, candidates\.Count\][\s\S]*utilitiesByGroup/,
+    /var baseUtilities = new BigInteger\[groups\.Count, candidates\.Count\][\s\S]*var anchorUtilities = new BigInteger\[groups\.Count, candidates\.Count\][\s\S]*utilitiesByGroup/,
   );
   assert.match(
     workoutModule,
-    /const utilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*utilitiesByGroup/,
+    /const baseUtilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*const anchorUtilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*utilitiesByGroup/,
   );
 });
 
@@ -1053,7 +1064,11 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(webApp, /repeatExercise\.addEventListener[\s\S]*playbackToggle\.addEventListener[\s\S]*nextExercise\.addEventListener/);
   assert.match(
     workoutModule,
-    /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates[\s\S]*setScore\(exercise, this\.getScore\(exercise\) - 1\)/,
+    /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates[\s\S]*applyShuffleRejection\(selectionGroupId, rejectedRoot, scoreUpdates\)[\s\S]*downvoteSequenceInSlot/,
+  );
+  assert.match(
+    sessionService,
+    /ShuffleNextExercise\([\s\S]*ApplyShuffleRejection\([\s\S]*group\.SelectionKey,[\s\S]*rejectedRoot,[\s\S]*scoreUpdates\)[\s\S]*DownvoteSequenceInSlot/,
   );
   assert.match(
     sessionService,
@@ -1207,7 +1222,7 @@ test("web and mobile preserve deployed keeps by catalog membership", () => {
   );
   assert.match(
     sessionService,
-    /NormalizeKeptExerciseIds\([\s\S]*!_exercisesById\.ContainsKey\(exerciseId\)/,
+    /NormalizeSlotPreferences\([\s\S]*IsValidPreferenceRoot[\s\S]*SyncLegacyKeptExerciseIds/,
   );
 });
 
@@ -1399,11 +1414,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
-    /ApplySequenceOutcome[\s\S]*GetSequenceExercises[\s\S]*LastKeptExerciseIds/,
+    /ApplySequenceOutcome[\s\S]*DownvoteSequenceInSlot[\s\S]*RecordWorkoutDecision/,
   );
   assert.match(
     workoutModule,
-    /applySequenceOutcome[\s\S]*getSequenceExercises[\s\S]*lastKeptExerciseIds/,
+    /applySequenceOutcome[\s\S]*downvoteSequenceInSlot[\s\S]*recordWorkoutDecision/,
   );
   assert.match(
     mainActivity,
