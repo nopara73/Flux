@@ -12,8 +12,8 @@ import {
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
   EXERCISE_MIRROR_RELATIONSHIP,
-  HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-  HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+  HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  HARD_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
@@ -23,10 +23,13 @@ import {
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_MUSCULAR_DEMAND,
-  MUSCLE_SESSION_BUDGET_HALF_UNITS,
-  MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
+  MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MODERATE_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR,
+  MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR,
   REST_DURATION_MS,
-  SCORE_HALF_UNITS_PER_VOTE,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
@@ -35,7 +38,9 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
-  calculateMuscleLoadHalfUnits,
+  calculateCanonicalMuscleLoadEighthUnits,
+  calculateMuscleBalanceEvaluation,
+  compareMuscleBalanceEvaluations,
   createWorkoutSchedule,
   createDefaultState,
   findHardFloorCategoryCoverageDeficiencies,
@@ -52,12 +57,9 @@ import {
   getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
-  getAdjustedScoreHalfUnits,
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
-  getMuscleBudgetTemporaryDownvoteHalfUnits,
-  getTemporaryDownvoteHalfUnitsAfterAddingExercise,
   getSelectionKey,
   getSessionMovementId,
   getWorkoutBlockAccent,
@@ -264,7 +266,7 @@ test("work-block colors come from the real side and direction cues", () => {
   );
 });
 
-test("muscular demand controls which associations consume muscle budget", () => {
+test("complete workload table counts every primary and distinct secondary", () => {
   const incidental = exercise(1, "HipAbductors", ["GlutealExtensors"], 0);
   const moderate = exercise(2, "AbdominalWall", ["GlutealExtensors"], 0);
   moderate.muscularDemand = MODERATE_MUSCULAR_DEMAND;
@@ -276,19 +278,25 @@ test("muscular demand controls which associations consume muscle budget", () => 
   );
   hard.muscularDemand = HARD_MUSCULAR_DEMAND;
 
-  const load = calculateMuscleLoadHalfUnits([incidental, moderate, hard]);
+  const load = calculateCanonicalMuscleLoadEighthUnits([
+    incidental,
+    moderate,
+    hard,
+  ]);
 
-  assert.equal(MUSCLE_SESSION_BUDGET_HALF_UNITS, 10);
-  assert.equal(MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS, 1);
-  assert.equal(HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS, 2);
-  assert.equal(HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS, 1);
-  assert.equal(load.has("HipAbductors"), false);
-  assert.equal(load.get("AbdominalWall"), 1);
-  assert.equal(load.get("ElbowFlexors"), 2);
-  assert.equal(load.get("GlutealExtensors"), 1);
+  assert.equal(MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS, 2);
+  assert.equal(MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS, 1);
+  assert.equal(MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS, 4);
+  assert.equal(MODERATE_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS, 2);
+  assert.equal(HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS, 8);
+  assert.equal(HARD_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS, 4);
+  assert.equal(load.get("HipAbductors"), 2);
+  assert.equal(load.get("AbdominalWall"), 4);
+  assert.equal(load.get("ElbowFlexors"), 8);
+  assert.equal(load.get("GlutealExtensors"), 7);
 });
 
-test("hard muscle budget counts an exercise once and actual repeated sets again", () => {
+test("one identity counts once per set and actual repeated sets count again", () => {
   const sideSpecific = exercise(
     1,
     "HipAbductors",
@@ -298,13 +306,16 @@ test("hard muscle budget counts an exercise once and actual repeated sets again"
   sideSpecific.sideSequence = "ScreenLeftThenRight";
   sideSpecific.muscularDemand = HARD_MUSCULAR_DEMAND;
 
-  const oneRound = calculateMuscleLoadHalfUnits([sideSpecific]);
-  const twoRounds = calculateMuscleLoadHalfUnits([sideSpecific, sideSpecific]);
+  const oneRound = calculateCanonicalMuscleLoadEighthUnits([sideSpecific]);
+  const twoRounds = calculateCanonicalMuscleLoadEighthUnits([
+    sideSpecific,
+    sideSpecific,
+  ]);
 
-  assert.equal(oneRound.get("HipAbductors"), 2);
-  assert.equal(oneRound.get("GlutealExtensors"), 1);
-  assert.equal(twoRounds.get("HipAbductors"), 4);
-  assert.equal(twoRounds.get("GlutealExtensors"), 2);
+  assert.equal(oneRound.get("HipAbductors"), 8);
+  assert.equal(oneRound.get("GlutealExtensors"), 4);
+  assert.equal(twoRounds.get("HipAbductors"), 16);
+  assert.equal(twoRounds.get("GlutealExtensors"), 8);
 });
 
 test("scheduled load does not double-count side blocks within one set", () => {
@@ -320,160 +331,218 @@ test("scheduled load does not double-count side blocks within one set", () => {
     setCountsBySelectionGroupId: new Map([["slot", setCount]]),
   });
 
-  const oneSet = session.calculateScheduledLoadHalfUnits(placements, allocation(1));
-  const twoSets = session.calculateScheduledLoadHalfUnits(placements, allocation(2));
+  const oneSet = session.calculateScheduledCanonicalLoadEighthUnits(
+    placements,
+    allocation(1),
+  );
+  const twoSets = session.calculateScheduledCanonicalLoadEighthUnits(
+    placements,
+    allocation(2),
+  );
 
-  assert.equal(oneSet.get("HipAbductors"), 2);
-  assert.equal(oneSet.get("GlutealExtensors"), 1);
-  assert.equal(twoSets.get("HipAbductors"), 4);
-  assert.equal(twoSets.get("GlutealExtensors"), 2);
+  assert.equal(oneSet.get("HipAbductors"), 8);
+  assert.equal(oneSet.get("GlutealExtensors"), 4);
+  assert.equal(twoSets.get("HipAbductors"), 16);
+  assert.equal(twoSets.get("GlutealExtensors"), 8);
 });
 
-test("adding an exercise uses only its demand-weighted load", () => {
-  const existingLoad = new Map([
-    ["AbdominalWall", 11],
-    ["GlutealExtensors", 13],
+test("all seven resolutions sum their canonical child loads", () => {
+  const load = new Map([
+    ["MedialAndDeepKneeExtensors", 8],
+    ["PosteriorThighAndKneeFlexors", 4],
   ]);
-  const incidental = exercise(1, "AbdominalWall", ["GlutealExtensors"], 0);
-  const moderate = exercise(2, "AbdominalWall", ["GlutealExtensors"], 0);
-  moderate.muscularDemand = MODERATE_MUSCULAR_DEMAND;
-  const hard = exercise(3, "AbdominalWall", ["GlutealExtensors"], 0);
-  hard.muscularDemand = HARD_MUSCULAR_DEMAND;
+  const evaluation = calculateMuscleBalanceEvaluation(load);
+  const threeMinute = evaluation.resolutions.find(({ minutes }) => minutes === 3);
+  const thirtyMinute = evaluation.resolutions.find(({ minutes }) => minutes === 30);
 
+  assert.equal(evaluation.resolutions.length, 7);
   assert.equal(
-    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, incidental),
-    0,
+    threeMinute.loadEighthUnitsByGroupId.get("r3.lower-limbs"),
+    12,
   );
   assert.equal(
-    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, moderate),
-    2,
+    thirtyMinute.loadEighthUnitsByGroupId.get("r30.medial-deep-knee-extensors"),
+    8,
   );
   assert.equal(
-    getTemporaryDownvoteHalfUnitsAfterAddingExercise(existingLoad, hard),
-    7,
+    thirtyMinute.loadEighthUnitsByGroupId.get(
+      "r30.posterior-thigh-knee-flexors",
+    ),
+    4,
   );
 });
 
-test("every overloaded half unit adds one temporary downvote half unit", () => {
-  const loadHalfUnits = new Map([
-    ["AbdominalWall", 13],
-    ["GlutealExtensors", 11],
-    ["HipFlexors", 10],
-  ]);
+test("one quarter is the inclusive balance goal at every resolution", () => {
+  const resolution = (minutes, weakest, strongest) => ({
+    minutes,
+    loadEighthUnitsByGroupId: new Map(),
+    weakestLoadEighthUnits: weakest,
+    strongestLoadEighthUnits: strongest,
+    isBalanced: strongest === 0 ||
+      weakest * MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR >=
+        strongest * MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR,
+  });
+  const balanced = {
+    resolutions: [resolution(3, 2, 8), resolution(5, 4, 8)],
+    isBalanced: true,
+  };
+  const weaker = {
+    resolutions: [resolution(3, 1, 8), resolution(5, 4, 8)],
+    isBalanced: false,
+  };
 
-  const temporaryDownvoteHalfUnits = getMuscleBudgetTemporaryDownvoteHalfUnits(
-    loadHalfUnits,
-    ["AbdominalWall", "GlutealExtensors", "HipFlexors", "AbdominalWall"],
-  );
-
-  assert.equal(SCORE_HALF_UNITS_PER_VOTE, 2);
-  assert.equal(temporaryDownvoteHalfUnits, 4);
-  assert.equal(getAdjustedScoreHalfUnits(0, 1), -1);
-  assert.equal(getAdjustedScoreHalfUnits(-1, 0), -2);
-  assert.equal(getAdjustedScoreHalfUnits(0, temporaryDownvoteHalfUnits), -4);
-  assert.equal(getAdjustedScoreHalfUnits(-1, temporaryDownvoteHalfUnits), -6);
+  assert.equal(MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR, 1);
+  assert.equal(MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR, 4);
+  assert.ok(compareMuscleBalanceEvaluations(balanced, weaker) > 0);
 });
 
-test("muscle budget prefers a once-downvoted alternative to an overloaded zero", () => {
+test("muscle balance replaces an unkept equal-score choice", () => {
   const groups = RESOLUTIONS.get(30).groups;
-  const overloadedMuscle = groups[0].canonicalGroups[0];
-  const targetGroup = groups[10];
-  const exercises = groups.map((group, index) => exercise(
+  const targetGroup = groups.find((group) =>
+    group.canonicalGroups.includes("ShoulderAbductors"));
+  const selected = groups.map((group, index) => exercise(
     1 + index,
     group.canonicalGroups[0],
-    (index >= 1 && index <= 9) || index === 11 ? [overloadedMuscle] : [],
+    [],
     0,
   ));
-  const overloadedZero = exercises[10];
-  overloadedZero.secondaryCanonicalGroups = [overloadedMuscle];
-  exercises.forEach((item) => {
-    item.muscularDemand = HARD_MUSCULAR_DEMAND;
-  });
-  const downvotedOnce = exercise(
+  const alternative = exercise(
     1_001,
     targetGroup.canonicalGroups[0],
-    [],
-    -1,
+    ["PelvicFloorAndPerineum"],
+    0,
   );
-  const downvotedTwice = exercise(
-    1_002,
-    targetGroup.canonicalGroups[0],
-    [],
-    -2,
-  );
-  downvotedOnce.muscularDemand = HARD_MUSCULAR_DEMAND;
-  downvotedTwice.muscularDemand = HARD_MUSCULAR_DEMAND;
-  exercises.push(downvotedOnce, downvotedTwice);
   const state = createDefaultState();
   state.lastWorkoutMinutes = 30;
   for (let index = 0; index < groups.length; index += 1) {
-    state.selectedExerciseIds[groups[index].id] = exercises[index].id;
+    state.selectedExerciseIds[groups[index].id] = selected[index].id;
   }
-  const session = new WorkoutSession(exercises, state, () => 0);
+  const session = new WorkoutSession([...selected, alternative], state, () => 0);
 
   session.startWorkout(30, WORKOUT_MODIFIERS.None);
 
-  assert.equal(session.state.selectedExerciseIds[targetGroup.id], downvotedOnce.id);
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], alternative.id);
   assert.deepEqual(session.state.scores, {});
-
-  const tieState = createDefaultState();
-  tieState.lastWorkoutMinutes = 30;
-  for (let index = 0; index < groups.length; index += 1) {
-    tieState.selectedExerciseIds[groups[index].id] = exercises[index].id;
-  }
-  const reducedLoadExercise = exercise(
-    exercises[11].id,
-    groups[11].canonicalGroups[0],
-    [],
-    0,
-  );
-  reducedLoadExercise.muscularDemand = HARD_MUSCULAR_DEMAND;
-  const tieSession = new WorkoutSession(
-    exercises
-      .filter((item) =>
-        item.id !== reducedLoadExercise.id && item.id !== downvotedTwice.id)
-      .concat(reducedLoadExercise),
-    tieState,
-    () => 0,
-  );
-
-  tieSession.startWorkout(30, WORKOUT_MODIFIERS.None);
-
-  assert.equal(tieSession.state.selectedExerciseIds[targetGroup.id], overloadedZero.id);
+  assert.deepEqual(session.state.exerciseScoreAdjustmentsBySelectionGroupId, {});
 });
 
-test("muscle budget ignores incidental primary and moderate secondary load", () => {
+test("muscle balance can use an atomic sequence without splitting its slots", () => {
   const groups = RESOLUTIONS.get(30).groups;
-  const overloadedMuscle = groups[0].canonicalGroups[0];
-  const targetGroup = groups[10];
+  const shoulderAbductors = groups.find((group) =>
+    group.canonicalGroups.includes("ShoulderAbductors"));
+  const rotatorCuff = groups.find((group) =>
+    group.canonicalGroups.includes("RotatorCuff"));
   const selected = groups.map((group, index) => exercise(
-    index + 1,
+    1 + index,
     group.canonicalGroups[0],
-    (index >= 1 && index <= 9) || index === 11 ? [overloadedMuscle] : [],
+    [],
     0,
   ));
-  selected.forEach((item, index) => {
-    item.muscularDemand = (index >= 1 && index <= 9) || index === 11
-      ? MODERATE_MUSCULAR_DEMAND
-      : MINIMUM_MUSCULAR_DEMAND;
-  });
-  const current = selected[10];
-  current.secondaryCanonicalGroups = [overloadedMuscle];
-  current.muscularDemand = HARD_MUSCULAR_DEMAND;
-  const downvotedAlternative = exercise(
+  const root = exercise(
     1_001,
-    targetGroup.canonicalGroups[0],
-    [],
-    -1,
+    shoulderAbductors.canonicalGroups[0],
+    ["PelvicFloorAndPerineum"],
+    0,
   );
-  downvotedAlternative.muscularDemand = HARD_MUSCULAR_DEMAND;
+  root.sequenceBlocks = [
+    { ...root.sequenceBlocks[0] },
+    {
+      ...root.sequenceBlocks[0],
+      exerciseId: 1_002,
+    },
+  ];
+  const member = exercise(
+    1_002,
+    rotatorCuff.canonicalGroups[0],
+    [],
+    0,
+  );
+  member.sequenceBlocks = [];
   const state = createDefaultState();
   state.lastWorkoutMinutes = 30;
   for (let index = 0; index < groups.length; index += 1) {
     state.selectedExerciseIds[groups[index].id] = selected[index].id;
   }
   const session = new WorkoutSession(
-    [...selected, downvotedAlternative],
+    [...selected, root, member],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[shoulderAbductors.id], root.id);
+  assert.equal(session.state.selectedExerciseIds[rotatorCuff.id], root.id);
+  const anchor = [shoulderAbductors, rotatorCuff]
+    .sort((left, right) => left.order - right.order)[0];
+  const sequenceRounds = session.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === anchor.id);
+  assert.deepEqual(
+    sequenceRounds.map((round) => round.exerciseOverrideId),
+    [root.id, member.id],
+  );
+});
+
+test("muscle balance never moves a selected keep", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const targetGroup = groups.find((group) =>
+    group.canonicalGroups.includes("ShoulderAbductors"));
+  const selected = groups.map((group, index) => exercise(
+    1 + index,
+    group.canonicalGroups[0],
+    [],
+    0,
+  ));
+  const current = selected.find((item) =>
+    item.primaryCanonicalGroup === "ShoulderAbductors");
+  const alternative = exercise(
+    1_001,
+    current.primaryCanonicalGroup,
+    ["PelvicFloorAndPerineum"],
+    0,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 30;
+  for (let index = 0; index < groups.length; index += 1) {
+    state.selectedExerciseIds[groups[index].id] = selected[index].id;
+  }
+  state.keptExerciseRootIdsBySelectionGroupId[targetGroup.id] = [current.id];
+  const session = new WorkoutSession([...selected, alternative], state, () => 0);
+
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], current.id);
+  assert.deepEqual(
+    session.state.keptExerciseRootIdsBySelectionGroupId[targetGroup.id],
+    [current.id],
+  );
+});
+
+test("muscle balance never promotes a rejected lower-score exercise", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const targetGroup = groups.find((group) =>
+    group.canonicalGroups.includes("ShoulderAbductors"));
+  const selected = groups.map((group, index) => exercise(
+    1 + index,
+    group.canonicalGroups[0],
+    [],
+    0,
+  ));
+  const current = selected.find((item) =>
+    item.primaryCanonicalGroup === "ShoulderAbductors");
+  const rejectedAlternative = exercise(
+    1_001,
+    current.primaryCanonicalGroup,
+    ["PelvicFloorAndPerineum"],
+    -1,
+  );
+  const state = createDefaultState();
+  state.lastWorkoutMinutes = 30;
+  for (let index = 0; index < groups.length; index += 1) {
+    state.selectedExerciseIds[groups[index].id] = selected[index].id;
+  }
+  const session = new WorkoutSession(
+    [...selected, rejectedAlternative],
     state,
     () => 0,
   );
@@ -483,41 +552,32 @@ test("muscle budget ignores incidental primary and moderate secondary load", () 
   assert.equal(session.state.selectedExerciseIds[targetGroup.id], current.id);
 });
 
-test("long-workout muscle budget counts the extra set before replacing a choice", () => {
+test("long-workout balance uses the actual repeated-set allocation", () => {
   const groups = RESOLUTIONS.get(30).groups;
-  const overloadedMuscle = groups[0].canonicalGroups[0];
-  const targetGroup = groups.at(-1);
+  const targetGroup = groups.find((group) =>
+    group.canonicalGroups.includes("HipFlexors"));
   const selected = groups.map((group, index) => exercise(
     index + 1,
     group.canonicalGroups[0],
-    index >= 1 && index <= 7 ? [overloadedMuscle] : [],
-    0,
-  ));
-  selected.forEach((item) => {
-    item.muscularDemand = HARD_MUSCULAR_DEMAND;
-  });
-  const overloaded = selected.at(-1);
-  overloaded.secondaryCanonicalGroups = [overloadedMuscle];
-  overloaded.muscularDemand = HARD_MUSCULAR_DEMAND;
-  const replacement = exercise(
-    1_001,
-    targetGroup.canonicalGroups[0],
     [],
     0,
+  ));
+  const alternative = exercise(
+    1_001,
+    targetGroup.canonicalGroups[0],
+    ["AnteriorLateralLowerLegAndDorsalFoot"],
+    0,
   );
-  replacement.muscularDemand = HARD_MUSCULAR_DEMAND;
   const state = createDefaultState();
   state.lastWorkoutMinutes = 45;
   for (let index = 0; index < groups.length; index += 1) {
     state.selectedExerciseIds[groups[index].id] = selected[index].id;
   }
-  const session = new WorkoutSession([...selected, replacement], state, () => 0);
+  const session = new WorkoutSession([...selected, alternative], state, () => 0);
 
   session.startWorkout(45, WORKOUT_MODIFIERS.None);
 
-  assert.equal(session.state.selectedExerciseIds[targetGroup.id], replacement.id);
-  assert.equal(session.state.scores[String(overloaded.id)], undefined);
-  assert.equal(session.state.scores[String(replacement.id)], undefined);
+  assert.equal(session.state.selectedExerciseIds[targetGroup.id], alternative.id);
   assert.equal(
     session.getActiveGroups().filter((round) =>
       getSelectionKey(round) === targetGroup.id).length,
@@ -1363,7 +1423,10 @@ test("reviewed production catalog satisfies every muscle and modifier combinatio
     assert.equal(session.state.activeWorkoutModifiers, allModifiers);
     assert.ok(session.getActiveGroups().every((group) =>
       isSelectableForWorkoutProfile(
-        session.getSelectedExercise(group),
+        session.getSequenceSelectionExerciseForGroup(
+          session.getSelectedExercise(group),
+          group,
+        ),
         group,
         allModifiers,
       )));
@@ -2406,12 +2469,18 @@ test("moderate recovery remains soft when the exercise has a higher user score",
 test("equivalent fresh hard candidates favor the longest-rested primary muscle", () => {
   const now = Date.UTC(2026, 7, 22, 12);
   const groups = RESOLUTIONS.get(3).groups;
-  const recentlyWorked = groups[0].canonicalGroups[0];
-  const longestRested = groups[0].canonicalGroups[1];
+  const recentlyWorked = "IntrinsicHand";
+  const longestRested = "ForearmExtensorsAndSupinators";
+  const sharedCoverage = [
+    recentlyWorked,
+    longestRested,
+    ...groups[0].canonicalGroups.filter((muscle) =>
+      muscle !== recentlyWorked && muscle !== longestRested),
+  ];
   const recentHard = exercise(
     1,
     recentlyWorked,
-    groups[0].canonicalGroups.filter((muscle) => muscle !== recentlyWorked),
+    sharedCoverage.filter((muscle) => muscle !== recentlyWorked),
     0,
     undefined,
     true,
@@ -2420,7 +2489,7 @@ test("equivalent fresh hard candidates favor the longest-rested primary muscle",
   const restedHard = exercise(
     2,
     longestRested,
-    groups[0].canonicalGroups.filter((muscle) => muscle !== longestRested),
+    sharedCoverage.filter((muscle) => muscle !== longestRested),
     0,
     undefined,
     true,
@@ -2761,7 +2830,10 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
       .map((group) => session.getSelectedExercise(group));
     const baseSelections = session.getSelectionGroups()
       .map((group) => session.getSelectedExercise(group));
-    assert.equal(new Set(baseSelections.map(getSessionMovementId)).size, 30);
+    assert.equal(
+      new Set(baseSelections.map(getSessionMovementId)).size,
+      session.getSelectedSequencePlacements().length,
+    );
     assert.equal(session.getActiveGroups().length, minutes);
     assert.ok(session.getActiveGroups().every((round) => {
       const rootId = session.state.selectedExerciseIds[getSelectionKey(round)];

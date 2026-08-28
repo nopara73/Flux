@@ -107,21 +107,31 @@ or demand-`2` keep loses only its current lineup preference and remains saved;
 ordinary score ordering continues to prevent a rejected lower-score exercise
 from returning in that slot. Historical global scores remain a read-only
 migration baseline because old releases did not record truthful slot provenance.
-A separate soft per-muscle workload budget may rebalance unkept selections.
-Demand-`0` exercises consume no muscular budget. Demand-`1` exercises add 0.5
-unit to their primary muscle and nothing to secondary associations. Demand-`2`
-exercises add 1 unit to their primary muscle and 0.5 to each distinct secondary
-association. These weights determine accumulated load; the resulting excess is
-then applied temporarily while comparing candidates associated with that
-muscle.
-Every 0.5 unit above 5 produces a 0.5 temporary candidate downvote for the
-affected muscle; these adjustments exist only while completing that lineup and
-never alter saved scores. Each distinct exercise identity counts once per
-sequence set: two side or direction blocks belonging to the same exercise do
-not double-count bilateral muscle work, while a genuinely different linked
-exercise does. Repeating the complete sequence in another set counts the work
-again. A muscle is never counted twice merely because it appears more than once
-in one exercise's metadata.
+A separate soft within-session rebalancer audits the resulting lineup with the
+complete workload table: demand-`0` contributes 0.25 for its primary muscle and
+0.125 for each distinct secondary; demand-`1` contributes 0.5 and 0.25; and
+demand-`2` contributes 1 and 0.5. Each distinct exercise identity counts once
+per sequence set, so two side or direction blocks of one identity do not
+double-count bilateral muscle work. Different linked identities count
+separately, and an actual repeated set counts again.
+
+The audit independently rolls those canonical loads into every existing 3-,
+5-, 7-, 10-, 15-, 20-, and 30-minute muscle resolution. At each resolution the
+weakest bucket is compared with the strongest; the soft goal is for every
+weakest bucket to reach at least 25% of its strongest. Flux repeatedly applies
+one legal replacement that improves the lexicographically sorted bucket shares
+(weakest first), recalculating all seven resolutions after every change. It
+stops when every resolution reaches the goal, no replacement improves the
+lineup, the lineup repeats, or 30 passes have run. An undersupplied catalog may
+therefore remain imbalanced rather than receiving a fabricated exercise.
+
+Selected Keeps are frozen in their exact slots, and a saved Keep cannot be
+moved elsewhere by balancing. A candidate must be no lower-scored than every
+displaced selection in each slot it covers. Modifiers, recovery and hard-work
+priority, Mirror preference, global assignment, atomic sequences, unique
+session movements, exact duration, and long-workout set allocation remain
+constraints. The balancing state is temporary and never changes persisted user
+scores or adds a numerical hardness score.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -160,8 +170,8 @@ Flux currently provides four composable modifiers:
 - **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
   tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
   show the full body. Mirror relevance breaks only otherwise remaining ties,
-  after real scores, hard-work rotation, contextual keeps, and the muscle
-  budget.
+  after real scores, hard-work rotation, contextual keeps, and within-session
+  muscle balance.
 
 Mirror availability affects exercise eligibility and selection only. It never
 horizontally flips demonstration media; reviewed atomic side blocks remain a

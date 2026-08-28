@@ -6,231 +6,157 @@ namespace Flux.Tests;
 public sealed class ExerciseSessionServiceTests
 {
     [Fact]
-    public void MuscleBudgetTemporarilyDownvotesOnlyNewOverloadedChoices()
+    public void MuscleBalanceReplacesAnUnkeptChoiceOnlyWhenEverySlotScoreIsPreserved()
     {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
-        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
-        WorkoutGroup targetGroup = groups[10];
-        var selectedByGroup = new Dictionary<string, int>(StringComparer.Ordinal);
-        var exercises = new List<Exercise>();
-        for (int index = 0; index < groups.Length; index++)
-        {
-            CanonicalMuscleGroup primary = groups[index].CanonicalGroups.Single();
-            CanonicalMuscleGroup[] secondary = index is >= 1 and <= 9 or 11
-                ? [overloadedMuscle]
-                : [];
-            Exercise selected = CloneWithMuscularDemand(
-                Exercise(1 + index, primary, 0, secondary),
-                WorkoutRecoveryPolicy.HardMuscularDemand);
-            exercises.Add(selected);
-            selectedByGroup[groups[index].Id] = selected.Id;
-        }
-
-        Exercise overloadedZero = CloneWithMuscularDemand(
+        (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =
+            CreateThirtyMinuteBalanceFixture();
+        WorkoutGroup targetGroup = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.ShoulderAbductors));
+        Exercise alternative = CloneWithMuscularDemand(
             Exercise(
-                selectedByGroup[targetGroup.Id],
+                1_001,
                 targetGroup.CanonicalGroups.Single(),
                 0,
-                overloadedMuscle),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        exercises.RemoveAll(exercise => exercise.Id == overloadedZero.Id);
-        exercises.Add(overloadedZero);
-        Exercise downvotedOnce = CloneWithMuscularDemand(
-            Exercise(1_001, targetGroup.CanonicalGroups.Single(), -1),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        Exercise downvotedTwice = CloneWithMuscularDemand(
-            Exercise(1_002, targetGroup.CanonicalGroups.Single(), -2),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        exercises.Add(downvotedOnce);
-        exercises.Add(downvotedTwice);
-        var state = new WorkoutState
-        {
-            LastWorkoutMinutes = 30,
-            SelectedExerciseIds = selectedByGroup,
-        };
-        var service = new ExerciseSessionService(exercises, new Random(1));
+                CanonicalMuscleGroup.PelvicFloorAndPerineum),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        var service = new ExerciseSessionService(
+            [.. selected, alternative],
+            new AlwaysZeroRandom());
 
         service.StartWorkout(state, 30, WorkoutModifiers.None);
 
-        Assert.Equal(downvotedOnce.Id, state.SelectedExerciseIds[targetGroup.Id]);
-        Assert.Equal(0, overloadedZero.Score);
-        Assert.Equal(-1, downvotedOnce.Score);
-        Assert.Equal(-2, downvotedTwice.Score);
-
-        var tieSelectedExerciseIds = new Dictionary<string, int>(
-            selectedByGroup,
-            StringComparer.Ordinal)
-        {
-            [targetGroup.Id] = overloadedZero.Id,
-        };
-        var tieState = new WorkoutState
-        {
-            LastWorkoutMinutes = 30,
-            SelectedExerciseIds = tieSelectedExerciseIds,
-        };
-        Exercise reducedLoadExercise = CloneWithMuscularDemand(
-            Exercise(
-                selectedByGroup[groups[11].Id],
-                groups[11].CanonicalGroups.Single(),
-                0),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        var tieService = new ExerciseSessionService(
-            exercises
-                .Where(exercise =>
-                    exercise.Id != reducedLoadExercise.Id &&
-                    exercise.Id != downvotedTwice.Id)
-                .Append(reducedLoadExercise)
-                .ToArray(),
-            new Random(1));
-
-        tieService.StartWorkout(tieState, 30, WorkoutModifiers.None);
-
-        Assert.Equal(overloadedZero.Id, tieState.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(alternative.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(0, alternative.Score);
+        Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
     }
 
     [Fact]
-    public void MuscleBudgetIgnoresIncidentalPrimaryAndModerateSecondaryLoad()
+    public void MuscleBalanceCanUseAnAtomicSequenceWithoutSplittingItsSlots()
     {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
-        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
-        WorkoutGroup targetGroup = groups[10];
-        var selectedByGroup = new Dictionary<string, int>(StringComparer.Ordinal);
-        var exercises = new List<Exercise>();
-        for (int index = 0; index < groups.Length; index++)
-        {
-            Exercise selected = Exercise(
-                index + 1,
-                groups[index].CanonicalGroups.Single(),
-                0,
-                index is >= 1 and <= 9 or 11 ? [overloadedMuscle] : []);
-            int muscularDemand = index is >= 1 and <= 9 or 11
-                ? Flux.Models.Exercise.ModerateMuscularDemand
-                : Flux.Models.Exercise.MinimumMuscularDemand;
-            selected = CloneWithMuscularDemand(selected, muscularDemand);
-            exercises.Add(selected);
-            selectedByGroup[groups[index].Id] = selected.Id;
-        }
+        (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =
+            CreateThirtyMinuteBalanceFixture();
+        WorkoutGroup shoulderAbductors = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.ShoulderAbductors));
+        WorkoutGroup rotatorCuff = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.RotatorCuff));
+        Exercise root = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                Exercise(
+                    1_001,
+                    shoulderAbductors.CanonicalGroups.Single(),
+                    0,
+                    CanonicalMuscleGroup.PelvicFloorAndPerineum),
+                1_002),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        Exercise member = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                Exercise(
+                    1_002,
+                    rotatorCuff.CanonicalGroups.Single()),
+                1_001),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        var service = new ExerciseSessionService(
+            [.. selected, root, member],
+            new AlwaysZeroRandom());
 
-        Exercise current = CloneWithMuscularDemand(
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+
+        Assert.Equal(root.Id, state.SelectedExerciseIds[shoulderAbductors.Id]);
+        Assert.Equal(root.Id, state.SelectedExerciseIds[rotatorCuff.Id]);
+        WorkoutGroup[] sequenceRounds = service.GetActiveGroups(state)
+            .Where(round => round.SelectionKey ==
+                new[] { shoulderAbductors, rotatorCuff }
+                    .MinBy(group => group.Order)!
+                    .Id)
+            .ToArray();
+        Assert.Equal(2, sequenceRounds.Length);
+        Assert.Equal([root.Id, member.Id], sequenceRounds
+            .Select(round => round.ExerciseOverrideId));
+    }
+
+    [Fact]
+    public void MuscleBalanceNeverMovesASelectedKeep()
+    {
+        (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =
+            CreateThirtyMinuteBalanceFixture();
+        WorkoutGroup targetGroup = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.ShoulderAbductors));
+        Exercise current = selected.Single(exercise =>
+            exercise.PrimaryCanonicalGroup ==
+                CanonicalMuscleGroup.ShoulderAbductors);
+        Exercise alternative = CloneWithMuscularDemand(
             Exercise(
-                selectedByGroup[targetGroup.Id],
-                targetGroup.CanonicalGroups.Single(),
+                1_001,
+                current.PrimaryCanonicalGroup,
                 0,
-                overloadedMuscle),
-            Flux.Models.Exercise.MaximumMuscularDemand);
-        exercises.RemoveAll(exercise => exercise.Id == current.Id);
-        exercises.Add(current);
-        Exercise downvotedAlternative = CloneWithMuscularDemand(
-            Exercise(1_001, targetGroup.CanonicalGroups.Single(), -1),
-            Flux.Models.Exercise.MaximumMuscularDemand);
-        exercises.Add(downvotedAlternative);
-        var state = new WorkoutState
-        {
-            LastWorkoutMinutes = 30,
-            SelectedExerciseIds = selectedByGroup,
-        };
-        var service = new ExerciseSessionService(exercises, new Random(1));
+                CanonicalMuscleGroup.PelvicFloorAndPerineum),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        state.KeptExerciseRootIdsBySelectionGroupId[targetGroup.Id] =
+            [current.Id];
+        var service = new ExerciseSessionService(
+            [.. selected, alternative],
+            new AlwaysZeroRandom());
 
         service.StartWorkout(state, 30, WorkoutModifiers.None);
 
         Assert.Equal(current.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Contains(
+            current.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[targetGroup.Id]);
     }
 
     [Fact]
-    public void LongWorkoutMuscleBudgetCountsExtraSetBeforeReplacingAChoice()
+    public void MuscleBalanceNeverPromotesARejectedLowerScoreExercise()
     {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
-        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
-        WorkoutGroup targetGroup = groups[^1];
-        Exercise[] selected = groups
-            .Select((group, index) => CloneWithMuscularDemand(
-                Exercise(
-                    index + 1,
-                    group.CanonicalGroups.Single(),
-                    0,
-                    index is >= 1 and <= 7 ? [overloadedMuscle] : []),
-                WorkoutRecoveryPolicy.HardMuscularDemand))
-            .ToArray();
-        Exercise overloaded = CloneWithMuscularDemand(
+        (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =
+            CreateThirtyMinuteBalanceFixture();
+        WorkoutGroup targetGroup = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.ShoulderAbductors));
+        Exercise current = selected.Single(exercise =>
+            exercise.PrimaryCanonicalGroup ==
+                CanonicalMuscleGroup.ShoulderAbductors);
+        Exercise rejectedAlternative = CloneWithMuscularDemand(
             Exercise(
-                selected[^1].Id,
+                1_001,
+                current.PrimaryCanonicalGroup,
+                -1,
+                CanonicalMuscleGroup.PelvicFloorAndPerineum),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        var service = new ExerciseSessionService(
+            [.. selected, rejectedAlternative],
+            new AlwaysZeroRandom());
+
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+
+        Assert.Equal(current.Id, state.SelectedExerciseIds[targetGroup.Id]);
+        Assert.Equal(-1, rejectedAlternative.Score);
+    }
+
+    [Fact]
+    public void LongWorkoutBalanceUsesTheActualRepeatedSetAllocation()
+    {
+        (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =
+            CreateThirtyMinuteBalanceFixture();
+        WorkoutGroup targetGroup = groups.Single(group =>
+            group.CanonicalGroups.Contains(CanonicalMuscleGroup.HipFlexors));
+        Exercise alternative = CloneWithMuscularDemand(
+            Exercise(
+                1_001,
                 targetGroup.CanonicalGroups.Single(),
                 0,
-                overloadedMuscle),
-            muscularDemand: WorkoutRecoveryPolicy.HardMuscularDemand);
-        selected[^1] = overloaded;
-        Exercise replacement = CloneWithMuscularDemand(
-            Exercise(1_001, targetGroup.CanonicalGroups.Single()),
-            muscularDemand: WorkoutRecoveryPolicy.HardMuscularDemand);
-        var state = new WorkoutState
-        {
-            LastWorkoutMinutes = 45,
-            SelectedExerciseIds = groups
-                .Select((group, index) => (
-                    GroupId: group.Id,
-                    ExerciseId: selected[index].Id))
-                .ToDictionary(entry => entry.GroupId, entry => entry.ExerciseId),
-        };
+                CanonicalMuscleGroup
+                    .AnteriorLateralLowerLegAndDorsalFoot),
+            Flux.Models.Exercise.MinimumMuscularDemand);
+        state.LastWorkoutMinutes = 45;
         var service = new ExerciseSessionService(
-            [.. selected, replacement],
+            [.. selected, alternative],
             new AlwaysZeroRandom());
 
         service.StartWorkout(state, 45, WorkoutModifiers.None);
 
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[targetGroup.Id]);
-        Assert.Equal(0, overloaded.Score);
-        Assert.Equal(0, replacement.Score);
+        Assert.Equal(alternative.Id, state.SelectedExerciseIds[targetGroup.Id]);
         Assert.Equal(
             2,
-            service.GetActiveGroups(state).Count(round =>
-                round.SelectionKey == targetGroup.Id));
-    }
-
-    [Fact]
-    public void MuscleBudgetCountsUnilateralSidesOncePerSet()
-    {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
-        CanonicalMuscleGroup overloadedMuscle = groups[0].CanonicalGroups.Single();
-        WorkoutGroup targetGroup = groups[^1];
-        Exercise[] selected = groups
-            .Select((group, index) => CloneWithMuscularDemand(
-                Exercise(
-                    index + 1,
-                    group.CanonicalGroups.Single(),
-                    0,
-                    index == 1 ? [overloadedMuscle] : []),
-                WorkoutRecoveryPolicy.HardMuscularDemand))
-            .ToArray();
-        Exercise unilateral = CloneWithMuscularDemand(
-            Exercise(
-                selected[^1].Id,
-                targetGroup.CanonicalGroups.Single(),
-                0,
-                ExerciseSideSequence.ScreenLeftThenRight,
-                overloadedMuscle),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        selected[^1] = unilateral;
-        Exercise replacement = CloneWithMuscularDemand(
-            Exercise(1_001, targetGroup.CanonicalGroups.Single()),
-            WorkoutRecoveryPolicy.HardMuscularDemand);
-        var state = new WorkoutState
-        {
-            LastWorkoutMinutes = 90,
-            SelectedExerciseIds = groups
-                .Select((group, index) => (
-                    GroupId: group.Id,
-                    ExerciseId: selected[index].Id))
-                .ToDictionary(entry => entry.GroupId, entry => entry.ExerciseId),
-        };
-        var service = new ExerciseSessionService(
-            [.. selected, replacement],
-            new AlwaysZeroRandom());
-
-        service.StartWorkout(state, 90, WorkoutModifiers.None);
-
-        Assert.Equal(unilateral.Id, state.SelectedExerciseIds[targetGroup.Id]);
-        Assert.Equal(
-            4,
             service.GetActiveGroups(state).Count(round =>
                 round.SelectionKey == targetGroup.Id));
     }
@@ -2017,7 +1943,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void PrimaryAssignmentBreaksEqualScoreTieBeforeCoverage()
+    public void MuscleBalanceCanOverridePrimaryTieWhenSecondaryChoiceImprovesLineup()
     {
         WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
         Exercise primary = ExerciseWithCoverage(
@@ -2042,7 +1968,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
 
-        Assert.Equal(primary.Id, service.GetSelectedExercise(state, lower).Id);
+        Assert.Equal(secondary.Id, service.GetSelectedExercise(state, lower).Id);
     }
 
     [Fact]
@@ -2214,7 +2140,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void TwentyGroupResolutionRewardsCoverageAcrossItsThreeLeafBucket()
+    public void MuscleBalanceCanOverrideCoverageTieWhenNarrowChoiceImprovesLineup()
     {
         Exercise[] canonicalExercises = MassGroupingTaxonomy.GetResolution(20).Groups
             .Select((group, index) => QualifiedForGroup(index + 1, group))
@@ -2234,8 +2160,11 @@ public sealed class ExerciseSessionServiceTests
 
         WorkoutGroup forearmAndHand = service.GetActiveGroups(state)
             .Single(group => group.Id == "r20.forearm-hand");
+        Exercise narrowForearmAndHand = canonicalExercises.Single(exercise =>
+            exercise.PrimaryCanonicalGroup ==
+                CanonicalMuscleGroup.ForearmFlexorsAndPronators);
         Assert.Equal(
-            broadForearmAndHand.Id,
+            narrowForearmAndHand.Id,
             service.GetSelectedExercise(state, forearmAndHand).Id);
     }
 
@@ -3032,15 +2961,36 @@ public sealed class ExerciseSessionServiceTests
     {
         DateTimeOffset now = new(2026, 8, 22, 12, 0, 0, TimeSpan.Zero);
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
-        CanonicalMuscleGroup recentlyWorked = groups[0].CanonicalGroups.First();
-        CanonicalMuscleGroup longestRested = groups[0].CanonicalGroups.Skip(1).First();
+        CanonicalMuscleGroup recentlyWorked =
+            CanonicalMuscleGroup.IntrinsicHand;
+        CanonicalMuscleGroup longestRested =
+            CanonicalMuscleGroup.ForearmExtensorsAndSupinators;
         int requiredCoverage = WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(
             groups[0]);
+        CanonicalMuscleGroup[] sharedCoverage = new[]
+            {
+                recentlyWorked,
+                longestRested,
+            }
+            .Concat(groups[0].CanonicalGroups
+                .Where(group =>
+                    group != recentlyWorked && group != longestRested)
+                .Order()
+                .Take(requiredCoverage - 2))
+            .ToArray();
         Exercise recentHard = CloneWithMuscularDemand(
-            ExerciseWithCoverage(1, recentlyWorked, 3, requiredCoverage),
+            Exercise(
+                1,
+                recentlyWorked,
+                0,
+                sharedCoverage.Where(group => group != recentlyWorked).ToArray()),
             muscularDemand: 2);
         Exercise restedHard = CloneWithMuscularDemand(
-            ExerciseWithCoverage(2, longestRested, 3, requiredCoverage),
+            Exercise(
+                2,
+                longestRested,
+                0,
+                sharedCoverage.Where(group => group != longestRested).ToArray()),
             muscularDemand: 2);
         Exercise middle = QualifiedForGroup(3, groups[1]);
         Exercise last = QualifiedForGroup(4, groups[2]);
@@ -3787,6 +3737,35 @@ public sealed class ExerciseSessionServiceTests
         }
 
         return exercises.ToArray();
+    }
+
+    private static (
+        WorkoutGroup[] Groups,
+        Exercise[] Selected,
+        WorkoutState State) CreateThirtyMinuteBalanceFixture()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        Exercise[] selected = groups
+            .Select((group, index) => CloneWithMuscularDemand(
+                Exercise(index + 1, group.CanonicalGroups.Single()),
+                Flux.Models.Exercise.MinimumMuscularDemand))
+            .ToArray();
+        var state = new WorkoutState
+        {
+            LastWorkoutMinutes = 30,
+            SelectedExerciseIds = groups
+                .Select((group, index) => (
+                    GroupId: group.Id,
+                    ExerciseId: selected[index].Id))
+                .ToDictionary(
+                    entry => entry.GroupId,
+                    entry => entry.ExerciseId,
+                    StringComparer.Ordinal),
+        };
+        return (groups, selected, state);
     }
 
     private static Exercise[] DirectionPairCatalog()

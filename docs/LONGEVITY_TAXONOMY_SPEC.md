@@ -456,14 +456,22 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 - For candidate priority, a sequence uses the hardest member whose primary
   muscle belongs to the slot being filled. Recovery timestamps are still
   recorded from each completed block's own exercise identity.
-- The soft muscle-workload budget counts each distinct exercise identity once
-  per sequence set. Side or direction blocks of the same identity do not
-  double-count bilateral muscle work; different linked identities do, and a
-  later repeated set counts again. Demand-`0` identities add no load;
-  demand-`1` identities add 0.5 only to their primary muscle; demand-`2`
-  identities add 1 to their primary and 0.5 to each distinct secondary. The
-  accumulated excess is applied temporarily when comparing candidates
-  associated with that muscle.
+- The soft within-session muscle rebalancer assigns primary/secondary workload
+  of 0.25/0.125 for demand `0`, 0.5/0.25 for demand `1`, and 1/0.5 for demand
+  `2`. Each distinct identity counts once per sequence set: repeated side or
+  direction blocks do not double-count it, different linked identities do, and
+  a later set counts again.
+- Canonical workload is summed independently into the existing 3-, 5-, 7-,
+  10-, 15-, 20-, and 30-minute muscle resolutions. The target at each is a
+  weakest bucket at least 25% of its strongest. Flux applies one legal
+  replacement that lexicographically improves the sorted shares, recalculates
+  every resolution, and repeats until all pass, no improvement exists, a lineup
+  repeats, or 30 passes complete.
+- Exact-slot Keeps are frozen and unavailable as replacement candidates. A
+  candidate must not lower the saved score of any displaced slot; modifier,
+  recovery, Mirror, atomic-sequence, movement-uniqueness, exact-duration, and
+  repeated-set constraints continue to apply. This is a best-effort lineup
+  adjustment, not a persisted score or a catalog-filling quota.
 - Keep is the only rest decision, and a sequence exposes it only after its final
   block and final repeated set.
 - Intermediate sequence rests are neutral: they hide Keep, apply no score, and

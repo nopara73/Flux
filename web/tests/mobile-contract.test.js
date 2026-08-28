@@ -12,8 +12,8 @@ import {
   EXERCISE_HARD_FLOOR_COMPATIBILITY,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
-  HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-  HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
+  HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  HARD_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
@@ -27,13 +27,16 @@ import {
   MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
   MINIMUM_MODIFIER_MATERIALITY_PERCENT,
   MINIMUM_MUSCULAR_DEMAND,
-  MUSCLE_BUDGET_MAX_REBALANCE_PASSES,
-  MUSCLE_SESSION_BUDGET_HALF_UNITS,
+  MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MODERATE_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+  MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR,
+  MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR,
+  MUSCLE_BALANCE_MAX_REBALANCE_PASSES,
   MIRROR_EQUIPMENT,
   MOVEMENT_DURATION_MS,
   PREPARATION_DURATION_MS,
-  MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-  SCORE_HALF_UNITS_PER_VOTE,
   RESOLUTIONS,
   REST_DURATION_MS,
   SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
@@ -59,7 +62,7 @@ const [
   workoutModifiers,
   exerciseModel,
   modifierPolicy,
-  muscleBudgetPolicy,
+  muscleBalancePolicy,
   recoveryPolicy,
   exerciseDatabase,
   catalogInvariantTests,
@@ -101,7 +104,7 @@ const [
   source("Flux", "Models", "WorkoutModifiers.cs"),
   source("Flux", "Models", "Exercise.cs"),
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
-  source("Flux", "Services", "WorkoutMuscleBudgetPolicy.cs"),
+  source("Flux", "Services", "WorkoutMuscleBalancePolicy.cs"),
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux.Tests", "CatalogInvariantTests.cs"),
@@ -218,66 +221,86 @@ test("web and mobile preserve exact slot preferences without duration remapping"
   );
 });
 
-test("web and mobile apply the same temporary muscle workload budget", () => {
+test("web and mobile apply the same multi-resolution muscle balancing", () => {
   assert.equal(
-    MUSCLE_SESSION_BUDGET_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "MaximumLoadHalfUnits"),
+    MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "MinimumPrimaryLoadEighthUnits"),
   );
   assert.equal(
-    MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "ModeratePrimaryLoadHalfUnits"),
+    MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "MinimumSecondaryLoadEighthUnits"),
   );
   assert.equal(
-    HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "HardPrimaryLoadHalfUnits"),
+    MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "ModeratePrimaryLoadEighthUnits"),
   );
   assert.equal(
-    HARD_SECONDARY_MUSCLE_LOAD_HALF_UNITS,
-    integerConstant(muscleBudgetPolicy, "HardSecondaryLoadHalfUnits"),
+    MODERATE_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "ModerateSecondaryLoadEighthUnits"),
   );
   assert.equal(
-    SCORE_HALF_UNITS_PER_VOTE,
-    integerConstant(muscleBudgetPolicy, "ScoreHalfUnitsPerVote"),
+    HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "HardPrimaryLoadEighthUnits"),
   );
   assert.equal(
-    MUSCLE_BUDGET_MAX_REBALANCE_PASSES,
-    integerConstant(muscleBudgetPolicy, "MaximumRebalancePasses"),
+    HARD_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
+    integerConstant(muscleBalancePolicy, "HardSecondaryLoadEighthUnits"),
+  );
+  assert.equal(
+    MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR,
+    integerConstant(muscleBalancePolicy, "MinimumBalancedShareNumerator"),
+  );
+  assert.equal(
+    MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR,
+    integerConstant(muscleBalancePolicy, "MinimumBalancedShareDenominator"),
+  );
+  assert.equal(
+    MUSCLE_BALANCE_MAX_REBALANCE_PASSES,
+    integerConstant(muscleBalancePolicy, "MaximumRebalancePasses"),
   );
   assert.match(
     sessionService,
-    /RepairActiveLineup\(state\);[\s\S]*RebalanceNewExercisesByMuscleBudget\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
+    /RepairActiveLineup\(state\);[\s\S]*RebalanceNewExercisesByMuscleBalance\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
   );
   assert.match(
     workoutModule,
-    /this\.repairActiveLineup\(\);[\s\S]*this\.rebalanceNewExercisesByMuscleBudget\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
+    /this\.repairActiveLineup\(\);[\s\S]*this\.rebalanceNewExercisesByMuscleBalance\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
   );
   assert.match(
-    muscleBudgetPolicy,
-    /MinimumMuscularDemand => 0[\s\S]*ModerateMuscularDemand => ModeratePrimaryLoadHalfUnits[\s\S]*MaximumMuscularDemand => HardPrimaryLoadHalfUnits/,
+    muscleBalancePolicy,
+    /MinimumMuscularDemand => MinimumPrimaryLoadEighthUnits[\s\S]*ModerateMuscularDemand => ModeratePrimaryLoadEighthUnits[\s\S]*MaximumMuscularDemand => HardPrimaryLoadEighthUnits/,
   );
   assert.match(
-    muscleBudgetPolicy,
-    /ModerateMuscularDemand => 0[\s\S]*MaximumMuscularDemand => HardSecondaryLoadHalfUnits/,
+    muscleBalancePolicy,
+    /MinimumMuscularDemand => MinimumSecondaryLoadEighthUnits[\s\S]*ModerateMuscularDemand => ModerateSecondaryLoadEighthUnits[\s\S]*MaximumMuscularDemand => HardSecondaryLoadEighthUnits/,
   );
   assert.match(
     workoutModule,
-    /case MINIMUM_MUSCULAR_DEMAND:[\s\S]*case MODERATE_MUSCULAR_DEMAND:[\s\S]*MODERATE_PRIMARY_MUSCLE_LOAD_HALF_UNITS[\s\S]*case HARD_MUSCULAR_DEMAND:[\s\S]*HARD_PRIMARY_MUSCLE_LOAD_HALF_UNITS/,
+    /case MINIMUM_MUSCULAR_DEMAND:[\s\S]*MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS[\s\S]*case MODERATE_MUSCULAR_DEMAND:[\s\S]*MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS[\s\S]*case HARD_MUSCULAR_DEMAND:[\s\S]*HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS/,
   );
   assert.match(
     sessionService,
-    /CalculateScheduledLoadHalfUnits[\s\S]*GetPrimaryLoadHalfUnits\(exercise\)[\s\S]*GetSecondaryLoadHalfUnits\(exercise\)/,
+    /CalculateScheduledCanonicalLoadEighthUnits[\s\S]*WorkoutMuscleBalancePolicy\.AddExerciseLoad/,
   );
   assert.match(
     workoutModule,
-    /calculateScheduledLoadHalfUnits[\s\S]*getPrimaryMuscleLoadHalfUnits\(exercise\)[\s\S]*getSecondaryMuscleLoadHalfUnits\(exercise\)/,
+    /calculateScheduledCanonicalLoadEighthUnits[\s\S]*addExerciseMuscleLoadEighthUnits/,
   );
   assert.match(
     sessionService,
-    /IsSequenceKept\(state, group\.Id, currentExercise\)[\s\S]*NextWorkoutExcludedExerciseIds\.Contains\(exercise\.Id\)/,
+    /currentBalance\.IsBalanced[\s\S]*removedPlacements\.Any\(placement => IsSequenceKept[\s\S]*GetSelectionScore\(state, candidate, group\.Id\) >=[\s\S]*GetSelectionScore\(state, displacedRoot, group\.Id\)/,
   );
   assert.match(
     workoutModule,
-    /this\.isSequenceKept\(group\.id, currentExercise\)[\s\S]*nextWorkoutExcludedExerciseIds\.includes\(exercise\.id\)/,
+    /currentBalance\.isBalanced[\s\S]*removedPlacements\.some\(\(placement\) =>[\s\S]*this\.isSequenceKept[\s\S]*this\.getSelectionScore\(candidate, group\.id\) >=[\s\S]*this\.getSelectionScore\(displacedRoot, group\.id\)/,
+  );
+  assert.match(
+    muscleBalancePolicy,
+    /MassGroupingTaxonomy[\s\S]*SupportedMinutes[\s\S]*group\.CanonicalGroups\.Sum/,
+  );
+  assert.match(
+    workoutModule,
+    /\[\.\.\.RESOLUTIONS\]\.map[\s\S]*group\.canonicalGroups\.reduce/,
   );
   assert.match(workoutState, /HashSet<int> NextWorkoutExcludedExerciseIds/);
 });
@@ -368,8 +391,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     workoutModule,
     /chooseBestDistinctLineup[\s\S]*getSessionMovementId\(candidate\)[\s\S]*solveAtomicSequenceLineup/,
   );
-  assert.equal((sessionService.match(/unavailableMovementIds/g) ?? []).length, 4);
-  assert.equal((workoutModule.match(/unavailableMovementIds/g) ?? []).length, 4);
+  assert.equal((sessionService.match(/unavailableMovementIds/g) ?? []).length, 2);
+  assert.equal((workoutModule.match(/unavailableMovementIds/g) ?? []).length, 2);
   assert.match(
     modifierPolicy,
     /WorkoutCoveragePolicy\.IsSelectable\(exercise, group\)[\s\S]*IsCompatible\(exercise, profile\)/,

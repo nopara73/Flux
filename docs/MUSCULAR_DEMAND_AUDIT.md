@@ -41,10 +41,29 @@ otherwise equivalent fresh hard choices, the longest-rested primary muscle is
 preferred. Mirror relevance is a lower-order tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
 
-The separate within-session muscle-workload budget uses the same reviewed
-rating without changing it. Rating `0` contributes no load. Rating `1`
-contributes 0.5 unit only to the primary canonical muscle. Rating `2`
-contributes 1 unit to the primary and 0.5 to each distinct secondary canonical
-muscle. Consequently, incidental work and moderate secondary associations do
-not increase accumulated load. Candidate comparison still applies any existing
-excess temporarily across the candidate's truthful muscle associations.
+The separate within-session muscle rebalancer uses the same reviewed rating
+without changing it:
+
+| `muscularDemand` | Primary canonical muscle | Each distinct secondary |
+|---:|---:|---:|
+| `0` | 0.25 | 0.125 |
+| `1` | 0.5 | 0.25 |
+| `2` | 1 | 0.5 |
+
+Actual repeated sets multiply those contributions. Multiple side or direction
+blocks of the same exercise identity within one sequence set count once;
+different linked identities count separately. The resulting canonical loads
+are summed into every existing 3-, 5-, 7-, 10-, 15-, 20-, and 30-minute muscle
+resolution independently.
+
+At each resolution, the weakest bucket's share of the strongest is evaluated.
+The soft goal is at least 25% at all seven resolutions. Flux chooses one legal
+replacement that lexicographically improves the sorted resolution shares,
+weakest first, recalculates, and repeats until all goals are met, no improvement
+exists, a lineup repeats, or 30 passes complete. Exact-slot Keeps remain frozen,
+and no candidate may have a lower saved score than a displaced selection in any
+covered slot. The process preserves modifier eligibility, recovery rotation,
+atomic sequences, unique session movements, exact duration, and repeated-set
+allocation. It changes neither `muscularDemand` nor persisted user scores, and
+it may deliberately stop below the goal when the catalog has no valid better
+lineup.

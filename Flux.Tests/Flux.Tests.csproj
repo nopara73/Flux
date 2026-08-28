@@ -56,7 +56,7 @@
     <Compile Include="..\Flux\Services\WorkoutCoveragePolicy.cs" Link="Production\Services\WorkoutCoveragePolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutDisplayPolicy.cs" Link="Production\Services\WorkoutDisplayPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutModifierPolicy.cs" Link="Production\Services\WorkoutModifierPolicy.cs" />
-    <Compile Include="..\Flux\Services\WorkoutMuscleBudgetPolicy.cs" Link="Production\Services\WorkoutMuscleBudgetPolicy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutMuscleBalancePolicy.cs" Link="Production\Services\WorkoutMuscleBalancePolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutRecoveryPolicy.cs" Link="Production\Services\WorkoutRecoveryPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutSequencePolicy.cs" Link="Production\Services\WorkoutSequencePolicy.cs" />
   </ItemGroup>

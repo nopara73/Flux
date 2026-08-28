@@ -27,17 +27,25 @@ with each paired modifier. Primary ownership is a preference after
 score/keep priority, never a reason to discard a truthful secondary association
 or admit a weak quota-filler.
 
-At session construction, keeps remain saved but are preferred contextually. The
-remaining choices use a soft per-muscle workload budget of 5. Demand-`0` work
-does not consume it. Demand-`1` work counts 0.5 for its primary muscle and zero
-for secondaries. Demand-`2` work counts 1 for its primary and 0.5 for each
-distinct secondary. Every excess 0.5 becomes a 0.5 temporary downvote while
-comparing candidates associated with that muscle. The adjustment is
-deterministic, is never persisted, and replaces the current candidate only on a
-strictly higher adjusted score. Each distinct exercise identity counts once per
-sequence set, so the two sides or directions of one identity do not double-count
-bilateral muscle work. Different linked exercise identities count separately,
-and an actual repeated set counts again.
+At session construction, Keeps remain saved but are preferred contextually. A
+soft rebalancer accounts for every unkept selection with primary/secondary
+weights of 0.25/0.125 for demand `0`, 0.5/0.25 for demand `1`, and 1/0.5 for
+demand `2`. Each distinct exercise identity counts once per sequence set, so
+side or direction blocks of one identity do not double-count bilateral muscle
+work. Different linked identities count separately, and an actual repeated set
+counts again.
+
+Canonical loads are summed independently into all seven existing muscle
+resolutions. The soft goal at each resolution is a weakest bucket at least 25%
+as loaded as its strongest. One legal lineup replacement is accepted at a time
+only when it lexicographically improves the sorted bucket shares, weakest first;
+all resolutions are then recalculated. The process stops when all resolutions
+meet the goal, no improvement exists, a lineup repeats, or 30 passes complete.
+Keeps stay frozen in their exact slots, candidates cannot lower the saved score
+of any displaced slot, and all modifier, recovery, sequence, uniqueness,
+duration, and set-allocation constraints remain in force. The balance is an
+attempt, not a quota: catalog gaps remain visible, and no derived value is
+persisted.
 
 The catalog mixes low-impact compound strength and conditioning with standing
 stretching, dynamic balance, active range of motion, rehabilitation, Pilates,
