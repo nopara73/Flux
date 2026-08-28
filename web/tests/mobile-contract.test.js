@@ -832,11 +832,11 @@ test("literal work-block timelines and logical exercise progress match", () => {
   );
   assert.match(
     workoutDisplayPolicy,
-    /Distinct\(StringComparer\.Ordinal\)[\s\S]*GetTimeline[\s\S]*UsesNeutralThreeExerciseAccent/,
+    /Distinct\(StringComparer\.Ordinal\)[\s\S]*GetTimeline[\s\S]*UsesThreeDistinctExercisePalette/,
   );
   assert.match(
     workoutDisplayPolicy,
-    /SequenceBlockCount == 3[\s\S]*ExerciseOverrideId > 0[\s\S]*Distinct\(\)[\s\S]*Count\(\) == 3/,
+    /SequenceBlockCount == 3[\s\S]*ExerciseOverrideId > 0[\s\S]*GetAccent\(group\) == WorkoutBlockAccent\.Neutral[\s\S]*Distinct\(\)[\s\S]*Count\(\) == 3/,
   );
   assert.match(
     workoutDisplayPolicy,
@@ -861,7 +861,7 @@ test("literal work-block timelines and logical exercise progress match", () => {
   );
   assert.match(
     workoutModule,
-    /getWorkoutDisplayProgress[\s\S]*getWorkoutExecutionTimeline[\s\S]*usesNeutralThreeExerciseAccent[\s\S]*getWorkoutBlockAccent/,
+    /getWorkoutDisplayProgress[\s\S]*getWorkoutExecutionTimeline[\s\S]*usesThreeDistinctExercisePalette[\s\S]*getThreeDistinctExerciseAccent[\s\S]*getWorkoutBlockAccent/,
   );
   assert.match(webStyles, /\.execution-block-track[\s\S]*grid-template-columns[\s\S]*\.execution-work-block\.blue[\s\S]*var\(--rest-accent\)[\s\S]*\.execution-work-block\.red[\s\S]*var\(--move-accent\)[\s\S]*\.execution-work-block\.neutral[\s\S]*var\(--chartreuse\)/);
   assert.match(webStyles, /\.execution-playhead[\s\S]*border-top: 7px solid var\(--graphite\)/);

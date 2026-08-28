@@ -75,23 +75,24 @@ public static class WorkoutDisplayPolicy
             currentBlockIndex++;
         }
 
-        bool usesNeutralThreeExerciseAccent =
-            UsesNeutralThreeExerciseAccent(blocks);
+        bool usesThreeDistinctExercisePalette =
+            UsesThreeDistinctExercisePalette(blocks);
         return new WorkoutExecutionTimeline(
             blocks
-                .Select(group => usesNeutralThreeExerciseAccent
-                    ? WorkoutBlockAccent.Neutral
+                .Select(group => usesThreeDistinctExercisePalette
+                    ? GetThreeDistinctExerciseAccent(group)
                     : GetAccent(group))
                 .ToArray(),
             currentBlockIndex);
     }
 
-    private static bool UsesNeutralThreeExerciseAccent(
+    private static bool UsesThreeDistinctExercisePalette(
         IReadOnlyList<WorkoutGroup> blocks) =>
         blocks.Count > 0 &&
         blocks.All(group =>
             group.SequenceBlockCount == 3 &&
-            group.ExerciseOverrideId > 0) &&
+            group.ExerciseOverrideId > 0 &&
+            GetAccent(group) == WorkoutBlockAccent.Neutral) &&
         blocks
             .GroupBy(group => group.SetNumber)
             .All(set =>
@@ -99,6 +100,18 @@ public static class WorkoutDisplayPolicy
                 set.Select(group => group.ExerciseOverrideId)
                     .Distinct()
                     .Count() == 3);
+
+    private static WorkoutBlockAccent GetThreeDistinctExerciseAccent(
+        WorkoutGroup group) =>
+        group.SequenceBlockIndex switch
+        {
+            0 => WorkoutBlockAccent.Blue,
+            1 => WorkoutBlockAccent.Neutral,
+            2 => WorkoutBlockAccent.Red,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(group),
+                "A three-exercise palette requires block indexes 0 through 2."),
+        };
 
     public static WorkoutBlockAccent GetAccent(WorkoutGroup group)
     {

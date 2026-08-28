@@ -164,42 +164,82 @@ test("execution timeline contains only real work blocks", () => {
   );
 });
 
-test("three distinct exercises use the neutral repeated-set accent", () => {
+test("three distinct uncued exercises use the three-phase palette", () => {
   const groups = [1, 2].flatMap((setNumber) => [
     {
       id: `circuit.set${setNumber}.block1`,
       order: (setNumber - 1) * 3 + 1,
       selectionGroupId: "circuit",
       sequenceBlockCount: 3,
+      sequenceBlockIndex: 0,
       setNumber,
       exerciseOverrideId: 101,
-      sequenceSideCue: "ScreenRight",
     },
     {
       id: `circuit.set${setNumber}.block2`,
       order: (setNumber - 1) * 3 + 2,
       selectionGroupId: "circuit",
       sequenceBlockCount: 3,
+      sequenceBlockIndex: 1,
       setNumber,
       exerciseOverrideId: 102,
-      sequenceSideCue: "ScreenLeft",
     },
     {
       id: `circuit.set${setNumber}.block3`,
       order: (setNumber - 1) * 3 + 3,
       selectionGroupId: "circuit",
       sequenceBlockCount: 3,
+      sequenceBlockIndex: 2,
       setNumber,
       exerciseOverrideId: 103,
-      sequenceDirectionCue: "Forward",
     },
   ]);
 
   assert.deepEqual(
     getWorkoutExecutionTimeline(groups, groups[4]),
     {
-      blocks: Array(6).fill("neutral"),
+      blocks: ["blue", "neutral", "red", "blue", "neutral", "red"],
       currentBlockIndex: 4,
+    },
+  );
+});
+
+test("three distinct exercises preserve real side and direction cues", () => {
+  const groups = [
+    {
+      id: "circuit.block1",
+      order: 1,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      sequenceBlockIndex: 0,
+      exerciseOverrideId: 101,
+      sequenceSideCue: "ScreenRight",
+    },
+    {
+      id: "circuit.block2",
+      order: 2,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      sequenceBlockIndex: 1,
+      exerciseOverrideId: 102,
+      sequenceSideCue: "ScreenLeft",
+    },
+    {
+      id: "circuit.block3",
+      order: 3,
+      selectionGroupId: "circuit",
+      sequenceBlockCount: 3,
+      sequenceBlockIndex: 2,
+      exerciseOverrideId: 103,
+      sequenceDirectionCue: "Forward",
+    },
+  ];
+
+  assert.deepEqual(
+    getWorkoutExecutionTimeline(groups, groups[1]),
+    {
+      blocks: ["blue", "red", "blue"],
+      currentBlockIndex: 1,
     },
   );
 });

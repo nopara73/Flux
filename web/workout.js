@@ -748,11 +748,12 @@ export function getWorkoutBlockAccent(group) {
   }
 }
 
-function usesNeutralThreeExerciseAccent(groups) {
+function usesThreeDistinctExercisePalette(groups) {
   if (groups.length === 0 || !groups.every((group) =>
     group.sequenceBlockCount === 3 &&
     Number.isInteger(group.exerciseOverrideId) &&
-    group.exerciseOverrideId > 0)) {
+    group.exerciseOverrideId > 0 &&
+    getWorkoutBlockAccent(group) === "neutral")) {
     return false;
   }
 
@@ -765,6 +766,21 @@ function usesNeutralThreeExerciseAccent(groups) {
   }
   return [...exerciseIdsBySet.values()].every((exerciseIds) =>
     exerciseIds.length === 3 && new Set(exerciseIds).size === 3);
+}
+
+function getThreeDistinctExerciseAccent(group) {
+  switch (group.sequenceBlockIndex) {
+    case 0:
+      return "blue";
+    case 1:
+      return "neutral";
+    case 2:
+      return "red";
+    default:
+      throw new RangeError(
+        "A three-exercise palette requires block indexes 0 through 2.",
+      );
+  }
 }
 
 export function getWorkoutExecutionTimeline(
@@ -787,11 +803,12 @@ export function getWorkoutExecutionTimeline(
   if (selectUpcomingBlock && currentBlockIndex + 1 < timelineGroups.length) {
     currentBlockIndex += 1;
   }
-  const usesNeutralAccent = usesNeutralThreeExerciseAccent(timelineGroups);
+  const usesThreeExercisePalette =
+    usesThreeDistinctExercisePalette(timelineGroups);
   return {
     blocks: timelineGroups.map((group) =>
-      usesNeutralAccent
-        ? "neutral"
+      usesThreeExercisePalette
+        ? getThreeDistinctExerciseAccent(group)
         : getWorkoutBlockAccent(group)),
     currentBlockIndex,
   };

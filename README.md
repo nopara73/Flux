@@ -276,13 +276,13 @@ final rest presents the one shared Keep/reject decision.
 Red means movement. Blue means rest or the inactive side of a side-specific
 block. The workout header uses one literal execution timeline for every
 exercise sequence: each equal segment is one real 45-second work block. Side
-and direction sequences use their actual blue/red/chartreuse cues; a three-block
-sequence made from three genuinely different exercises uses the neutral
-chartreuse pattern used by repeated sets. An external playhead marks the current
-block without changing the segment. Repeated sets repeat their real segment
-pattern; the 15-second rests remain in the separate rest timer and never appear
-as timeline segments or gaps. The main header counter counts each selected
-sequence once, so it remains
+and direction sequences use their actual blue/red/chartreuse cues. An uncued
+three-block sequence made from three genuinely different exercises uses a
+blue/chartreuse/red identity pattern, so it cannot be mistaken for repeated sets;
+extra sets repeat that same pattern. An external playhead marks the current block
+without changing the segment. The 15-second rests remain in the separate rest
+timer and never appear as timeline segments or gaps. The main header counter
+counts each selected sequence once, so it remains
 unchanged across that sequence's sides, directions, linked exercises, and
 repeated sets. The workout controls follow a media-player model: shuffle
 rejects an unstarted sequence with the same -1 vote as Next and replaces it in
