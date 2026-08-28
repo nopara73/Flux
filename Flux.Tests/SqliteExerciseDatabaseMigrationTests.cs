@@ -152,6 +152,57 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     }
 
     [Fact]
+    public void PublishedVersion68CatalogUpgradesWithoutRejectingChangedHardFloorExercises()
+    {
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "exercises.json")),
+                CatalogJsonOptions)
+            ?? throw new InvalidOperationException("The test catalog is missing.");
+        int[] addedAfterVersion68 =
+        [
+            547, 548,
+            549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
+            559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+            569, 570, 571, 574, 575, 578, 581, 582, 583,
+        ];
+        var publishedVersion68Names = new Dictionary<int, string>
+        {
+            [439] = "Pogo Bounces with Fixed-Gaze Head Turns",
+            [442] = "Pogo Bounces with Fixed-Gaze Head Nods",
+            [444] = "Pogo Bounces with Fixed-Gaze Head Tilts",
+            [478] = "Eye-Tracking Rotational Jumps",
+        };
+        HashSet<int> added = addedAfterVersion68.ToHashSet();
+        Dictionary<int, StoredExerciseSnapshot> storedVersion68 = catalog
+            .Where(exercise => !added.Contains(exercise.Id))
+            .ToDictionary(
+                exercise => exercise.Id,
+                exercise => new StoredExerciseSnapshot(
+                    publishedVersion68Names.GetValueOrDefault(
+                        exercise.Id,
+                        exercise.Name),
+                    exercise.Video,
+                    Score: exercise.Id % 19 - 9));
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            catalog,
+            storedVersion68);
+
+        Assert.Equal(448, storedVersion68.Count);
+        Assert.Equal(444, preserved.Count);
+        Assert.Equal(
+            storedVersion68.Keys
+                .Except(publishedVersion68Names.Keys)
+                .Order(),
+            preserved.Order());
+        Assert.All(storedVersion68, entry =>
+            Assert.Equal(entry.Key % 19 - 9, entry.Value.Score));
+    }
+
+    [Fact]
     public void LegacyMirrorOnlyRowCanBeCopiedIntoCurrentSchema()
     {
         using var connection = new SqliteConnection("Data Source=:memory:");

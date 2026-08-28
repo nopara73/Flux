@@ -366,6 +366,18 @@ public static class CatalogMigrationRules
                 [31] = new(
                     "Knee Raise with Overhead Reach",
                     "Tai Chi Golden-Rooster Balance Drill"),
+                [439] = new(
+                    "Pogo Bounces with Fixed-Gaze Head Turns",
+                    "Bidirectional Triangle-Path Saccades"),
+                [442] = new(
+                    "Pogo Bounces with Fixed-Gaze Head Nods",
+                    "Near-Point Convergence"),
+                [444] = new(
+                    "Pogo Bounces with Fixed-Gaze Head Tilts",
+                    "Vertical Gaze Stabilization"),
+                [478] = new(
+                    "Eye-Tracking Rotational Jumps",
+                    "Dance Head Accent Front"),
                 [219] = new(
                     "High-Knee Cross-Body Pull",
                     "Four-Way Self-Resisted Wrist Sequence"),

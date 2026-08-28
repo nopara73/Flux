@@ -2027,6 +2027,56 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
+    [Theory]
+    [InlineData(
+        439,
+        "Pogo Bounces with Fixed-Gaze Head Turns",
+        "Feet-Together Fixed-Gaze Head Turns",
+        "Bidirectional Triangle-Path Saccades")]
+    [InlineData(
+        442,
+        "Pogo Bounces with Fixed-Gaze Head Nods",
+        "Feet-Together Fixed-Gaze Head Nods",
+        "Near-Point Convergence")]
+    [InlineData(
+        444,
+        "Pogo Bounces with Fixed-Gaze Head Tilts",
+        "Feet-Together Fixed-Gaze Head Tilts",
+        "Vertical Gaze Stabilization")]
+    [InlineData(
+        478,
+        "Eye-Tracking Rotational Jumps",
+        "Step-Out Pivot with Thumb Tracking",
+        "Dance Head Accent Front")]
+    public void HardFloorCoverageAcceptsPublishedVersion68IdentityAndResetsIt(
+        int exerciseId,
+        string version68Name,
+        string currentName,
+        string baselineRetiredName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(version68Name, video, -7),
+        };
+        Exercise replacement = Exercise(
+            exerciseId,
+            currentName,
+            video,
+            retiredName: baselineRetiredName);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+
+        stored[exerciseId] = new(version68Name, "wrong.mp4", -7);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored));
+    }
+
     [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
