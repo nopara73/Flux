@@ -13,6 +13,132 @@ public sealed class WorkoutStateInvariantTests
             Converters = { new JsonStringEnumConverter() },
         };
 
+    [Theory]
+    [InlineData(1, WorkoutExercisePhase.Warmup)]
+    [InlineData(15, WorkoutExercisePhase.Warmup)]
+    [InlineData(16, WorkoutExercisePhase.PeakPerformance)]
+    [InlineData(45, WorkoutExercisePhase.PeakPerformance)]
+    [InlineData(46, WorkoutExercisePhase.Fatigued)]
+    [InlineData(90, WorkoutExercisePhase.Fatigued)]
+    public void ExercisePhaseUsesInclusiveFifteenAndFortyFiveBlockBoundaries(
+        int blockOrder,
+        WorkoutExercisePhase expected)
+    {
+        Assert.Equal(
+            expected,
+            WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(blockOrder));
+    }
+
+    [Fact]
+    public void VersionTwentyTwoSlotDownvotesMigrateFromLogsIntoWorkoutPhases()
+    {
+        Exercise exercise = Exercise(
+            101,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            score: 4);
+        string selectionGroupId = MassGroupingTaxonomy.GetGroup(
+            3,
+            exercise.PrimaryCanonicalGroup).Id;
+        var state = new WorkoutState
+        {
+            Version = 22,
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            ExerciseScoreAdjustmentsBySelectionGroupId = new()
+            {
+                [selectionGroupId] = new Dictionary<int, int>
+                {
+                    [exercise.Id] = -3,
+                },
+            },
+            WorkoutHistory =
+            [
+                SessionWithDecision(
+                    sessionId: 1,
+                    selectionGroupId,
+                    exercise,
+                    blockOrder: 1,
+                    ExerciseOutcome.Tick),
+                SessionWithShuffle(
+                    sessionId: 2,
+                    selectionGroupId,
+                    exercise,
+                    workoutMinutes: 3),
+                SessionWithDecision(
+                    sessionId: 3,
+                    selectionGroupId,
+                    exercise,
+                    blockOrder: 16,
+                    ExerciseOutcome.X),
+                SessionWithDecision(
+                    sessionId: 4,
+                    selectionGroupId,
+                    exercise,
+                    blockOrder: 46,
+                    ExerciseOutcome.X),
+            ],
+        };
+        var service = new ExerciseSessionService([exercise], new Random(1));
+
+        service.Initialize(state);
+
+        Assert.Equal(23, state.Version);
+        Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
+        Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.Warmup][exercise.Id]);
+        Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.PeakPerformance][exercise.Id]);
+        Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.Fatigued][exercise.Id]);
+        Assert.Contains(
+            exercise.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
+        Assert.Contains(exercise.Id, state.LastKeptExerciseIds);
+        Assert.Equal(4, exercise.Score);
+    }
+
+    [Fact]
+    public void PreSlotHistoryRestoresKeepsWithoutInventingPhaseDownvotes()
+    {
+        Exercise exercise = Exercise(
+            101,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            score: -2);
+        string selectionGroupId = MassGroupingTaxonomy.GetGroup(
+            3,
+            exercise.PrimaryCanonicalGroup).Id;
+        var state = new WorkoutState
+        {
+            Version = 21,
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            WorkoutHistory =
+            [
+                SessionWithDecision(
+                    sessionId: 1,
+                    selectionGroupId,
+                    exercise,
+                    blockOrder: 1,
+                    ExerciseOutcome.Tick),
+                SessionWithDecision(
+                    sessionId: 2,
+                    selectionGroupId,
+                    exercise,
+                    blockOrder: 16,
+                    ExerciseOutcome.X),
+            ],
+        };
+        var service = new ExerciseSessionService([exercise], new Random(1));
+
+        service.Initialize(state);
+
+        Assert.Equal(23, state.Version);
+        Assert.Contains(
+            exercise.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
+        Assert.Contains(exercise.Id, state.LastKeptExerciseIds);
+        Assert.Empty(state.ExerciseScoreAdjustmentsByPhase);
+        Assert.Equal(-2, exercise.Score);
+    }
+
     [Fact]
     public void SerializedVersionFourUnsupportedDurationMigratesToNearestResolution()
     {
@@ -33,7 +159,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(22, state.Version);
+        Assert.Equal(23, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -130,7 +256,7 @@ public sealed class WorkoutStateInvariantTests
         Assert.Equal(11, rejected.Score);
         Assert.Equal(
             -1,
-            state.ExerciseScoreAdjustmentsBySelectionGroupId[target.Id][
+            state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 rejected.Id]);
         Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
         Assert.Equal(untouchedCurrentExerciseId, state.SelectedExerciseIds[untouched.Id]);
@@ -197,7 +323,7 @@ public sealed class WorkoutStateInvariantTests
                 state.SelectedExerciseIds[groupId]));
         Assert.Equal(
             -1,
-            state.ExerciseScoreAdjustmentsBySelectionGroupId[target.Id][
+            state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 rejected.Id]);
     }
 
@@ -333,7 +459,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(22, state.Version);
+        Assert.Equal(23, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
             WorkoutModifiers.HardFloor,
@@ -458,6 +584,18 @@ public sealed class WorkoutStateInvariantTests
                             WasKeptAtWorkoutStart = true,
                         },
                     ],
+                    SelectionChanges =
+                    [
+                        new WorkoutSelectionChangeLog
+                        {
+                            Kind = WorkoutSelectionChangeKind.Shuffle,
+                            ChangedAtUnixMilliseconds = 1_777_000_030_000,
+                            SelectionGroupId = "3.LowerBody",
+                            ExercisePhase = WorkoutExercisePhase.Warmup,
+                            RejectedRootExerciseId = 100,
+                            ReplacementRootExerciseId = 101,
+                        },
+                    ],
                     Blocks =
                     [
                         new WorkoutBlockLog
@@ -488,6 +626,7 @@ public sealed class WorkoutStateInvariantTests
                         {
                             DecidedAtUnixMilliseconds = 1_777_000_075_000,
                             SelectionGroupId = "3.LowerBody",
+                            ExercisePhase = WorkoutExercisePhase.Warmup,
                             RootExerciseId = 101,
                             RootExerciseName = "Historic Squat Name",
                             SequenceExerciseIds = [101],
@@ -512,8 +651,47 @@ public sealed class WorkoutStateInvariantTests
         Assert.Equal(WorkoutSessionStatus.Completed, session.Status);
         Assert.Equal("Historic Squat Name", Assert.Single(session.Blocks).ExerciseName);
         Assert.Equal(2, session.Blocks[0].MuscularDemand);
+        Assert.Equal(
+            WorkoutExercisePhase.Warmup,
+            Assert.Single(session.SelectionChanges).ExercisePhase);
         Assert.Equal(ExerciseOutcome.Tick, Assert.Single(session.Decisions).Outcome);
+        Assert.Equal(
+            WorkoutExercisePhase.Warmup,
+            Assert.Single(session.Decisions).ExercisePhase);
         Assert.Equal(8, restored.NextWorkoutSessionId);
+    }
+
+    [Fact]
+    public void PhaseDownvotesRoundTripWithoutChangingCatalogScores()
+    {
+        var state = new WorkoutState
+        {
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.Warmup] = new Dictionary<int, int>
+                {
+                    [101] = -2,
+                },
+                [WorkoutExercisePhase.Fatigued] = new Dictionary<int, int>
+                {
+                    [101] = -1,
+                },
+            },
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal(-2, restored.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.Warmup][101]);
+        Assert.Equal(-1, restored.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.Fatigued][101]);
+        Assert.DoesNotContain(
+            WorkoutExercisePhase.PeakPerformance,
+            restored.ExerciseScoreAdjustmentsByPhase.Keys);
     }
 
     [Fact]
@@ -611,6 +789,71 @@ public sealed class WorkoutStateInvariantTests
             MaxSpaceMeters = 2,
             Equipment = "None",
             Silent = true,
+        };
+    }
+
+    private static WorkoutSessionLog SessionWithDecision(
+        long sessionId,
+        string selectionGroupId,
+        Exercise exercise,
+        int blockOrder,
+        ExerciseOutcome outcome)
+    {
+        long timestamp = 1_777_000_000_000 + sessionId * 100_000;
+        return new WorkoutSessionLog
+        {
+            SessionId = sessionId,
+            StartedAtUnixMilliseconds = timestamp - 60_000,
+            EndedAtUnixMilliseconds = timestamp + 1,
+            WorkoutMinutes = blockOrder,
+            Status = WorkoutSessionStatus.Completed,
+            Blocks =
+            [
+                new WorkoutBlockLog
+                {
+                    CompletedAtUnixMilliseconds = timestamp,
+                    SelectionGroupId = selectionGroupId,
+                    Order = blockOrder,
+                    RootExerciseId = exercise.Id,
+                    ExerciseId = exercise.Id,
+                },
+            ],
+            Decisions =
+            [
+                new WorkoutDecisionLog
+                {
+                    DecidedAtUnixMilliseconds = timestamp + 1,
+                    SelectionGroupId = selectionGroupId,
+                    RootExerciseId = exercise.Id,
+                    Outcome = outcome,
+                },
+            ],
+        };
+    }
+
+    private static WorkoutSessionLog SessionWithShuffle(
+        long sessionId,
+        string selectionGroupId,
+        Exercise exercise,
+        int workoutMinutes)
+    {
+        long timestamp = 1_777_000_000_000 + sessionId * 100_000;
+        return new WorkoutSessionLog
+        {
+            SessionId = sessionId,
+            StartedAtUnixMilliseconds = timestamp - 60_000,
+            EndedAtUnixMilliseconds = timestamp + 1,
+            WorkoutMinutes = workoutMinutes,
+            Status = WorkoutSessionStatus.Interrupted,
+            SelectionChanges =
+            [
+                new WorkoutSelectionChangeLog
+                {
+                    ChangedAtUnixMilliseconds = timestamp,
+                    SelectionGroupId = selectionGroupId,
+                    RejectedRootExerciseId = exercise.Id,
+                },
+            ],
         };
     }
 }

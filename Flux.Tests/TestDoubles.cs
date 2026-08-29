@@ -77,6 +77,11 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                     entry => entry.Key,
                     entry => new Dictionary<int, int>(entry.Value),
                     StringComparer.Ordinal),
+            ExerciseScoreAdjustmentsByPhase = state
+                .ExerciseScoreAdjustmentsByPhase
+                .ToDictionary(
+                    entry => entry.Key,
+                    entry => new Dictionary<int, int>(entry.Value)),
             LastHardWorkUnixMillisecondsByPrimaryMuscle =
                 new Dictionary<string, long>(
                     state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
@@ -175,6 +180,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                     Kind = change.Kind,
                     ChangedAtUnixMilliseconds = change.ChangedAtUnixMilliseconds,
                     SelectionGroupId = change.SelectionGroupId,
+                    ExercisePhase = change.ExercisePhase,
                     RejectedRootExerciseId = change.RejectedRootExerciseId,
                     RejectedRootExerciseName = change.RejectedRootExerciseName,
                     RejectedSelectionScoreBeforeChange =
@@ -217,6 +223,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 {
                     DecidedAtUnixMilliseconds = decision.DecidedAtUnixMilliseconds,
                     SelectionGroupId = decision.SelectionGroupId,
+                    ExercisePhase = decision.ExercisePhase,
                     RootExerciseId = decision.RootExerciseId,
                     RootExerciseName = decision.RootExerciseName,
                     SequenceExerciseIds = [.. decision.SequenceExerciseIds],

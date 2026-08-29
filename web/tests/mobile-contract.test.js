@@ -43,6 +43,8 @@ import {
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
+  WORKOUT_EXERCISE_PHASE,
+  getWorkoutExercisePhase,
 } from "../workout.js";
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -69,6 +71,7 @@ const [
   catalogInvariantTests,
   exerciseDatabaseVersionPolicy,
   workoutSessionLog,
+  workoutExercisePhase,
   durationLayout,
   workoutLayout,
   androidColors,
@@ -112,6 +115,7 @@ const [
   source("Flux.Tests", "CatalogInvariantTests.cs"),
   source("Flux", "Data", "ExerciseDatabaseVersionPolicy.cs"),
   source("Flux", "Models", "WorkoutSessionLog.cs"),
+  source("Flux", "Models", "WorkoutExercisePhase.cs"),
   source("Flux", "Resources", "layout", "screen_duration.xml"),
   source("Flux", "Resources", "layout", "screen_workout.xml"),
   source("Flux", "Resources", "values", "colors.xml"),
@@ -176,6 +180,8 @@ test("web and mobile persist the same complete workout audit trail", () => {
     workoutModule,
     /workoutHistory[\s\S]*activeWorkoutSession[\s\S]*selectionChanges[\s\S]*blocks[\s\S]*decisions/,
   );
+  assert.match(workoutSessionLog, /WorkoutExercisePhase ExercisePhase/);
+  assert.match(workoutModule, /exercisePhase/);
 });
 
 test("web and mobile persist hard-first block-aware workout allocation", () => {
@@ -204,23 +210,41 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
   );
   assert.match(
     sessionService,
-    /KeepSequenceInSlot\(state, selectionGroup\.Id, root\)[\s\S]*RemoveSequenceKeep\(state, selectionGroup\.Id, root\)[\s\S]*SyncLegacyKeptExerciseIds\(state\)/,
+    /KeepSequenceInSlot\(state, selectionGroup\.Id, root\)[\s\S]*rejectedSelectionKeys\.Add\(selectionGroup\.Id\)[\s\S]*SyncLegacyKeptExerciseIds\(state\)/,
   );
 });
 
-test("web and mobile preserve exact slot preferences without duration remapping", () => {
+test("web and mobile carry keeps across duration resolutions", () => {
   assert.match(
     sessionService,
     /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(state\);/,
   );
   assert.match(
     sessionService,
-    /CarrySlotPreferencesForward\([\s\S]*KeptExerciseRootIdsBySelectionGroupId[\s\S]*ChooseBestDistinctLineup/,
+    /CarrySlotPreferencesForward\([\s\S]*BuildCrossResolutionKeepPreferences[\s\S]*ChooseBestDistinctLineup/,
   );
   assert.match(
     workoutModule,
-    /carrySlotPreferencesForward\(\)[\s\S]*keptExerciseRootIdsBySelectionGroupId[\s\S]*chooseBestDistinctLineup/,
+    /carrySlotPreferencesForward\(\)[\s\S]*buildCrossResolutionKeepPreferences[\s\S]*chooseBestDistinctLineup/,
   );
+});
+
+test("web and mobile scope rejection feedback to the same workout phases", () => {
+  assert.equal(getWorkoutExercisePhase(15), WORKOUT_EXERCISE_PHASE.Warmup);
+  assert.equal(getWorkoutExercisePhase(16),
+    WORKOUT_EXERCISE_PHASE.PeakPerformance);
+  assert.equal(getWorkoutExercisePhase(45),
+    WORKOUT_EXERCISE_PHASE.PeakPerformance);
+  assert.equal(getWorkoutExercisePhase(46), WORKOUT_EXERCISE_PHASE.Fatigued);
+  assert.match(
+    workoutExercisePhase,
+    /WarmupFinalBlock\s*=\s*15[\s\S]*PeakPerformanceFinalBlock\s*=\s*45/,
+  );
+  assert.match(
+    workoutState,
+    /Dictionary<WorkoutExercisePhase, Dictionary<int, int>>[\s\S]*ExerciseScoreAdjustmentsByPhase/,
+  );
+  assert.match(workoutModule, /exerciseScoreAdjustmentsByPhase/);
 });
 
 test("web and mobile apply the same multi-resolution muscle balancing", () => {
@@ -338,10 +362,11 @@ test("web and mobile persist one combined duration and modifier selection contex
     hardFloorCompatibilityModel,
     /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 19);
-  assert.match(workoutState, /public int Version[^=]*=\s*22/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 20);
+  assert.match(workoutState, /public int Version[^=]*=\s*23/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
+  assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
   assert.match(workoutState, /PendingRestMillisecondsRemaining/);
   assert.match(workoutState, /PendingRestPausedByUser/);
   assert.match(workoutModule, /pendingRestMillisecondsRemaining/);
@@ -1119,11 +1144,15 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.match(webApp, /repeatExercise\.addEventListener[\s\S]*playbackToggle\.addEventListener[\s\S]*nextExercise\.addEventListener/);
   assert.match(
     workoutModule,
-    /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates[\s\S]*applyShuffleRejection\(selectionGroupId, rejectedRoot, scoreUpdates\)[\s\S]*downvoteSequenceInSlot/,
+    /shuffleNextExercise\(group\)[\s\S]*getCompatibleShuffleCandidates[\s\S]*applyShuffleRejection\([\s\S]*selectionGroupId,[\s\S]*this\.getExercisePhase\(group\),[\s\S]*rejectedRoot,[\s\S]*scoreUpdates/,
+  );
+  assert.match(
+    workoutModule,
+    /applyShuffleRejection\(selectionGroupId, phase, rejectedRoot, exercises\)[\s\S]*downvoteSequenceInPhase\(phase, rejectedRoot\)/,
   );
   assert.match(
     sessionService,
-    /ShuffleNextExercise\([\s\S]*ApplyShuffleRejection\([\s\S]*group\.SelectionKey,[\s\S]*rejectedRoot,[\s\S]*scoreUpdates\)[\s\S]*DownvoteSequenceInSlot/,
+    /ShuffleNextExercise\([\s\S]*ApplyShuffleRejection\([\s\S]*group\.SelectionKey,[\s\S]*GetExercisePhase\(group\),[\s\S]*rejectedRoot,[\s\S]*scoreUpdates[\s\S]*DownvoteSequenceInPhase/,
   );
   assert.match(
     sessionService,
@@ -1448,11 +1477,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
-    /OrderBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
+    /OrderByDescending\(placement => GetPhaseScoreAdjustment\([\s\S]*ThenBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
   );
   assert.match(
     workoutModule,
-    /setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*setCountsBySelectionGroupId\.get\(right\.anchor\.id\) \|\|[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1[\s\S]*blockCostByGroup\.get\(left\.anchor\.id\) === 1/,
+    /getPhaseScoreAdjustment\([\s\S]*getPhaseAfterAddingSet[\s\S]*rightScore - leftScore \|\|[\s\S]*setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1/,
   );
   assert.match(
     sessionService,
@@ -1480,11 +1509,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
-    /ApplySequenceOutcome[\s\S]*DownvoteSequenceInSlot[\s\S]*RecordWorkoutDecision/,
+    /ApplySequenceOutcome[\s\S]*DownvoteSequenceInPhase[\s\S]*RecordWorkoutDecision/,
   );
   assert.match(
     workoutModule,
-    /applySequenceOutcome[\s\S]*downvoteSequenceInSlot[\s\S]*recordWorkoutDecision/,
+    /applySequenceOutcome[\s\S]*downvoteSequenceInPhase[\s\S]*recordWorkoutDecision/,
   );
   assert.match(
     mainActivity,

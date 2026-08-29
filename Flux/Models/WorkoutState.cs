@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 22;
+    public int Version { get; set; } = 23;
 
     public int CatalogRevision { get; set; }
 
@@ -19,11 +19,17 @@ public sealed class WorkoutState
     public Dictionary<string, HashSet<int>>
         KeptExerciseRootIdsBySelectionGroupId { get; set; } = [];
 
-    // New downvotes are stored as per-slot adjustments to the legacy catalog
-    // score. The immutable legacy score remains the migration baseline, while
-    // every post-migration vote affects only the slot where it was made.
+    // Version 22 migration input only. Downvotes stopped following anatomical
+    // selection slots in version 23; retain this field so those votes can be
+    // migrated without losing the user's feedback.
     public Dictionary<string, Dictionary<int, int>>
         ExerciseScoreAdjustmentsBySelectionGroupId { get; set; } = [];
+
+    // New downvotes follow the sequence root only within the workout phase in
+    // which the user rejected it. The immutable catalog score remains the
+    // baseline for feedback recorded before phase-scoped persistence existed.
+    public Dictionary<WorkoutExercisePhase, Dictionary<int, int>>
+        ExerciseScoreAdjustmentsByPhase { get; set; } = [];
 
     public Dictionary<string, long>
         LastHardWorkUnixMillisecondsByPrimaryMuscle { get; set; } = [];

@@ -70,6 +70,8 @@ public sealed class WorkoutSelectionChangeLog
 
     public string SelectionGroupId { get; set; } = string.Empty;
 
+    public WorkoutExercisePhase ExercisePhase { get; set; }
+
     public int RejectedRootExerciseId { get; set; }
 
     public string RejectedRootExerciseName { get; set; } = string.Empty;
@@ -133,6 +135,8 @@ public sealed class WorkoutDecisionLog
     public long DecidedAtUnixMilliseconds { get; set; }
 
     public string SelectionGroupId { get; set; } = string.Empty;
+
+    public WorkoutExercisePhase ExercisePhase { get; set; }
 
     public int RootExerciseId { get; set; }
 

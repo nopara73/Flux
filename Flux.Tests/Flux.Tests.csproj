@@ -42,6 +42,7 @@
     <Compile Include="..\Flux\Models\RecordedWorkoutOutcome.cs" Link="Production\Models\RecordedWorkoutOutcome.cs" />
     <Compile Include="..\Flux\Models\LegacyWorkoutState.cs" Link="Production\Models\LegacyWorkoutState.cs" />
     <Compile Include="..\Flux\Models\WorkoutGroup.cs" Link="Production\Models\WorkoutGroup.cs" />
+    <Compile Include="..\Flux\Models\WorkoutExercisePhase.cs" Link="Production\Models\WorkoutExercisePhase.cs" />
     <Compile Include="..\Flux\Models\WorkoutModifiers.cs" Link="Production\Models\WorkoutModifiers.cs" />
     <Compile Include="..\Flux\Models\WorkoutSessionLog.cs" Link="Production\Models\WorkoutSessionLog.cs" />
     <Compile Include="..\Flux\Models\MirrorEquipment.cs" Link="Production\Models\MirrorEquipment.cs" />

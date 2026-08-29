@@ -1424,6 +1424,7 @@ public static class CatalogMigrationRules
         state.LastKeptExerciseIds ??= [];
         state.KeptExerciseRootIdsBySelectionGroupId ??= [];
         state.ExerciseScoreAdjustmentsBySelectionGroupId ??= [];
+        state.ExerciseScoreAdjustmentsByPhase ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
         state.ActiveSetCountsBySelectionGroupId ??= [];
         state.ActiveDirectionPartnerExerciseIds ??= [];
@@ -1508,6 +1509,25 @@ public static class CatalogMigrationRules
             {
                 state.ExerciseScoreAdjustmentsBySelectionGroupId.Remove(
                     selectionGroupId);
+            }
+        }
+
+        foreach (WorkoutExercisePhase phase in
+                 state.ExerciseScoreAdjustmentsByPhase.Keys.ToArray())
+        {
+            foreach (int exerciseId in state.ExerciseScoreAdjustmentsByPhase[phase]
+                         .Keys
+                         .Where(exerciseId => IsScorePreferenceRootInvalidated(
+                             exerciseId,
+                             scoreInvalidatedExerciseIds,
+                             exercisesById))
+                         .ToArray())
+            {
+                state.ExerciseScoreAdjustmentsByPhase[phase].Remove(exerciseId);
+            }
+            if (state.ExerciseScoreAdjustmentsByPhase[phase].Count == 0)
+            {
+                state.ExerciseScoreAdjustmentsByPhase.Remove(phase);
             }
         }
 

@@ -164,6 +164,32 @@ export const HARD_ROTATION_STATUS = Object.freeze({
   Neutral: "Neutral",
   FreshHard: "FreshHard",
 });
+export const WORKOUT_EXERCISE_PHASE = Object.freeze({
+  Unknown: "Unknown",
+  Warmup: "Warmup",
+  PeakPerformance: "PeakPerformance",
+  Fatigued: "Fatigued",
+});
+export const WARMUP_FINAL_BLOCK = 15;
+export const PEAK_PERFORMANCE_FINAL_BLOCK = 45;
+
+export function getWorkoutExercisePhase(oneBasedBlockOrder) {
+  if (!Number.isInteger(oneBasedBlockOrder) || oneBasedBlockOrder <= 0) {
+    throw new RangeError("Exercise block order must be a positive integer.");
+  }
+  if (oneBasedBlockOrder <= WARMUP_FINAL_BLOCK) {
+    return WORKOUT_EXERCISE_PHASE.Warmup;
+  }
+  return oneBasedBlockOrder <= PEAK_PERFORMANCE_FINAL_BLOCK
+    ? WORKOUT_EXERCISE_PHASE.PeakPerformance
+    : WORKOUT_EXERCISE_PHASE.Fatigued;
+}
+
+function isPersistableExercisePhase(phase) {
+  return phase === WORKOUT_EXERCISE_PHASE.Warmup ||
+    phase === WORKOUT_EXERCISE_PHASE.PeakPerformance ||
+    phase === WORKOUT_EXERCISE_PHASE.Fatigued;
+}
 export const MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS = 2;
 export const MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS = 1;
 export const MODERATE_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS = 4;
@@ -175,7 +201,8 @@ export const MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR = 4;
 export const MUSCLE_BALANCE_MAX_REBALANCE_PASSES = 30;
 export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 19;
+export const CURRENT_WORKOUT_STATE_VERSION = 20;
+const PHASE_SCOPED_DOWNVOTE_STATE_VERSION = 20;
 const SLOT_SCOPED_PREFERENCE_STATE_VERSION = 19;
 const IMPLICIT_HARD_FLOOR_STATE_VERSION = 18;
 const EXPLICIT_MIRROR_EQUIPMENT_STATE_VERSION = 9;
@@ -2370,6 +2397,7 @@ export function createDefaultState() {
     lastKeptExerciseIds: [],
     keptExerciseRootIdsBySelectionGroupId: {},
     exerciseScoreAdjustmentsBySelectionGroupId: {},
+    exerciseScoreAdjustmentsByPhase: {},
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
     lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {},
     nextWorkoutSessionId: 1,
@@ -2506,6 +2534,22 @@ function normalizeStateShape(raw) {
     }
     if (Object.keys(normalized).length > 0) {
       state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] = normalized;
+    }
+  }
+  for (const [phase, adjustments] of Object.entries(objectOrEmpty(
+    raw.exerciseScoreAdjustmentsByPhase,
+  ))) {
+    if (!isPersistableExercisePhase(phase)) {
+      continue;
+    }
+    const normalized = {};
+    for (const [rootId, adjustment] of Object.entries(objectOrEmpty(adjustments))) {
+      if (/^\d+$/.test(rootId) && Number.isInteger(adjustment) && adjustment < 0) {
+        normalized[rootId] = adjustment;
+      }
+    }
+    if (Object.keys(normalized).length > 0) {
+      state.exerciseScoreAdjustmentsByPhase[phase] = normalized;
     }
   }
   state.lastHardWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
@@ -2758,6 +2802,9 @@ function normalizeWorkoutSessionLog(raw) {
         change.changedAtUnixMilliseconds,
       ),
       selectionGroupId: stringOrEmpty(change.selectionGroupId),
+      exercisePhase: isPersistableExercisePhase(change.exercisePhase)
+        ? change.exercisePhase
+        : WORKOUT_EXERCISE_PHASE.Unknown,
       rejectedRootExerciseId: positiveIntegerOrZero(change.rejectedRootExerciseId),
       rejectedRootExerciseName: stringOrEmpty(change.rejectedRootExerciseName),
       rejectedSelectionScoreBeforeChange: integerOrZero(
@@ -2800,6 +2847,9 @@ function normalizeWorkoutSessionLog(raw) {
         decision.decidedAtUnixMilliseconds,
       ),
       selectionGroupId: stringOrEmpty(decision.selectionGroupId),
+      exercisePhase: isPersistableExercisePhase(decision.exercisePhase)
+        ? decision.exercisePhase
+        : WORKOUT_EXERCISE_PHASE.Unknown,
       rootExerciseId: positiveIntegerOrZero(decision.rootExerciseId),
       rootExerciseName: stringOrEmpty(decision.rootExerciseName),
       sequenceExerciseIds: uniquePositiveIntegers(decision.sequenceExerciseIds)
@@ -2898,6 +2948,15 @@ export class WorkoutSession {
     if (this.loadedStateVersion < SLOT_SCOPED_PREFERENCE_STATE_VERSION) {
       this.migrateSlotScopedPreferences();
     }
+    if (this.loadedStateVersion < PHASE_SCOPED_DOWNVOTE_STATE_VERSION) {
+      if (this.loadedStateVersion < SLOT_SCOPED_PREFERENCE_STATE_VERSION) {
+        // Older releases have only the global score baseline, so their
+        // historical rejections cannot be assigned a truthful phase.
+        this.state.exerciseScoreAdjustmentsBySelectionGroupId = {};
+      }
+      // This also restores historical Keeps that an older rejection removed.
+      this.migratePhaseScopedDownvotes();
+    }
     this.normalizeSlotPreferences();
   }
 
@@ -2983,8 +3042,8 @@ export class WorkoutSession {
     this.state.completionAcknowledged = false;
     this.clearPendingMovement();
     this.clearPendingRest();
-    // Shuffle exclusions belong only to the workout being shuffled. The
-    // durable preference is the score adjustment for that exact slot.
+    // Shuffle exclusions belong only to the workout being shuffled. Durable
+    // rejection feedback is stored by workout phase.
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.carrySlotPreferencesForward();
     this.repairActiveLineup();
@@ -3127,7 +3186,7 @@ export class WorkoutSession {
     const selectionGroupId = getSelectionKey(group);
     const rejectedSelectionScore = this.getSelectionScore(
       rejectedRoot,
-      selectionGroupId,
+      this.getExercisePhase(group),
     );
 
     this.shuffle(candidates);
@@ -3141,11 +3200,17 @@ export class WorkoutSession {
     }
     this.recordWorkoutSelectionChange(
       selectionGroupId,
+      this.getExercisePhase(group),
       rejectedRoot,
       rejectedSelectionScore,
       selected.exercise,
     );
-    this.applyShuffleRejection(selectionGroupId, rejectedRoot, scoreUpdates);
+    this.applyShuffleRejection(
+      selectionGroupId,
+      this.getExercisePhase(group),
+      rejectedRoot,
+      scoreUpdates,
+    );
     this.applyLongWorkoutAllocation(selected.allocation);
     return {
       rejectedExercise,
@@ -3154,9 +3219,9 @@ export class WorkoutSession {
     };
   }
 
-  applyShuffleRejection(selectionGroupId, rejectedRoot, exercises) {
+  applyShuffleRejection(selectionGroupId, phase, rejectedRoot, exercises) {
     const rejectedExerciseIds = new Set(exercises.map((exercise) => exercise.id));
-    this.downvoteSequenceInSlot(selectionGroupId, rejectedRoot);
+    this.downvoteSequenceInPhase(phase, rejectedRoot);
     this.state.nextWorkoutExcludedExerciseIds = [...new Set([
       ...this.state.nextWorkoutExcludedExerciseIds,
       ...rejectedExerciseIds,
@@ -3604,7 +3669,11 @@ export class WorkoutSession {
     }
     this.clearPendingMovement();
     this.clearPendingRest();
-    return this.applySequenceOutcome(decisionRound, false);
+    return this.applySequenceOutcome(
+      decisionRound,
+      false,
+      this.getExercisePhase(group),
+    );
   }
 
   advanceSequence(group) {
@@ -3620,16 +3689,17 @@ export class WorkoutSession {
     this.state.completionAcknowledged = false;
   }
 
-  applySequenceOutcome(group, keep) {
+  applySequenceOutcome(group, keep, feedbackPhase = null) {
     const exercise = this.getSelectedExercise(group);
     const root = this.getSequenceRoot(exercise);
     const selectionGroupId = getSelectionKey(group);
+    const exercisePhase = feedbackPhase ?? this.getExercisePhase(group);
     const selectionScoreBeforeDecision = this.getSelectionScore(
       root,
-      selectionGroupId,
+      exercisePhase,
     );
     if (!keep) {
-      this.downvoteSequenceInSlot(selectionGroupId, root);
+      this.downvoteSequenceInPhase(exercisePhase, root);
     }
     const decidedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     this.recordWorkoutDecision(
@@ -3637,6 +3707,7 @@ export class WorkoutSession {
       root,
       keep ? "tick" : "x",
       selectionScoreBeforeDecision,
+      exercisePhase,
       decidedAtUnixMilliseconds,
     );
     this.state.outcomes[group.id] = keep ? "tick" : "x";
@@ -3709,7 +3780,6 @@ export class WorkoutSession {
         this.keepSequenceInSlot(selectionGroup.id, root);
       } else {
         rejectedSelectionKeys.add(selectionGroup.id);
-        this.removeSequenceKeep(selectionGroup.id, root);
       }
     }
     this.state.nextWorkoutExcludedExerciseIds = [];
@@ -3792,6 +3862,8 @@ export class WorkoutSession {
     }
 
     const targetGroups = this.getSelectionGroups();
+    const carriedKeepRootIdsBySelectionGroupId =
+      this.buildCrossResolutionKeepPreferences(targetGroups);
     const currentExerciseIds = new Map(
       targetGroups
         .map((group) => [
@@ -3808,9 +3880,69 @@ export class WorkoutSession {
       this.state.activeWorkoutModifiers,
       {
         currentExerciseIds,
+        carriedKeepRootIdsBySelectionGroupId,
       },
     );
     this.applyDistinctLineup(targetGroups, carriedLineup, false);
+
+    for (const placement of this.getSelectedSequencePlacements()) {
+      if (!carriedKeepRootIdsBySelectionGroupId.get(placement.anchor.id)
+        ?.has(placement.root.id)) {
+        continue;
+      }
+      this.keepSequenceInSlot(placement.anchor.id, placement.root);
+    }
+    this.syncLegacyKeptExerciseIds();
+  }
+
+  buildCrossResolutionKeepPreferences(targetGroups) {
+    const targetGroupIds = new Set(targetGroups.map((group) => group.id));
+    const rootsWithTargetResolutionKeeps = new Set(Object.entries(
+      this.state.keptExerciseRootIdsBySelectionGroupId,
+    ).filter(([selectionGroupId]) => targetGroupIds.has(selectionGroupId))
+      .flatMap(([, rootIds]) => rootIds));
+    const carried = new Map();
+    for (const [sourceGroupId, keptRootIds] of Object.entries(
+      this.state.keptExerciseRootIdsBySelectionGroupId,
+    )) {
+      const sourceGroup = ALL_GROUPS.get(sourceGroupId);
+      if (targetGroupIds.has(sourceGroupId) || !sourceGroup) {
+        continue;
+      }
+      for (const rootId of keptRootIds) {
+        const root = this.exercisesById.get(rootId);
+        if (rootsWithTargetResolutionKeeps.has(rootId) ||
+            !root || this.getSequenceRoot(root).id !== rootId) {
+          continue;
+        }
+        const sourceSelectionExercise = this.getSequenceSelectionExerciseForGroup(
+          root,
+          sourceGroup,
+        );
+        const targetPrimaryGroup = targetGroups.find((group) =>
+          group.canonicalGroups.includes(
+            sourceSelectionExercise.primaryCanonicalGroup,
+          ));
+        if (!targetPrimaryGroup) {
+          continue;
+        }
+        const mappedPlacement = this.getSequencePlacementOptions(root, targetGroups)
+          .filter((option) => option.some((group) =>
+            group.id === targetPrimaryGroup.id))
+          .sort((left, right) => right.length - left.length ||
+            Math.min(...left.map((group) => group.order)) -
+              Math.min(...right.map((group) => group.order)))[0];
+        if (!mappedPlacement) {
+          continue;
+        }
+        const targetAnchor = [...mappedPlacement]
+          .sort((left, right) => left.order - right.order)[0];
+        const targetKeeps = carried.get(targetAnchor.id) ?? new Set();
+        targetKeeps.add(rootId);
+        carried.set(targetAnchor.id, targetKeeps);
+      }
+    }
+    return carried;
   }
 
   chooseBestDistinctLineup(
@@ -3820,6 +3952,7 @@ export class WorkoutSession {
       currentExerciseIds = new Map(),
       excludedExerciseIdsByGroup = new Map(),
       allowSavedSelectionException = false,
+      carriedKeepRootIdsBySelectionGroupId = new Map(),
     } = {},
   ) {
     if (groups.length === 0) {
@@ -3860,13 +3993,19 @@ export class WorkoutSession {
     this.shuffle(candidates);
     const orderedScores = [...new Set(candidates.flatMap((exercise) => groups
       .filter((group) => isAllowed(exercise, group))
-      .map((group) => this.getSelectionScore(exercise, group.id))))]
+      .map((group) => this.getSelectionScore(
+        exercise,
+        this.getProjectedSelectionPhase(group, groups.length),
+      ))))]
       .sort((left, right) => left - right);
     const scoreRanks = new Map(orderedScores.map((score, rank) => [score, rank]));
     const highestScoreByGroup = new Map(groups.map((group) => {
       const allowedScores = candidates
         .filter((exercise) => isAllowed(exercise, group))
-        .map((exercise) => this.getSelectionScore(exercise, group.id));
+        .map((exercise) => this.getSelectionScore(
+          exercise,
+          this.getProjectedSelectionPhase(group, groups.length),
+        ));
       return [
         group.id,
         allowedScores.length > 0
@@ -3946,14 +4085,24 @@ export class WorkoutSession {
           )) ?? 0
         : 0;
       const isKept = includeSlotPreference &&
-        this.isSequenceKept(evaluationGroup.id, exercise);
+        (this.isSequenceKept(evaluationGroup.id, exercise) ||
+         carriedKeepRootIdsBySelectionGroupId.get(evaluationGroup.id)
+           ?.has(this.getSequenceRoot(exercise).id) === true);
+      const phase = this.getProjectedSelectionPhase(
+        evaluationGroup,
+        groups.length,
+      );
       const selectionScore = includeSlotPreference
-        ? this.getSelectionScore(exercise, evaluationGroup.id)
+        ? this.getSelectionScore(exercise, phase)
         : 0;
+      const isDownvotedInPhase = includeSlotPreference &&
+        this.getPhaseScoreAdjustment(exercise, phase) < 0;
       const hasHardOpportunity = includeSlotPreference &&
         hardRotationStatus === HARD_ROTATION_STATUS.FreshHard &&
+        !isDownvotedInPhase &&
         (isKept || selectionScore === highestScoreByGroup.get(evaluationGroup.id));
       const hasContextualKeepPreference = includeSlotPreference && isKept &&
+        !isDownvotedInPhase &&
         hardRotationStatus !== HARD_ROTATION_STATUS.RecoveringHard &&
         !isRecoveringModerate;
       const isCurrentSelection = includeSlotPreference &&
@@ -4098,10 +4247,14 @@ export class WorkoutSession {
       throw new Error(`No eligible exercise exists for ${group.displayName}.`);
     }
 
+    const phase = this.getLegacySelectionGroupPhase(
+      group.id,
+      this.state.activeWorkoutMinutes,
+    );
     const highestScore = Math.max(...candidates.map((exercise) =>
-      this.getSelectionScore(exercise, group.id)));
+      this.getSelectionScore(exercise, phase)));
     const highestScored = candidates.filter((exercise) =>
-      this.getSelectionScore(exercise, group.id) === highestScore);
+      this.getSelectionScore(exercise, phase) === highestScore);
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     const rotationStatusByExercise = new Map(highestScored.map((exercise) => [
       exercise.id,
@@ -4349,26 +4502,53 @@ export class WorkoutSession {
     }
   }
 
-  getSelectionScore(exercise, selectionGroupId) {
+  getSelectionScore(exercise, phase) {
     const root = this.getSequenceRoot(exercise);
     const legacyScore = Math.min(...this.getSequenceExercises(root).map((member) =>
       this.getScore(member)));
-    const adjustment = this.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      selectionGroupId
-    ]?.[String(root.id)];
+    const adjustment = this.state.exerciseScoreAdjustmentsByPhase[phase]?.[
+      String(root.id)
+    ];
     return legacyScore + (Number.isInteger(adjustment) ? adjustment : 0);
   }
 
-  downvoteSequenceInSlot(selectionGroupId, exercise) {
+  getPhaseScoreAdjustment(exercise, phase) {
+    if (!isPersistableExercisePhase(phase)) {
+      return 0;
+    }
     const root = this.getSequenceRoot(exercise);
-    const adjustments = this.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      selectionGroupId
-    ] ?? {};
+    const adjustment = this.state.exerciseScoreAdjustmentsByPhase[phase]?.[
+      String(root.id)
+    ];
+    return Number.isInteger(adjustment) ? adjustment : 0;
+  }
+
+  downvoteSequenceInPhase(phase, exercise) {
+    if (!isPersistableExercisePhase(phase)) {
+      throw new RangeError("A downvote requires a workout exercise phase.");
+    }
+    const root = this.getSequenceRoot(exercise);
+    const adjustments = this.state.exerciseScoreAdjustmentsByPhase[phase] ?? {};
     adjustments[String(root.id)] = (adjustments[String(root.id)] ?? 0) - 1;
-    this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] =
-      adjustments;
-    this.removeSequenceKeep(selectionGroupId, root);
-    this.syncLegacyKeptExerciseIds();
+    this.state.exerciseScoreAdjustmentsByPhase[phase] = adjustments;
+  }
+
+  getExercisePhase(group) {
+    return getWorkoutExercisePhase(group.order);
+  }
+
+  getProjectedSelectionPhase(group, selectionGroupCount) {
+    if (!Number.isInteger(selectionGroupCount) || selectionGroupCount <= 0) {
+      throw new RangeError("Selection group count must be positive.");
+    }
+    const workoutMinutes = Math.max(
+      selectionGroupCount,
+      this.state.activeWorkoutMinutes,
+    );
+    const projectedFinalBlockOrder = Math.ceil(
+      group.order * workoutMinutes / selectionGroupCount,
+    );
+    return getWorkoutExercisePhase(projectedFinalBlockOrder);
   }
 
   migrateSlotScopedPreferences() {
@@ -4442,6 +4622,129 @@ export class WorkoutSession {
     this.syncLegacyKeptExerciseIds();
   }
 
+  migratePhaseScopedDownvotes() {
+    const sessions = [
+      ...this.state.workoutHistory,
+      ...(this.state.activeWorkoutSession ? [this.state.activeWorkoutSession] : []),
+    ];
+    // Earlier preference models removed a slot Keep when that same slot was
+    // rejected. Phase-local rejection no longer means "unkeep everywhere",
+    // so restore historical Keeps before replaying phase-provenance feedback.
+    for (const session of sessions) {
+      for (const decision of session.decisions.filter((item) =>
+        item.outcome === "tick")) {
+        const root = this.exercisesById.get(decision.rootExerciseId);
+        if (root && ALL_GROUPS.has(decision.selectionGroupId)) {
+          this.keepSequenceInSlot(decision.selectionGroupId, root);
+        }
+      }
+    }
+    const loggedDownvotes = sessions.flatMap((session) => [
+      ...session.selectionChanges.map((change) => ({
+        sessionId: session.sessionId,
+        timestamp: change.changedAtUnixMilliseconds,
+        selectionGroupId: change.selectionGroupId,
+        rootExerciseId: change.rejectedRootExerciseId,
+        phase: this.resolveLoggedSelectionChangePhase(session, change),
+      })),
+      ...session.decisions.filter((decision) => decision.outcome === "x")
+        .map((decision) => ({
+          sessionId: session.sessionId,
+          timestamp: decision.decidedAtUnixMilliseconds,
+          selectionGroupId: decision.selectionGroupId,
+          rootExerciseId: decision.rootExerciseId,
+          phase: this.resolveLoggedDecisionPhase(session, decision),
+        })),
+    ]).sort((left, right) => left.timestamp - right.timestamp ||
+      left.sessionId - right.sessionId);
+
+    for (const [selectionGroupId, adjustments] of Object.entries(
+      this.state.exerciseScoreAdjustmentsBySelectionGroupId,
+    )) {
+      for (const [rootIdText, adjustment] of Object.entries(
+        objectOrEmpty(adjustments),
+      )) {
+        const rootId = Number(rootIdText);
+        const root = this.exercisesById.get(rootId);
+        const downvoteCount = Number.isInteger(adjustment)
+          ? Math.max(0, -adjustment)
+          : 0;
+        if (!root || downvoteCount === 0) {
+          continue;
+        }
+        const matchingEvents = loggedDownvotes.filter((entry) =>
+          entry.selectionGroupId === selectionGroupId &&
+          entry.rootExerciseId === rootId).slice(-downvoteCount);
+        for (const entry of matchingEvents) {
+          this.downvoteSequenceInPhase(entry.phase, root);
+        }
+        const fallbackPhase = this.getLegacySelectionGroupPhase(selectionGroupId);
+        for (let index = matchingEvents.length; index < downvoteCount; index += 1) {
+          this.downvoteSequenceInPhase(fallbackPhase, root);
+        }
+      }
+    }
+    this.state.exerciseScoreAdjustmentsBySelectionGroupId = {};
+  }
+
+  resolveLoggedSelectionChangePhase(session, change) {
+    if (isPersistableExercisePhase(change.exercisePhase)) {
+      return change.exercisePhase;
+    }
+    const lastCompletedOrder = Math.max(0, ...session.blocks
+      .filter((block) => change.changedAtUnixMilliseconds <= 0 ||
+        block.completedAtUnixMilliseconds <= change.changedAtUnixMilliseconds)
+      .map((block) => block.order));
+    return lastCompletedOrder > 0
+      ? getWorkoutExercisePhase(lastCompletedOrder + 1)
+      : this.getLegacySelectionGroupPhase(
+        change.selectionGroupId,
+        session.workoutMinutes,
+      );
+  }
+
+  resolveLoggedDecisionPhase(session, decision) {
+    if (isPersistableExercisePhase(decision.exercisePhase)) {
+      return decision.exercisePhase;
+    }
+    const matchingOrders = session.blocks.filter((block) =>
+      block.selectionGroupId === decision.selectionGroupId &&
+      block.rootExerciseId === decision.rootExerciseId &&
+      (decision.decidedAtUnixMilliseconds <= 0 ||
+       block.completedAtUnixMilliseconds <= decision.decidedAtUnixMilliseconds))
+      .map((block) => block.order);
+    const fallbackOrders = session.blocks.filter((block) =>
+      decision.decidedAtUnixMilliseconds <= 0 ||
+      block.completedAtUnixMilliseconds <= decision.decidedAtUnixMilliseconds)
+      .map((block) => block.order);
+    const decisionOrder = Math.max(
+      0,
+      ...(matchingOrders.length > 0 ? matchingOrders : fallbackOrders),
+    );
+    return decisionOrder > 0
+      ? getWorkoutExercisePhase(decisionOrder)
+      : this.getLegacySelectionGroupPhase(
+        decision.selectionGroupId,
+        session.workoutMinutes,
+      );
+  }
+
+  getLegacySelectionGroupPhase(selectionGroupId, workoutMinutes = 0) {
+    const group = ALL_GROUPS.get(selectionGroupId);
+    const resolutionMatch = /^r(\d+)\./.exec(selectionGroupId);
+    const resolutionMinutes = Number(resolutionMatch?.[1]);
+    if (!group || !RESOLUTIONS.has(resolutionMinutes)) {
+      return WORKOUT_EXERCISE_PHASE.Warmup;
+    }
+    const resolutionGroupCount = getResolution(resolutionMinutes).groups.length;
+    const effectiveMinutes = SUPPORTED_MINUTES.includes(workoutMinutes)
+      ? workoutMinutes
+      : resolutionGroupCount;
+    return getWorkoutExercisePhase(Math.ceil(
+      group.order * effectiveMinutes / resolutionGroupCount,
+    ));
+  }
+
   normalizeSlotPreferences() {
     for (const [selectionGroupId, rootIds] of Object.entries(
       this.state.keptExerciseRootIdsBySelectionGroupId,
@@ -4465,6 +4768,20 @@ export class WorkoutSession {
         delete this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId];
       } else {
         this.state.exerciseScoreAdjustmentsBySelectionGroupId[selectionGroupId] = normalized;
+      }
+    }
+    for (const [phase, adjustments] of Object.entries(
+      this.state.exerciseScoreAdjustmentsByPhase,
+    )) {
+      const normalized = Object.fromEntries(Object.entries(objectOrEmpty(adjustments))
+        .filter(([rootId, adjustment]) => /^\d+$/.test(rootId) &&
+          isPersistableExercisePhase(phase) &&
+          Number.isInteger(adjustment) && adjustment < 0 &&
+          this.isValidPreferenceRootId(Number(rootId))));
+      if (Object.keys(normalized).length === 0) {
+        delete this.state.exerciseScoreAdjustmentsByPhase[phase];
+      } else {
+        this.state.exerciseScoreAdjustmentsByPhase[phase] = normalized;
       }
     }
     this.syncLegacyKeptExerciseIds();
@@ -4493,6 +4810,11 @@ export class WorkoutSession {
       this.getResolutionGroupsForGroup(group),
     ).some((option) => [...option].sort((left, right) => left.order - right.order)[0]
       ?.id === selectionGroupId);
+  }
+
+  isValidPreferenceRootId(rootId) {
+    const root = this.exercisesById.get(rootId);
+    return Boolean(root && this.getSequenceRoot(root).id === rootId);
   }
 
   getKeptRootIdsForSlot(selectionGroupId) {
@@ -4624,29 +4946,6 @@ export class WorkoutSession {
   }
 
   isLongWorkoutAllocationValid() {
-    if (this.state.activeWorkoutMinutes <= 30) {
-      if (Object.keys(this.state.activeDirectionPartnerExerciseIds).length !== 0 ||
-          this.state.activeFullSideRoundIds.length !== 0 ||
-          this.state.activeExtraSetSelectionGroupIds.length !== 0 ||
-          Object.keys(this.state.activeSetCountsBySelectionGroupId).length !== 0) {
-        return false;
-      }
-      try {
-        const allocation = this.chooseLongWorkoutAllocation();
-        return this.createActiveWorkoutSchedule(
-          allocation.setCountsBySelectionGroupId,
-        ).length === this.state.activeWorkoutMinutes;
-      } catch {
-        return false;
-      }
-    }
-
-    let expected;
-    try {
-      expected = this.chooseLongWorkoutAllocation();
-    } catch {
-      return false;
-    }
     if (Object.keys(this.state.activeDirectionPartnerExerciseIds).length !== 0 ||
         this.state.activeFullSideRoundIds.length !== 0) {
       return false;
@@ -4680,10 +4979,10 @@ export class WorkoutSession {
 
     try {
       const rounds = this.createActiveWorkoutSchedule(actualSetCounts);
-      return rounds.length === this.state.activeWorkoutMinutes &&
-        actualSetCounts.size === expected.setCountsBySelectionGroupId.size &&
-        [...actualSetCounts].every(([groupId, setCount]) =>
-          expected.setCountsBySelectionGroupId.get(groupId) === setCount);
+      // This is an active-workout snapshot. Re-ranking it after a Keep or
+      // downvote would move already scheduled blocks and orphan their results.
+      // New phase feedback is applied when the next allocation is created.
+      return rounds.length === this.state.activeWorkoutMinutes;
     } catch {
       return false;
     }
@@ -4738,6 +5037,20 @@ export class WorkoutSession {
       !lockedSelectionGroupIds.has(anchor.id));
     const repeatableCosts = [...new Set(repeatablePlacements.map((placement) =>
       blockCostByGroup.get(placement.anchor.id)))];
+    const scheduleOrderedPlacements = [...rankedPlacements]
+      .sort((left, right) => left.anchor.order - right.anchor.order);
+    const getPhaseAfterAddingSet = (candidate) => {
+      let finalBlockOrder = 0;
+      for (const placement of scheduleOrderedPlacements) {
+        const setCount = setCountsBySelectionGroupId.get(placement.anchor.id) +
+          (placement.anchor.id === candidate.anchor.id ? 1 : 0);
+        finalBlockOrder += blockCostByGroup.get(placement.anchor.id) * setCount;
+        if (placement.anchor.id === candidate.anchor.id) {
+          return getWorkoutExercisePhase(finalBlockOrder);
+        }
+      }
+      throw new Error("The repeat candidate is not part of the workout schedule.");
+    };
     const canFill = (minutes) => {
       const fillable = new Array(minutes + 1).fill(false);
       fillable[0] = true;
@@ -4750,11 +5063,21 @@ export class WorkoutSession {
 
     while (remainingMinutes > 0) {
       const selectedPlacement = [...repeatablePlacements]
-        .sort((left, right) =>
+        .sort((left, right) => {
+          const leftScore = this.getPhaseScoreAdjustment(
+            left.root,
+            getPhaseAfterAddingSet(left),
+          );
+          const rightScore = this.getPhaseScoreAdjustment(
+            right.root,
+            getPhaseAfterAddingSet(right),
+          );
+          return rightScore - leftScore ||
           setCountsBySelectionGroupId.get(left.anchor.id) -
             setCountsBySelectionGroupId.get(right.anchor.id) ||
           Number(blockCostByGroup.get(right.anchor.id) === 1) -
-            Number(blockCostByGroup.get(left.anchor.id) === 1))
+            Number(blockCostByGroup.get(left.anchor.id) === 1);
+        })
         .find((placement) => {
           const cost = blockCostByGroup.get(placement.anchor.id);
           return cost <= remainingMinutes &&
@@ -4821,7 +5144,13 @@ export class WorkoutSession {
       if (!selectionScoreByRootAndGroup.has(key)) {
         selectionScoreByRootAndGroup.set(
           key,
-          this.getSelectionScore(root, groupId),
+          this.getSelectionScore(
+            root,
+            this.getProjectedSelectionPhase(
+              ALL_GROUPS.get(groupId),
+              groups.length,
+            ),
+          ),
         );
       }
       return selectionScoreByRootAndGroup.get(key);
@@ -5081,7 +5410,13 @@ export class WorkoutSession {
       exerciseId: candidate.id,
       coveredGroups,
       balance,
-      realScore: this.getSelectionScore(candidate, anchor.id),
+      realScore: this.getSelectionScore(
+        candidate,
+        this.getProjectedSelectionPhase(
+          anchor,
+          this.getSelectionGroups().length,
+        ),
+      ),
       isFreshHard: rotationStatus === HARD_ROTATION_STATUS.FreshHard,
       isRecoveringHard: rotationStatus === HARD_ROTATION_STATUS.RecoveringHard,
       isRecoveringModerate,
@@ -5186,11 +5521,6 @@ export class WorkoutSession {
   applyLongWorkoutAllocation(allocation) {
     this.state.activeDirectionPartnerExerciseIds = {};
     this.state.activeFullSideRoundIds = [];
-    if (this.state.activeWorkoutMinutes <= 30) {
-      this.state.activeExtraSetSelectionGroupIds = [];
-      this.state.activeSetCountsBySelectionGroupId = {};
-      return;
-    }
     this.state.activeExtraSetSelectionGroupIds = [...allocation.extraSetSelectionGroupIds];
     this.state.activeSetCountsBySelectionGroupId = Object.fromEntries(
       allocation.setCountsBySelectionGroupId,
@@ -5198,9 +5528,6 @@ export class WorkoutSession {
   }
 
   getEffectiveSetCounts() {
-    if (this.state.activeWorkoutMinutes <= 30) {
-      return this.chooseLongWorkoutAllocation().setCountsBySelectionGroupId;
-    }
     return this.isLongWorkoutAllocationValid()
       ? new Map(Object.entries(this.state.activeSetCountsBySelectionGroupId))
       : this.chooseLongWorkoutAllocation().setCountsBySelectionGroupId;
@@ -5680,6 +6007,13 @@ export class WorkoutSession {
         delete adjustments[String(rootId)];
       }
     }
+    for (const adjustments of Object.values(
+      this.state.exerciseScoreAdjustmentsByPhase,
+    )) {
+      for (const rootId of scoreResetPreferenceRoots) {
+        delete adjustments[String(rootId)];
+      }
+    }
 
     this.normalizeSlotPreferences();
 
@@ -5751,7 +6085,10 @@ export class WorkoutSession {
           rootExerciseName: placement.root.name,
           selectionScoreAtStart: this.getSelectionScore(
             placement.root,
-            placement.anchor.id,
+            this.getProjectedSelectionPhase(
+              placement.anchor,
+              this.getSelectionGroups().length,
+            ),
           ),
           sequenceBlockCount: placement.root.sequenceBlocks.length,
           setCount: Math.max(1, setCounts.get(placement.anchor.id) ?? 1),
@@ -5777,6 +6114,7 @@ export class WorkoutSession {
 
   recordWorkoutSelectionChange(
     selectionGroupId,
+    phase,
     rejectedRoot,
     rejectedSelectionScore,
     replacementRoot,
@@ -5786,6 +6124,7 @@ export class WorkoutSession {
       kind: "Shuffle",
       changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(),
       selectionGroupId,
+      exercisePhase: phase,
       rejectedRootExerciseId: rejectedRoot.id,
       rejectedRootExerciseName: rejectedRoot.name,
       rejectedSelectionScoreBeforeChange: rejectedSelectionScore,
@@ -5799,7 +6138,7 @@ export class WorkoutSession {
       replacementRootExerciseName: replacementRoot.name,
       replacementSelectionScore: this.getSelectionScore(
         replacementRoot,
-        selectionGroupId,
+        phase,
       ),
     });
   }
@@ -5846,6 +6185,7 @@ export class WorkoutSession {
     root,
     outcome,
     selectionScoreBeforeDecision,
+    exercisePhase,
     decidedAtUnixMilliseconds,
   ) {
     const session = this.ensureActiveWorkoutSession(true);
@@ -5862,6 +6202,7 @@ export class WorkoutSession {
     session.decisions.push({
       decidedAtUnixMilliseconds,
       selectionGroupId,
+      exercisePhase,
       rootExerciseId: root.id,
       rootExerciseName: root.name,
       sequenceExerciseIds: this.getSequenceExercises(root)

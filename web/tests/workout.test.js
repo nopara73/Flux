@@ -7,6 +7,7 @@ import test from "node:test";
 import {
   ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
+  CURRENT_WORKOUT_STATE_VERSION,
   CURRENT_CATALOG_REVISION,
   EXERCISE_HARD_FLOOR_COMPATIBILITY,
   EXERCISE_INSECT_COMPATIBILITY,
@@ -37,6 +38,7 @@ import {
   WORKOUT_MODIFIER_VALIDATION_PROFILES,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
+  WORKOUT_EXERCISE_PHASE,
   WorkoutSession,
   calculateCanonicalMuscleLoadEighthUnits,
   calculateMuscleBalanceEvaluation,
@@ -65,6 +67,7 @@ import {
   getWorkoutBlockAccent,
   getWorkoutDisplayProgress,
   getWorkoutExecutionTimeline,
+  getWorkoutExercisePhase,
   hasRepeatedSets,
   hasReviewedMuscularDemand,
   isModerateExerciseRecovering,
@@ -84,6 +87,140 @@ import {
   parseStoredState,
   withMirrorEquipment,
 } from "../workout.js";
+
+test("exercise phases use inclusive 15- and 45-block boundaries", () => {
+  assert.equal(getWorkoutExercisePhase(1), WORKOUT_EXERCISE_PHASE.Warmup);
+  assert.equal(getWorkoutExercisePhase(15), WORKOUT_EXERCISE_PHASE.Warmup);
+  assert.equal(getWorkoutExercisePhase(16),
+    WORKOUT_EXERCISE_PHASE.PeakPerformance);
+  assert.equal(getWorkoutExercisePhase(45),
+    WORKOUT_EXERCISE_PHASE.PeakPerformance);
+  assert.equal(getWorkoutExercisePhase(46), WORKOUT_EXERCISE_PHASE.Fatigued);
+  assert.equal(getWorkoutExercisePhase(90), WORKOUT_EXERCISE_PHASE.Fatigued);
+});
+
+test("version nineteen slot downvotes migrate from logs into workout phases", () => {
+  const group = RESOLUTIONS.get(3).groups[0];
+  const root = exercise(
+    101,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    4,
+  );
+  const state = createDefaultState();
+  state.version = 19;
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.exerciseScoreAdjustmentsBySelectionGroupId = {
+    [group.id]: { [root.id]: -3 },
+  };
+  const decisionSession = (sessionId, order, outcome) => {
+    const timestamp = 1_777_000_000_000 + sessionId * 100_000;
+    return {
+      sessionId,
+      startedAtUnixMilliseconds: timestamp - 60_000,
+      endedAtUnixMilliseconds: timestamp + 1,
+      workoutMinutes: order,
+      status: "Completed",
+      blocks: [{
+        completedAtUnixMilliseconds: timestamp,
+        selectionGroupId: group.id,
+        order,
+        rootExerciseId: root.id,
+        exerciseId: root.id,
+      }],
+      decisions: [{
+        decidedAtUnixMilliseconds: timestamp + 1,
+        selectionGroupId: group.id,
+        rootExerciseId: root.id,
+        outcome,
+      }],
+    };
+  };
+  const shuffleTimestamp = 1_777_000_200_000;
+  state.workoutHistory = [
+    decisionSession(1, 1, "tick"),
+    {
+      sessionId: 2,
+      startedAtUnixMilliseconds: shuffleTimestamp - 60_000,
+      endedAtUnixMilliseconds: shuffleTimestamp + 1,
+      workoutMinutes: 3,
+      status: "Interrupted",
+      selectionChanges: [{
+        changedAtUnixMilliseconds: shuffleTimestamp,
+        selectionGroupId: group.id,
+        rejectedRootExerciseId: root.id,
+      }],
+    },
+    decisionSession(3, 16, "x"),
+    decisionSession(4, 46, "x"),
+  ];
+
+  const session = new WorkoutSession([root], state, () => 0);
+  session.initialize();
+
+  assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.deepEqual(session.state.exerciseScoreAdjustmentsBySelectionGroupId, {});
+  assert.equal(session.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.Warmup][root.id], -1);
+  assert.equal(session.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance][root.id], -1);
+  assert.equal(session.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.Fatigued][root.id], -1);
+  assert.equal(session.state.keptExerciseRootIdsBySelectionGroupId[group.id]
+    .includes(root.id), true);
+  assert.equal(session.state.lastKeptExerciseIds.includes(root.id), true);
+  assert.equal(session.getScore(root), 4);
+
+  const restored = parseStoredState(JSON.stringify(session.state));
+  assert.equal(restored.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.Warmup][root.id], -1);
+});
+
+test("pre-slot history restores keeps without inventing phase downvotes", () => {
+  const group = RESOLUTIONS.get(3).groups[0];
+  const root = exercise(
+    101,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    -2,
+  );
+  const state = createDefaultState();
+  state.version = 18;
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.workoutHistory = ["tick", "x"].map((outcome, index) => {
+    const timestamp = 1_777_000_000_000 + index * 100_000;
+    return {
+      sessionId: index + 1,
+      startedAtUnixMilliseconds: timestamp - 60_000,
+      endedAtUnixMilliseconds: timestamp + 1,
+      workoutMinutes: 3,
+      status: "Completed",
+      blocks: [{
+        completedAtUnixMilliseconds: timestamp,
+        selectionGroupId: group.id,
+        order: index === 0 ? 1 : 16,
+        rootExerciseId: root.id,
+        exerciseId: root.id,
+      }],
+      decisions: [{
+        decidedAtUnixMilliseconds: timestamp + 1,
+        selectionGroupId: group.id,
+        rootExerciseId: root.id,
+        outcome,
+      }],
+    };
+  });
+
+  const session = new WorkoutSession([root], state, () => 0);
+  session.initialize();
+
+  assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.equal(session.state.keptExerciseRootIdsBySelectionGroupId[group.id]
+    .includes(root.id), true);
+  assert.equal(session.state.lastKeptExerciseIds.includes(root.id), true);
+  assert.deepEqual(session.state.exerciseScoreAdjustmentsByPhase, {});
+  assert.equal(session.getScore(root), -2);
+});
 
 test("exercise sequences and repeated sets are distinct presentation states", () => {
   const cases = [
@@ -424,6 +561,7 @@ test("muscle balance replaces an unkept equal-score choice", () => {
   assert.equal(session.state.selectedExerciseIds[targetGroup.id], alternative.id);
   assert.deepEqual(session.state.scores, {});
   assert.deepEqual(session.state.exerciseScoreAdjustmentsBySelectionGroupId, {});
+  assert.deepEqual(session.state.exerciseScoreAdjustmentsByPhase, {});
 });
 
 test("muscle balance can use an atomic sequence without splitting its slots", () => {
@@ -810,7 +948,7 @@ test("pre-hard-floor state keeps silence relaxed while adding the hard-floor def
     activeWorkoutMinutes: 0,
   }));
 
-  assert.equal(state.version, 19);
+  assert.equal(state.version, CURRENT_WORKOUT_STATE_VERSION);
   assert.equal(state.lastWorkoutModifiers, WORKOUT_MODIFIERS.HardFloor);
 });
 
@@ -827,7 +965,7 @@ test("binary mirror state does not guess mirror height during migration", () => 
     },
   }));
 
-  assert.equal(state.version, 19);
+  assert.equal(state.version, CURRENT_WORKOUT_STATE_VERSION);
   assert.equal(
     state.lastWorkoutModifiers,
     WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor,
@@ -1225,7 +1363,7 @@ test("modifier profiles share keeps without forgetting excluded exercises", () =
   );
 });
 
-test("a slot downvote reselects an alternative without global exclusion", () => {
+test("a warmup downvote reselects an alternative without global exclusion", () => {
   const exercises = RESOLUTIONS.get(3).groups.flatMap((group, index) => [
     exercise(1 + index * 3, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible),
@@ -1251,7 +1389,9 @@ test("a slot downvote reselects an alternative without global exclusion", () => 
   );
   assert.deepEqual(session.state.nextWorkoutExcludedExerciseIds, []);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[0].id][rejectedId],
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup
+    ][rejectedId],
     -1,
   );
   session.startWorkout(3, WORKOUT_MODIFIERS.Insect);
@@ -1259,7 +1399,7 @@ test("a slot downvote reselects an alternative without global exclusion", () => 
   assert.notEqual(session.getSelectedExercise(session.getActiveGroups()[0]).id, rejectedId);
 });
 
-test("short-workout keeps do not become long-workout slot preferences", () => {
+test("short-workout keeps carry into matching long-workout slots", () => {
   const session = new WorkoutSession(
     reviewedInsectCatalog(),
     createDefaultState(),
@@ -1279,17 +1419,18 @@ test("short-workout keeps do not become long-workout slot preferences", () => {
     [...session.state.lastKeptExerciseIds].sort((left, right) => left - right),
     [...keptExerciseIds].sort((left, right) => left - right),
   );
-  assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
-    .every((selectionGroupId) => selectionGroupId.startsWith("r3.")));
-  assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
-    .every((selectionGroupId) => !selectionGroupId.startsWith("r30.")));
+  const longKeepIds = Object.entries(
+    session.state.keptExerciseRootIdsBySelectionGroupId,
+  ).filter(([selectionGroupId]) => selectionGroupId.startsWith("r30."))
+    .flatMap(([, rootIds]) => rootIds);
+  assert.ok(keptExerciseIds.every((exerciseId) => longKeepIds.includes(exerciseId)));
   assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 15);
 });
 
-test("the same exercise can be kept in one slot and downvoted in another", () => {
+test("a keep and downvote for one exercise remain independent across phases", () => {
   const shortGroups = RESOLUTIONS.get(3).groups;
-  const longGroups = RESOLUTIONS.get(5).groups;
-  const primary = shortGroups[0].canonicalGroups[0];
+  const longGroups = RESOLUTIONS.get(30).groups;
+  const primary = "AbdominalWall";
   const shortSlot = shortGroups.find((group) =>
     group.canonicalGroups.includes(primary));
   const longSlot = longGroups.find((group) =>
@@ -1324,10 +1465,15 @@ test("the same exercise can be kept in one slot and downvoted in another", () =>
     () => 0,
   );
 
-  session.startWorkout(5, WORKOUT_MODIFIERS.None);
-  const longRound = session.getActiveGroups().find((round) =>
-    getSelectionKey(round) === longSlot.id);
+  session.startWorkout(60, WORKOUT_MODIFIERS.None);
+  const longRound = session.getActiveGroups().filter((round) =>
+    getSelectionKey(round) === longSlot.id).at(-1);
   assert.equal(session.getSelectedExercise(longRound).id, shared.id);
+
+  for (const prior of session.getActiveGroups().filter((round) =>
+    round.order < longRound.order)) {
+    session.state.outcomes[prior.id] = "tick";
+  }
 
   session.recordOutcome(longRound, false);
 
@@ -1339,11 +1485,27 @@ test("the same exercise can be kept in one slot and downvoted in another", () =>
   assert.equal(
     session.state.keptExerciseRootIdsBySelectionGroupId[longSlot.id]
       ?.includes(shared.id) ?? false,
-    false,
+    true,
+  );
+  assert.equal(getWorkoutExercisePhase(longRound.order),
+    WORKOUT_EXERCISE_PHASE.PeakPerformance);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance
+    ][shared.id],
+    -1,
   );
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[longSlot.id][shared.id],
-    -1,
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup
+    ],
+    undefined,
+  );
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Fatigued
+    ],
+    undefined,
   );
   assert.equal(session.state.lastKeptExerciseIds.includes(shared.id), true);
   assert.equal(session.getScore(shared), 10);
@@ -1353,7 +1515,9 @@ test("the same exercise can be kept in one slot and downvoted in another", () =>
 
   assert.equal(session.state.selectedExerciseIds[shortSlot.id], shared.id);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[longSlot.id][shared.id],
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance
+    ][shared.id],
     -1,
   );
 });
@@ -3045,13 +3209,12 @@ test("cross-primary shuffle replaces every covered slot atomically", () => {
   assert.equal(session.getScore(first), 100);
   assert.equal(session.getScore(second), 100);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[0].id][first.id],
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup
+    ][first.id],
     -1,
   );
-  assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[groups[1].id],
-    undefined,
-  );
+  assert.deepEqual(session.state.exerciseScoreAdjustmentsBySelectionGroupId, {});
   assert.deepEqual(
     session.getActiveGroups().map((round) => session.getSelectedExercise(round).id),
     [replacementFirst.id, replacementSecond.id, third.id],
@@ -3194,13 +3357,13 @@ test("shuffle rejects the current exercise and replaces only its slot", () => {
   assert.deepEqual(result.scoreUpdates.map((item) => item.id), [originalId]);
   assert.equal(session.getScore(result.rejectedExercise), originalScores.get(originalId));
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(current)
+    session.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(current.order)
     ][originalId],
     -1,
   );
   assert.ok(session.state.nextWorkoutExcludedExerciseIds.includes(originalId));
-  assert.equal(session.state.lastKeptExerciseIds.includes(originalId), false);
+  assert.equal(session.state.lastKeptExerciseIds.includes(originalId), true);
   assert.equal(
     Object.values(session.state.selectedExerciseIds).includes(originalId),
     false,
@@ -3333,8 +3496,8 @@ test("sequence shuffle rejects every member once and never starts mid-sequence",
   assert.equal(session.getScore(exercises[0]), 100);
   assert.equal(session.getScore(exercises[1]), 100);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(lead)
+    session.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(lead.order)
     ]["1"],
     -1,
   );
@@ -3436,10 +3599,14 @@ test("rejecting any current block rejects the whole sequence with one member vot
   assert.equal(session.getScore(exercises[0]), 100);
   assert.equal(session.getScore(exercises[1]), 100);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(firstRound)
+    session.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(firstRound.order)
     ]["1"],
     -1,
+  );
+  assert.equal(
+    session.state.activeWorkoutSession.decisions[0].exercisePhase,
+    getWorkoutExercisePhase(firstRound.order),
   );
   assert.ok(sequenceRounds.slice(0, -1).every((round) =>
     session.state.outcomes[round.id] === "neutral"));
@@ -3504,7 +3671,7 @@ test("legacy in-progress sided movement migrates without resetting its workout",
 
   const pending = restored.getPendingMovementGroup();
   assert.equal(restored.state.activeWorkoutMinutes, 45);
-  assert.equal(restored.state.version, 19);
+  assert.equal(restored.state.version, CURRENT_WORKOUT_STATE_VERSION);
   assert.equal(pending.sequenceBlockIndex, 1);
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 35_000);
   const migratedSequenceRounds = restored.getActiveGroups().filter((round) =>
@@ -3621,7 +3788,7 @@ test("every catalog exercise has exactly one atomic sequence owner", () => {
     .sequenceBlocks.length, 3);
 });
 
-test("keeps remain bound to their original duration slots", () => {
+test("keeps carry across workout duration resolutions", () => {
   const allCanonicalGroups = RESOLUTIONS.get(30).groups
     .flatMap((group) => group.canonicalGroups);
 
@@ -3652,6 +3819,9 @@ test("keeps remain bound to their original duration slots", () => {
     const state = createDefaultState();
     for (const [index, group] of previousGroups.entries()) {
       state.selectedExerciseIds[group.id] = keptExercises[index].id;
+      state.keptExerciseRootIdsBySelectionGroupId[group.id] = [
+        keptExercises[index].id,
+      ];
     }
     const session = new WorkoutSession(
       [...keptExercises, ...nextDurationAlternatives],
@@ -3659,11 +3829,7 @@ test("keeps remain bound to their original duration slots", () => {
       () => 0,
     );
 
-    session.startWorkout(previousMinutes, WORKOUT_MODIFIERS.None);
-    for (const round of session.getActiveGroups()) {
-      session.recordOutcome(round, true);
-    }
-    session.acknowledgeCompletion();
+    session.initialize();
 
     for (const [index, group] of nextGroups.entries()) {
       session.state.selectedExerciseIds[group.id] = nextDurationAlternatives[index].id;
@@ -3677,21 +3843,25 @@ test("keeps remain bound to their original duration slots", () => {
     assert.equal(session.state.lastKeptExerciseIds.length, previousMinutes);
     assert.equal(
       selectedExerciseIds.filter((exerciseId) => keptExerciseIds.has(exerciseId)).length,
-      0,
+      Math.min(previousMinutes, nextMinutes),
     );
     assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
-      .every((selectionGroupId) => selectionGroupId.startsWith(
+      .some((selectionGroupId) => selectionGroupId.startsWith(
         `r${previousMinutes}.`,
       )));
-    assert.ok(Object.keys(session.state.keptExerciseRootIdsBySelectionGroupId)
-      .every((selectionGroupId) => !selectionGroupId.startsWith(
-        `r${nextMinutes}.`,
-      )));
+    const targetKeepIds = Object.entries(
+      session.state.keptExerciseRootIdsBySelectionGroupId,
+    ).filter(([selectionGroupId]) => selectionGroupId.startsWith(
+      `r${nextMinutes}.`,
+    )).flatMap(([, rootIds]) => rootIds);
+    assert.ok(selectedExerciseIds
+      .filter((exerciseId) => keptExerciseIds.has(exerciseId))
+      .every((exerciseId) => targetKeepIds.includes(exerciseId)));
     assert.equal(new Set(selectedExerciseIds).size, nextMinutes);
   }
 });
 
-test("an interrupted workout preserves unreviewed keeps until explicit rejection", () => {
+test("a phase-specific rejection does not erase an existing keep", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const keptRound = session.getActiveGroups().at(-1);
@@ -3711,10 +3881,16 @@ test("an interrupted workout preserves unreviewed keeps until explicit rejection
   }
   session.acknowledgeCompletion();
 
-  assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), false);
+  assert.equal(session.state.lastKeptExerciseIds.includes(kept.id), true);
+  assert.equal(
+    session.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup
+    ][session.getSequenceRoot(kept).id],
+    -1,
+  );
 });
 
-test("rejection downvotes and purges only its exact slot", () => {
+test("rejection records phase feedback and purges only its current lineup slot", () => {
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const groups = session.getActiveGroups();
@@ -3738,9 +3914,9 @@ test("rejection downvotes and purges only its exact slot", () => {
   }
   assert.equal(session.getScore(rejected), 0);
   assert.equal(
-    session.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      rejectedSlotId
-    ][rejected.id],
+    session.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(rejectedGroup.order)
+    ][session.getSequenceRoot(rejected).id],
     -1,
   );
   session.acknowledgeCompletion();
@@ -3776,9 +3952,9 @@ test("interrupted movement is neutral while an explicitly abandoned rest settles
   restored.finishInterruptedWorkout();
   assert.equal(restored.getScore(rejectedExercise), 0);
   assert.equal(
-    restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(rejectedGroup)
-    ][rejectedExercise.id],
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(rejectedGroup.order)
+    ][restored.getSequenceRoot(rejectedExercise).id],
     -1,
   );
   assert.equal(restored.state.activeWorkoutMinutes, 0);
@@ -3791,9 +3967,9 @@ test("interrupted movement is neutral while an explicitly abandoned rest settles
   restoredAgain.initialize();
   assert.equal(restoredAgain.getScore(rejectedExercise), 0);
   assert.equal(
-    restoredAgain.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(rejectedGroup)
-    ][rejectedExercise.id],
+    restoredAgain.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(rejectedGroup.order)
+    ][restoredAgain.getSequenceRoot(rejectedExercise).id],
     -1,
   );
 });
@@ -3829,9 +4005,9 @@ test("pending rest survives schedule order and coverage changes for the performe
   restored.finishInterruptedWorkout();
   assert.equal(restored.getScore(performed), 0);
   assert.equal(
-    restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
-      getSelectionKey(pendingGroup)
-    ][performed.id],
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      getWorkoutExercisePhase(pendingGroup.order)
+    ][restored.getSequenceRoot(performed).id],
     -1,
   );
   assert.equal(restored.state.activeWorkoutMinutes, 0);
