@@ -157,6 +157,20 @@ export const MINIMUM_MUSCULAR_DEMAND = 0;
 export const MODERATE_MUSCULAR_DEMAND = 1;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
+
+export function getMuscularDemandSchedulePriority(muscularDemand) {
+  switch (muscularDemand) {
+    case MINIMUM_MUSCULAR_DEMAND:
+      return 0;
+    case MAXIMUM_MUSCULAR_DEMAND:
+      return 1;
+    case MODERATE_MUSCULAR_DEMAND:
+      return 2;
+    default:
+      throw new RangeError("Muscular demand must be 0, 1, or 2.");
+  }
+}
+
 export const MODERATE_RECOVERY_WINDOW_MS = 18 * 60 * 60 * 1000;
 export const HARD_RECOVERY_WINDOW_MS = 36 * 60 * 60 * 1000;
 export const HARD_ROTATION_STATUS = Object.freeze({
@@ -955,6 +969,7 @@ export function createWorkoutSchedule(
   setCountsBySelectionGroupId = null,
   exercisesById = null,
   isRelaxedSingletonValid = null,
+  frozenSelectionGroupIds = [],
 ) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
     throw new RangeError("Unsupported workout duration.");
@@ -968,11 +983,15 @@ export function createWorkoutSchedule(
     : new Map([...sequenceRoots.values()]
         .filter(Boolean)
         .map((exercise) => [exercise.id, exercise]));
-  const placements = getSelectedSequencePlacements(
-    minutes,
-    sequenceRoots,
+  const placements = orderSelectedSequencePlacementsForSchedule(
+    getSelectedSequencePlacements(
+      minutes,
+      sequenceRoots,
+      exerciseMap,
+      isRelaxedSingletonValid,
+    ),
     exerciseMap,
-    isRelaxedSingletonValid,
+    frozenSelectionGroupIds,
   );
   const setCounts = setCountsBySelectionGroupId instanceof Map
     ? setCountsBySelectionGroupId
@@ -1206,6 +1225,48 @@ function getSelectedSequencePlacements(
     });
   }
   return placements.sort((left, right) => left.anchor.order - right.anchor.order);
+}
+
+export function getSequenceMuscularDemand(root, exercisesById) {
+  if (!root || !(exercisesById instanceof Map) ||
+      !Array.isArray(root.sequenceBlocks) || root.sequenceBlocks.length === 0) {
+    throw new TypeError("A scheduled sequence and exercise map are required.");
+  }
+  return Math.max(...root.sequenceBlocks.map((block) => {
+    const exercise = exercisesById.get(block.exerciseId);
+    if (!exercise) {
+      throw new Error(`Sequence block exercise ${block.exerciseId} is missing.`);
+    }
+    return exercise.muscularDemand;
+  }));
+}
+
+export function orderSelectedSequencePlacementsForSchedule(
+  placements,
+  exercisesById,
+  frozenSelectionGroupIds = [],
+) {
+  const placementArray = [...placements];
+  const frozenIds = Array.isArray(frozenSelectionGroupIds)
+    ? frozenSelectionGroupIds
+    : [];
+  if (frozenIds.length === placementArray.length &&
+      new Set(frozenIds).size === placementArray.length) {
+    const placementsByAnchor = new Map(placementArray.map((placement) =>
+      [placement.anchor.id, placement]));
+    if (frozenIds.every((selectionGroupId) =>
+      placementsByAnchor.has(selectionGroupId))) {
+      return frozenIds.map((selectionGroupId) =>
+        placementsByAnchor.get(selectionGroupId));
+    }
+  }
+
+  return placementArray.sort((left, right) =>
+    getMuscularDemandSchedulePriority(
+      getSequenceMuscularDemand(left.root, exercisesById),
+    ) - getMuscularDemandSchedulePriority(
+      getSequenceMuscularDemand(right.root, exercisesById),
+    ) || left.anchor.order - right.anchor.order);
 }
 
 export function isPrimaryForGroup(exercise, group) {
@@ -3100,6 +3161,19 @@ export class WorkoutSession {
     );
   }
 
+  getScheduleOrderedPlacements(
+    placements = this.getSelectedSequencePlacements(),
+  ) {
+    const frozenSelectionGroupIds = this.state.activeWorkoutSession
+      ?.initialSelections
+      ?.map((selection) => selection.selectionGroupId) ?? [];
+    return orderSelectedSequencePlacementsForSchedule(
+      placements,
+      this.exercisesById,
+      frozenSelectionGroupIds,
+    );
+  }
+
   createActiveWorkoutSchedule(setCountsBySelectionGroupId) {
     const roots = new Map(this.getSelectionGroups().map((group) => [
       group.id,
@@ -3118,6 +3192,8 @@ export class WorkoutSession {
         this.getSequenceExercises(root).every((member) =>
           this.isCompatibleWithModifiers(member, this.state.activeWorkoutModifiers) &&
           this.isAssignedToGroup(member, group)),
+      this.state.activeWorkoutSession?.initialSelections?.map((selection) =>
+        selection.selectionGroupId) ?? [],
     );
   }
 
@@ -5037,8 +5113,9 @@ export class WorkoutSession {
       !lockedSelectionGroupIds.has(anchor.id));
     const repeatableCosts = [...new Set(repeatablePlacements.map((placement) =>
       blockCostByGroup.get(placement.anchor.id)))];
-    const scheduleOrderedPlacements = [...rankedPlacements]
-      .sort((left, right) => left.anchor.order - right.anchor.order);
+    const scheduleOrderedPlacements = this.getScheduleOrderedPlacements(
+      rankedPlacements,
+    );
     const getPhaseAfterAddingSet = (candidate) => {
       let finalBlockOrder = 0;
       for (const placement of scheduleOrderedPlacements) {
@@ -6058,6 +6135,14 @@ export class WorkoutSession {
       keptExerciseIdsAtStart,
     ).sort((left, right) => left - right);
     const setCounts = this.getEffectiveSetCounts();
+    const scheduleOrderedPlacements = this.getScheduleOrderedPlacements();
+    const finalBlockOrderBySelectionGroupId = new Map();
+    for (const group of this.createActiveWorkoutSchedule(setCounts)) {
+      finalBlockOrderBySelectionGroupId.set(
+        getSelectionKey(group),
+        group.order,
+      );
+    }
     const session = {
       sessionId,
       startedAtUnixMilliseconds,
@@ -6075,7 +6160,7 @@ export class WorkoutSession {
             [...rootIds].sort((left, right) => left - right),
           ]),
       ),
-      initialSelections: this.getSelectedSequencePlacements()
+      initialSelections: scheduleOrderedPlacements
         .map((placement) => ({
           selectionGroupId: placement.anchor.id,
           coveredWorkoutGroupIds: [...placement.coveredGroups]
@@ -6085,9 +6170,8 @@ export class WorkoutSession {
           rootExerciseName: placement.root.name,
           selectionScoreAtStart: this.getSelectionScore(
             placement.root,
-            this.getProjectedSelectionPhase(
-              placement.anchor,
-              this.getSelectionGroups().length,
+            getWorkoutExercisePhase(
+              finalBlockOrderBySelectionGroupId.get(placement.anchor.id),
             ),
           ),
           sequenceBlockCount: placement.root.sequenceBlocks.length,
@@ -6096,14 +6180,7 @@ export class WorkoutSession {
             placement.anchor.id,
             placement.root,
           ),
-        }))
-        .sort((left, right) => {
-          const leftOrder = Math.min(...left.coveredWorkoutGroupIds.map((groupId) =>
-            ALL_GROUPS.get(groupId)?.order ?? Number.MAX_SAFE_INTEGER));
-          const rightOrder = Math.min(...right.coveredWorkoutGroupIds.map((groupId) =>
-            ALL_GROUPS.get(groupId)?.order ?? Number.MAX_SAFE_INTEGER));
-          return leftOrder - rightOrder;
-        }),
+        })),
       selectionChanges: [],
       blocks: [],
       decisions: [],

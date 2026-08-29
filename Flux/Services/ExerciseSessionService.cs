@@ -2692,8 +2692,16 @@ public sealed class ExerciseSessionService
                     StringComparer.Ordinal),
         };
         IReadOnlyDictionary<string, int> setCounts = GetEffectiveSetCounts(state);
-        int selectionGroupCount = GetSelectionGroups(state).Count;
-        session.InitialSelections = GetSelectedSequencePlacements(state)
+        Dictionary<string, int> finalBlockOrderBySelectionGroupId =
+            CreateWorkoutSchedule(state, setCounts)
+                .GroupBy(group => group.SelectionKey)
+                .ToDictionary(
+                    groups => groups.Key,
+                    groups => groups.Max(group => group.Order),
+                    StringComparer.Ordinal);
+        session.InitialSelections = GetScheduleOrderedPlacements(
+                state,
+                GetSelectedSequencePlacements(state))
             .Select(placement => new WorkoutSelectionSnapshot
             {
                 SelectionGroupId = placement.Anchor.Id,
@@ -2706,10 +2714,9 @@ public sealed class ExerciseSessionService
                 SelectionScoreAtStart = GetSelectionScore(
                     state,
                     placement.Root,
-                    GetProjectedSelectionPhase(
-                        state,
-                        placement.Anchor,
-                        selectionGroupCount)),
+                    WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(
+                        finalBlockOrderBySelectionGroupId[
+                            placement.Anchor.Id])),
                 SequenceBlockCount = placement.Root.SequenceBlocks.Length,
                 SetCount = Math.Max(
                     1,
@@ -2719,11 +2726,6 @@ public sealed class ExerciseSessionService
                     placement.Anchor.Id,
                     placement.Root),
             })
-            .OrderBy(selection => selection.CoveredWorkoutGroupIds
-                .Select(groupId => KnownWorkoutGroups.GetValueOrDefault(groupId)?.Order ??
-                    int.MaxValue)
-                .DefaultIfEmpty(int.MaxValue)
-                .Min())
             .ToList();
         state.ActiveWorkoutSession = session;
         return session;
@@ -4057,6 +4059,42 @@ public sealed class ExerciseSessionService
             .ToArray();
     }
 
+    private SelectedSequencePlacement[] GetScheduleOrderedPlacements(
+        WorkoutState state,
+        IEnumerable<SelectedSequencePlacement> placements)
+    {
+        SelectedSequencePlacement[] placementArray = placements.ToArray();
+        string[] frozenSelectionGroupIds = state.ActiveWorkoutSession?
+            .InitialSelections
+            .Select(selection => selection.SelectionGroupId)
+            .ToArray() ?? [];
+        if (frozenSelectionGroupIds.Length == placementArray.Length &&
+            frozenSelectionGroupIds.Distinct(StringComparer.Ordinal).Count() ==
+                placementArray.Length)
+        {
+            Dictionary<string, SelectedSequencePlacement> placementsByAnchor =
+                placementArray.ToDictionary(
+                    placement => placement.Anchor.Id,
+                    StringComparer.Ordinal);
+            if (frozenSelectionGroupIds.All(placementsByAnchor.ContainsKey))
+            {
+                return frozenSelectionGroupIds
+                    .Select(selectionGroupId =>
+                        placementsByAnchor[selectionGroupId])
+                    .ToArray();
+            }
+        }
+
+        return placementArray
+            .OrderBy(placement =>
+                WorkoutSchedulePolicy.GetMuscularDemandPriority(
+                    WorkoutSchedulePolicy.GetSequenceMuscularDemand(
+                        placement.Root,
+                        _exercisesById)))
+            .ThenBy(placement => placement.Anchor.Order)
+            .ToArray();
+    }
+
     private LongWorkoutAllocation ChooseLongWorkoutAllocation(
         WorkoutState state,
         IReadOnlySet<string>? lockedSelectionGroupIds = null,
@@ -4115,9 +4153,8 @@ public sealed class ExerciseSessionService
             .Select(placement => blockCostByGroup[placement.Anchor.Id])
             .Distinct()
             .ToArray();
-        SelectedSequencePlacement[] scheduleOrderedPlacements = rankedPlacements
-            .OrderBy(placement => placement.Anchor.Order)
-            .ToArray();
+        SelectedSequencePlacement[] scheduleOrderedPlacements =
+            GetScheduleOrderedPlacements(state, rankedPlacements);
         WorkoutExercisePhase GetPhaseAfterAddingSet(
             SelectedSequencePlacement candidate)
         {
@@ -4774,7 +4811,9 @@ public sealed class ExerciseSessionService
     {
         var rounds = new List<WorkoutGroup>(state.ActiveWorkoutMinutes);
         foreach (SelectedSequencePlacement placement in
-                 GetSelectedSequencePlacements(state))
+                 GetScheduleOrderedPlacements(
+                     state,
+                     GetSelectedSequencePlacements(state)))
         {
             int setCount = Math.Max(
                 1,

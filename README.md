@@ -27,7 +27,9 @@ resolution.
 
 Choosing a shorter session therefore coarsens the body map instead of cutting
 the end off a longer routine. A 5-minute workout has five broad targets; a
-30-minute workout addresses all 30 leaves individually. Groups are scheduled
+30-minute workout addresses all 30 leaves individually. Selected exercise
+sequences are scheduled first by muscular demand: demand `0`, then demand `2`,
+then demand `1`. Within each demand tier, groups retain their existing order
 from smaller to larger estimated bilateral skeletal-muscle mass.
 
 The supported workout durations are 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90
@@ -262,6 +264,13 @@ Sequence structure is derived from the demonstrated movement:
   awkward or redundant variants are omitted.
 - Distinct established exercises that are useful only together may be linked in
   one sequence.
+
+Scheduling never splits an atomic sequence to obtain the demand order. A
+sequence's scheduling demand is the highest `muscularDemand` among all of its
+blocks, and the complete sequence moves as one unit into the corresponding
+`0`, `2`, or `1` tier. Repeated sets remain adjacent to that sequence. Once a
+workout has started, its resolved sequence order is frozen so restoring or
+continuing it cannot move completed and remaining work around.
 
 Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory

@@ -44,6 +44,7 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WORKOUT_EXERCISE_PHASE,
+  getMuscularDemandSchedulePriority,
   getWorkoutExercisePhase,
 } from "../workout.js";
 
@@ -93,6 +94,7 @@ const [
   softFloorIcon,
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
+  workoutSchedulePolicy,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -137,6 +139,7 @@ const [
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
+  source("Flux", "Services", "WorkoutSchedulePolicy.cs"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -706,6 +709,41 @@ test("muscular demand is a separate reviewed catalog score on both platforms", (
     exercise.muscularDemand >= MINIMUM_MUSCULAR_DEMAND &&
     exercise.muscularDemand <= MAXIMUM_MUSCULAR_DEMAND));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
+});
+
+test("web and mobile schedule demand zero then two then one before muscle order", () => {
+  assert.deepEqual(
+    [
+      MINIMUM_MUSCULAR_DEMAND,
+      MAXIMUM_MUSCULAR_DEMAND,
+      MODERATE_MUSCULAR_DEMAND,
+    ].map(getMuscularDemandSchedulePriority),
+    [0, 1, 2],
+  );
+  assert.match(
+    workoutSchedulePolicy,
+    /MinimumMuscularDemand\s*=>\s*0[\s\S]*MaximumMuscularDemand\s*=>\s*1[\s\S]*ModerateMuscularDemand\s*=>\s*2/,
+  );
+  assert.match(
+    workoutSchedulePolicy,
+    /GetSequenceMuscularDemand[\s\S]*SequenceBlocks[\s\S]*\.Max\(\)/,
+  );
+  assert.match(
+    sessionService,
+    /GetScheduleOrderedPlacements[\s\S]*GetSequenceMuscularDemand[\s\S]*ThenBy\(placement => placement\.Anchor\.Order\)/,
+  );
+  assert.match(
+    sessionService,
+    /CreateWorkoutSchedule[\s\S]*GetScheduleOrderedPlacements/,
+  );
+  assert.match(
+    workoutModule,
+    /orderSelectedSequencePlacementsForSchedule[\s\S]*getSequenceMuscularDemand[\s\S]*left\.anchor\.order - right\.anchor\.order/,
+  );
+  assert.match(
+    workoutModule,
+    /createWorkoutSchedule[\s\S]*orderSelectedSequencePlacementsForSchedule/,
+  );
 });
 
 test("web and mobile apply rolling muscular recovery by primary muscle", () => {

@@ -62,7 +62,9 @@ import {
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
+  getMuscularDemandSchedulePriority,
   getSelectionKey,
+  getSequenceMuscularDemand,
   getSessionMovementId,
   getWorkoutBlockAccent,
   getWorkoutDisplayProgress,
@@ -2726,7 +2728,12 @@ test("completed hard exercise starts both recovery windows but skipped does not"
     () => now,
   );
   completed.startWorkout(3, WORKOUT_MODIFIERS.None);
-  const completedGroup = completed.getNextGroup();
+  const completedGroup = completed.getActiveGroups().find((group) =>
+    completed.getSelectedExercise(group).id === hard.id);
+  for (const prior of completed.getActiveGroups().filter((group) =>
+    group.order < completedGroup.order)) {
+    completed.state.outcomes[prior.id] = "neutral";
+  }
   completed.beginRest(completedGroup, now + 15_000);
   const persistedCompletion = parseStoredState(JSON.stringify(completed.state));
 
@@ -2751,7 +2758,13 @@ test("completed hard exercise starts both recovery windows but skipped does not"
     () => now,
   );
   skipped.startWorkout(3, WORKOUT_MODIFIERS.None);
-  skipped.recordOutcome(skipped.getNextGroup(), false);
+  const skippedGroup = skipped.getActiveGroups().find((group) =>
+    skipped.getSelectedExercise(group).id === hard.id);
+  for (const prior of skipped.getActiveGroups().filter((group) =>
+    group.order < skippedGroup.order)) {
+    skipped.state.outcomes[prior.id] = "neutral";
+  }
+  skipped.recordOutcome(skippedGroup, false);
 
   assert.deepEqual(skipped.state.lastHardWorkUnixMillisecondsByPrimaryMuscle, {});
   assert.deepEqual(skipped.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle, {});
@@ -2794,7 +2807,12 @@ test("completed moderate exercise starts only meaningful recovery", () => {
     () => now,
   );
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
-  const completedGroup = session.getNextGroup();
+  const completedGroup = session.getActiveGroups().find((group) =>
+    session.getSelectedExercise(group).id === moderate.id);
+  for (const prior of session.getActiveGroups().filter((group) =>
+    group.order < completedGroup.order)) {
+    session.state.outcomes[prior.id] = "neutral";
+  }
 
   session.beginRest(completedGroup, now + 15_000);
 
@@ -2895,6 +2913,115 @@ test("every resolution covers all canonical leaves once in scheduled order", () 
   assert.equal(RESOLUTIONS.get(3).groups.at(-1).id, "r3.lower-limbs");
   assert.equal(RESOLUTIONS.get(30).groups[0].id, "r30.pelvic-floor-perineum");
   assert.equal(RESOLUTIONS.get(30).groups.at(-1).id, "r30.medial-deep-knee-extensors");
+});
+
+test("workout schedule orders demand zero then two then one before muscle order", () => {
+  const groups = RESOLUTIONS.get(5).groups;
+  const demandByMuscleOrder = [
+    MODERATE_MUSCULAR_DEMAND,
+    MINIMUM_MUSCULAR_DEMAND,
+    MAXIMUM_MUSCULAR_DEMAND,
+    MINIMUM_MUSCULAR_DEMAND,
+    MODERATE_MUSCULAR_DEMAND,
+  ];
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+    true,
+    demandByMuscleOrder[index],
+  ));
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+
+  session.startWorkout(5, WORKOUT_MODIFIERS.None);
+
+  const expectedSelectionOrder = [...groups]
+    .sort((left, right) =>
+      getMuscularDemandSchedulePriority(
+        demandByMuscleOrder[left.order - 1],
+      ) - getMuscularDemandSchedulePriority(
+        demandByMuscleOrder[right.order - 1],
+      ) || left.order - right.order)
+    .map((group) => group.id);
+  const rounds = session.getActiveGroups();
+  assert.deepEqual(rounds.map(getSelectionKey), expectedSelectionOrder);
+  assert.deepEqual(
+    rounds.map((round) => session.getSelectedExercise(round).muscularDemand),
+    [0, 0, 2, 1, 1],
+  );
+  assert.deepEqual(
+    session.state.activeWorkoutSession.initialSelections.map(
+      (selection) => selection.selectionGroupId,
+    ),
+    expectedSelectionOrder,
+  );
+
+  const snapshotsByGroup = new Map(
+    session.state.activeWorkoutSession.initialSelections.map((selection) =>
+      [selection.selectionGroupId, selection]),
+  );
+  session.state.activeWorkoutSession.initialSelections = groups.map((group) =>
+    snapshotsByGroup.get(group.id));
+  assert.deepEqual(
+    session.getActiveGroups().map(getSelectionKey),
+    groups.map((group) => group.id),
+  );
+});
+
+test("mixed-demand sequence uses its highest demand and remains atomic", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const root = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+    true,
+    MINIMUM_MUSCULAR_DEMAND,
+  );
+  const member = exercise(
+    2,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
+    true,
+    MAXIMUM_MUSCULAR_DEMAND,
+  );
+  const easyStandalone = exercise(
+    3,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  root.sequenceBlocks = [
+    root.sequenceBlocks[0],
+    member.sequenceBlocks[0],
+  ];
+  member.sequenceBlocks = [];
+  const session = new WorkoutSession(
+    [root, member, easyStandalone],
+    createDefaultState(),
+    () => 0,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  const rounds = session.getActiveGroups();
+  assert.deepEqual(
+    rounds.map(getSelectionKey),
+    [groups[2].id, groups[0].id, groups[0].id],
+  );
+  assert.deepEqual(
+    rounds.map((round) => session.getSelectedExercise(round).id),
+    [easyStandalone.id, root.id, member.id],
+  );
+  assert.equal(
+    getSequenceMuscularDemand(root, session.exercisesById),
+    MAXIMUM_MUSCULAR_DEMAND,
+  );
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
@@ -3894,10 +4021,13 @@ test("rejection records phase feedback and purges only its current lineup slot",
   const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
   const groups = session.getActiveGroups();
-  const rejectedGroup = groups[0];
+  const rejectedGroup = groups.find((group) =>
+    getSelectionKey(group) === RESOLUTIONS.get(3).groups[0].id);
   const rejected = session.getSelectedExercise(rejectedGroup);
   const keptIds = new Map(
-    groups.slice(1).map((group) => [group.id, session.getSelectedExercise(group).id]),
+    groups
+      .filter((group) => group.id !== rejectedGroup.id)
+      .map((group) => [group.id, session.getSelectedExercise(group).id]),
   );
   const canonicalGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes(rejected.primaryCanonicalGroup),
@@ -3908,9 +4038,8 @@ test("rejection records phase feedback and purges only its current lineup slot",
     `p${WORKOUT_MODIFIERS.Insect}|${rejectedSlotId}`;
   session.state.selectedExerciseIds[insectRejectedSlotKey] = rejected.id;
 
-  session.recordOutcome(rejectedGroup, false);
-  for (const group of groups.slice(1)) {
-    session.recordOutcome(group, true);
+  for (const group of groups) {
+    session.recordOutcome(group, group.id !== rejectedGroup.id);
   }
   assert.equal(session.getScore(rejected), 0);
   assert.equal(
@@ -3986,9 +4115,14 @@ test("pending rest survives schedule order and coverage changes for the performe
   const performed = started.getSelectedExercise(pendingGroup);
   started.beginRest(pendingGroup, Date.now() + 15_000);
 
+  const retainedAssignment = pendingGroup.canonicalGroups.includes(
+    performed.primaryCanonicalGroup,
+  )
+    ? []
+    : [pendingGroup.canonicalGroups[0]];
   const changedCatalog = catalog.map((item) =>
     item.id === performed.id
-      ? { ...item, secondaryCanonicalGroups: [] }
+      ? { ...item, secondaryCanonicalGroups: retainedAssignment }
       : item,
   );
   assert.equal(isSelectable(changedCatalog.find((item) => item.id === performed.id), pendingGroup), false);

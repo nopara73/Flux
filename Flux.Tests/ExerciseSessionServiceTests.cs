@@ -517,6 +517,93 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void WorkoutScheduleOrdersDemandZeroThenTwoThenOneBeforeMuscleOrder()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(5).Groups
+            .ToArray();
+        int[] demandByMuscleOrder = [1, 0, 2, 0, 1];
+        Exercise[] exercises = groups
+            .Select((group, index) => CloneWithMuscularDemand(
+                QualifiedForGroup(index + 1, group),
+                demandByMuscleOrder[index]))
+            .ToArray();
+        var service = new ExerciseSessionService(exercises, new AlwaysZeroRandom());
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 5, WorkoutModifiers.None);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        string[] expectedSelectionOrder = groups
+            .OrderBy(group => WorkoutSchedulePolicy.GetMuscularDemandPriority(
+                exercises[group.Order - 1].MuscularDemand))
+            .ThenBy(group => group.Order)
+            .Select(group => group.Id)
+            .ToArray();
+        Assert.Equal(expectedSelectionOrder, rounds.Select(round => round.SelectionKey));
+        Assert.Equal(
+            [0, 0, 2, 1, 1],
+            rounds.Select(round =>
+                service.GetSelectedExercise(state, round).MuscularDemand));
+        Assert.Equal(
+            expectedSelectionOrder,
+            state.ActiveWorkoutSession!.InitialSelections.Select(selection =>
+                selection.SelectionGroupId));
+
+        Dictionary<string, WorkoutSelectionSnapshot> snapshotsByGroup = state
+            .ActiveWorkoutSession.InitialSelections
+            .ToDictionary(
+                selection => selection.SelectionGroupId,
+                StringComparer.Ordinal);
+        state.ActiveWorkoutSession.InitialSelections = groups
+            .Select(group => snapshotsByGroup[group.Id])
+            .ToList();
+        Assert.Equal(
+            groups.Select(group => group.Id),
+            service.GetActiveGroups(state).Select(round => round.SelectionKey));
+    }
+
+    [Fact]
+    public void MixedDemandSequenceUsesItsHighestDemandAndRemainsAtomic()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups
+            .ToArray();
+        Exercise root = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(1, groups[0]),
+                linkedMemberExerciseId: 2),
+            muscularDemand: 0);
+        Exercise member = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(2, groups[1]),
+                linkedMemberExerciseId: 1),
+            muscularDemand: 2);
+        Exercise easyStandalone = CloneWithMuscularDemand(
+            QualifiedForGroup(3, groups[2]),
+            muscularDemand: 0);
+        var service = new ExerciseSessionService(
+            [root, member, easyStandalone],
+            new AlwaysZeroRandom());
+        var state = new WorkoutState();
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(
+            [groups[2].Id, groups[0].Id, groups[0].Id],
+            rounds.Select(round => round.SelectionKey));
+        Assert.Equal(
+            [easyStandalone.Id, root.Id, member.Id],
+            rounds.Select(round => service.GetSelectedExercise(state, round).Id));
+        Assert.Equal(2, WorkoutSchedulePolicy.GetSequenceMuscularDemand(
+            root,
+            new Dictionary<int, Exercise>
+            {
+                [root.Id] = root,
+                [member.Id] = member,
+            }));
+    }
+
+    [Fact]
     public void ThirtyMinuteWorkoutSelectsOneDistinctEligibleExercisePerGroup()
     {
         Exercise[] exercises = MassGroupingTaxonomy.GetResolution(30).Groups
@@ -3062,7 +3149,14 @@ public sealed class ExerciseSessionServiceTests
             () => now);
         var completedState = new WorkoutState();
         service.StartWorkout(completedState, 3, WorkoutModifiers.None);
-        WorkoutGroup completedGroup = service.GetNextGroup(completedState)!;
+        WorkoutGroup completedGroup = service.GetActiveGroups(completedState)
+            .Single(group =>
+                service.GetSelectedExercise(completedState, group).Id == hard.Id);
+        foreach (WorkoutGroup prior in service.GetActiveGroups(completedState)
+                     .Where(group => group.Order < completedGroup.Order))
+        {
+            completedState.Outcomes[prior.Id] = ExerciseOutcome.Neutral;
+        }
 
         service.BeginRest(
             completedState,
@@ -3084,7 +3178,14 @@ public sealed class ExerciseSessionServiceTests
 
         var skippedState = new WorkoutState();
         service.StartWorkout(skippedState, 3, WorkoutModifiers.None);
-        WorkoutGroup skippedGroup = service.GetNextGroup(skippedState)!;
+        WorkoutGroup skippedGroup = service.GetActiveGroups(skippedState)
+            .Single(group =>
+                service.GetSelectedExercise(skippedState, group).Id == hard.Id);
+        foreach (WorkoutGroup prior in service.GetActiveGroups(skippedState)
+                     .Where(group => group.Order < skippedGroup.Order))
+        {
+            skippedState.Outcomes[prior.Id] = ExerciseOutcome.Neutral;
+        }
         service.RecordOutcome(skippedState, skippedGroup, keep: false);
 
         Assert.Empty(skippedState.LastHardWorkUnixMillisecondsByPrimaryMuscle);
@@ -3108,7 +3209,14 @@ public sealed class ExerciseSessionServiceTests
             () => now);
         var state = new WorkoutState();
         service.StartWorkout(state, 3, WorkoutModifiers.None);
-        WorkoutGroup completedGroup = service.GetNextGroup(state)!;
+        WorkoutGroup completedGroup = service.GetActiveGroups(state)
+            .Single(group => service.GetSelectedExercise(state, group).Id ==
+                moderate.Id);
+        foreach (WorkoutGroup prior in service.GetActiveGroups(state)
+                     .Where(group => group.Order < completedGroup.Order))
+        {
+            state.Outcomes[prior.Id] = ExerciseOutcome.Neutral;
+        }
 
         service.BeginRest(
             state,
