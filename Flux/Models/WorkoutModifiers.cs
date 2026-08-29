@@ -12,4 +12,5 @@ public enum WorkoutModifiers
     // qualifier is never valid without Mirror.
     TallMirror = 8,
     HardFloor = 16,
+    Wall = 32,
 }

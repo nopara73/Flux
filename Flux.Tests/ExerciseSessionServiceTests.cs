@@ -234,6 +234,42 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void WallPreferenceBreaksTiesButNeverOverridesARealVote()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] ordinary = groups
+            .Select((group, index) => QualifiedForGroup(
+                21_000 + index * 2,
+                group,
+                insectCompatibility: ExerciseInsectCompatibility.Compatible))
+            .ToArray();
+        Exercise[] wallRequired = ordinary
+            .Select(exercise => CloneWithWallRequirement(
+                exercise,
+                exercise.Id + 1,
+                wallRequired: true))
+            .ToArray();
+        Exercise[] exercises = ordinary.Concat(wallRequired).ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var tiedState = new WorkoutState();
+
+        service.StartWorkout(tiedState, 3, WorkoutModifiers.Wall);
+
+        Assert.All(service.GetActiveGroups(tiedState), group => Assert.True(
+            service.GetSelectedExercise(tiedState, group).WallRequired));
+
+        foreach (Exercise exercise in ordinary)
+        {
+            exercise.Score = 1;
+        }
+        var votedState = new WorkoutState();
+        service.StartWorkout(votedState, 3, WorkoutModifiers.Wall);
+
+        Assert.All(service.GetActiveGroups(votedState), group => Assert.False(
+            service.GetSelectedExercise(votedState, group).WallRequired));
+    }
+
+    [Fact]
     public void FullyReviewedCatalogAlwaysHonorsEnabledModifier()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -272,7 +308,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
     }
 
@@ -298,7 +334,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.HardFloor,
             state.LastWorkoutModifiers);
@@ -1388,7 +1424,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1445,7 +1481,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -2875,6 +2911,86 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void VersionTwentyFourRecoversContiguousLegacyDayForTomorrowLightWorkout()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux migration UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux migration UTC+07",
+            "Flux migration UTC+07");
+        DateTimeOffset now = new(
+            2026,
+            8,
+            30,
+            8,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        DateTimeOffset legacyDay = now.AddDays(-3);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now.ToUniversalTime(),
+            timeZone);
+        var state = new WorkoutState
+        {
+            Version = 24,
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            WorkoutHistory =
+            [
+                CompletedSession(1, now.AddDays(-2)),
+                CompletedSession(2, now.AddDays(-1)),
+            ],
+            LastHardWorkUnixMillisecondsByPrimaryMuscle = new()
+            {
+                [CanonicalMuscleGroup.CalfDeepPosteriorLegAndPlantarFoot.ToString()] =
+                    legacyDay.ToUnixTimeMilliseconds(),
+                [CanonicalMuscleGroup.GlutealExtensors.ToString()] =
+                    legacyDay.AddMinutes(4).ToUnixTimeMilliseconds(),
+                [CanonicalMuscleGroup.MedialAndDeepKneeExtensors.ToString()] =
+                    legacyDay.AddMinutes(12).ToUnixTimeMilliseconds(),
+            },
+        };
+
+        service.Initialize(state);
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal(25, state.Version);
+        Assert.Single(state.LegacyCompletedTrainingDayUnixMilliseconds);
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.True(state.ActiveWorkoutSession!.IsLightDay);
+        Assert.Equal(2, state.WorkoutHistory.Count);
+    }
+
+    [Fact]
+    public void LegacyDayInferenceRejectsSparseHardWorkEvidence()
+    {
+        DateTimeOffset now = new(2026, 8, 30, 8, 0, 0, TimeSpan.Zero);
+        IReadOnlyList<long> inferred = WorkoutLightDayPolicy
+            .InferLegacyCompletedTrainingDays(
+                [
+                    CompletedSession(1, now.AddDays(-2)),
+                    CompletedSession(2, now.AddDays(-1)),
+                ],
+                new Dictionary<string, long>
+                {
+                    [CanonicalMuscleGroup.GlutealExtensors.ToString()] =
+                        now.AddDays(-3).ToUnixTimeMilliseconds(),
+                    [CanonicalMuscleGroup.MedialAndDeepKneeExtensors.ToString()] =
+                        now.AddDays(-3).AddMinutes(4).ToUnixTimeMilliseconds(),
+                },
+                [],
+                now.ToUnixTimeMilliseconds(),
+                TimeZoneInfo.Utc);
+
+        Assert.Empty(inferred);
+    }
+
+    [Fact]
     public void LightDayTopBucketDemandZeroOutranksHardKeepWithoutDeletingIt()
     {
         TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
@@ -3098,7 +3214,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.Equal(easy.Id, state.SelectedExerciseIds[groups[0].Id]);
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
@@ -3991,7 +4107,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -4376,6 +4492,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
+            WallRequired = source.WallRequired,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4412,6 +4529,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
+            WallRequired = source.WallRequired,
             MuscularDemand = muscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4457,6 +4575,7 @@ public sealed class ExerciseSessionServiceTests
                 ExerciseMirrorRelationship.BenefitsGreatly
                 ? ExerciseMirrorCoverage.UpperBody
                 : ExerciseMirrorCoverage.None,
+            WallRequired = source.WallRequired,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4465,6 +4584,49 @@ public sealed class ExerciseSessionServiceTests
             Equipment = mirrorRelationship == ExerciseMirrorRelationship.MirrorOnly
                 ? "Mirror"
                 : "None",
+            Silent = source.Silent,
+        };
+    }
+
+    private static Exercise CloneWithWallRequirement(
+        Exercise source,
+        int id,
+        bool wallRequired)
+    {
+        return new Exercise
+        {
+            Id = id,
+            Name = $"Exercise {id}",
+            RetiredName = source.RetiredName,
+            Video = $"exercise_{id:D4}.mp4",
+            PrimaryCanonicalGroup = source.PrimaryCanonicalGroup,
+            SecondaryCanonicalGroups = source.SecondaryCanonicalGroups,
+            Practice = source.Practice,
+            MotionProfile = source.MotionProfile,
+            Mode = source.Mode,
+            Presentation = source.Presentation,
+            HoldFramePercent = source.HoldFramePercent,
+            SideSequence = source.SideSequence,
+            DirectionSequence = source.DirectionSequence,
+            SequenceBlocks = source.SequenceBlocks.Length == 0
+                ? []
+                : source.SequenceBlocks
+                    .Select(block => block.ExerciseId == source.Id
+                        ? block with { ExerciseId = id }
+                        : block)
+                    .ToArray(),
+            SessionMovementId = source.SessionMovementId,
+            InsectCompatibility = source.InsectCompatibility,
+            HardFloorCompatibility = source.HardFloorCompatibility,
+            MirrorRelationship = source.MirrorRelationship,
+            MinimumMirrorCoverage = source.MinimumMirrorCoverage,
+            WallRequired = wallRequired,
+            MuscularDemand = source.MuscularDemand,
+            Score = source.Score,
+            OnlyFeetTouchGround = source.OnlyFeetTouchGround,
+            ShoeAgnostic = source.ShoeAgnostic,
+            MaxSpaceMeters = source.MaxSpaceMeters,
+            Equipment = source.Equipment,
             Silent = source.Silent,
         };
     }

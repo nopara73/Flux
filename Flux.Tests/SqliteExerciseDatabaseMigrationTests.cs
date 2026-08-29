@@ -9,6 +9,13 @@ namespace Flux.Tests;
 
 public sealed class SqliteExerciseDatabaseMigrationTests
 {
+    private static readonly HashSet<int> WallExerciseIds =
+    [
+        134, 137, 149, 153, 162, 163, 165, 166, 172, 175,
+        579, 580, 584, 585, 586, 587, 603, 633,
+        701, 702, 703, 704, 801, 835,
+    ];
+
     private static readonly JsonSerializerOptions CatalogJsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -22,21 +29,23 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(68)]
     [InlineData(69)]
     [InlineData(70)]
+    [InlineData(71)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(71, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(72, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 71)]
+    [InlineData(13, 72)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
     [InlineData(71, 71)]
-    [InlineData(71, 72)]
+    [InlineData(72, 72)]
+    [InlineData(72, 73)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -71,7 +80,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         var storedVersion67 = catalog
             .Where(exercise =>
                 !added.Contains(exercise.Id) &&
-                !laterHardFloorCoverageIds.Contains(exercise.Id))
+                !laterHardFloorCoverageIds.Contains(exercise.Id) &&
+                !WallExerciseIds.Contains(exercise.Id))
             .ToDictionary(
                 exercise => exercise.Id,
                 exercise => new StoredExerciseSnapshot(
@@ -88,7 +98,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion67);
 
-        Assert.Equal(475, catalog.Length);
+        Assert.Equal(499, catalog.Length);
         Assert.Equal(430, storedVersion67.Count);
         Assert.Equal(428, preserved.Count);
         Assert.DoesNotContain(520, preserved);
@@ -124,7 +134,9 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         ];
         HashSet<int> added = addedExerciseIds.ToHashSet();
         Dictionary<int, StoredExerciseSnapshot> storedVersion69 = catalog
-            .Where(exercise => !added.Contains(exercise.Id))
+            .Where(exercise =>
+                !added.Contains(exercise.Id) &&
+                !WallExerciseIds.Contains(exercise.Id))
             .ToDictionary(
                 exercise => exercise.Id,
                 exercise => new StoredExerciseSnapshot(
@@ -136,7 +148,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion69);
 
-        Assert.Equal(475, catalog.Length);
+        Assert.Equal(499, catalog.Length);
         Assert.Equal(449, storedVersion69.Count);
         Assert.Equal(storedVersion69.Keys.Order(), preserved.Order());
         Assert.All(storedVersion69, entry =>
@@ -181,7 +193,9 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         };
         HashSet<int> added = addedAfterVersion68.ToHashSet();
         Dictionary<int, StoredExerciseSnapshot> storedVersion68 = catalog
-            .Where(exercise => !added.Contains(exercise.Id))
+            .Where(exercise =>
+                !added.Contains(exercise.Id) &&
+                !WallExerciseIds.Contains(exercise.Id))
             .ToDictionary(
                 exercise => exercise.Id,
                 exercise => new StoredExerciseSnapshot(
@@ -284,7 +298,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             """
             SELECT name, video, score, equipment,
                 hard_floor_compatibility, mirror_relationship,
-                mirror_coverage, session_movement_id
+                mirror_coverage, wall_required, session_movement_id
             FROM exercises
             WHERE id = 528
             """;
@@ -299,7 +313,37 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.Equal("Unreviewed", reader.GetString(5));
         Assert.Equal("None", reader.GetString(6));
         Assert.Equal(0, reader.GetInt32(7));
+        Assert.Equal(0, reader.GetInt32(8));
         Assert.False(reader.Read());
+    }
+
+    [Fact]
+    public void CurrentSchemaPersistsWallRequirementAsBoolean()
+    {
+        using var connection = new SqliteConnection("Data Source=:memory:");
+        connection.Open();
+        Execute(
+            connection,
+            ExerciseDatabaseMigrationSql.CreateRebuiltExerciseTable);
+        Execute(
+            connection,
+            $"""
+            INSERT INTO {ExerciseDatabaseMigrationSql.RebuiltExerciseTableName} (
+                id, name, video, practice, motion_profile, muscular_demand,
+                insect_compatibility, hard_floor_compatibility,
+                mirror_relationship, wall_required)
+            VALUES (
+                1, 'Wall Sit', 'exercise_0001.mp4', 'Bodyweight strength',
+                'WallSit', 2, 'Compatible', 'Compatible', 'Agnostic', 1)
+            """);
+
+        using SqliteCommand command = connection.CreateCommand();
+        command.CommandText =
+            $"SELECT wall_required FROM " +
+            ExerciseDatabaseMigrationSql.RebuiltExerciseTableName +
+            " WHERE id = 1";
+
+        Assert.Equal(1, Convert.ToInt32(command.ExecuteScalar()));
     }
 
     private static void Execute(SqliteConnection connection, string sql)

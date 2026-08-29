@@ -6,6 +6,7 @@
     mirror: 4,
     tallMirror: 8,
     hardFloor: 16,
+    wall: 32,
   });
   const feedbackDurationMs = 2_040;
   const elements = {
@@ -19,13 +20,15 @@
     hardFloor: document.getElementById("hard-floor-modifier"),
     insect: document.getElementById("insect-modifier"),
     silence: document.getElementById("silence-modifier"),
+    wall: document.getElementById("wall-modifier"),
     mirror: document.getElementById("mirror-modifier"),
     feedback: document.getElementById("modifier-feedback"),
     status: document.getElementById("status"),
   };
   if (!elements.dial || !elements.value || !elements.decrease ||
       !elements.increase || !elements.range || !elements.begin ||
-      !elements.insect || !elements.silence || !elements.mirror ||
+      !elements.insect || !elements.silence || !elements.wall ||
+      !elements.mirror ||
       !elements.feedback) {
     return;
   }
@@ -47,6 +50,7 @@
     toggleModifier("hardFloor"));
   elements.insect.addEventListener("click", () => toggleModifier("insect"));
   elements.silence.addEventListener("click", () => toggleModifier("silence"));
+  elements.wall.addEventListener("click", () => toggleModifier("wall"));
   elements.mirror.addEventListener("click", cycleMirrorEquipment);
 
   renderDuration();
@@ -116,6 +120,7 @@
       ["hardFloor", elements.hardFloor],
       ["insect", elements.insect],
       ["silence", elements.silence],
+      ["wall", elements.wall],
     ]) {
       if (element?.getAttribute("aria-pressed") === "true") {
         modifiers |= modifierFlags[name];
@@ -207,6 +212,7 @@
     renderBinaryModifier(elements.hardFloor, "hardFloor");
     renderBinaryModifier(elements.insect, "insect");
     renderBinaryModifier(elements.silence, "silence");
+    renderBinaryModifier(elements.wall, "wall");
 
     const hasMirror = (selectedModifiers & modifierFlags.mirror) !== 0;
     const hasTallMirror = (selectedModifiers & modifierFlags.tallMirror) !== 0;
@@ -244,6 +250,14 @@
           : "Quiet exercise filter: noisy exercises allowed",
       );
     }
+    if (name === "wall") {
+      element.setAttribute(
+        "aria-label",
+        enabled
+          ? "Wall equipment: wall available"
+          : "Wall equipment: no wall available",
+      );
+    }
   }
 
   function modifierFeedbackLabel(name) {
@@ -253,6 +267,9 @@
     }
     if (name === "insect") {
       return `insect mode ${enabled ? "ON" : "OFF"}`;
+    }
+    if (name === "wall") {
+      return `equipment ${enabled ? "ON" : "OFF"}: wall`;
     }
     return enabled ? "noisy exercises DISABLED" : "noisy exercises ENABLED";
   }

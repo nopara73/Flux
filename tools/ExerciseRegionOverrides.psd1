@@ -134,4 +134,9 @@
     962 = 'CORE'
     973 = 'LEGS'
     1000 = 'BACK'
+
+    # Wall-equipment additions whose stable ID family differs from the visible
+    # motion-generation profile.
+    603 = 'LEGS'
+    633 = 'LEGS'
 }

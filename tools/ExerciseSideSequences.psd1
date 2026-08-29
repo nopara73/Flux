@@ -153,4 +153,17 @@
     997 = 'ScreenRightThenLeft'
     998 = 'ScreenRightThenLeft'
     999 = 'ScreenRightThenLeft'
+
+    # Wall-equipment movements whose demonstrated side must be completed on
+    # both sides before the single session movement can be kept or replaced.
+    149 = 'ScreenRightThenLeft'
+    153 = 'ScreenRightThenLeft'
+    163 = 'ScreenRightThenLeft'
+    172 = 'ScreenLeftThenRight'
+    603 = 'ScreenLeftThenRight'
+    585 = 'ScreenRightThenLeft'
+    586 = 'ScreenRightThenLeft'
+    587 = 'ScreenRightThenLeft'
+    633 = 'ScreenLeftThenRight'
+    704 = 'ScreenLeftThenRight'
 }

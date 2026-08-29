@@ -338,7 +338,6 @@
         MirrorForAlternation = $true
     }
     157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $true }
-    162 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
     167 = @{
         File = 'high-knee-march.mp4'
         Url = 'https://www.youtube.com/watch?v=0U_Gi19HiGo'
@@ -2785,19 +2784,6 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $true
     }
-    134 = @{
-        File = 'standing-pilates.mp4'
-        Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
-        SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
-        Human = $true
-        Youtube = $true
-        Video = $true
-        StartSeconds = 273
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $false
-    }
     144 = @{
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
@@ -4610,6 +4596,319 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         PingPong = $true
         MirrorForAlternation = $true
+    }
+    134 = @{
+        File = 'wall-sit-puregym.mp4'
+        Url = 'https://www.youtube.com/watch?v=6Li55TURhVg'
+        SourcePage = 'https://www.youtube.com/watch?v=6Li55TURhVg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.25
+        DurationSeconds = 14.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    137 = @{
+        File = 'wall-squat.mp4'
+        Url = 'https://www.youtube.com/watch?v=hAvVXAE9Bgs'
+        SourcePage = 'https://www.youtube.com/watch?v=hAvVXAE9Bgs'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 16
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    149 = @{
+        File = 'isometric-hip-abduction-against-wall.mp4'
+        Url = 'https://www.youtube.com/watch?v=MpjO3dbsdqg'
+        SourcePage = 'https://www.youtube.com/watch?v=MpjO3dbsdqg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 5.5
+        DurationSeconds = 19
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    153 = @{
+        File = 'wall-supported-standing-hip-extension.mp4'
+        Url = 'https://www.youtube.com/watch?v=ey-ZCfnm4E0'
+        SourcePage = 'https://www.youtube.com/watch?v=ey-ZCfnm4E0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1
+        DurationSeconds = 25
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    162 = @{
+        File = 'wall-leaning-calf-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=eF9h8tGzucA'
+        SourcePage = 'https://www.youtube.com/watch?v=eF9h8tGzucA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.5
+        DurationSeconds = 11.5
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    163 = @{
+        File = 'wall-soleus-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=kTnS4Sxnt0E'
+        SourcePage = 'https://www.youtube.com/watch?v=kTnS4Sxnt0E'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 8
+        DurationSeconds = 13
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    165 = @{
+        File = 'wall-tibialis-raise.mp4'
+        Url = 'https://www.youtube.com/watch?v=VzIcGAgBiaM'
+        SourcePage = 'https://www.youtube.com/watch?v=VzIcGAgBiaM'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1
+        DurationSeconds = 19
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    166 = @{
+        File = 'wall-drill-marching-clean.mp4'
+        Url = 'https://www.youtube.com/watch?v=O8ck9U0B4nk'
+        SourcePage = 'https://www.youtube.com/watch?v=O8ck9U0B4nk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.25
+        DurationSeconds = 10.25
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    172 = @{
+        File = 'wall-knee-drive-hop.mp4'
+        Url = 'https://www.youtube.com/watch?v=WpBE5TdWwY8'
+        SourcePage = 'https://www.youtube.com/watch?v=WpBE5TdWwY8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 15
+        DurationSeconds = 17
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    175 = @{
+        File = 'wall-sit-march.mp4'
+        Url = 'https://www.youtube.com/watch?v=WJ-X-1sL1k8'
+        SourcePage = 'https://www.youtube.com/watch?v=WJ-X-1sL1k8'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.3
+        DurationSeconds = 9
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    579 = @{
+        File = 'wall-shoulder-slides.mp4'
+        Url = 'https://www.youtube.com/watch?v=GLty-L_JxXk'
+        SourcePage = 'https://www.youtube.com/watch?v=GLty-L_JxXk'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 38
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    580 = @{
+        File = 'wall-angel.mp4'
+        Url = 'https://www.youtube.com/watch?v=cvx06snMQ3A'
+        SourcePage = 'https://www.youtube.com/watch?v=cvx06snMQ3A'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 18
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    584 = @{
+        File = 'wall-scapular-push-up.mp4'
+        Url = 'https://www.youtube.com/watch?v=qqVHikvbt7w'
+        SourcePage = 'https://www.youtube.com/watch?v=qqVHikvbt7w'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 22
+        DurationSeconds = 25
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    585 = @{
+        File = 'isometric-shoulder-abduction-against-wall.mp4'
+        Url = 'https://www.youtube.com/watch?v=ocy3UYV3ikc'
+        SourcePage = 'https://www.youtube.com/watch?v=ocy3UYV3ikc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 24
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    586 = @{
+        File = 'isometric-shoulder-flexion-against-wall.mp4'
+        Url = 'https://www.youtube.com/watch?v=3Ldy98UgaW0'
+        SourcePage = 'https://www.youtube.com/watch?v=3Ldy98UgaW0'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 8
+        FramesPerSecond = 10
+        Crop = 'crop=iw*0.75:ih:iw*0.25:0'
+        MirrorForAlternation = $false
+    }
+    587 = @{
+        File = 'isometric-shoulder-external-rotation-against-wall.mp4'
+        Url = 'https://www.youtube.com/watch?v=xZKlQlkAeZA'
+        SourcePage = 'https://www.youtube.com/watch?v=xZKlQlkAeZA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 2
+        DurationSeconds = 24
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    603 = @{
+        File = 'wall-supported-glute-kickback.mp4'
+        Url = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
+        SourcePage = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 7
+        DurationSeconds = 25
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    633 = @{
+        File = 'wall-calf-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=mafo7o7OnFo'
+        SourcePage = 'https://www.youtube.com/watch?v=mafo7o7OnFo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3
+        DurationSeconds = 16
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    701 = @{
+        File = 'wall-push-up.mp4'
+        Url = 'https://www.youtube.com/watch?v=wIPJvBQs7RA'
+        SourcePage = 'https://www.youtube.com/watch?v=wIPJvBQs7RA'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 12
+        DurationSeconds = 15
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    702 = @{
+        File = 'wall-triceps-push-up.mp4'
+        Url = 'https://www.youtube.com/watch?v=Gqgud0M2eTo'
+        SourcePage = 'https://www.youtube.com/watch?v=Gqgud0M2eTo'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 23
+        DurationSeconds = 5
+        FramesPerSecond = 10
+        PingPong = $true
+        MirrorForAlternation = $false
+    }
+    703 = @{
+        File = 'wall-push-up-shoulder-tap.mp4'
+        Url = 'https://www.youtube.com/watch?v=Je_kiDtc5eY'
+        SourcePage = 'https://www.youtube.com/watch?v=Je_kiDtc5eY'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.3
+        DurationSeconds = 12
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    704 = @{
+        File = 'wall-pectoral-stretch-blue-wall.mp4'
+        Url = 'https://www.youtube.com/watch?v=7ZJFqBHRCtI'
+        SourcePage = 'https://www.youtube.com/watch?v=7ZJFqBHRCtI'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0.5
+        DurationSeconds = 21
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    801 = @{
+        File = 'wall-roll-down.mp4'
+        Url = 'https://www.youtube.com/watch?v=D89Qyxoj-Lg'
+        SourcePage = 'https://www.youtube.com/watch?v=D89Qyxoj-Lg'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 3
+        DurationSeconds = 18
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    835 = @{
+        File = 'wall-lat-stretch.mp4'
+        Url = 'https://www.youtube.com/watch?v=Ca6cJdBeB0s'
+        SourcePage = 'https://www.youtube.com/watch?v=Ca6cJdBeB0s'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 1
+        DurationSeconds = 14
+        FramesPerSecond = 10
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
     1000 = @{
         File = 'oy2AfcI1CXA.mp4'

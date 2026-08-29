@@ -81,6 +81,10 @@ $hardFloorIncompatibleExerciseIds = @(
     $hardFloorCompatibilityReview.IncompatibleByReason.Values |
         ForEach-Object { $_ } |
         ForEach-Object { [int]$_ })
+$wallRequirementReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseWallRequirements.psd1') -SkipLimitCheck
+$wallRequiredExerciseIds = @(
+    $wallRequirementReview.Required | ForEach-Object { [int]$_ })
 $silenceCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseSilenceCompatibility.psd1') -SkipLimitCheck
 $silentExerciseIds = @(
@@ -231,6 +235,25 @@ $retainedExerciseIds = @(
         ForEach-Object { [int]$_ } |
         Sort-Object -Unique)
 $expectedExerciseCount = $retainedExerciseIds.Count
+
+if ($wallRequiredExerciseIds.Count -ne
+        @($wallRequiredExerciseIds | Sort-Object -Unique).Count -or
+    @($wallRequiredExerciseIds | Where-Object {
+            $_ -notin $retainedExerciseIds }).Count -gt 0) {
+    throw 'WallRequired must contain unique retained exercise IDs only.'
+}
+$wallRequiredSessionMovementCount = @(
+    $wallRequiredExerciseIds | ForEach-Object {
+        if ($sessionMovementByExerciseId.ContainsKey($_)) {
+            [int]$sessionMovementByExerciseId[$_]
+        }
+        else {
+            [int]$_
+        }
+    } | Sort-Object -Unique).Count
+if ($wallRequiredSessionMovementCount -lt 20) {
+    throw "WallRequired requires at least 20 distinct session movements; found $wallRequiredSessionMovementCount."
+}
 
 $allHardFloorReviewedExerciseIds = @(
     $hardFloorCompatibleExerciseIds +
@@ -892,7 +915,8 @@ function Get-MotionProfile {
         'LEGS' {
             if ($Name -match 'Squat|Plie|Chair Pose|Goddess|Horse|Duck Walk') { return 'Squat' }
             if ($Name -match 'Lunge|Warrior I|Warrior II|Side Angle') { return 'Lunge' }
-            if ($Name -match 'Bilateral Bent-Knee Calf Raise') { return 'HeelRaise' }
+            if ($Name -match 'Calf Raise') { return 'HeelRaise' }
+            if ($Name -match 'Tibialis Raise') { return 'ForefootRaise' }
             if ($Name -match 'Hamstring Curl|Heel Flick') { return 'KneeCurl' }
             if ($Name -match 'Knee|March|Passe|Retire') { return 'KneeLift' }
             if ($Name -match 'Side|Abduction|Adduction|a la Seconde') { return 'LegSide' }
@@ -986,9 +1010,9 @@ function Get-MotionProfile {
         'CHEST' {
             if ($Name -match 'Breath|Breathing|Expansion') { return 'ChestBreathing' }
             if ($Name -match 'Circle|Figure Eight|Ribcage Isolation|Slide') { return 'ChestCircle' }
-            if ($Name -match 'Press|Strike|Punch|Squeeze|Svend') { return 'ChestPress' }
+            if ($Name -match 'Press|Strike|Punch|Push-Up|Squeeze|Svend') { return 'ChestPress' }
             if ($Name -match 'Fly|Hug|Wing|Crane') { return 'ChestFly' }
-            if ($Name -match 'Open|Prayer|Salute|Warrior|Mountain|Cactus|Goalpost|Cow-Face|Eagle') { return 'ChestOpen' }
+            if ($Name -match 'Open|Stretch|Prayer|Salute|Warrior|Mountain|Cactus|Goalpost|Cow-Face|Eagle') { return 'ChestOpen' }
             if ($Name -match 'Tai Chi|Qigong|Brocades') { return 'ChestFlow' }
             return 'ChestIsolation'
         }
@@ -3359,6 +3383,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             else {
                 'Incompatible'
             }
+            wallRequired = $exerciseId -in $wallRequiredExerciseIds
             mirrorRelationship = if (
                 $exerciseId -in $mirrorOnlyExerciseIds) {
                 'MirrorOnly'
@@ -3713,6 +3738,7 @@ $constraintViolations = $records | Where-Object {
         $_['minimumMirrorCoverage'] -ne 'None') -or
     $_['hardFloorCompatibility'] -notin @(
         'Compatible', 'Incompatible') -or
+    -not ($_['wallRequired'] -is [bool]) -or
     -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
@@ -3798,6 +3824,9 @@ foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 
     foreach ($memberId in $members) {
         $member = $recordsById[$memberId]
         if ($memberId -ne $rootId -and @($member['sequenceBlocks']).Count -ne 0) {
+            $sequenceViolations.Add($rootId)
+        }
+        if ([bool]$member['wallRequired'] -ne [bool]$root['wallRequired']) {
             $sequenceViolations.Add($rootId)
         }
     }

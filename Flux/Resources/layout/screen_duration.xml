@@ -108,8 +108,8 @@
                     <Button
                         android:id="@+id/duration_decrease_button"
                         style="@style/DurationStepButton"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:contentDescription="@string/duration_decrease_description"
                         android:foreground="@drawable/ic_minus"
                         android:foregroundGravity="center"
@@ -135,8 +135,8 @@
                     <Button
                         android:id="@+id/duration_increase_button"
                         style="@style/DurationStepButton"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:contentDescription="@string/duration_increase_description"
                         android:foreground="@drawable/ic_plus"
                         android:foregroundGravity="center"
@@ -217,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:alignmentMode="alignMargins"
-                    android:columnCount="4"
+                    android:columnCount="5"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:useDefaultMargins="false">
@@ -225,8 +225,8 @@
                     <CheckBox
                         android:id="@+id/hard_floor_modifier_button"
                         style="@style/DurationModifierTile"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_margin="6dp"
                         android:layout_gravity="center"
                         android:button="@null"
@@ -270,10 +270,26 @@
                         android:tooltipText="@string/noisy_exercises_disabled_feedback" />
 
                     <CheckBox
+                        android:id="@+id/wall_modifier_button"
+                        style="@style/DurationModifierTile"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="6dp"
+                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/wall_modifier_description"
+                        android:drawableTint="@color/duration_modifier_icon_tint"
+                        android:drawableTop="@drawable/ic_wall"
+                        android:gravity="center"
+                        android:text=""
+                        android:tooltipText="@string/wall_equipment_disabled_feedback" />
+
+                    <CheckBox
                         android:id="@+id/mirror_modifier_button"
                         style="@style/DurationModifierTile"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_margin="6dp"
                         android:layout_gravity="center"
                         android:button="@null"

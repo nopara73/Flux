@@ -75,6 +75,7 @@ public class MainActivity : Activity
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private CheckBox _wallModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
     private TextView _durationModifierFeedback = null!;
     private int _modifierFeedbackGeneration;
@@ -530,6 +531,8 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _wallModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.wall_modifier_button);
         _mirrorModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.mirror_modifier_button);
         _durationModifierFeedback = FindRequiredView<TextView>(
@@ -669,6 +672,21 @@ public class MainActivity : Activity
                 userInitiated: true);
             ShowModifierFeedback(GetModifierFeedbackResourceId(
                 WorkoutModifiers.Silence,
+                enabled));
+        };
+        _wallModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _wallModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Wall,
+                enabled,
+                _wallModifierButton,
+                Resource.String.wall_modifier_description,
+                Resource.String.wall_modifier_on,
+                Resource.String.wall_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Wall,
                 enabled));
         };
         _mirrorModifierButton.Click += (_, _) =>
@@ -943,7 +961,7 @@ public class MainActivity : Activity
             };
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGrid.LayoutParameters = modifierGridLayout;
-            _durationModifierGrid.ColumnCount = 4;
+            _durationModifierGrid.ColumnCount = 5;
             SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
@@ -1004,8 +1022,8 @@ public class MainActivity : Activity
         };
         portraitModifierGridLayout.TopMargin = DpInt(32);
         _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
-        _durationModifierGrid.ColumnCount = 4;
-        SetModifierTileSizes(DpInt(64));
+        _durationModifierGrid.ColumnCount = 5;
+        SetModifierTileSizes(DpInt(48));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
             matchParent,
@@ -1572,6 +1590,13 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Wall,
+            (_state.LastWorkoutModifiers & WorkoutModifiers.Wall) != 0,
+            _wallModifierButton,
+            Resource.String.wall_modifier_description,
+            Resource.String.wall_modifier_on,
+            Resource.String.wall_modifier_off);
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _state.LastWorkoutModifiers));
@@ -1701,6 +1726,9 @@ public class MainActivity : Activity
         WorkoutModifiers.Silence => enabled
             ? Resource.String.noisy_exercises_disabled_feedback
             : Resource.String.noisy_exercises_enabled_feedback,
+        WorkoutModifiers.Wall => enabled
+            ? Resource.String.wall_equipment_enabled_feedback
+            : Resource.String.wall_equipment_disabled_feedback,
         _ => throw new ArgumentOutOfRangeException(nameof(modifier), modifier, null),
     };
 

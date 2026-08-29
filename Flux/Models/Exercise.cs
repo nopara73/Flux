@@ -51,6 +51,8 @@ public sealed class Exercise
     public ExerciseMirrorCoverage MinimumMirrorCoverage { get; init; } =
         ExerciseMirrorCoverage.None;
 
+    public bool WallRequired { get; init; }
+
     public int MuscularDemand { get; init; }
 
     public int Score { get; set; } = 0;

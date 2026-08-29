@@ -1,11 +1,11 @@
 # Exercise catalog audit artifacts
 
-Flux models a first-time user standing in a 2 m × 2 m space with no wall,
-equipment, or spoken instruction except where a physical mirror is explicitly
-declared. The final packaged silent human demonstration is authoritative for
+Flux models a first-time user standing in a 2 m × 2 m space with no external
+support, equipment, or spoken instruction except where a stable wall or
+physical mirror is explicitly declared. The final packaged silent human demonstration is authoritative for
 the action, name, muscular demand, anatomy, structure, and presentation.
 
-## Current full-loop integrity audit
+## 2026-08-29 full-loop integrity baseline
 
 The 2026-08-29 review inspected all **479** pre-audit records and produced a
 final catalog of **475** entries:
@@ -18,6 +18,12 @@ final catalog of **475** entries:
 - mirror relationships: **10** `MirrorOnly`, **77** `BenefitsGreatly`, and
   **388** `Agnostic`.
 
+The subsequent Wall-equipment implementation added 24 separately reviewed
+wall-required movements, producing the current 499-record catalog. Their full
+inventory and independent singleton-floor contract are documented in
+[`../WALL_EQUIPMENT_AUDIT.md`](../WALL_EQUIPMENT_AUDIT.md); the counts above
+remain the frozen outcome of the 479-record baseline review.
+
 [`demonstration_metadata_integrity_2026-08-29.csv`](demonstration_metadata_integrity_2026-08-29.csv)
 has exactly one row per pre-audit exercise. Each changed row records the prior
 metadata, what the final loop actually shows, every exact changed field, and the
@@ -25,8 +31,9 @@ reason. It also records the loop, crop, seam, speed, mirroring, travel, hold
 frame, and equipment review dimensions.
 
 [`modifier_coverage_deficits_2026-08-29.json`](modifier_coverage_deficits_2026-08-29.json)
-is the complete output of the unchanged modifier validators after false
-inherited anatomy was removed. It deliberately preserves real catalog debt
+is the current output of the unchanged pairwise modifier validators. Wall is
+not a pairwise quota dimension, so the pre-existing deficit totals remain
+directly comparable after the 24-record extension. The ledger deliberately preserves real catalog debt
 rather than making the checks green through filler or false associations.
 The methodology, summary, evidence, migrations, and correction classes are in
 [`../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).

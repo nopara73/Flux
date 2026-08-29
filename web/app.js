@@ -5,6 +5,7 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
+  findWallRequiredCatalogDeficiencies,
   findMirrorCategoryDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
@@ -33,6 +34,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
+  wallEnabled: "equipment ON: wall",
+  wallDisabled: "equipment OFF: wall",
   compactMirrorEnabled: "equipment ON: compact mirror",
   tallMirrorEnabled: "equipment ON: tall mirror",
   mirrorDisabled: "equipment OFF: mirror",
@@ -50,6 +53,7 @@ const elements = {
   hardFloorModifier: byId("hard-floor-modifier"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
+  wallModifier: byId("wall-modifier"),
   mirrorModifier: byId("mirror-modifier"),
   modifierFeedback: byId("modifier-feedback"),
   workoutScreen: byId("workout-screen"),
@@ -165,9 +169,12 @@ async function bootstrap() {
     }
     assetVersions = Object.freeze({ ...loadedAssetVersions });
     const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
+    const wallCatalogDeficiencies =
+      findWallRequiredCatalogDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
         !isSessionMovementMetadataValid(exercises) ||
-        mirrorCategoryDeficiencies.length > 0) {
+        mirrorCategoryDeficiencies.length > 0 ||
+        wallCatalogDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
@@ -340,6 +347,12 @@ function workoutModifierTiles() {
       enabledLabel: "Quiet exercise filter: quiet exercises only",
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
+    {
+      element: elements.wallModifier,
+      flag: WORKOUT_MODIFIERS.Wall,
+      enabledLabel: "Wall equipment: wall available",
+      disabledLabel: "Wall equipment: no wall available",
+    },
   ];
 }
 
@@ -368,6 +381,11 @@ function workoutModifierFeedbackLabel(flag, enabled) {
   if (flag === WORKOUT_MODIFIERS.Silence) {
     return MODIFIER_FEEDBACK_LABELS[
       enabled ? "noisyDisabled" : "noisyEnabled"
+    ];
+  }
+  if (flag === WORKOUT_MODIFIERS.Wall) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "wallEnabled" : "wallDisabled"
     ];
   }
   throw new RangeError(`Unknown workout modifier: ${flag}`);

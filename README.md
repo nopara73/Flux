@@ -4,8 +4,8 @@
 
 Flux is a zero-admin workout app. Choose a duration, receive one standing
 exercise at a time, then keep or discard each movement. Exercises require no
-equipment by default; a compact or tall mirror can be declared available as an
-optional modifier. Flux
+equipment by default; an ordinary wall and a compact or tall mirror can be
+declared available as optional modifiers. Flux
 uses those decisions to shape later sessions without allowing preference,
 randomness, or filters to destroy anatomical coverage.
 
@@ -77,7 +77,7 @@ The optimizer applies these priorities lexicographically:
 6. prefer work outside its recovery window, then fresh hard work and its
    longest-rested primary muscle;
 7. preserve a valid existing selection when the higher priorities tie;
-8. apply the soft Mirror preference;
+8. apply the soft available-equipment preference for Wall and Mirror;
 9. prefer primary ownership and then wider coverage of the target group;
 10. randomize only otherwise equivalent choices.
 
@@ -190,21 +190,26 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
-Flux currently provides four composable modifiers:
+Flux currently provides five composable modifiers, in this UI order:
 
 - **Hard Floor**, enabled by default and shown first, admits only movements
   reviewed as ergonomic on an ordinary rigid floor. Turning it off selects a
   stable soft floor and relaxes that restriction;
-- **Silence**, enabled by default, admits only naturally quiet movements;
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
+- **Silence**, enabled by default, admits only naturally quiet movements;
+- **Wall**, disabled by default, admits established exercises that genuinely
+  require an ordinary stable wall and softly prefers them when all stronger
+  selection priorities tie;
 - **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
   tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
   show the full body. Mirror relevance breaks only otherwise remaining ties,
   after real scores, hard-work rotation, contextual keeps, and within-session
   muscle balance.
 
-Mirror availability affects exercise eligibility and selection only. It never
+Wall and Mirror availability affect exercise eligibility and selection only.
+Wall-required exercises remain unavailable while Wall is off; ordinary
+wall-agnostic exercises remain selectable in either state. Mirror never
 horizontally flips demonstration media; reviewed atomic side blocks remain a
 separate exercise-sequence behavior.
 
@@ -218,7 +223,13 @@ behavior is coverage-aware:
   mirror but receive mirror preference only with a tall mirror;
 - `Agnostic` exercises are unaffected.
 
-For every modifier pair, duration, and workout group, the catalog must provide
+Wall is deliberately outside the pairwise, per-muscle, and duration quota
+system. It instead has one direct catalog invariant: at least 20 distinct
+wall-required session movements. Sides, directions, sequence blocks, repeated
+sets, aliases, and names cannot multiply that count. The current audited
+inventory contains 24.
+
+For every existing non-Wall modifier pair, duration, and workout group, the catalog must provide
 at least five exercises under every real state. Two binary modifiers have four
 states; a pair involving Mirror has six because Mirror has off, compact, and
 tall states. In a mirror-equipped state, only `MirrorOnly` and
@@ -248,6 +259,8 @@ an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
 materiality checks. Hard-floor classifications and their review criteria are
 recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
+Wall's Boolean contract, singleton floor, and reviewed 24-movement inventory
+are recorded in [`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
 
 The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
 anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
@@ -257,9 +270,9 @@ and every exact deficit are retained in
 no relationship or muscle assignment is inflated to hide them. All supported
 profiles still admit a distinct atomic lineup.
 
-These guarantees grow quadratically with the number of modifiers. They prove
-single and pairwise behavior, not arbitrary intersections of three or more
-future modifiers.
+The pairwise guarantees grow quadratically with the number of quota-bearing
+modifiers. Wall's singleton floor remains constant-size and does not create new
+pairwise edges or arbitrary all-modifier intersections.
 
 ### Atomic exercise sequences
 
@@ -299,8 +312,8 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 419 schedulable roots from 475 exercise records:
-264 one-block, 111 two-block, 28 three-block, 15 four-block, and one five-block
+current semantic audit yields 443 schedulable roots from 499 exercise records:
+278 one-block, 121 two-block, 28 three-block, 15 four-block, and one five-block
 root. Forty-eight roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
@@ -385,7 +398,7 @@ still leaves the unreached exercise neutral.
 
 ## Exercise catalog
 
-Flux ships with 475 reviewed movements spanning compound strength and
+Flux ships with 499 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.
@@ -398,9 +411,10 @@ Every retained exercise must:
 - keep all ground contact at the feet;
 - work in ordinary shoes or barefoot;
 - fit inside 2 m x 2 m;
-- require no wall, chair, floor work, prop, partner, or equipment other than a
-  physical mirror explicitly gated by the Mirror modifier; travel is permitted
-  only when intrinsic to the named exercise;
+- require no chair, floor work, prop, or partner; the only admitted external
+  supports are an ordinary stable wall explicitly gated by Wall and a physical
+  mirror explicitly gated by Mirror; travel is permitted only when intrinsic
+  to the named exercise;
 - declare repetition or hold behavior and its exact side protocol;
 - derive its name, timing, direction, muscle associations, crop, and hold target
   from the reviewed demonstration.
@@ -443,7 +457,7 @@ Movement start and resume checkpoints use Android's non-blocking preference
 apply so the Play control responds without waiting for a disk flush; pausing,
 finishing, and score-changing actions still commit synchronously.
 
-The Android catalog uses SQLite schema version 71. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 72. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

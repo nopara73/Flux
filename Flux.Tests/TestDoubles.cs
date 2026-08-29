@@ -90,6 +90,8 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 new Dictionary<string, long>(
                     state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
                     StringComparer.Ordinal),
+            LegacyCompletedTrainingDayUnixMilliseconds = new HashSet<long>(
+                state.LegacyCompletedTrainingDayUnixMilliseconds),
             NextWorkoutSessionId = state.NextWorkoutSessionId,
             ActiveWorkoutSession = state.ActiveWorkoutSession is null
                 ? null

@@ -38,6 +38,32 @@
         626 = 'Sumo'
         960 = 'Fundamental movement skills'
         969 = 'Yoga'
+
+        # Exact wall-equipment practices.
+        134 = 'Bodyweight isometrics'
+        137 = 'Bodyweight strength'
+        149 = 'Hip stability training'
+        153 = 'Hip stability training'
+        162 = 'Calf strengthening'
+        163 = 'Clinical stretching'
+        165 = 'Standing ankle strengthening'
+        166 = 'Running drills'
+        172 = 'Running drills'
+        175 = 'Bodyweight strength'
+        579 = 'Shoulder rehabilitation'
+        580 = 'Shoulder mobility'
+        584 = 'Shoulder rehabilitation'
+        585 = 'Shoulder isometrics'
+        586 = 'Shoulder isometrics'
+        587 = 'Shoulder isometrics'
+        603 = 'Hip stability training'
+        633 = 'Clinical stretching'
+        701 = 'Bodyweight strength'
+        702 = 'Bodyweight strength'
+        703 = 'Bodyweight strength'
+        704 = 'Clinical stretching'
+        801 = 'Standing mobility and movement practice'
+        835 = 'Clinical stretching'
     }
 
     # Default catalog-label to DAG-node mapping. Broad nodes are intentional

@@ -1,15 +1,15 @@
 # Muscular-demand audit
 
-The 475 selectable exercises were individually reviewed against one frozen,
+The 499 selectable exercises were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 122 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 217 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 136 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 129 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 227 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 143 |
 
 Ratings were assigned exercise by exercise. There is no desired distribution,
 quota, or balancing target. Stretching and mobility are not promoted merely
@@ -43,7 +43,8 @@ available saved-score bucket, is preferred when its primary canonical muscle
 belongs to the current workout group. Recovering exercises remain selectable,
 and their keeps remain saved for later; a higher user score still wins. Among
 otherwise equivalent fresh hard choices, the longest-rested primary muscle is
-preferred. Mirror relevance is a lower-order tie-break, and a rejected
+preferred. Available-equipment relevance for Wall and Mirror is a lower-order
+tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
 
 Every fourth consecutive local-calendar training day adds a higher-order light

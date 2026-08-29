@@ -30,6 +30,9 @@
     <string name="silence_modifier_description">Quiet exercise filter</string>
     <string name="silence_modifier_on">Quiet exercises only</string>
     <string name="silence_modifier_off">Noisy exercises allowed</string>
+    <string name="wall_modifier_description">Wall equipment</string>
+    <string name="wall_modifier_on">Wall available</string>
+    <string name="wall_modifier_off">No wall available</string>
     <string name="mirror_modifier_description">Mirror equipment</string>
     <string name="mirror_modifier_compact">Compact mirror available</string>
     <string name="mirror_modifier_tall">Tall mirror available</string>
@@ -40,6 +43,8 @@
     <string name="insect_mode_disabled_feedback">insect mode OFF</string>
     <string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED</string>
     <string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED</string>
+    <string name="wall_equipment_enabled_feedback">equipment ON: wall</string>
+    <string name="wall_equipment_disabled_feedback">equipment OFF: wall</string>
     <string name="compact_mirror_equipment_enabled_feedback">equipment ON: compact mirror</string>
     <string name="tall_mirror_equipment_enabled_feedback">equipment ON: tall mirror</string>
     <string name="mirror_equipment_disabled_feedback">equipment OFF: mirror</string>

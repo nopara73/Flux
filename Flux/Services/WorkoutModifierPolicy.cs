@@ -31,6 +31,10 @@ public sealed record WorkoutMirrorCategoryDeficiency(
     int MatchingExerciseCount,
     int RequiredExerciseCount);
 
+public sealed record WorkoutWallRequiredCatalogDeficiency(
+    int MatchingSessionMovementCount,
+    int RequiredSessionMovementCount);
+
 public sealed record WorkoutProfileLineupDeficiency(
     int Minutes,
     WorkoutModifiers Profile,
@@ -52,6 +56,7 @@ public static class WorkoutModifierPolicy
 {
     public const int MinimumExercisesPerPairStatePerGroup = 5;
     public const int MinimumExercisesPerMirrorCategory = 5;
+    public const int MinimumWallRequiredSessionMovements = 20;
     public const int MinimumMaterialExercises = 5;
     public const int MinimumMaterialExercisePercent = 5;
     public const int MinimumAffectedBucketPercent = 10;
@@ -94,7 +99,7 @@ public static class WorkoutModifierPolicy
 
     private static readonly WorkoutModifiers SupportedModifierMask =
         Rules.Aggregate(
-            WorkoutModifiers.TallMirror,
+            WorkoutModifiers.TallMirror | WorkoutModifiers.Wall,
             (mask, rule) => mask | rule.Flag);
 
     private static readonly IReadOnlyList<WorkoutModifiers> ProfilesForValidation =
@@ -173,8 +178,45 @@ public static class WorkoutModifierPolicy
     {
         ArgumentNullException.ThrowIfNull(exercise);
         WorkoutModifiers normalized = Normalize(profile);
-        return Rules.All(rule =>
+        return (!exercise.WallRequired ||
+                normalized.HasFlag(WorkoutModifiers.Wall)) &&
+            Rules.All(rule =>
             rule.IsCompatibleForProfile(exercise, normalized));
+    }
+
+    public static bool IsWallPreferred(
+        Exercise exercise,
+        WorkoutModifiers profile)
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+        return exercise.WallRequired &&
+            Normalize(profile).HasFlag(WorkoutModifiers.Wall);
+    }
+
+    public static int GetEquipmentPreferenceCount(
+        Exercise exercise,
+        WorkoutModifiers profile) =>
+        (IsWallPreferred(exercise, profile) ? 1 : 0) +
+        (IsMirrorPreferred(exercise, profile) ? 1 : 0);
+
+    public static IReadOnlyList<WorkoutWallRequiredCatalogDeficiency>
+        FindWallRequiredCatalogDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        int movementCount = exercises
+            .Where(exercise => exercise.WallRequired)
+            .Select(GetSessionMovementId)
+            .Distinct()
+            .Count();
+        return movementCount >= MinimumWallRequiredSessionMovements
+            ? []
+            :
+            [
+                new WorkoutWallRequiredCatalogDeficiency(
+                    movementCount,
+                    MinimumWallRequiredSessionMovements),
+            ];
     }
 
     public static bool IsMirrorRelevant(Exercise exercise)

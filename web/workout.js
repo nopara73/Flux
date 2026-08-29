@@ -6,6 +6,7 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   Mirror: 4,
   TallMirror: 8,
   HardFloor: 16,
+  Wall: 32,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
@@ -140,7 +141,7 @@ function createWorkoutModifierValidationProfiles() {
 }
 export const SUPPORTED_WORKOUT_MODIFIER_MASK = MODIFIER_RULES.reduce(
   (mask, rule) => mask | rule.flag,
-  WORKOUT_MODIFIERS.TallMirror,
+  WORKOUT_MODIFIERS.TallMirror | WORKOUT_MODIFIERS.Wall,
 );
 export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
   createWorkoutModifierValidationProfiles(),
@@ -150,6 +151,7 @@ const SELECTION_PROFILE_SEPARATOR = "|";
 const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
 export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
+export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
 export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
@@ -215,7 +217,8 @@ export const MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR = 4;
 export const MUSCLE_BALANCE_MAX_REBALANCE_PASSES = 30;
 export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 21;
+export const CURRENT_WORKOUT_STATE_VERSION = 22;
+const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
 const PERSISTED_LIGHT_DAY_STATE_VERSION = 21;
 const PHASE_SCOPED_DOWNVOTE_STATE_VERSION = 20;
 const SLOT_SCOPED_PREFERENCE_STATE_VERSION = 19;
@@ -227,6 +230,7 @@ export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
+export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
 export const CURRENT_CATALOG_REVISION = 52;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -1502,6 +1506,7 @@ export function getMovementDurationMs() {
 
 export function isModifierMetadataComplete(exercises) {
   return exercises.every((exercise) =>
+    typeof exercise.wallRequired === "boolean" &&
     MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
 }
 
@@ -1533,6 +1538,7 @@ export function isSessionMovementMetadataValid(exercises) {
     for (const block of root.sequenceBlocks) {
       const member = exercisesById.get(block?.exerciseId);
       if (!member ||
+          member.wallRequired !== root.wallRequired ||
           !validSideCues.has(block.sideCue ?? "None") ||
           !validDirectionCues.has(block.directionCue ?? "None") ||
           typeof block.mirrorMedia !== "boolean" ||
@@ -1592,8 +1598,33 @@ export function isSessionMovementMetadataValid(exercises) {
 
 export function isCompatibleWithWorkoutModifiers(exercise, modifiers) {
   const normalized = normalizeWorkoutModifiers(modifiers);
-  return MODIFIER_RULES.every((rule) =>
+  return (exercise.wallRequired !== true ||
+      (normalized & WORKOUT_MODIFIERS.Wall) !== 0) &&
+    MODIFIER_RULES.every((rule) =>
     rule.isCompatibleForProfile(exercise, normalized));
+}
+
+export function isWallPreferred(exercise, modifiers) {
+  return exercise.wallRequired === true &&
+    (normalizeWorkoutModifiers(modifiers) & WORKOUT_MODIFIERS.Wall) !== 0;
+}
+
+export function getEquipmentPreferenceCount(exercise, modifiers) {
+  return Number(isWallPreferred(exercise, modifiers)) +
+    Number(isMirrorPreferred(exercise, modifiers));
+}
+
+export function findWallRequiredCatalogDeficiencies(exercises) {
+  const movementCount = new Set(exercises
+    .filter((exercise) => exercise.wallRequired === true)
+    .map(getSessionMovementId)).size;
+  return movementCount >= MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS
+    ? []
+    : [{
+        matchingSessionMovementCount: movementCount,
+        requiredSessionMovementCount:
+          MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
+      }];
 }
 
 export function isMirrorRelevant(exercise) {
@@ -2489,6 +2520,7 @@ export function createDefaultState() {
     exerciseScoreAdjustmentsByPhase: {},
     lastHardWorkUnixMillisecondsByPrimaryMuscle: {},
     lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle: {},
+    legacyCompletedTrainingDayUnixMilliseconds: [],
     nextWorkoutSessionId: 1,
     activeWorkoutSession: null,
     workoutHistory: [],
@@ -2648,6 +2680,9 @@ function normalizeStateShape(raw) {
   );
   state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = normalizeWorkHistory(
     raw.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+  );
+  state.legacyCompletedTrainingDayUnixMilliseconds = uniquePositiveIntegers(
+    raw.legacyCompletedTrainingDayUnixMilliseconds,
   );
   const normalizedWorkoutHistory = normalizeWorkoutHistoryShape(raw);
   state.nextWorkoutSessionId = normalizedWorkoutHistory.nextWorkoutSessionId;
@@ -3016,7 +3051,11 @@ function getLocalCalendarDayNumber(unixMilliseconds) {
   ) / 86_400_000);
 }
 
-export function isLightWorkoutDayDue(workoutHistory, nowUnixMilliseconds) {
+export function isLightWorkoutDayDue(
+  workoutHistory,
+  nowUnixMilliseconds,
+  legacyCompletedTrainingDayUnixMilliseconds = [],
+) {
   const today = getLocalCalendarDayNumber(nowUnixMilliseconds);
   if (today === null) {
     throw new RangeError("Current workout time must be positive Unix milliseconds.");
@@ -3031,6 +3070,11 @@ export function isLightWorkoutDayDue(workoutHistory, nowUnixMilliseconds) {
         positiveSafeIntegerOrZero(session.endedAtUnixMilliseconds),
     ))
     .filter((dayNumber) => dayNumber !== null));
+  for (const dayNumber of uniquePositiveIntegers(
+    legacyCompletedTrainingDayUnixMilliseconds,
+  ).map(getLocalCalendarDayNumber).filter((day) => day !== null)) {
+    completedTrainingDays.add(dayNumber);
+  }
 
   let consecutivePriorDays = 0;
   for (let day = today - 1; completedTrainingDays.has(day); day -= 1) {
@@ -3038,6 +3082,58 @@ export function isLightWorkoutDayDue(workoutHistory, nowUnixMilliseconds) {
   }
   return consecutivePriorDays >= LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 &&
     (consecutivePriorDays + 1) % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE === 0;
+}
+
+export function inferLegacyCompletedTrainingDays(
+  workoutHistory,
+  lastHardWorkByPrimaryMuscle,
+  existingLegacyTrainingDayTimestamps,
+  nowUnixMilliseconds,
+) {
+  const today = getLocalCalendarDayNumber(nowUnixMilliseconds);
+  if (today === null) {
+    throw new RangeError("Current workout time must be positive Unix milliseconds.");
+  }
+
+  const loggedCompletedDays = new Set((Array.isArray(workoutHistory)
+    ? workoutHistory
+    : [])
+    .filter((session) => session?.status === "Completed")
+    .map((session) => getLocalCalendarDayNumber(
+      positiveSafeIntegerOrZero(session.startedAtUnixMilliseconds) ||
+        positiveSafeIntegerOrZero(session.endedAtUnixMilliseconds),
+    ))
+    .filter((dayNumber) => dayNumber !== null));
+  const existingLegacyDays = new Set(uniquePositiveIntegers(
+    existingLegacyTrainingDayTimestamps,
+  ).map(getLocalCalendarDayNumber).filter((day) => day !== null));
+  const hardEvidenceByDay = new Map();
+  for (const timestamp of Object.values(normalizeWorkHistory(
+    lastHardWorkByPrimaryMuscle,
+  ))) {
+    const day = getLocalCalendarDayNumber(timestamp);
+    if (day === null) {
+      continue;
+    }
+    const timestamps = hardEvidenceByDay.get(day) ?? [];
+    timestamps.push(timestamp);
+    hardEvidenceByDay.set(day, timestamps);
+  }
+
+  // Bridge only the uninterrupted days immediately before the current logged
+  // streak. Sparse old recovery timestamps are not full session logs.
+  let cursor = loggedCompletedDays.has(today) ? today : today - 1;
+  while (loggedCompletedDays.has(cursor) || existingLegacyDays.has(cursor)) {
+    cursor -= 1;
+  }
+
+  const inferred = [];
+  while ((hardEvidenceByDay.get(cursor)?.length ?? 0) >=
+      MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES) {
+    inferred.push(Math.max(...hardEvidenceByDay.get(cursor)));
+    cursor -= 1;
+  }
+  return inferred;
 }
 
 export class WorkoutSession {
@@ -3103,6 +3199,10 @@ export class WorkoutSession {
   }
 
   initialize() {
+    const currentUnixTimeMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    if (this.loadedStateVersion < LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION) {
+      this.migrateLegacyCompletedTrainingDays(currentUnixTimeMilliseconds);
+    }
     const atomicSequenceMigration =
       [13, 14].includes(this.loadedStateVersion) &&
         this.state.activeWorkoutMinutes > 0
@@ -3124,7 +3224,8 @@ export class WorkoutSession {
       !this.state.pendingRestGroupId &&
       isLightWorkoutDayDue(
         this.state.workoutHistory,
-        this.getCurrentUnixTimeMilliseconds(),
+        currentUnixTimeMilliseconds,
+        this.state.legacyCompletedTrainingDayUnixMilliseconds,
       );
     if (shouldMigratePreparedLightDay) {
       this.state.activeWorkoutIsLightDay = true;
@@ -3183,6 +3284,9 @@ export class WorkoutSession {
 
     this.normalizeSlotPreferences();
     const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    if (this.loadedStateVersion < LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION) {
+      this.migrateLegacyCompletedTrainingDays(workoutStartedAtUnixMilliseconds);
+    }
     this.finalizeActiveWorkoutSession(
       "Interrupted",
       workoutStartedAtUnixMilliseconds,
@@ -3196,6 +3300,7 @@ export class WorkoutSession {
     this.state.activeWorkoutIsLightDay = isLightWorkoutDayDue(
       this.state.workoutHistory,
       workoutStartedAtUnixMilliseconds,
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
     );
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
@@ -4239,7 +4344,7 @@ export class WorkoutSession {
       return weight;
     };
     const primaryWeight = addPriorityDimension(1);
-    const mirrorPreferenceWeight = addPriorityDimension(1);
+    const equipmentPreferenceWeight = addPriorityDimension(2);
     const currentSelectionWeight = addPriorityDimension(1);
     const hardMuscleAgeWeight = addPriorityDimension(
       Math.max(0, freshHardMuscleRanks.size - 1),
@@ -4333,9 +4438,8 @@ export class WorkoutSession {
           : 0n) +
         BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
         (isCurrentSelection ? currentSelectionWeight : 0n) +
-        (isMirrorPreferred(selectionExercise, modifiers)
-          ? mirrorPreferenceWeight
-          : 0n) +
+        BigInt(getEquipmentPreferenceCount(selectionExercise, modifiers)) *
+          equipmentPreferenceWeight +
         (isPrimaryForGroup(selectionExercise, evaluationGroup) ? primaryWeight : 0n) +
         BigInt(getSequenceCanonicalCoverage(
           exercise,
@@ -4517,12 +4621,16 @@ export class WorkoutSession {
           exercise.primaryCanonicalGroup,
         ) === oldestHardWork);
     }
-    const mirrorRelevant = keepPreferred.filter((exercise) =>
-      isMirrorPreferred(exercise, modifiers));
-    const mirrorPreferred = mirrorRelevant.length > 0 ? mirrorRelevant : keepPreferred;
-    const primaryOwned = mirrorPreferred.filter((exercise) =>
+    const highestEquipmentPreference = Math.max(...keepPreferred.map((exercise) =>
+      getEquipmentPreferenceCount(exercise, modifiers)));
+    const equipmentPreferred = keepPreferred.filter((exercise) =>
+      getEquipmentPreferenceCount(exercise, modifiers) ===
+        highestEquipmentPreference);
+    const primaryOwned = equipmentPreferred.filter((exercise) =>
       isPrimaryForGroup(exercise, group));
-    const ownershipPreferred = primaryOwned.length > 0 ? primaryOwned : mirrorPreferred;
+    const ownershipPreferred = primaryOwned.length > 0
+      ? primaryOwned
+      : equipmentPreferred;
     const widestCoverage = Math.max(
       ...ownershipPreferred.map((exercise) => getCanonicalCoverage(exercise, group)),
     );
@@ -4771,6 +4879,21 @@ export class WorkoutSession {
       group.order * workoutMinutes / selectionGroupCount,
     );
     return getWorkoutExercisePhase(projectedFinalBlockOrder);
+  }
+
+  migrateLegacyCompletedTrainingDays(nowUnixMilliseconds) {
+    const inferred = inferLegacyCompletedTrainingDays(
+      this.state.workoutHistory,
+      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
+      nowUnixMilliseconds,
+    );
+    this.state.legacyCompletedTrainingDayUnixMilliseconds = [
+      ...new Set([
+        ...this.state.legacyCompletedTrainingDayUnixMilliseconds,
+        ...inferred,
+      ]),
+    ];
   }
 
   migrateSlotScopedPreferences() {
@@ -5658,7 +5781,7 @@ export class WorkoutSession {
               selectionExercise.primaryCanonicalGroup,
             )
           : 0,
-      isMirrorPreferred: isMirrorPreferred(
+      equipmentPreferenceCount: getEquipmentPreferenceCount(
         selectionExercise,
         this.state.activeWorkoutModifiers,
       ),
@@ -5691,8 +5814,10 @@ export class WorkoutSession {
                 currentBest.lastHardWorkUnixMilliseconds
               ? candidate.lastHardWorkUnixMilliseconds <
                   currentBest.lastHardWorkUnixMilliseconds
-              : candidate.isMirrorPreferred !== currentBest.isMirrorPreferred
-                ? candidate.isMirrorPreferred
+              : candidate.equipmentPreferenceCount !==
+                  currentBest.equipmentPreferenceCount
+                ? candidate.equipmentPreferenceCount >
+                    currentBest.equipmentPreferenceCount
                 : candidate.isPrimary !== currentBest.isPrimary
                   ? candidate.isPrimary
                   : candidate.canonicalCoverage !== currentBest.canonicalCoverage

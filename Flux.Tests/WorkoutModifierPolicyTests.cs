@@ -109,6 +109,93 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void WallEquipmentEnablesAndSoftlyPrefersWallRequiredExercises()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise wallRequired = Exercise(1, group, wallRequired: true);
+        Exercise ordinary = Exercise(2, group);
+
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            wallRequired,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            wallRequired,
+            WorkoutModifiers.Wall));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            ordinary,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            ordinary,
+            WorkoutModifiers.Wall));
+        Assert.True(WorkoutModifierPolicy.IsWallPreferred(
+            wallRequired,
+            WorkoutModifiers.Wall));
+        Assert.False(WorkoutModifierPolicy.IsWallPreferred(
+            wallRequired,
+            WorkoutModifiers.None));
+        Assert.False(WorkoutModifierPolicy.IsWallPreferred(
+            ordinary,
+            WorkoutModifiers.Wall));
+    }
+
+    [Fact]
+    public void WallAndMirrorPreferencesComposeWithoutOneHidingTheOther()
+    {
+        Exercise wallAndMirrorRelevant = Exercise(
+            1,
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
+            mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
+            wallRequired: true);
+
+        Assert.Equal(0, WorkoutModifierPolicy.GetEquipmentPreferenceCount(
+            wallAndMirrorRelevant,
+            WorkoutModifiers.None));
+        Assert.Equal(1, WorkoutModifierPolicy.GetEquipmentPreferenceCount(
+            wallAndMirrorRelevant,
+            WorkoutModifiers.Wall));
+        Assert.Equal(1, WorkoutModifierPolicy.GetEquipmentPreferenceCount(
+            wallAndMirrorRelevant,
+            WorkoutModifiers.Mirror));
+        Assert.Equal(2, WorkoutModifierPolicy.GetEquipmentPreferenceCount(
+            wallAndMirrorRelevant,
+            WorkoutModifiers.Wall | WorkoutModifiers.Mirror));
+    }
+
+    [Fact]
+    public void WallSingletonFloorCountsDistinctSessionMovementsOnly()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise[] exercises = Enumerable.Range(
+                1,
+                WorkoutModifierPolicy.MinimumWallRequiredSessionMovements)
+            .Select(id => Exercise(
+                id,
+                group,
+                sessionMovementId: id,
+                wallRequired: true))
+            .ToArray();
+
+        Assert.Empty(
+            WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises));
+
+        exercises[^1] = Exercise(
+            exercises[^1].Id,
+            group,
+            sessionMovementId: exercises[^2].SessionMovementId,
+            wallRequired: true);
+        WorkoutWallRequiredCatalogDeficiency deficiency = Assert.Single(
+            WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises));
+        Assert.Equal(
+            WorkoutModifierPolicy.MinimumWallRequiredSessionMovements - 1,
+            deficiency.MatchingSessionMovementCount);
+        Assert.Equal(
+            WorkoutModifierPolicy.MinimumWallRequiredSessionMovements,
+            deficiency.RequiredSessionMovementCount);
+    }
+
+    [Fact]
     public void MirrorEquipmentAppliesCoverageWithoutFilteringOrdinaryExercises()
     {
         CanonicalMuscleGroup group =
@@ -465,6 +552,9 @@ public sealed class WorkoutModifierPolicyTests
             WorkoutModifiers.Silence | WorkoutModifiers.Mirror |
                 WorkoutModifiers.TallMirror,
             WorkoutModifierPolicy.ValidationProfiles);
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.ValidationProfiles,
+            profile => profile.HasFlag(WorkoutModifiers.Wall));
     }
 
     [Fact]
@@ -977,7 +1067,8 @@ public sealed class WorkoutModifierPolicyTests
         int sessionMovementId = 0,
         ExerciseSequenceBlock[]? sequenceBlocks = null,
         ExerciseHardFloorCompatibility hardFloorCompatibility =
-            ExerciseHardFloorCompatibility.Compatible)
+            ExerciseHardFloorCompatibility.Compatible,
+        bool wallRequired = false)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -1015,6 +1106,7 @@ public sealed class WorkoutModifierPolicyTests
                     ExerciseMirrorRelationship.BenefitsGreatly
                     ? ExerciseMirrorCoverage.UpperBody
                     : ExerciseMirrorCoverage.None),
+            WallRequired = wallRequired,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,

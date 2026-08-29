@@ -12,7 +12,8 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.HardFloor | WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 24;
+    private const int CurrentStateVersion = 25;
+    private const int LegacyTrainingDayInferenceStateVersion = 25;
     private const int PersistedLightDayStateVersion = 24;
     private const int PhaseScopedDownvoteStateVersion = 23;
     private const int SlotScopedPreferenceStateVersion = 22;
@@ -96,6 +97,13 @@ public sealed class ExerciseSessionService
         int loadedStateVersion = state.Version;
         NormalizeCollections(state);
         NormalizeWorkoutHistory(state);
+        long currentUnixTimeMilliseconds = GetCurrentUnixTimeMilliseconds();
+        if (loadedStateVersion < LegacyTrainingDayInferenceStateVersion)
+        {
+            MigrateLegacyCompletedTrainingDays(
+                state,
+                currentUnixTimeMilliseconds);
+        }
         bool shouldMigratePreparedLightDay =
             loadedStateVersion < PersistedLightDayStateVersion &&
             state.ActiveWorkoutSession is null &&
@@ -105,7 +113,7 @@ public sealed class ExerciseSessionService
             !state.CompletionAcknowledged &&
             state.PendingMovementGroupId is null &&
             state.PendingRestGroupId is null &&
-            IsLightDayDue(state, GetCurrentUnixTimeMilliseconds());
+            IsLightDayDue(state, currentUnixTimeMilliseconds);
         bool requiresSlotPreferenceMigration =
             state.Version < SlotScopedPreferenceStateVersion;
         if (requiresSlotPreferenceMigration)
@@ -276,11 +284,18 @@ public sealed class ExerciseSessionService
             throw new InvalidOperationException("A workout is already active.");
         }
 
+        int loadedStateVersion = state.Version;
         NormalizeCollections(state);
         NormalizeWorkoutHistory(state);
         NormalizeSlotPreferences(state);
         long workoutStartedAtUnixMilliseconds =
             GetCurrentUnixTimeMilliseconds();
+        if (loadedStateVersion < LegacyTrainingDayInferenceStateVersion)
+        {
+            MigrateLegacyCompletedTrainingDays(
+                state,
+                workoutStartedAtUnixMilliseconds);
+        }
         FinalizeActiveWorkoutSession(
             state,
             WorkoutSessionStatus.Interrupted,
@@ -1419,7 +1434,7 @@ public sealed class ExerciseSessionService
         }
 
         BigInteger primaryWeight = AddPriorityDimension(1L);
-        BigInteger mirrorPreferenceWeight = AddPriorityDimension(1L);
+        BigInteger equipmentPreferenceWeight = AddPriorityDimension(2L);
         BigInteger currentSelectionWeight = AddPriorityDimension(1L);
         BigInteger hardMuscleAgeWeight = AddPriorityDimension(
             Math.Max(0, freshHardMuscleRanks.Count - 1));
@@ -1539,11 +1554,9 @@ public sealed class ExerciseSessionService
                 (isCurrentSelection
                     ? currentSelectionWeight
                     : BigInteger.Zero) +
-                (WorkoutModifierPolicy.IsMirrorPreferred(
-                        selectionExercise,
-                        modifiers)
-                    ? mirrorPreferenceWeight
-                    : BigInteger.Zero) +
+                WorkoutModifierPolicy.GetEquipmentPreferenceCount(
+                    selectionExercise,
+                    modifiers) * equipmentPreferenceWeight +
                 (WorkoutCoveragePolicy.IsPrimaryForGroup(
                         selectionExercise,
                         evaluationGroup)
@@ -2605,6 +2618,7 @@ public sealed class ExerciseSessionService
         state.ExerciseScoreAdjustmentsByPhase ??= [];
         state.LastHardWorkUnixMillisecondsByPrimaryMuscle ??= [];
         state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle ??= [];
+        state.LegacyCompletedTrainingDayUnixMilliseconds ??= [];
         state.WorkoutHistory ??= [];
         state.NextWorkoutExcludedExerciseIds ??= [];
         state.ActiveExtraSetSelectionGroupIds ??= [];
@@ -4036,7 +4050,24 @@ public sealed class ExerciseSessionService
         return WorkoutLightDayPolicy.IsLightDayDue(
             state.WorkoutHistory,
             nowUnixMilliseconds,
-            _localTimeZone);
+            _localTimeZone,
+            state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
+
+    private void MigrateLegacyCompletedTrainingDays(
+        WorkoutState state,
+        long nowUnixMilliseconds)
+    {
+        foreach (long timestamp in WorkoutLightDayPolicy
+                     .InferLegacyCompletedTrainingDays(
+                         state.WorkoutHistory,
+                         state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
+                         state.LegacyCompletedTrainingDayUnixMilliseconds,
+                         nowUnixMilliseconds,
+                         _localTimeZone))
+        {
+            state.LegacyCompletedTrainingDayUnixMilliseconds.Add(timestamp);
+        }
     }
 
     private string GetSelectionStorageKey(
@@ -4788,7 +4819,7 @@ public sealed class ExerciseSessionService
                     state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
                     selectionExercise.PrimaryCanonicalGroup)
                 : 0L,
-            WorkoutModifierPolicy.IsMirrorPreferred(
+            WorkoutModifierPolicy.GetEquipmentPreferenceCount(
                 selectionExercise,
                 state.ActiveWorkoutModifiers),
             WorkoutCoveragePolicy.IsPrimaryForGroup(selectionExercise, anchor),
@@ -4831,9 +4862,11 @@ public sealed class ExerciseSessionService
             return candidate.LastHardWorkUnixMilliseconds <
                 currentBest.LastHardWorkUnixMilliseconds;
         }
-        if (candidate.IsMirrorPreferred != currentBest.IsMirrorPreferred)
+        if (candidate.EquipmentPreferenceCount !=
+            currentBest.EquipmentPreferenceCount)
         {
-            return candidate.IsMirrorPreferred;
+            return candidate.EquipmentPreferenceCount >
+                currentBest.EquipmentPreferenceCount;
         }
         if (candidate.IsPrimary != currentBest.IsPrimary)
         {
@@ -5031,7 +5064,7 @@ public sealed class ExerciseSessionService
         bool IsRecoveringHard,
         bool IsRecoveringModerate,
         long LastHardWorkUnixMilliseconds,
-        bool IsMirrorPreferred,
+        int EquipmentPreferenceCount,
         bool IsPrimary,
         int CanonicalCoverage);
 

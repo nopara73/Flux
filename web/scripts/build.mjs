@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import {
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findWallRequiredCatalogDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
@@ -132,8 +133,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 475) {
-  throw new Error(`Expected 475 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 499) {
+  throw new Error(`Expected 499 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 const pairwiseDeficiencies =
@@ -143,6 +144,7 @@ const hardFloorCategoryDeficiencies =
 const materialityDeficiencies =
   findWorkoutModifierMaterialityDeficiencies(catalog);
 const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
+const wallCatalogDeficiencies = findWallRequiredCatalogDeficiencies(catalog);
 const distinctLineupDeficiencies =
   findWorkoutProfileLineupDeficiencies(catalog);
 const integrityDeficitReport = JSON.parse(await readFile(
@@ -173,6 +175,7 @@ const integrityDebtMatches =
 const catalogInvariantChecks = [
   ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
   ["session movement metadata", isSessionMovementMetadataValid(catalog)],
+  ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
   ["explicit catalog-integrity deficit ledger", integrityDebtMatches],
 ];
 const failedCatalogInvariants = catalogInvariantChecks

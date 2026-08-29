@@ -81,7 +81,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
         Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
             WorkoutExercisePhase.Warmup][exercise.Id]);
@@ -130,7 +130,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Contains(
             exercise.Id,
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
@@ -159,7 +159,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -459,7 +459,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(24, state.Version);
+        Assert.Equal(25, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
             WorkoutModifiers.HardFloor,
@@ -661,6 +661,51 @@ public sealed class WorkoutStateInvariantTests
             WorkoutExercisePhase.Warmup,
             Assert.Single(session.Decisions).ExercisePhase);
         Assert.Equal(8, restored.NextWorkoutSessionId);
+    }
+
+    [Fact]
+    public void LegacyCompletedTrainingDaysRoundTripSeparatelyFromSessionLogs()
+    {
+        const long legacyTrainingDay = 1_777_000_000_000;
+        var state = new WorkoutState
+        {
+            LegacyCompletedTrainingDayUnixMilliseconds = [legacyTrainingDay],
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Contains(
+            legacyTrainingDay,
+            restored.LegacyCompletedTrainingDayUnixMilliseconds);
+        Assert.Empty(restored.WorkoutHistory);
+    }
+
+    [Fact]
+    public void WallEquipmentModifierRoundTripsWithWorkoutState()
+    {
+        var state = new WorkoutState
+        {
+            LastWorkoutModifiers = WorkoutModifiers.Wall |
+                WorkoutModifiers.Silence,
+            ActiveWorkoutModifiers = WorkoutModifiers.Wall,
+        };
+
+        string json = JsonSerializer.Serialize(state, JsonOptions);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+                json,
+                JsonOptions)
+            ?? throw new InvalidOperationException("Workout state did not deserialize.");
+
+        Assert.Equal(
+            WorkoutModifiers.Wall | WorkoutModifiers.Silence,
+            restored.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.Wall,
+            restored.ActiveWorkoutModifiers);
     }
 
     [Fact]

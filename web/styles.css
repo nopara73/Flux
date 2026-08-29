@@ -300,19 +300,19 @@ button:disabled {
 }
 
 .duration-modifiers {
-  min-height: 64px;
+  min-height: 56px;
   margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .modifier-tile {
   position: relative;
-  width: 64px;
-  height: 64px;
-  padding: 16px;
+  width: 56px;
+  height: 56px;
+  padding: 12px;
   border: 1px solid var(--outline);
   border-radius: 16px;
   display: grid;

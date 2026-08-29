@@ -72,6 +72,8 @@ internal static class ExerciseDatabaseMigrationSql
                     'None',
                     'UpperBody',
                     'FullBody')),
+            wall_required INTEGER NOT NULL DEFAULT 0
+                CHECK (wall_required IN (0, 1)),
             session_movement_id INTEGER NOT NULL DEFAULT 0
                 CHECK (session_movement_id >= 0),
             CHECK (
@@ -100,7 +102,7 @@ internal static class ExerciseDatabaseMigrationSql
             hold_frame_percent, side_sequence, direction_sequence,
             insect_compatibility, hard_floor_compatibility,
             mirror_relationship, mirror_coverage,
-            session_movement_id)
+            wall_required, session_movement_id)
         SELECT
             id, name, video, practice, motion_profile, score, 0,
             only_feet_touch_ground, shoe_agnostic,
@@ -108,7 +110,7 @@ internal static class ExerciseDatabaseMigrationSql
                 THEN max_space_meters ELSE 2 END,
             'None', silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
-            insect_compatibility, 'Unreviewed', 'Unreviewed', 'None', 0
+            insect_compatibility, 'Unreviewed', 'Unreviewed', 'None', 0, 0
         FROM exercises
         """;
 

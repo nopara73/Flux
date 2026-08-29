@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 24;
+    public int Version { get; set; } = 25;
 
     public int CatalogRevision { get; set; }
 
@@ -36,6 +36,12 @@ public sealed class WorkoutState
 
     public Dictionary<string, long>
         LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle { get; set; } = [];
+
+    // A one-time migration can recover contiguous pre-logging training days
+    // from legacy hard-work timestamps. Keep those timestamps separate from
+    // WorkoutHistory: they prove the day occurred, but cannot reconstruct a
+    // truthful block-by-block session log.
+    public HashSet<long> LegacyCompletedTrainingDayUnixMilliseconds { get; set; } = [];
 
     public long NextWorkoutSessionId { get; set; } = 1;
 

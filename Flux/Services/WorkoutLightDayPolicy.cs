@@ -6,11 +6,13 @@ public static class WorkoutLightDayPolicy
 {
     public const int TrainingDaysPerCycle = 4;
     public const int ConsecutivePriorDaysRequired = TrainingDaysPerCycle - 1;
+    public const int MinimumLegacyHardPrimaryMuscles = 3;
 
     public static bool IsLightDayDue(
         IEnumerable<WorkoutSessionLog> workoutHistory,
         long nowUnixMilliseconds,
-        TimeZoneInfo? localTimeZone = null)
+        TimeZoneInfo? localTimeZone = null,
+        IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
     {
         ArgumentNullException.ThrowIfNull(workoutHistory);
         if (nowUnixMilliseconds <= 0)
@@ -32,6 +34,14 @@ public static class WorkoutLightDayPolicy
             .Where(dayNumber => dayNumber.HasValue)
             .Select(dayNumber => dayNumber!.Value)
             .ToHashSet();
+        foreach (int dayNumber in (legacyCompletedTrainingDayUnixMilliseconds ?? [])
+                     .Where(timestamp => timestamp > 0)
+                     .Select(timestamp => TryGetLocalDayNumber(timestamp, timeZone))
+                     .Where(dayNumber => dayNumber.HasValue)
+                     .Select(dayNumber => dayNumber!.Value))
+        {
+            completedTrainingDays.Add(dayNumber);
+        }
 
         int consecutivePriorDays = 0;
         for (int day = today - 1; completedTrainingDays.Contains(day); day--)
@@ -44,6 +54,83 @@ public static class WorkoutLightDayPolicy
         // not make every later day in the streak light as well.
         return consecutivePriorDays >= ConsecutivePriorDaysRequired &&
             (consecutivePriorDays + 1) % TrainingDaysPerCycle == 0;
+    }
+
+    public static IReadOnlyList<long> InferLegacyCompletedTrainingDays(
+        IEnumerable<WorkoutSessionLog> workoutHistory,
+        IReadOnlyDictionary<string, long> lastHardWorkByPrimaryMuscle,
+        IEnumerable<long> existingLegacyTrainingDayTimestamps,
+        long nowUnixMilliseconds,
+        TimeZoneInfo? localTimeZone = null)
+    {
+        ArgumentNullException.ThrowIfNull(workoutHistory);
+        ArgumentNullException.ThrowIfNull(lastHardWorkByPrimaryMuscle);
+        ArgumentNullException.ThrowIfNull(existingLegacyTrainingDayTimestamps);
+        if (nowUnixMilliseconds <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(nowUnixMilliseconds));
+        }
+
+        TimeZoneInfo timeZone = localTimeZone ?? TimeZoneInfo.Local;
+        int today = GetLocalDayNumber(nowUnixMilliseconds, timeZone);
+        HashSet<int> loggedCompletedDays = workoutHistory
+            .Where(session =>
+                session is not null &&
+                session.Status == WorkoutSessionStatus.Completed)
+            .Select(session => session.StartedAtUnixMilliseconds > 0
+                ? session.StartedAtUnixMilliseconds
+                : session.EndedAtUnixMilliseconds)
+            .Where(timestamp => timestamp > 0)
+            .Select(timestamp => TryGetLocalDayNumber(timestamp, timeZone))
+            .Where(dayNumber => dayNumber.HasValue)
+            .Select(dayNumber => dayNumber!.Value)
+            .ToHashSet();
+        Dictionary<int, long> existingLegacyDays = existingLegacyTrainingDayTimestamps
+            .Where(timestamp => timestamp > 0)
+            .Select(timestamp => new
+            {
+                Timestamp = timestamp,
+                Day = TryGetLocalDayNumber(timestamp, timeZone),
+            })
+            .Where(entry => entry.Day.HasValue)
+            .GroupBy(entry => entry.Day!.Value)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Max(entry => entry.Timestamp));
+        Dictionary<int, long[]> hardEvidenceByDay = lastHardWorkByPrimaryMuscle
+            .Where(entry =>
+                !string.IsNullOrWhiteSpace(entry.Key) &&
+                entry.Value > 0)
+            .Select(entry => new
+            {
+                entry.Value,
+                Day = TryGetLocalDayNumber(entry.Value, timeZone),
+            })
+            .Where(entry => entry.Day.HasValue)
+            .GroupBy(entry => entry.Day!.Value)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Select(entry => entry.Value).ToArray());
+
+        // Only bridge the uninterrupted streak immediately preceding the
+        // current logged streak. Sparse older recovery timestamps must never
+        // turn isolated historical activity into fabricated workout sessions.
+        int cursor = loggedCompletedDays.Contains(today) ? today : today - 1;
+        while (loggedCompletedDays.Contains(cursor) ||
+               existingLegacyDays.ContainsKey(cursor))
+        {
+            cursor--;
+        }
+
+        var inferred = new List<long>();
+        while (hardEvidenceByDay.TryGetValue(cursor, out long[]? timestamps) &&
+               timestamps.Length >= MinimumLegacyHardPrimaryMuscles)
+        {
+            inferred.Add(timestamps.Max());
+            cursor--;
+        }
+
+        return inferred;
     }
 
     private static int GetLocalDayNumber(

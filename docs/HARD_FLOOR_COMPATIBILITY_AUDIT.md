@@ -35,14 +35,20 @@ must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 384 exercises
-- `Incompatible`: 91 exercises
+- `Compatible`: 406 exercises
+- `Incompatible`: 93 exercises
 - `Unreviewed`: 0 exercises
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,
-Silence, and Mirror UI states. The validation remains quadratic in the number
-of modifiers; it does not require every state in the full modifier power set.
+Silence, and Mirror UI states. Of the 24 wall-required movements, the repeated
+wall calf raise and wall tibialis raise are hard-floor-incompatible under the
+same concentrated forefoot/heel rule as equivalent unsupported work; the other
+22 are compatible. Because Wall off excludes them and Wall is not a
+pairwise quota dimension, they do not hide or alter the pre-existing floor
+coverage deficits. The validation remains quadratic in the number of
+quota-bearing modifiers; it does not require every state in the full modifier
+power set.
 
 In addition to ordinary pairwise viability, every workout group must retain at
 least five exercises from each exact floor category—`Compatible` and

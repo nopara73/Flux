@@ -19,11 +19,13 @@ import {
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
   LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
+  MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES,
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
+  MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_MUSCULAR_DEMAND,
   MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
   MINIMUM_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
@@ -50,10 +52,12 @@ import {
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findWallRequiredCatalogDeficiencies,
   findWorkoutProfileLineupDeficiencies,
   getCanonicalCoverage,
   getMaximumDistinctLineupSize,
   getMirrorEquipment,
+  getEquipmentPreferenceCount,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
@@ -84,8 +88,10 @@ import {
   isSessionMovementMetadataValid,
   isCompatibleWithWorkoutModifiers,
   isLightWorkoutDayDue,
+  inferLegacyCompletedTrainingDays,
   isModifierMetadataComplete,
   isMirrorPreferred,
+  isWallPreferred,
   normalizeWorkoutModifiers,
   normalizeMinutes,
   parseStoredState,
@@ -739,7 +745,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [122, 217, 136],
+    [129, 227, 143],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -980,6 +986,22 @@ test("binary mirror state does not guess mirror height during migration", () => 
   assert.equal(state.selectedExerciseIds["p5|r3.lower-limbs"], undefined);
 });
 
+test("wall equipment modifier survives current state restoration", () => {
+  const state = parseStoredState(JSON.stringify({
+    ...createDefaultState(),
+    version: CURRENT_WORKOUT_STATE_VERSION,
+    lastWorkoutModifiers: WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.Silence,
+    activeWorkoutMinutes: 3,
+    activeWorkoutModifiers: WORKOUT_MODIFIERS.Wall,
+  }));
+
+  assert.equal(
+    state.lastWorkoutModifiers,
+    WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.Silence,
+  );
+  assert.equal(state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Wall);
+});
+
 test("unreviewed catalog cannot silently treat an enabled modifier as off", () => {
   const exercises = RESOLUTIONS.get(3).groups.map((group, index) =>
     exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0));
@@ -1135,6 +1157,80 @@ test("compact and tall mirrors apply coverage without filtering ordinary exercis
   assert.equal(isMirrorPreferred(agnostic, WORKOUT_MODIFIERS.Mirror), false);
 });
 
+test("wall equipment enables and softly prefers wall-required exercises", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const wallRequired = {
+    ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    wallRequired: true,
+  };
+  const ordinary = exercise(
+    2,
+    primary,
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    wallRequired, WORKOUT_MODIFIERS.None), false);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    wallRequired, WORKOUT_MODIFIERS.Wall), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    ordinary, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    ordinary, WORKOUT_MODIFIERS.Wall), true);
+  assert.equal(isWallPreferred(wallRequired, WORKOUT_MODIFIERS.Wall), true);
+  assert.equal(isWallPreferred(wallRequired, WORKOUT_MODIFIERS.None), false);
+  assert.equal(isWallPreferred(ordinary, WORKOUT_MODIFIERS.Wall), false);
+});
+
+test("wall and mirror preferences compose without one hiding the other", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const wallAndMirrorRelevant = {
+    ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+    minimumMirrorCoverage: EXERCISE_MIRROR_COVERAGE.UpperBody,
+    wallRequired: true,
+  };
+
+  assert.equal(getEquipmentPreferenceCount(
+    wallAndMirrorRelevant, WORKOUT_MODIFIERS.None), 0);
+  assert.equal(getEquipmentPreferenceCount(
+    wallAndMirrorRelevant, WORKOUT_MODIFIERS.Wall), 1);
+  assert.equal(getEquipmentPreferenceCount(
+    wallAndMirrorRelevant, WORKOUT_MODIFIERS.Mirror), 1);
+  assert.equal(getEquipmentPreferenceCount(
+    wallAndMirrorRelevant,
+    WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.Mirror,
+  ), 2);
+});
+
+test("wall singleton floor counts distinct session movements only", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const exercises = Array.from(
+    { length: MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS },
+    (_, index) => ({
+      ...exercise(
+        index + 1,
+        primary,
+        [],
+        0,
+        EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      ),
+      wallRequired: true,
+      sessionMovementId: index + 1,
+    }),
+  );
+
+  assert.deepEqual(findWallRequiredCatalogDeficiencies(exercises), []);
+
+  exercises.at(-1).sessionMovementId = exercises.at(-2).sessionMovementId;
+  assert.deepEqual(findWallRequiredCatalogDeficiencies(exercises), [{
+    matchingSessionMovementCount: MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS - 1,
+    requiredSessionMovementCount: MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
+  }]);
+});
+
 test("mirror equipment round-trips and discards an orphan tall qualifier", () => {
   const context = WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence;
   assert.equal(getMirrorEquipment(WORKOUT_MODIFIERS.TallMirror), MIRROR_EQUIPMENT.None);
@@ -1271,6 +1367,33 @@ test("mirror relevance breaks score ties but never overrides a real vote", () =>
   assert.equal(voted.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Mirror).id, 1);
 });
 
+test("wall relevance breaks score ties but never overrides a real vote", () => {
+  const group = RESOLUTIONS.get(30).groups[0];
+  const ordinary = exercise(
+    1,
+    group.canonicalGroups[0],
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  );
+  const wallRequired = {
+    ...exercise(
+      2,
+      group.canonicalGroups[0],
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    ),
+    wallRequired: true,
+  };
+  const tied = new WorkoutSession([ordinary, wallRequired], createDefaultState(), () => 0);
+  assert.equal(tied.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Wall).id, 2);
+
+  ordinary.score = 1;
+  const voted = new WorkoutSession([ordinary, wallRequired], createDefaultState(), () => 0);
+  assert.equal(voted.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Wall).id, 1);
+});
+
 test("validation profiles remain pairwise with compact and tall mirror states", () => {
   assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 15);
   assert.equal(
@@ -1284,6 +1407,8 @@ test("validation profiles remain pairwise with compact and tall mirror states", 
     WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Mirror |
       WORKOUT_MODIFIERS.TallMirror,
   ));
+  assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.every((profile) =>
+    (profile & WORKOUT_MODIFIERS.Wall) === 0));
 });
 
 test("insect selection is composed with score and coverage instead of post-filtered", () => {
@@ -1531,7 +1656,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 77);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 388);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 412);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 10);
@@ -1564,6 +1689,10 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
   }
   assert.equal(isModifierMetadataComplete(catalog), true);
   assert.deepEqual(findMirrorCategoryDeficiencies(catalog), []);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 24);
+  assert.equal(new Set(catalog.filter((exercise) => exercise.wallRequired)
+    .map((exercise) => exercise.sessionMovementId || exercise.id)).size, 24);
+  assert.deepEqual(findWallRequiredCatalogDeficiencies(catalog), []);
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
   assert.equal(pairwiseDeficiencies.length, 178);
   assert.deepEqual(
@@ -2354,6 +2483,59 @@ test("light day repeats on every fourth day of one uninterrupted training streak
     history,
     new Date(2026, 8, 2, 8).getTime(),
   ), true);
+});
+
+test("version 21 recovers a contiguous legacy day for tomorrow's light workout", () => {
+  const now = new Date(2026, 7, 30, 8).getTime();
+  const legacyDay = new Date(2026, 7, 27, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const state = createDefaultState();
+  state.version = 21;
+  state.workoutHistory = [
+    completedWorkoutSession(1, new Date(2026, 7, 28, 8).getTime()),
+    completedWorkoutSession(2, new Date(2026, 7, 29, 8).getTime()),
+  ];
+  state.lastHardWorkUnixMillisecondsByPrimaryMuscle = {
+    CalfDeepPosteriorLegAndPlantarFoot: legacyDay,
+    GlutealExtensors: legacyDay + 4 * 60_000,
+    MedialAndDeepKneeExtensors: legacyDay + 12 * 60_000,
+  };
+  const session = new WorkoutSession(exercises, state, () => 0, () => now);
+
+  session.initialize();
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.equal(session.state.legacyCompletedTrainingDayUnixMilliseconds.length, 1);
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
+  assert.equal(session.state.workoutHistory.length, 2);
+});
+
+test("legacy day inference rejects sparse hard-work evidence", () => {
+  const now = new Date(2026, 7, 30, 8).getTime();
+  const legacyDay = new Date(2026, 7, 27, 8).getTime();
+  const inferred = inferLegacyCompletedTrainingDays(
+    [
+      completedWorkoutSession(1, new Date(2026, 7, 28, 8).getTime()),
+      completedWorkoutSession(2, new Date(2026, 7, 29, 8).getTime()),
+    ],
+    {
+      GlutealExtensors: legacyDay,
+      MedialAndDeepKneeExtensors: legacyDay + 4 * 60_000,
+    },
+    [],
+    now,
+  );
+
+  assert.equal(MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES, 3);
+  assert.deepEqual(inferred, []);
 });
 
 test("light day top-bucket demand zero outranks a hard keep without deleting it", () => {
@@ -3309,9 +3491,9 @@ test("mixed-demand sequence uses its highest demand and remains atomic", () => {
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 475);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 475);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 475);
+  assert.equal(catalog.length, 499);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 499);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 499);
   assert.equal(isSessionMovementMetadataValid(catalog), true);
   const actualSessionMovements = {};
   for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
@@ -6094,7 +6276,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
     if (item.mode === "Hold") {
       holds.push(item);
-      assert.match(item.name, /\b(?:hold|isometric|pose|stance|stretch)\b/i);
+      assert.match(item.name, /\b(?:hold|isometric|pose|stance|stretch|sit)\b/i);
       await assertFile(
         path.join(repositoryRoot, "Flux", "Assets", getHoldFramePath(item)),
       );
@@ -6190,6 +6372,7 @@ function exercise(
     muscularDemand,
     insectCompatibility,
     hardFloorCompatibility,
+    wallRequired: false,
     mirrorRelationship,
     minimumMirrorCoverage,
     equipment: mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly

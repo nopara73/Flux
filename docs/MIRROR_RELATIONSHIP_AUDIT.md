@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 475 retained exercises are reviewed against physical mirror equipment, not
+The 499 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -17,7 +17,7 @@ Each exercise has both a relationship and a minimum useful coverage:
 | `MirrorOnly` | `FullBody` | Requires tall | 5 |
 | `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 27 |
 | `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
-| `Agnostic` | `None` | Unaffected | 388 |
+| `Agnostic` | `None` | Unaffected | 412 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
@@ -86,7 +86,9 @@ actually prefer a meaningful, anatomically broad upper-body set; full-body
 prefer the compatible upper- and full-body set. These checks also run when
 either other modifier is already enabled.
 
-The guarantees remain quadratic in the number of logical modifiers. Mirror's
+The guarantees remain quadratic in the number of quota-bearing logical
+modifiers. The separate Wall equipment modifier has only its own global
+distinct-movement floor and does not add pairwise Mirror states. Mirror's
 extra equipment state enlarges the states of a pair but does not create an
 all-modifier power set.
 
