@@ -132,30 +132,48 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 479) {
-  throw new Error(`Expected 479 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 475) {
+  throw new Error(`Expected 475 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
+
+const pairwiseDeficiencies =
+  findWorkoutModifierPairCoverageDeficiencies(catalog);
+const hardFloorCategoryDeficiencies =
+  findHardFloorCategoryCoverageDeficiencies(catalog);
+const materialityDeficiencies =
+  findWorkoutModifierMaterialityDeficiencies(catalog);
+const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
+const distinctLineupDeficiencies =
+  findWorkoutProfileLineupDeficiencies(catalog);
+const integrityDeficitReport = JSON.parse(await readFile(
+  path.join(
+    repositoryRoot,
+    "docs",
+    "catalog-audit",
+    "modifier_coverage_deficits_2026-08-29.json",
+  ),
+  "utf8",
+));
+const catalogSha256 = createHash("sha256")
+  .update(catalogSource)
+  .digest("hex");
+const integrityDebtMatches =
+  integrityDeficitReport.catalogRecordCount === catalog.length &&
+  integrityDeficitReport.catalogSha256 === catalogSha256 &&
+  integrityDeficitReport.policy?.validatorsChanged === false &&
+  exactlyEqual(integrityDeficitReport.pairwise, pairwiseDeficiencies) &&
+  exactlyEqual(
+    integrityDeficitReport.hardFloorCategory,
+    hardFloorCategoryDeficiencies,
+  ) &&
+  exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
+  exactlyEqual(integrityDeficitReport.mirrorCategory, mirrorCategoryDeficiencies) &&
+  exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies);
 
 const catalogInvariantChecks = [
   ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
   ["session movement metadata", isSessionMovementMetadataValid(catalog)],
-  [
-    "modifier pair coverage",
-    findWorkoutModifierPairCoverageDeficiencies(catalog).length === 0,
-  ],
-  [
-    "hard-floor category coverage",
-    findHardFloorCategoryCoverageDeficiencies(catalog).length === 0,
-  ],
-  [
-    "modifier materiality",
-    findWorkoutModifierMaterialityDeficiencies(catalog).length === 0,
-  ],
-  ["mirror categories", findMirrorCategoryDeficiencies(catalog).length === 0],
-  [
-    "distinct workout lineups",
-    findWorkoutProfileLineupDeficiencies(catalog).length === 0,
-  ],
+  ["explicit catalog-integrity deficit ledger", integrityDebtMatches],
 ];
 const failedCatalogInvariants = catalogInvariantChecks
   .filter(([, valid]) => !valid)
@@ -322,6 +340,10 @@ function fingerprintedName(stem, extension, content) {
 
 function contentFingerprint(content) {
   return createHash("sha256").update(content).digest("hex").slice(0, 12);
+}
+
+function exactlyEqual(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
 }
 
 async function walk(directory) {

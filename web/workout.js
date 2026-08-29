@@ -225,7 +225,7 @@ const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const CURRENT_CATALOG_REVISION = 51;
+export const CURRENT_CATALOG_REVISION = 52;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -317,6 +317,20 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
     559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
     569, 570, 571, 574, 575, 578, 581, 582, 583,
+  ])],
+  [52, new Set([
+    32, 58, 92, 95, 104, 105, 107, 108, 109, 119, 167, 168,
+    169, 190, 193, 195, 252, 253, 267, 282, 295, 296, 390,
+    391, 392, 393, 394, 395, 397, 398, 399, 400, 401, 407,
+    408, 410, 411, 412, 413, 417, 420, 424, 426, 427, 428,
+    431, 432, 433, 434, 435, 436, 437, 438, 440, 441, 443,
+    445, 448, 450, 451, 452, 455, 456, 457, 458, 459, 460,
+    461, 462, 463, 464, 465, 469, 471, 472, 475, 476, 478,
+    479, 480, 484, 487, 488, 517, 530, 537, 548, 549, 550,
+    551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561,
+    562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 574,
+    575, 578, 581, 582, 583, 591, 609, 610, 611, 612, 613,
+    615, 616, 619, 687, 884, 885, 886, 887,
   ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
@@ -457,7 +471,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [756, ["Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles"]],
   [758, ["Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles"]],
   [94, ["Mirror-Guided Lateral Weight Shift", "Lateral Weight Shift"]],
-  [95, ["Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Pelvic Control"]],
+  [95, ["Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Knee-Raise Hold"]],
   [99, ["Mirror-Guided Bent-Knee Front-to-Back Leg Swing", "Bent-Knee Front-to-Back Leg Swing"]],
   [100, ["Mirror-Guided Bent-Knee Leg Swing with Pause", "Bent-Knee Leg Swing with Pause"]],
   [497, ["Mirror-Guided Eyebrow Raise", "Eyebrow Raise"]],
@@ -473,6 +487,17 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [526, ["Side-Chest Pose Hold", "Mirror Side-Chest Pose Hold"]],
   [527, ["Side-Triceps Pose Hold", "Mirror Side-Triceps Pose Hold"]],
   [528, ["Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Pose Hold"]],
+  [193, ["Wide-Squat Floor-to-Overhead Reach", "Wide-Stance Floor-to-Overhead Reach"]],
+  [417, ["Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach"]],
+  [556, ["Tiptoe Raises with Fist Clenches", "Standing Fist Clench and Release"]],
+  [561, ["Tiptoe Bourree Steps with Head Spot", "Tiptoe Running Steps with Head Spot"]],
+  [562, ["Ballet Rises with Arm Movement", "Ballet Calf Raises with Arm Sweeps"]],
+  [564, ["Calf Raise with Pelvic Floor Contraction", "Parallel Calf Raises with Hands on Hips"]],
+  [565, ["Pelvic-Floor Mini Squat to Calf Raise", "Mini Squat with Forward Reach"]],
+  [566, ["Parallel Calf Raises for Pelvic-Floor Support", "Parallel Calf Raises"]],
+  [581, ["Toes-In Calf Raises for Pelvic-Floor Support", "Toes-In Calf Raises"]],
+  [582, ["Toes-Out Calf Raises for Pelvic-Floor Support", "Toes-Out Calf Raises"]],
+  [615, ["Hamstring Curl with Prayer Hands", "Alternating Hamstring Curls with Prayer Hands"]],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
@@ -497,6 +522,7 @@ export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
   [400, new Set(["Shibashi Separating-the-Clouds Breathing"])],
   [401, new Set(["Shibashi Alternating Swinging-Arms Breathing"])],
   [617, new Set(["Alternating Standing Side-Leg Circles"])],
+  [95, new Set(["Single-Leg Pelvic Control"])],
 ]);
 
 const CANONICAL_GROUPS = Object.freeze([

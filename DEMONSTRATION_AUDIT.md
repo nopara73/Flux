@@ -1,46 +1,46 @@
 # Flux demonstration quality audit
 
 Flux now ships a strictly human-demonstrated exercise catalog.
-All **450** bundled exercises show an actual person performing the movement.
+All **475** bundled exercises show an actual person performing the movement.
 Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
 both the runtime catalog and the application package.
 
 | Canonical muscle group | Primary exercises | All meaningful assignments |
 | --- | ---: | ---: |
-| Medial and deep knee extensors | 22 | 154 |
-| Posterior thigh and knee flexors | 17 | 71 |
-| Major hip adductors | 13 | 54 |
-| Lateral knee extensors | 20 | 156 |
-| Gluteal extensors | 14 | 172 |
-| Spinal extensors | 14 | 44 |
-| Calf, deep posterior leg and plantar foot | 20 | 133 |
-| Soleus | 9 | 91 |
-| Scapular girdle | 10 | 134 |
-| Shoulder adductors and extensors | 14 | 53 |
-| Abdominal wall | 12 | 181 |
-| Hip abductors | 25 | 98 |
-| Chest | 12 | 58 |
-| Elbow extensors | 14 | 35 |
-| Hip flexors | 29 | 94 |
-| Anterior/lateral lower leg and dorsal foot | 11 | 64 |
-| Deep hip rotators | 16 | 48 |
-| Shoulder abductors | 16 | 120 |
-| Forearm flexors and pronators | 10 | 66 |
-| Deep and intersegmental back | 17 | 80 |
-| Elbow flexors | 16 | 39 |
-| Breathing muscles | 15 | 67 |
+| Medial and deep knee extensors | 31 | 160 |
+| Posterior thigh and knee flexors | 20 | 68 |
+| Major hip adductors | 17 | 55 |
+| Lateral knee extensors | 25 | 162 |
+| Gluteal extensors | 14 | 175 |
+| Spinal extensors | 13 | 43 |
+| Calf, deep posterior leg and plantar foot | 34 | 148 |
+| Soleus | 9 | 81 |
+| Scapular girdle | 10 | 144 |
+| Shoulder adductors and extensors | 15 | 64 |
+| Abdominal wall | 12 | 169 |
+| Hip abductors | 27 | 99 |
+| Chest | 13 | 59 |
+| Elbow extensors | 14 | 39 |
+| Hip flexors | 35 | 97 |
+| Anterior/lateral lower leg and dorsal foot | 11 | 44 |
+| Deep hip rotators | 18 | 45 |
+| Shoulder abductors | 19 | 136 |
+| Forearm flexors and pronators | 11 | 64 |
+| Deep and intersegmental back | 21 | 77 |
+| Elbow flexors | 15 | 40 |
+| Breathing muscles | 2 | 39 |
 | Forearm extensors and supinators | 11 | 46 |
-| Rotator cuff | 13 | 68 |
-| Accessory hip adductors | 10 | 47 |
-| Posterior neck and suboccipital muscles | 11 | 40 |
-| Cranial muscles | 28 | 39 |
-| Anterior/lateral neck and hyoid muscles | 11 | 39 |
-| Intrinsic hand | 11 | 48 |
-| Pelvic floor and perineum | 9 | 15 |
+| Rotator cuff | 13 | 54 |
+| Accessory hip adductors | 10 | 38 |
+| Posterior neck and suboccipital muscles | 11 | 32 |
+| Cranial muscles | 22 | 35 |
+| Anterior/lateral neck and hyoid muscles | 11 | 31 |
+| Intrinsic hand | 11 | 43 |
+| Pelvic floor and perineum | 0 | 45 |
 
 ## Retained source quality
 
-- Direct human-footage demonstrations: **444**
+- Direct human-footage demonstrations: **471**
 - Exact copies of human footage: **0**
 - Exact deterministic transforms of human footage: **4**
 
@@ -50,3 +50,7 @@ validated by the catalog generator and this audit script.
 
 The retained ID inventory is in `tools/VerifiedExerciseDemos.psd1`; source,
 copy, and transform mappings live in the corresponding media manifests.
+
+The complete 2026-08-29 demonstration-to-metadata review, including one
+ledger row for every pre-audit exercise and every exact correction, is in
+`docs/CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`.

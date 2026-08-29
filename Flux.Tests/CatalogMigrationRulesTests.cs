@@ -398,7 +398,6 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(257, "Karate Knife-Hand Block", "Self-Resisted Chest-Level Pull Hold")]
     [InlineData(260, "Standing Triceps Kickbacks", "Behind-the-Back Self-Resisted Press")]
     [InlineData(266, "Alternating T-Arm Lifts", "Standing Palms-Up Arm Raise")]
-    [InlineData(267, "Floor Touch to Calf Raise", "T-Position Shoulder Rotation")]
     [InlineData(268, "Self-Resisted External-Rotation Push-Out", "Self-Resisted External-Rotation Isometric")]
     [InlineData(269, "C-Rotation Arm Curls", "Self-Resisted Curl-and-Press")]
     [InlineData(270, "Goalpost Elbow Open-and-Close", "Palm-Squeeze Forward Press")]
@@ -798,7 +797,9 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(756, "Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles")]
     [InlineData(758, "Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles")]
     [InlineData(94, "Mirror-Guided Lateral Weight Shift", "Lateral Weight Shift")]
-    [InlineData(95, "Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Pelvic Control")]
+    [InlineData(95, "Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Knee-Raise Hold")]
+    [InlineData(95, "Single-Leg Pelvic Control", "Single-Leg Knee-Raise Hold")]
+    [InlineData(417, "Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach")]
     [InlineData(99, "Mirror-Guided Bent-Knee Front-to-Back Leg Swing", "Bent-Knee Front-to-Back Leg Swing")]
     [InlineData(100, "Mirror-Guided Bent-Knee Leg Swing with Pause", "Bent-Knee Leg Swing with Pause")]
     [InlineData(497, "Mirror-Guided Eyebrow Raise", "Eyebrow Raise")]
@@ -2078,10 +2079,79 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void DemonstrationIntegrityRevisionRebuildsChangedWorkoutStateButPreservesScores()
+    {
+        int[] changedIds =
+        [
+            32, 58, 92, 95, 104, 105, 107, 108, 109, 119, 167, 168,
+            169, 190, 193, 195, 252, 253, 267, 282, 295, 296, 390,
+            391, 392, 393, 394, 395, 397, 398, 399, 400, 401, 407,
+            408, 410, 411, 412, 413, 417, 420, 424, 426, 427, 428,
+            431, 432, 433, 434, 435, 436, 437, 438, 440, 441, 443,
+            445, 448, 450, 451, 452, 455, 456, 457, 458, 459, 460,
+            461, 462, 463, 464, 465, 469, 471, 472, 475, 476, 478,
+            479, 480, 484, 487, 488, 517, 530, 537, 548, 549, 550,
+            551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561,
+            562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 574,
+            575, 578, 581, 582, 583, 591, 609, 610, 611, 612, 613,
+            615, 616, 619, 687, 884, 885, 886, 887,
+        ];
+        Assert.Equal(
+            changedIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[52]);
+        Assert.False(CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(52));
+
+        const string changedGroup = "integrity.changed";
+        const string retiredGroup = "integrity.retired";
+        const string retainedGroup = "integrity.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 51,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 417,
+                [retiredGroup] = 267,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retiredGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 417,
+            PendingScoreValue = -4,
+            LastKeptExerciseIds = [417, 267, 15],
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(retiredGroup, state.SelectedExerciseIds);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(417, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Contains(417, state.LastKeptExerciseIds);
+        // Revision reconciliation invalidates prepared placements without
+        // rewriting historical keeps. The catalog reconciliation that has the
+        // bundled inventory removes the retired ID afterward.
+        Assert.Contains(267, state.LastKeptExerciseIds);
+        Assert.Contains(15, state.LastKeptExerciseIds);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(
-            new HashSet<int> { 90, 229, 757, 759, 760, 761, 762, 763, 764 },
+            new HashSet<int>
+            {
+                90, 229, 267, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
+            },
             CatalogMigrationRules.PermanentlyRetiredExerciseIds);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {

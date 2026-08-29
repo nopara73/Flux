@@ -344,7 +344,7 @@
         Practice = 'Ballet conditioning'
         MotionProfile = 'PlieSquat'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PelvicFloorAndPerineum')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -625,7 +625,7 @@
         Practice = 'Low-impact conditioning'
         MotionProfile = 'HighKneePulldown'
         Primary = 'HipFlexors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -959,11 +959,11 @@
     }
     193 = @{
         RetiredName = 'Ballet Tendu Derriere'
-        Name = 'Wide-Squat Floor-to-Overhead Reach'
+        Name = 'Wide-Stance Floor-to-Overhead Reach'
         Practice = 'Standing mobility'
-        MotionProfile = 'SquatOverheadReach'
-        Primary = 'SpinalExtensors'
-        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall', 'ShoulderAbductors')
+        MotionProfile = 'HipHingeOverheadReach'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -1015,7 +1015,7 @@
         Practice = 'Balance training'
         MotionProfile = 'LateralLungeKneeUpBalance'
         Primary = 'HipAbductors'
-        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
+        Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2150,30 +2150,6 @@
             MirrorForAlternation = $false
         }
     }
-    267 = @{
-        RetiredName = 'T-Position Shoulder Rotation'
-        Name = 'Standing Calf-Raise Hold'
-        Practice = 'Calf isometrics'
-        MotionProfile = 'CalfRaiseHold'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AbdominalWall')
-        SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 15
-        Media = @{
-            File = 'ballet-second-position-releve.webm'
-            Url = 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Relev%C3%A9%2C_ballet_technique_tutorial.webm'
-            SourcePage = 'https://commons.wikimedia.org/wiki/File:Relev%C3%A9,_ballet_technique_tutorial.webm'
-            Human = $true
-            Video = $true
-            StartSeconds = 3.2
-            DurationSeconds = 3.6
-            FramesPerSecond = 10
-            PingPong = $true
-            MirrorForAlternation = $false
-        }
-    }
     268 = @{
         RetiredName = 'Self-Resisted External-Rotation Isometric'
         Name = 'Goalpost-to-T Rotations'
@@ -2466,7 +2442,7 @@
         Practice = 'Low-impact boxing conditioning'
         MotionProfile = 'SideStepKneeDriveSidePunch'
         Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'HipFlexors', 'HipAbductors', 'AbdominalWall')
+        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'HipFlexors', 'HipAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2778,7 +2754,7 @@
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'SquatMarch'
         Primary = 'Soleus'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -2804,7 +2780,7 @@
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'SprinterMarch'
         Primary = 'GlutealExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3037,8 +3013,8 @@
         Name = 'Inhale Arms Up, Exhale Step-Touch'
         Practice = 'Breath-led mobility'
         MotionProfile = 'StepTouchArmArc'
-        Primary = 'BreathingMuscles'
-        Secondary = @('ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'SpinalExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall')
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ShoulderAdductorsAndExtensors', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3063,8 +3039,8 @@
         Name = 'Inhale Arms Open, Exhale High-Knee'
         Practice = 'Breath-led conditioning'
         MotionProfile = 'HighKneeOpenArmMarch'
-        Primary = 'BreathingMuscles'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors')
+        Primary = 'HipFlexors'
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3089,8 +3065,8 @@
         Name = 'Exhale-Down Inhale-Up Breathing Squat'
         Practice = 'Breathwork'
         MotionProfile = 'BreathingSquat'
-        Primary = 'BreathingMuscles'
-        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'AbdominalWall')
+        Primary = 'MajorHipAdductors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3116,7 +3092,7 @@
         Practice = 'Standing bodyweight conditioning'
         MotionProfile = 'DeadliftKneeDrive'
         Primary = 'PosteriorThighAndKneeFlexors'
-        Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors')
+        Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3141,8 +3117,8 @@
         Name = 'Inhale Open, Exhale Cross-Body Knee'
         Practice = 'Breath-led conditioning'
         MotionProfile = 'HighKneeCrossBodySweep'
-        Primary = 'BreathingMuscles'
-        Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        Primary = 'HipFlexors'
+        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'Chest', 'ScapularGirdle', 'BreathingMuscles')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3167,8 +3143,8 @@
         Name = 'Single-Side Inhale Reach Up, Exhale Knee Lift'
         Practice = 'Breath-led mobility'
         MotionProfile = 'KneeLiftOverheadReach'
-        Primary = 'BreathingMuscles'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle')
+        Primary = 'HipFlexors'
+        Secondary = @('ShoulderAbductors', 'AbdominalWall', 'BreathingMuscles')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3219,8 +3195,8 @@
         Name = 'Inhale Open, Exhale Cross-Body Side Tap'
         Practice = 'Breath-led mobility'
         MotionProfile = 'SideTapCrossBodySweep'
-        Primary = 'BreathingMuscles'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'GlutealExtensors')
+        Primary = 'HipAbductors'
+        Secondary = @('GlutealExtensors', 'ShoulderAbductors', 'BreathingMuscles')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3296,8 +3272,8 @@
         Name = 'Inhale-Up, Exhale-Down Arm Circles'
         Practice = 'Breath-led mobility'
         MotionProfile = 'BreathingArmCircle'
-        Primary = 'BreathingMuscles'
-        Secondary = @('ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall')
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3323,7 +3299,7 @@
         Practice = 'Balance and gaze-control mobility'
         MotionProfile = 'SplitSquatThumbTrackingRotation'
         Primary = 'DeepAndIntersegmentalBack'
-        Secondary = @('AbdominalWall', 'ScapularGirdle', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'RotatorCuff', 'PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        Secondary = @('AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle', 'CranialMuscles', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3348,8 +3324,8 @@
         Name = 'Squat with Upward Thumb Tracking'
         Practice = 'Vestibular rehabilitation'
         MotionProfile = 'UpwardThumbTrackingSquat'
-        Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CranialMuscles', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3374,8 +3350,8 @@
         Name = 'Squat with Downward Thumb Tracking'
         Practice = 'Vestibular rehabilitation'
         MotionProfile = 'DownwardThumbTrackingSquat'
-        Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CranialMuscles', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3400,8 +3376,8 @@
         Name = 'Lateral Lunge with Sideward Thumb Tracking'
         Practice = 'Vestibular rehabilitation'
         MotionProfile = 'LateralLungeThumbTracking'
-        Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ScapularGirdle', 'ShoulderAbductors', 'RotatorCuff')
+        Primary = 'MajorHipAdductors'
+        Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'CranialMuscles', 'ShoulderAbductors')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3426,8 +3402,8 @@
         Name = 'March in Place with Sideward Eye Shifts Between Thumbs'
         Practice = 'Brain-calibration training'
         MotionProfile = 'MarchingEyeShift'
-        Primary = 'CranialMuscles'
-        Secondary = @('HipFlexors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff')
+        Primary = 'HipFlexors'
+        Secondary = @('CranialMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'PelvicFloorAndPerineum')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3527,11 +3503,11 @@
     }
     417 = @{
         RetiredName = 'Side-to-Side Head Translation'
-        Name = 'Narrow Squat and Overhead Reach with Thumb Tracking'
-        Practice = 'Vestibular rehabilitation'
-        MotionProfile = 'NarrowSquatThumbTracking'
-        Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        Name = 'Narrow-Stance Overhead-to-Floor Reach'
+        Practice = 'Standing mobility'
+        MotionProfile = 'NarrowStanceOverheadFloorReach'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ScapularGirdle', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3609,7 +3585,7 @@
         Practice = 'Cardio conditioning'
         MotionProfile = 'JumpingJack'
         Primary = 'HipAbductors'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3713,7 +3689,7 @@
         Practice = 'Cardio and bodyweight conditioning'
         MotionProfile = 'SquatJack'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3765,7 +3741,7 @@
         Practice = 'Cardio conditioning'
         MotionProfile = 'CrossJack'
         Primary = 'HipAbductors'
-        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'Chest', 'ScapularGirdle', 'BreathingMuscles')
+        Secondary = @('MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'Chest', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3791,7 +3767,7 @@
         Practice = 'Cardio conditioning'
         MotionProfile = 'SplitJack'
         Primary = 'HipFlexors'
-        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3817,7 +3793,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'PogoJumpArmSwing'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'ScapularGirdle', 'BreathingMuscles')
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'ScapularGirdle', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3895,7 +3871,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'JumpSquat'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3921,7 +3897,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'RotationalJumpSquat'
         Primary = 'DeepHipRotators'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3947,7 +3923,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'JumpingLunge'
         Primary = 'GlutealExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3973,7 +3949,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'LateralLineHop'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -3999,7 +3975,7 @@
         Practice = 'Boxing cardio conditioning'
         MotionProfile = 'RunningHighKneePunch'
         Primary = 'HipFlexors'
-        Secondary = @('Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'RotatorCuff', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4025,7 +4001,7 @@
         Practice = 'Boxing cardio conditioning'
         MotionProfile = 'PunchJack'
         Primary = 'HipAbductors'
-        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'RotatorCuff', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('MajorHipAdductors', 'Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4051,7 +4027,7 @@
         Practice = 'Cardio coordination'
         MotionProfile = 'HighKneeClap'
         Primary = 'HipFlexors'
-        Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4077,7 +4053,7 @@
         Practice = 'Boxing conditioning'
         MotionProfile = 'FastFeetStraightPunch'
         Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'RotatorCuff', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4129,7 +4105,7 @@
         Practice = 'Boxing and plyometric conditioning'
         MotionProfile = 'HookPunchTuckJump'
         Primary = 'HipFlexors'
-        Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4155,7 +4131,7 @@
         Practice = 'Boxing and cardio conditioning'
         MotionProfile = 'HookPunchRopelessJump'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Chest', 'ScapularGirdle', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('Chest', 'ScapularGirdle', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4207,7 +4183,7 @@
         Practice = 'Boxing and plyometric conditioning'
         MotionProfile = 'SquatJumpDoublePunch'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ElbowExtensors', 'Chest', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'RotatorCuff', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowExtensors', 'Chest', 'ShoulderAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4259,7 +4235,7 @@
         Practice = 'Rope-free cardio conditioning'
         MotionProfile = 'ImaginaryJumpRopeChangingFeet'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles')
+        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4337,7 +4313,7 @@
         Practice = 'Plyometric landing mechanics'
         MotionProfile = 'TuckJumpStickLanding'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4389,7 +4365,7 @@
         Practice = 'Plyometric landing mechanics'
         MotionProfile = 'VerticalJumpControlledLanding'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4415,7 +4391,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'PowerJack'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'ShoulderAbductors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4441,7 +4417,7 @@
         Practice = 'Plyometric conditioning'
         MotionProfile = 'QuarterTurnSquatJump'
         Primary = 'DeepHipRotators'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4519,7 +4495,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'StandingMountainClimberHighImpact'
         Primary = 'HipFlexors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4545,7 +4521,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'AlternatingHighKneePulldownRun'
         Primary = 'ShoulderAdductorsAndExtensors'
-        Secondary = @('ElbowFlexors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('ElbowFlexors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4570,8 +4546,8 @@
         Name = 'Switch Lunge Uppercuts'
         Practice = 'Bodyweight cardio boxing'
         MotionProfile = 'SwitchLungeUppercut'
-        Primary = 'ElbowFlexors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles')
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'ElbowFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4597,7 +4573,7 @@
         Practice = 'Plyometric balance conditioning'
         MotionProfile = 'SingleLegRotationalHop'
         Primary = 'DeepHipRotators'
-        Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4623,7 +4599,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'GoalPostJack'
         Primary = 'RotatorCuff'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'Chest', 'HipAbductors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'HipAbductors', 'MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4649,7 +4625,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'JogInPlaceForwardArmCircle'
         Primary = 'ShoulderAbductors'
-        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles')
+        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4675,7 +4651,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'HighKneeBentArmCircle'
         Primary = 'ShoulderAbductors'
-        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4701,7 +4677,7 @@
         Practice = 'Rope-free cardio conditioning'
         MotionProfile = 'FakeJumpRope'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles')
+        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4727,7 +4703,7 @@
         Practice = 'Rope-free cardio conditioning'
         MotionProfile = 'FakeJumpRopeHighKnees'
         Primary = 'HipFlexors'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles')
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4753,7 +4729,7 @@
         Practice = 'Rope-free cardio conditioning'
         MotionProfile = 'FakeJumpRopeHeelTaps'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles')
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4779,7 +4755,7 @@
         Practice = 'Rope-free cardio conditioning'
         MotionProfile = 'SingleLegImaginaryJumpRope'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles')
+        Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4883,7 +4859,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'ArmCircleJumpingJack'
         Primary = 'RotatorCuff'
-        Secondary = @('ShoulderAbductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles')
+        Secondary = @('ShoulderAbductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4935,7 +4911,7 @@
         Practice = 'Plyometric landing mechanics'
         MotionProfile = 'SingleLegQuarterTurnHopStickLanding'
         Primary = 'DeepHipRotators'
-        Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -4961,7 +4937,7 @@
         Practice = 'Plyometric posterior-chain conditioning'
         MotionProfile = 'HingeJump'
         Primary = 'GlutealExtensors'
-        Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5039,7 +5015,7 @@
         Practice = 'Balance and neck mobility'
         MotionProfile = 'HeadTurnMarch'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5065,7 +5041,7 @@
         Practice = 'Bodyweight cardio conditioning'
         MotionProfile = 'SingleSideHighKneePullHop'
         Primary = 'HipFlexors'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles')
+        Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5116,8 +5092,8 @@
         Name = 'Step-Out Pivot with Thumb Tracking'
         Practice = 'Vestibular and visual-motor conditioning'
         MotionProfile = 'StepOutPivotThumbTracking'
-        Primary = 'CranialMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles', 'DeepHipRotators', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
+        Primary = 'DeepHipRotators'
+        Secondary = @('CranialMuscles', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5143,7 +5119,7 @@
         Practice = 'Boxing cardio conditioning'
         MotionProfile = 'CrossBodyPunchJack'
         Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'RotatorCuff', 'HipAbductors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles')
+        Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'HipAbductors', 'MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5168,8 +5144,8 @@
         Name = 'Three-Part Arm Inhale with Forceful Fold Exhale'
         Practice = 'Breath-led yoga'
         MotionProfile = 'BreathOfJoyFlow'
-        Primary = 'BreathingMuscles'
-        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'PosteriorThighAndKneeFlexors')
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'PosteriorThighAndKneeFlexors', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5272,8 +5248,8 @@
         Name = 'Goddess Squat with Lion''s Breath'
         Practice = 'Yoga breathing'
         MotionProfile = 'GoddessSquatLionsBreath'
-        Primary = 'BreathingMuscles'
-        Secondary = @('CranialMuscles', 'AbdominalWall', 'MajorHipAdductors', 'DeepHipRotators', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'ShoulderAbductors', 'RotatorCuff', 'ScapularGirdle')
+        Primary = 'MajorHipAdductors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'AbdominalWall', 'CranialMuscles', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5351,7 +5327,7 @@
         Practice = 'Bodyweight cardio boxing'
         MotionProfile = 'SquatJackUppercut'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('ElbowFlexors', 'LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'Chest', 'ScapularGirdle', 'AbdominalWall', 'BreathingMuscles')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowFlexors', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -5377,7 +5353,7 @@
         Practice = 'Plyometric landing mechanics'
         MotionProfile = 'SingleLegVerticalJumpStickLanding'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors')
+        Secondary = @('Soleus', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6000,7 +5976,7 @@
         Practice = 'Yoga breathing'
         MotionProfile = 'BreathOfJoyHaExhale'
         Primary = 'BreathingMuscles'
-        Secondary = @('AbdominalWall', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors')
+        Secondary = @('ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'SpinalExtensors', 'PosteriorThighAndKneeFlexors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6182,7 +6158,7 @@
         Practice = 'Boxing'
         MotionProfile = 'MartialHand'
         Primary = 'ShoulderAbductors'
-        Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot')
+        Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'RotatorCuff', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6259,8 +6235,8 @@
         Name = 'First-Position Plié Squat and Rise'
         Practice = 'Ballet conditioning'
         MotionProfile = 'Squat'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators')
+        Primary = 'MajorHipAdductors'
+        Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6284,8 +6260,8 @@
         Name = 'Warrior II Hold'
         Practice = 'Yoga'
         MotionProfile = 'Lunge'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators')
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Hold'
         Presentation = 'Still'
@@ -6310,8 +6286,8 @@
         Name = 'Wide-Stance Hip Circles'
         Practice = 'Standing mobility'
         MotionProfile = 'HipCircle'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators')
+        Primary = 'DeepHipRotators'
+        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors', 'MajorHipAdductors', 'GlutealExtensors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6336,8 +6312,8 @@
         Name = 'Standing Lateral Leg Lift'
         Practice = 'Bodyweight strength'
         MotionProfile = 'HipAbduction'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('HipAbductors', 'GlutealExtensors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot')
+        Primary = 'HipAbductors'
+        Secondary = @('GlutealExtensors', 'DeepHipRotators')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6361,9 +6337,9 @@
         Name = 'Balance March'
         Practice = 'Balance training'
         MotionProfile = 'BalanceMarch'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('HipFlexors', 'AnteriorLateralLowerLegAndDorsalFoot', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        Primary = 'HipFlexors'
+        Secondary = @('AnteriorLateralLowerLegAndDorsalFoot', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -6409,12 +6385,12 @@
     }
     615 = @{
         RetiredName = 'Alternating Pelvic-Floor Lunge Twist'
-        Name = 'Hamstring Curl with Prayer Hands'
-        Practice = 'Standing pelvic mobility'
+        Name = 'Alternating Hamstring Curls with Prayer Hands'
+        Practice = 'Standing conditioning'
         MotionProfile = 'HamstringCurlPrayer'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('AbdominalWall', 'GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack')
-        SideSequence = 'Continuous'
+        Primary = 'PosteriorThighAndKneeFlexors'
+        Secondary = @('GlutealExtensors')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -6438,8 +6414,8 @@
         Name = 'Standing Overhead Chop'
         Practice = 'Standing mobility'
         MotionProfile = 'DiagonalReach'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('AbdominalWall', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'DeepAndIntersegmentalBack')
+        Primary = 'ShoulderAdductorsAndExtensors'
+        Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6489,8 +6465,8 @@
         Name = 'Squat with Forward Scoop'
         Practice = 'Standing pelvic-floor movement'
         MotionProfile = 'SquatReach'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall')
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6592,7 +6568,7 @@
         Practice = 'Standing conditioning'
         MotionProfile = 'HipAbductionBentKnee'
         Primary = 'HipAbductors'
-        Secondary = @('DeepHipRotators', 'GlutealExtensors')
+        Secondary = @('GlutealExtensors', 'DeepHipRotators')
         SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -6824,8 +6800,8 @@
         Name = 'Horse-Stance Alternating Straight Punches'
         Practice = 'Karate conditioning'
         MotionProfile = 'HorseStancePunch'
-        Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'ElbowExtensors', 'Chest', 'ShoulderAbductors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -7113,7 +7089,7 @@
         Practice = 'Boxing'
         MotionProfile = 'BoxingHeadMovement'
         Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -7139,7 +7115,7 @@
         Practice = 'Boxing'
         MotionProfile = 'BoxingHeadMovement'
         Primary = 'SpinalExtensors'
-        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -7342,15 +7318,15 @@
     }
     95 = @{
         RetiredName = 'Controlled March'
-        Name = 'Single-Leg Pelvic Control'
-        Practice = 'Single-leg balance training'
-        MotionProfile = 'SingleLegPelvicControl'
-        Primary = 'HipAbductors'
-        Secondary = @('GlutealExtensors', 'DeepHipRotators', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        Name = 'Single-Leg Knee-Raise Hold'
+        Practice = 'Standing balance isometrics'
+        MotionProfile = 'KneeRaiseHold'
+        Primary = 'HipFlexors'
+        Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 60
         Media = @{
             File = 'mirror-single-leg-pelvic-control.mp4'
             Url = 'https://media.physitrack.com/exercises/f0151a5d-503a-4562-8930-3fa93d16651a/en/video_1280x720.mp4'
@@ -7804,8 +7780,8 @@
         Name = 'Alternating Standing Lateral Leg Raises'
         Practice = 'Bodyweight conditioning'
         MotionProfile = 'HipAbduction'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('HipAbductors', 'GlutealExtensors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot')
+        Primary = 'HipAbductors'
+        Secondary = @('GlutealExtensors', 'DeepHipRotators')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -7987,7 +7963,7 @@
         Practice = 'Bodyweight conditioning'
         MotionProfile = 'DeadliftKneeDrive'
         Primary = 'PosteriorThighAndKneeFlexors'
-        Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors')
+        Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'PelvicFloorAndPerineum')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8246,7 +8222,7 @@
         Practice = 'Coordination training'
         MotionProfile = 'CrossBodyKneeTap'
         Primary = 'HipFlexors'
-        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors')
+        Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'PelvicFloorAndPerineum')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8271,7 +8247,7 @@
         Practice = 'Calf strengthening'
         MotionProfile = 'CalfRaiseArmSwing'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8297,7 +8273,7 @@
         Practice = 'Full-body strength training'
         MotionProfile = 'SquatCalfRaiseOverheadReach'
         Primary = 'LateralKneeExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8323,7 +8299,7 @@
         Practice = 'Full-body strength training'
         MotionProfile = 'SquatOverheadReachCalfRaise'
         Primary = 'LateralKneeExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8349,7 +8325,7 @@
         Practice = 'Calf strengthening'
         MotionProfile = 'LateralArmRaiseCalfRaise'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors', 'DeepHipRotators')
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8368,39 +8344,13 @@
             MirrorForAlternation = $false
         }
     }
-    553 = @{
-        RetiredName = 'Garudasana Arm Flow'
-        Name = 'T-Raise to Calf Raise'
-        Practice = 'Calf strengthening'
-        MotionProfile = 'TRaiseCalfRaise'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 't-raise-calf-raise.mp4'
-            Url = 'https://www.youtube.com/watch?v=mDE1fqtioVA'
-            SourcePage = 'https://www.youtube.com/watch?v=mDE1fqtioVA'
-            Human = $true
-            Youtube = $true
-            Video = $true
-            StartSeconds = 0
-            DurationSeconds = 4.4
-            FramesPerSecond = 12
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-            PingPong = $false
-            MirrorForAlternation = $false
-        }
-    }
     554 = @{
         RetiredName = 'Gomukhasana Arm Flow'
         Name = 'Half Squat Arm Swing to Heel Raise'
         Practice = 'Full-body strength training'
         MotionProfile = 'HalfSquatArmSwingHeelRaise'
         Primary = 'LateralKneeExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum', 'HipAbductors', 'DeepHipRotators')
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8426,7 +8376,7 @@
         Practice = 'Coordination training'
         MotionProfile = 'HeelRaiseWalkingArms'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors', 'ElbowExtensors', 'Chest', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'HipFlexors', 'HipAbductors')
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ElbowFlexors', 'ElbowExtensors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8448,11 +8398,11 @@
     }
     556 = @{
         RetiredName = 'Prayer-to-Overhead Flow'
-        Name = 'Tiptoe Raises with Fist Clenches'
-        Practice = 'Lymphatic exercise'
-        MotionProfile = 'TiptoeFistClench'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'DeepAndIntersegmentalBack')
+        Name = 'Standing Fist Clench and Release'
+        Practice = 'Hand mobility and breathing'
+        MotionProfile = 'FistClenchRelease'
+        Primary = 'ForearmFlexorsAndPronators'
+        Secondary = @('IntrinsicHand', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8478,7 +8428,7 @@
         Practice = 'Tai chi'
         MotionProfile = 'TiptoeForwardPunch'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators')
+        Secondary = @('Soleus', 'ElbowExtensors', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8498,65 +8448,13 @@
             MirrorForAlternation = $false
         }
     }
-    558 = @{
-        RetiredName = 'Hands-Behind-Back Shoulder Lift'
-        Name = 'Tiptoe One-Leg Circular Arm-and-Torso Sweep'
-        Practice = 'Ballet'
-        MotionProfile = 'TiptoeCircularPortDeBras'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'tiptoe-circular-arm-torso-sweep.mp4'
-            Url = 'https://www.youtube.com/watch?v=u5BoOGzjGuo'
-            SourcePage = 'https://www.youtube.com/watch?v=u5BoOGzjGuo'
-            Human = $true
-            Youtube = $true
-            Video = $true
-            StartSeconds = 2
-            DurationSeconds = 22
-            FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-            PingPong = $false
-            MirrorForAlternation = $true
-        }
-    }
-    559 = @{
-        RetiredName = 'Standing Scapular Push'
-        Name = 'Tiptoe High Side-Leg Hold with Circular Arm Sweep'
-        Practice = 'Ballet'
-        MotionProfile = 'TiptoeOneLegPortDeBras'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
-        SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'tiptoe-one-leg-circular-arm-sweep.mp4'
-            Url = 'https://www.youtube.com/watch?v=EgVjTLGp5BU'
-            SourcePage = 'https://www.youtube.com/watch?v=EgVjTLGp5BU'
-            Human = $true
-            Youtube = $true
-            Video = $true
-            StartSeconds = 3.8
-            DurationSeconds = 29
-            FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-            PingPong = $false
-            MirrorForAlternation = $true
-        }
-    }
     560 = @{
         RetiredName = 'Bear-Hug Shoulder Sweep'
         Name = 'Tiptoe Forward-and-Back Torso-and-Arm Sweep'
         Practice = 'Ballet'
         MotionProfile = 'TiptoeForwardBackPortDeBras'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'HipAbductors', 'DeepHipRotators', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8578,11 +8476,11 @@
     }
     561 = @{
         RetiredName = 'Boxing Shoulder Roll'
-        Name = 'Tiptoe Bourree Steps with Head Spot'
+        Name = 'Tiptoe Running Steps with Head Spot'
         Practice = 'Ballet'
-        MotionProfile = 'BourreeHeadSpot'
+        MotionProfile = 'TiptoeRunningHeadSpot'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8604,11 +8502,11 @@
     }
     562 = @{
         RetiredName = 'Symmetric Boxing-Guard Shoulder Roll'
-        Name = 'Ballet Rises with Arm Movement'
+        Name = 'Ballet Calf Raises with Arm Sweeps'
         Practice = 'Ballet'
-        MotionProfile = 'BalletRiseArmMovement'
+        MotionProfile = 'BalletCalfRaiseArmSweep'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowFlexors', 'ElbowExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        Secondary = @('Soleus', 'MajorHipAdductors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8634,7 +8532,7 @@
         Practice = 'Balance training'
         MotionProfile = 'SingleLegCalfRaiseHeadTurn'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        Secondary = @('Soleus', 'HipAbductors', 'DeepHipRotators', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
         SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8656,11 +8554,11 @@
     }
     564 = @{
         RetiredName = 'Straight-Punch Shoulder Protraction'
-        Name = 'Calf Raise with Pelvic Floor Contraction'
-        Practice = 'Pelvic floor training'
-        MotionProfile = 'CalfRaisePelvicFloorContraction'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Name = 'Parallel Calf Raises with Hands on Hips'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'ParallelCalfRaiseHandsOnHips'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8682,11 +8580,11 @@
     }
     565 = @{
         RetiredName = 'Jab-Cross Shoulder Rotation'
-        Name = 'Pelvic-Floor Mini Squat to Calf Raise'
-        Practice = 'Pelvic floor training'
-        MotionProfile = 'PelvicFloorMiniSquatCalfRaise'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'BreathingMuscles')
+        Name = 'Mini Squat with Forward Reach'
+        Practice = 'Bodyweight conditioning'
+        MotionProfile = 'MiniSquatForwardReach'
+        Primary = 'MedialAndDeepKneeExtensors'
+        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8708,11 +8606,11 @@
     }
     566 = @{
         RetiredName = 'Hook Shoulder Rotation'
-        Name = 'Parallel Calf Raises for Pelvic-Floor Support'
-        Practice = 'Pelvic floor training'
-        MotionProfile = 'ParallelPelvicFloorCalfRaise'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Name = 'Parallel Calf Raises'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'ParallelCalfRaise'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8737,8 +8635,8 @@
         Name = 'Breathing Calf Raises with Arm Folds'
         Practice = 'Breathing exercise'
         MotionProfile = 'BreathingCalfRaiseFoldedHands'
-        Primary = 'BreathingMuscles'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'PelvicFloorAndPerineum', 'Chest', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors')
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8762,8 +8660,8 @@
         Name = 'Chest-Expansion Breathing Calf Raises'
         Practice = 'Breathing exercise'
         MotionProfile = 'ChestExpansionBreathingCalfRaise'
-        Primary = 'BreathingMuscles'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'Chest', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'RotatorCuff', 'ElbowFlexors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'PelvicFloorAndPerineum')
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'Chest', 'ScapularGirdle', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'BreathingMuscles')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8788,7 +8686,7 @@
         Practice = 'Full-body strength training'
         MotionProfile = 'TiptoeHipHinge'
         Primary = 'PosteriorThighAndKneeFlexors'
-        Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'PelvicFloorAndPerineum')
+        Secondary = @('GlutealExtensors', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8814,7 +8712,7 @@
         Practice = 'Coordination training'
         MotionProfile = 'TiptoeTorsoTwist'
         Primary = 'DeepAndIntersegmentalBack'
-        Secondary = @('AbdominalWall', 'SpinalExtensors', 'DeepHipRotators', 'HipAbductors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'Chest', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ScapularGirdle')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8840,7 +8738,7 @@
         Practice = 'Full-body strength training'
         MotionProfile = 'HipHingeSquatCalfRaise'
         Primary = 'LateralKneeExtensors'
-        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'PelvicFloorAndPerineum')
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8866,7 +8764,7 @@
         Practice = 'Yoga'
         MotionProfile = 'TiptoeOverheadSideBend'
         Primary = 'DeepAndIntersegmentalBack'
-        Secondary = @('AbdominalWall', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'Chest', 'ElbowExtensors', 'HipAbductors', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'PelvicFloorAndPerineum', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'BreathingMuscles')
+        Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
         SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8891,7 +8789,7 @@
         Practice = 'Boxing'
         MotionProfile = 'BoxerBounceJabCross'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ElbowExtensors', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        Secondary = @('Soleus', 'ElbowExtensors', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8917,7 +8815,7 @@
         Practice = 'Boxing'
         MotionProfile = 'BounceStepJab'
         Primary = 'ElbowExtensors'
-        Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmFlexorsAndPronators', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8939,11 +8837,11 @@
     }
     581 = @{
         RetiredName = 'Ballet Epaulement Croise'
-        Name = 'Toes-In Calf Raises for Pelvic-Floor Support'
-        Practice = 'Pelvic floor training'
-        MotionProfile = 'ToesInPelvicFloorCalfRaise'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Name = 'Toes-In Calf Raises'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'ToesInCalfRaise'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8965,11 +8863,11 @@
     }
     582 = @{
         RetiredName = 'Ballet Epaulement Efface'
-        Name = 'Toes-Out Calf Raises for Pelvic-Floor Support'
-        Practice = 'Pelvic floor training'
-        MotionProfile = 'ToesOutPelvicFloorCalfRaise'
-        Primary = 'PelvicFloorAndPerineum'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'DeepHipRotators', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'BreathingMuscles')
+        Name = 'Toes-Out Calf Raises'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'ToesOutCalfRaise'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
@@ -8995,7 +8893,7 @@
         Practice = 'Boxing'
         MotionProfile = 'BounceStepCross'
         Primary = 'Chest'
-        Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'DeepHipRotators', 'HipAbductors')
+        Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmFlexorsAndPronators', 'PelvicFloorAndPerineum')
         SideSequence = 'ScreenLeftLeadThenRightLead'
         Mode = 'Repetition'
         Presentation = 'Motion'

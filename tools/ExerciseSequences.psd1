@@ -24,7 +24,7 @@
         '214' = @(214, 755)               # Inward, then outward wrist circles on both sides
         '220' = @(220, 543)               # Rising-block sides, then alternating integration
         '223' = @(223, 756)               # Inward, then outward controlled wrist circles on both sides
-        '252' = @(252, 253, 254, 267)     # Three calf-raise foot angles, then an isometric hold
+        '252' = @(252, 253, 254)          # Three calf-raise foot angles
         '261' = @(261, 677)               # Reverse-fly repetitions, then hold
         '264' = @(264, 406)               # Synchronous arm circles, then windmill-style integration
         '285' = @(285, 541)               # Inside-block sides, then alternating integration
@@ -44,7 +44,7 @@
         '491' = @(491, 501)               # Fixed-thumb gaze stabilization with nods and turns
         '500' = @(500, 505, 506)          # Jaw opening, side glide, and forward glide
         '502' = @(502, 503)               # Levator-scapulae and upper-trapezius stretches on both sides
-        '566' = @(566, 581, 582)          # Parallel, toes-in, then toes-out pelvic-floor calf raises
+        '566' = @(566, 581, 582)          # Parallel, toes-in, then toes-out calf raises
         '610' = @(610, 232)               # Warrior II, then extended side angle on both sides
         '612' = @(612, 530)               # Lateral-leg-lift sides, then alternating integration
         '617' = @(617, 620)               # Forward, then backward side-leg circles on both sides
@@ -85,7 +85,7 @@
         498, 499, 504, 507, 508, 509, 510, 511,
         512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523,
         524, 525, 526, 527, 528, 544, 547, 548,
-        549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559,
+        549, 550, 551, 552, 554, 555, 556, 557,
         560, 561, 562, 563, 564, 565, 567, 568, 569, 570,
         571, 572, 573, 574, 575, 576, 577, 578, 583, 588, 591,
         608, 609, 611, 613, 614, 615, 616, 618, 619, 625, 632, 636,

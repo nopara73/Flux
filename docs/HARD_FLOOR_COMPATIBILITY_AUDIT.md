@@ -35,8 +35,8 @@ must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 382 exercises
-- `Incompatible`: 97 exercises
+- `Compatible`: 384 exercises
+- `Incompatible`: 91 exercises
 - `Unreviewed`: 0 exercises
 
 These counts are audit results, not quotas. Pairwise availability and
@@ -49,4 +49,8 @@ least five exercises from each exact floor category—`Compatible` and
 `Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
 Floor off still admits both categories at runtime; the category-specific audit
 exists so the larger combined pool cannot conceal a missing soft-floor-only or
-hard-floor-suitable side of a pair.
+hard-floor-suitable side of a pair. The complete demonstration-integrity audit
+exposed **112** genuine category deficiencies across **44** group IDs. They
+remain explicitly reported in
+[`catalog-audit/modifier_coverage_deficits_2026-08-29.json`](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
+rather than being hidden with false floor or muscle classifications.

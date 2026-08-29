@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 51;
+    public const int CurrentCatalogRevision = 52;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -218,7 +218,7 @@ public static class CatalogMigrationRules
                     "Lateral Weight Shift"),
                 [95] = new(
                     "Mirror-Guided Single-Leg Pelvic Control",
-                    "Single-Leg Pelvic Control"),
+                    "Single-Leg Knee-Raise Hold"),
                 [99] = new(
                     "Mirror-Guided Bent-Knee Front-to-Back Leg Swing",
                     "Bent-Knee Front-to-Back Leg Swing"),
@@ -264,6 +264,39 @@ public static class CatalogMigrationRules
                 [528] = new(
                     "Abdominals-and-Thighs Pose Hold",
                     "Mirror Abdominals-and-Thighs Pose Hold"),
+                [193] = new(
+                    "Wide-Squat Floor-to-Overhead Reach",
+                    "Wide-Stance Floor-to-Overhead Reach"),
+                [417] = new(
+                    "Narrow Squat and Overhead Reach with Thumb Tracking",
+                    "Narrow-Stance Overhead-to-Floor Reach"),
+                [556] = new(
+                    "Tiptoe Raises with Fist Clenches",
+                    "Standing Fist Clench and Release"),
+                [561] = new(
+                    "Tiptoe Bourree Steps with Head Spot",
+                    "Tiptoe Running Steps with Head Spot"),
+                [562] = new(
+                    "Ballet Rises with Arm Movement",
+                    "Ballet Calf Raises with Arm Sweeps"),
+                [564] = new(
+                    "Calf Raise with Pelvic Floor Contraction",
+                    "Parallel Calf Raises with Hands on Hips"),
+                [565] = new(
+                    "Pelvic-Floor Mini Squat to Calf Raise",
+                    "Mini Squat with Forward Reach"),
+                [566] = new(
+                    "Parallel Calf Raises for Pelvic-Floor Support",
+                    "Parallel Calf Raises"),
+                [581] = new(
+                    "Toes-In Calf Raises for Pelvic-Floor Support",
+                    "Toes-In Calf Raises"),
+                [582] = new(
+                    "Toes-Out Calf Raises for Pelvic-Floor Support",
+                    "Toes-Out Calf Raises"),
+                [615] = new(
+                    "Hamstring Curl with Prayer Hands",
+                    "Alternating Hamstring Curls with Prayer Hands"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -323,6 +356,10 @@ public static class CatalogMigrationRules
                 [617] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Alternating Standing Side-Leg Circles",
+                },
+                [95] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Leg Pelvic Control",
                 },
             };
 
@@ -865,7 +902,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
     [
-        90, 229, 757, 759, 760, 761, 762, 763, 764,
+        90, 229, 267, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -985,6 +1022,21 @@ public static class CatalogMigrationRules
                     549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
                     559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
                     569, 570, 571, 574, 575, 578, 581, 582, 583,
+                },
+                [52] = new HashSet<int>
+                {
+                    32, 58, 92, 95, 104, 105, 107, 108, 109, 119, 167, 168,
+                    169, 190, 193, 195, 252, 253, 267, 282, 295, 296, 390,
+                    391, 392, 393, 394, 395, 397, 398, 399, 400, 401, 407,
+                    408, 410, 411, 412, 413, 417, 420, 424, 426, 427, 428,
+                    431, 432, 433, 434, 435, 436, 437, 438, 440, 441, 443,
+                    445, 448, 450, 451, 452, 455, 456, 457, 458, 459, 460,
+                    461, 462, 463, 464, 465, 469, 471, 472, 475, 476, 478,
+                    479, 480, 484, 487, 488, 517, 530, 537, 548, 549, 550,
+                    551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561,
+                    562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 574,
+                    575, 578, 581, 582, 583, 591, 609, 610, 611, 612, 613,
+                    615, 616, 619, 687, 884, 885, 886, 887,
                 },
             };
 

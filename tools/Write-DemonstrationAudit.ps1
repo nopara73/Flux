@@ -184,6 +184,10 @@ $lines.Add('validated by the catalog generator and this audit script.')
 $lines.Add('')
 $lines.Add('The retained ID inventory is in `tools/VerifiedExerciseDemos.psd1`; source,')
 $lines.Add('copy, and transform mappings live in the corresponding media manifests.')
+$lines.Add('')
+$lines.Add('The complete 2026-08-29 demonstration-to-metadata review, including one')
+$lines.Add('ledger row for every pre-audit exercise and every exact correction, is in')
+$lines.Add('`docs/CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`.')
 
 $lines | Set-Content -LiteralPath $OutputPath -Encoding utf8
 Write-Output "Audit: $([IO.Path]::GetFullPath($OutputPath))"

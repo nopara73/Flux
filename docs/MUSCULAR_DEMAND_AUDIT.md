@@ -1,15 +1,15 @@
 # Muscular-demand audit
 
-The 450 selectable exercises were individually reviewed against one frozen,
+The 475 selectable exercises were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 118 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 198 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 134 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 122 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 217 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 136 |
 
 Ratings were assigned exercise by exercise. There is no desired distribution,
 quota, or balancing target. Stretching and mobility are not promoted merely
@@ -17,6 +17,11 @@ because a muscle is named; unloaded striking and rhythmic cardio do not become
 `2` merely because they are fast; demanding squat/lunge patterns, substantial
 bodyweight isometrics, self-resistance, and repeated plyometric work qualify
 when local force or fatigue is the limiting demand.
+
+The complete 2026-08-29 demonstration-integrity review corrected three demand
+ratings strictly from the final loops: ID 556 changed `1 -> 0`, while IDs 193
+and 417 changed `2 -> 1`. The review did not target a distribution. See
+[`CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
 
 The authoritative reviewed ID lists and rubric live in
 [`tools/ExerciseMuscularDemand.psd1`](../tools/ExerciseMuscularDemand.psd1).

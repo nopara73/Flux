@@ -3945,19 +3945,6 @@
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
-    267 = @{
-        File = 'PJO1hQSMPT4.mp4'
-        Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
-        SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
-        Human = $true
-        Youtube = $true
-        Video = $true
-        StartSeconds = 4
-        DurationSeconds = 21
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $false
-    }
     268 = @{
         File = 'Fl4OAJo1JsQ.mp4'
         Url = 'https://www.youtube.com/watch?v=Fl4OAJo1JsQ'

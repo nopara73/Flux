@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 479 retained exercises are reviewed against physical mirror equipment, not
+The 475 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -16,8 +16,8 @@ Each exercise has both a relationship and a minimum useful coverage:
 | `MirrorOnly` | `UpperBody` | Requires compact or tall | 5 |
 | `MirrorOnly` | `FullBody` | Requires tall | 5 |
 | `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 27 |
-| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 52 |
-| `Agnostic` | `None` | Unaffected | 390 |
+| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
+| `Agnostic` | `None` | Unaffected | 388 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
@@ -61,10 +61,10 @@ of four audited reasons:
 4. live plane, path, or symmetry correction.
 
 Merely seeing oneself, comparing oneself with the demonstration, or receiving
-ordinary optional form feedback does not qualify. The current 79 assignments
+ordinary optional form feedback does not qualify. The current 77 assignments
 are an audit result, never a quota, target, cap, or reason to promote or demote
 an exercise. Their coverage split is independently reviewed and must exactly
-partition the same 79 IDs.
+partition the same 77 IDs.
 
 ## Catalog guarantees
 

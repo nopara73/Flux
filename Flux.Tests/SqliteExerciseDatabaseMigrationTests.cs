@@ -21,20 +21,22 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(67)]
     [InlineData(68)]
     [InlineData(69)]
+    [InlineData(70)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(70, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(71, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 70)]
+    [InlineData(13, 71)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
-    [InlineData(70, 71)]
+    [InlineData(71, 71)]
+    [InlineData(71, 72)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -86,9 +88,9 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion67);
 
-        Assert.Equal(479, catalog.Length);
-        Assert.Equal(431, storedVersion67.Count);
-        Assert.Equal(429, preserved.Count);
+        Assert.Equal(475, catalog.Length);
+        Assert.Equal(430, storedVersion67.Count);
+        Assert.Equal(428, preserved.Count);
         Assert.DoesNotContain(520, preserved);
         Assert.DoesNotContain(521, preserved);
         Assert.Equal(
@@ -116,8 +118,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             ?? throw new InvalidOperationException("The test catalog is missing.");
         int[] addedExerciseIds =
         [
-            549, 550, 551, 552, 553, 554, 555, 556, 557, 558,
-            559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
+            549, 550, 551, 552, 554, 555, 556, 557,
+            560, 561, 562, 563, 564, 565, 566, 567, 568,
             569, 570, 571, 574, 575, 578, 581, 582, 583,
         ];
         HashSet<int> added = addedExerciseIds.ToHashSet();
@@ -134,8 +136,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion69);
 
-        Assert.Equal(479, catalog.Length);
-        Assert.Equal(450, storedVersion69.Count);
+        Assert.Equal(475, catalog.Length);
+        Assert.Equal(449, storedVersion69.Count);
         Assert.Equal(storedVersion69.Keys.Order(), preserved.Order());
         Assert.All(storedVersion69, entry =>
             Assert.Equal(entry.Key % 19 - 9, entry.Value.Score));
@@ -145,7 +147,9 @@ public sealed class SqliteExerciseDatabaseMigrationTests
                 catalog,
                 exercise => exercise.Id == exerciseId);
             Assert.Equal(
-                ExerciseHardFloorCompatibility.Incompatible,
+                exerciseId is 556 or 565
+                    ? ExerciseHardFloorCompatibility.Compatible
+                    : ExerciseHardFloorCompatibility.Incompatible,
                 addedExercise.HardFloorCompatibility);
             Assert.DoesNotContain(exerciseId, preserved);
         });
@@ -191,8 +195,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion68);
 
-        Assert.Equal(448, storedVersion68.Count);
-        Assert.Equal(444, preserved.Count);
+        Assert.Equal(447, storedVersion68.Count);
+        Assert.Equal(443, preserved.Count);
         Assert.Equal(
             storedVersion68.Keys
                 .Except(publishedVersion68Names.Keys)
@@ -262,7 +266,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Execute(
             connection,
             """
-            CREATE TABLE exercises_v70 (
+            CREATE TABLE exercises_v71 (
                 id INTEGER NOT NULL PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
                 video TEXT NOT NULL UNIQUE,
@@ -315,7 +319,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             SELECT name, video, score, equipment,
                 hard_floor_compatibility, mirror_relationship,
                 mirror_coverage, session_movement_id
-            FROM exercises_v70
+            FROM exercises_v71
             WHERE id = 528
             """;
         using SqliteDataReader reader = command.ExecuteReader();

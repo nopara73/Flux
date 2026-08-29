@@ -1,42 +1,49 @@
-# Exercise catalog usability audit
+# Exercise catalog audit artifacts
 
-This audit models a first-time user standing in a 2 m × 2 m space with no wall,
-equipment, or spoken instruction. For every catalog entry, the reviewer recorded
-what the user would infer from the plain exercise name, what the silent human
-demonstration visibly shows, and whether those two signals make the action
-immediately copyable.
+Flux models a first-time user standing in a 2 m × 2 m space with no wall,
+equipment, or spoken instruction except where a physical mirror is explicitly
+declared. The final packaged silent human demonstration is authoritative for
+the action, name, muscular demand, anatomy, structure, and presentation.
 
-- Original entries reviewed: 410
-- Original entries retained: 130
-- Original entries retired: 280
-- Reviewed replacements/reactivations in the current manifest: 349 (the
-  original 288-row audit pass plus 61 later reviewed catalog changes)
-- Final catalog entries: 479
-- Final presentation mix: 421 motion demonstrations, 58 still endpoints
-- Pairwise modifier coverage: for every modifier pair and every supported
-  roll-up, each real UI state (on/on, on/off, off/on, and off/off) contains at
-  least 5 selectable exercises. Off relaxes the corresponding filter. A separate
-  quadratic materiality check requires each modifier to exclude at least 5
-  exercises or 5% of the prior candidate pool, whichever is larger, across at
-  least 10% of canonical buckets, both alone and when its paired modifier is on.
-  Hard Floor additionally preserves at least five compatible and five
-  incompatible exercises per workout group with Insect off/on, Silence off/on,
-  and Mirror off. The rule grows with modifier pairs, not the full power set.
-- Hard-floor compatibility: all 479 entries have an explicit review; 382 are
-  suitable on an ordinary rigid floor and 97 require a stable soft floor.
-- Distinct-lineup feasibility: every duration and enabled profile must admit one
-  different exercise per scheduled group.
+## Current full-loop integrity audit
 
-[`exercise_usability_audit.csv`](exercise_usability_audit.csv) is the complete
+The 2026-08-29 review inspected all **479** pre-audit records and produced a
+final catalog of **475** entries:
+
+- **349** passed without correction;
+- **126** were corrected while retaining their stable IDs and scores;
+- **4** were retired;
+- final presentation mix: **417** motion loops and **58** still endpoints;
+- hard-floor compatibility: **384** compatible and **91** incompatible;
+- mirror relationships: **10** `MirrorOnly`, **77** `BenefitsGreatly`, and
+  **388** `Agnostic`.
+
+[`demonstration_metadata_integrity_2026-08-29.csv`](demonstration_metadata_integrity_2026-08-29.csv)
+has exactly one row per pre-audit exercise. Each changed row records the prior
+metadata, what the final loop actually shows, every exact changed field, and the
+reason. It also records the loop, crop, seam, speed, mirroring, travel, hold
+frame, and equipment review dimensions.
+
+[`modifier_coverage_deficits_2026-08-29.json`](modifier_coverage_deficits_2026-08-29.json)
+is the complete output of the unchanged modifier validators after false
+inherited anatomy was removed. It deliberately preserves real catalog debt
+rather than making the checks green through filler or false associations.
+The methodology, summary, evidence, migrations, and correction classes are in
+[`../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
+
+## Historical usability audit
+
+The earlier review started from 410 original entries: 130 were retained and
+280 retired. Subsequent reviewed replacements and reactivations produced the
+pre-integrity inventory audited above.
+
+[`exercise_usability_audit.csv`](exercise_usability_audit.csv) preserves that
 one-row-per-original-exercise review. [`catalog_replacements.csv`](catalog_replacements.csv)
-preserves the original 288-row replacement pass, including its literal action,
-classification, timing, presentation, human-media metadata, and rationale.
-[`tools/CatalogExerciseReplacements.psd1`](../../tools/CatalogExerciseReplacements.psd1)
-is the authoritative current 349-entry replacement and safe-reactivation
-manifest.
+preserves the original replacement pass, including action, classification,
+timing, presentation, human-media metadata, and rationale. The authoritative
+current replacement and safe-reactivation manifest is
+[`tools/CatalogExerciseReplacements.psd1`](../../tools/CatalogExerciseReplacements.psd1).
 
-Existing scores are preserved for every retained exercise. A replaced numeric slot
-is deleted and reinserted so the new exercise starts at score 0 instead of inheriting
-the retired exercise's history. Two invalid slots are permanently retired without a
-replacement; ten older retired identities are safely reactivated for the linked
-opposite-direction exercises and also start at score 0.
+Existing scores are preserved for retained identities. A genuinely replaced
+numeric slot is deleted and reinserted so it cannot inherit the retired
+exercise's score. Permanent retirements cannot silently return.

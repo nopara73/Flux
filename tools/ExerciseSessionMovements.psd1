@@ -15,7 +15,6 @@
         '177' = @(177, 186)      # Hip airplane
         '214' = @(214, 223)      # Inward wrist circles
         '231' = @(231, 685)      # Karate reverse punch
-        '253' = @(253, 267)      # Double calf raise
         '256' = @(256, 845)      # Overhead side stretch
         '261' = @(261, 677)      # Bent-elbow reverse fly
         '514' = @(514, 521)      # Symmetric smile / mirror smiling practice

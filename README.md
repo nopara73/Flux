@@ -228,11 +228,19 @@ and Silence must remove at least five exercises or 5% of the previous candidate
 pool, whichever is larger. Mirror must actually prefer at least that many
 compatible exercises for compact and tall equipment independently. Each
 modifier must affect at least 10% of the canonical buckets, both alone and with
-its paired modifier enabled. The current 79 `BenefitsGreatly` assignments are
+its paired modifier enabled. The current 77 `BenefitsGreatly` assignments are
 an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
 materiality checks. Hard-floor classifications and their review criteria are
 recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
+
+The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
+anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
+deficiencies, and one Silence materiality deficiency. The unchanged validators
+and every exact deficit are retained in
+[`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
+no relationship or muscle assignment is inflated to hide them. All supported
+profiles still admit a distinct atomic lineup.
 
 These guarantees grow quadratically with the number of modifiers. They prove
 single and pairwise behavior, not arbitrary intersections of three or more
@@ -276,9 +284,9 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 395 schedulable roots from 450 exercise records:
-245 one-block, 107 two-block, 26 three-block, 16 four-block, and one five-block
-root. Forty-seven roots couple multiple named exercise records, including 17
+current semantic audit yields 419 schedulable roots from 475 exercise records:
+264 one-block, 111 two-block, 28 three-block, 15 four-block, and one five-block
+root. Forty-eight roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
 
@@ -362,7 +370,7 @@ still leaves the unreached exercise neutral.
 
 ## Exercise catalog
 
-Flux ships with 450 reviewed movements spanning compound strength and
+Flux ships with 475 reviewed movements spanning compound strength and
 conditioning, mobility, dynamic balance, active range of motion,
 rehabilitation-style movement, Pilates, yoga, tai chi, qigong, boxing, dance,
 martial arts, breathing, and isometrics.
@@ -391,7 +399,9 @@ Catalog generation rejects missing or duplicate identities, unknown anatomical
 assignments, fake variation suffixes, incomplete modifier reviews, impossible
 lineups, constraint violations, non-human media, and movements without an
 explicit side decision. See [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) and
-[DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md).
+[DEMONSTRATION_AUDIT.md](DEMONSTRATION_AUDIT.md). The complete current full-loop
+ledger is documented in
+[`docs/CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](docs/CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
 
 ## Persistence and upgrades
 
@@ -414,7 +424,7 @@ Movement start and resume checkpoints use Android's non-blocking preference
 apply so the Play control responds without waiting for a disk flush; pausing,
 finishing, and score-changing actions still commit synchronously.
 
-The Android catalog uses SQLite schema version 68. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 71. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

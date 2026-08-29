@@ -1,6 +1,6 @@
 # Flux exercise catalog
 
-Flux contains 450 human-demonstrated standing movements. Exercises are chosen
+Flux contains 475 human-demonstrated standing movements. Exercises are chosen
 for movement quality first and assigned to canonical muscle groups afterward.
 Each exercise has one primary scheduling group and zero or more meaningful
 secondary groups. Full-body movements remain eligible wherever they place real
@@ -10,8 +10,10 @@ meaningful secondary associations remain real scheduling eligibility.
 The 30 canonical leaves roll up explicitly into the app's 3, 5, 7, 10, 15, 20,
 and 30-group resolutions. Every resolution covers every leaf exactly once and
 schedules its declared mass hierarchy from smallest to largest. A selectable
-exercise must train at least half of that bucket's canonical leaves. For every
-modifier pair, every bucket has at least five choices under each real UI state.
+exercise must train at least half of that bucket's canonical leaves. Policy
+requires five choices for every modifier pair, bucket, and real UI state; the
+complete integrity audit reports current genuine shortfalls explicitly rather
+than repairing them with false anatomy.
 A binary/binary pair has four states; a pair involving Mirror has six because
 Mirror has off, compact, and tall equipment states. Restrictive modifiers relax
 when off. With a compact mirror, upper-body `MirrorOnly` movements are admitted
@@ -94,9 +96,9 @@ the sequence's internal order.
 `tools/ExerciseSequences.psd1` exhaustively partitions the retained inventory:
 every record is either in exactly one mandatory sequence or is explicitly
 standalone. Generation rejects implicit defaults, overlaps, orphans, and hidden
-members scheduled as roots. The current reviewed inventory has 395 schedulable
-roots: 245 one-block, 107 two-block, 26 three-block, 16 four-block, and one
-five-block root. Forty-seven roots couple multiple named records, including
+members scheduled as roots. The current reviewed inventory has 419 schedulable
+roots: 264 one-block, 111 two-block, 28 three-block, 15 four-block, and one
+five-block root. Forty-eight roots couple multiple named records, including
 17 exact alternating integrations added after the side/integration audit.
 These numbers are audit outputs rather than coverage targets.
 
@@ -107,9 +109,11 @@ fails if the two manifests drift. The runtime catalog emits the canonical map
 directly. The historical ten source
 families remain generator-only so stable exercise IDs and reviewed media paths
 do not change. The generator rejects missing, duplicate, or unknown assignments;
-modifier-profile coverage or distinct-lineup deficits; duplicate names;
-synthetic modifier suffixes; missing motion profiles; non-human media; and
-constraint violations. It also requires an explicit reviewed timed-side or continuous
+duplicate names; distinct-lineup deficits; synthetic modifier suffixes; missing
+motion profiles; non-human media; and constraint violations. Modifier-profile
+coverage deficits are computed by the unchanged policy validators and must be
+either closed with independently valid exercises or pinned explicitly as
+catalog debt. Generation also requires an explicit reviewed timed-side or continuous
 decision for every retained movement, so new entries cannot silently default
 to the wrong playback behavior.
 
@@ -126,7 +130,7 @@ This equipment classification never controls
 media mirroring; only the established timed-side presentation protocol may flip
 the second playback phase.
 
-The current 71 `BenefitsGreatly` assignments are an audited result, not a quota,
+The current 77 `BenefitsGreatly` assignments are an audited result, not a quota,
 target, or ceiling. Each entry must belong to one of the manifest's narrow
 audited criteria, and ordinary optional form checking does not qualify. Changes
 to the count must follow the exercise semantics, never a coverage requirement.
@@ -143,7 +147,7 @@ mirror-category floor.
 Every entry has an offline 256 × 256 H.264 MP4 with its audio stripped. The
 `silent` catalog field separately records whether performing the movement is
 naturally quiet, allowing the default-on Silence modifier to exclude impact
-movements. All 450 included
+movements. All 475 included
 demonstrations show an actual person. Retained media consists of visually
 reviewed human footage, semantically identical copies of reviewed footage, or
 an exact deterministic transform when the transformed footage demonstrates the
@@ -162,6 +166,11 @@ The retained inventory and media mappings live in:
 - `tools/ExerciseDirectionSequences.psd1`
 - `tools/ExerciseSequences.psd1`
 - `tools/ReviewedContinuousExercises.psd1`
+
+The current full-loop integrity audit leaves genuine modifier-coverage gaps
+explicit instead of restoring false anatomy. The unchanged validators' exact
+results are in
+[`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json).
 
 `tools/Test-ExerciseVideos.ps1` verifies the complete media inventory and
 compares every hold’s decoded final frame with its reviewed target. Counts are
