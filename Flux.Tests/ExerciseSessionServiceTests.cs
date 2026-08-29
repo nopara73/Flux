@@ -3094,6 +3094,35 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void PreparedWorkoutDoesNotStartLoggingUntilItIsActivated()
+    {
+        DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
+        var service = new ExerciseSessionService(
+            ThreeGroupCatalog(),
+            new AlwaysZeroRandom(),
+            () => now);
+        var state = new WorkoutState();
+
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.Equal(3, state.ActiveWorkoutMinutes);
+        Assert.Null(state.ActiveWorkoutSession);
+        Assert.Empty(state.WorkoutHistory);
+        Assert.Equal(1, state.NextWorkoutSessionId);
+        Assert.Equal(3, service.GetActiveGroups(state).Count);
+
+        now = now.AddMinutes(2);
+        service.ActivatePreparedWorkout(state);
+
+        Assert.NotNull(state.ActiveWorkoutSession);
+        Assert.Equal(now.ToUnixTimeMilliseconds(),
+            state.ActiveWorkoutSession.StartedAtUnixMilliseconds);
+        Assert.Equal(2, state.NextWorkoutSessionId);
+        Assert.Throws<InvalidOperationException>(() =>
+            service.ActivatePreparedWorkout(state));
+    }
+
+    [Fact]
     public void CompletedWorkoutArchivesExactBlocksDecisionsAndPriorKeeps()
     {
         DateTimeOffset now = new(2026, 8, 27, 1, 0, 0, TimeSpan.Zero);

@@ -28,6 +28,28 @@ await mkdir(outputRoot, { recursive: true });
 const workoutSource = await readFile(path.join(webRoot, "workout.js"), "utf8");
 const workoutOutputName = fingerprintedName("workout", "js", workoutSource);
 await writeFile(path.join(outputRoot, workoutOutputName), workoutSource, "utf8");
+const preparationWorkerSource = await readFile(
+  path.join(webRoot, "workout-preparation-worker.js"),
+  "utf8",
+);
+const fingerprintedPreparationWorkerSource = preparationWorkerSource.replace(
+  'from "./workout.js";',
+  `from "./${workoutOutputName}";`,
+);
+if (fingerprintedPreparationWorkerSource === preparationWorkerSource ||
+    !fingerprintedPreparationWorkerSource.includes(workoutOutputName)) {
+  throw new Error("Could not content-address the workout preparation worker.");
+}
+const preparationWorkerOutputName = fingerprintedName(
+  "workout-preparation-worker",
+  "js",
+  fingerprintedPreparationWorkerSource,
+);
+await writeFile(
+  path.join(outputRoot, preparationWorkerOutputName),
+  fingerprintedPreparationWorkerSource,
+  "utf8",
+);
 
 const hardFloorIconPath = path.join(
   repositoryRoot,
@@ -201,9 +223,14 @@ const fingerprintedAppSource = appSource
   .replace(
     '"data/asset-versions.json"',
     `"data/asset-versions.json?v=${assetVersionsVersion}"`,
+  )
+  .replace(
+    '"./workout-preparation-worker.js"',
+    `"./${preparationWorkerOutputName}"`,
   );
 if (fingerprintedAppSource === appSource ||
     !fingerprintedAppSource.includes(workoutOutputName) ||
+    !fingerprintedAppSource.includes(preparationWorkerOutputName) ||
     !fingerprintedAppSource.includes(`exercises.json?v=${catalogVersion}`) ||
     !fingerprintedAppSource.includes(
       `asset-versions.json?v=${assetVersionsVersion}`)) {

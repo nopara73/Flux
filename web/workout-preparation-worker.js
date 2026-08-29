@@ -1,0 +1,15 @@
+import { WorkoutSession } from "./workout.js";
+
+self.addEventListener("message", (event) => {
+  const { generation, exercises, state, minutes, modifiers } = event.data ?? {};
+  try {
+    const session = new WorkoutSession(exercises, state);
+    session.prepareWorkout(minutes, modifiers);
+    self.postMessage({ generation, state: session.state });
+  } catch (error) {
+    self.postMessage({
+      generation,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+});

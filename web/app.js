@@ -99,6 +99,7 @@ const sounds = Object.fromEntries(
 
 const startupControls = window.fluxStartupControls ?? null;
 let session = null;
+let exerciseCatalog = null;
 let assetVersions = Object.freeze({});
 let selectedMinutes = startupControls?.selectedMinutes ?? 10;
 let selectedModifiers = startupControls?.selectedModifiers ??
@@ -126,6 +127,13 @@ let wakeLock = null;
 let wakeLockRequestPending = false;
 let wakeLockGeneration = 0;
 let modifierFeedbackTimer = null;
+let workoutPreparationGeneration = 0;
+let workoutPreparationWorker = null;
+let workoutPreparationPromise = null;
+let workoutPreparationResolve = null;
+let preparingWorkoutMinutes = 0;
+let preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
+let preparedWorkout = null;
 
 bindEvents();
 renderDuration(selectedMinutes, false);
@@ -150,6 +158,7 @@ async function bootstrap() {
       catalogResponse.json(),
       assetVersionsResponse.json(),
     ]);
+    exerciseCatalog = exercises;
     if (!loadedAssetVersions || Array.isArray(loadedAssetVersions) ||
         typeof loadedAssetVersions !== "object") {
       throw new Error("Asset-version manifest is invalid.");
@@ -211,6 +220,9 @@ function bindEvents() {
         selectedModifiers = nextSelection.selectedModifiers;
         if (userInitiated && !session) {
           startupSelectionChanged = true;
+        }
+        if (userInitiated && session?.state.activeWorkoutMinutes === 0) {
+          queueWorkoutPreparation();
         }
       },
       startRequested: startWorkout,
@@ -311,6 +323,7 @@ function renderDuration(minutes, userInitiated) {
     }
     elements.durationDial.classList.remove("pulse");
     requestAnimationFrame(() => elements.durationDial.classList.add("pulse"));
+    queueWorkoutPreparation();
   }
 }
 
@@ -338,6 +351,7 @@ function toggleWorkoutModifier(flag) {
   renderWorkoutModifiers();
   const enabled = (selectedModifiers & flag) !== 0;
   showWorkoutModifierFeedback(workoutModifierFeedbackLabel(flag, enabled));
+  queueWorkoutPreparation();
 }
 
 function workoutModifierFeedbackLabel(flag, enabled) {
@@ -371,6 +385,7 @@ function cycleMirrorEquipment() {
   }
   renderWorkoutModifiers();
   showWorkoutModifierFeedback(mirrorEquipmentFeedbackLabel(nextEquipment));
+  queueWorkoutPreparation();
 }
 
 function mirrorEquipmentFeedbackLabel(equipment) {
@@ -450,6 +465,7 @@ function showDuration({ preserveSelection = false } = {}) {
   renderDuration(selectedMinutes, false);
   renderWorkoutModifiers();
   startupControls?.setSelection(selectedMinutes, selectedModifiers);
+  queueWorkoutPreparation();
   elements.beginWorkout.disabled = false;
   startupControls?.markReady();
   showScreen("duration");
@@ -461,7 +477,145 @@ function showDuration({ preserveSelection = false } = {}) {
   }
 }
 
-function startWorkout() {
+function queueWorkoutPreparation(
+  minutes = selectedMinutes,
+  modifiers = selectedModifiers,
+) {
+  if (!session || !exerciseCatalog || session.state.activeWorkoutMinutes !== 0) {
+    return null;
+  }
+  if (preparedWorkout?.minutes === minutes &&
+      preparedWorkout.modifiers === modifiers) {
+    return Promise.resolve(preparedWorkout);
+  }
+  if (workoutPreparationPromise &&
+      preparingWorkoutMinutes === minutes &&
+      preparingWorkoutModifiers === modifiers) {
+    return workoutPreparationPromise;
+  }
+
+  cancelWorkoutPreparation();
+  const generation = ++workoutPreparationGeneration;
+  preparingWorkoutMinutes = minutes;
+  preparingWorkoutModifiers = modifiers;
+  workoutPreparationPromise = new Promise((resolve) => {
+    workoutPreparationResolve = resolve;
+  });
+  let fallbackStarted = false;
+
+  const complete = (result) => {
+    if (generation !== workoutPreparationGeneration) {
+      return;
+    }
+    workoutPreparationWorker?.terminate();
+    workoutPreparationWorker = null;
+    preparedWorkout = result;
+    if (result) {
+      performance.mark?.("flux-workout-prepared");
+    }
+    workoutPreparationResolve?.(result);
+    workoutPreparationResolve = null;
+    workoutPreparationPromise = null;
+  };
+  const prepareOnMainThread = () => {
+    if (fallbackStarted) {
+      return;
+    }
+    fallbackStarted = true;
+    setTimeout(() => {
+      if (generation !== workoutPreparationGeneration) {
+        return;
+      }
+      try {
+        const preparedSession = new WorkoutSession(
+          exerciseCatalog,
+          cloneWorkoutState(session.state),
+        );
+        preparedSession.prepareWorkout(minutes, modifiers);
+        complete({ minutes, modifiers, state: preparedSession.state });
+      } catch (error) {
+        console.error(error);
+        complete(null);
+      }
+    }, 0);
+  };
+
+  try {
+    workoutPreparationWorker = new Worker(
+      new URL("./workout-preparation-worker.js", import.meta.url),
+      { type: "module" },
+    );
+    workoutPreparationWorker.addEventListener("message", (event) => {
+      if (event.data?.generation !== generation) {
+        return;
+      }
+      if (event.data.error) {
+        console.warn(`Background workout preparation failed: ${event.data.error}`);
+        workoutPreparationWorker?.terminate();
+        workoutPreparationWorker = null;
+        prepareOnMainThread();
+        return;
+      }
+      complete({ minutes, modifiers, state: event.data.state });
+    });
+    workoutPreparationWorker.addEventListener("error", (error) => {
+      if (generation !== workoutPreparationGeneration) {
+        return;
+      }
+      console.warn("Background workout preparation failed.", error);
+      workoutPreparationWorker?.terminate();
+      workoutPreparationWorker = null;
+      prepareOnMainThread();
+    }, { once: true });
+    workoutPreparationWorker.postMessage({
+      generation,
+      exercises: exerciseCatalog,
+      state: session.state,
+      minutes,
+      modifiers,
+    });
+  } catch (error) {
+    console.warn("Background workout preparation is unavailable.", error);
+    prepareOnMainThread();
+  }
+  return workoutPreparationPromise;
+}
+
+async function ensureWorkoutPrepared(minutes, modifiers) {
+  if (preparedWorkout?.minutes === minutes &&
+      preparedWorkout.modifiers === modifiers) {
+    return preparedWorkout;
+  }
+  if (!workoutPreparationPromise ||
+      preparingWorkoutMinutes !== minutes ||
+      preparingWorkoutModifiers !== modifiers) {
+    queueWorkoutPreparation(minutes, modifiers);
+  }
+  return workoutPreparationPromise
+    ? await workoutPreparationPromise
+    : null;
+}
+
+function cancelWorkoutPreparation() {
+  workoutPreparationGeneration += 1;
+  workoutPreparationWorker?.terminate();
+  workoutPreparationWorker = null;
+  workoutPreparationResolve?.(null);
+  workoutPreparationResolve = null;
+  workoutPreparationPromise = null;
+  preparedWorkout = null;
+  preparingWorkoutMinutes = 0;
+  preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
+}
+
+function cloneWorkoutState(state) {
+  return typeof structuredClone === "function"
+    ? structuredClone(state)
+    : JSON.parse(JSON.stringify(state));
+}
+
+async function startWorkout() {
+  performance.mark?.("flux-workout-start-requested");
   if (!session) {
     startWorkoutWhenReady = true;
     elements.beginWorkout.disabled = true;
@@ -474,9 +628,23 @@ function startWorkout() {
   }
   elements.beginWorkout.disabled = true;
   try {
-    session.startWorkout(selectedMinutes, selectedModifiers);
+    const minutes = selectedMinutes;
+    const modifiers = selectedModifiers;
+    const prepared = await ensureWorkoutPrepared(minutes, modifiers);
+    if (!prepared) {
+      throw new Error("The selected workout could not be prepared.");
+    }
+    cancelWorkoutPreparation();
+    session = new WorkoutSession(exerciseCatalog, prepared.state);
+    session.activatePreparedWorkout();
     persistState();
     showNextExercise();
+    performance.mark?.("flux-workout-visible");
+    performance.measure?.(
+      "flux-workout-start-latency",
+      "flux-workout-start-requested",
+      "flux-workout-visible",
+    );
   } catch (error) {
     console.error(error);
     elements.beginWorkout.disabled = false;

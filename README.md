@@ -133,6 +133,12 @@ session movements, exact duration, and long-workout set allocation remain
 constraints. The balancing state is temporary and never changes persisted user
 scores or adds a numerical hardness score.
 
+Android and web prepare this complete constrained plan in the background while
+the duration screen is visible. Pressing Start only activates the prepared plan
+and timestamps its workout log, so selection work cannot block the Start tap.
+Changing duration or a modifier discards the stale plan and prepares the newly
+selected profile instead.
+
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
 not locally limiting work, and `2` means hard muscular work whose force or

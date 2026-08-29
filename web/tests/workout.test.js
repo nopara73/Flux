@@ -5163,6 +5163,41 @@ test("corrupt local state resets safely", () => {
   assert.equal(parseStoredState('{"lastWorkoutMinutes":6}').lastWorkoutMinutes, 7);
 });
 
+test("prepared workout stays unlogged until instant activation", () => {
+  let now = Date.UTC(2026, 7, 29, 8);
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    19_000 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    10,
+  ));
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+
+  session.prepareWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.activeWorkoutMinutes, 3);
+  assert.equal(session.state.activeWorkoutSession, null);
+  assert.deepEqual(session.state.workoutHistory, []);
+  assert.equal(session.state.nextWorkoutSessionId, 1);
+  assert.equal(session.getActiveGroups().length, 3);
+
+  now += 120_000;
+  session.activatePreparedWorkout();
+
+  assert.equal(session.state.activeWorkoutSession.startedAtUnixMilliseconds, now);
+  assert.equal(session.state.nextWorkoutSessionId, 2);
+  assert.throws(
+    () => session.activatePreparedWorkout(),
+    /activatable prepared workout/,
+  );
+});
+
 test("completed workout history preserves exact blocks decisions and prior keeps", () => {
   let now = Date.UTC(2026, 7, 27, 8);
   const groups = RESOLUTIONS.get(3).groups;

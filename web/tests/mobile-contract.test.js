@@ -55,6 +55,7 @@ const [
   movementSchedule,
   mainActivity,
   webApp,
+  preparationWorker,
   instantControls,
   workoutModule,
   catalogMigrationRules,
@@ -97,6 +98,7 @@ const [
   source("Flux", "Services", "MovementPhaseSchedule.cs"),
   source("Flux", "MainActivity.cs"),
   source("web", "app.js"),
+  source("web", "workout-preparation-worker.js"),
   source("web", "instant-controls.js"),
   source("web", "workout.js"),
   source("Flux", "Services", "CatalogMigrationRules.cs"),
@@ -209,7 +211,7 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
 test("web and mobile preserve exact slot preferences without duration remapping", () => {
   assert.match(
     sessionService,
-    /StartWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(state\);/,
+    /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(state\);/,
   );
   assert.match(
     sessionService,
@@ -288,11 +290,11 @@ test("web and mobile apply the same multi-resolution muscle balancing", () => {
   );
   assert.match(
     sessionService,
-    /currentBalance\.IsBalanced[\s\S]*removedPlacements\.Any\(placement => IsSequenceKept[\s\S]*GetSelectionScore\(state, candidate, group\.Id\) >=[\s\S]*GetSelectionScore\(state, displacedRoot, group\.Id\)/,
+    /currentBalance\.IsBalanced[\s\S]*removedPlacements\.Any\(placement => IsSequenceKept[\s\S]*GetCachedSelectionScore\(candidate, group\.Id\) >=[\s\S]*GetCachedSelectionScore\(displacedRoot, group\.Id\)/,
   );
   assert.match(
     workoutModule,
-    /currentBalance\.isBalanced[\s\S]*removedPlacements\.some\(\(placement\) =>[\s\S]*this\.isSequenceKept[\s\S]*this\.getSelectionScore\(candidate, group\.id\) >=[\s\S]*this\.getSelectionScore\(displacedRoot, group\.id\)/,
+    /currentBalance\.isBalanced[\s\S]*removedPlacements\.some\(\(placement\) =>[\s\S]*this\.isSequenceKept[\s\S]*getCachedSelectionScore\(candidate, group\.id\) >=[\s\S]*getCachedSelectionScore\(displacedRoot, group\.id\)/,
   );
   assert.match(
     muscleBalancePolicy,
@@ -356,11 +358,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
   assert.match(
     sessionService,
-    /StartWorkout\([\s\S]*state\.LastWorkoutModifiers\s*=\s*modifiers;[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
+    /PrepareWorkout\([\s\S]*state\.LastWorkoutModifiers\s*=\s*modifiers;[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
   );
   assert.match(
     workoutModule,
-    /startWorkout\(minutes, modifiers[\s\S]*this\.state\.lastWorkoutModifiers\s*=\s*modifiers;[\s\S]*this\.state\.activeWorkoutModifiers\s*=\s*modifiers;/,
+    /prepareWorkout\(minutes, modifiers[\s\S]*this\.state\.lastWorkoutModifiers\s*=\s*modifiers;[\s\S]*this\.state\.activeWorkoutModifiers\s*=\s*modifiers;/,
   );
   assert.match(
     sessionService,
@@ -500,7 +502,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.ok(catalog.every((exercise) =>
     exercise.hardFloorCompatibility === "Compatible" ||
     exercise.hardFloorCompatibility === "Incompatible"));
-  assert.match(webApp, /session\.startWorkout\(selectedMinutes, selectedModifiers\)/);
+  assert.match(
+    webApp,
+    /ensureWorkoutPrepared\(minutes, modifiers\)[\s\S]*session\.activatePreparedWorkout\(\)/,
+  );
   assert.match(durationLayout, /@\+id\/hard_floor_modifier_button/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);
@@ -927,7 +932,7 @@ test("duration controls do not wait for catalog startup on either platform", () 
   );
   const mobileStart = methodBody(
     mainActivity,
-    "private void StartSelectedWorkout()",
+    "private async void StartSelectedWorkout()",
     "private static void RecoverPendingScoreUpdate(",
   );
   assert.match(
@@ -964,6 +969,33 @@ test("duration controls do not wait for catalog startup on either platform", () 
   assert.match(
     webBuild,
     /instant-controls\.js[\s\S]*instantControlsSource[\s\S]*<script>/,
+  );
+});
+
+test("Start activates an off-thread prepared workout on Android and web", () => {
+  assert.match(
+    sessionService,
+    /StartWorkout\([\s\S]*PrepareWorkout\(state, minutes, modifiers\);[\s\S]*ActivatePreparedWorkout\(state\);/,
+  );
+  assert.match(
+    workoutModule,
+    /startWorkout\(minutes, modifiers[\s\S]*this\.prepareWorkout\(minutes, modifiers\);[\s\S]*this\.activatePreparedWorkout\(\);/,
+  );
+  assert.match(
+    mainActivity,
+    /QueueWorkoutPreparation\([\s\S]*Task\.Run\([\s\S]*PrepareWorkout\([\s\S]*StartSelectedWorkout\([\s\S]*ActivatePreparedWorkout/,
+  );
+  assert.match(
+    webApp,
+    /queueWorkoutPreparation\([\s\S]*new Worker\([\s\S]*ensureWorkoutPrepared\([\s\S]*activatePreparedWorkout\(\)/,
+  );
+  assert.match(
+    preparationWorker,
+    /new WorkoutSession\(exercises, state\)[\s\S]*prepareWorkout\(minutes, modifiers\)[\s\S]*postMessage/,
+  );
+  assert.match(
+    webBuild,
+    /workout-preparation-worker\.js[\s\S]*preparationWorkerOutputName[\s\S]*fingerprintedPreparationWorkerSource/,
   );
 });
 

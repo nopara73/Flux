@@ -2872,10 +2872,14 @@ export class WorkoutSession {
       throw new Error("Exercise catalog contains duplicate IDs.");
     }
     this.sequenceRootByExerciseId = new Map();
+    this.sequenceExercisesByRootId = new Map();
     for (const root of exercises.filter((exercise) =>
       Array.isArray(exercise.sequenceBlocks) && exercise.sequenceBlocks.length > 0)) {
-      for (const memberId of new Set(root.sequenceBlocks.map((block) =>
-        block.exerciseId))) {
+      const memberIds = [...new Set(root.sequenceBlocks.map((block) =>
+        block.exerciseId))];
+      const members = memberIds.map((memberId) => this.exercisesById.get(memberId));
+      this.sequenceExercisesByRootId.set(root.id, members);
+      for (const memberId of memberIds) {
         if (!this.exercisesById.has(memberId) ||
             this.sequenceRootByExerciseId.has(memberId)) {
           throw new Error(`Exercise ${memberId} has an invalid sequence owner.`);
@@ -2950,6 +2954,11 @@ export class WorkoutSession {
   }
 
   startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
+    this.prepareWorkout(minutes, modifiers);
+    this.activatePreparedWorkout();
+  }
+
+  prepareWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
     if (!SUPPORTED_MINUTES.includes(minutes)) {
       throw new RangeError("Unsupported workout duration.");
     }
@@ -2963,8 +2972,6 @@ export class WorkoutSession {
       "Interrupted",
       workoutStartedAtUnixMilliseconds,
     );
-    const keptExerciseIdsAtStart = [...this.state.lastKeptExerciseIds]
-      .sort((left, right) => left - right);
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
     this.state.lastWorkoutMinutes = minutes;
@@ -2983,6 +2990,23 @@ export class WorkoutSession {
     this.repairActiveLineup();
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
+  }
+
+  activatePreparedWorkout() {
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes) ||
+        this.state.activeWorkoutSession ||
+        Object.keys(this.state.outcomes).length !== 0 ||
+        this.state.workoutCompleted ||
+        this.state.completionAcknowledged ||
+        this.state.pendingMovementGroupId ||
+        this.state.pendingRestGroupId) {
+      throw new Error(
+        "The workout state does not contain an activatable prepared workout.",
+      );
+    }
+    const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    const keptExerciseIdsAtStart = [...this.state.lastKeptExerciseIds]
+      .sort((left, right) => left - right);
     this.createActiveWorkoutSession(
       workoutStartedAtUnixMilliseconds,
       keptExerciseIdsAtStart,
@@ -3802,7 +3826,7 @@ export class WorkoutSession {
       return new Map();
     }
 
-    const isAllowed = (exercise, group) => {
+    const calculateIsAllowed = (exercise, group) => {
       const sequenceExercises = this.getSequenceExercises(exercise);
       if (sequenceExercises.some((member) =>
         excludedExerciseIdsByGroup.get(group.id)?.has(member.id))) {
@@ -3815,8 +3839,24 @@ export class WorkoutSession {
         currentExerciseIds.get(group.id) === exercise.id &&
         this.isSavedSelectionValid(exercise, group, modifiers);
     };
-    let candidates = this.exercises.filter((exercise) =>
-      groups.some((group) => isAllowed(exercise, group)));
+    const allowedGroupIdsByExerciseId = new Map();
+    let candidates = [];
+    for (const exercise of this.exercises) {
+      if (exercise.sequenceBlocks.length === 0 ||
+          this.getSequenceRoot(exercise).id !== exercise.id) {
+        continue;
+      }
+      const allowedGroupIds = new Set(groups
+        .filter((group) => calculateIsAllowed(exercise, group))
+        .map((group) => group.id));
+      if (allowedGroupIds.size === 0) {
+        continue;
+      }
+      candidates.push(exercise);
+      allowedGroupIdsByExerciseId.set(exercise.id, allowedGroupIds);
+    }
+    const isAllowed = (exercise, group) =>
+      allowedGroupIdsByExerciseId.get(exercise.id)?.has(group.id) ?? false;
     this.shuffle(candidates);
     const orderedScores = [...new Set(candidates.flatMap((exercise) => groups
       .filter((group) => isAllowed(exercise, group))
@@ -4179,10 +4219,7 @@ export class WorkoutSession {
 
   getSequenceExercises(exercise) {
     const root = this.getSequenceRoot(exercise);
-    return [...new Map(root.sequenceBlocks.map((block) => {
-      const member = this.exercisesById.get(block.exerciseId);
-      return [member.id, member];
-    })).values()];
+    return this.sequenceExercisesByRootId.get(root.id);
   }
 
   getSequenceSelectionExerciseForGroup(exercise, group) {
@@ -4778,6 +4815,31 @@ export class WorkoutSession {
       }
       return sequenceLoadByRootId.get(root.id);
     };
+    const selectionScoreByRootAndGroup = new Map();
+    const getCachedSelectionScore = (root, groupId) => {
+      const key = `${root.id}:${groupId}`;
+      if (!selectionScoreByRootAndGroup.has(key)) {
+        selectionScoreByRootAndGroup.set(
+          key,
+          this.getSelectionScore(root, groupId),
+        );
+      }
+      return selectionScoreByRootAndGroup.get(key);
+    };
+    const rebalanceCandidates = rebalanceRoots.map((candidate) => ({
+      candidate,
+      movementId: getSessionMovementId(candidate),
+      options: placementOptionsByRootId.get(candidate.id)
+        .filter((option) => option.every((group) => isSelectableForWorkoutProfile(
+          this.getSequenceSelectionExerciseForGroup(candidate, group),
+          group,
+          this.state.activeWorkoutModifiers,
+        )))
+        .map((option) => ({
+          groups: option,
+          anchor: [...option].sort((left, right) => left.order - right.order)[0],
+        })),
+    }));
 
     const seenLineups = new Set();
     for (let pass = 0; pass < MUSCLE_BALANCE_MAX_REBALANCE_PASSES; pass += 1) {
@@ -4823,10 +4885,13 @@ export class WorkoutSession {
         ...currentAllocation.setCountsBySelectionGroupId.values(),
       ].every((setCount) => setCount === 1);
 
-      for (const candidate of rebalanceRoots.filter((exercise) =>
-        !currentRootIds.has(exercise.id))) {
-        const candidateMovementId = getSessionMovementId(candidate);
-        for (const option of placementOptionsByRootId.get(candidate.id)) {
+      for (const candidateMetadata of rebalanceCandidates) {
+        const { candidate, movementId: candidateMovementId } = candidateMetadata;
+        if (currentRootIds.has(candidate.id) ||
+            currentMovementIds.has(candidateMovementId)) {
+          continue;
+        }
+        for (const { groups: option, anchor } of candidateMetadata.options) {
           const removedPlacements = [...new Set(option.map((group) =>
             placementByGroupId.get(group.id)))];
           if (removedPlacements.reduce((total, placement) =>
@@ -4835,12 +4900,6 @@ export class WorkoutSession {
                 this.isSequenceKept(placement.anchor.id, placement.root)) ||
               removedPlacements.some((placement) =>
                 getSessionMovementId(placement.root) === candidateMovementId)) {
-            continue;
-          }
-
-          const retainedPlacements = currentPlacements.filter((placement) =>
-            !removedPlacements.includes(placement));
-          if (currentMovementIds.has(candidateMovementId)) {
             continue;
           }
 
@@ -4853,26 +4912,12 @@ export class WorkoutSession {
             ];
             const displacedRoot = this.exercisesById.get(displacedRootId);
             return displacedRoot &&
-              this.getSelectionScore(candidate, group.id) >=
-                this.getSelectionScore(displacedRoot, group.id);
+              getCachedSelectionScore(candidate, group.id) >=
+                getCachedSelectionScore(displacedRoot, group.id);
           });
           if (!preservesScores) {
             continue;
           }
-          if (option.some((group) => !isSelectableForWorkoutProfile(
-            this.getSequenceSelectionExerciseForGroup(candidate, group),
-            group,
-            this.state.activeWorkoutModifiers,
-          ))) {
-            continue;
-          }
-
-          const anchor = [...option].sort((left, right) =>
-            left.order - right.order)[0];
-          const candidatePlacements = [
-            ...retainedPlacements,
-            { root: candidate, anchor, coveredGroups: option },
-          ].sort((left, right) => left.anchor.order - right.anchor.order);
           let candidateBalance;
           const removedBlockCount = removedPlacements.reduce(
             (total, placement) =>
@@ -4925,6 +4970,12 @@ export class WorkoutSession {
               canonicalLoadDelta,
             );
           } else {
+            const removedPlacementSet = new Set(removedPlacements);
+            const candidatePlacements = [
+              ...currentPlacements.filter((placement) =>
+                !removedPlacementSet.has(placement)),
+              { root: candidate, anchor, coveredGroups: option },
+            ].sort((left, right) => left.anchor.order - right.anchor.order);
             let candidateAllocation;
             try {
               candidateAllocation = this.getCachedLongWorkoutAllocation(
@@ -4934,11 +4985,39 @@ export class WorkoutSession {
             } catch {
               continue;
             }
-            candidateBalance = calculateMuscleBalanceEvaluation(
-              this.calculateScheduledCanonicalLoadEighthUnits(
-                candidatePlacements,
-                candidateAllocation,
-              ),
+            const canonicalLoadDelta = new Map();
+            for (const placement of currentPlacements) {
+              const currentSetCount =
+                currentAllocation.setCountsBySelectionGroupId.get(
+                  placement.anchor.id,
+                ) ?? 1;
+              const candidateSetCount = removedPlacementSet.has(placement)
+                ? 0
+                : candidateAllocation.setCountsBySelectionGroupId.get(
+                  placement.anchor.id,
+                ) ?? 1;
+              const setCountDelta = candidateSetCount - currentSetCount;
+              if (setCountDelta === 0) {
+                continue;
+              }
+              for (const [muscle, load] of getSequenceLoad(placement.root)) {
+                canonicalLoadDelta.set(
+                  muscle,
+                  (canonicalLoadDelta.get(muscle) ?? 0) + load * setCountDelta,
+                );
+              }
+            }
+            const candidateSetCount =
+              candidateAllocation.setCountsBySelectionGroupId.get(anchor.id) ?? 1;
+            for (const [muscle, load] of getSequenceLoad(candidate)) {
+              canonicalLoadDelta.set(
+                muscle,
+                (canonicalLoadDelta.get(muscle) ?? 0) + load * candidateSetCount,
+              );
+            }
+            candidateBalance = calculateMuscleBalanceAfterCanonicalDelta(
+              currentBalance,
+              canonicalLoadDelta,
             );
           }
           if (compareMuscleBalanceEvaluations(

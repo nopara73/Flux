@@ -1,6 +1,7 @@
 using Android.Views;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
+using System.Text.Json;
 using Flux.Data;
 using Flux.Models;
 using Flux.Services;
@@ -154,6 +155,11 @@ public class MainActivity : Activity
     private bool _automaticSequenceStartPending;
     private bool _applicationStartupCompleted;
     private bool _startWorkoutWhenReady;
+    private CancellationTokenSource? _workoutPreparationCancellation;
+    private Task<PreparedWorkout>? _workoutPreparationTask;
+    private PreparedWorkout? _preparedWorkout;
+    private int _preparingWorkoutMinutes;
+    private WorkoutModifiers _preparingWorkoutModifiers;
     private bool _durationSelectionChangedDuringStartup;
     private bool _activityDestroyed;
     private int _mediaLoadGeneration;
@@ -311,6 +317,104 @@ public class MainActivity : Activity
         _beginWorkoutButton.Alpha = 1f;
     }
 
+    private void QueueWorkoutPreparation()
+    {
+        if (!_applicationStartupCompleted ||
+            _activityDestroyed ||
+            _appScreen != AppScreen.Duration)
+        {
+            return;
+        }
+
+        int minutes = _selectedWorkoutMinutes;
+        WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
+            _selectedWorkoutModifiers);
+        if (_preparedWorkout is { } prepared &&
+            prepared.Minutes == minutes &&
+            prepared.Modifiers == modifiers)
+        {
+            return;
+        }
+        if (_workoutPreparationTask is { IsCompleted: false } &&
+            _preparingWorkoutMinutes == minutes &&
+            _preparingWorkoutModifiers == modifiers)
+        {
+            return;
+        }
+
+        _workoutPreparationCancellation?.Cancel();
+        _workoutPreparationCancellation?.Dispose();
+        var cancellation = new CancellationTokenSource();
+        _workoutPreparationCancellation = cancellation;
+        _preparedWorkout = null;
+        _preparingWorkoutMinutes = minutes;
+        _preparingWorkoutModifiers = modifiers;
+        string stateJson = JsonSerializer.Serialize(
+            _state,
+            WorkoutJsonContext.Default.WorkoutState);
+        IReadOnlyList<Exercise> exercises = _exerciseDatabase.Exercises;
+        _workoutPreparationTask = Task.Run(() =>
+        {
+            cancellation.Token.ThrowIfCancellationRequested();
+            WorkoutState preparedState = JsonSerializer.Deserialize(
+                    stateJson,
+                    WorkoutJsonContext.Default.WorkoutState)
+                ?? throw new InvalidOperationException(
+                    "Unable to clone the workout state for preparation.");
+            var preparationService = new ExerciseSessionService(exercises);
+            preparationService.PrepareWorkout(
+                preparedState,
+                minutes,
+                modifiers);
+            cancellation.Token.ThrowIfCancellationRequested();
+            return new PreparedWorkout(preparedState, minutes, modifiers);
+        }, cancellation.Token);
+        _ = ObserveWorkoutPreparationAsync(
+            _workoutPreparationTask,
+            cancellation);
+    }
+
+    private async Task ObserveWorkoutPreparationAsync(
+        Task<PreparedWorkout> preparationTask,
+        CancellationTokenSource cancellation)
+    {
+        try
+        {
+            PreparedWorkout prepared = await preparationTask.ConfigureAwait(false);
+            if (_activityDestroyed || cancellation.IsCancellationRequested)
+            {
+                return;
+            }
+
+            RunOnUiThread(() =>
+            {
+                if (!_activityDestroyed &&
+                    ReferenceEquals(
+                        _workoutPreparationCancellation,
+                        cancellation) &&
+                    !cancellation.IsCancellationRequested &&
+                    _appScreen == AppScreen.Duration &&
+                    _state.ActiveWorkoutMinutes == 0 &&
+                    _selectedWorkoutMinutes == prepared.Minutes &&
+                    WorkoutModifierPolicy.Normalize(
+                        _selectedWorkoutModifiers) == prepared.Modifiers)
+                {
+                    _preparedWorkout = prepared;
+                }
+            });
+        }
+        catch (OperationCanceledException)
+        {
+            // A newer duration or modifier selection superseded this plan.
+        }
+        catch (Exception error)
+        {
+            Android.Util.Log.Error(
+                "Flux",
+                $"Workout preparation failed: {error}");
+        }
+    }
+
     private void ShowApplicationStartupFailure(Exception error)
     {
         if (_activityDestroyed)
@@ -372,6 +476,9 @@ public class MainActivity : Activity
     protected override void OnDestroy()
     {
         _activityDestroyed = true;
+        _workoutPreparationCancellation?.Cancel();
+        _workoutPreparationCancellation?.Dispose();
+        _workoutPreparationCancellation = null;
         _mediaReady = false;
         _mediaLoadGeneration++;
         CancelCountdown(resetToStart: false);
@@ -1464,6 +1571,7 @@ public class MainActivity : Activity
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _state.LastWorkoutModifiers));
+        QueueWorkoutPreparation();
     }
 
     private void SetSelectedWorkoutModifier(
@@ -1506,6 +1614,7 @@ public class MainActivity : Activity
         _durationSelectionChangedDuringStartup |=
             !_applicationStartupCompleted;
         AnimateModifierTile(button);
+        QueueWorkoutPreparation();
     }
 
     private void SetSelectedMirrorEquipment(
@@ -1542,6 +1651,7 @@ public class MainActivity : Activity
             _durationSelectionChangedDuringStartup |=
                 !_applicationStartupCompleted;
             AnimateModifierTile(_mirrorModifierButton);
+            QueueWorkoutPreparation();
         }
     }
 
@@ -1696,6 +1806,7 @@ public class MainActivity : Activity
         if (userInitiated && previousOptionIndex != optionIndex)
         {
             AnimateDurationSelectionChange(optionIndex);
+            QueueWorkoutPreparation();
         }
     }
 
@@ -1774,7 +1885,7 @@ public class MainActivity : Activity
         throw new ArgumentOutOfRangeException(nameof(minutes), minutes, null);
     }
 
-    private void StartSelectedWorkout()
+    private async void StartSelectedWorkout()
     {
         if (!_applicationStartupCompleted)
         {
@@ -1793,18 +1904,53 @@ public class MainActivity : Activity
         _beginWorkoutButton.Alpha = 0.6f;
         try
         {
-            _sessionService.StartWorkout(
-                _state,
-                _selectedWorkoutMinutes,
+            int minutes = _selectedWorkoutMinutes;
+            WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
                 _selectedWorkoutModifiers);
+            QueueWorkoutPreparation();
+            PreparedWorkout? prepared = _preparedWorkout is
+                { Minutes: var preparedMinutes, Modifiers: var preparedModifiers }
+                && preparedMinutes == minutes
+                && preparedModifiers == modifiers
+                    ? _preparedWorkout
+                    : null;
+            if (prepared is null &&
+                _workoutPreparationTask is { } preparationTask &&
+                _preparingWorkoutMinutes == minutes &&
+                _preparingWorkoutModifiers == modifiers)
+            {
+                prepared = await preparationTask;
+            }
+            if (prepared is null)
+            {
+                throw new InvalidOperationException(
+                    "The selected workout could not be prepared.");
+            }
+            if (_activityDestroyed)
+            {
+                return;
+            }
+
+            _workoutPreparationCancellation?.Cancel();
+            _workoutPreparationCancellation?.Dispose();
+            _workoutPreparationCancellation = null;
+            _workoutPreparationTask = null;
+            _preparedWorkout = null;
+            _state = prepared.State;
+            _sessionService.ActivatePreparedWorkout(_state);
             _stateStore.Save(_state);
             ShowNextExercise();
         }
-        catch
+        catch (OperationCanceledException)
         {
             _beginWorkoutButton.Enabled = true;
             _beginWorkoutButton.Alpha = 1f;
-            throw;
+        }
+        catch (Exception error)
+        {
+            _beginWorkoutButton.Enabled = true;
+            _beginWorkoutButton.Alpha = 1f;
+            Android.Util.Log.Error("Flux", $"Unable to start workout: {error}");
         }
     }
 
@@ -3892,6 +4038,11 @@ public class MainActivity : Activity
             return onInfo(what);
         }
     }
+
+    private sealed record PreparedWorkout(
+        WorkoutState State,
+        int Minutes,
+        WorkoutModifiers Modifiers);
 
     private sealed record ApplicationStartupResult(
         SqliteExerciseDatabase Database,
