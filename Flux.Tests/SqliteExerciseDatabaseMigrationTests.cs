@@ -265,53 +265,19 @@ public sealed class SqliteExerciseDatabaseMigrationTests
 
         Execute(
             connection,
-            """
-            CREATE TABLE exercises_v71 (
-                id INTEGER NOT NULL PRIMARY KEY,
-                name TEXT NOT NULL UNIQUE,
-                video TEXT NOT NULL UNIQUE,
-                practice TEXT NOT NULL,
-                motion_profile TEXT NOT NULL,
-                score INTEGER NOT NULL,
-                muscular_demand INTEGER NOT NULL
-                    CHECK (muscular_demand BETWEEN 0 AND 2),
-                only_feet_touch_ground INTEGER NOT NULL CHECK (only_feet_touch_ground = 1),
-                shoe_agnostic INTEGER NOT NULL CHECK (shoe_agnostic = 1),
-                max_space_meters INTEGER NOT NULL
-                    CHECK (max_space_meters > 0 AND max_space_meters <= 2),
-                equipment TEXT NOT NULL CHECK (equipment IN ('None', 'Mirror')),
-                silent INTEGER NOT NULL CHECK (silent IN (0, 1)),
-                exercise_mode TEXT NOT NULL CHECK (exercise_mode IN ('Repetition', 'Hold')),
-                presentation TEXT NOT NULL CHECK (presentation IN ('Motion', 'Still')),
-                hold_frame_percent INTEGER NOT NULL CHECK (hold_frame_percent BETWEEN 0 AND 99),
-                side_sequence TEXT NOT NULL,
-                direction_sequence TEXT NOT NULL,
-                insect_compatibility TEXT NOT NULL,
-                hard_floor_compatibility TEXT NOT NULL,
-                mirror_relationship TEXT NOT NULL,
-                mirror_coverage TEXT NOT NULL,
-                session_movement_id INTEGER NOT NULL DEFAULT 0
-                    CHECK (session_movement_id >= 0),
-                CHECK (
-                    (mirror_relationship = 'MirrorOnly' AND
-                        equipment = 'Mirror' AND
-                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
-                    (mirror_relationship = 'BenefitsGreatly' AND
-                        equipment = 'None' AND
-                        mirror_coverage IN ('UpperBody', 'FullBody')) OR
-                    (mirror_relationship IN ('Unreviewed', 'Agnostic') AND
-                        equipment = 'None' AND
-                        mirror_coverage = 'None')),
-                CHECK (
-                    (exercise_mode = 'Repetition' AND hold_frame_percent = 0) OR
-                    (exercise_mode = 'Hold' AND hold_frame_percent > 0))
-            );
-            """);
+            ExerciseDatabaseMigrationSql.DropRebuiltExerciseTableIfPresent);
+        Execute(
+            connection,
+            ExerciseDatabaseMigrationSql.CreateRebuiltExerciseTable);
 
         Execute(
             connection,
             ExerciseDatabaseMigrationSql
                 .CopyExistingExercisesWithNeutralCatalogMetadata);
+        Execute(connection, "DROP TABLE exercises");
+        Execute(
+            connection,
+            ExerciseDatabaseMigrationSql.RenameRebuiltExerciseTable);
 
         using SqliteCommand command = connection.CreateCommand();
         command.CommandText =
@@ -319,7 +285,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             SELECT name, video, score, equipment,
                 hard_floor_compatibility, mirror_relationship,
                 mirror_coverage, session_movement_id
-            FROM exercises_v71
+            FROM exercises
             WHERE id = 528
             """;
         using SqliteDataReader reader = command.ExecuteReader();
