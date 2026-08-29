@@ -456,6 +456,11 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 - For candidate priority, a sequence uses the hardest member whose primary
   muscle belongs to the slot being filled. Recovery timestamps are still
   recorded from each completed block's own exercise identity.
+- On days 4, 8, 12, and so on of an uninterrupted local-calendar daily streak,
+  all-demand-`0` sequences in a slot's highest saved-score bucket outrank Keeps
+  and hard-work opportunities. This is a soft priority: it neither reaches into
+  a lower score bucket nor excludes ordinary candidates when no top-bucket
+  demand-`0` sequence exists.
 - The soft within-session muscle rebalancer assigns primary/secondary workload
   of 0.25/0.125 for demand `0`, 0.5/0.25 for demand `1`, and 1/0.5 for demand
   `2`. Each distinct identity counts once per sequence set: repeated side or

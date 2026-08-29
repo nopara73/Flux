@@ -12,7 +12,8 @@ public sealed class ExerciseSessionService
     public const WorkoutModifiers DefaultWorkoutModifiers =
         WorkoutModifiers.HardFloor | WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 23;
+    private const int CurrentStateVersion = 24;
+    private const int PersistedLightDayStateVersion = 24;
     private const int PhaseScopedDownvoteStateVersion = 23;
     private const int SlotScopedPreferenceStateVersion = 22;
     private const long RestDurationMilliseconds = 15_000L;
@@ -37,11 +38,13 @@ public sealed class ExerciseSessionService
         _sequencePlacementOptionsCache = new(StringComparer.Ordinal);
     private readonly Random _random;
     private readonly Func<DateTimeOffset> _utcNowProvider;
+    private readonly TimeZoneInfo _localTimeZone;
 
     public ExerciseSessionService(
         IReadOnlyList<Exercise> exercises,
         Random? random = null,
-        Func<DateTimeOffset>? utcNowProvider = null)
+        Func<DateTimeOffset>? utcNowProvider = null,
+        TimeZoneInfo? localTimeZone = null)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         _exercises = exercises;
@@ -80,6 +83,7 @@ public sealed class ExerciseSessionService
                     .ToArray());
         _random = random ?? Random.Shared;
         _utcNowProvider = utcNowProvider ?? (() => DateTimeOffset.UtcNow);
+        _localTimeZone = localTimeZone ?? TimeZoneInfo.Local;
     }
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
@@ -89,8 +93,19 @@ public sealed class ExerciseSessionService
     {
         ArgumentNullException.ThrowIfNull(state);
 
+        int loadedStateVersion = state.Version;
         NormalizeCollections(state);
         NormalizeWorkoutHistory(state);
+        bool shouldMigratePreparedLightDay =
+            loadedStateVersion < PersistedLightDayStateVersion &&
+            state.ActiveWorkoutSession is null &&
+            IsValidWorkoutMinutes(state.ActiveWorkoutMinutes) &&
+            state.Outcomes.Count == 0 &&
+            !state.WorkoutCompleted &&
+            !state.CompletionAcknowledged &&
+            state.PendingMovementGroupId is null &&
+            state.PendingRestGroupId is null &&
+            IsLightDayDue(state, GetCurrentUnixTimeMilliseconds());
         bool requiresSlotPreferenceMigration =
             state.Version < SlotScopedPreferenceStateVersion;
         if (requiresSlotPreferenceMigration)
@@ -153,6 +168,14 @@ public sealed class ExerciseSessionService
             state.ActiveWorkoutModifiers);
         NormalizeSavedLineups(state);
         NormalizeSlotPreferences(state);
+        if (shouldMigratePreparedLightDay)
+        {
+            // Older builds may have persisted an unstarted background plan.
+            // Re-evaluate that plan from its already persisted session history
+            // so installing the update on day four takes effect immediately.
+            state.ActiveWorkoutIsLightDay = true;
+            CarrySlotPreferencesForward(state);
+        }
 
         if (migratedLegacyState && state.ActiveWorkoutMinutes > 0)
         {
@@ -188,8 +211,15 @@ public sealed class ExerciseSessionService
         // Only a valid, resumable rest may preserve a below-threshold active
         // selection. Clear stale checkpoints before lineup arbitration.
         NormalizePendingRest(state);
-        RepairActiveLineup(state);
+        RepairActiveLineup(
+            state,
+            preserveCurrentSelections: !shouldMigratePreparedLightDay);
         NormalizeActiveLongWorkoutAllocation(state);
+        if (shouldMigratePreparedLightDay)
+        {
+            RebalanceNewExercisesByMuscleBalance(state);
+            SetActiveLongWorkoutAllocation(state);
+        }
         if (atomicSequenceMigration is not null)
         {
             MigrateLegacyActiveProgress(state, atomicSequenceMigration);
@@ -261,6 +291,9 @@ public sealed class ExerciseSessionService
         state.LastWorkoutModifiers = modifiers;
         state.ActiveWorkoutMinutes = minutes;
         state.ActiveWorkoutModifiers = modifiers;
+        state.ActiveWorkoutIsLightDay = IsLightDayDue(
+            state,
+            workoutStartedAtUnixMilliseconds);
         state.Outcomes.Clear();
         state.WorkoutCompleted = false;
         state.CompletionAcknowledged = false;
@@ -271,7 +304,9 @@ public sealed class ExerciseSessionService
         // happened. Persistent rejection feedback is stored by workout phase.
         state.NextWorkoutExcludedExerciseIds.Clear();
         CarrySlotPreferencesForward(state);
-        RepairActiveLineup(state);
+        RepairActiveLineup(
+            state,
+            preserveCurrentSelections: !state.ActiveWorkoutIsLightDay);
         RebalanceNewExercisesByMuscleBalance(state);
         SetActiveLongWorkoutAllocation(state);
     }
@@ -448,6 +483,23 @@ public sealed class ExerciseSessionService
         if (candidates.Count == 0)
         {
             return null;
+        }
+
+        if (state.ActiveWorkoutIsLightDay)
+        {
+            WorkoutExercisePhase phase = GetExercisePhase(group);
+            int highestReplacementScore = candidates.Max(candidate =>
+                GetSelectionScore(state, candidate.Exercise, phase));
+            List<ShuffleCandidate> lightCandidates = candidates
+                .Where(candidate =>
+                    IsDemandZeroSequence(candidate.Exercise) &&
+                    GetSelectionScore(state, candidate.Exercise, phase) ==
+                        highestReplacementScore)
+                .ToList();
+            if (lightCandidates.Count > 0)
+            {
+                candidates = lightCandidates;
+            }
         }
 
         Exercise rejectedExercise = GetSelectedExercise(state, group);
@@ -979,6 +1031,10 @@ public sealed class ExerciseSessionService
 
     private void PrepareNextSession(WorkoutState state)
     {
+        // This method chooses cached candidates for a future workout. The
+        // just-finished workout's light-day mode must not leak into that cache;
+        // the next actual preparation recalculates the calendar cadence.
+        state.ActiveWorkoutIsLightDay = false;
         WorkoutGroup[] activeRounds = GetActiveGroups(state).ToArray();
         WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
         var rejectedSelectionKeys = new HashSet<string>(StringComparer.Ordinal);
@@ -1374,9 +1430,28 @@ public sealed class ExerciseSessionService
             Math.Max(0, orderedScores.Length - 1));
         BigInteger keptExerciseWeight = AddPriorityDimension(1L);
         BigInteger hardOpportunityWeight = AddPriorityDimension(1L);
+        BigInteger lightDayOpportunityWeight = AddPriorityDimension(1L);
         BigInteger preservedActiveSelectionWeight = allowSavedSelectionException
             ? totalLowerPriorityRange + BigInteger.One
             : BigInteger.Zero;
+
+        bool HasLightDayOpportunity(
+            Exercise exercise,
+            WorkoutGroup preferenceSlot)
+        {
+            if (!state.ActiveWorkoutIsLightDay ||
+                !IsDemandZeroSequence(exercise))
+            {
+                return false;
+            }
+
+            WorkoutExercisePhase phase = GetProjectedSelectionPhase(
+                state,
+                preferenceSlot,
+                groups.Count);
+            return GetSelectionScore(state, exercise, phase) ==
+                highestScoreByGroup[preferenceSlot.Id];
+        }
 
         BigInteger CalculateUtility(
             Exercise exercise,
@@ -1436,6 +1511,11 @@ public sealed class ExerciseSessionService
             return
                 (allowSavedSelectionException && isCurrentSelection
                     ? preservedActiveSelectionWeight
+                    : BigInteger.Zero) +
+                (includeSlotPreference && HasLightDayOpportunity(
+                        exercise,
+                        evaluationGroup)
+                    ? lightDayOpportunityWeight
                     : BigInteger.Zero) +
                 (hasHardOpportunity
                     ? hardOpportunityWeight
@@ -1577,6 +1657,23 @@ public sealed class ExerciseSessionService
                             : baseUtilities[groupIndex, candidateIndex];
                     }
                 }
+                if (HasLightDayOpportunity(candidate, preferenceSlot))
+                {
+                    // Reward every slot covered by an all-demand-zero atomic
+                    // sequence. Counting only its anchor could tie it with one
+                    // easy singleton plus non-easy work in the other slots.
+                    for (int groupIndex = 0;
+                         groupIndex < groups.Count;
+                         groupIndex++)
+                    {
+                        if (groupIndex != preferenceSlotIndex &&
+                            (coverageMask & (1UL << groupIndex)) != 0)
+                        {
+                            utilitiesByGroup[groupIndex] +=
+                                lightDayOpportunityWeight;
+                        }
+                    }
+                }
                 atomicCandidates.Add(new AtomicSequenceCandidate(
                     candidate.Id,
                     WorkoutModifierPolicy.GetSessionMovementId(candidate),
@@ -1606,7 +1703,9 @@ public sealed class ExerciseSessionService
             StringComparer.Ordinal);
     }
 
-    private void RepairActiveLineup(WorkoutState state)
+    private void RepairActiveLineup(
+        WorkoutState state,
+        bool preserveCurrentSelections = true)
     {
         WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
         IReadOnlyList<WorkoutGroup> activeRounds;
@@ -1637,7 +1736,7 @@ public sealed class ExerciseSessionService
             selectionGroups,
             state.ActiveWorkoutModifiers,
             currentExerciseIds: currentExerciseIds,
-            allowSavedSelectionException: true);
+            allowSavedSelectionException: preserveCurrentSelections);
         ApplyDistinctLineup(
             state,
             selectionGroups,
@@ -1928,6 +2027,12 @@ public sealed class ExerciseSessionService
     {
         Exercise root = GetSequenceRoot(exercise);
         return _sequenceExercisesByRootId[root.Id];
+    }
+
+    private bool IsDemandZeroSequence(Exercise exercise)
+    {
+        return GetSequenceExercises(exercise).All(member =>
+            member.MuscularDemand == Exercise.MinimumMuscularDemand);
     }
 
     private Exercise GetSequenceSelectionExerciseForGroup(
@@ -2551,6 +2656,7 @@ public sealed class ExerciseSessionService
             nextSessionId = Math.Max(nextSessionId, activeSession.SessionId + 1L);
             activeSession.Status = WorkoutSessionStatus.InProgress;
             activeSession.EndedAtUnixMilliseconds = 0;
+            state.ActiveWorkoutIsLightDay = activeSession.IsLightDay;
         }
 
         state.NextWorkoutSessionId = Math.Max(1L, nextSessionId);
@@ -2676,6 +2782,7 @@ public sealed class ExerciseSessionService
             StartedAtUnixMilliseconds = startedAtUnixMilliseconds,
             WorkoutMinutes = state.ActiveWorkoutMinutes,
             Modifiers = state.ActiveWorkoutModifiers,
+            IsLightDay = state.ActiveWorkoutIsLightDay,
             Status = WorkoutSessionStatus.InProgress,
             StartedBeforeLogging = startedBeforeLogging,
             KeptExerciseIdsAtStart = keptExerciseIdsAtStart
@@ -3884,6 +3991,7 @@ public sealed class ExerciseSessionService
         state.ActiveWorkoutSession = null;
         state.ActiveWorkoutMinutes = 0;
         state.ActiveWorkoutModifiers = WorkoutModifiers.None;
+        state.ActiveWorkoutIsLightDay = false;
         state.Outcomes.Clear();
         state.ActiveExtraSetSelectionGroupIds.Clear();
         state.ActiveSetCountsBySelectionGroupId.Clear();
@@ -3919,6 +4027,16 @@ public sealed class ExerciseSessionService
         WorkoutModifiers modifiers)
     {
         return WorkoutModifierPolicy.Normalize(modifiers);
+    }
+
+    private bool IsLightDayDue(
+        WorkoutState state,
+        long nowUnixMilliseconds)
+    {
+        return WorkoutLightDayPolicy.IsLightDayDue(
+            state.WorkoutHistory,
+            nowUnixMilliseconds,
+            _localTimeZone);
     }
 
     private string GetSelectionStorageKey(
@@ -4402,6 +4520,17 @@ public sealed class ExerciseSessionService
                             WorkoutModifierPolicy.GetSessionMovementId(
                                 placement.Root) == candidateMovementId))
                     {
+                        continue;
+                    }
+
+                    if (state.ActiveWorkoutIsLightDay &&
+                        removedPlacements.Any(placement =>
+                            IsDemandZeroSequence(placement.Root)) &&
+                        !IsDemandZeroSequence(candidate))
+                    {
+                        // Muscle balancing is subordinate to the day-mode
+                        // choice. It may improve one easy lineup with another,
+                        // but cannot undo an available top-bucket easy choice.
                         continue;
                     }
 

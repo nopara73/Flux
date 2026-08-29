@@ -272,7 +272,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
     }
 
@@ -298,7 +298,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.HardFloor,
             state.LastWorkoutModifiers);
@@ -1388,7 +1388,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
@@ -1445,7 +1445,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -2826,6 +2826,285 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void FourthConsecutiveTrainingDayRepeatsAsAFourDayLightCadence()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux test UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux test UTC+07",
+            "Flux test UTC+07");
+        DateTimeOffset dayFour = new(
+            2026,
+            8,
+            29,
+            8,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        List<WorkoutSessionLog> history = Enumerable.Range(1, 3)
+            .Select(index => CompletedSession(
+                index,
+                dayFour.AddDays(index - 4)))
+            .ToList();
+        history.Add(new WorkoutSessionLog
+        {
+            SessionId = 99,
+            StartedAtUnixMilliseconds = dayFour.AddDays(-1)
+                .AddHours(1)
+                .ToUnixTimeMilliseconds(),
+            Status = WorkoutSessionStatus.Interrupted,
+        });
+
+        Assert.True(WorkoutLightDayPolicy.IsLightDayDue(
+            history,
+            dayFour.ToUnixTimeMilliseconds(),
+            timeZone));
+
+        history.Add(CompletedSession(4, dayFour));
+        Assert.False(WorkoutLightDayPolicy.IsLightDayDue(
+            history,
+            dayFour.AddDays(1).ToUnixTimeMilliseconds(),
+            timeZone));
+
+        history.AddRange(Enumerable.Range(5, 3).Select(index =>
+            CompletedSession(index, dayFour.AddDays(index - 4))));
+        Assert.True(WorkoutLightDayPolicy.IsLightDayDue(
+            history,
+            dayFour.AddDays(4).ToUnixTimeMilliseconds(),
+            timeZone));
+    }
+
+    [Fact]
+    public void LightDayTopBucketDemandZeroOutranksHardKeepWithoutDeletingIt()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux selection UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux selection UTC+07",
+            "Flux selection UTC+07");
+        DateTimeOffset now = new(
+            2026,
+            8,
+            29,
+            8,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise hardKeep = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0]),
+            muscularDemand: 2);
+        Exercise easy = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0]),
+            muscularDemand: 0);
+        Exercise middle = CloneWithMuscularDemand(
+            QualifiedForGroup(3, groups[1]),
+            muscularDemand: 0);
+        Exercise last = CloneWithMuscularDemand(
+            QualifiedForGroup(4, groups[2]),
+            muscularDemand: 0);
+        var service = new ExerciseSessionService(
+            [hardKeep, easy, middle, last],
+            new AlwaysZeroRandom(),
+            () => now.ToUniversalTime(),
+            timeZone);
+        var state = new WorkoutState
+        {
+            WorkoutHistory = Enumerable.Range(1, 3)
+                .Select(index => CompletedSession(
+                    index,
+                    now.AddDays(index - 4)))
+                .ToList(),
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [groups[0].Id] = [hardKeep.Id],
+            },
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(easy.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Contains(
+            hardKeep.Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[groups[0].Id]);
+        Assert.True(state.ActiveWorkoutSession!.IsLightDay);
+    }
+
+    [Fact]
+    public void LightDayNeverPullsDemandZeroFromALowerScoreBucket()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.Utc;
+        DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise topScoredHard = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0], score: 0),
+            muscularDemand: 2);
+        Exercise lowerScoredEasy = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0], score: -1),
+            muscularDemand: 0);
+        Exercise middle = QualifiedForGroup(3, groups[1]);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [topScoredHard, lowerScoredEasy, middle, last],
+            new AlwaysZeroRandom(),
+            () => now,
+            timeZone);
+        var state = new WorkoutState
+        {
+            WorkoutHistory = Enumerable.Range(1, 3)
+                .Select(index => CompletedSession(
+                    index,
+                    now.AddDays(index - 4)))
+                .ToList(),
+        };
+
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(topScoredHard.Id, state.SelectedExerciseIds[groups[0].Id]);
+    }
+
+    [Fact]
+    public void LightDayRequiresEveryBlockOfAnAtomicSequenceToBeDemandZero()
+    {
+        DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(5).Groups.ToArray();
+        Exercise mixedRoot = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(1, groups[0]),
+                2),
+            muscularDemand: 0);
+        Exercise moderateMember = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(2, groups[1]),
+                1),
+            muscularDemand: 1);
+        Exercise easyFirst = CloneWithMuscularDemand(
+            QualifiedForGroup(3, groups[0]),
+            muscularDemand: 0);
+        Exercise easySecond = CloneWithMuscularDemand(
+            QualifiedForGroup(4, groups[1]),
+            muscularDemand: 0);
+        Exercise[] fillers = groups.Skip(2)
+            .Select((group, index) => CloneWithMuscularDemand(
+                QualifiedForGroup(5 + index, group),
+                muscularDemand: 0))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [mixedRoot, moderateMember, easyFirst, easySecond, .. fillers],
+            new AlwaysZeroRandom(),
+            () => now,
+            TimeZoneInfo.Utc);
+        var state = new WorkoutState
+        {
+            WorkoutHistory = Enumerable.Range(1, 3)
+                .Select(index => CompletedSession(
+                    index,
+                    now.AddDays(index - 4)))
+                .ToList(),
+        };
+        state.SelectedExerciseIds[groups[0].Id] = mixedRoot.Id;
+        state.SelectedExerciseIds[groups[1].Id] = mixedRoot.Id;
+        foreach ((WorkoutGroup group, Exercise filler) in groups
+                     .Skip(2)
+                     .Zip(fillers))
+        {
+            state.SelectedExerciseIds[group.Id] = filler.Id;
+        }
+
+        service.StartWorkout(state, 5, WorkoutModifiers.None);
+
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(easyFirst.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.Equal(easySecond.Id, state.SelectedExerciseIds[groups[1].Id]);
+        Assert.DoesNotContain(mixedRoot.Id, state.SelectedExerciseIds.Values);
+    }
+
+    [Fact]
+    public void LightDayShuffleUsesDemandZeroOnlyWhenItExistsInTopBucket()
+    {
+        DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise easyOne = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0]),
+            muscularDemand: 0);
+        Exercise easyTwo = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0]),
+            muscularDemand: 0);
+        Exercise hard = CloneWithMuscularDemand(
+            QualifiedForGroup(3, groups[0]),
+            muscularDemand: 2);
+        Exercise middle = QualifiedForGroup(4, groups[1]);
+        Exercise last = QualifiedForGroup(5, groups[2]);
+        var service = new ExerciseSessionService(
+            [easyOne, easyTwo, hard, middle, last],
+            new AlwaysZeroRandom(),
+            () => now,
+            TimeZoneInfo.Utc);
+        var state = new WorkoutState
+        {
+            WorkoutHistory = Enumerable.Range(1, 3)
+                .Select(index => CompletedSession(
+                    index,
+                    now.AddDays(index - 4)))
+                .ToList(),
+        };
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup first = service.GetNextGroup(state)!;
+
+        ShuffledExerciseResult result = service.ShuffleNextExercise(state, first)!;
+
+        Assert.Equal(0, result.ReplacementExercise.MuscularDemand);
+    }
+
+    [Fact]
+    public void VersionTwentyThreePreparedWorkoutRecognizesExistingLightDayStreak()
+    {
+        DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise hard = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0]),
+            muscularDemand: 2);
+        Exercise easy = CloneWithMuscularDemand(
+            QualifiedForGroup(2, groups[0]),
+            muscularDemand: 0);
+        Exercise middle = QualifiedForGroup(3, groups[1]);
+        Exercise last = QualifiedForGroup(4, groups[2]);
+        var service = new ExerciseSessionService(
+            [hard, easy, middle, last],
+            new AlwaysZeroRandom(),
+            () => now,
+            TimeZoneInfo.Utc);
+        var state = new WorkoutState
+        {
+            Version = 23,
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            LastWorkoutMinutes = 3,
+            ActiveWorkoutMinutes = 3,
+            ActiveWorkoutModifiers = WorkoutModifiers.None,
+            SelectedExerciseIds = new()
+            {
+                [groups[0].Id] = hard.Id,
+                [groups[1].Id] = middle.Id,
+                [groups[2].Id] = last.Id,
+            },
+            WorkoutHistory = Enumerable.Range(1, 3)
+                .Select(index => CompletedSession(
+                    index,
+                    now.AddDays(index - 4)))
+                .ToList(),
+        };
+
+        service.Initialize(state);
+
+        Assert.Equal(24, state.Version);
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(easy.Id, state.SelectedExerciseIds[groups[0].Id]);
+        Assert.True(state.ActiveWorkoutSession!.IsLightDay);
+    }
+
+    [Fact]
     public void SameMuscleSequenceIsRankedByItsHardestPrimaryBlock()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
@@ -3712,7 +3991,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -4049,6 +4328,21 @@ public sealed class ExerciseSessionServiceTests
             Enum.GetValues<CanonicalMuscleGroup>()
                 .Where(group => group != primary)
                 .ToArray());
+    }
+
+    private static WorkoutSessionLog CompletedSession(
+        long sessionId,
+        DateTimeOffset startedAt)
+    {
+        return new WorkoutSessionLog
+        {
+            SessionId = sessionId,
+            StartedAtUnixMilliseconds = startedAt.ToUnixTimeMilliseconds(),
+            EndedAtUnixMilliseconds = startedAt.AddMinutes(3)
+                .ToUnixTimeMilliseconds(),
+            WorkoutMinutes = 3,
+            Status = WorkoutSessionStatus.Completed,
+        };
     }
 
     private static Exercise CloneWithLinkedSequenceMember(

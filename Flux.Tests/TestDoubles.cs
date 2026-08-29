@@ -131,6 +131,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             LastWorkoutModifiers = state.LastWorkoutModifiers,
             ActiveWorkoutMinutes = state.ActiveWorkoutMinutes,
             ActiveWorkoutModifiers = state.ActiveWorkoutModifiers,
+            ActiveWorkoutIsLightDay = state.ActiveWorkoutIsLightDay,
             WorkoutCompleted = state.WorkoutCompleted,
             CompletionAcknowledged = state.CompletionAcknowledged,
             LegacySelectedExerciseNames = new Dictionary<string, string>(
@@ -152,6 +153,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             EndedAtUnixMilliseconds = session.EndedAtUnixMilliseconds,
             WorkoutMinutes = session.WorkoutMinutes,
             Modifiers = session.Modifiers,
+            IsLightDay = session.IsLightDay,
             Status = session.Status,
             StartedBeforeLogging = session.StartedBeforeLogging,
             KeptExerciseIdsAtStart = [.. session.KeptExerciseIdsAtStart],

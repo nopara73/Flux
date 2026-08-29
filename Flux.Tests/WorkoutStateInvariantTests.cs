@@ -81,7 +81,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
         Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
             WorkoutExercisePhase.Warmup][exercise.Id]);
@@ -130,7 +130,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Contains(
             exercise.Id,
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
@@ -159,7 +159,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -459,7 +459,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(23, state.Version);
+        Assert.Equal(24, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
             WorkoutModifiers.HardFloor,
@@ -568,6 +568,7 @@ public sealed class WorkoutStateInvariantTests
                     EndedAtUnixMilliseconds = 1_777_000_180_000,
                     WorkoutMinutes = 3,
                     Modifiers = WorkoutModifiers.Silence | WorkoutModifiers.Mirror,
+                    IsLightDay = true,
                     Status = WorkoutSessionStatus.Completed,
                     KeptExerciseIdsAtStart = [101],
                     InitialSelections =
@@ -649,6 +650,7 @@ public sealed class WorkoutStateInvariantTests
 
         WorkoutSessionLog session = Assert.Single(restored.WorkoutHistory);
         Assert.Equal(WorkoutSessionStatus.Completed, session.Status);
+        Assert.True(session.IsLightDay);
         Assert.Equal("Historic Squat Name", Assert.Single(session.Blocks).ExerciseName);
         Assert.Equal(2, session.Blocks[0].MuscularDemand);
         Assert.Equal(

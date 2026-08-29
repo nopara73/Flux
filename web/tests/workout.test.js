@@ -18,6 +18,7 @@ import {
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
+  LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
@@ -82,6 +83,7 @@ import {
   isSequenceRound,
   isSessionMovementMetadataValid,
   isCompatibleWithWorkoutModifiers,
+  isLightWorkoutDayDue,
   isModifierMetadataComplete,
   isMirrorPreferred,
   normalizeWorkoutModifiers,
@@ -2322,6 +2324,254 @@ test("fresh hard work outranks a non-hard keep and soft mirror preference", () =
     hard.id,
   );
   assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
+});
+
+test("light day repeats on every fourth day of one uninterrupted training streak", () => {
+  const dayFour = new Date(2026, 7, 29, 8).getTime();
+  const history = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  history.push({
+    ...completedWorkoutSession(99, new Date(2026, 7, 28, 9).getTime()),
+    status: "Interrupted",
+  });
+
+  assert.equal(LIGHT_DAY_TRAINING_DAYS_PER_CYCLE, 4);
+  assert.equal(isLightWorkoutDayDue(history, dayFour), true);
+
+  history.push(completedWorkoutSession(4, dayFour));
+  assert.equal(isLightWorkoutDayDue(
+    history,
+    new Date(2026, 7, 30, 8).getTime(),
+  ), false);
+
+  history.push(...[5, 6, 7].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  )));
+  assert.equal(isLightWorkoutDayDue(
+    history,
+    new Date(2026, 8, 2, 8).getTime(),
+  ), true);
+});
+
+test("light day top-bucket demand zero outranks a hard keep without deleting it", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const hardKeep = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const easy = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+  );
+  const middle = exercise(
+    3,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+  );
+  const last = exercise(
+    4,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+  );
+  const state = createDefaultState();
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [groups[0].id]: [hardKeep.id],
+  };
+  const session = new WorkoutSession(
+    [hardKeep, easy, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], easy.id);
+  assert.ok(session.state.keptExerciseRootIdsBySelectionGroupId[groups[0].id]
+    .includes(hardKeep.id));
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
+  const restored = parseStoredState(JSON.stringify(session.state));
+  assert.equal(restored.activeWorkoutIsLightDay, true);
+  assert.equal(restored.activeWorkoutSession.isLightDay, true);
+});
+
+test("light day does not pull demand zero from a lower score bucket", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const topScoredHard = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const lowerScoredEasy = exercise(
+    2,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    -1,
+  );
+  const middle = exercise(3, groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1), 0);
+  const last = exercise(4, groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1), 0);
+  const state = createDefaultState();
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  const session = new WorkoutSession(
+    [topScoredHard, lowerScoredEasy, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], topScoredHard.id);
+});
+
+test("light day requires every block of an atomic sequence to be demand zero", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(5).groups;
+  const mixedRoot = exercise(1, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0);
+  const moderateMember = exercise(2, groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1), 0, undefined, true, 1);
+  mixedRoot.sequenceBlocks = [
+    { ...mixedRoot.sequenceBlocks[0] },
+    { ...moderateMember.sequenceBlocks[0] },
+  ];
+  moderateMember.sequenceBlocks = [];
+  const easyFirst = exercise(3, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0);
+  const easySecond = exercise(4, groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1), 0);
+  const fillers = groups.slice(2).map((group, index) => exercise(
+    5 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const state = createDefaultState();
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  state.selectedExerciseIds = {
+    [groups[0].id]: mixedRoot.id,
+    [groups[1].id]: mixedRoot.id,
+    ...Object.fromEntries(groups.slice(2).map((group, index) =>
+      [group.id, fillers[index].id])),
+  };
+  const session = new WorkoutSession(
+    [mixedRoot, moderateMember, easyFirst, easySecond, ...fillers],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(5, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], easyFirst.id);
+  assert.equal(session.state.selectedExerciseIds[groups[1].id], easySecond.id);
+  assert.equal(Object.values(session.state.selectedExerciseIds)
+    .includes(mixedRoot.id), false);
+});
+
+test("light-day shuffle stays demand zero when the top bucket has an option", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const easyOne = exercise(1, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0);
+  const easyTwo = exercise(2, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0);
+  const hard = exercise(3, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0, undefined, true, 2);
+  const middle = exercise(4, groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1), 0);
+  const last = exercise(5, groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1), 0);
+  const state = createDefaultState();
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  const session = new WorkoutSession(
+    [easyOne, easyTwo, hard, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  const result = session.shuffleNextExercise(session.getNextGroup());
+
+  assert.equal(result.replacementExercise.muscularDemand, 0);
+});
+
+test("version twenty prepared workout recognizes an existing light-day streak", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const hard = exercise(1, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0, undefined, true, 2);
+  const easy = exercise(2, groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1), 0);
+  const middle = exercise(3, groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1), 0);
+  const last = exercise(4, groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1), 0);
+  const state = createDefaultState();
+  state.version = 20;
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.activeWorkoutMinutes = 3;
+  state.activeWorkoutModifiers = WORKOUT_MODIFIERS.None;
+  state.lastWorkoutMinutes = 3;
+  state.selectedExerciseIds = {
+    [groups[0].id]: hard.id,
+    [groups[1].id]: middle.id,
+    [groups[2].id]: last.id,
+  };
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  const session = new WorkoutSession(
+    [hard, easy, middle, last],
+    state,
+    () => 0,
+    () => now,
+  );
+
+  session.initialize();
+
+  assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], easy.id);
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
 });
 
 test("a same-muscle sequence is ranked by its hardest primary block", () => {
@@ -5904,6 +6154,17 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, /width: min\(100%, 78dvh, 900px\);/);
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
+
+function completedWorkoutSession(sessionId, startedAtUnixMilliseconds) {
+  return {
+    sessionId,
+    startedAtUnixMilliseconds,
+    endedAtUnixMilliseconds: startedAtUnixMilliseconds + 3 * 60_000,
+    workoutMinutes: 3,
+    modifiers: WORKOUT_MODIFIERS.None,
+    status: "Completed",
+  };
+}
 
 function exercise(
   id,

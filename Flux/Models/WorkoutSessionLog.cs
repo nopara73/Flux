@@ -24,6 +24,8 @@ public sealed class WorkoutSessionLog
 
     public WorkoutModifiers Modifiers { get; set; }
 
+    public bool IsLightDay { get; set; }
+
     public WorkoutSessionStatus Status { get; set; } =
         WorkoutSessionStatus.InProgress;
 

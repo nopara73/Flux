@@ -18,6 +18,7 @@ import {
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
   LAST_CUMULATIVE_CATALOG_REVISION,
+  LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
@@ -68,6 +69,7 @@ const [
   modifierPolicy,
   muscleBalancePolicy,
   recoveryPolicy,
+  lightDayPolicy,
   exerciseDatabase,
   catalogInvariantTests,
   exerciseDatabaseVersionPolicy,
@@ -113,6 +115,7 @@ const [
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
   source("Flux", "Services", "WorkoutMuscleBalancePolicy.cs"),
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
+  source("Flux", "Services", "WorkoutLightDayPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux.Tests", "CatalogInvariantTests.cs"),
   source("Flux", "Data", "ExerciseDatabaseVersionPolicy.cs"),
@@ -161,6 +164,7 @@ test("web and mobile persist the same complete workout audit trail", () => {
     "EndedAtUnixMilliseconds",
     "WorkoutMinutes",
     "Modifiers",
+    "IsLightDay",
     "KeptExerciseIdsAtStart",
     "KeptExerciseRootIdsBySelectionGroupIdAtStart",
     "InitialSelections",
@@ -171,6 +175,8 @@ test("web and mobile persist the same complete workout audit trail", () => {
     assert.match(workoutSessionLog, new RegExp(`\\b${field}\\b`));
   }
   assert.match(workoutState, /NextWorkoutSessionId[\s\S]*ActiveWorkoutSession[\s\S]*WorkoutHistory/);
+  assert.match(workoutState, /ActiveWorkoutIsLightDay/);
+  assert.match(workoutModule, /activeWorkoutIsLightDay/);
   assert.match(
     sessionService,
     /RecordCompletedWorkoutBlock[\s\S]*RecordWorkoutDecision[\s\S]*FinalizeActiveWorkoutSession/,
@@ -185,6 +191,17 @@ test("web and mobile persist the same complete workout audit trail", () => {
   );
   assert.match(workoutSessionLog, /WorkoutExercisePhase ExercisePhase/);
   assert.match(workoutModule, /exercisePhase/);
+  assert.equal(
+    LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
+    integerConstant(lightDayPolicy, "TrainingDaysPerCycle"),
+  );
+  assert.match(sessionService, /ActiveWorkoutIsLightDay/);
+  assert.match(sessionService, /IsLightDayDue/);
+  assert.match(sessionService, /lightDayOpportunityWeight/);
+  assert.match(
+    workoutModule,
+    /activeWorkoutIsLightDay[\s\S]*isLightWorkoutDayDue[\s\S]*lightDayOpportunityWeight/,
+  );
 });
 
 test("web and mobile persist hard-first block-aware workout allocation", () => {
@@ -220,7 +237,7 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
 test("web and mobile carry keeps across duration resolutions", () => {
   assert.match(
     sessionService,
-    /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(state\);/,
+    /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !state\.ActiveWorkoutIsLightDay\);/,
   );
   assert.match(
     sessionService,
@@ -289,11 +306,11 @@ test("web and mobile apply the same multi-resolution muscle balancing", () => {
   );
   assert.match(
     sessionService,
-    /RepairActiveLineup\(state\);[\s\S]*RebalanceNewExercisesByMuscleBalance\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
+    /RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !state\.ActiveWorkoutIsLightDay\);[\s\S]*RebalanceNewExercisesByMuscleBalance\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
   );
   assert.match(
     workoutModule,
-    /this\.repairActiveLineup\(\);[\s\S]*this\.rebalanceNewExercisesByMuscleBalance\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
+    /this\.repairActiveLineup\(!this\.state\.activeWorkoutIsLightDay\);[\s\S]*this\.rebalanceNewExercisesByMuscleBalance\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
   );
   assert.match(
     muscleBalancePolicy,
@@ -365,8 +382,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     hardFloorCompatibilityModel,
     /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 20);
-  assert.match(workoutState, /public int Version[^=]*=\s*23/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 21);
+  assert.match(workoutState, /public int Version[^=]*=\s*24/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
@@ -1198,7 +1215,7 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   );
   assert.match(
     workoutModule,
-    /this\.shuffle\(candidates\);[\s\S]*const selected = candidates\[0\]/,
+    /this\.shuffle\(replacementCandidates\);[\s\S]*const selected = replacementCandidates\[0\]/,
   );
   assert.match(
     sessionService,

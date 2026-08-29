@@ -215,7 +215,8 @@ export const MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR = 4;
 export const MUSCLE_BALANCE_MAX_REBALANCE_PASSES = 30;
 export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 20;
+export const CURRENT_WORKOUT_STATE_VERSION = 21;
+const PERSISTED_LIGHT_DAY_STATE_VERSION = 21;
 const PHASE_SCOPED_DOWNVOTE_STATE_VERSION = 20;
 const SLOT_SCOPED_PREFERENCE_STATE_VERSION = 19;
 const IMPLICIT_HARD_FLOOR_STATE_VERSION = 18;
@@ -225,6 +226,7 @@ const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
+export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const CURRENT_CATALOG_REVISION = 52;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -2508,6 +2510,7 @@ export function createDefaultState() {
     lastWorkoutModifiers: DEFAULT_WORKOUT_MODIFIERS,
     activeWorkoutMinutes: 0,
     activeWorkoutModifiers: WORKOUT_MODIFIERS.None,
+    activeWorkoutIsLightDay: false,
     workoutCompleted: false,
     completionAcknowledged: false,
   };
@@ -2549,6 +2552,7 @@ function normalizeStateShape(raw) {
   state.activeWorkoutModifiers = raw.activeWorkoutModifiers === undefined
     ? state.activeWorkoutModifiers
     : normalizeWorkoutModifiers(raw.activeWorkoutModifiers);
+  state.activeWorkoutIsLightDay = raw.activeWorkoutIsLightDay === true;
   state.workoutCompleted = raw.workoutCompleted === true;
   state.completionAcknowledged = raw.completionAcknowledged === true;
   state.pendingRestGroupId =
@@ -2649,6 +2653,9 @@ function normalizeStateShape(raw) {
   state.nextWorkoutSessionId = normalizedWorkoutHistory.nextWorkoutSessionId;
   state.activeWorkoutSession = normalizedWorkoutHistory.activeWorkoutSession;
   state.workoutHistory = normalizedWorkoutHistory.workoutHistory;
+  if (state.activeWorkoutSession) {
+    state.activeWorkoutIsLightDay = state.activeWorkoutSession.isLightDay;
+  }
   state.nextWorkoutExcludedExerciseIds = uniquePositiveIntegers(
     raw.nextWorkoutExcludedExerciseIds,
   );
@@ -2857,6 +2864,7 @@ function normalizeWorkoutSessionLog(raw) {
       ? session.workoutMinutes
       : 0,
     modifiers: normalizeWorkoutModifiers(session.modifiers),
+    isLightDay: session.isLightDay === true,
     status: session.status === "Completed" || session.status === "Interrupted"
       ? session.status
       : "InProgress",
@@ -2993,6 +3001,45 @@ function sameStringSet(left, right) {
     [...leftSet].every((value) => rightSet.has(value));
 }
 
+function getLocalCalendarDayNumber(unixMilliseconds) {
+  if (!Number.isSafeInteger(unixMilliseconds) || unixMilliseconds <= 0) {
+    return null;
+  }
+  const localTime = new Date(unixMilliseconds);
+  if (Number.isNaN(localTime.getTime())) {
+    return null;
+  }
+  return Math.trunc(Date.UTC(
+    localTime.getFullYear(),
+    localTime.getMonth(),
+    localTime.getDate(),
+  ) / 86_400_000);
+}
+
+export function isLightWorkoutDayDue(workoutHistory, nowUnixMilliseconds) {
+  const today = getLocalCalendarDayNumber(nowUnixMilliseconds);
+  if (today === null) {
+    throw new RangeError("Current workout time must be positive Unix milliseconds.");
+  }
+
+  const completedTrainingDays = new Set((Array.isArray(workoutHistory)
+    ? workoutHistory
+    : [])
+    .filter((session) => session?.status === "Completed")
+    .map((session) => getLocalCalendarDayNumber(
+      positiveSafeIntegerOrZero(session.startedAtUnixMilliseconds) ||
+        positiveSafeIntegerOrZero(session.endedAtUnixMilliseconds),
+    ))
+    .filter((dayNumber) => dayNumber !== null));
+
+  let consecutivePriorDays = 0;
+  for (let day = today - 1; completedTrainingDays.has(day); day -= 1) {
+    consecutivePriorDays += 1;
+  }
+  return consecutivePriorDays >= LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 &&
+    (consecutivePriorDays + 1) % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE === 0;
+}
+
 export class WorkoutSession {
   constructor(
     exercises,
@@ -3066,6 +3113,24 @@ export class WorkoutSession {
     this.normalizeSavedLineups();
     this.normalizeSlotPreferences();
 
+    const shouldMigratePreparedLightDay =
+      this.loadedStateVersion < PERSISTED_LIGHT_DAY_STATE_VERSION &&
+      !this.state.activeWorkoutSession &&
+      SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes) &&
+      Object.keys(this.state.outcomes).length === 0 &&
+      !this.state.workoutCompleted &&
+      !this.state.completionAcknowledged &&
+      !this.state.pendingMovementGroupId &&
+      !this.state.pendingRestGroupId &&
+      isLightWorkoutDayDue(
+        this.state.workoutHistory,
+        this.getCurrentUnixTimeMilliseconds(),
+      );
+    if (shouldMigratePreparedLightDay) {
+      this.state.activeWorkoutIsLightDay = true;
+      this.carrySlotPreferencesForward();
+    }
+
     if (this.state.activeWorkoutMinutes === 0) {
       this.finalizeActiveWorkoutSession("Interrupted");
       this.resetTransientState();
@@ -3079,8 +3144,12 @@ export class WorkoutSession {
     }
 
     this.normalizePendingRest();
-    this.repairActiveLineup();
+    this.repairActiveLineup(!shouldMigratePreparedLightDay);
     this.normalizeActiveLongWorkoutAllocation();
+    if (shouldMigratePreparedLightDay) {
+      this.rebalanceNewExercisesByMuscleBalance();
+      this.setActiveLongWorkoutAllocation();
+    }
     if (atomicSequenceMigration) {
       this.migrateLegacyActiveProgress(atomicSequenceMigration);
     }
@@ -3124,6 +3193,10 @@ export class WorkoutSession {
     this.state.lastWorkoutModifiers = modifiers;
     this.state.activeWorkoutMinutes = minutes;
     this.state.activeWorkoutModifiers = modifiers;
+    this.state.activeWorkoutIsLightDay = isLightWorkoutDayDue(
+      this.state.workoutHistory,
+      workoutStartedAtUnixMilliseconds,
+    );
     this.state.outcomes = {};
     this.state.workoutCompleted = false;
     this.state.completionAcknowledged = false;
@@ -3133,7 +3206,7 @@ export class WorkoutSession {
     // rejection feedback is stored by workout phase.
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.carrySlotPreferencesForward();
-    this.repairActiveLineup();
+    this.repairActiveLineup(!this.state.activeWorkoutIsLightDay);
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
   }
@@ -3282,6 +3355,20 @@ export class WorkoutSession {
       return null;
     }
 
+    let replacementCandidates = candidates;
+    if (this.state.activeWorkoutIsLightDay) {
+      const phase = this.getExercisePhase(group);
+      const highestReplacementScore = Math.max(...candidates.map((candidate) =>
+        this.getSelectionScore(candidate.exercise, phase)));
+      const lightCandidates = candidates.filter((candidate) =>
+        this.isDemandZeroSequence(candidate.exercise) &&
+        this.getSelectionScore(candidate.exercise, phase) ===
+          highestReplacementScore);
+      if (lightCandidates.length > 0) {
+        replacementCandidates = lightCandidates;
+      }
+    }
+
     const rejectedExercise = this.getSelectedExercise(group);
     const rejectedRoot = this.getSequenceRoot(rejectedExercise);
     const scoreUpdates = this.getSequenceExercises(rejectedRoot);
@@ -3291,8 +3378,8 @@ export class WorkoutSession {
       this.getExercisePhase(group),
     );
 
-    this.shuffle(candidates);
-    const selected = candidates[0];
+    this.shuffle(replacementCandidates);
+    const selected = replacementCandidates[0];
 
     for (const coveredGroup of selected.coveredGroups) {
       this.state.selectedExerciseIds[this.getSelectionStorageKey(
@@ -3855,6 +3942,9 @@ export class WorkoutSession {
   }
 
   prepareNextSession() {
+    // Candidate caching here targets a future workout. Recalculate its day
+    // mode only when that workout is actually prepared.
+    this.state.activeWorkoutIsLightDay = false;
     const activeGroups = this.getActiveGroups();
     const selectionGroups = this.getSelectionGroups();
     const rejectedSelectionKeys = new Set();
@@ -3927,7 +4017,7 @@ export class WorkoutSession {
     this.resetTransientState();
   }
 
-  repairActiveLineup() {
+  repairActiveLineup(preserveCurrentSelections = true) {
     const selectionGroups = this.getSelectionGroups();
     let activeGroups = [];
     try {
@@ -3951,7 +4041,7 @@ export class WorkoutSession {
       this.state.activeWorkoutModifiers,
       {
         currentExerciseIds,
-        allowSavedSelectionException: true,
+        allowSavedSelectionException: preserveCurrentSelections,
       },
     );
     this.applyDistinctLineup(selectionGroups, repairedLineup, true, activeGroups);
@@ -4160,9 +4250,23 @@ export class WorkoutSession {
     const scoreWeight = addPriorityDimension(Math.max(0, orderedScores.length - 1));
     const keptExerciseWeight = addPriorityDimension(1);
     const hardOpportunityWeight = addPriorityDimension(1);
+    const lightDayOpportunityWeight = addPriorityDimension(1);
     const preservedActiveSelectionWeight = allowSavedSelectionException
       ? totalLowerPriorityRange + 1n
       : 0n;
+
+    const hasLightDayOpportunity = (exercise, preferenceSlot) => {
+      if (!this.state.activeWorkoutIsLightDay ||
+          !this.isDemandZeroSequence(exercise)) {
+        return false;
+      }
+      const phase = this.getProjectedSelectionPhase(
+        preferenceSlot,
+        groups.length,
+      );
+      return this.getSelectionScore(exercise, phase) ===
+        highestScoreByGroup.get(preferenceSlot.id);
+    };
 
     const calculateUtility = (exercise, evaluationGroup, includeSlotPreference) => {
       const selectionExercise = this.getSequenceSelectionExerciseForGroup(
@@ -4212,6 +4316,9 @@ export class WorkoutSession {
       return (allowSavedSelectionException && isCurrentSelection
         ? preservedActiveSelectionWeight
         : 0n) +
+        (includeSlotPreference && hasLightDayOpportunity(exercise, evaluationGroup)
+          ? lightDayOpportunityWeight
+          : 0n) +
         (hasHardOpportunity ? hardOpportunityWeight : 0n) +
         (hasContextualKeepPreference ? keptExerciseWeight : 0n) +
         (includeSlotPreference
@@ -4311,6 +4418,14 @@ export class WorkoutSession {
               ? anchorUtilities[groupIndex][candidateIndex]
               : baseUtilities[groupIndex][candidateIndex]
             : 0n);
+        if (hasLightDayOpportunity(candidate, preferenceSlot)) {
+          for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+            if (groupIndex !== preferenceSlotIndex &&
+                (coverageMask & (1n << BigInt(groupIndex))) !== 0n) {
+              utilitiesByGroup[groupIndex] += lightDayOpportunityWeight;
+            }
+          }
+        }
         atomicCandidates.push({
           exerciseId: candidate.id,
           movementId: getSessionMovementId(candidate),
@@ -4475,6 +4590,11 @@ export class WorkoutSession {
   getSequenceExercises(exercise) {
     const root = this.getSequenceRoot(exercise);
     return this.sequenceExercisesByRootId.get(root.id);
+  }
+
+  isDemandZeroSequence(exercise) {
+    return this.getSequenceExercises(exercise).every((member) =>
+      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND);
   }
 
   getSequenceSelectionExerciseForGroup(exercise, group) {
@@ -5335,6 +5455,14 @@ export class WorkoutSession {
             continue;
           }
 
+          if (this.state.activeWorkoutIsLightDay &&
+              removedPlacements.some((placement) =>
+                this.isDemandZeroSequence(placement.root)) &&
+              !this.isDemandZeroSequence(candidate)) {
+            // The balance pass is lower priority than the calendar day mode.
+            continue;
+          }
+
           const preservesScores = option.every((group) => {
             const displacedRootId = this.state.selectedExerciseIds[
               this.getSelectionStorageKey(
@@ -6175,6 +6303,7 @@ export class WorkoutSession {
       endedAtUnixMilliseconds: 0,
       workoutMinutes: this.state.activeWorkoutMinutes,
       modifiers: this.state.activeWorkoutModifiers,
+      isLightDay: this.state.activeWorkoutIsLightDay,
       status: "InProgress",
       startedBeforeLogging: startedBeforeLogging === true,
       keptExerciseIdsAtStart: normalizedKeptExerciseIdsAtStart,
@@ -6366,6 +6495,7 @@ export class WorkoutSession {
     this.state.activeWorkoutSession = null;
     this.state.activeWorkoutMinutes = 0;
     this.state.activeWorkoutModifiers = WORKOUT_MODIFIERS.None;
+    this.state.activeWorkoutIsLightDay = false;
     this.state.outcomes = {};
     this.state.activeExtraSetSelectionGroupIds = [];
     this.state.activeSetCountsBySelectionGroupId = {};

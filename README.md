@@ -66,17 +66,20 @@ audits reject missing, overlapping, or anatomically inconsistent mappings.
 The optimizer applies these priorities lexicographically:
 
 1. preserve a valid in-progress lineup while restoring an active workout;
-2. give a fresh hard keep, or a suitable highest-score fresh hard exercise, a
+2. on every fourth consecutive local-calendar training day, prefer complete
+   demand-`0` sequences from each slot's highest available score bucket; this
+   outranks non-demand-`0` Keeps but never reaches into a lower score bucket;
+3. give a fresh hard keep, or a suitable highest-score fresh hard exercise, a
    hard-work opportunity;
-3. retain contextual keeps, except demand-`1` and demand-`2` keeps whose
+4. retain contextual keeps, except demand-`1` and demand-`2` keeps whose
    primary muscle is still inside the applicable recovery window;
-4. prefer exercises with better saved keep/discard scores;
-5. prefer work outside its recovery window, then fresh hard work and its
+5. prefer exercises with better saved keep/discard scores;
+6. prefer work outside its recovery window, then fresh hard work and its
    longest-rested primary muscle;
-6. preserve a valid existing selection when the higher priorities tie;
-7. apply the soft Mirror preference;
-8. prefer primary ownership and then wider coverage of the target group;
-9. randomize only otherwise equivalent choices.
+7. preserve a valid existing selection when the higher priorities tie;
+8. apply the soft Mirror preference;
+9. prefer primary ownership and then wider coverage of the target group;
+10. randomize only otherwise equivalent choices.
 
 The priority weights are constructed so that all lower priorities combined
 cannot outweigh a higher one. Global assignment also prevents an early greedy
@@ -116,6 +119,18 @@ remain a read-only migration baseline because older releases did not record
 truthful phase provenance. Version-22 slot-scoped downvotes are migrated from
 their workout logs when possible and otherwise projected into the phase where
 that slot would have executed.
+
+A completed workout on each of the three immediately preceding local calendar
+days makes the fourth day a light day. The four-day cadence repeats inside a
+longer uninterrupted daily streak, so days 4, 8, 12, and so on are light rather
+than every day after day 3. Interrupted or merely prepared workouts do not
+count, and multiple completed workouts on one date still count as one day. The
+mode is a selection priority, not a filter: an all-demand-`0` sequence wins only
+when it already belongs to the slot's highest saved-score bucket. If that bucket
+has no such sequence, the normal Keep, hard-rotation, recovery, Mirror, and
+anatomical priorities apply. A selected light-day alternative does not erase a
+saved non-demand-`0` Keep.
+
 A separate soft within-session rebalancer audits the resulting lineup with the
 complete workload table: demand-`0` contributes 0.25 for its primary muscle and
 0.125 for each distinct secondary; demand-`1` contributes 0.5 and 0.25; and
@@ -138,7 +153,7 @@ Selected Keeps are frozen to their anatomical placements within the prepared
 lineup, and a saved Keep cannot be moved elsewhere by balancing. A candidate
 must be no lower-scored than every displaced selection in the execution phase
 of each slot it covers. Modifiers, recovery and hard-work priority, Mirror
-preference, global assignment, atomic sequences, unique session movements,
+preference, light-day priority, global assignment, atomic sequences, unique session movements,
 exact duration, and long-workout set allocation remain constraints. The
 balancing state is temporary and never changes persisted user scores or adds a
 numerical hardness score.
@@ -411,7 +426,7 @@ retain separate stable lineups while sharing durable keeps.
 
 Every workout started after audit logging was introduced also has one durable,
 append-only local session record. It snapshots the start/end time, duration,
-modifiers, starting Keep set and lineup, every pre-start Shuffle, every actually
+modifiers, frozen light-day mode, starting Keep set and lineup, every pre-start Shuffle, every actually
 completed 45-second block, and every final Keep/reject decision. Block snapshots
 include the exercise name, demand, primary and secondary canonical muscles,
 side/direction/media cues, and sequence/set position; decisions include the
@@ -420,6 +435,10 @@ interrupted records are finalized idempotently and never mutate scores. Because
 history stores snapshots as well as IDs, later catalog edits cannot rewrite what
 happened. This makes exact hard-block and prior-session Keep-repeat comparisons
 possible; sessions completed before this version cannot be reconstructed.
+Light-day detection is derived from these completed-session timestamps, so an
+upgrade recognizes an existing three-day streak without fabricating a new
+counter. An unstarted lineup prepared by an older build is rebuilt during that
+migration; a workout already in progress is never reclassified.
 Movement start and resume checkpoints use Android's non-blocking preference
 apply so the Play control responds without waiting for a disk flush; pausing,
 finishing, and score-changing actions still commit synchronously.

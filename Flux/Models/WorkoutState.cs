@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 23;
+    public int Version { get; set; } = 24;
 
     public int CatalogRevision { get; set; }
 
@@ -89,6 +89,10 @@ public sealed class WorkoutState
 
     public WorkoutModifiers ActiveWorkoutModifiers { get; set; } =
         WorkoutModifiers.None;
+
+    // Frozen when a workout is prepared so an app restart, midnight boundary,
+    // or later history write cannot change the already presented lineup.
+    public bool ActiveWorkoutIsLightDay { get; set; }
 
     public bool WorkoutCompleted { get; set; }
 
