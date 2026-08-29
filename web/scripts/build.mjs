@@ -155,7 +155,7 @@ const integrityDeficitReport = JSON.parse(await readFile(
   "utf8",
 ));
 const catalogSha256 = createHash("sha256")
-  .update(catalogSource)
+  .update(normalizeLineEndings(catalogSource))
   .digest("hex");
 const integrityDebtMatches =
   integrityDeficitReport.catalogRecordCount === catalog.length &&
@@ -340,6 +340,10 @@ function fingerprintedName(stem, extension, content) {
 
 function contentFingerprint(content) {
   return createHash("sha256").update(content).digest("hex").slice(0, 12);
+}
+
+function normalizeLineEndings(text) {
+  return text.replace(/\r\n?/g, "\n");
 }
 
 function exactlyEqual(left, right) {

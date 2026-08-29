@@ -33,7 +33,9 @@ const distinctLineup = findWorkoutProfileLineupDeficiencies(catalog);
 const report = {
   auditDate: "2026-08-29",
   catalogRecordCount: catalog.length,
-  catalogSha256: createHash("sha256").update(catalogBytes).digest("hex"),
+  catalogSha256: createHash("sha256")
+    .update(normalizeLineEndings(catalogBytes.toString("utf8")))
+    .digest("hex"),
   policy: {
     treatment: "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     validatorsChanged: false,
@@ -60,3 +62,7 @@ await mkdir(path.dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(report, null, 2)}\n`);
 console.log(`Deficit report: ${outputPath}`);
 console.log(JSON.stringify(report.summary));
+
+function normalizeLineEndings(text) {
+  return text.replace(/\r\n?/g, "\n");
+}
