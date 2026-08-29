@@ -174,6 +174,10 @@ public class MainActivity : Activity
     {
         base.OnCreate(savedInstanceState);
 
+        // Keep hardware volume keys on the whistle/media stream even while
+        // Flux is between cues and no sound is actively playing.
+        VolumeControlStream = Android.Media.Stream.Music;
+
         SetContentView(Resource.Layout.activity_main);
 
         BindViews();

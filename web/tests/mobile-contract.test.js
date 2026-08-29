@@ -1368,6 +1368,17 @@ test("web and mobile separate the exercise whistle from the final completion cue
   }
 });
 
+test("Android volume keys always control the whistle media stream", () => {
+  assert.match(
+    mainActivity,
+    /OnCreate\(Bundle\? savedInstanceState\)[\s\S]*VolumeControlStream\s*=\s*Android\.Media\.Stream\.Music;[\s\S]*ConfigureWhistleCues\(\);/,
+  );
+  assert.match(
+    mainActivity,
+    /SetUsage\(\s*Android\.Media\.AudioUsageKind\.Media\)/,
+  );
+});
+
 test("all bilateral, directional, linked, and repeated work uses one sequence model", () => {
   assert.match(exerciseModel, /ExerciseSequenceBlock\[\] SequenceBlocks/);
   assert.doesNotMatch(exerciseModel, /DirectionPartnerExerciseId/);
