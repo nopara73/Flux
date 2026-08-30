@@ -59,10 +59,9 @@ public sealed class WorkoutState
     // selections are rebuilt after a mid-workout equipment change.
     public List<string> ActiveSelectionGroupOrder { get; set; } = [];
 
-    // A compatible current atomic selection can remain fixed while future
-    // selections are rebuilt after a modifier change. Incompatible unfinished
-    // work is replaced immediately; a block already completed and resting is
-    // protected only so recorded work is not rewritten retroactively.
+    // Unfinished current work is replanned normally for every modifier change.
+    // This exception exists only for a block already completed and resting, so
+    // recorded work is not rewritten retroactively.
     public string? ActiveModifierProtectedSelectionGroupId { get; set; }
 
     // Version 16 migration inputs only. Atomic sequences replace both legacy

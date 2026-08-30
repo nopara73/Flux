@@ -166,7 +166,7 @@ public class MainActivity : Activity
     private int _preparingWorkoutMinutes;
     private WorkoutModifiers _preparingWorkoutModifiers;
     private bool _preparingWorkoutIsReconfiguration;
-    private string? _preparingProtectedWorkoutGroupId;
+    private string? _preparingCurrentWorkoutGroupId;
     private bool _durationSelectionChangedDuringStartup;
     private bool _activityDestroyed;
     private int _mediaLoadGeneration;
@@ -347,12 +347,12 @@ public class MainActivity : Activity
         WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
             _selectedWorkoutModifiers);
         bool isReconfiguration = _editingActiveWorkoutSetup;
-        string? protectedWorkoutGroupId = _workoutSetupCurrentGroupId;
+        string? currentWorkoutGroupId = _workoutSetupCurrentGroupId;
         if (_preparedWorkout is { } prepared &&
             prepared.Minutes == minutes &&
             prepared.Modifiers == modifiers &&
             prepared.IsReconfiguration == isReconfiguration &&
-            prepared.ProtectedWorkoutGroupId == protectedWorkoutGroupId)
+            prepared.CurrentWorkoutGroupId == currentWorkoutGroupId)
         {
             return;
         }
@@ -360,7 +360,7 @@ public class MainActivity : Activity
             _preparingWorkoutMinutes == minutes &&
             _preparingWorkoutModifiers == modifiers &&
             _preparingWorkoutIsReconfiguration == isReconfiguration &&
-            _preparingProtectedWorkoutGroupId == protectedWorkoutGroupId)
+            _preparingCurrentWorkoutGroupId == currentWorkoutGroupId)
         {
             return;
         }
@@ -373,7 +373,7 @@ public class MainActivity : Activity
         _preparingWorkoutMinutes = minutes;
         _preparingWorkoutModifiers = modifiers;
         _preparingWorkoutIsReconfiguration = isReconfiguration;
-        _preparingProtectedWorkoutGroupId = protectedWorkoutGroupId;
+        _preparingCurrentWorkoutGroupId = currentWorkoutGroupId;
         string stateJson = JsonSerializer.Serialize(
             _state,
             WorkoutJsonContext.Default.WorkoutState);
@@ -392,7 +392,7 @@ public class MainActivity : Activity
                 preparationService.ReconfigureActiveWorkout(
                     preparedState,
                     modifiers,
-                    protectedWorkoutGroupId!);
+                    currentWorkoutGroupId!);
             }
             else
             {
@@ -407,7 +407,7 @@ public class MainActivity : Activity
                 minutes,
                 modifiers,
                 isReconfiguration,
-                protectedWorkoutGroupId);
+                currentWorkoutGroupId);
         }, cancellation.Token);
         _ = ObserveWorkoutPreparationAsync(
             _workoutPreparationTask,
@@ -436,7 +436,7 @@ public class MainActivity : Activity
                     _appScreen == AppScreen.Duration &&
                     prepared.IsReconfiguration ==
                         _editingActiveWorkoutSetup &&
-                    prepared.ProtectedWorkoutGroupId ==
+                    prepared.CurrentWorkoutGroupId ==
                         _workoutSetupCurrentGroupId &&
                     (_editingActiveWorkoutSetup
                         ? _state.ActiveWorkoutMinutes == prepared.Minutes
@@ -1907,9 +1907,9 @@ public class MainActivity : Activity
             }
             else
             {
-                // An incompatible current exercise was removed by the new
-                // modifier profile. Show its replacement from a fresh Ready
-                // state instead of restoring the obsolete countdown.
+                // The new modifier profile selected a different current
+                // exercise. Show its replacement from a fresh Ready state
+                // instead of restoring the obsolete countdown.
                 StopCountdownTimer();
                 ShowNextExercise();
             }
@@ -2323,7 +2323,7 @@ public class MainActivity : Activity
                 && preparedModifiers == modifiers
                 && _preparedWorkout.IsReconfiguration ==
                     _editingActiveWorkoutSetup
-                && _preparedWorkout.ProtectedWorkoutGroupId ==
+                && _preparedWorkout.CurrentWorkoutGroupId ==
                     _workoutSetupCurrentGroupId
                     ? _preparedWorkout
                     : null;
@@ -2333,7 +2333,7 @@ public class MainActivity : Activity
                 _preparingWorkoutModifiers == modifiers &&
                 _preparingWorkoutIsReconfiguration ==
                     _editingActiveWorkoutSetup &&
-                _preparingProtectedWorkoutGroupId ==
+                _preparingCurrentWorkoutGroupId ==
                     _workoutSetupCurrentGroupId)
             {
                 prepared = await preparationTask;
@@ -4468,7 +4468,7 @@ public class MainActivity : Activity
         int Minutes,
         WorkoutModifiers Modifiers,
         bool IsReconfiguration,
-        string? ProtectedWorkoutGroupId);
+        string? CurrentWorkoutGroupId);
 
     private sealed record ApplicationStartupResult(
         SqliteExerciseDatabase Database,

@@ -8,12 +8,12 @@ self.addEventListener("message", (event) => {
     minutes,
     modifiers,
     mode,
-    protectedWorkoutGroupId,
+    currentWorkoutGroupId,
   } = event.data ?? {};
   try {
     const session = new WorkoutSession(exercises, state);
     if (mode === "reconfigure") {
-      session.reconfigureActiveWorkout(modifiers, protectedWorkoutGroupId);
+      session.reconfigureActiveWorkout(modifiers, currentWorkoutGroupId);
     } else {
       session.prepareWorkout(minutes, modifiers);
     }

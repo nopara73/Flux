@@ -165,10 +165,14 @@ Changing duration or a modifier discards the stale plan and prepares the newly
 selected profile instead. During an active workout, the setup control pauses the
 current movement or rest and reuses this screen with duration locked. Modifier
 changes preserve completed work. A compatible atomic selection currently on
-screen keeps its checkpoint and allocated sets; an incompatible unfinished
-selection is replaced immediately and returns in Ready state with a full timer.
-A block already completed and resting is not rewritten retroactively. Remaining
-unstarted selections are rebuilt, and the workout itself is never restarted.
+screen is not automatically protected: the unfinished current slot is selected
+again using the complete target modifier profile. If that profile independently
+chooses the same exercise, its checkpoint and allocated sets survive. If it
+chooses another exercise because of either a restriction or a newly enabled
+equipment preference, the replacement appears immediately in Ready state with a
+full timer. A block already completed and resting is not rewritten retroactively.
+Remaining unstarted selections are rebuilt, and the workout itself is never
+restarted.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but

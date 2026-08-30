@@ -145,7 +145,7 @@ let preparingWorkoutMinutes = 0;
 let preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
 let preparedWorkout = null;
 let preparingWorkoutIsReconfiguration = false;
-let preparingProtectedWorkoutGroupId = null;
+let preparingCurrentWorkoutGroupId = null;
 let activeWorkoutSetup = false;
 let workoutSetupReturnPhase = "ready";
 let workoutSetupShouldResume = false;
@@ -632,8 +632,8 @@ function restoreWorkoutAfterSetup() {
     restorePendingRest();
   } else if (returnPhase === "movement") {
     if (!restorePendingMovement()) {
-      // The modifier profile removed the incompatible current exercise.
-      // Present its replacement from Ready instead of restoring the obsolete
+      // The modifier profile selected a different current exercise. Present
+      // its replacement from Ready instead of restoring the obsolete
       // countdown.
       showNextExercise();
     }
@@ -650,10 +650,10 @@ function queueWorkoutPreparation(
   modifiers = selectedModifiers,
 ) {
   const isReconfiguration = activeWorkoutSetup;
-  const protectedWorkoutGroupId = workoutSetupCurrentGroupId;
+  const currentWorkoutGroupId = workoutSetupCurrentGroupId;
   if (!session || !exerciseCatalog ||
       (isReconfiguration
-        ? !protectedWorkoutGroupId ||
+        ? !currentWorkoutGroupId ||
           session.state.activeWorkoutMinutes !== minutes
         : session.state.activeWorkoutMinutes !== 0)) {
     return null;
@@ -661,14 +661,14 @@ function queueWorkoutPreparation(
   if (preparedWorkout?.minutes === minutes &&
       preparedWorkout.modifiers === modifiers &&
       preparedWorkout.isReconfiguration === isReconfiguration &&
-      preparedWorkout.protectedWorkoutGroupId === protectedWorkoutGroupId) {
+      preparedWorkout.currentWorkoutGroupId === currentWorkoutGroupId) {
     return Promise.resolve(preparedWorkout);
   }
   if (workoutPreparationPromise &&
       preparingWorkoutMinutes === minutes &&
       preparingWorkoutModifiers === modifiers &&
       preparingWorkoutIsReconfiguration === isReconfiguration &&
-      preparingProtectedWorkoutGroupId === protectedWorkoutGroupId) {
+      preparingCurrentWorkoutGroupId === currentWorkoutGroupId) {
     return workoutPreparationPromise;
   }
 
@@ -677,7 +677,7 @@ function queueWorkoutPreparation(
   preparingWorkoutMinutes = minutes;
   preparingWorkoutModifiers = modifiers;
   preparingWorkoutIsReconfiguration = isReconfiguration;
-  preparingProtectedWorkoutGroupId = protectedWorkoutGroupId;
+  preparingCurrentWorkoutGroupId = currentWorkoutGroupId;
   workoutPreparationPromise = new Promise((resolve) => {
     workoutPreparationResolve = resolve;
   });
@@ -714,7 +714,7 @@ function queueWorkoutPreparation(
         if (isReconfiguration) {
           preparedSession.reconfigureActiveWorkout(
             modifiers,
-            protectedWorkoutGroupId,
+            currentWorkoutGroupId,
           );
         } else {
           preparedSession.prepareWorkout(minutes, modifiers);
@@ -724,7 +724,7 @@ function queueWorkoutPreparation(
           modifiers,
           state: preparedSession.state,
           isReconfiguration,
-          protectedWorkoutGroupId,
+          currentWorkoutGroupId,
         });
       } catch (error) {
         console.error(error);
@@ -754,7 +754,7 @@ function queueWorkoutPreparation(
         modifiers,
         state: event.data.state,
         isReconfiguration,
-        protectedWorkoutGroupId,
+        currentWorkoutGroupId,
       });
     });
     workoutPreparationWorker.addEventListener("error", (error) => {
@@ -773,7 +773,7 @@ function queueWorkoutPreparation(
       minutes,
       modifiers,
       mode: isReconfiguration ? "reconfigure" : "prepare",
-      protectedWorkoutGroupId,
+      currentWorkoutGroupId,
     });
   } catch (error) {
     console.warn("Background workout preparation is unavailable.", error);
@@ -786,19 +786,19 @@ async function ensureWorkoutPrepared(
   minutes,
   modifiers,
   isReconfiguration = activeWorkoutSetup,
-  protectedWorkoutGroupId = workoutSetupCurrentGroupId,
+  currentWorkoutGroupId = workoutSetupCurrentGroupId,
 ) {
   if (preparedWorkout?.minutes === minutes &&
       preparedWorkout.modifiers === modifiers &&
       preparedWorkout.isReconfiguration === isReconfiguration &&
-      preparedWorkout.protectedWorkoutGroupId === protectedWorkoutGroupId) {
+      preparedWorkout.currentWorkoutGroupId === currentWorkoutGroupId) {
     return preparedWorkout;
   }
   if (!workoutPreparationPromise ||
       preparingWorkoutMinutes !== minutes ||
       preparingWorkoutModifiers !== modifiers ||
       preparingWorkoutIsReconfiguration !== isReconfiguration ||
-      preparingProtectedWorkoutGroupId !== protectedWorkoutGroupId) {
+      preparingCurrentWorkoutGroupId !== currentWorkoutGroupId) {
     queueWorkoutPreparation(minutes, modifiers);
   }
   return workoutPreparationPromise
@@ -817,7 +817,7 @@ function cancelWorkoutPreparation() {
   preparingWorkoutMinutes = 0;
   preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
   preparingWorkoutIsReconfiguration = false;
-  preparingProtectedWorkoutGroupId = null;
+  preparingCurrentWorkoutGroupId = null;
 }
 
 function cloneWorkoutState(state) {
@@ -843,12 +843,12 @@ async function startWorkout() {
     const minutes = selectedMinutes;
     const modifiers = selectedModifiers;
     const isReconfiguration = activeWorkoutSetup;
-    const protectedWorkoutGroupId = workoutSetupCurrentGroupId;
+    const currentWorkoutGroupId = workoutSetupCurrentGroupId;
     const prepared = await ensureWorkoutPrepared(
       minutes,
       modifiers,
       isReconfiguration,
-      protectedWorkoutGroupId,
+      currentWorkoutGroupId,
     );
     if (!prepared) {
       throw new Error("The selected workout could not be prepared.");

@@ -1418,7 +1418,7 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
     mobileRestore,
     /pendingGroup is not null[\s\S]*RestorePendingMovement[\s\S]*else[\s\S]*StopCountdownTimer\(\)[\s\S]*ShowNextExercise/,
   );
-  assert.match(mainActivity, /ReconfigureActiveWorkout\([\s\S]*protectedWorkoutGroupId/);
+  assert.match(mainActivity, /ReconfigureActiveWorkout\([\s\S]*currentWorkoutGroupId/);
 
   const webSetup = methodBody(
     webApp,
@@ -1451,16 +1451,18 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
   );
   assert.match(
     sessionService,
-    /currentSelectionFitsModifiers[\s\S]*protectCurrentSelection[\s\S]*ClearPendingMovement/,
+    /preserveCompletedCurrentSelection[\s\S]*lockedSelectionGroupIds\.Remove[\s\S]*currentSelectionChanged[\s\S]*ClearPendingMovement/,
   );
+  assert.doesNotMatch(sessionService, /currentSelectionFitsModifiers/);
   assert.match(
     workoutModule,
     /reconfigureActiveWorkout\([\s\S]*lockedSelectionGroupIds[\s\S]*rebalanceNewExercisesByMuscleBalance\(lockedSelectionGroupIds\)/,
   );
   assert.match(
     workoutModule,
-    /currentSelectionFitsModifiers[\s\S]*protectCurrentSelection[\s\S]*clearPendingMovement/,
+    /preserveCompletedCurrentSelection[\s\S]*lockedSelectionGroupIds\.delete[\s\S]*currentSelectionChanged[\s\S]*clearPendingMovement/,
   );
+  assert.doesNotMatch(workoutModule, /currentSelectionFitsModifiers/);
 });
 
 test("active movement checkpoints and invalid media recovery match across platforms", async () => {

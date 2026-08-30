@@ -375,6 +375,73 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void ReenablingMirrorRestoresTheCurrentMirrorProfileSelection()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] ordinary = groups
+            .Select((group, index) => QualifiedForGroup(
+                22_300 + index * 2,
+                group,
+                insectCompatibility: ExerciseInsectCompatibility.Compatible))
+            .ToArray();
+        Exercise[] mirrorOnly = ordinary
+            .Select(exercise => CloneWithMirrorRelationship(
+                exercise,
+                exercise.Id + 1,
+                ExerciseMirrorRelationship.MirrorOnly))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            ordinary.Concat(mirrorOnly).ToArray(),
+            new AlwaysZeroRandom());
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.Mirror);
+        WorkoutGroup initialGroup = service.GetNextGroup(state)!;
+        Exercise initialMirrorExercise = service.GetSelectedExercise(
+            state,
+            initialGroup);
+        Assert.Equal(
+            ExerciseMirrorRelationship.MirrorOnly,
+            initialMirrorExercise.MirrorRelationship);
+        service.BeginMovement(
+            state,
+            initialGroup,
+            28_000,
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 28_000);
+
+        service.ReconfigureActiveWorkout(
+            state,
+            WorkoutModifiers.None,
+            initialGroup.Id);
+
+        WorkoutGroup ordinaryGroup = service.GetNextGroup(state)!;
+        Exercise ordinaryExercise = service.GetSelectedExercise(
+            state,
+            ordinaryGroup);
+        Assert.Equal(
+            ExerciseMirrorRelationship.Agnostic,
+            ordinaryExercise.MirrorRelationship);
+        Assert.Null(state.PendingMovementGroupId);
+
+        service.ReconfigureActiveWorkout(
+            state,
+            WorkoutModifiers.Mirror,
+            ordinaryGroup.Id);
+
+        WorkoutGroup restoredGroup = service.GetNextGroup(state)!;
+        Exercise restoredMirrorExercise = service.GetSelectedExercise(
+            state,
+            restoredGroup);
+        Assert.Equal(initialGroup.SelectionKey, restoredGroup.SelectionKey);
+        Assert.Equal(initialMirrorExercise.Id, restoredMirrorExercise.Id);
+        Assert.Equal(
+            ExerciseMirrorRelationship.MirrorOnly,
+            restoredMirrorExercise.MirrorRelationship);
+        Assert.Null(state.PendingMovementGroupId);
+        Assert.Null(state.ActiveModifierProtectedSelectionGroupId);
+        Assert.Equal(2, state.ActiveWorkoutSession!.ModifierChanges.Count);
+    }
+
+    [Fact]
     public void CompatibleModifierTransitionPreservesCurrentMovementCheckpoint()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -415,13 +482,10 @@ public sealed class ExerciseSessionServiceTests
             service.GetNextGroup(state)!).Id);
         Assert.Equal(currentGroup.Id, state.PendingMovementGroupId);
         Assert.Equal(movementRemaining, state.PendingMovementMillisecondsRemaining);
-        Assert.Equal(
-            currentGroup.SelectionKey,
-            state.ActiveModifierProtectedSelectionGroupId);
-        Assert.Equal(
-            currentGroup.SelectionKey,
-            Assert.Single(state.ActiveWorkoutSession!.ModifierChanges)
-                .ProtectedSelectionGroupId);
+        Assert.Null(state.ActiveModifierProtectedSelectionGroupId);
+        Assert.Empty(Assert.Single(
+            state.ActiveWorkoutSession!.ModifierChanges)
+            .ProtectedSelectionGroupId);
     }
 
     [Fact]
@@ -482,7 +546,56 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void CompatibleModifierTransitionProtectionCoversEverySetOfTheCurrentSelection()
+    public void InitializationClearsLegacyCompatibleProtectionWithoutLosingCheckpoint()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] ordinary = groups
+            .Select((group, index) => QualifiedForGroup(
+                22_900 + index,
+                group,
+                insectCompatibility: ExerciseInsectCompatibility.Compatible))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            ordinary,
+            new AlwaysZeroRandom());
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, WorkoutModifiers.None);
+        WorkoutGroup currentGroup = service.GetNextGroup(state)!;
+        Exercise currentExercise = service.GetSelectedExercise(state, currentGroup);
+        const long movementRemaining = 28_000;
+        service.BeginMovement(
+            state,
+            currentGroup,
+            movementRemaining,
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + movementRemaining);
+
+        // Previous builds persisted a compatible current selection as a
+        // protection exception. It is safe to remove that exception without
+        // discarding the still-valid movement checkpoint.
+        state.ActiveModifierProtectedSelectionGroupId = currentGroup.SelectionKey;
+
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState restored = store.Load();
+        var restoredService = new ExerciseSessionService(
+            ordinary,
+            new AlwaysZeroRandom());
+
+        restoredService.Initialize(restored);
+
+        Assert.Null(restored.ActiveModifierProtectedSelectionGroupId);
+        Assert.Equal(currentGroup.Id, restoredService.GetNextGroup(restored)!.Id);
+        Assert.Equal(currentExercise.Id, restoredService.GetSelectedExercise(
+            restored,
+            restoredService.GetNextGroup(restored)!).Id);
+        Assert.Equal(currentGroup.Id, restored.PendingMovementGroupId);
+        Assert.Equal(
+            movementRemaining,
+            restored.PendingMovementMillisecondsRemaining);
+    }
+
+    [Fact]
+    public void CompatibleModifierTransitionPreservesRepeatedSelectionWithoutProtection()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
         Exercise[] ordinary = groups
@@ -532,9 +645,7 @@ public sealed class ExerciseSessionServiceTests
         WorkoutGroup secondSet = service.GetNextGroup(state)!;
         Assert.Equal(firstRepeatedSet.SelectionKey, secondSet.SelectionKey);
         Assert.Equal(2, secondSet.SetNumber);
-        Assert.Equal(
-            firstRepeatedSet.SelectionKey,
-            state.ActiveModifierProtectedSelectionGroupId);
+        Assert.Null(state.ActiveModifierProtectedSelectionGroupId);
         Assert.Equal(
             protectedExercise.Id,
             service.GetSelectedExercise(state, secondSet).Id);

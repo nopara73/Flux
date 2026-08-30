@@ -1617,6 +1617,71 @@ test("mid-workout modifier changes replace incompatible current movement and rep
   assert.equal(restored.getSelectedExercise(restored.getNextGroup()).wallRequired, false);
 });
 
+test("reenabling mirror restores the current mirror-profile selection", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const ordinary = groups.map((group, index) => exercise(
+    22_300 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  ));
+  const mirrorOnly = ordinary.map((source) => {
+    const id = source.id + 1;
+    return {
+      ...source,
+      id,
+      name: `Exercise ${id}`,
+      video: `exercise_videos/exercise_${String(id).padStart(4, "0")}.mp4`,
+      mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+      minimumMirrorCoverage: EXERCISE_MIRROR_COVERAGE.UpperBody,
+      equipment: "Mirror",
+      sequenceBlocks: source.sequenceBlocks.map((block) => ({
+        ...block,
+        exerciseId: id,
+      })),
+    };
+  });
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    [...ordinary, ...mirrorOnly],
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.Mirror);
+  const initialGroup = session.getNextGroup();
+  const initialMirrorExercise = session.getSelectedExercise(initialGroup);
+  assert.equal(
+    initialMirrorExercise.mirrorRelationship,
+    EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+  );
+  session.beginMovement(initialGroup, 28_000, now + 28_000);
+
+  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.None, initialGroup.id);
+
+  const ordinaryGroup = session.getNextGroup();
+  assert.equal(
+    session.getSelectedExercise(ordinaryGroup).mirrorRelationship,
+    EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
+  );
+  assert.equal(session.state.pendingMovementGroupId, null);
+
+  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.Mirror, ordinaryGroup.id);
+
+  const restoredGroup = session.getNextGroup();
+  const restoredMirrorExercise = session.getSelectedExercise(restoredGroup);
+  assert.equal(getSelectionKey(restoredGroup), getSelectionKey(initialGroup));
+  assert.equal(restoredMirrorExercise.id, initialMirrorExercise.id);
+  assert.equal(
+    restoredMirrorExercise.mirrorRelationship,
+    EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
+  );
+  assert.equal(session.state.pendingMovementGroupId, null);
+  assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
+  assert.equal(session.state.activeWorkoutSession.modifierChanges.length, 2);
+});
+
 test("compatible modifier transition preserves current movement checkpoint", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const ordinary = groups.map((group, index) => exercise(
@@ -1661,13 +1726,10 @@ test("compatible modifier transition preserves current movement checkpoint", () 
   assert.equal(session.getSelectedExercise(session.getNextGroup()).id, currentExercise.id);
   assert.equal(session.state.pendingMovementGroupId, currentGroup.id);
   assert.equal(session.state.pendingMovementMillisecondsRemaining, 28_000);
-  assert.equal(
-    session.state.activeModifierProtectedSelectionGroupId,
-    getSelectionKey(currentGroup),
-  );
+  assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
   assert.equal(
     session.state.activeWorkoutSession.modifierChanges[0].protectedSelectionGroupId,
-    getSelectionKey(currentGroup),
+    "",
   );
 });
 
@@ -1728,7 +1790,52 @@ test("initialization replaces legacy protected incompatible movement", () => {
   assert.equal(restored.state.pendingMovementMillisecondsRemaining, 0);
 });
 
-test("compatible modifier transition protection covers every set of the current selection", () => {
+test("initialization clears legacy compatible protection without losing checkpoint", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const ordinary = groups.map((group, index) => exercise(
+    22_900 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  ));
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    ordinary,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const currentGroup = session.getNextGroup();
+  const currentExercise = session.getSelectedExercise(currentGroup);
+  session.beginMovement(currentGroup, 28_000, now + 28_000);
+
+  // Previous builds persisted compatible current work as a protection
+  // exception. Removing it must not discard a still-valid checkpoint.
+  session.state.activeModifierProtectedSelectionGroupId =
+    getSelectionKey(currentGroup);
+
+  const restored = new WorkoutSession(
+    ordinary,
+    parseStoredState(JSON.stringify(session.state)),
+    () => 0,
+    () => now,
+  );
+
+  restored.initialize();
+
+  assert.equal(restored.state.activeModifierProtectedSelectionGroupId, null);
+  assert.equal(restored.getNextGroup().id, currentGroup.id);
+  assert.equal(
+    restored.getSelectedExercise(restored.getNextGroup()).id,
+    currentExercise.id,
+  );
+  assert.equal(restored.state.pendingMovementGroupId, currentGroup.id);
+  assert.equal(restored.state.pendingMovementMillisecondsRemaining, 28_000);
+});
+
+test("compatible modifier transition preserves repeated selection without protection", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const ordinary = groups.map((group, index) => exercise(
     23_000 + index * 2,
@@ -1783,10 +1890,7 @@ test("compatible modifier transition protection covers every set of the current 
   const secondSet = session.getNextGroup();
   assert.equal(getSelectionKey(secondSet), getSelectionKey(firstRepeatedSet));
   assert.equal(secondSet.setNumber, 2);
-  assert.equal(
-    session.state.activeModifierProtectedSelectionGroupId,
-    getSelectionKey(firstRepeatedSet),
-  );
+  assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
   assert.equal(session.getSelectedExercise(secondSet).id, protectedExercise.id);
 
   session.recordOutcome(secondSet, false);

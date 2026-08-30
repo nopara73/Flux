@@ -379,7 +379,7 @@ public sealed class ExerciseSessionService
         if (GetNextGroup(state)?.Id != currentRound.Id)
         {
             throw new InvalidOperationException(
-                "Only the currently displayed workout block can be protected.");
+                "Only the currently displayed workout block can be replanned.");
         }
 
         WorkoutModifiers previousModifiers = state.ActiveWorkoutModifiers;
@@ -398,26 +398,22 @@ public sealed class ExerciseSessionService
             GetScheduleOrderedPlacements(state, priorPlacements);
         SelectedSequencePlacement currentPlacement = priorPlacements.Single(
             placement => placement.Anchor.Id == currentRound.SelectionKey);
-        bool currentSelectionFitsModifiers = GetSequenceExercises(
-                currentPlacement.Root)
-            .All(member => IsCompatibleWithModifiers(member, modifiers));
-        bool currentBlockAlreadyCompleted =
+        bool preserveCompletedCurrentSelection =
             GetPendingRestGroup(state)?.Id == currentRound.Id;
-        bool protectCurrentSelection =
-            currentSelectionFitsModifiers || currentBlockAlreadyCompleted;
         HashSet<string> lockedSelectionGroupIds = priorActiveRounds
             .Where(round => state.Outcomes.ContainsKey(round.Id))
             .Select(round => round.SelectionKey)
             .ToHashSet(StringComparer.Ordinal);
-        if (protectCurrentSelection)
+        if (preserveCompletedCurrentSelection)
         {
             lockedSelectionGroupIds.Add(currentRound.SelectionKey);
         }
         else
         {
-            // Earlier blocks of the same atomic selection may already have
-            // completed. Keep their durable block logs, but do not let their
-            // old selection pin an incompatible current block in place.
+            // The unfinished current slot must be chosen normally for the
+            // target profile. This lets both restrictive changes and newly
+            // enabled equipment preferences replace it. Earlier completed
+            // blocks remain in the durable workout log.
             lockedSelectionGroupIds.Remove(currentRound.SelectionKey);
         }
         SelectedSequencePlacement[] lockedPlacements = priorPlacements
@@ -475,7 +471,9 @@ public sealed class ExerciseSessionService
             state.LastWorkoutModifiers = modifiers;
             state.ActiveWorkoutModifiers = modifiers;
             state.ActiveModifierProtectedSelectionGroupId =
-                protectCurrentSelection ? currentRound.SelectionKey : null;
+                preserveCompletedCurrentSelection
+                    ? currentRound.SelectionKey
+                    : null;
             ApplyDistinctLineup(
                 state,
                 selectionGroups,
@@ -515,13 +513,14 @@ public sealed class ExerciseSessionService
                     state.Outcomes.Remove(priorRound.Id);
                 }
 
-                // Partial time belongs to the incompatible movement that was
-                // removed. The replacement returns in Ready state with its
-                // full timer; no score or Keep is changed.
+                // Partial time belongs to the movement that was removed. The
+                // replacement returns in Ready state with its full timer; no
+                // score or Keep is changed.
                 ClearPendingMovement(state);
                 state.ActiveModifierProtectedSelectionGroupId = null;
             }
 
+            WorkoutGroup? replannedNextRound = GetNextGroup(state);
             bool changedLockedSelection = lockedExerciseIdsByGroup.Any(entry =>
                 state.SelectedExerciseIds.GetValueOrDefault(
                     GetSelectionStorageKey(
@@ -536,21 +535,28 @@ public sealed class ExerciseSessionService
                 changedLockedSetCount ||
                 state.Outcomes.Keys.Any(outcomeGroupId =>
                     replannedRounds.All(round => round.Id != outcomeGroupId)) ||
-                (protectCurrentSelection &&
-                    GetNextGroup(state)?.Id != currentRound.Id) ||
-                (!protectCurrentSelection && !currentSelectionChanged) ||
-                (protectCurrentSelection &&
+                (preserveCompletedCurrentSelection &&
+                    replannedNextRound?.Id != currentRound.Id) ||
+                (!preserveCompletedCurrentSelection &&
+                    replannedNextRound?.SelectionKey !=
+                        currentRound.SelectionKey) ||
+                (!currentSelectionChanged &&
+                    replannedNextRound?.Id != currentRound.Id) ||
+                (!currentSelectionChanged &&
+                    pendingMovementGroupBefore is not null &&
+                    state.PendingMovementGroupId != pendingMovementGroupBefore) ||
+                (preserveCompletedCurrentSelection &&
                     state.PendingMovementGroupId is not null &&
                     state.PendingMovementGroupId != currentRound.Id) ||
-                (protectCurrentSelection &&
+                (preserveCompletedCurrentSelection &&
                     state.PendingRestGroupId is not null &&
                     state.PendingRestGroupId != currentRound.Id) ||
-                (!protectCurrentSelection &&
+                (currentSelectionChanged &&
                     state.PendingMovementGroupId is not null))
             {
                 throw new InvalidOperationException(
                     "The modifier change could not preserve completed work or " +
-                    "replace an incompatible current exercise safely.");
+                    "replan the current exercise safely.");
             }
 
             WorkoutSessionLog session = EnsureActiveWorkoutSession(
@@ -561,7 +567,7 @@ public sealed class ExerciseSessionService
                 ChangedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds(),
                 PreviousModifiers = previousModifiers,
                 NewModifiers = modifiers,
-                ProtectedSelectionGroupId = protectCurrentSelection
+                ProtectedSelectionGroupId = preserveCompletedCurrentSelection
                     ? currentRound.SelectionKey
                     : string.Empty,
                 PlannedSelections = CreateCurrentSelectionSnapshots(
@@ -2039,16 +2045,14 @@ public sealed class ExerciseSessionService
                 IsCompatibleWithModifiers(
                     member,
                     state.ActiveWorkoutModifiers));
-        if (remainsCompatible)
-        {
-            return;
-        }
-
-        // Older builds could persist an incompatible current movement as a
-        // protected exception. Drop both that exception and its partial timer
-        // before the normal lineup repair selects a valid replacement.
+        // Current work is no longer privileged merely because it is compatible.
+        // Older builds persisted that one-way exception; remove it on upgrade.
         state.ActiveModifierProtectedSelectionGroupId = null;
-        ClearPendingMovement(state);
+        if (!remainsCompatible)
+        {
+            // An incompatible legacy movement cannot keep its partial timer.
+            ClearPendingMovement(state);
+        }
     }
 
     private void CarrySlotPreferencesForward(WorkoutState state)
