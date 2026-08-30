@@ -343,6 +343,14 @@ button:disabled {
   margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modifier-group {
+  display: flex;
+  align-items: center;
   justify-content: center;
   gap: 8px;
 }
@@ -1619,6 +1627,10 @@ input:focus-visible {
   .duration-modifiers {
     min-height: clamp(74px, 6vw, 92px);
     margin-top: clamp(24px, 3dvh, 40px);
+    gap: 32px;
+  }
+
+  .modifier-group {
     gap: 16px;
   }
 
@@ -1931,6 +1943,22 @@ input:focus-visible {
     margin-right: 68px;
     margin-left: 68px;
     font-size: 9px;
+  }
+}
+
+@media (max-width: 340px) {
+  .duration-modifiers {
+    gap: 12px;
+  }
+
+  .modifier-group {
+    gap: 6px;
+  }
+
+  .modifier-tile {
+    width: 48px;
+    height: 48px;
+    padding: 10px;
   }
 }
 

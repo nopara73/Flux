@@ -71,7 +71,7 @@ public class MainActivity : Activity
     private LinearLayout _durationControls = null!;
     private LinearLayout _durationStepRow = null!;
     private FrameLayout _durationOptionLabels = null!;
-    private GridLayout _durationModifierGrid = null!;
+    private LinearLayout _durationModifierGroups = null!;
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
@@ -587,8 +587,8 @@ public class MainActivity : Activity
         _durationStepRow = FindRequiredView<LinearLayout>(Resource.Id.duration_step_row);
         _durationOptionLabels = FindRequiredView<FrameLayout>(
             Resource.Id.duration_option_labels);
-        _durationModifierGrid = FindRequiredView<GridLayout>(
-            Resource.Id.duration_modifier_grid);
+        _durationModifierGroups = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_modifier_groups);
         _hardFloorModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.hard_floor_modifier_button);
         _insectModifierButton = FindRequiredView<CheckBox>(
@@ -1035,8 +1035,7 @@ public class MainActivity : Activity
                 Gravity = GravityFlags.CenterHorizontal,
             };
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
-            _durationModifierGrid.LayoutParameters = modifierGridLayout;
-            _durationModifierGrid.ColumnCount = 5;
+            _durationModifierGroups.LayoutParameters = modifierGridLayout;
             SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
@@ -1096,8 +1095,7 @@ public class MainActivity : Activity
             Gravity = GravityFlags.CenterHorizontal,
         };
         portraitModifierGridLayout.TopMargin = DpInt(32);
-        _durationModifierGrid.LayoutParameters = portraitModifierGridLayout;
-        _durationModifierGrid.ColumnCount = 5;
+        _durationModifierGroups.LayoutParameters = portraitModifierGridLayout;
         SetModifierTileSizes(DpInt(48));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(
@@ -1543,15 +1541,13 @@ public class MainActivity : Activity
         return (int)Math.Round(Dp(value));
     }
 
-    private GridLayout.LayoutParams CreateModifierTileLayout(int size)
+    private LinearLayout.LayoutParams CreateModifierTileLayout(int size)
     {
-        var layout = new GridLayout.LayoutParams
+        var layout = new LinearLayout.LayoutParams(size, size)
         {
-            Width = size,
-            Height = size,
+            Gravity = GravityFlags.Center,
         };
-        layout.SetGravity(GravityFlags.Center);
-        int margin = DpInt(6);
+        int margin = DpInt(5);
         layout.SetMargins(margin, margin, margin, margin);
         return layout;
     }
@@ -1559,11 +1555,15 @@ public class MainActivity : Activity
     private void SetModifierTileSizes(int size)
     {
         int padding = GetModifierTilePadding(size);
-        for (int index = 0; index < _durationModifierGrid.ChildCount; index++)
+        foreach (CheckBox tile in new[]
+                 {
+                     _hardFloorModifierButton,
+                     _insectModifierButton,
+                     _silenceModifierButton,
+                     _wallModifierButton,
+                     _mirrorModifierButton,
+                 })
         {
-            View tile = _durationModifierGrid.GetChildAt(index)
-                ?? throw new InvalidOperationException(
-                    "A duration modifier tile is missing.");
             tile.LayoutParameters = CreateModifierTileLayout(size);
             tile.SetPadding(padding, padding, padding, padding);
         }

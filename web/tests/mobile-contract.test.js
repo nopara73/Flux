@@ -1474,6 +1474,23 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
   assert.doesNotMatch(workoutModule, /currentSelectionFitsModifiers/);
 });
 
+test("duration modifiers separate workout context from available equipment", () => {
+  assert.match(
+    durationLayout,
+    /duration_context_modifier_group[\s\S]*hard_floor_modifier_button[\s\S]*insect_modifier_button[\s\S]*silence_modifier_button[\s\S]*duration_equipment_modifier_group[\s\S]*wall_modifier_button[\s\S]*mirror_modifier_button/,
+  );
+  assert.match(
+    webIndex,
+    /modifier-context-group[\s\S]*hard-floor-modifier[\s\S]*insect-modifier[\s\S]*silence-modifier[\s\S]*modifier-equipment-group[\s\S]*wall-modifier[\s\S]*mirror-modifier/,
+  );
+  assert.match(webStyles, /\.duration-modifiers[\s\S]*gap: 20px/);
+  assert.match(webStyles, /\.modifier-group[\s\S]*gap: 8px/);
+  assert.match(
+    webStyles,
+    /@media \(max-width: 340px\)[\s\S]*\.duration-modifiers[\s\S]*gap: 12px[\s\S]*\.modifier-group[\s\S]*gap: 6px/,
+  );
+});
+
 test("active movement checkpoints and invalid media recovery match across platforms", async () => {
   const [stateStoreContract, stateStore] = await Promise.all([
     source("Flux", "Data", "IWorkoutStateStore.cs"),

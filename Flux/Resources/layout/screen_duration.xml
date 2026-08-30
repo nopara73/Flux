@@ -222,96 +222,111 @@
                         android:text="@string/duration_option_90" />
                 </FrameLayout>
 
-                <GridLayout
-                    android:id="@+id/duration_modifier_grid"
+                <LinearLayout
+                    android:id="@+id/duration_modifier_groups"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:alignmentMode="alignMargins"
-                    android:columnCount="5"
+                    android:baselineAligned="false"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:useDefaultMargins="false">
+                    android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/hard_floor_modifier_button"
-                        style="@style/DurationModifierTile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="center"
-                        android:button="@null"
-                        android:checked="true"
-                        android:contentDescription="@string/hard_floor_modifier_description"
-                        android:drawableTint="@color/duration_modifier_icon_tint"
-                        android:drawableTop="@drawable/ic_hard_floor"
-                        android:gravity="center"
-                        android:text=""
-                        android:tooltipText="@string/hard_floor_enabled_feedback" />
+                    <LinearLayout
+                        android:id="@+id/duration_context_modifier_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/insect_modifier_button"
-                        style="@style/DurationModifierTile"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="center"
-                        android:button="@null"
-                        android:checked="false"
-                        android:contentDescription="@string/insect_modifier_description"
-                        android:foreground="@drawable/ic_insect"
-                        android:foregroundGravity="center"
-                        android:foregroundTint="@color/duration_modifier_icon_tint"
-                        android:text=""
-                        android:tooltipText="@string/insect_mode_disabled_feedback" />
+                        <CheckBox
+                            android:id="@+id/hard_floor_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="true"
+                            android:contentDescription="@string/hard_floor_modifier_description"
+                            android:drawableTint="@color/duration_modifier_icon_tint"
+                            android:drawableTop="@drawable/ic_hard_floor"
+                            android:gravity="center"
+                            android:text=""
+                            android:tooltipText="@string/hard_floor_enabled_feedback" />
 
-                    <CheckBox
-                        android:id="@+id/silence_modifier_button"
-                        style="@style/DurationModifierTile"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="center"
-                        android:button="@null"
-                        android:checked="true"
-                        android:contentDescription="@string/silence_modifier_description"
-                        android:foreground="@drawable/ic_no_clap"
-                        android:foregroundGravity="center"
-                        android:text=""
-                        android:tooltipText="@string/noisy_exercises_disabled_feedback" />
+                        <CheckBox
+                            android:id="@+id/insect_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="false"
+                            android:contentDescription="@string/insect_modifier_description"
+                            android:foreground="@drawable/ic_insect"
+                            android:foregroundGravity="center"
+                            android:foregroundTint="@color/duration_modifier_icon_tint"
+                            android:text=""
+                            android:tooltipText="@string/insect_mode_disabled_feedback" />
 
-                    <CheckBox
-                        android:id="@+id/wall_modifier_button"
-                        style="@style/DurationModifierTile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="center"
-                        android:button="@null"
-                        android:checked="false"
-                        android:contentDescription="@string/wall_modifier_description"
-                        android:drawableTint="@color/duration_modifier_icon_tint"
-                        android:drawableTop="@drawable/ic_wall_off"
-                        android:gravity="center"
-                        android:text=""
-                        android:tooltipText="@string/wall_equipment_disabled_feedback" />
+                        <CheckBox
+                            android:id="@+id/silence_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="true"
+                            android:contentDescription="@string/silence_modifier_description"
+                            android:foreground="@drawable/ic_no_clap"
+                            android:foregroundGravity="center"
+                            android:text=""
+                            android:tooltipText="@string/noisy_exercises_disabled_feedback" />
+                    </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/mirror_modifier_button"
-                        style="@style/DurationModifierTile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="6dp"
-                        android:layout_gravity="center"
-                        android:button="@null"
-                        android:checked="false"
-                        android:contentDescription="@string/mirror_modifier_description"
-                        android:drawableTint="@color/duration_modifier_icon_tint"
-                        android:drawableTop="@drawable/ic_mirror"
-                        android:gravity="center"
-                        android:text=""
-                        android:tooltipText="@string/mirror_equipment_disabled_feedback" />
-                </GridLayout>
+                    <LinearLayout
+                        android:id="@+id/duration_equipment_modifier_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/wall_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="false"
+                            android:contentDescription="@string/wall_modifier_description"
+                            android:drawableTint="@color/duration_modifier_icon_tint"
+                            android:drawableTop="@drawable/ic_wall_off"
+                            android:gravity="center"
+                            android:text=""
+                            android:tooltipText="@string/wall_equipment_disabled_feedback" />
+
+                        <CheckBox
+                            android:id="@+id/mirror_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="false"
+                            android:contentDescription="@string/mirror_modifier_description"
+                            android:drawableTint="@color/duration_modifier_icon_tint"
+                            android:drawableTop="@drawable/ic_mirror"
+                            android:gravity="center"
+                            android:text=""
+                            android:tooltipText="@string/mirror_equipment_disabled_feedback" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/duration_option_segments"
