@@ -11,6 +11,8 @@ public enum WorkoutModifiers
     // represented by Mirror; a tall mirror by Mirror | TallMirror. The
     // qualifier is never valid without Mirror.
     TallMirror = 8,
+    // A rigid, slippery floor. This is one modifier;
+    // slipperiness is not a separate equipment state.
     HardFloor = 16,
     Wall = 32,
 }

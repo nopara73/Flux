@@ -17,6 +17,9 @@ $requiredIncompatibilityReasons = @(
     'RepeatedJumpingOrLanding'
     'RunningOrRapidFootImpact'
     'DeliberateStomping'
+    'LateralTravelOrDirectionChange'
+    'TractionLoadedWideOrSplitStance'
+    'PivotingStrikingOrKicking'
 )
 
 $review = Import-PowerShellDataFile -LiteralPath $ReviewPath -SkipLimitCheck

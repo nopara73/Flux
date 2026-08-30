@@ -7,7 +7,8 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 52;
+    public const int CurrentCatalogRevision = 53;
+    private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -1038,6 +1039,18 @@ public static class CatalogMigrationRules
                     575, 578, 581, 582, 583, 591, 609, 610, 611, 612, 613,
                     615, 616, 619, 687, 884, 885, 886, 887,
                 },
+                [53] = new HashSet<int>
+                {
+                    17, 19, 37, 41, 58, 60, 92, 93, 97, 103, 104, 105,
+                    107, 108, 109, 112, 116, 117, 120, 121, 122, 123, 124, 125,
+                    126, 127, 128, 129, 133, 136, 142, 143, 150, 156, 163, 174,
+                    178, 180, 181, 182, 183, 184, 190, 192, 193, 195, 199, 203,
+                    231, 232, 245, 278, 279, 280, 282, 303, 311, 314, 315,
+                    326, 340, 404, 408, 412, 478, 484, 508, 509, 534, 535,
+                    536, 538, 572, 576, 591, 610, 611, 626, 633, 636, 685, 687,
+                    733, 746, 748, 750, 816, 884, 885, 886, 887, 905, 915, 971,
+                    973, 986, 999,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1421,7 +1434,8 @@ public static class CatalogMigrationRules
             StringComparison.Ordinal);
 
     private static IReadOnlySet<int> GetWorkoutStateInvalidationExerciseIds(
-        int priorCatalogRevision)
+        int priorCatalogRevision,
+        int excludedRevision = 0)
     {
         var invalidatedExerciseIds = priorCatalogRevision <
             LastCumulativeWorkoutStateRevision
@@ -1431,7 +1445,7 @@ public static class CatalogMigrationRules
         foreach ((int revision, IReadOnlySet<int> exerciseIds) in
             ScopedWorkoutStateInvalidationsByRevision)
         {
-            if (revision > priorCatalogRevision)
+            if (revision > priorCatalogRevision && revision != excludedRevision)
             {
                 invalidatedExerciseIds.UnionWith(exerciseIds);
             }
@@ -1483,29 +1497,41 @@ public static class CatalogMigrationRules
         state.ActiveFullSideRoundIds ??= [];
         state.PendingScoreUpdates ??= [];
         IReadOnlySet<int> invalidatedExerciseIds =
-            GetWorkoutStateInvalidationExerciseIds(state.CatalogRevision);
+            GetWorkoutStateInvalidationExerciseIds(
+                state.CatalogRevision,
+                HardFloorSlipperinessCatalogRevision);
+        IReadOnlySet<int> hardFloorInvalidatedExerciseIds =
+            state.CatalogRevision < HardFloorSlipperinessCatalogRevision
+                ? ScopedWorkoutStateInvalidationsByRevision[
+                    HardFloorSlipperinessCatalogRevision]
+                : new HashSet<int>();
         IReadOnlySet<int> scoreInvalidatedExerciseIds =
             GetScoreInvalidationExerciseIds(state.CatalogRevision);
 
-        var selectionsWithRetiredExercises = state.SelectedExerciseIds
-            .Where(selection => invalidatedExerciseIds.Contains(selection.Value))
+        var selectionsWithInvalidatedExercises = state.SelectedExerciseIds
             .Select(selection => new
             {
                 StorageKey = selection.Key,
+                ExerciseId = selection.Value,
                 Parsed = ParseSelectionStorageKey(selection.Key),
             })
+            .Where(selection =>
+                invalidatedExerciseIds.Contains(selection.ExerciseId) ||
+                (hardFloorInvalidatedExerciseIds.Contains(selection.ExerciseId) &&
+                    (WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) &
+                        WorkoutModifiers.HardFloor) != 0))
             .ToArray();
         WorkoutModifiers activeModifiers = WorkoutModifierPolicy.Normalize(
             state.ActiveWorkoutModifiers);
         HashSet<string> selectionGroupsWithRetiredSelections =
-            selectionsWithRetiredExercises
+            selectionsWithInvalidatedExercises
                 .Where(selection =>
                     WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) ==
                         activeModifiers)
                 .Select(selection => selection.Parsed.SelectionGroupId)
                 .ToHashSet(StringComparer.Ordinal);
 
-        foreach (var selection in selectionsWithRetiredExercises)
+        foreach (var selection in selectionsWithInvalidatedExercises)
         {
             state.SelectedExerciseIds.Remove(selection.StorageKey);
         }

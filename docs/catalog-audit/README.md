@@ -31,10 +31,16 @@ reason. It also records the loop, crop, seam, speed, mirroring, travel, hold
 frame, and equipment review dimensions.
 
 [`modifier_coverage_deficits_2026-08-29.json`](modifier_coverage_deficits_2026-08-29.json)
-is the current output of the unchanged pairwise modifier validators. Wall is
-not a pairwise quota dimension, so the pre-existing deficit totals remain
-directly comparable after the 24-record extension. The ledger deliberately preserves real catalog debt
-rather than making the checks green through filler or false associations.
+is the frozen output of the unchanged pairwise modifier validators at that
+audit baseline. Wall is not a pairwise quota dimension, so the totals remained
+directly comparable after the 24-record extension. The later combined
+hard-and-slippery floor contract changes candidate membership, so current
+deficit counts are pinned by the Android and web contract tests instead of
+rewriting this dated artifact. The ledger deliberately preserves real catalog
+debt rather than making the checks green through filler or false associations.
+[`modifier_coverage_deficits_current.json`](modifier_coverage_deficits_current.json)
+is regenerated with `npm run refresh:catalog-deficit-ledger` from `web/` and is
+the ledger enforced by the production build.
 The methodology, summary, evidence, migrations, and correction classes are in
 [`../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
 

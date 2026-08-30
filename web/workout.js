@@ -18,6 +18,8 @@ export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
   Compatible: "Compatible",
   Incompatible: "Incompatible",
 });
+// "Hard Floor" is one combined contract: rigid and slippery.
+// Compatible movements must satisfy both impact-comfort and traction safety.
 export const EXERCISE_HARD_FLOOR_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
   Compatible: "Compatible",
@@ -231,7 +233,8 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 52;
+export const CURRENT_CATALOG_REVISION = 53;
+const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -337,6 +340,17 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 574,
     575, 578, 581, 582, 583, 591, 609, 610, 611, 612, 613,
     615, 616, 619, 687, 884, 885, 886, 887,
+  ])],
+  [53, new Set([
+    17, 19, 37, 41, 58, 60, 92, 93, 97, 103, 104, 105,
+    107, 108, 109, 112, 116, 117, 120, 121, 122, 123, 124, 125,
+    126, 127, 128, 129, 133, 136, 142, 143, 150, 156, 163, 174,
+    178, 180, 181, 182, 183, 184, 190, 192, 193, 195, 199, 203,
+    231, 232, 245, 278, 279, 280, 282, 303, 311, 314, 315,
+    326, 340, 404, 408, 412, 478, 484, 508, 509, 534, 535,
+    536, 538, 572, 576, 591, 610, 611, 626, 633, 636, 685, 687,
+    733, 746, 748, 750, 816, 884, 885, 886, 887, 905, 915, 971,
+    973, 986, 999,
   ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
@@ -6554,10 +6568,17 @@ export class WorkoutSession {
     const currentIdentities = Object.fromEntries(
       this.exercises.map((exercise) => [String(exercise.id), catalogIdentity(exercise)]),
     );
+    const hardFloorInvalidatedExerciseIds =
+      this.state.catalogRevision < HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION
+        ? SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(
+          HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION,
+        ) ?? new Set()
+        : new Set();
     const changedExerciseIds = catalogInvalidationIdsSince(
       this.state.catalogRevision,
       this.exercises,
       SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
+      new Set([HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION]),
     );
     const scoreResetExerciseIds = catalogInvalidationIdsSince(
       this.state.catalogRevision,
@@ -6582,9 +6603,13 @@ export class WorkoutSession {
       }
     }
 
-    if (changedExerciseIds.size > 0) {
+    if (changedExerciseIds.size > 0 || hardFloorInvalidatedExerciseIds.size > 0) {
       const affectedSelectionStorageKeys = Object.entries(this.state.selectedExerciseIds)
-        .filter(([, exerciseId]) => changedExerciseIds.has(exerciseId))
+        .filter(([selectionStorageKey, exerciseId]) =>
+          changedExerciseIds.has(exerciseId) ||
+          (hardFloorInvalidatedExerciseIds.has(exerciseId) &&
+            (this.parseSelectionStorageKey(selectionStorageKey).modifiers &
+              WORKOUT_MODIFIERS.HardFloor) !== 0))
         .map(([selectionStorageKey]) => selectionStorageKey);
       for (const selectionStorageKey of affectedSelectionStorageKeys) {
         delete this.state.selectedExerciseIds[selectionStorageKey];
@@ -6926,7 +6951,12 @@ function catalogIdentity(exercise) {
   return `${exercise.name}\u001f${exercise.video}`;
 }
 
-function catalogInvalidationIdsSince(priorRevision, exercises, scopedInvalidations) {
+function catalogInvalidationIdsSince(
+  priorRevision,
+  exercises,
+  scopedInvalidations,
+  excludedRevisions = new Set(),
+) {
   const invalidatedExerciseIds = new Set();
   if (priorRevision < LAST_CUMULATIVE_CATALOG_REVISION) {
     for (const exercise of exercises) {
@@ -6937,7 +6967,7 @@ function catalogInvalidationIdsSince(priorRevision, exercises, scopedInvalidatio
   }
 
   for (const [revision, exerciseIds] of scopedInvalidations) {
-    if (revision > priorRevision) {
+    if (revision > priorRevision && !excludedRevisions.has(revision)) {
       for (const exerciseId of exerciseIds) {
         invalidatedExerciseIds.add(exerciseId);
       }

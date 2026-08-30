@@ -30,22 +30,24 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(69)]
     [InlineData(70)]
     [InlineData(71)]
+    [InlineData(72)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(72, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(73, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 72)]
+    [InlineData(13, 73)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
     [InlineData(71, 71)]
     [InlineData(72, 72)]
-    [InlineData(72, 73)]
+    [InlineData(73, 73)]
+    [InlineData(73, 74)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -218,6 +220,39 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             preserved.Order());
         Assert.All(storedVersion68, entry =>
             Assert.Equal(entry.Key % 19 - 9, entry.Value.Score));
+    }
+
+    [Fact]
+    public void Version72UpgradeReclassifiesSlippingRisksWithoutResettingScores()
+    {
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "exercises.json")),
+                CatalogJsonOptions)
+            ?? throw new InvalidOperationException("The test catalog is missing.");
+        Dictionary<int, StoredExerciseSnapshot> storedVersion72 = catalog
+            .ToDictionary(
+                exercise => exercise.Id,
+                exercise => new StoredExerciseSnapshot(
+                    exercise.Name,
+                    exercise.Video,
+                    Score: exercise.Id % 23 - 11));
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            catalog,
+            storedVersion72);
+
+        Assert.Equal(catalog.Select(exercise => exercise.Id).ToHashSet(), preserved);
+        Assert.Equal(
+            ExerciseHardFloorCompatibility.Incompatible,
+            catalog.Single(exercise => exercise.Id == 37).HardFloorCompatibility);
+        Assert.Equal(
+            ExerciseHardFloorCompatibility.Compatible,
+            catalog.Single(exercise => exercise.Id == 101).HardFloorCompatibility);
+        Assert.All(storedVersion72, entry =>
+            Assert.Equal(entry.Key % 23 - 11, entry.Value.Score));
     }
 
     [Fact]

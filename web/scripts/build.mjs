@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  CURRENT_CATALOG_REVISION,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
   findWallRequiredCatalogDeficiencies,
@@ -152,7 +153,7 @@ const integrityDeficitReport = JSON.parse(await readFile(
     repositoryRoot,
     "docs",
     "catalog-audit",
-    "modifier_coverage_deficits_2026-08-29.json",
+    "modifier_coverage_deficits_current.json",
   ),
   "utf8",
 ));
@@ -160,6 +161,7 @@ const catalogSha256 = createHash("sha256")
   .update(normalizeLineEndings(catalogSource))
   .digest("hex");
 const integrityDebtMatches =
+  integrityDeficitReport.catalogRevision === CURRENT_CATALOG_REVISION &&
   integrityDeficitReport.catalogRecordCount === catalog.length &&
   integrityDeficitReport.catalogSha256 === catalogSha256 &&
   integrityDeficitReport.policy?.validatorsChanged === false &&

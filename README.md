@@ -196,9 +196,10 @@ shuffle, skip, and repeat do not.
 
 Flux currently provides five composable modifiers, in this UI order:
 
-- **Hard Floor**, enabled by default and shown first, admits only movements
-  reviewed as ergonomic on an ordinary rigid floor. Turning it off selects a
-  stable soft floor and relaxes that restriction;
+- **Hard Floor**, enabled by default and shown first, means one combined
+  surface condition: rigid **and slippery**. It admits only movements reviewed
+  for both impact comfort and low-traction execution. Turning it off selects a
+  stable soft floor and relaxes both restrictions;
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
@@ -246,7 +247,7 @@ duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
 
 Hard Floor also has an explicit category-preservation check. For every workout
-group, at least five hard-floor-compatible and five hard-floor-incompatible
+group, at least five combined hard-and-slippery-compatible and five incompatible
 sequences must remain available with Insect off/on, Silence off/on, and Mirror
 off. This prevents the relaxed soft-floor state from passing merely because it
 contains five exercises in total while one floor category is effectively
@@ -268,11 +269,16 @@ are recorded in [`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
 
 The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
 anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
-deficiencies, and one Silence materiality deficiency. The unchanged validators
-and every exact deficit are retained in
+deficiencies, and one Silence materiality deficiency. That frozen baseline and
+every exact deficit are retained in
 [`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
-no relationship or muscle assignment is inflated to hide them. All supported
-profiles still admit a distinct atomic lineup.
+no relationship or muscle assignment is inflated to hide them. After Hard
+Floor was defined as both rigid and slippery, the current validators expose
+245 pairwise deficiencies across 38 group IDs and 77 floor-category
+deficiencies across 24 group IDs. The stricter filter also resolves the former
+Silence materiality deficiency. The reproducible current ledger is
+[`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
+All supported profiles still admit a distinct atomic lineup.
 
 The pairwise guarantees grow quadratically with the number of quota-bearing
 modifiers. Wall's singleton floor remains constant-size and does not create new
@@ -462,7 +468,7 @@ Movement start and resume checkpoints use Android's non-blocking preference
 apply so the Play control responds without waiting for a disk flush; pausing,
 finishing, and score-changing actions still commit synchronously.
 
-The Android catalog uses SQLite schema version 72. Catalog migrations distinguish
+The Android catalog uses SQLite schema version 73. Catalog migrations distinguish
 semantic exercise replacements from approved name, timing, and media repairs.
 Unchanged identities retain their scores and valid keeps; changed identities
 invalidate only affected workout state. Score changes use a small recovery

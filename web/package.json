@@ -5,6 +5,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "check:parity": "node scripts/check-mobile-parity.mjs",
+    "refresh:catalog-deficit-ledger": "node scripts/refresh-catalog-deficit-ledger.mjs",
     "test": "npm run check:parity && node --test tests/*.test.js"
   }
 }

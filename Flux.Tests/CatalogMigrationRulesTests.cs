@@ -1423,7 +1423,7 @@ public sealed class CatalogMigrationRulesTests
             {
                 [kneePullGroup] = 31,
                 [highKneeReachGroup] = 618,
-                [nameOnlyGroup] = 915,
+                [nameOnlyGroup] = 914,
             },
             PendingScoreExerciseId = 31,
             PendingScoreValue = -3,
@@ -1433,7 +1433,7 @@ public sealed class CatalogMigrationRulesTests
 
         Assert.DoesNotContain(kneePullGroup, state.SelectedExerciseIds);
         Assert.DoesNotContain(highKneeReachGroup, state.SelectedExerciseIds);
-        Assert.Equal(915, state.SelectedExerciseIds[nameOnlyGroup]);
+        Assert.Equal(914, state.SelectedExerciseIds[nameOnlyGroup]);
         Assert.Equal(0, state.PendingScoreExerciseId);
         Assert.Equal(0, state.PendingScoreValue);
         Assert.Equal(
@@ -2142,6 +2142,105 @@ public sealed class CatalogMigrationRulesTests
         Assert.Contains(267, state.LastKeptExerciseIds);
         Assert.Contains(15, state.LastKeptExerciseIds);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void SlipperyHardFloorRevisionRebuildsPlacementsButPreservesFeedback()
+    {
+        int[] changedIds =
+        [
+            17, 19, 37, 41, 58, 60, 92, 93, 97, 103, 104, 105,
+            107, 108, 109, 112, 116, 117, 120, 121, 122, 123, 124, 125,
+            126, 127, 128, 129, 133, 136, 142, 143, 150, 156, 163, 174,
+            178, 180, 181, 182, 183, 184, 190, 192, 193, 195, 199, 203,
+            231, 232, 245, 278, 279, 280, 282, 303, 311, 314, 315,
+            326, 340, 404, 408, 412, 478, 484, 508, 509, 534, 535,
+            536, 538, 572, 576, 591, 610, 611, 626, 633, 636, 685, 687,
+            733, 746, 748, 750, 816, 884, 885, 886, 887, 905, 915, 971,
+            973, 986, 999,
+        ];
+        Assert.Equal(
+            changedIds.ToHashSet(),
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[53]);
+        Assert.False(CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(53));
+
+        const string changedGroup = "slippery.changed";
+        const string retainedGroup = "slippery.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 52,
+            ActiveWorkoutModifiers = WorkoutModifiers.HardFloor,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [$"p{(int)WorkoutModifiers.HardFloor}|{changedGroup}"] = 37,
+                [$"p{(int)WorkoutModifiers.HardFloor}|{retainedGroup}"] = 101,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 37,
+            PendingScoreValue = -3,
+            LastKeptExerciseIds = [37, 101],
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [37] = -3,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(
+            $"p{(int)WorkoutModifiers.HardFloor}|{changedGroup}",
+            state.SelectedExerciseIds);
+        Assert.Equal(
+            101,
+            state.SelectedExerciseIds[
+                $"p{(int)WorkoutModifiers.HardFloor}|{retainedGroup}"]);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(37, state.PendingScoreExerciseId);
+        Assert.Equal(-3, state.PendingScoreValue);
+        Assert.Equal(
+            -3,
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance][37]);
+        Assert.Contains(37, state.LastKeptExerciseIds);
+        Assert.Contains(101, state.LastKeptExerciseIds);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+
+        const string softFloorGroup = "slippery.soft-floor";
+        var softFloorState = new WorkoutState
+        {
+            CatalogRevision = 52,
+            ActiveWorkoutModifiers = WorkoutModifiers.None,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [softFloorGroup] = 37,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [softFloorGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = softFloorGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(softFloorState));
+        Assert.Equal(37, softFloorState.SelectedExerciseIds[softFloorGroup]);
+        Assert.Equal(ExerciseOutcome.Tick, softFloorState.Outcomes[softFloorGroup]);
+        Assert.Equal(softFloorGroup, softFloorState.PendingRestGroupId);
+        Assert.Equal(123456, softFloorState.PendingRestEndsAtUnixMilliseconds);
+        Assert.True(softFloorState.PendingRestKept);
     }
 
     [Fact]

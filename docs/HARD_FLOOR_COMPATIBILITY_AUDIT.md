@@ -1,9 +1,11 @@
 # Hard-floor compatibility audit
 
-Hard Floor is the first workout modifier and is enabled by default. Its two UI
-states are:
+Hard Floor is the first workout modifier and is enabled by default. It is one
+combined surface contract: the floor is both rigid and slippery. Slipperiness
+is not a separate modifier or optional interpretation. Its two UI states are:
 
-- **Hard floor ON:** only `Compatible` exercises are selectable.
+- **Hard floor ON:** only exercises reviewed for both hard-floor ergonomics and
+  low-traction execution are selectable.
 - **Hard floor OFF:** the user has a stable soft floor, so both `Compatible` and
   `Incompatible` exercises are selectable.
 
@@ -17,36 +19,48 @@ Every catalog ID must appear exactly once in
 `Unreviewed` until that explicit decision is added; generation, Android tests,
 and web tests reject an incomplete partition.
 
-An exercise is `Incompatible` when its demonstrated execution makes an
-ordinary rigid floor meaningfully less ergonomic through one of these audited
-mechanisms:
+An exercise is `Incompatible` when its demonstrated execution makes a rigid,
+slippery floor meaningfully less ergonomic or requires dependable traction
+through one of these audited mechanisms:
 
 - concentrated heel or forefoot loading, including sustained or repeated
   calf-raise and tiptoe work;
 - repeated jumping or landing;
-- running or rapid foot impact; or
-- deliberate stomping.
+- running or rapid foot impact;
+- deliberate stomping;
+- lateral travel or weight-bearing direction changes;
+- a traction-loaded wide, split, lunge, or staggered stance; or
+- pivoting strikes, stance-driven boxing movements, or forceful kicks.
 
-Ordinary planted standing, stepping, lunging, squatting, balance, mobility,
-boxing, dance, and mirror work remains `Compatible` unless the actual
-demonstration meets one of those mechanisms. Classification follows the final
-packaged movement, not its name or a coverage target. Every mandatory sequence
-must use one consistent floor classification across all of its blocks.
+Ordinary planted standing, controlled straight-line stepping, vertical
+squatting, static single-leg balance, mobility, and upper-body work remains
+`Compatible` unless the actual demonstration meets one of those mechanisms.
+The slippery-floor review does not assume a wet, oily, or otherwise acutely
+unsafe surface on which nobody should exercise. Classification follows the
+final packaged movement, not its name or a coverage target. Every mandatory
+sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 406 exercises
-- `Incompatible`: 93 exercises
+- `Compatible`: 309 exercises
+- `Incompatible`: 190 exercises
 - `Unreviewed`: 0 exercises
+
+Catalog revision 53 rebuilds cached placements for the 97 reclassified
+exercise IDs only when the saved profile has Hard Floor enabled. Soft Floor
+placements remain valid. Scores, keeps, phase feedback, history, and recovery
+state are preserved on both platforms. Android SQLite schema 73 applies the
+same catalog refresh without deleting stored scores.
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,
 Silence, and Mirror UI states. Of the 24 wall-required movements, the repeated
-wall calf raise and wall tibialis raise are hard-floor-incompatible under the
-same concentrated forefoot/heel rule as equivalent unsupported work; the other
-22 are compatible. Because Wall off excludes them and Wall is not a
-pairwise quota dimension, they do not hide or alter the pre-existing floor
-coverage deficits. The validation remains quadratic in the number of
+wall calf raise and wall tibialis raise are incompatible under the same
+concentrated forefoot/heel rule as equivalent unsupported work. Wall soleus
+stretch and wall calf stretch are also incompatible because their split stance
+requires dependable traction; the other 20 are compatible. Because Wall off
+excludes them and Wall is not a pairwise quota dimension, they do not hide or
+alter floor-coverage accounting. The validation remains quadratic in the number of
 quota-bearing modifiers; it does not require every state in the full modifier
 power set.
 
@@ -55,8 +69,10 @@ least five exercises from each exact floor category—`Compatible` and
 `Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
 Floor off still admits both categories at runtime; the category-specific audit
 exists so the larger combined pool cannot conceal a missing soft-floor-only or
-hard-floor-suitable side of a pair. The complete demonstration-integrity audit
-exposed **112** genuine category deficiencies across **44** group IDs. They
-remain explicitly reported in
-[`catalog-audit/modifier_coverage_deficits_2026-08-29.json`](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
-rather than being hidden with false floor or muscle classifications.
+hard-floor-suitable side of a pair. The current validators expose **77**
+genuine category deficiencies across **24** group IDs. They remain pinned in
+the Android and web contract tests and in the
+[`current deficit ledger`](catalog-audit/modifier_coverage_deficits_current.json)
+rather than being hidden with false floor or muscle classifications. The
+[`2026-08-29 deficit report`](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
+is intentionally retained as the pre-slipperiness baseline.

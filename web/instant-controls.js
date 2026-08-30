@@ -258,7 +258,9 @@
       element.dataset.hardFloor = enabled ? "hard" : "soft";
       element.setAttribute(
         "aria-label",
-        enabled ? "Floor surface: hard floor" : "Floor surface: soft floor",
+        enabled
+          ? "Floor surface: hard and slippery floor"
+          : "Floor surface: stable soft floor",
       );
     }
     if (name === "silence") {

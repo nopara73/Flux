@@ -57,13 +57,15 @@ These are established movements whose wall contact is integral to the exercise,
 not ordinary exercises relabeled because a nearby wall could offer optional
 balance assistance. The wall calf raise and wall tibialis raise remain
 hard-floor-incompatible because they concentrate repeated load through the
-forefoot or heel; Wall availability does not override the independent floor
-verdict. All 24 final packaged MP4s, crops, loops, and applicable
+forefoot or heel. Wall soleus stretch and wall calf stretch are also
+incompatible because Hard Floor means a rigid, slippery surface and their split
+stance requires dependable traction. Wall availability does not override the
+independent floor verdict. All 24 final packaged MP4s, crops, loops, and applicable
 hold frames were reviewed against their final names and metadata. The catalog
 generator rejects missing verdicts, linked-sequence disagreement, duplicate
 identities, and an undersized distinct-movement inventory.
 
 The authoritative classifications live in
 [`tools/ExerciseWallRequirements.psd1`](../tools/ExerciseWallRequirements.psd1).
-The Android catalog stores the verdict in SQLite schema 72; web consumes the
+The Android catalog stores the verdict in SQLite schema 73; web consumes the
 same generated catalog and enforces the same selection and startup invariants.

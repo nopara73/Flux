@@ -688,6 +688,9 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="mirror_equipment_disabled_feedback">equipment OFF: mirror<\/string>/);
   assert.match(strings, /<string name="hard_floor_enabled_feedback">hard floor ON<\/string>/);
   assert.match(strings, /<string name="hard_floor_disabled_feedback">hard floor OFF<\/string>/);
+  assert.match(strings, /<string name="hard_floor_modifier_on">Hard and slippery floor<\/string>/);
+  assert.match(strings, /<string name="hard_floor_modifier_off">Stable soft floor<\/string>/);
+  assert.match(webIndex, /Floor surface: hard and slippery floor/);
   for (const label of [
     "hard floor ON",
     "hard floor OFF",
@@ -715,7 +718,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webApp, /setAttribute\("title", workoutModifierFeedbackLabel\(flag, enabled\)\)/);
   assert.match(
     instantControls,
-    /name === "hardFloor"[\s\S]*Floor surface: hard floor[\s\S]*Floor surface: soft floor/,
+    /name === "hardFloor"[\s\S]*Floor surface: hard and slippery floor[\s\S]*Floor surface: stable soft floor/,
   );
   assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Compact[\s\S]*MIRROR_EQUIPMENT\.Tall/);
   assert.match(
@@ -739,7 +742,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*72/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*73/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,

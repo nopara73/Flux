@@ -85,10 +85,22 @@ public sealed class CatalogInvariantTests
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Unreviewed);
-        Assert.Equal(406, exercises.Count(exercise =>
+        Assert.Equal(309, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Compatible));
-        Assert.Equal(93, exercises.Count(exercise =>
+        Assert.Equal(190, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Incompatible));
+        Assert.All(
+            new[] { 37, 610, 326 },
+            exerciseId => Assert.Equal(
+                ExerciseHardFloorCompatibility.Incompatible,
+                exercises.Single(exercise => exercise.Id == exerciseId)
+                    .HardFloorCompatibility));
+        Assert.All(
+            new[] { 101, 167, 367 },
+            exerciseId => Assert.Equal(
+                ExerciseHardFloorCompatibility.Compatible,
+                exercises.Single(exercise => exercise.Id == exerciseId)
+                    .HardFloorCompatibility));
         Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
@@ -184,57 +196,52 @@ public sealed class CatalogInvariantTests
                 exercise.InsectCompatibility));
         WorkoutModifierPairCoverageDeficiency[] pairwiseDeficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).ToArray();
-        Assert.Equal(178, pairwiseDeficiencies.Length);
+        Assert.Equal(245, pairwiseDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
-                [3] = 2,
-                [5] = 13,
-                [7] = 3,
-                [10] = 26,
-                [15] = 29,
-                [20] = 31,
-                [30] = 74,
+                [3] = 8,
+                [5] = 20,
+                [7] = 15,
+                [10] = 34,
+                [15] = 34,
+                [20] = 43,
+                [30] = 91,
             },
             pairwiseDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
                 .ToDictionary(group => group.Key, group => group.Count()));
         Assert.Equal(
-            19,
+            38,
             pairwiseDeficiencies.Select(deficiency => deficiency.GroupId).Distinct().Count());
         WorkoutHardFloorCategoryCoverageDeficiency[] hardFloorCategoryDeficiencies =
             WorkoutModifierPolicy
                 .FindHardFloorCategoryCoverageDeficiencies(exercises)
                 .ToArray();
-        Assert.Equal(112, hardFloorCategoryDeficiencies.Length);
+        Assert.Equal(77, hardFloorCategoryDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
                 [3] = 6,
-                [5] = 12,
-                [7] = 10,
-                [10] = 13,
-                [15] = 14,
-                [20] = 15,
-                [30] = 42,
+                [5] = 7,
+                [7] = 11,
+                [10] = 9,
+                [15] = 7,
+                [20] = 13,
+                [30] = 24,
             },
             hardFloorCategoryDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
                 .ToDictionary(group => group.Key, group => group.Count()));
         Assert.Equal(
-            44,
+            24,
             hardFloorCategoryDeficiencies
                 .Select(deficiency => deficiency.GroupId)
                 .Distinct()
                 .Count());
         WorkoutModifierMaterialityDeficiency[] materialityDeficiencies =
             WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).ToArray();
-        WorkoutModifierMaterialityDeficiency materialityDeficiency =
-            Assert.Single(materialityDeficiencies);
-        Assert.Equal(16, materialityDeficiency.MaterialExerciseCount);
-        Assert.Equal(17, materialityDeficiency.RequiredMaterialExerciseCount);
-        Assert.Equal(19, materialityDeficiency.AffectedBucketCount);
-        Assert.Equal(3, materialityDeficiency.RequiredAffectedBucketCount);
+        Assert.Empty(materialityDeficiencies);
         WorkoutProfileLineupDeficiency[] lineupDeficiencies =
             WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
         Assert.Empty(lineupDeficiencies);
