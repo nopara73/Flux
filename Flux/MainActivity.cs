@@ -1647,8 +1647,8 @@ public class MainActivity : Activity
         int drawableResourceId = equipment switch
         {
             WallEquipment.None => Resource.Drawable.ic_wall_off,
-            WallEquipment.SolesStayOff => Resource.Drawable.ic_wall,
-            WallEquipment.SolesMayTouch => Resource.Drawable.ic_wall_sole,
+            WallEquipment.SolesStayOff => Resource.Drawable.ic_wall_no_sole,
+            WallEquipment.SolesMayTouch => Resource.Drawable.ic_wall,
             _ => Resource.Drawable.ic_wall_off,
         };
         _wallModifierButton.SetCompoundDrawablesWithIntrinsicBounds(

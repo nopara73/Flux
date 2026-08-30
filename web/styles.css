@@ -460,8 +460,8 @@ button.modifier-tile:not(:disabled):active {
   display: none;
 }
 
-.wall-footprint {
-  stroke-width: 1.5;
+.wall-no-sole-slash {
+  stroke-width: 2.4;
 }
 
 .modifier-tile[data-wall-equipment="none"] .wall-glyph-none,
