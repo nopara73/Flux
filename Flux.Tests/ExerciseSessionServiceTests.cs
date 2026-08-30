@@ -1613,7 +1613,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void FortyFiveMinuteExtraSetsPreferHardExercisesBeforeNonHardKeeps()
+    public void FortyFiveMinuteExtraSetsPreferKeepsThenUnkeptHardExercises()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
         Exercise[] exercises = groups
@@ -1638,20 +1638,19 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 45, WorkoutModifiers.None);
 
-        string[] expected = groups.Skip(10)
-            .Take(15)
-            .Select(group => group.Id)
-            .ToArray();
-        Assert.Equal(
-            expected.Order(),
-            state.ActiveExtraSetSelectionGroupIds.Order());
-        Assert.All(groups.Take(10), group => Assert.Single(
-            service.GetActiveGroups(state),
-            round => round.SelectionKey == group.Id));
-        Assert.All(groups.Skip(10).Take(15), group => Assert.Equal(
+        Assert.All(groups.Take(10), group => Assert.Equal(
             2,
             service.GetActiveGroups(state)
                 .Count(round => round.SelectionKey == group.Id)));
+        Assert.Equal(
+            5,
+            groups.Skip(10).Take(15).Count(group =>
+                service.GetActiveGroups(state)
+                    .Count(round => round.SelectionKey == group.Id) == 2));
+        Assert.All(groups.Skip(25), group => Assert.Single(
+            service.GetActiveGroups(state),
+            round => round.SelectionKey == group.Id));
+        Assert.Equal(15, state.ActiveExtraSetSelectionGroupIds.Count);
     }
 
     [Theory]
@@ -1695,6 +1694,50 @@ public sealed class ExerciseSessionServiceTests
             state.ActiveSetCountsBySelectionGroupId[groups[0].Id]);
         Assert.Equal(
             expectedRepeatedSingleBlockCount,
+            groups.Skip(2).Count(group =>
+                state.ActiveSetCountsBySelectionGroupId[group.Id] == 2));
+        Assert.All(
+            state.ActiveSetCountsBySelectionGroupId.Values,
+            setCount => Assert.InRange(setCount, 1, 2));
+    }
+
+    [Fact]
+    public void KeptMultiBlockSequenceRepeatsBeforeUnkeptSingleBlockExercises()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise first = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(1, groups[0], score: 100),
+            2);
+        Exercise second = CloneWithLinkedSequenceMember(
+            QualifiedForGroup(2, groups[1], score: 100),
+            1);
+        Exercise[] singleBlockExercises = groups
+            .Skip(2)
+            .Select((group, index) => QualifiedForGroup(
+                100 + index,
+                group,
+                score: 100))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [first, second, .. singleBlockExercises],
+            new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            KeptExerciseRootIdsBySelectionGroupId = new Dictionary<string, HashSet<int>>(
+                StringComparer.Ordinal)
+            {
+                [groups[0].Id] = [first.Id],
+            },
+        };
+
+        service.StartWorkout(state, 45, WorkoutModifiers.None);
+
+        Assert.Equal(
+            2,
+            state.ActiveSetCountsBySelectionGroupId[groups[0].Id]);
+        Assert.Equal(
+            13,
             groups.Skip(2).Count(group =>
                 state.ActiveSetCountsBySelectionGroupId[group.Id] == 2));
         Assert.All(

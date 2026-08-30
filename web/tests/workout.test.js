@@ -3721,6 +3721,86 @@ for (const [minutes, expectedMultiBlockSets, expectedRepeatedSingles] of [
   });
 }
 
+test("kept multiblock sequence repeats before unkept single-block exercises", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const first = exercise(
+    1,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    100,
+  );
+  const second = exercise(
+    2,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    100,
+  );
+  first.sequenceBlocks = [
+    { ...first.sequenceBlocks[0] },
+    { ...second.sequenceBlocks[0] },
+  ];
+  second.sequenceBlocks = [];
+  const singleBlockExercises = groups.slice(2).map((group, index) => exercise(
+    100 + index,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    100,
+  ));
+  const state = createDefaultState();
+  state.keptExerciseRootIdsBySelectionGroupId[groups[0].id] = [first.id];
+  const session = new WorkoutSession(
+    [first, second, ...singleBlockExercises],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  assert.equal(
+    session.state.activeSetCountsBySelectionGroupId[groups[0].id],
+    2,
+  );
+  assert.equal(
+    groups.slice(2).filter((group) =>
+      session.state.activeSetCountsBySelectionGroupId[group.id] === 2).length,
+    13,
+  );
+  assert.ok(Object.values(session.state.activeSetCountsBySelectionGroupId)
+    .every((setCount) => setCount >= 1 && setCount <= 2));
+});
+
+test("extra sets prefer keeps then hard exercises among unkept choices", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+  ));
+  for (const candidate of exercises.slice(10, 25)) {
+    candidate.muscularDemand = HARD_MUSCULAR_DEMAND;
+  }
+  const state = createDefaultState();
+  for (let index = 0; index < 10; index += 1) {
+    state.keptExerciseRootIdsBySelectionGroupId[groups[index].id] = [
+      exercises[index].id,
+    ];
+  }
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  session.startWorkout(45, WORKOUT_MODIFIERS.None);
+
+  assert.ok(groups.slice(0, 10).every((group) =>
+    session.state.activeSetCountsBySelectionGroupId[group.id] === 2));
+  assert.equal(
+    groups.slice(10, 25).filter((group) =>
+      session.state.activeSetCountsBySelectionGroupId[group.id] === 2).length,
+    5,
+  );
+  assert.ok(groups.slice(25).every((group) =>
+    session.state.activeSetCountsBySelectionGroupId[group.id] === 1));
+  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 15);
+});
+
 for (const minutes of [3, 5, 7, 10, 15, 20, 30]) {
   test(`same-primary sequences yield to exact ${minutes}-minute block capacity`, () => {
     const exercises = directionPairCatalog();

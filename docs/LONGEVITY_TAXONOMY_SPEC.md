@@ -444,12 +444,12 @@ Multi-category tags remain scientifically and analytically useful, but the requi
   satisfy those slots together; same-primary side or direction blocks consume
   time without claiming extra slots. All blocks stay consecutive even when the
   surrounding group order shifts.
-- Long-workout extra sets are allocated to placements with the fewest current
-  sets first. Within that set-count layer, one-block sequences precede
-  multi-block sequences, followed by hard-work, Keep, and workout-order
-  priority. Exact remaining-duration feasibility may skip a candidate. This
-  prevents a third standalone set while an eligible multi-block placement is
-  still waiting for its second set.
+- Long-workout extra sets first respect phase-specific rejection feedback, then
+  favor placements with the fewest current sets. Within that layer, an
+  exact-slot Keep precedes every unkept choice, including when the kept sequence
+  has multiple blocks. One-block sequences then precede multi-block sequences,
+  followed by hard-work and workout-order priority. Exact remaining-duration
+  feasibility may skip a candidate that cannot fit.
 - Every retained record must be declared in exactly one mandatory sequence or
   in the explicit standalone inventory. There is no implicit standalone
   fallback; generation rejects unreviewed, overlapping, or orphaned records.

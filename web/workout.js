@@ -5421,6 +5421,8 @@ export class WorkoutSession {
           return rightScore - leftScore ||
           setCountsBySelectionGroupId.get(left.anchor.id) -
             setCountsBySelectionGroupId.get(right.anchor.id) ||
+          Number(this.isSequenceKept(right.anchor.id, right.root)) -
+            Number(this.isSequenceKept(left.anchor.id, left.root)) ||
           Number(blockCostByGroup.get(right.anchor.id) === 1) -
             Number(blockCostByGroup.get(left.anchor.id) === 1);
         })

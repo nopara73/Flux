@@ -4345,6 +4345,10 @@ public sealed class ExerciseSessionService
                     placement.Root,
                     GetPhaseAfterAddingSet(placement)))
                 .ThenBy(placement => setCounts[placement.Anchor.Id])
+                .ThenByDescending(placement => IsSequenceKept(
+                    state,
+                    placement.Anchor.Id,
+                    placement.Root))
                 .ThenByDescending(placement =>
                     blockCostByGroup[placement.Anchor.Id] == 1)
                 .FirstOrDefault(placement =>

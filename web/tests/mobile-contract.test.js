@@ -1592,11 +1592,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
-    /OrderByDescending\(placement => GetPhaseScoreAdjustment\([\s\S]*ThenBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
+    /OrderByDescending\(placement => GetPhaseScoreAdjustment\([\s\S]*ThenBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement => IsSequenceKept\([\s\S]*placement\.Anchor\.Id,[\s\S]*placement\.Root\)\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
   );
   assert.match(
     workoutModule,
-    /getPhaseScoreAdjustment\([\s\S]*getPhaseAfterAddingSet[\s\S]*rightScore - leftScore \|\|[\s\S]*setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1/,
+    /getPhaseScoreAdjustment\([\s\S]*getPhaseAfterAddingSet[\s\S]*rightScore - leftScore \|\|[\s\S]*setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*isSequenceKept\(right\.anchor\.id, right\.root\)[\s\S]*isSequenceKept\(left\.anchor\.id, left\.root\)[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1/,
   );
   assert.match(
     sessionService,
