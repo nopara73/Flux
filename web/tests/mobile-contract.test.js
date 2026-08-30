@@ -1483,11 +1483,18 @@ test("duration modifiers separate workout context from available equipment", () 
     webIndex,
     /modifier-context-group[\s\S]*hard-floor-modifier[\s\S]*insect-modifier[\s\S]*silence-modifier[\s\S]*modifier-equipment-group[\s\S]*wall-modifier[\s\S]*mirror-modifier/,
   );
-  assert.match(webStyles, /\.duration-modifiers[\s\S]*gap: 20px/);
-  assert.match(webStyles, /\.modifier-group[\s\S]*gap: 8px/);
+  assert.match(
+    durationLayout,
+    /duration_context_modifier_group[\s\S]*background="@drawable\/duration_modifier_group_background"[\s\S]*duration_equipment_modifier_group[\s\S]*background="@drawable\/duration_modifier_group_background"/,
+  );
+  assert.match(webStyles, /\.duration-modifiers[\s\S]*gap: 12px/);
   assert.match(
     webStyles,
-    /@media \(max-width: 340px\)[\s\S]*\.duration-modifiers[\s\S]*gap: 12px[\s\S]*\.modifier-group[\s\S]*gap: 6px/,
+    /\.modifier-group\s*\{[\s\S]*gap: 5px;[\s\S]*padding: 4px;[\s\S]*border: 1px solid #9f978d;[\s\S]*border-radius: 22px;[\s\S]*background: #e8e0d6;/,
+  );
+  assert.match(
+    webStyles,
+    /@media \(max-width: 340px\)[\s\S]*\.duration-modifiers[\s\S]*gap: 8px[\s\S]*\.modifier-group[\s\S]*gap: 4px/,
   );
 });
 
