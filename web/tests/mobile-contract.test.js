@@ -982,6 +982,30 @@ test("movement and rest phases use pronounced accents across the surface, media,
   );
 });
 
+test("Android landscape keeps controls left and the demonstration on the right", () => {
+  const workoutLayoutMethod = methodBody(
+    mainActivity,
+    "private void ApplyWorkoutLayout(",
+    "private void ApplyCompletionLayout(",
+  );
+  assert.match(
+    mainActivity,
+    /_workoutControlColumn = new LinearLayout\(this\)[\s\S]*Orientation = Orientation\.Vertical[\s\S]*LayoutDirection = LayoutDirection\.Ltr/,
+  );
+  assert.match(
+    workoutLayoutMethod,
+    /if \(landscape\)[\s\S]*MoveWorkoutView\(_workoutHeader, _workoutControlColumn, 0\)[\s\S]*MoveWorkoutView\(_workoutActionHost, _workoutControlColumn, 1\)[\s\S]*MoveWorkoutView\(_workoutControlColumn, _workoutInsetContent, 0\)[\s\S]*MoveWorkoutView\(_exerciseMediaArea, _workoutInsetContent, 1\)/,
+  );
+  assert.match(
+    workoutLayoutMethod,
+    /MoveWorkoutView\(_workoutHeader, _workoutInsetContent, 0\)[\s\S]*MoveWorkoutView\(_exerciseMediaArea, _workoutInsetContent, 1\)[\s\S]*MoveWorkoutView\(_workoutActionHost, _workoutInsetContent, 2\)/,
+  );
+  assert.match(
+    webStyles,
+    /\.workout-header[\s\S]*grid-column: 1[\s\S]*\.exercise-media-area[\s\S]*grid-column: 2[\s\S]*\.workout-action-host[\s\S]*grid-column: 1/,
+  );
+});
+
 test("literal work-block timelines and logical exercise progress match", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");

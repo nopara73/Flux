@@ -91,6 +91,7 @@ public class MainActivity : Activity
     private View _workoutPhaseLeft = null!;
     private View _workoutPhaseRight = null!;
     private LinearLayout _workoutInsetContent = null!;
+    private LinearLayout _workoutControlColumn = null!;
     private LinearLayout _workoutHeader = null!;
     private TextView _workoutProgressText = null!;
     private ProgressBar _workoutProgressBar = null!;
@@ -556,6 +557,11 @@ public class MainActivity : Activity
         _workoutPhaseRight = FindRequiredView<View>(Resource.Id.workout_phase_right);
         _workoutInsetContent = FindRequiredView<LinearLayout>(
             Resource.Id.workout_inset_content);
+        _workoutControlColumn = new LinearLayout(this)
+        {
+            Orientation = Orientation.Vertical,
+            LayoutDirection = LayoutDirection.Ltr,
+        };
         _workoutHeader = FindRequiredView<LinearLayout>(Resource.Id.workout_header);
         _workoutProgressText = FindRequiredView<TextView>(Resource.Id.workout_progress_text);
         _workoutProgressBar = FindRequiredView<ProgressBar>(Resource.Id.workout_progress_bar);
@@ -1095,6 +1101,7 @@ public class MainActivity : Activity
         int gap = Resources!.GetDimensionPixelSize(
             Resource.Dimension.landscape_content_gap);
 
+        ArrangeWorkoutContent(landscape);
         _workoutInsetContent.Orientation = landscape
             ? Orientation.Horizontal
             : Orientation.Vertical;
@@ -1104,22 +1111,29 @@ public class MainActivity : Activity
 
         if (landscape)
         {
-            _workoutHeader.LayoutParameters = new LinearLayout.LayoutParams(
+            _workoutControlColumn.LayoutParameters = new LinearLayout.LayoutParams(
                 0,
                 matchParent,
-                0.92f);
+                0.96f);
+
+            var headerLayout = new LinearLayout.LayoutParams(
+                matchParent,
+                0,
+                1f);
+            headerLayout.BottomMargin = gap;
+            _workoutHeader.LayoutParameters = headerLayout;
+
+            _workoutActionHost.LayoutParameters = new LinearLayout.LayoutParams(
+                matchParent,
+                0,
+                1f);
 
             var mediaLayout = new LinearLayout.LayoutParams(
                 0,
                 matchParent,
                 1.28f);
-            mediaLayout.SetMargins(gap, 0, gap, 0);
+            mediaLayout.MarginStart = gap;
             _exerciseMediaArea.LayoutParameters = mediaLayout;
-
-            _workoutActionHost.LayoutParameters = new LinearLayout.LayoutParams(
-                0,
-                matchParent,
-                0.96f);
         }
         else
         {
@@ -1152,6 +1166,47 @@ public class MainActivity : Activity
                 matchParent,
                 GravityFlags.Center);
         }
+    }
+
+    private void ArrangeWorkoutContent(bool landscape)
+    {
+        if (landscape)
+        {
+            MoveWorkoutView(_workoutHeader, _workoutControlColumn, 0);
+            MoveWorkoutView(_workoutActionHost, _workoutControlColumn, 1);
+            MoveWorkoutView(_workoutControlColumn, _workoutInsetContent, 0);
+            MoveWorkoutView(_exerciseMediaArea, _workoutInsetContent, 1);
+            return;
+        }
+
+        MoveWorkoutView(_workoutHeader, _workoutInsetContent, 0);
+        MoveWorkoutView(_exerciseMediaArea, _workoutInsetContent, 1);
+        MoveWorkoutView(_workoutActionHost, _workoutInsetContent, 2);
+        if (_workoutControlColumn.Parent is ViewGroup parent)
+        {
+            parent.RemoveView(_workoutControlColumn);
+        }
+    }
+
+    private static void MoveWorkoutView(
+        View view,
+        ViewGroup destination,
+        int destinationIndex)
+    {
+        if (view.Parent is ViewGroup currentParent)
+        {
+            if (ReferenceEquals(currentParent, destination) &&
+                currentParent.IndexOfChild(view) == destinationIndex)
+            {
+                return;
+            }
+
+            currentParent.RemoveView(view);
+        }
+
+        destination.AddView(
+            view,
+            Math.Min(destinationIndex, destination.ChildCount));
     }
 
     private void ApplyCompletionLayout(bool landscape)
