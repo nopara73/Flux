@@ -85,6 +85,11 @@ $wallRequirementReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseWallRequirements.psd1') -SkipLimitCheck
 $wallRequiredExerciseIds = @(
     $wallRequirementReview.Required | ForEach-Object { [int]$_ })
+$soleWallContactRequirementReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSoleWallContactRequirements.psd1') -SkipLimitCheck
+$soleWallContactRequiredExerciseIds = @(
+    $soleWallContactRequirementReview.Required |
+        ForEach-Object { [int]$_ })
 $silenceCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseSilenceCompatibility.psd1') -SkipLimitCheck
 $silentExerciseIds = @(
@@ -242,8 +247,23 @@ if ($wallRequiredExerciseIds.Count -ne
             $_ -notin $retainedExerciseIds }).Count -gt 0) {
     throw 'WallRequired must contain unique retained exercise IDs only.'
 }
+$invalidSoleWallContactRequirementIds = @(
+    $soleWallContactRequiredExerciseIds | Where-Object {
+        $_ -notin $retainedExerciseIds -or
+        $_ -notin $wallRequiredExerciseIds
+    })
+if ($soleWallContactRequiredExerciseIds.Count -ne
+        @($soleWallContactRequiredExerciseIds |
+            Sort-Object -Unique).Count -or
+    $invalidSoleWallContactRequirementIds.Count -gt 0) {
+    throw 'SoleWallContactRequired must contain unique retained WallRequired exercise IDs only.'
+}
+$baseWallRequiredExerciseIds = @(
+    $wallRequiredExerciseIds | Where-Object {
+        $_ -notin $soleWallContactRequiredExerciseIds
+    })
 $wallRequiredSessionMovementCount = @(
-    $wallRequiredExerciseIds | ForEach-Object {
+    $baseWallRequiredExerciseIds | ForEach-Object {
         if ($sessionMovementByExerciseId.ContainsKey($_)) {
             [int]$sessionMovementByExerciseId[$_]
         }
@@ -252,7 +272,19 @@ $wallRequiredSessionMovementCount = @(
         }
     } | Sort-Object -Unique).Count
 if ($wallRequiredSessionMovementCount -lt 20) {
-    throw "WallRequired requires at least 20 distinct session movements; found $wallRequiredSessionMovementCount."
+    throw "WallRequired without sole contact requires at least 20 distinct session movements; found $wallRequiredSessionMovementCount."
+}
+$soleWallContactRequiredSessionMovementCount = @(
+    $soleWallContactRequiredExerciseIds | ForEach-Object {
+        if ($sessionMovementByExerciseId.ContainsKey($_)) {
+            [int]$sessionMovementByExerciseId[$_]
+        }
+        else {
+            [int]$_
+        }
+    } | Sort-Object -Unique).Count
+if ($soleWallContactRequiredSessionMovementCount -lt 5) {
+    throw "SoleWallContactRequired requires at least 5 distinct session movements; found $soleWallContactRequiredSessionMovementCount."
 }
 
 $allHardFloorReviewedExerciseIds = @(
@@ -3384,6 +3416,8 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
                 'Incompatible'
             }
             wallRequired = $exerciseId -in $wallRequiredExerciseIds
+            soleWallContactRequired =
+                $exerciseId -in $soleWallContactRequiredExerciseIds
             mirrorRelationship = if (
                 $exerciseId -in $mirrorOnlyExerciseIds) {
                 'MirrorOnly'
@@ -3739,6 +3773,9 @@ $constraintViolations = $records | Where-Object {
     $_['hardFloorCompatibility'] -notin @(
         'Compatible', 'Incompatible') -or
     -not ($_['wallRequired'] -is [bool]) -or
+    -not ($_['soleWallContactRequired'] -is [bool]) -or
+    ([bool]$_['soleWallContactRequired'] -and
+        -not [bool]$_['wallRequired']) -or
     -not ($_['silent'] -is [bool]) -or
     [string]::IsNullOrWhiteSpace($_['primaryCanonicalGroup']) -or
     $_['primaryCanonicalGroup'] -notin $canonicalGroupKeys -or
@@ -3827,6 +3864,10 @@ foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 
             $sequenceViolations.Add($rootId)
         }
         if ([bool]$member['wallRequired'] -ne [bool]$root['wallRequired']) {
+            $sequenceViolations.Add($rootId)
+        }
+        if ([bool]$member['soleWallContactRequired'] -ne
+                [bool]$root['soleWallContactRequired']) {
             $sequenceViolations.Add($rootId)
         }
     }

@@ -34,9 +34,13 @@ $actualDemonstrations = @{
     559 = 'A tiptoe side-leg hold with a circular arm sweep performed while using a ballet barre for support.'
     561 = 'Rapid small tiptoe running steps with a full-body turn and a spotting head action.'
     562 = 'Repeated ballet calf raises coordinated with broad arm sweeps.'
-    564 = 'Parallel calf raises with hands resting on the hips; no visible pelvic-floor action can be inferred from the silent loop.'
+    563 = 'A planted hip airplane performed with the free foot pressing into the wall behind the body.'
+    564 = 'A standing isometric glute press with the bent free leg placing the shoe sole against the wall.'
     565 = 'Repeated mini squats with a forward arm reach; the heels stay down.'
     566 = 'Parallel two-leg calf raises.'
+    567 = 'A split squat performed with the rear shoe sole supported against a plain wall.'
+    568 = 'A standing calf stretch with the front shoe sole angled against the wall.'
+    574 = 'Repeated standing toe taps against the wall while both hands provide light wall support.'
     581 = 'Two-leg calf raises with the toes turned inward.'
     582 = 'Two-leg calf raises with the toes turned outward.'
     615 = 'Alternating standing hamstring curls while the hands remain together in a prayer position.'
@@ -132,9 +136,13 @@ function Get-CorrectionReason {
         556 { return 'The heels never rise; the meaningful action is an easy hand/forearm clench-and-release movement.' }
         561 { return 'The loop is rapid tiptoe running with spotting rather than a classical bourree; the name and anatomy were narrowed to actions actually shown.' }
         562 { return 'The generic label and inflated whole-body associations were replaced by the exact calf-raise and arm-sweep action.' }
-        564 { return 'A silent visual demonstration cannot establish a voluntary pelvic-floor contraction; the visible calf raise is now the exercise.' }
+        563 { return 'The exact wall-supported hip-airplane demonstration replaces a redundant calf variation and requires sole-to-wall access.' }
+        564 { return 'The exact standing foot-to-wall press replaces a redundant calf variation and requires sole-to-wall access.' }
         565 { return 'No calf raise or visible pelvic-floor action occurs; the demonstrated mini squat and reach are now authoritative.' }
         566 { return 'A silent loop cannot establish pelvic-floor support; only the visible calf-raise mechanics remain associated.' }
+        567 { return 'The exact foot-on-wall split squat replaces a redundant calf variation and requires sole-to-wall access.' }
+        568 { return 'The exact toes-on-wall calf stretch replaces a redundant calf variation and requires sole-to-wall access.' }
+        574 { return 'The exact wall toe-tap demonstration replaces a redundant calf-and-shoulder variation and requires sole-to-wall access.' }
         581 { return 'A silent loop cannot establish pelvic-floor support; only the visible toes-in calf-raise mechanics remain associated.' }
         582 { return 'A silent loop cannot establish pelvic-floor support; only the visible toes-out calf-raise mechanics remain associated.' }
         615 { return 'The loop clearly alternates hamstring curls; the name, primary muscle, and supporting associations now state that movement directly.' }

@@ -8528,24 +8528,24 @@
     }
     563 = @{
         RetiredName = 'Peekaboo-Guard Shoulder Rhythm'
-        Name = 'Single-Leg Calf Raise with Head Turns'
+        Name = 'Hip Airplane with Back Foot on Wall'
         Practice = 'Balance training'
-        MotionProfile = 'SingleLegCalfRaiseHeadTurn'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'HipAbductors', 'DeepHipRotators', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
-        SideSequence = 'ScreenLeftThenRight'
+        MotionProfile = 'WallSupportedHipAirplane'
+        Primary = 'HipAbductors'
+        Secondary = @('DeepHipRotators', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'single-leg-calf-raise-head-turns.mp4'
-            Url = 'https://www.youtube.com/watch?v=jM--1N7PTV0'
-            SourcePage = 'https://www.youtube.com/watch?v=jM--1N7PTV0'
+            File = 'hip-airplane-back-foot-on-wall.mp4'
+            Url = 'https://www.youtube.com/watch?v=6isF4wBvRyY'
+            SourcePage = 'https://www.youtube.com/watch?v=6isF4wBvRyY'
             Human = $true
             Youtube = $true
             Video = $true
             StartSeconds = 0
-            DurationSeconds = 18.4
+            DurationSeconds = 23
             FramesPerSecond = 10
             Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
@@ -8554,28 +8554,28 @@
     }
     564 = @{
         RetiredName = 'Straight-Punch Shoulder Protraction'
-        Name = 'Parallel Calf Raises with Hands on Hips'
-        Practice = 'Calf strengthening'
-        MotionProfile = 'ParallelCalfRaiseHandsOnHips'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
+        Name = 'Standing Foot-to-Wall Press Hold'
+        Practice = 'Glute strengthening'
+        MotionProfile = 'StandingFootToWallPressHold'
+        Primary = 'GlutealExtensors'
+        Secondary = @('PosteriorThighAndKneeFlexors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
         Presentation = 'Motion'
-        HoldFramePercent = 0
+        HoldFramePercent = 50
         Media = @{
-            File = 'calf-raise-pelvic-floor-contraction.mp4'
-            Url = 'https://www.youtube.com/watch?v=3YDz7hGIYyU'
-            SourcePage = 'https://www.youtube.com/watch?v=3YDz7hGIYyU'
+            File = 'standing-foot-to-wall-press.mp4'
+            Url = 'https://www.youtube.com/watch?v=jn99CofnDqU'
+            SourcePage = 'https://www.youtube.com/watch?v=jn99CofnDqU'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 24
-            DurationSeconds = 10.5
+            StartSeconds = 12
+            DurationSeconds = 29
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
-            MirrorForAlternation = $false
+            MirrorForAlternation = $true
         }
     }
     565 = @{
@@ -8632,52 +8632,54 @@
     }
     567 = @{
         RetiredName = 'Uppercut Shoulder Drive'
-        Name = 'Breathing Calf Raises with Arm Folds'
-        Practice = 'Breathing exercise'
-        MotionProfile = 'BreathingCalfRaiseFoldedHands'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'BreathingMuscles')
-        SideSequence = 'Continuous'
+        Name = 'Rear-Foot-on-Wall Split Squat'
+        Practice = 'Lower-body strength training'
+        MotionProfile = 'RearFootOnWallSplitSquat'
+        Primary = 'LateralKneeExtensors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'breathing-calf-raises-folded-hands.mp4'
-            Url = 'https://www.youtube.com/watch?v=e_9vvxdTQ8Y'
-            SourcePage = 'https://www.youtube.com/watch?v=e_9vvxdTQ8Y'
+            File = 'bodyweight-rear-foot-on-wall-split-squat.mp4'
+            Url = 'https://www.youtube.com/watch?v=h8YF8B7xN7U'
+            SourcePage = 'https://www.youtube.com/watch?v=h8YF8B7xN7U'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 9
-            DurationSeconds = 16.5
-            FramesPerSecond = 8
+            StartSeconds = 0
+            DurationSeconds = 12
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
-            MirrorForAlternation = $false
+            MirrorForAlternation = $true
         }
     }
     568 = @{
         RetiredName = 'Karate Age-Uke'
-        Name = 'Chest-Expansion Breathing Calf Raises'
-        Practice = 'Breathing exercise'
-        MotionProfile = 'ChestExpansionBreathingCalfRaise'
+        Name = 'Toes-on-Wall Calf Stretch'
+        Practice = 'Mobility training'
+        MotionProfile = 'ToesOnWallCalfStretch'
         Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'Chest', 'ScapularGirdle', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'BreathingMuscles')
-        SideSequence = 'Continuous'
-        Mode = 'Repetition'
+        Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
         Presentation = 'Motion'
-        HoldFramePercent = 0
+        HoldFramePercent = 50
         Media = @{
-            File = 'chest-expansion-breathing-calf-raises.mp4'
-            Url = 'https://www.youtube.com/watch?v=Uoz03pwS3es'
-            SourcePage = 'https://www.youtube.com/watch?v=Uoz03pwS3es'
+            File = 'toes-on-wall-calf-stretch.mp4'
+            Url = 'https://www.youtube.com/watch?v=kEGyxBNeuvo'
+            SourcePage = 'https://www.youtube.com/watch?v=kEGyxBNeuvo'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 12
-            DurationSeconds = 30
-            FramesPerSecond = 8
+            StartSeconds = 14
+            DurationSeconds = 29
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
-            MirrorForAlternation = $false
+            MirrorForAlternation = $true
         }
     }
     569 = @{
@@ -8760,27 +8762,28 @@
     }
     574 = @{
         RetiredName = 'Tai Chi Cloud-Hands Shoulder Flow'
-        Name = 'Tiptoe Overhead Side Bends'
-        Practice = 'Yoga'
-        MotionProfile = 'TiptoeOverheadSideBend'
-        Primary = 'DeepAndIntersegmentalBack'
-        Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
-        SideSequence = 'Alternating'
+        Name = 'Wall Toe Taps'
+        Practice = 'Balance training'
+        MotionProfile = 'WallToeTaps'
+        Primary = 'HipFlexors'
+        Secondary = @('MedialAndDeepKneeExtensors', 'AnteriorLateralLowerLegAndDorsalFoot', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'tiptoe-overhead-side-bends.mp4'
-            Url = 'https://www.youtube.com/watch?v=6WhxifoUOEQ'
-            SourcePage = 'https://www.youtube.com/watch?v=6WhxifoUOEQ'
+            File = 'wall-toe-taps.mp4'
+            Url = 'https://www.youtube.com/watch?v=x9LMIMbkKDg'
+            SourcePage = 'https://www.youtube.com/watch?v=x9LMIMbkKDg'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 51
-            DurationSeconds = 28
-            FramesPerSecond = 8
+            StartSeconds = 18
+            DurationSeconds = 12
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
-            MirrorForAlternation = $false
+            MirrorForAlternation = $true
         }
     }
     575 = @{

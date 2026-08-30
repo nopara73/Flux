@@ -291,7 +291,7 @@
                         android:checked="false"
                         android:contentDescription="@string/wall_modifier_description"
                         android:drawableTint="@color/duration_modifier_icon_tint"
-                        android:drawableTop="@drawable/ic_wall"
+                        android:drawableTop="@drawable/ic_wall_off"
                         android:gravity="center"
                         android:text=""
                         android:tooltipText="@string/wall_equipment_disabled_feedback" />

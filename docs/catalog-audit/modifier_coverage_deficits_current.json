@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 53,
+  "catalogRevision": 54,
   "catalogRecordCount": 499,
-  "catalogSha256": "0e8c5644320baec53307ea1506d57578201e1e49550504653cc769e5fd39a817",
+  "catalogSha256": "1fe13220fec01c965c2d46ec906853e42ecb226194b760d43450d018069119f8",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     "validatorsChanged": false
@@ -9,7 +9,7 @@
   "summary": {
     "pairwiseDeficiencyCount": 245,
     "pairwiseAffectedGroupCount": 38,
-    "hardFloorCategoryDeficiencyCount": 77,
+    "hardFloorCategoryDeficiencyCount": 81,
     "hardFloorCategoryAffectedGroupCount": 24,
     "materialityDeficiencyCount": 0,
     "mirrorCategoryDeficiencyCount": 0,
@@ -757,7 +757,7 @@
       "secondModifier": 2,
       "secondModifierEnabled": true,
       "mirrorEquipment": "None",
-      "matchingExerciseCount": 4,
+      "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
     {
@@ -3025,7 +3025,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 2,
       "requiredExerciseCount": 5
     },
     {
@@ -3045,7 +3045,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 2,
       "requiredExerciseCount": 5
     },
     {
@@ -3055,7 +3055,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 2,
       "requiredExerciseCount": 5
     },
     {
@@ -3065,7 +3065,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 2,
       "requiredExerciseCount": 5
     },
     {
@@ -3224,8 +3224,28 @@
       "groupName": "Head, neck, scapular girdle, chest and breathing",
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.head-neck-scapular-chest-breathing",
+      "groupName": "Head, neck, scapular girdle, chest and breathing",
+      "hardFloorCompatibility": "Incompatible",
+      "partnerModifier": 1,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.head-neck-scapular-chest-breathing",
+      "groupName": "Head, neck, scapular girdle, chest and breathing",
+      "hardFloorCompatibility": "Incompatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
     {
@@ -3235,6 +3255,16 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
+      "matchingExerciseCount": 1,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.head-neck-scapular-chest-breathing",
+      "groupName": "Head, neck, scapular girdle, chest and breathing",
+      "hardFloorCompatibility": "Incompatible",
+      "partnerModifier": 4,
+      "partnerModifierEnabled": false,
       "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
@@ -3305,7 +3335,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3325,7 +3355,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3335,7 +3365,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3345,7 +3375,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3375,7 +3405,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3395,7 +3425,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3405,7 +3435,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3415,7 +3445,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3515,7 +3545,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3535,7 +3565,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3545,7 +3575,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3555,7 +3585,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3580,6 +3610,16 @@
     },
     {
       "minutes": 30,
+      "groupId": "r30.cranial-muscles",
+      "groupName": "Cranial muscles",
+      "hardFloorCompatibility": "Incompatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 4,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
       "groupId": "r30.posterior-neck-suboccipital",
       "groupName": "Posterior neck and suboccipital muscles",
       "hardFloorCompatibility": "Compatible",
@@ -3595,7 +3635,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3615,7 +3655,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3625,7 +3665,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3635,7 +3675,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
-      "matchingExerciseCount": 2,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3665,7 +3705,7 @@
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 2,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
+      "matchingExerciseCount": 2,
       "requiredExerciseCount": 5
     },
     {

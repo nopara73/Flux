@@ -15,4 +15,8 @@ public enum WorkoutModifiers
     // slipperiness is not a separate equipment state.
     HardFloor = 16,
     Wall = 32,
+    // Internal qualifier for the Wall equipment modifier. Wall alone excludes
+    // movements that require sole-to-wall contact; Wall | SoleWallContact
+    // allows them. The qualifier is never valid without Wall.
+    SoleWallContact = 64,
 }

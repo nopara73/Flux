@@ -456,6 +456,20 @@ button.modifier-tile:not(:disabled):active {
   display: none;
 }
 
+.wall-glyph {
+  display: none;
+}
+
+.wall-footprint {
+  stroke-width: 1.5;
+}
+
+.modifier-tile[data-wall-equipment="none"] .wall-glyph-none,
+.modifier-tile[data-wall-equipment="soles-stay-off"] .wall-glyph-soles-stay-off,
+.modifier-tile[data-wall-equipment="soles-may-touch"] .wall-glyph-soles-may-touch {
+  display: inline;
+}
+
 .modifier-tile[data-mirror-equipment="none"] .mirror-glyph-none,
 .modifier-tile[data-mirror-equipment="compact"] .mirror-glyph-compact,
 .modifier-tile[data-mirror-equipment="tall"] .mirror-glyph-tall {

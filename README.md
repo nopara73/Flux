@@ -203,9 +203,10 @@ Flux currently provides five composable modifiers, in this UI order:
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
-- **Wall**, disabled by default, admits established exercises that genuinely
-  require an ordinary stable wall and softly prefers them when all stronger
-  selection priorities tie;
+- **Wall**, disabled by default, cycles through no wall, wall available with
+  soles kept off, and wall available with sole contact allowed. It admits
+  established exercises that genuinely require the selected wall access and
+  softly prefers them when all stronger selection priorities tie;
 - **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
   tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
   show the full body. Mirror relevance breaks only otherwise remaining ties,
@@ -213,8 +214,10 @@ Flux currently provides five composable modifiers, in this UI order:
   muscle balance.
 
 Wall and Mirror availability affect exercise eligibility and selection only.
-Wall-required exercises remain unavailable while Wall is off; ordinary
-wall-agnostic exercises remain selectable in either state. Mirror never
+Wall-required exercises remain unavailable while Wall is off, and exercises
+whose demonstrated movement requires sole-to-wall contact remain unavailable
+in the soles-stay-off state. Ordinary wall-agnostic exercises remain selectable
+in every state. Mirror never
 horizontally flips demonstration media; reviewed atomic side blocks remain a
 separate exercise-sequence behavior.
 
@@ -229,10 +232,11 @@ behavior is coverage-aware:
 - `Agnostic` exercises are unaffected.
 
 Wall is deliberately outside the pairwise, per-muscle, and duration quota
-system. It instead has one direct catalog invariant: at least 20 distinct
-wall-required session movements. Sides, directions, sequence blocks, repeated
-sets, aliases, and names cannot multiply that count. The current audited
-inventory contains 24.
+system. It instead has two direct catalog invariants: at least 20 distinct
+wall-required session movements that do not require sole contact, plus at least
+five distinct sole-contact wall movements. Sides, directions, sequence blocks,
+repeated sets, aliases, and names cannot multiply either count. The current
+audited inventory contains 24 base-wall movements and five sole-wall movements.
 
 For every existing non-Wall modifier pair, duration, and workout group, the catalog must provide
 at least five exercises under every real state. Two binary modifiers have four
@@ -264,8 +268,9 @@ an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
 materiality checks. Hard-floor classifications and their review criteria are
 recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
-Wall's Boolean contract, singleton floor, and reviewed 24-movement inventory
-are recorded in [`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
+Wall's three-state contract, separate direct floors, and reviewed 29-movement
+inventory are recorded in
+[`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
 
 The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
 anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
@@ -274,14 +279,14 @@ every exact deficit are retained in
 [`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
 no relationship or muscle assignment is inflated to hide them. After Hard
 Floor was defined as both rigid and slippery, the current validators expose
-245 pairwise deficiencies across 38 group IDs and 77 floor-category
+245 pairwise deficiencies across 38 group IDs and 81 floor-category
 deficiencies across 24 group IDs. The stricter filter also resolves the former
 Silence materiality deficiency. The reproducible current ledger is
 [`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
 All supported profiles still admit a distinct atomic lineup.
 
 The pairwise guarantees grow quadratically with the number of quota-bearing
-modifiers. Wall's singleton floor remains constant-size and does not create new
+modifiers. Wall's two direct floors remain constant-size and do not create new
 pairwise edges or arbitrary all-modifier intersections.
 
 ### Atomic exercise sequences

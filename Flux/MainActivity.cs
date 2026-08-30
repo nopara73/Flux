@@ -751,18 +751,17 @@ public class MainActivity : Activity
         };
         _wallModifierButton.Click += (_, _) =>
         {
-            bool enabled = _wallModifierButton.Checked;
-            SetSelectedWorkoutModifier(
-                WorkoutModifiers.Wall,
-                enabled,
-                _wallModifierButton,
-                Resource.String.wall_modifier_description,
-                Resource.String.wall_modifier_on,
-                Resource.String.wall_modifier_off,
-                userInitiated: true);
-            ShowModifierFeedback(GetModifierFeedbackResourceId(
-                WorkoutModifiers.Wall,
-                enabled));
+            WallEquipment nextEquipment = WorkoutModifierPolicy
+                .GetWallEquipment(_selectedWorkoutModifiers) switch
+            {
+                WallEquipment.None => WallEquipment.SolesStayOff,
+                WallEquipment.SolesStayOff => WallEquipment.SolesMayTouch,
+                WallEquipment.SolesMayTouch => WallEquipment.None,
+                _ => throw new InvalidOperationException(
+                    "Unknown wall equipment state."),
+            };
+            SetSelectedWallEquipment(nextEquipment, userInitiated: true);
+            ShowModifierFeedback(GetWallFeedbackResourceId(nextEquipment));
         };
         _mirrorModifierButton.Click += (_, _) =>
         {
@@ -1573,6 +1572,10 @@ public class MainActivity : Activity
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _selectedWorkoutModifiers),
             size);
+        UpdateWallModifierPresentation(
+            WorkoutModifierPolicy.GetWallEquipment(
+                _selectedWorkoutModifiers),
+            size);
         UpdateHardFloorModifierPresentation(
             _selectedWorkoutModifiers.HasFlag(WorkoutModifiers.HardFloor),
             size);
@@ -1631,6 +1634,35 @@ public class MainActivity : Activity
             ?? DpInt(64);
         int padding = GetModifierTilePadding(size);
         _hardFloorModifierButton.SetPadding(
+            padding,
+            padding,
+            padding,
+            padding);
+    }
+
+    private void UpdateWallModifierPresentation(
+        WallEquipment equipment,
+        int? tileSize = null)
+    {
+        int drawableResourceId = equipment switch
+        {
+            WallEquipment.None => Resource.Drawable.ic_wall_off,
+            WallEquipment.SolesStayOff => Resource.Drawable.ic_wall,
+            WallEquipment.SolesMayTouch => Resource.Drawable.ic_wall_sole,
+            _ => Resource.Drawable.ic_wall_off,
+        };
+        _wallModifierButton.SetCompoundDrawablesWithIntrinsicBounds(
+            0,
+            drawableResourceId,
+            0,
+            0);
+        _wallModifierButton.SetTextSize(
+            Android.Util.ComplexUnitType.Sp,
+            0f);
+        int size = tileSize ?? _wallModifierButton.LayoutParameters?.Width
+            ?? DpInt(64);
+        int padding = GetModifierTilePadding(size);
+        _wallModifierButton.SetPadding(
             padding,
             padding,
             padding,
@@ -1717,13 +1749,9 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
-        SetSelectedWorkoutModifier(
-            WorkoutModifiers.Wall,
-            (_state.LastWorkoutModifiers & WorkoutModifiers.Wall) != 0,
-            _wallModifierButton,
-            Resource.String.wall_modifier_description,
-            Resource.String.wall_modifier_on,
-            Resource.String.wall_modifier_off);
+        SetSelectedWallEquipment(
+            WorkoutModifierPolicy.GetWallEquipment(
+                _state.LastWorkoutModifiers));
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _state.LastWorkoutModifiers));
@@ -1804,13 +1832,9 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
-        SetSelectedWorkoutModifier(
-            WorkoutModifiers.Wall,
-            (_selectedWorkoutModifiers & WorkoutModifiers.Wall) != 0,
-            _wallModifierButton,
-            Resource.String.wall_modifier_description,
-            Resource.String.wall_modifier_on,
-            Resource.String.wall_modifier_off);
+        SetSelectedWallEquipment(
+            WorkoutModifierPolicy.GetWallEquipment(
+                _selectedWorkoutModifiers));
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _selectedWorkoutModifiers));
@@ -1971,6 +1995,46 @@ public class MainActivity : Activity
         }
     }
 
+    private void SetSelectedWallEquipment(
+        WallEquipment equipment,
+        bool userInitiated = false)
+    {
+        _selectedWorkoutModifiers = WorkoutModifierPolicy.WithWallEquipment(
+            _selectedWorkoutModifiers,
+            equipment);
+        _wallModifierButton.Checked = equipment != WallEquipment.None;
+        _wallModifierButton.Text = string.Empty;
+        UpdateWallModifierPresentation(equipment);
+        int stateResourceId = equipment switch
+        {
+            WallEquipment.SolesStayOff =>
+                Resource.String.wall_modifier_soles_stay_off,
+            WallEquipment.SolesMayTouch =>
+                Resource.String.wall_modifier_soles_may_touch,
+            _ => Resource.String.wall_modifier_off,
+        };
+        _wallModifierButton.ContentDescription =
+            $"{GetString(Resource.String.wall_modifier_description)}: " +
+            GetString(stateResourceId);
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _wallModifierButton.TooltipText = GetString(
+                GetWallFeedbackResourceId(equipment));
+        }
+        if (OperatingSystem.IsAndroidVersionAtLeast(30))
+        {
+            _wallModifierButton.StateDescription = GetString(stateResourceId);
+        }
+
+        if (userInitiated)
+        {
+            _durationSelectionChangedDuringStartup |=
+                !_applicationStartupCompleted;
+            AnimateModifierTile(_wallModifierButton);
+            QueueWorkoutPreparation();
+        }
+    }
+
     private static int GetMirrorFeedbackResourceId(MirrorEquipment equipment) =>
         equipment switch
         {
@@ -1980,6 +2044,19 @@ public class MainActivity : Activity
                 Resource.String.compact_mirror_equipment_enabled_feedback,
             MirrorEquipment.Tall =>
                 Resource.String.tall_mirror_equipment_enabled_feedback,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null),
+        };
+
+    private static int GetWallFeedbackResourceId(WallEquipment equipment) =>
+        equipment switch
+        {
+            WallEquipment.None =>
+                Resource.String.wall_equipment_disabled_feedback,
+            WallEquipment.SolesStayOff =>
+                Resource.String.wall_equipment_enabled_feedback,
+            WallEquipment.SolesMayTouch =>
+                Resource.String.wall_sole_contact_enabled_feedback,
             _ => throw new ArgumentOutOfRangeException(
                 nameof(equipment), equipment, null),
         };

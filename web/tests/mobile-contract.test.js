@@ -25,6 +25,7 @@ import {
   MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
+  MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
   MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT,
@@ -86,6 +87,7 @@ const [
   webStyles,
   webBuild,
   mirrorEquipmentModel,
+  wallEquipmentModel,
   mirrorCoverageModel,
   hardFloorCompatibilityModel,
   sequenceBlockModel,
@@ -97,6 +99,8 @@ const [
   hardFloorIcon,
   softFloorIcon,
   wallIcon,
+  wallOffIcon,
+  wallSoleIcon,
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
   workoutSchedulePolicy,
@@ -133,6 +137,7 @@ const [
   source("web", "styles.css"),
   source("web", "scripts", "build.mjs"),
   source("Flux", "Models", "MirrorEquipment.cs"),
+  source("Flux", "Models", "WallEquipment.cs"),
   source("Flux", "Models", "ExerciseMirrorCoverage.cs"),
   source("Flux", "Models", "ExerciseHardFloorCompatibility.cs"),
   source("Flux", "Models", "ExerciseSequenceBlock.cs"),
@@ -144,6 +149,8 @@ const [
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_hard_floor.png"),
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Resources", "drawable", "ic_wall.xml"),
+  source("Flux", "Resources", "drawable", "ic_wall_off.xml"),
+  source("Flux", "Resources", "drawable", "ic_wall_sole.xml"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
   source("Flux", "Services", "WorkoutSchedulePolicy.cs"),
@@ -369,6 +376,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.equal(WORKOUT_MODIFIERS.TallMirror, 8);
   assert.equal(WORKOUT_MODIFIERS.HardFloor, 16);
   assert.equal(WORKOUT_MODIFIERS.Wall, 32);
+  assert.equal(WORKOUT_MODIFIERS.SoleWallContact, 64);
   assert.deepEqual(MIRROR_EQUIPMENT, {
     None: "None",
     Compact: "Compact",
@@ -481,9 +489,16 @@ test("web and mobile persist one combined duration and modifier selection contex
     MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
     integerConstant(modifierPolicy, "MinimumWallRequiredSessionMovements"),
   );
+  assert.equal(
+    MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
+    integerConstant(
+      modifierPolicy,
+      "MinimumSoleWallContactRequiredSessionMovements",
+    ),
+  );
   assert.match(
     modifierPolicy,
-    /SupportedModifierMask[\s\S]*WorkoutModifiers\.TallMirror \| WorkoutModifiers\.Wall/,
+    /SupportedModifierMask[\s\S]*WorkoutModifiers\.TallMirror \|[\s\S]*WorkoutModifiers\.Wall \|[\s\S]*WorkoutModifiers\.SoleWallContact/,
   );
   assert.doesNotMatch(
     modifierPolicy,
@@ -492,6 +507,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(
     modifierPolicy,
     /FindWallRequiredCatalogDeficiencies[\s\S]*WallRequired[\s\S]*GetSessionMovementId[\s\S]*Distinct/,
+  );
+  assert.match(
+    modifierPolicy,
+    /FindSoleWallContactRequiredCatalogDeficiencies[\s\S]*SoleWallContactRequired[\s\S]*GetSessionMovementId[\s\S]*Distinct/,
   );
   assert.match(
     modifierPolicy,
@@ -554,13 +573,33 @@ test("web and mobile persist one combined duration and modifier selection contex
   }
   assert.match(exerciseDatabase, /FindMirrorCategoryDeficiencies/);
   assert.match(exerciseDatabase, /FindWallRequiredCatalogDeficiencies/);
+  assert.match(
+    exerciseDatabase,
+    /FindSoleWallContactRequiredCatalogDeficiencies/,
+  );
   assert.match(exerciseModel, /ExerciseInsectCompatibility InsectCompatibility/);
   assert.match(exerciseModel, /ExerciseMirrorRelationship MirrorRelationship/);
   assert.match(exerciseModel, /ExerciseMirrorCoverage MinimumMirrorCoverage/);
   assert.match(exerciseModel, /bool WallRequired/);
+  assert.match(exerciseModel, /bool SoleWallContactRequired/);
+  assert.match(
+    wallEquipmentModel,
+    /None\s*=\s*0[\s\S]*SolesStayOff\s*=\s*1[\s\S]*SolesMayTouch\s*=\s*2/,
+  );
   assert.ok(catalog.every((exercise) => typeof exercise.silent === "boolean"));
   assert.ok(catalog.every((exercise) => typeof exercise.wallRequired === "boolean"));
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 24);
+  assert.ok(catalog.every((exercise) =>
+    typeof exercise.soleWallContactRequired === "boolean"));
+  assert.ok(catalog.every((exercise) =>
+    !exercise.soleWallContactRequired || exercise.wallRequired));
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 29);
+  assert.equal(catalog.filter((exercise) =>
+    exercise.wallRequired && !exercise.soleWallContactRequired).length, 24);
+  assert.deepEqual(
+    new Set(catalog.filter((exercise) => exercise.soleWallContactRequired)
+      .map((exercise) => exercise.id)),
+    new Set([563, 564, 567, 568, 574]),
+  );
   assert.ok(catalog.every((exercise) =>
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Incompatible));
@@ -611,8 +650,21 @@ test("web and mobile persist one combined duration and modifier selection contex
       webIndex.indexOf('id="wall-modifier"') <
       webIndex.indexOf('id="mirror-modifier"'),
   );
-  assert.match(durationLayout, /@drawable\/ic_wall/);
+  assert.match(durationLayout, /@drawable\/ic_wall_off/);
   assert.match(wallIcon, /<vector[\s\S]*pathData=/);
+  assert.match(wallOffIcon, /<vector[\s\S]*pathData=/);
+  assert.match(wallSoleIcon, /<vector[\s\S]*pathData=/);
+  assert.notEqual(wallIcon, wallOffIcon);
+  assert.notEqual(wallIcon, wallSoleIcon);
+  assert.notEqual(wallOffIcon, wallSoleIcon);
+  assert.match(
+    mainActivity,
+    /UpdateWallModifierPresentation[\s\S]*WallEquipment\.None\s*=>\s*Resource\.Drawable\.ic_wall_off[\s\S]*WallEquipment\.SolesStayOff\s*=>\s*Resource\.Drawable\.ic_wall[\s\S]*WallEquipment\.SolesMayTouch\s*=>\s*Resource\.Drawable\.ic_wall_sole/,
+  );
+  assert.match(
+    webStyles,
+    /data-wall-equipment="none"[\s\S]*wall-glyph-none[\s\S]*data-wall-equipment="soles-stay-off"[\s\S]*wall-glyph-soles-stay-off[\s\S]*data-wall-equipment="soles-may-touch"[\s\S]*wall-glyph-soles-may-touch/,
+  );
   assert.match(durationLayout, /@drawable\/ic_hard_floor/);
   assert.notDeepEqual(hardFloorIcon, softFloorIcon);
   assert.deepEqual([...hardFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
@@ -681,7 +733,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="insect_mode_disabled_feedback">insect mode OFF<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
-  assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall<\/string>/);
+  assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall, soles stay off<\/string>/);
+  assert.match(strings, /<string name="wall_sole_contact_enabled_feedback">equipment ON: wall, soles may touch<\/string>/);
   assert.match(strings, /<string name="wall_equipment_disabled_feedback">equipment OFF: wall<\/string>/);
   assert.match(strings, /<string name="compact_mirror_equipment_enabled_feedback">equipment ON: compact mirror<\/string>/);
   assert.match(strings, /<string name="tall_mirror_equipment_enabled_feedback">equipment ON: tall mirror<\/string>/);
@@ -698,7 +751,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     "insect mode OFF",
     "noisy exercises ENABLED",
     "noisy exercises DISABLED",
-    "equipment ON: wall",
+    "equipment ON: wall, soles stay off",
+    "equipment ON: wall, soles may touch",
     "equipment OFF: wall",
     "equipment ON: compact mirror",
     "equipment ON: tall mirror",
@@ -709,6 +763,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
   assert.match(mainActivity, /GetMirrorFeedbackResourceId[\s\S]*MirrorEquipment\.Compact[\s\S]*compact_mirror_equipment_enabled_feedback[\s\S]*MirrorEquipment\.Tall[\s\S]*tall_mirror_equipment_enabled_feedback/);
   assert.match(mainActivity, /MirrorEquipment\.None\s*=>\s*MirrorEquipment\.Compact[\s\S]*MirrorEquipment\.Compact\s*=>\s*MirrorEquipment\.Tall[\s\S]*MirrorEquipment\.Tall\s*=>\s*MirrorEquipment\.None/);
+  assert.match(mainActivity, /WallEquipment\.None\s*=>\s*WallEquipment\.SolesStayOff[\s\S]*WallEquipment\.SolesStayOff\s*=>\s*WallEquipment\.SolesMayTouch[\s\S]*WallEquipment\.SolesMayTouch\s*=>\s*WallEquipment\.None/);
   assert.match(durationLayout, /insect_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/insect_mode_disabled_feedback"/);
   assert.match(durationLayout, /hard_floor_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/hard_floor_enabled_feedback"/);
   assert.match(durationLayout, /silence_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/noisy_exercises_disabled_feedback"/);
@@ -721,6 +776,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     /name === "hardFloor"[\s\S]*Floor surface: hard and slippery floor[\s\S]*Floor surface: stable soft floor/,
   );
   assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Compact[\s\S]*MIRROR_EQUIPMENT\.Tall/);
+  assert.match(webApp, /cycleWallEquipment[\s\S]*WALL_EQUIPMENT\.None[\s\S]*WALL_EQUIPMENT\.SolesStayOff[\s\S]*WALL_EQUIPMENT\.SolesMayTouch/);
   assert.match(
     mainActivity,
     /ModifierFeedbackEnterDurationMilliseconds\s*=\s*140L[\s\S]*ModifierFeedbackHoldMilliseconds\s*=\s*1_200L[\s\S]*ModifierFeedbackFadeDurationMilliseconds\s*=\s*700L/,
@@ -742,7 +798,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*73/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*74/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,

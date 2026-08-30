@@ -4702,6 +4702,7 @@ public sealed class ExerciseSessionServiceTests
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
+            SoleWallContactRequired = source.SoleWallContactRequired,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4739,6 +4740,7 @@ public sealed class ExerciseSessionServiceTests
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
+            SoleWallContactRequired = source.SoleWallContactRequired,
             MuscularDemand = muscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4785,6 +4787,7 @@ public sealed class ExerciseSessionServiceTests
                 ? ExerciseMirrorCoverage.UpperBody
                 : ExerciseMirrorCoverage.None,
             WallRequired = source.WallRequired,
+            SoleWallContactRequired = source.SoleWallContactRequired,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,
@@ -4830,6 +4833,8 @@ public sealed class ExerciseSessionServiceTests
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = wallRequired,
+            SoleWallContactRequired =
+                wallRequired && source.SoleWallContactRequired,
             MuscularDemand = source.MuscularDemand,
             Score = source.Score,
             OnlyFeetTouchGround = source.OnlyFeetTouchGround,

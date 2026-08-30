@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 53;
+    public const int CurrentCatalogRevision = 54;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -373,11 +373,9 @@ public static class CatalogMigrationRules
                     "Standing Palms-Up Arm Raise"),
             };
 
-    // ID 497 was permanently retired at revision 30 and is intentionally
-    // reused at revision 43 for a different, reviewed movement. Devices that
-    // jump directly from an older database can still contain one of these
-    // exact obsolete identities. They are accepted only so the old row and
-    // score can be discarded before the new exercise is inserted.
+    // Reused IDs can still contain an exact obsolete identity on devices that
+    // jump directly from an older catalog. Accept only these reviewed pairs so
+    // the old row and score are discarded before the new exercise is inserted.
     private static readonly IReadOnlyDictionary<int,
         IReadOnlySet<DiscardedStoredExerciseIdentity>>
         DiscardedStoredExerciseIdentities =
@@ -394,6 +392,36 @@ public static class CatalogMigrationRules
                     new(
                         "Track Finger in Circles",
                         "exercise_direction_videos/exercise_0497.mp4"),
+                },
+                [563] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Single-Leg Calf Raise with Head Turns",
+                        "exercise_videos/exercise_0563.mp4"),
+                },
+                [564] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Parallel Calf Raises with Hands on Hips",
+                        "exercise_videos/exercise_0564.mp4"),
+                },
+                [567] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Breathing Calf Raises with Arm Folds",
+                        "exercise_videos/exercise_0567.mp4"),
+                },
+                [568] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Chest-Expansion Breathing Calf Raises",
+                        "exercise_videos/exercise_0568.mp4"),
+                },
+                [574] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Tiptoe Overhead Side Bends",
+                        "exercise_videos/exercise_0574.mp4"),
                 },
             };
 
@@ -1051,6 +1079,7 @@ public static class CatalogMigrationRules
                     733, 746, 748, 750, 816, 884, 885, 886, 887, 905, 915, 971,
                     973, 986, 999,
                 },
+                [54] = new HashSet<int> { 563, 564, 567, 568, 574 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1142,6 +1171,7 @@ public static class CatalogMigrationRules
                     559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
                     569, 570, 571, 574, 575, 578, 581, 582, 583,
                 },
+                [54] = new HashSet<int> { 563, 564, 567, 568, 574 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

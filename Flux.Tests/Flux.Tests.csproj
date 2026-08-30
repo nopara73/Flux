@@ -46,6 +46,7 @@
     <Compile Include="..\Flux\Models\WorkoutModifiers.cs" Link="Production\Models\WorkoutModifiers.cs" />
     <Compile Include="..\Flux\Models\WorkoutSessionLog.cs" Link="Production\Models\WorkoutSessionLog.cs" />
     <Compile Include="..\Flux\Models\MirrorEquipment.cs" Link="Production\Models\MirrorEquipment.cs" />
+    <Compile Include="..\Flux\Models\WallEquipment.cs" Link="Production\Models\WallEquipment.cs" />
     <Compile Include="..\Flux\Models\WorkoutState.cs" Link="Production\Models\WorkoutState.cs" />
     <Compile Include="..\Flux\Services\ExerciseSessionService.cs" Link="Production\Services\ExerciseSessionService.cs" />
     <Compile Include="..\Flux\Services\AtomicSequenceLineupSolver.cs" Link="Production\Services\AtomicSequenceLineupSolver.cs" />

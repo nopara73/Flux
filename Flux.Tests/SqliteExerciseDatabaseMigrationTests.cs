@@ -31,23 +31,24 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(70)]
     [InlineData(71)]
     [InlineData(72)]
+    [InlineData(73)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(73, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(74, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 73)]
+    [InlineData(13, 74)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
     [InlineData(71, 71)]
     [InlineData(72, 72)]
     [InlineData(73, 73)]
-    [InlineData(73, 74)]
+    [InlineData(74, 74)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -333,7 +334,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             """
             SELECT name, video, score, equipment,
                 hard_floor_compatibility, mirror_relationship,
-                mirror_coverage, wall_required, session_movement_id
+                mirror_coverage, wall_required,
+                sole_wall_contact_required, session_movement_id
             FROM exercises
             WHERE id = 528
             """;
@@ -349,11 +351,12 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.Equal("None", reader.GetString(6));
         Assert.Equal(0, reader.GetInt32(7));
         Assert.Equal(0, reader.GetInt32(8));
+        Assert.Equal(0, reader.GetInt32(9));
         Assert.False(reader.Read());
     }
 
     [Fact]
-    public void CurrentSchemaPersistsWallRequirementAsBoolean()
+    public void CurrentSchemaPersistsWallContactRequirementsAsBooleans()
     {
         using var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
@@ -366,19 +369,48 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             INSERT INTO {ExerciseDatabaseMigrationSql.RebuiltExerciseTableName} (
                 id, name, video, practice, motion_profile, muscular_demand,
                 insect_compatibility, hard_floor_compatibility,
-                mirror_relationship, wall_required)
+                mirror_relationship, wall_required,
+                sole_wall_contact_required)
             VALUES (
                 1, 'Wall Sit', 'exercise_0001.mp4', 'Bodyweight strength',
-                'WallSit', 2, 'Compatible', 'Compatible', 'Agnostic', 1)
+                'WallSit', 2, 'Compatible', 'Compatible', 'Agnostic', 1, 1)
             """);
 
         using SqliteCommand command = connection.CreateCommand();
         command.CommandText =
-            $"SELECT wall_required FROM " +
+            $"SELECT wall_required, sole_wall_contact_required FROM " +
             ExerciseDatabaseMigrationSql.RebuiltExerciseTableName +
             " WHERE id = 1";
 
-        Assert.Equal(1, Convert.ToInt32(command.ExecuteScalar()));
+        using SqliteDataReader reader = command.ExecuteReader();
+        Assert.True(reader.Read());
+        Assert.Equal(1, reader.GetInt32(0));
+        Assert.Equal(1, reader.GetInt32(1));
+        Assert.False(reader.Read());
+    }
+
+    [Fact]
+    public void CurrentSchemaRejectsSoleWallContactWithoutWallEquipment()
+    {
+        using var connection = new SqliteConnection("Data Source=:memory:");
+        connection.Open();
+        Execute(
+            connection,
+            ExerciseDatabaseMigrationSql.CreateRebuiltExerciseTable);
+
+        Assert.Throws<SqliteException>(() => Execute(
+            connection,
+            $"""
+            INSERT INTO {ExerciseDatabaseMigrationSql.RebuiltExerciseTableName} (
+                id, name, video, practice, motion_profile, muscular_demand,
+                insect_compatibility, hard_floor_compatibility,
+                mirror_relationship, wall_required,
+                sole_wall_contact_required)
+            VALUES (
+                1, 'Invalid wall contact', 'exercise_0001.mp4', 'Test',
+                'InvalidWallContact', 0, 'Compatible', 'Compatible',
+                'Agnostic', 0, 1)
+            """));
     }
 
     private static void Execute(SqliteConnection connection, string sql)

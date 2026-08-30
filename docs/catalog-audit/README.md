@@ -18,9 +18,11 @@ final catalog of **475** entries:
 - mirror relationships: **10** `MirrorOnly`, **77** `BenefitsGreatly`, and
   **388** `Agnostic`.
 
-The subsequent Wall-equipment implementation added 24 separately reviewed
-wall-required movements, producing the current 499-record catalog. Their full
-inventory and independent singleton-floor contract are documented in
+The subsequent Wall-equipment implementation added 24 separately reviewed base
+wall movements, producing the current 499-record catalog. Five existing slots
+now contain separately reviewed sole-contact wall movements. Their full
+29-movement inventory and two independent direct-floor contracts are
+documented in
 [`../WALL_EQUIPMENT_AUDIT.md`](../WALL_EQUIPMENT_AUDIT.md); the counts above
 remain the frozen outcome of the 479-record baseline review.
 

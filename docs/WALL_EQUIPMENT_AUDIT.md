@@ -1,27 +1,36 @@
 # Wall equipment audit
 
-Wall is a binary physical-equipment modifier. It is disabled by default and is
-shown after Silence and before Mirror. Its exact toggle feedback and tooltip
-copy is `equipment ON: wall` and `equipment OFF: wall`.
+Wall is a three-state physical-equipment modifier. It is disabled by default
+and is shown after Silence and before Mirror. Its states cycle in this order:
 
-Each catalog record carries an explicit Boolean `wallRequired` verdict:
+1. no wall — `equipment OFF: wall`;
+2. wall available, soles kept off — `equipment ON: wall, soles stay off`;
+3. wall available, sole contact allowed — `equipment ON: wall, soles may touch`.
 
-- Wall off excludes `wallRequired` exercises.
-- Wall on admits them and softly prefers them only when every stronger
-  selection priority ties.
-- Ordinary exercises remain selectable in either state.
+Each catalog record carries explicit `wallRequired` and
+`soleWallContactRequired` Boolean verdicts. Sole contact always implies Wall:
+
+- Wall off excludes every `wallRequired` exercise.
+- The soles-stay-off state admits base wall exercises but excludes exercises
+  whose demonstrated movement requires sole-to-wall contact.
+- The soles-may-touch state admits both kinds of wall exercise.
+- Either available-wall state softly prefers admitted wall work only when every
+  stronger selection priority ties.
+- Ordinary exercises remain selectable in every state.
 - Wall never changes, mirrors, or substitutes demonstration media.
+- There is no clean/dirty wall or socks property.
 
 Wall is intentionally not another pairwise quota dimension. It does not enter
 per-muscle, duration, materiality, or modifier-pair coverage checks. Instead,
-Android and web enforce one direct global floor of at least 20 distinct
-wall-required session movements. `sessionMovementId` is resolved before
-counting, so sides, directions, blocks, repeated sets, aliases, and renamed
-duplicates cannot pad the result.
+Android and web enforce two separate direct global floors: at least 20 distinct
+base wall session movements and at least five distinct sole-contact wall
+session movements. A sole-contact movement cannot count toward the base 20.
+`sessionMovementId` is resolved before counting, so sides, directions, blocks,
+repeated sets, aliases, and renamed duplicates cannot pad either result.
 
 ## Reviewed inventory
 
-The current catalog contains 24 distinct wall-required session movements:
+The current catalog contains 24 distinct base wall session movements:
 
 - `134` — `Wall Sit`
 - `137` — `Wall Squat`
@@ -48,6 +57,14 @@ The current catalog contains 24 distinct wall-required session movements:
 - `801` — `Wall Roll-Down`
 - `835` — `Wall Lat Stretch`
 
+It also contains five distinct sole-contact wall session movements:
+
+- `563` — `Hip Airplane with Back Foot on Wall`
+- `564` — `Standing Foot-to-Wall Press Hold`
+- `567` — `Rear-Foot-on-Wall Split Squat`
+- `568` — `Toes-on-Wall Calf Stretch`
+- `574` — `Wall Toe Taps`
+
 `Wall Shoulder Slides` uses an equipment-free wall-slide demonstration. The
 previous reviewed source was rejected after a resistance band was found in the
 packaged loop; the replacement shows one complete natural wall-slide cycle
@@ -59,13 +76,20 @@ balance assistance. The wall calf raise and wall tibialis raise remain
 hard-floor-incompatible because they concentrate repeated load through the
 forefoot or heel. Wall soleus stretch and wall calf stretch are also
 incompatible because Hard Floor means a rigid, slippery surface and their split
-stance requires dependable traction. Wall availability does not override the
-independent floor verdict. All 24 final packaged MP4s, crops, loops, and applicable
-hold frames were reviewed against their final names and metadata. The catalog
+stance requires dependable traction. The five sole-contact movements are also
+incompatible with Hard Floor because Hard Floor means slippery and their
+demonstrated support,
+balance, or traction depends on reliable foot placement. Wall availability does
+not override the independent floor verdict. All 29 final packaged MP4s, crops,
+loops, and applicable hold frames were reviewed against their final names and
+metadata. The catalog
 generator rejects missing verdicts, linked-sequence disagreement, duplicate
-identities, and an undersized distinct-movement inventory.
+identities, sole-without-wall implication violations, and an undersized
+distinct-movement inventory.
 
 The authoritative classifications live in
-[`tools/ExerciseWallRequirements.psd1`](../tools/ExerciseWallRequirements.psd1).
-The Android catalog stores the verdict in SQLite schema 73; web consumes the
+[`tools/ExerciseWallRequirements.psd1`](../tools/ExerciseWallRequirements.psd1)
+and
+[`tools/ExerciseSoleWallContactRequirements.psd1`](../tools/ExerciseSoleWallContactRequirements.psd1).
+The Android catalog stores both verdicts in SQLite schema 74; web consumes the
 same generated catalog and enforces the same selection and startup invariants.

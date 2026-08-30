@@ -43,6 +43,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "mirror_relationship",
         "mirror_coverage",
         "wall_required",
+        "sole_wall_contact_required",
         "session_movement_id",
     ];
 
@@ -248,8 +249,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'FullBody')),
                 wall_required INTEGER NOT NULL DEFAULT 0
                     CHECK (wall_required IN (0, 1)),
+                sole_wall_contact_required INTEGER NOT NULL DEFAULT 0
+                    CHECK (sole_wall_contact_required IN (0, 1)),
                 session_movement_id INTEGER NOT NULL DEFAULT 0
                     CHECK (session_movement_id >= 0),
+                CHECK (
+                    sole_wall_contact_required = 0 OR wall_required = 1),
                 CHECK (
                     (mirror_relationship = 'MirrorOnly' AND
                         equipment = 'Mirror' AND
@@ -593,6 +598,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
         values.Put("wall_required", exercise.WallRequired ? 1 : 0);
+        values.Put(
+            "sole_wall_contact_required",
+            exercise.SoleWallContactRequired ? 1 : 0);
         values.Put("session_movement_id", exercise.SessionMovementId);
         return values;
     }
@@ -776,7 +784,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
                 WallRequired = cursor.GetInt(21) == 1,
-                SessionMovementId = cursor.GetInt(22),
+                SoleWallContactRequired = cursor.GetInt(22) == 1,
+                SessionMovementId = cursor.GetInt(23),
             });
         }
 
@@ -903,6 +912,10 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         bool hasUndersizedWallCatalog =
             WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises)
                 .Count > 0;
+        bool hasUndersizedSoleWallCatalog =
+            WorkoutModifierPolicy
+                .FindSoleWallContactRequiredCatalogDeficiencies(exercises)
+                .Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -928,6 +941,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.HardFloorCompatibility) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
             !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
+            (exercise.SoleWallContactRequired && !exercise.WallRequired) ||
             (exercise.DirectionSequence != ExerciseDirectionSequence.None &&
                 (exercise.Mode != ExerciseMode.Repetition ||
                     exercise.Presentation != ExercisePresentation.Motion)) ||
@@ -987,6 +1001,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                 sequenceOwnerByExerciseId[member.Id] = root.Id;
                 if (member.Id != root.Id && member.SequenceBlocks.Length > 0 ||
                     member.WallRequired != root.WallRequired ||
+                    member.SoleWallContactRequired !=
+                        root.SoleWallContactRequired ||
                     block.MediaSegment != ExerciseSequenceMediaSegment.Full &&
                         member.DirectionSequence == ExerciseDirectionSequence.None)
                 {
@@ -1024,6 +1040,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
 
         if (hasUndersizedMirrorCategory ||
             hasUndersizedWallCatalog ||
+            hasUndersizedSoleWallCatalog ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||

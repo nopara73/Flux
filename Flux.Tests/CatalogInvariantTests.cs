@@ -45,10 +45,19 @@ public sealed class CatalogInvariantTests
             Assert.Contains(
                 wallRequired.ValueKind,
                 new[] { JsonValueKind.True, JsonValueKind.False });
+            Assert.True(element.TryGetProperty(
+                "soleWallContactRequired",
+                out JsonElement soleWallContactRequired));
+            Assert.Contains(
+                soleWallContactRequired.ValueKind,
+                new[] { JsonValueKind.True, JsonValueKind.False });
+            Assert.False(
+                soleWallContactRequired.GetBoolean() &&
+                !wallRequired.GetBoolean());
         });
-        Assert.Equal(129, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(227, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(143, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(131, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(224, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(144, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
             [104] = [104, 136, 626],
@@ -171,23 +180,58 @@ public sealed class CatalogInvariantTests
         Exercise[] wallRequired = exercises
             .Where(exercise => exercise.WallRequired)
             .ToArray();
-        Assert.Equal(24, wallRequired.Length);
+        Exercise[] baseWallRequired = wallRequired
+            .Where(exercise => !exercise.SoleWallContactRequired)
+            .ToArray();
+        Exercise[] soleWallRequired = wallRequired
+            .Where(exercise => exercise.SoleWallContactRequired)
+            .ToArray();
+        Assert.Equal(29, wallRequired.Length);
+        Assert.Equal(24, baseWallRequired.Length);
         Assert.Equal(
             24,
-            wallRequired
+            baseWallRequired
+                .Select(WorkoutModifierPolicy.GetSessionMovementId)
+                .Distinct()
+                .Count());
+        Assert.Equal(5, soleWallRequired.Length);
+        Assert.Equal(
+            new HashSet<int> { 563, 564, 567, 568, 574 },
+            soleWallRequired.Select(exercise => exercise.Id).ToHashSet());
+        Assert.Equal(
+            5,
+            soleWallRequired
                 .Select(WorkoutModifierPolicy.GetSessionMovementId)
                 .Distinct()
                 .Count());
         Assert.Empty(
             WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises));
+        Assert.Empty(WorkoutModifierPolicy
+            .FindSoleWallContactRequiredCatalogDeficiencies(exercises));
         Assert.All(wallRequired, exercise =>
         {
             Assert.False(WorkoutModifierPolicy.IsCompatible(
                 exercise,
                 WorkoutModifiers.None));
+        });
+        Assert.All(baseWallRequired, exercise =>
+        {
             Assert.True(WorkoutModifierPolicy.IsCompatible(
                 exercise,
                 WorkoutModifiers.Wall));
+        });
+        WorkoutModifiers soleWallProfile =
+            WorkoutModifierPolicy.WithWallEquipment(
+                WorkoutModifiers.None,
+                WallEquipment.SolesMayTouch);
+        Assert.All(soleWallRequired, exercise =>
+        {
+            Assert.False(WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                WorkoutModifiers.Wall));
+            Assert.True(WorkoutModifierPolicy.IsCompatible(
+                exercise,
+                soleWallProfile));
         });
         Assert.All(
             exercises.Where(exercise => exercise.Mode == ExerciseMode.Hold),
@@ -218,17 +262,17 @@ public sealed class CatalogInvariantTests
             WorkoutModifierPolicy
                 .FindHardFloorCategoryCoverageDeficiencies(exercises)
                 .ToArray();
-        Assert.Equal(77, hardFloorCategoryDeficiencies.Length);
+        Assert.Equal(81, hardFloorCategoryDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
                 [3] = 6,
                 [5] = 7,
                 [7] = 11,
-                [10] = 9,
+                [10] = 12,
                 [15] = 7,
                 [20] = 13,
-                [30] = 24,
+                [30] = 25,
             },
             hardFloorCategoryDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
@@ -367,7 +411,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(161, timedSideExercises.Length);
+        Assert.Equal(165, timedSideExercises.Length);
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -377,7 +421,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(152, alternatingExercises.Length);
+        Assert.Equal(151, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -488,8 +532,8 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 278,
-            [2] = 121,
+            [1] = 274,
+            [2] = 125,
             [3] = 28,
             [4] = 15,
             [5] = 1,
@@ -649,6 +693,11 @@ public sealed class CatalogInvariantTests
             [575] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [578] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [583] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
+            [563] = ExerciseSideSequence.ScreenRightThenLeft,
+            [564] = ExerciseSideSequence.ScreenRightThenLeft,
+            [567] = ExerciseSideSequence.ScreenRightThenLeft,
+            [568] = ExerciseSideSequence.ScreenRightThenLeft,
+            [574] = ExerciseSideSequence.ScreenLeftThenRight,
             [591] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [611] = ExerciseSideSequence.Continuous,
             [617] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -841,9 +890,13 @@ public sealed class CatalogInvariantTests
             [556] = "Standing Fist Clench and Release",
             [561] = "Tiptoe Running Steps with Head Spot",
             [562] = "Ballet Calf Raises with Arm Sweeps",
-            [564] = "Parallel Calf Raises with Hands on Hips",
+            [563] = "Hip Airplane with Back Foot on Wall",
+            [564] = "Standing Foot-to-Wall Press Hold",
             [565] = "Mini Squat with Forward Reach",
             [566] = "Parallel Calf Raises",
+            [567] = "Rear-Foot-on-Wall Split Squat",
+            [568] = "Toes-on-Wall Calf Stretch",
+            [574] = "Wall Toe Taps",
             [581] = "Toes-In Calf Raises",
             [582] = "Toes-Out Calf Raises",
             [615] = "Alternating Hamstring Curls with Prayer Hands",

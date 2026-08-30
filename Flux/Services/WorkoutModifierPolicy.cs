@@ -35,6 +35,10 @@ public sealed record WorkoutWallRequiredCatalogDeficiency(
     int MatchingSessionMovementCount,
     int RequiredSessionMovementCount);
 
+public sealed record WorkoutSoleWallContactRequiredCatalogDeficiency(
+    int MatchingSessionMovementCount,
+    int RequiredSessionMovementCount);
+
 public sealed record WorkoutProfileLineupDeficiency(
     int Minutes,
     WorkoutModifiers Profile,
@@ -57,6 +61,7 @@ public static class WorkoutModifierPolicy
     public const int MinimumExercisesPerPairStatePerGroup = 5;
     public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumWallRequiredSessionMovements = 20;
+    public const int MinimumSoleWallContactRequiredSessionMovements = 5;
     public const int MinimumMaterialExercises = 5;
     public const int MinimumMaterialExercisePercent = 5;
     public const int MinimumAffectedBucketPercent = 10;
@@ -99,7 +104,9 @@ public static class WorkoutModifierPolicy
 
     private static readonly WorkoutModifiers SupportedModifierMask =
         Rules.Aggregate(
-            WorkoutModifiers.TallMirror | WorkoutModifiers.Wall,
+            WorkoutModifiers.TallMirror |
+                WorkoutModifiers.Wall |
+                WorkoutModifiers.SoleWallContact,
             (mask, rule) => mask | rule.Flag);
 
     private static readonly IReadOnlyList<WorkoutModifiers> ProfilesForValidation =
@@ -124,6 +131,10 @@ public static class WorkoutModifierPolicy
         if (!normalized.HasFlag(WorkoutModifiers.Mirror))
         {
             normalized &= ~WorkoutModifiers.TallMirror;
+        }
+        if (!normalized.HasFlag(WorkoutModifiers.Wall))
+        {
+            normalized &= ~WorkoutModifiers.SoleWallContact;
         }
 
         return normalized;
@@ -165,11 +176,52 @@ public static class WorkoutModifierPolicy
         };
     }
 
+    public static WallEquipment GetWallEquipment(WorkoutModifiers profile)
+    {
+        WorkoutModifiers normalized = Normalize(profile);
+        if (!normalized.HasFlag(WorkoutModifiers.Wall))
+        {
+            return WallEquipment.None;
+        }
+
+        return normalized.HasFlag(WorkoutModifiers.SoleWallContact)
+            ? WallEquipment.SolesMayTouch
+            : WallEquipment.SolesStayOff;
+    }
+
+    public static WorkoutModifiers WithWallEquipment(
+        WorkoutModifiers profile,
+        WallEquipment equipment)
+    {
+        if (!Enum.IsDefined(equipment))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null);
+        }
+
+        WorkoutModifiers withoutWall = Normalize(profile) &
+            ~(WorkoutModifiers.Wall | WorkoutModifiers.SoleWallContact);
+        return equipment switch
+        {
+            WallEquipment.None => withoutWall,
+            WallEquipment.SolesStayOff =>
+                withoutWall | WorkoutModifiers.Wall,
+            WallEquipment.SolesMayTouch =>
+                withoutWall |
+                    WorkoutModifiers.Wall |
+                    WorkoutModifiers.SoleWallContact,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(equipment), equipment, null),
+        };
+    }
+
     public static bool IsCatalogMetadataComplete(
         IEnumerable<Exercise> exercises)
     {
         ArgumentNullException.ThrowIfNull(exercises);
-        return exercises.All(exercise => Rules.All(rule => rule.IsReviewed(exercise)));
+        return exercises.All(exercise =>
+            (!exercise.SoleWallContactRequired || exercise.WallRequired) &&
+            Rules.All(rule => rule.IsReviewed(exercise)));
     }
 
     public static bool IsCompatible(
@@ -178,8 +230,11 @@ public static class WorkoutModifierPolicy
     {
         ArgumentNullException.ThrowIfNull(exercise);
         WorkoutModifiers normalized = Normalize(profile);
+        WallEquipment wallEquipment = GetWallEquipment(normalized);
         return (!exercise.WallRequired ||
-                normalized.HasFlag(WorkoutModifiers.Wall)) &&
+                wallEquipment != WallEquipment.None) &&
+            (!exercise.SoleWallContactRequired ||
+                wallEquipment == WallEquipment.SolesMayTouch) &&
             Rules.All(rule =>
             rule.IsCompatibleForProfile(exercise, normalized));
     }
@@ -190,7 +245,7 @@ public static class WorkoutModifierPolicy
     {
         ArgumentNullException.ThrowIfNull(exercise);
         return exercise.WallRequired &&
-            Normalize(profile).HasFlag(WorkoutModifiers.Wall);
+            GetWallEquipment(profile) != WallEquipment.None;
     }
 
     public static int GetEquipmentPreferenceCount(
@@ -205,7 +260,9 @@ public static class WorkoutModifierPolicy
     {
         ArgumentNullException.ThrowIfNull(exercises);
         int movementCount = exercises
-            .Where(exercise => exercise.WallRequired)
+            .Where(exercise =>
+                exercise.WallRequired &&
+                !exercise.SoleWallContactRequired)
             .Select(GetSessionMovementId)
             .Distinct()
             .Count();
@@ -216,6 +273,26 @@ public static class WorkoutModifierPolicy
                 new WorkoutWallRequiredCatalogDeficiency(
                     movementCount,
                     MinimumWallRequiredSessionMovements),
+            ];
+    }
+
+    public static IReadOnlyList<WorkoutSoleWallContactRequiredCatalogDeficiency>
+        FindSoleWallContactRequiredCatalogDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        int movementCount = exercises
+            .Where(exercise => exercise.SoleWallContactRequired)
+            .Select(GetSessionMovementId)
+            .Distinct()
+            .Count();
+        return movementCount >= MinimumSoleWallContactRequiredSessionMovements
+            ? []
+            :
+            [
+                new WorkoutSoleWallContactRequiredCatalogDeficiency(
+                    movementCount,
+                    MinimumSoleWallContactRequiredSessionMovements),
             ];
     }
 

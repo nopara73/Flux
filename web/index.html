@@ -107,13 +107,26 @@
                   id="wall-modifier"
                   class="modifier-tile"
                   type="button"
-                  aria-label="Wall equipment: no wall available"
-                  aria-pressed="false"
-                  title="equipment OFF: wall"
-                >
-                  <svg class="modifier-icon wall-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path class="modifier-icon-stroke" d="M3 4h18v16H3Zm0 5h18M3 15h18M9 4v5m7 0v6m-8 0v5" />
-                  </svg>
+                    aria-label="Wall equipment: no wall available"
+                    aria-pressed="false"
+                    title="equipment OFF: wall"
+                    data-wall-equipment="none"
+                  >
+                    <svg class="modifier-icon wall-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <g class="wall-glyph wall-glyph-none">
+                        <path class="modifier-icon-stroke" d="M3 4h18v16H3Zm0 5h18M3 15h18M9 4v5m7 0v6m-8 0v5M3 21 21 3" />
+                      </g>
+                      <g class="wall-glyph wall-glyph-soles-stay-off">
+                        <path class="modifier-icon-stroke" d="M3 4h18v16H3Zm0 5h18M3 15h18M9 4v5m7 0v6m-8 0v5" />
+                      </g>
+                      <g class="wall-glyph wall-glyph-soles-may-touch">
+                        <path class="modifier-icon-stroke" d="M2 4h12v16H2Zm0 5h12M2 15h12M7 4v5m3 0v6m-4 0v5" />
+                        <path class="modifier-icon-stroke wall-footprint" d="M17.8 20.5c-1.7 0-2.7-1.1-2.5-2.7l.7-4.1c.3-1.6 1.5-2.5 2.8-2.1 1.5.4 2.2 1.9 1.9 3.6l-.6 3.5c-.2 1.2-1 1.8-2.3 1.8Z" />
+                        <circle cx="16.2" cy="9.8" r="1" />
+                        <circle cx="18.4" cy="8.8" r="1" />
+                        <circle cx="20.5" cy="9.6" r=".9" />
+                      </g>
+                    </svg>
                 </button>
                 <button
                   id="mirror-modifier"

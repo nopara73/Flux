@@ -25,6 +25,7 @@ import {
   MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
+  MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_MUSCULAR_DEMAND,
   MINIMUM_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
@@ -38,6 +39,7 @@ import {
   SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
   RESOLUTIONS,
   MIRROR_EQUIPMENT,
+  WALL_EQUIPMENT,
   WORKOUT_MODIFIER_VALIDATION_PROFILES,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
@@ -52,11 +54,13 @@ import {
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
   findWorkoutProfileLineupDeficiencies,
   getCanonicalCoverage,
   getMaximumDistinctLineupSize,
   getMirrorEquipment,
+  getWallEquipment,
   getEquipmentPreferenceCount,
   getExerciseVideoPath,
   getHoldFramePath,
@@ -96,6 +100,7 @@ import {
   normalizeMinutes,
   parseStoredState,
   withMirrorEquipment,
+  withWallEquipment,
 } from "../workout.js";
 
 test("exercise phases use inclusive 15- and 45-block boundaries", () => {
@@ -745,7 +750,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [129, 227, 143],
+    [131, 224, 144],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -1181,14 +1186,19 @@ test("compact and tall mirrors apply coverage without filtering ordinary exercis
   assert.equal(isMirrorPreferred(agnostic, WORKOUT_MODIFIERS.Mirror), false);
 });
 
-test("wall equipment enables and softly prefers wall-required exercises", () => {
+test("wall equipment states unlock exactly their allowed exercises", () => {
   const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
   const wallRequired = {
     ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
     wallRequired: true,
   };
+  const soleWallRequired = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    wallRequired: true,
+    soleWallContactRequired: true,
+  };
   const ordinary = exercise(
-    2,
+    3,
     primary,
     [],
     0,
@@ -1198,12 +1208,25 @@ test("wall equipment enables and softly prefers wall-required exercises", () => 
   assert.equal(isCompatibleWithWorkoutModifiers(
     wallRequired, WORKOUT_MODIFIERS.None), false);
   assert.equal(isCompatibleWithWorkoutModifiers(
+    soleWallRequired, WORKOUT_MODIFIERS.None), false);
+  assert.equal(isCompatibleWithWorkoutModifiers(
     wallRequired, WORKOUT_MODIFIERS.Wall), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    soleWallRequired, WORKOUT_MODIFIERS.Wall), false);
+  const solesMayTouch = withWallEquipment(
+    WORKOUT_MODIFIERS.None,
+    WALL_EQUIPMENT.SolesMayTouch,
+  );
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    wallRequired, solesMayTouch), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    soleWallRequired, solesMayTouch), true);
   assert.equal(isCompatibleWithWorkoutModifiers(
     ordinary, WORKOUT_MODIFIERS.None), true);
   assert.equal(isCompatibleWithWorkoutModifiers(
     ordinary, WORKOUT_MODIFIERS.Wall), true);
   assert.equal(isWallPreferred(wallRequired, WORKOUT_MODIFIERS.Wall), true);
+  assert.equal(isWallPreferred(soleWallRequired, solesMayTouch), true);
   assert.equal(isWallPreferred(wallRequired, WORKOUT_MODIFIERS.None), false);
   assert.equal(isWallPreferred(ordinary, WORKOUT_MODIFIERS.Wall), false);
 });
@@ -1253,6 +1276,75 @@ test("wall singleton floor counts distinct session movements only", () => {
     matchingSessionMovementCount: MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS - 1,
     requiredSessionMovementCount: MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
   }]);
+});
+
+test("sole-wall floor is separate and counts distinct session movements only", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const exercises = Array.from(
+    { length: MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS },
+    (_, index) => ({
+      ...exercise(
+        index + 1,
+        primary,
+        [],
+        0,
+        EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      ),
+      wallRequired: true,
+      soleWallContactRequired: true,
+      sessionMovementId: index + 1,
+    }),
+  );
+
+  assert.deepEqual(
+    findSoleWallContactRequiredCatalogDeficiencies(exercises),
+    [],
+  );
+  assert.equal(findWallRequiredCatalogDeficiencies(exercises).length, 1);
+
+  exercises.at(-1).sessionMovementId = exercises.at(-2).sessionMovementId;
+  assert.deepEqual(
+    findSoleWallContactRequiredCatalogDeficiencies(exercises),
+    [{
+      matchingSessionMovementCount:
+        MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS - 1,
+      requiredSessionMovementCount:
+        MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
+    }],
+  );
+});
+
+test("wall equipment round-trips and discards an orphan sole qualifier", () => {
+  const context = WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence;
+  assert.equal(
+    getWallEquipment(WORKOUT_MODIFIERS.SoleWallContact),
+    WALL_EQUIPMENT.None,
+  );
+  assert.equal(
+    normalizeWorkoutModifiers(WORKOUT_MODIFIERS.SoleWallContact),
+    WORKOUT_MODIFIERS.None,
+  );
+
+  const solesStayOff = withWallEquipment(
+    context,
+    WALL_EQUIPMENT.SolesStayOff,
+  );
+  assert.equal(getWallEquipment(solesStayOff), WALL_EQUIPMENT.SolesStayOff);
+  assert.equal(solesStayOff, context | WORKOUT_MODIFIERS.Wall);
+
+  const solesMayTouch = withWallEquipment(
+    solesStayOff,
+    WALL_EQUIPMENT.SolesMayTouch,
+  );
+  assert.equal(getWallEquipment(solesMayTouch), WALL_EQUIPMENT.SolesMayTouch);
+  assert.equal(
+    solesMayTouch,
+    context | WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.SoleWallContact,
+  );
+  assert.equal(
+    withWallEquipment(solesMayTouch, WALL_EQUIPMENT.None),
+    context,
+  );
 });
 
 test("mirror equipment round-trips and discards an orphan tall qualifier", () => {
@@ -1360,6 +1452,10 @@ test("mirror metadata is complete only when relationship matches equipment", () 
   assert.equal(isModifierMetadataComplete([{
     ...agnostic,
     mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.Unreviewed,
+  }]), false);
+  assert.equal(isModifierMetadataComplete([{
+    ...agnostic,
+    soleWallContactRequired: true,
   }]), false);
 });
 
@@ -1878,10 +1974,25 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
   }
   assert.equal(isModifierMetadataComplete(catalog), true);
   assert.deepEqual(findMirrorCategoryDeficiencies(catalog), []);
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 24);
-  assert.equal(new Set(catalog.filter((exercise) => exercise.wallRequired)
+  const baseWallExercises = catalog.filter((exercise) =>
+    exercise.wallRequired && !exercise.soleWallContactRequired);
+  const soleWallExercises = catalog.filter((exercise) =>
+    exercise.soleWallContactRequired);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 29);
+  assert.equal(baseWallExercises.length, 24);
+  assert.equal(new Set(baseWallExercises
     .map((exercise) => exercise.sessionMovementId || exercise.id)).size, 24);
+  assert.deepEqual(
+    new Set(soleWallExercises.map((exercise) => exercise.id)),
+    new Set([563, 564, 567, 568, 574]),
+  );
+  assert.equal(new Set(soleWallExercises
+    .map((exercise) => exercise.sessionMovementId || exercise.id)).size, 5);
   assert.deepEqual(findWallRequiredCatalogDeficiencies(catalog), []);
+  assert.deepEqual(
+    findSoleWallContactRequiredCatalogDeficiencies(catalog),
+    [],
+  );
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
   assert.equal(pairwiseDeficiencies.length, 245);
   assert.deepEqual(
@@ -1896,7 +2007,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
   assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 38);
 
   const hardFloorDeficiencies = findHardFloorCategoryCoverageDeficiencies(catalog);
-  assert.equal(hardFloorDeficiencies.length, 77);
+  assert.equal(hardFloorDeficiencies.length, 81);
   assert.deepEqual(
     Object.fromEntries([...new Set(hardFloorDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -1904,7 +2015,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         hardFloorDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 6, 5: 7, 7: 11, 10: 9, 15: 7, 20: 13, 30: 24 },
+    { 3: 6, 5: 7, 7: 11, 10: 12, 15: 7, 20: 13, 30: 25 },
   );
   assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 24);
 
@@ -5028,9 +5139,12 @@ test("approved clarity corrections preserve browser memory", () => {
     const isSequenceMemberOnly = currentExercise.sequenceBlocks.length === 0;
     const isUnavailableWithoutMirror = currentExercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly;
+    const isUnavailableWithoutWall = currentExercise.wallRequired;
     assert.equal(
       restored.state.selectedExerciseIds[group.id],
-      isSequenceMemberOnly || isUnavailableWithoutMirror ? undefined : exerciseId,
+      isSequenceMemberOnly || isUnavailableWithoutMirror || isUnavailableWithoutWall
+        ? undefined
+        : exerciseId,
     );
     assert.equal(restored.getScore(currentExercise), -3);
   }
@@ -6261,6 +6375,58 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
   assert.equal(softFloorRestored.state.pendingRestKept, true);
 });
 
+test("sole-wall revision rebuilds changed workout state and resets scores", () => {
+  const changedIds = [563, 564, 567, 568, 574];
+  assert.equal(CURRENT_CATALOG_REVISION, 54);
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(54)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 53;
+  state.activeWorkoutMinutes = 30;
+  state.activeWorkoutModifiers =
+    WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.SoleWallContact;
+  const changedGroupId = "r30.deep-hip-rotators";
+  const retainedGroupId = "r30.gluteal-extensors";
+  const profilePrefix = `p${state.activeWorkoutModifiers}|`;
+  state.selectedExerciseIds = {
+    [`${profilePrefix}${changedGroupId}`]: 563,
+    [`${profilePrefix}${retainedGroupId}`]: 15,
+  };
+  state.outcomes = {
+    [changedGroupId]: "x",
+    [retainedGroupId]: "tick",
+  };
+  state.scores = { 563: -4, 15: -2 };
+  state.pendingRestGroupId = changedGroupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(
+    restored.state.selectedExerciseIds[`${profilePrefix}${changedGroupId}`],
+    undefined,
+  );
+  assert.equal(
+    restored.state.selectedExerciseIds[`${profilePrefix}${retainedGroupId}`],
+    15,
+  );
+  assert.equal(restored.state.outcomes[changedGroupId], undefined);
+  assert.equal(restored.state.outcomes[retainedGroupId], "tick");
+  assert.equal(restored.state.scores["563"], undefined);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, 54);
+});
+
 test("unclear exercise replacement revision resets every changed score", () => {
   const changedIds = [
     211, 213, 214, 215, 218, 223, 224,
@@ -6730,6 +6896,7 @@ function exercise(
     insectCompatibility,
     hardFloorCompatibility,
     wallRequired: false,
+    soleWallContactRequired: false,
     mirrorRelationship,
     minimumMirrorCoverage,
     equipment: mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly

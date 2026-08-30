@@ -1,10 +1,12 @@
 import {
   DEFAULT_WORKOUT_MODIFIERS,
   MIRROR_EQUIPMENT,
+  WALL_EQUIPMENT,
   REST_DURATION_MS,
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
+  findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
   findMirrorCategoryDeficiencies,
   getExerciseVideoPath,
@@ -14,12 +16,14 @@ import {
   getMovementPhaseState,
   getMovementPresentation,
   getMirrorEquipment,
+  getWallEquipment,
   getWorkoutDisplayProgress,
   getWorkoutExecutionTimeline,
   isModifierMetadataComplete,
   isSessionMovementMetadataValid,
   parseStoredState,
   withMirrorEquipment,
+  withWallEquipment,
 } from "./workout.js";
 
 const STORAGE_KEY = "flux.workout.state.v1";
@@ -34,7 +38,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
-  wallEnabled: "equipment ON: wall",
+  wallSolesStayOff: "equipment ON: wall, soles stay off",
+  wallSolesMayTouch: "equipment ON: wall, soles may touch",
   wallDisabled: "equipment OFF: wall",
   compactMirrorEnabled: "equipment ON: compact mirror",
   tallMirrorEnabled: "equipment ON: tall mirror",
@@ -178,10 +183,13 @@ async function bootstrap() {
     const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
     const wallCatalogDeficiencies =
       findWallRequiredCatalogDeficiencies(exercises);
+    const soleWallCatalogDeficiencies =
+      findSoleWallContactRequiredCatalogDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
         !isSessionMovementMetadataValid(exercises) ||
         mirrorCategoryDeficiencies.length > 0 ||
-        wallCatalogDeficiencies.length > 0) {
+        wallCatalogDeficiencies.length > 0 ||
+        soleWallCatalogDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
@@ -252,6 +260,7 @@ function bindEvents() {
     for (const { element, flag } of workoutModifierTiles()) {
       element.addEventListener("click", () => toggleWorkoutModifier(flag));
     }
+    elements.wallModifier.addEventListener("click", cycleWallEquipment);
     elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
   }
   elements.shuffleExercise.addEventListener("click", shuffleCurrentExercise);
@@ -356,12 +365,6 @@ function workoutModifierTiles() {
       enabledLabel: "Quiet exercise filter: quiet exercises only",
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
-    {
-      element: elements.wallModifier,
-      flag: WORKOUT_MODIFIERS.Wall,
-      enabledLabel: "Wall equipment: wall available",
-      disabledLabel: "Wall equipment: no wall available",
-    },
   ];
 }
 
@@ -392,12 +395,33 @@ function workoutModifierFeedbackLabel(flag, enabled) {
       enabled ? "noisyDisabled" : "noisyEnabled"
     ];
   }
-  if (flag === WORKOUT_MODIFIERS.Wall) {
-    return MODIFIER_FEEDBACK_LABELS[
-      enabled ? "wallEnabled" : "wallDisabled"
-    ];
-  }
   throw new RangeError(`Unknown workout modifier: ${flag}`);
+}
+
+function cycleWallEquipment() {
+  const currentEquipment = getWallEquipment(selectedModifiers);
+  const nextEquipment = currentEquipment === WALL_EQUIPMENT.None
+    ? WALL_EQUIPMENT.SolesStayOff
+    : currentEquipment === WALL_EQUIPMENT.SolesStayOff
+      ? WALL_EQUIPMENT.SolesMayTouch
+      : WALL_EQUIPMENT.None;
+  selectedModifiers = withWallEquipment(selectedModifiers, nextEquipment);
+  if (!session) {
+    startupSelectionChanged = true;
+  }
+  renderWorkoutModifiers();
+  showWorkoutModifierFeedback(wallEquipmentFeedbackLabel(nextEquipment));
+  queueWorkoutPreparation();
+}
+
+function wallEquipmentFeedbackLabel(equipment) {
+  if (equipment === WALL_EQUIPMENT.SolesStayOff) {
+    return MODIFIER_FEEDBACK_LABELS.wallSolesStayOff;
+  }
+  if (equipment === WALL_EQUIPMENT.SolesMayTouch) {
+    return MODIFIER_FEEDBACK_LABELS.wallSolesMayTouch;
+  }
+  return MODIFIER_FEEDBACK_LABELS.wallDisabled;
 }
 
 function cycleMirrorEquipment() {
@@ -457,6 +481,28 @@ function renderWorkoutModifiers() {
       element.setAttribute("aria-label", enabled ? enabledLabel : disabledLabel);
     }
   }
+
+  const wallEquipment = getWallEquipment(selectedModifiers);
+  const wallEnabled = wallEquipment !== WALL_EQUIPMENT.None;
+  elements.wallModifier.setAttribute("aria-pressed", String(wallEnabled));
+  elements.wallModifier.setAttribute(
+    "title",
+    wallEquipmentFeedbackLabel(wallEquipment),
+  );
+  elements.wallModifier.setAttribute(
+    "aria-label",
+    wallEquipment === WALL_EQUIPMENT.None
+      ? "Wall equipment: no wall available"
+      : wallEquipment === WALL_EQUIPMENT.SolesStayOff
+        ? "Wall equipment: wall available; soles stay off"
+        : "Wall equipment: wall available; soles may touch",
+  );
+  elements.wallModifier.dataset.wallEquipment =
+    wallEquipment === WALL_EQUIPMENT.None
+      ? "none"
+      : wallEquipment === WALL_EQUIPMENT.SolesStayOff
+        ? "soles-stay-off"
+        : "soles-may-touch";
 
   const mirrorEquipment = getMirrorEquipment(selectedModifiers);
   const mirrorEnabled = mirrorEquipment !== MIRROR_EQUIPMENT.None;

@@ -7,6 +7,7 @@ import {
   CURRENT_CATALOG_REVISION,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
@@ -146,6 +147,8 @@ const materialityDeficiencies =
   findWorkoutModifierMaterialityDeficiencies(catalog);
 const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
 const wallCatalogDeficiencies = findWallRequiredCatalogDeficiencies(catalog);
+const soleWallCatalogDeficiencies =
+  findSoleWallContactRequiredCatalogDeficiencies(catalog);
 const distinctLineupDeficiencies =
   findWorkoutProfileLineupDeficiencies(catalog);
 const integrityDeficitReport = JSON.parse(await readFile(
@@ -178,6 +181,7 @@ const catalogInvariantChecks = [
   ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
   ["session movement metadata", isSessionMovementMetadataValid(catalog)],
   ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
+  ["sole-wall session-movement floor", soleWallCatalogDeficiencies.length === 0],
   ["explicit catalog-integrity deficit ledger", integrityDebtMatches],
 ];
 const failedCatalogInvariants = catalogInvariantChecks

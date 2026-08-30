@@ -2244,6 +2244,90 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
+    public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
+    {
+        HashSet<int> changedIds = [563, 564, 567, 568, 574];
+        Assert.Equal(54, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[54]);
+
+        const string changedGroup = "sole-wall.changed";
+        const string retainedGroup = "sole-wall.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 53,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 563,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 563,
+            PendingScoreValue = -4,
+            LastKeptExerciseIds = [563, 15],
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Assert.Contains(563, state.LastKeptExerciseIds);
+        Assert.Contains(15, state.LastKeptExerciseIds);
+        Assert.Equal(54, state.CatalogRevision);
+    }
+
+    [Theory]
+    [InlineData(563, "Single-Leg Calf Raise with Head Turns")]
+    [InlineData(564, "Parallel Calf Raises with Hands on Hips")]
+    [InlineData(567, "Breathing Calf Raises with Arm Folds")]
+    [InlineData(568, "Chest-Expansion Breathing Calf Raises")]
+    [InlineData(574, "Tiptoe Overhead Side Bends")]
+    public void SoleWallReplacementsDiscardExactPublishedIdentityAndScore(
+        int exerciseId,
+        string oldName)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(oldName, replacement.Video, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
+    }
+
+    [Fact]
     public void PermanentlyRetiredExercisesMayBeRemovedButCannotReturn()
     {
         Assert.Equal(

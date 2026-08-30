@@ -7,6 +7,7 @@
     tallMirror: 8,
     hardFloor: 16,
     wall: 32,
+    soleWallContact: 64,
   });
   const feedbackDurationMs = 2_040;
   const elements = {
@@ -51,7 +52,7 @@
     toggleModifier("hardFloor"));
   elements.insect.addEventListener("click", () => toggleModifier("insect"));
   elements.silence.addEventListener("click", () => toggleModifier("silence"));
-  elements.wall.addEventListener("click", () => toggleModifier("wall"));
+  elements.wall.addEventListener("click", cycleWallEquipment);
   elements.mirror.addEventListener("click", cycleMirrorEquipment);
 
   renderDuration();
@@ -129,7 +130,6 @@
       ["hardFloor", elements.hardFloor],
       ["insect", elements.insect],
       ["silence", elements.silence],
-      ["wall", elements.wall],
     ]) {
       if (element?.getAttribute("aria-pressed") === "true") {
         modifiers |= modifierFlags[name];
@@ -140,6 +140,12 @@
       modifiers |= modifierFlags.mirror;
     } else if (mirrorEquipment === "tall") {
       modifiers |= modifierFlags.mirror | modifierFlags.tallMirror;
+    }
+    const wallEquipment = elements.wall.dataset.wallEquipment;
+    if (wallEquipment === "soles-stay-off") {
+      modifiers |= modifierFlags.wall;
+    } else if (wallEquipment === "soles-may-touch") {
+      modifiers |= modifierFlags.wall | modifierFlags.soleWallContact;
     }
     return modifiers;
   }
@@ -227,11 +233,48 @@
     notifySelection(true);
   }
 
+  function cycleWallEquipment() {
+    const hasWall = (selectedModifiers & modifierFlags.wall) !== 0;
+    const solesMayTouch =
+      (selectedModifiers & modifierFlags.soleWallContact) !== 0;
+    selectedModifiers &=
+      ~(modifierFlags.wall | modifierFlags.soleWallContact);
+    if (!hasWall) {
+      selectedModifiers |= modifierFlags.wall;
+    } else if (!solesMayTouch) {
+      selectedModifiers |=
+        modifierFlags.wall | modifierFlags.soleWallContact;
+    }
+    selectionChanged = true;
+    renderModifiers();
+    showFeedback(wallFeedbackLabel());
+    notifySelection(true);
+  }
+
   function renderModifiers() {
     renderBinaryModifier(elements.hardFloor, "hardFloor");
     renderBinaryModifier(elements.insect, "insect");
     renderBinaryModifier(elements.silence, "silence");
-    renderBinaryModifier(elements.wall, "wall");
+
+    const hasWall = (selectedModifiers & modifierFlags.wall) !== 0;
+    const solesMayTouch =
+      (selectedModifiers & modifierFlags.soleWallContact) !== 0;
+    const wallEquipment = !hasWall
+      ? "none"
+      : solesMayTouch
+        ? "soles-may-touch"
+        : "soles-stay-off";
+    elements.wall.setAttribute("aria-pressed", String(hasWall));
+    elements.wall.dataset.wallEquipment = wallEquipment;
+    elements.wall.setAttribute("title", wallFeedbackLabel());
+    elements.wall.setAttribute(
+      "aria-label",
+      wallEquipment === "none"
+        ? "Wall equipment: no wall available"
+        : wallEquipment === "soles-stay-off"
+          ? "Wall equipment: wall available; soles stay off"
+          : "Wall equipment: wall available; soles may touch",
+    );
 
     const hasMirror = (selectedModifiers & modifierFlags.mirror) !== 0;
     const hasTallMirror = (selectedModifiers & modifierFlags.tallMirror) !== 0;
@@ -271,14 +314,6 @@
           : "Quiet exercise filter: noisy exercises allowed",
       );
     }
-    if (name === "wall") {
-      element.setAttribute(
-        "aria-label",
-        enabled
-          ? "Wall equipment: wall available"
-          : "Wall equipment: no wall available",
-      );
-    }
   }
 
   function modifierFeedbackLabel(name) {
@@ -289,10 +324,16 @@
     if (name === "insect") {
       return `insect mode ${enabled ? "ON" : "OFF"}`;
     }
-    if (name === "wall") {
-      return `equipment ${enabled ? "ON" : "OFF"}: wall`;
-    }
     return enabled ? "noisy exercises DISABLED" : "noisy exercises ENABLED";
+  }
+
+  function wallFeedbackLabel() {
+    if ((selectedModifiers & modifierFlags.wall) === 0) {
+      return "equipment OFF: wall";
+    }
+    return (selectedModifiers & modifierFlags.soleWallContact) !== 0
+      ? "equipment ON: wall, soles may touch"
+      : "equipment ON: wall, soles stay off";
   }
 
   function mirrorFeedbackLabel() {

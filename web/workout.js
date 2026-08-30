@@ -7,11 +7,17 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   TallMirror: 8,
   HardFloor: 16,
   Wall: 32,
+  SoleWallContact: 64,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
   Compact: "Compact",
   Tall: "Tall",
+});
+export const WALL_EQUIPMENT = Object.freeze({
+  None: "None",
+  SolesStayOff: "SolesStayOff",
+  SolesMayTouch: "SolesMayTouch",
 });
 export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
@@ -143,7 +149,9 @@ function createWorkoutModifierValidationProfiles() {
 }
 export const SUPPORTED_WORKOUT_MODIFIER_MASK = MODIFIER_RULES.reduce(
   (mask, rule) => mask | rule.flag,
-  WORKOUT_MODIFIERS.TallMirror | WORKOUT_MODIFIERS.Wall,
+  WORKOUT_MODIFIERS.TallMirror |
+    WORKOUT_MODIFIERS.Wall |
+    WORKOUT_MODIFIERS.SoleWallContact,
 );
 export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
   createWorkoutModifierValidationProfiles(),
@@ -154,6 +162,7 @@ const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
 export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
 export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
+export const MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
 export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
@@ -233,7 +242,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 53;
+export const CURRENT_CATALOG_REVISION = 54;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -352,6 +361,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     733, 746, 748, 750, 816, 884, 885, 886, 887, 905, 915, 971,
     973, 986, 999,
   ])],
+  [54, new Set([563, 564, 567, 568, 574])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -425,6 +435,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     559, 560, 561, 562, 563, 564, 565, 566, 567, 568,
     569, 570, 571, 574, 575, 578, 581, 582, 583,
   ])],
+  [54, new Set([563, 564, 567, 568, 574])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -1521,6 +1532,8 @@ export function getMovementDurationMs() {
 export function isModifierMetadataComplete(exercises) {
   return exercises.every((exercise) =>
     typeof exercise.wallRequired === "boolean" &&
+    typeof exercise.soleWallContactRequired === "boolean" &&
+    (!exercise.soleWallContactRequired || exercise.wallRequired) &&
     MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
 }
 
@@ -1553,6 +1566,8 @@ export function isSessionMovementMetadataValid(exercises) {
       const member = exercisesById.get(block?.exerciseId);
       if (!member ||
           member.wallRequired !== root.wallRequired ||
+          member.soleWallContactRequired !==
+            root.soleWallContactRequired ||
           !validSideCues.has(block.sideCue ?? "None") ||
           !validDirectionCues.has(block.directionCue ?? "None") ||
           typeof block.mirrorMedia !== "boolean" ||
@@ -1612,15 +1627,18 @@ export function isSessionMovementMetadataValid(exercises) {
 
 export function isCompatibleWithWorkoutModifiers(exercise, modifiers) {
   const normalized = normalizeWorkoutModifiers(modifiers);
+  const wallEquipment = getWallEquipment(normalized);
   return (exercise.wallRequired !== true ||
-      (normalized & WORKOUT_MODIFIERS.Wall) !== 0) &&
+      wallEquipment !== WALL_EQUIPMENT.None) &&
+    (exercise.soleWallContactRequired !== true ||
+      wallEquipment === WALL_EQUIPMENT.SolesMayTouch) &&
     MODIFIER_RULES.every((rule) =>
     rule.isCompatibleForProfile(exercise, normalized));
 }
 
 export function isWallPreferred(exercise, modifiers) {
   return exercise.wallRequired === true &&
-    (normalizeWorkoutModifiers(modifiers) & WORKOUT_MODIFIERS.Wall) !== 0;
+    getWallEquipment(modifiers) !== WALL_EQUIPMENT.None;
 }
 
 export function getEquipmentPreferenceCount(exercise, modifiers) {
@@ -1630,7 +1648,9 @@ export function getEquipmentPreferenceCount(exercise, modifiers) {
 
 export function findWallRequiredCatalogDeficiencies(exercises) {
   const movementCount = new Set(exercises
-    .filter((exercise) => exercise.wallRequired === true)
+    .filter((exercise) =>
+      exercise.wallRequired === true &&
+      exercise.soleWallContactRequired !== true)
     .map(getSessionMovementId)).size;
   return movementCount >= MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS
     ? []
@@ -1638,6 +1658,20 @@ export function findWallRequiredCatalogDeficiencies(exercises) {
         matchingSessionMovementCount: movementCount,
         requiredSessionMovementCount:
           MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
+      }];
+}
+
+export function findSoleWallContactRequiredCatalogDeficiencies(exercises) {
+  const movementCount = new Set(exercises
+    .filter((exercise) => exercise.soleWallContactRequired === true)
+    .map(getSessionMovementId)).size;
+  return movementCount >=
+      MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS
+    ? []
+    : [{
+        matchingSessionMovementCount: movementCount,
+        requiredSessionMovementCount:
+          MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
       }];
 }
 
@@ -2424,6 +2458,9 @@ export function normalizeWorkoutModifiers(modifiers) {
   if ((normalized & WORKOUT_MODIFIERS.Mirror) === 0) {
     normalized &= ~WORKOUT_MODIFIERS.TallMirror;
   }
+  if ((normalized & WORKOUT_MODIFIERS.Wall) === 0) {
+    normalized &= ~WORKOUT_MODIFIERS.SoleWallContact;
+  }
   return normalized;
 }
 
@@ -2451,6 +2488,32 @@ export function withMirrorEquipment(modifiers, equipment) {
       WORKOUT_MODIFIERS.TallMirror;
   }
   throw new RangeError(`Unknown mirror equipment: ${equipment}`);
+}
+
+export function getWallEquipment(modifiers) {
+  const normalized = normalizeWorkoutModifiers(modifiers);
+  if ((normalized & WORKOUT_MODIFIERS.Wall) === 0) {
+    return WALL_EQUIPMENT.None;
+  }
+  return (normalized & WORKOUT_MODIFIERS.SoleWallContact) !== 0
+    ? WALL_EQUIPMENT.SolesMayTouch
+    : WALL_EQUIPMENT.SolesStayOff;
+}
+
+export function withWallEquipment(modifiers, equipment) {
+  const withoutWall = normalizeWorkoutModifiers(modifiers) &
+    ~(WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.SoleWallContact);
+  if (equipment === WALL_EQUIPMENT.None) {
+    return withoutWall;
+  }
+  if (equipment === WALL_EQUIPMENT.SolesStayOff) {
+    return withoutWall | WORKOUT_MODIFIERS.Wall;
+  }
+  if (equipment === WALL_EQUIPMENT.SolesMayTouch) {
+    return withoutWall | WORKOUT_MODIFIERS.Wall |
+      WORKOUT_MODIFIERS.SoleWallContact;
+  }
+  throw new RangeError(`Unknown wall equipment: ${equipment}`);
 }
 
 export function getMovementCountdownDurationMs(group) {
