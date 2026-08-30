@@ -1262,6 +1262,15 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.doesNotMatch(workoutLayout, /workout_group_name|muscle_chip_background|skip_action/);
   assert.doesNotMatch(webIndex, /workout-group-name|skip-exercise|>\s*Start\s*</);
   assert.match(webIndex, /id="shuffle-exercise"[\s\S]*id="start-movement"/);
+  assert.match(
+    strings,
+    /shuffle_exercise_description">Reject and replace this exercise</,
+  );
+  assert.match(
+    webIndex,
+    /id="shuffle-exercise"[\s\S]*aria-label="Reject and replace this exercise"[\s\S]*title="Reject and replace this exercise"/,
+  );
+  assert.doesNotMatch(webIndex, /Shuffle exercise \(-1 vote\)/);
   assert.match(webIndex, /id="start-movement"[\s\S]*start-playback-icon/);
   assert.match(webIndex, /id="repeat-exercise"[\s\S]*id="toggle-playback"[\s\S]*id="next-exercise"/);
 
