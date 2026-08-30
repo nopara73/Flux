@@ -150,7 +150,7 @@ const [
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Resources", "drawable", "ic_wall.xml"),
   source("Flux", "Resources", "drawable", "ic_wall_off.xml"),
-  source("Flux", "Resources", "drawable", "ic_wall_no_sole.xml"),
+  binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_wall_no_sole.png"),
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
   source("Flux", "Services", "WorkoutSchedulePolicy.cs"),
@@ -653,13 +653,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /@drawable\/ic_wall_off/);
   assert.match(wallIcon, /<vector[\s\S]*pathData=/);
   assert.match(wallOffIcon, /<vector[\s\S]*pathData=/);
-  assert.match(wallNoSoleIcon, /<vector[\s\S]*pathData=/);
+  assert.deepEqual(
+    [...wallNoSoleIcon.subarray(0, 8)],
+    [137, 80, 78, 71, 13, 10, 26, 10],
+  );
   assert.notEqual(wallIcon, wallOffIcon);
-  assert.notEqual(wallIcon, wallNoSoleIcon);
-  assert.notEqual(wallOffIcon, wallNoSoleIcon);
-  assert.match(wallNoSoleIcon, /M12,2\.5A9\.5,9\.5/);
-  assert.match(wallNoSoleIcon, /M16\.8,5\.2L16\.8,18\.8/);
-  assert.match(wallNoSoleIcon, /M5\.3,5\.3L18\.7,18\.7/);
   assert.match(
     mainActivity,
     /UpdateWallModifierPresentation[\s\S]*WallEquipment\.None\s*=>\s*Resource\.Drawable\.ic_wall_off[\s\S]*WallEquipment\.SolesStayOff\s*=>\s*Resource\.Drawable\.ic_wall_no_sole[\s\S]*WallEquipment\.SolesMayTouch\s*=>\s*Resource\.Drawable\.ic_wall/,
@@ -670,7 +668,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     webIndex,
-    /wall-glyph-soles-stay-off[\s\S]*wall-no-sole-slash[\s\S]*wall-glyph-soles-may-touch[\s\S]*M3 4h18v16H3/,
+    /wall-glyph-soles-stay-off[\s\S]*wall-no-sole-mask[\s\S]*wall-glyph-soles-may-touch[\s\S]*M3 4h18v16H3/,
+  );
+  assert.match(
+    webStyles,
+    /wall-no-sole-mask[\s\S]*mask-image:\s*url\("\.\/assets\/ic_wall_no_sole\.png"\)/,
   );
   assert.match(durationLayout, /@drawable\/ic_hard_floor/);
   assert.notDeepEqual(hardFloorIcon, softFloorIcon);
@@ -685,8 +687,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /data-hard-floor="hard"[\s\S]*floor-glyph-hard[\s\S]*data-hard-floor="soft"[\s\S]*floor-glyph-soft/);
   assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_hard_floor\.png"\)/);
   assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_soft_floor\.png"\)/);
-  assert.match(webBuild, /drawable-xxhdpi[\s\S]*ic_hard_floor\.png[\s\S]*ic_soft_floor\.png/);
-  assert.match(webBuild, /fingerprintedName\([\s\S]*"ic_hard_floor"[\s\S]*"ic_soft_floor"/);
+  assert.match(webBuild, /drawable-xxhdpi[\s\S]*ic_hard_floor\.png[\s\S]*ic_soft_floor\.png[\s\S]*ic_wall_no_sole\.png/);
+  assert.match(webBuild, /fingerprintedName\([\s\S]*"ic_hard_floor"[\s\S]*"ic_soft_floor"[\s\S]*"ic_wall_no_sole"/);
   assert.match(
     durationLayout,
     /mirror_modifier_button(?:(?!\/>)[\s\S])*drawableTop="@drawable\/ic_mirror"/,

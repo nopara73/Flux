@@ -460,8 +460,15 @@ button.modifier-tile:not(:disabled):active {
   display: none;
 }
 
-.wall-no-sole-slash {
-  stroke-width: 2.4;
+.wall-no-sole-mask {
+  mask-image: url("./assets/ic_wall_no_sole.png");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("./assets/ic_wall_no_sole.png");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 
 .modifier-tile[data-wall-equipment="none"] .wall-glyph-none,
