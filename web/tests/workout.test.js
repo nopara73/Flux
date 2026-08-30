@@ -1514,7 +1514,7 @@ test("wall relevance breaks score ties but never overrides a real vote", () => {
   assert.equal(voted.chooseBestCandidate(group, new Set(), WORKOUT_MODIFIERS.Wall).id, 1);
 });
 
-test("mid-workout modifier changes preserve started work and replan only future selections", () => {
+test("mid-workout modifier changes replace incompatible current movement and replan future selections", () => {
   const groups = RESOLUTIONS.get(3).groups;
   const ordinary = groups.map((group, index) => exercise(
     22_000 + index * 2,
@@ -1566,9 +1566,13 @@ test("mid-workout modifier changes preserve started work and replan only future 
 
   assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
   assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
-  assert.equal(session.getNextGroup().id, currentGroup.id);
-  assert.equal(session.state.pendingMovementGroupId, currentGroup.id);
-  assert.equal(session.state.pendingMovementMillisecondsRemaining, 28_000);
+  const replacementGroup = session.getNextGroup();
+  const replacementExercise = session.getSelectedExercise(replacementGroup);
+  assert.equal(getSelectionKey(replacementGroup), getSelectionKey(currentGroup));
+  assert.notEqual(replacementExercise.id, currentExercise.id);
+  assert.equal(replacementExercise.wallRequired, false);
+  assert.equal(session.state.pendingMovementGroupId, null);
+  assert.equal(session.state.pendingMovementMillisecondsRemaining, 0);
   assert.equal(session.state.outcomes[completedGroup.id], "tick");
   assert.deepEqual(
     [...session.state.lastKeptExerciseIds].sort((left, right) => left - right),
@@ -1579,10 +1583,8 @@ test("mid-workout modifier changes preserve started work and replan only future 
     session.state.selectedExerciseIds[getSelectionKey(completedGroup)],
     completedExercise.id,
   );
-  assert.equal(session.getSelectedExercise(session.getNextGroup()).id, currentExercise.id);
   assert.ok(session.getActiveGroups()
-    .filter((group) => session.state.outcomes[group.id] === undefined &&
-      getSelectionKey(group) !== getSelectionKey(currentGroup))
+    .filter((group) => session.state.outcomes[group.id] === undefined)
     .every((group) => session.getSelectedExercise(group).wallRequired === false));
   assert.deepEqual(session.state.activeSelectionGroupOrder, initialSelectionGroups);
 
@@ -1590,7 +1592,8 @@ test("mid-workout modifier changes preserve started work and replan only future 
   assert.equal(session.state.activeWorkoutSession.modifierChanges.length, 1);
   assert.equal(change.previousModifiers, WORKOUT_MODIFIERS.Wall);
   assert.equal(change.newModifiers, WORKOUT_MODIFIERS.None);
-  assert.equal(change.protectedSelectionGroupId, getSelectionKey(currentGroup));
+  assert.equal(change.protectedSelectionGroupId, "");
+  assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
   assert.equal(change.plannedSelections.length, groups.length);
   assert.equal(session.state.activeWorkoutSession.modifiers, WORKOUT_MODIFIERS.Wall);
 
@@ -1602,12 +1605,10 @@ test("mid-workout modifier changes preserve started work and replan only future 
   );
   restored.initialize();
   const restoredCurrent = restored.getNextGroup();
-  assert.equal(restoredCurrent.id, currentGroup.id);
-  assert.equal(restored.getSelectedExercise(restoredCurrent).id, currentExercise.id);
-  assert.equal(
-    restored.state.activeModifierProtectedSelectionGroupId,
-    getSelectionKey(currentGroup),
-  );
+  assert.equal(restoredCurrent.id, replacementGroup.id);
+  assert.equal(restored.getSelectedExercise(restoredCurrent).id, replacementExercise.id);
+  assert.equal(restored.state.activeModifierProtectedSelectionGroupId, null);
+  assert.equal(restored.state.pendingMovementGroupId, null);
   assert.equal(restored.state.activeWorkoutSession.modifierChanges.length, 1);
 
   restored.recordOutcome(restoredCurrent, false);
@@ -1616,7 +1617,118 @@ test("mid-workout modifier changes preserve started work and replan only future 
   assert.equal(restored.getSelectedExercise(restored.getNextGroup()).wallRequired, false);
 });
 
-test("modifier transition protection covers every set of the current selection", () => {
+test("compatible modifier transition preserves current movement checkpoint", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const ordinary = groups.map((group, index) => exercise(
+    22_500 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  ));
+  const wallRequired = ordinary.map((source) => {
+    const id = source.id + 1;
+    return {
+      ...source,
+      id,
+      name: `Exercise ${id}`,
+      video: `exercise_videos/exercise_${String(id).padStart(4, "0")}.mp4`,
+      wallRequired: true,
+      sequenceBlocks: source.sequenceBlocks.map((block) => ({
+        ...block,
+        exerciseId: id,
+      })),
+    };
+  });
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    [...ordinary, ...wallRequired],
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.Wall);
+  const currentGroup = session.getNextGroup();
+  const currentExercise = session.getSelectedExercise(currentGroup);
+  session.beginMovement(currentGroup, 28_000, now + 28_000);
+
+  session.reconfigureActiveWorkout(
+    WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.HardFloor,
+    currentGroup.id,
+  );
+
+  assert.equal(session.getNextGroup().id, currentGroup.id);
+  assert.equal(session.getSelectedExercise(session.getNextGroup()).id, currentExercise.id);
+  assert.equal(session.state.pendingMovementGroupId, currentGroup.id);
+  assert.equal(session.state.pendingMovementMillisecondsRemaining, 28_000);
+  assert.equal(
+    session.state.activeModifierProtectedSelectionGroupId,
+    getSelectionKey(currentGroup),
+  );
+  assert.equal(
+    session.state.activeWorkoutSession.modifierChanges[0].protectedSelectionGroupId,
+    getSelectionKey(currentGroup),
+  );
+});
+
+test("initialization replaces legacy protected incompatible movement", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const ordinary = groups.map((group, index) => exercise(
+    22_700 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  ));
+  const wallRequired = ordinary.map((source) => {
+    const id = source.id + 1;
+    return {
+      ...source,
+      id,
+      name: `Exercise ${id}`,
+      video: `exercise_videos/exercise_${String(id).padStart(4, "0")}.mp4`,
+      wallRequired: true,
+      sequenceBlocks: source.sequenceBlocks.map((block) => ({
+        ...block,
+        exerciseId: id,
+      })),
+    };
+  });
+  const exercises = [...ordinary, ...wallRequired];
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.Wall);
+  const currentGroup = session.getNextGroup();
+  session.beginMovement(currentGroup, 28_000, now + 28_000);
+
+  session.state.activeWorkoutModifiers = WORKOUT_MODIFIERS.None;
+  session.state.lastWorkoutModifiers = WORKOUT_MODIFIERS.None;
+  for (const [index, group] of groups.entries()) {
+    session.state.selectedExerciseIds[group.id] = wallRequired[index].id;
+  }
+  session.state.activeModifierProtectedSelectionGroupId =
+    getSelectionKey(currentGroup);
+
+  const restored = new WorkoutSession(
+    exercises,
+    parseStoredState(JSON.stringify(session.state)),
+    () => 0,
+    () => now,
+  );
+  restored.initialize();
+
+  assert.equal(restored.getSelectedExercise(restored.getNextGroup()).wallRequired, false);
+  assert.equal(restored.state.activeModifierProtectedSelectionGroupId, null);
+  assert.equal(restored.state.pendingMovementGroupId, null);
+  assert.equal(restored.state.pendingMovementMillisecondsRemaining, 0);
+});
+
+test("compatible modifier transition protection covers every set of the current selection", () => {
   const groups = RESOLUTIONS.get(30).groups;
   const ordinary = groups.map((group, index) => exercise(
     23_000 + index * 2,
@@ -1662,7 +1774,10 @@ test("modifier transition protection covers every set of the current selection",
   const protectedExercise = session.getSelectedExercise(firstRepeatedSet);
   assert.equal(protectedExercise.wallRequired, true);
 
-  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.None, firstRepeatedSet.id);
+  session.reconfigureActiveWorkout(
+    WORKOUT_MODIFIERS.Wall | WORKOUT_MODIFIERS.HardFloor,
+    firstRepeatedSet.id,
+  );
   session.advanceSequence(firstRepeatedSet);
 
   const secondSet = session.getNextGroup();
@@ -1676,6 +1791,64 @@ test("modifier transition protection covers every set of the current selection",
 
   session.recordOutcome(secondSet, false);
 
+  assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
+});
+
+test("incompatible modifier transition replaces current repeated set", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const ordinary = groups.map((group, index) => exercise(
+    23_500 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+  ));
+  const wallRequired = ordinary.map((source) => {
+    const id = source.id + 1;
+    return {
+      ...source,
+      id,
+      name: `Exercise ${id}`,
+      video: `exercise_videos/exercise_${String(id).padStart(4, "0")}.mp4`,
+      wallRequired: true,
+      sequenceBlocks: source.sequenceBlocks.map((block) => ({
+        ...block,
+        exerciseId: id,
+      })),
+    };
+  });
+  const session = new WorkoutSession(
+    [...ordinary, ...wallRequired],
+    createDefaultState(),
+    () => 0,
+  );
+  session.startWorkout(45, WORKOUT_MODIFIERS.Wall);
+  const initialRounds = session.getActiveGroups();
+  const firstRepeatedSet = initialRounds.find((round) =>
+    round.setCount > 1 && round.setNumber === 1);
+  for (const priorRound of initialRounds) {
+    if (priorRound.id === firstRepeatedSet.id) {
+      break;
+    }
+    if (session.isIntermediateSequenceBlock(priorRound)) {
+      session.advanceSequence(priorRound);
+    } else {
+      session.recordOutcome(priorRound, false);
+    }
+  }
+  const completedBefore = { ...session.state.outcomes };
+  session.beginMovement(firstRepeatedSet, 28_000, 1_800_000_028_000);
+
+  session.reconfigureActiveWorkout(
+    WORKOUT_MODIFIERS.None,
+    firstRepeatedSet.id,
+  );
+
+  const replacementRound = session.getNextGroup();
+  assert.equal(getSelectionKey(replacementRound), getSelectionKey(firstRepeatedSet));
+  assert.equal(session.getSelectedExercise(replacementRound).wallRequired, false);
+  assert.deepEqual(session.state.outcomes, completedBefore);
+  assert.equal(session.state.pendingMovementGroupId, null);
   assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
 });
 

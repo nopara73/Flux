@@ -3359,6 +3359,7 @@ export class WorkoutSession {
     }
 
     this.normalizePendingRest();
+    this.normalizeActiveModifierTransitionProtection();
     this.repairActiveLineup(!shouldMigratePreparedLightDay);
     this.normalizeActiveLongWorkoutAllocation();
     if (shouldMigratePreparedLightDay) {
@@ -3484,10 +3485,28 @@ export class WorkoutSession {
     const priorOrderedPlacements = this.getScheduleOrderedPlacements(
       priorPlacements,
     );
+    const currentPlacement = priorPlacements.find((placement) =>
+      placement.anchor.id === getSelectionKey(currentRound));
+    if (!currentPlacement) {
+      throw new Error("The current atomic selection could not be resolved.");
+    }
+    const currentSelectionFitsModifiers = this.getSequenceExercises(
+      currentPlacement.root,
+    ).every((member) => this.isCompatibleWithModifiers(member, modifiers));
+    const currentBlockAlreadyCompleted =
+      this.getPendingRestGroup()?.id === currentRound.id;
+    const protectCurrentSelection =
+      currentSelectionFitsModifiers || currentBlockAlreadyCompleted;
     const lockedSelectionGroupIds = new Set(priorActiveRounds
       .filter((round) => this.state.outcomes[round.id] !== undefined)
       .map((round) => getSelectionKey(round)));
-    lockedSelectionGroupIds.add(getSelectionKey(currentRound));
+    if (protectCurrentSelection) {
+      lockedSelectionGroupIds.add(getSelectionKey(currentRound));
+    } else {
+      // Earlier blocks of the same atomic selection remain in the durable
+      // workout log, but cannot pin an incompatible current block in place.
+      lockedSelectionGroupIds.delete(getSelectionKey(currentRound));
+    }
     const lockedPlacements = priorPlacements.filter((placement) =>
       lockedSelectionGroupIds.has(placement.anchor.id));
     const lockedExerciseIdsByGroup = new Map(lockedPlacements.flatMap(
@@ -3517,13 +3536,21 @@ export class WorkoutSession {
       ...this.state.activeExtraSetSelectionGroupIds,
     ];
     const selectionOrderBefore = [...this.state.activeSelectionGroupOrder];
+    const outcomesBefore = { ...this.state.outcomes };
     const protectedSelectionBefore =
       this.state.activeModifierProtectedSelectionGroupId;
+    const pendingMovementGroupBefore = this.state.pendingMovementGroupId;
+    const pendingMovementRemainingBefore =
+      this.state.pendingMovementMillisecondsRemaining;
+    const pendingMovementEndsAtBefore =
+      this.state.pendingMovementEndsAtUnixMilliseconds;
+    const pendingMovementPausedBefore =
+      this.state.pendingMovementPausedByUser;
     try {
       this.state.lastWorkoutModifiers = modifiers;
       this.state.activeWorkoutModifiers = modifiers;
       this.state.activeModifierProtectedSelectionGroupId =
-        getSelectionKey(currentRound);
+        protectCurrentSelection ? getSelectionKey(currentRound) : null;
       this.applyDistinctLineup(selectionGroups, replannedLineup, false);
       this.updateSelectionOrderAfterReconfiguration(priorOrderedPlacements);
       this.rebalanceNewExercisesByMuscleBalance(lockedSelectionGroupIds);
@@ -3533,6 +3560,28 @@ export class WorkoutSession {
       ));
 
       const replannedRounds = this.getActiveGroups();
+      const replannedCurrentPlacement = this.getSelectedSequencePlacements()
+        .find((placement) => placement.coveredGroups.some((group) =>
+          group.id === getSelectionKey(currentRound)));
+      if (!replannedCurrentPlacement) {
+        throw new Error("The current workout slot was not replanned.");
+      }
+      const currentSelectionChanged =
+        replannedCurrentPlacement.root.id !== currentPlacement.root.id;
+      if (currentSelectionChanged) {
+        const replannedRoundIds = new Set(replannedRounds.map((round) => round.id));
+        for (const priorRound of priorActiveRounds.filter((round) =>
+          getSelectionKey(round) === getSelectionKey(currentRound) &&
+          !replannedRoundIds.has(round.id))) {
+          delete this.state.outcomes[priorRound.id];
+        }
+
+        // Partial time belonged to the incompatible exercise. Its replacement
+        // returns in Ready state with a full timer and no score/Keep mutation.
+        this.clearPendingMovement();
+        this.state.activeModifierProtectedSelectionGroupId = null;
+      }
+
       const changedLockedSelection = [...lockedExerciseIdsByGroup].some(
         ([groupId, exerciseId]) => this.state.selectedExerciseIds[
           this.getSelectionStorageKey(
@@ -3551,13 +3600,19 @@ export class WorkoutSession {
       if (changedLockedSelection || changedLockedSetCount ||
           Object.keys(this.state.outcomes).some((outcomeGroupId) =>
           !replannedRounds.some((round) => round.id === outcomeGroupId)) ||
-          this.getNextGroup()?.id !== currentRound.id ||
-          (this.state.pendingMovementGroupId &&
+          (protectCurrentSelection &&
+            this.getNextGroup()?.id !== currentRound.id) ||
+          (!protectCurrentSelection && !currentSelectionChanged) ||
+          (protectCurrentSelection &&
+            this.state.pendingMovementGroupId &&
             this.state.pendingMovementGroupId !== currentRound.id) ||
-          (this.state.pendingRestGroupId &&
-            this.state.pendingRestGroupId !== currentRound.id)) {
+          (protectCurrentSelection &&
+            this.state.pendingRestGroupId &&
+            this.state.pendingRestGroupId !== currentRound.id) ||
+          (!protectCurrentSelection && this.state.pendingMovementGroupId)) {
         throw new Error(
-          "The modifier change would alter completed or current work.",
+          "The modifier change could not preserve completed work or " +
+            "replace an incompatible current exercise safely.",
         );
       }
 
@@ -3566,7 +3621,9 @@ export class WorkoutSession {
         changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(),
         previousModifiers,
         newModifiers: modifiers,
-        protectedSelectionGroupId: getSelectionKey(currentRound),
+        protectedSelectionGroupId: protectCurrentSelection
+          ? getSelectionKey(currentRound)
+          : "",
         plannedSelections: this.createCurrentSelectionSnapshots(session),
       });
     } catch (error) {
@@ -3574,8 +3631,15 @@ export class WorkoutSession {
       this.state.activeSetCountsBySelectionGroupId = setCountsBefore;
       this.state.activeExtraSetSelectionGroupIds = extraSetGroupsBefore;
       this.state.activeSelectionGroupOrder = selectionOrderBefore;
+      this.state.outcomes = outcomesBefore;
       this.state.activeModifierProtectedSelectionGroupId =
         protectedSelectionBefore;
+      this.state.pendingMovementGroupId = pendingMovementGroupBefore;
+      this.state.pendingMovementMillisecondsRemaining =
+        pendingMovementRemainingBefore;
+      this.state.pendingMovementEndsAtUnixMilliseconds =
+        pendingMovementEndsAtBefore;
+      this.state.pendingMovementPausedByUser = pendingMovementPausedBefore;
       this.state.activeWorkoutModifiers = previousModifiers;
       this.state.lastWorkoutModifiers = previousLastModifiers;
       throw error;
@@ -4427,6 +4491,37 @@ export class WorkoutSession {
       },
     );
     this.applyDistinctLineup(selectionGroups, repairedLineup, true, activeGroups);
+  }
+
+  normalizeActiveModifierTransitionProtection() {
+    const protectedSelectionGroupId =
+      this.state.activeModifierProtectedSelectionGroupId;
+    if (!protectedSelectionGroupId ||
+        this.pendingRestMatchesSelectionGroup(protectedSelectionGroupId)) {
+      return;
+    }
+
+    const root = this.exercisesById.get(this.state.selectedExerciseIds[
+      this.getSelectionStorageKey(
+        protectedSelectionGroupId,
+        this.state.activeWorkoutModifiers,
+      )
+    ]);
+    const remainsCompatible = root &&
+      this.getSequenceRoot(root).id === root.id &&
+      this.getSequenceExercises(root).every((member) =>
+        this.isCompatibleWithModifiers(
+          member,
+          this.state.activeWorkoutModifiers,
+        ));
+    if (remainsCompatible) {
+      return;
+    }
+
+    // Older builds persisted incompatible current movement as a protected
+    // exception. Remove its partial timer before normal lineup repair.
+    this.state.activeModifierProtectedSelectionGroupId = null;
+    this.clearPendingMovement();
   }
 
   carrySlotPreferencesForward() {

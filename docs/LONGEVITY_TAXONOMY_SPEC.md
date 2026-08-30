@@ -497,13 +497,16 @@ Multi-category tags remain scientifically and analytically useful, but the requi
   than adding modifier controls to the workout player.
 - Lock duration for the active workout. Modifiers remain editable and the main
   action becomes Resume.
-- Preserve every completed selection and the complete atomic selection that is
-  currently on screen, including its allocated repeated sets. Replan only
-  selections that have not started, then return to the same ready, movement, or
-  rest state without starting another workout.
+- Preserve every completed selection. Preserve the atomic selection currently
+  on screen only when it remains compatible with the new modifier profile. If
+  unfinished current work is incompatible, replace it immediately, discard its
+  partial countdown, and return its replacement in Ready state with a full
+  timer. A block already completed and resting remains historical work rather
+  than being rewritten retroactively. Replan all other unstarted selections
+  without starting another workout.
 - Record each applied modifier transition and its complete resulting plan in
-  the active session log. Keeps, downvotes, completed history, and the current
-  selection remain untouched by the transition.
+  the active session log. Keeps, downvotes, and completed history remain
+  untouched by the transition.
 
 ### 8.7 Abrupt close
 

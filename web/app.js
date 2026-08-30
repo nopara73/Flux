@@ -632,7 +632,10 @@ function restoreWorkoutAfterSetup() {
     restorePendingRest();
   } else if (returnPhase === "movement") {
     if (!restorePendingMovement()) {
-      throw new Error("The paused exercise could not be restored.");
+      // The modifier profile removed the incompatible current exercise.
+      // Present its replacement from Ready instead of restoring the obsolete
+      // countdown.
+      showNextExercise();
     }
   } else {
     showNextExercise();

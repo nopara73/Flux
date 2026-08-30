@@ -164,9 +164,11 @@ and timestamps its workout log, so selection work cannot block the Start tap.
 Changing duration or a modifier discards the stale plan and prepares the newly
 selected profile instead. During an active workout, the setup control pauses the
 current movement or rest and reuses this screen with duration locked. Modifier
-changes preserve the completed work and the complete atomic selection currently
-on screen; only selections that have not started are rebuilt. Resume returns to
-the same ready, movement, or rest state without restarting the workout.
+changes preserve completed work. A compatible atomic selection currently on
+screen keeps its checkpoint and allocated sets; an incompatible unfinished
+selection is replaced immediately and returns in Ready state with a full timer.
+A block already completed and resting is not rewritten retroactively. Remaining
+unstarted selections are rebuilt, and the workout itself is never restarted.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but

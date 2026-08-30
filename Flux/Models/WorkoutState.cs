@@ -59,9 +59,10 @@ public sealed class WorkoutState
     // selections are rebuilt after a mid-workout equipment change.
     public List<string> ActiveSelectionGroupOrder { get; set; } = [];
 
-    // A modifier change takes effect after the exercise currently on screen.
-    // That atomic sequence remains runnable even if the new profile would
-    // normally exclude it (for example, turning Wall off during wall work).
+    // A compatible current atomic selection can remain fixed while future
+    // selections are rebuilt after a modifier change. Incompatible unfinished
+    // work is replaced immediately; a block already completed and resting is
+    // protected only so recorded work is not rewritten retroactively.
     public string? ActiveModifierProtectedSelectionGroupId { get; set; }
 
     // Version 16 migration inputs only. Atomic sequences replace both legacy

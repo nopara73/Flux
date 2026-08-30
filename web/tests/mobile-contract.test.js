@@ -1381,7 +1381,7 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   assert.doesNotMatch(webApp, /workoutGroupName/);
 });
 
-test("mid-workout modifiers open the setup screen and preserve the active group", () => {
+test("mid-workout modifiers revalidate the active exercise on both platforms", () => {
   assert.match(
     workoutLayout,
     /@\+id\/workout_setup_button[\s\S]*@drawable\/ic_tune/,
@@ -1414,6 +1414,10 @@ test("mid-workout modifiers open the setup screen and preserve the active group"
     mobileRestore,
     /RestorePendingRest[\s\S]*RestorePendingMovement[\s\S]*ShowNextExercise/,
   );
+  assert.match(
+    mobileRestore,
+    /pendingGroup is not null[\s\S]*RestorePendingMovement[\s\S]*else[\s\S]*StopCountdownTimer\(\)[\s\S]*ShowNextExercise/,
+  );
   assert.match(mainActivity, /ReconfigureActiveWorkout\([\s\S]*protectedWorkoutGroupId/);
 
   const webSetup = methodBody(
@@ -1425,6 +1429,15 @@ test("mid-workout modifiers open the setup screen and preserve the active group"
   assert.match(webSetup, /pauseRest\(currentGroup, remaining\)/);
   assert.match(webSetup, /showScreen\("duration"\)/);
   assert.match(webSetup, /queueWorkoutPreparation\(\)/);
+  const webRestore = methodBody(
+    webApp,
+    "function restoreWorkoutAfterSetup()",
+    "function queueWorkoutPreparation(",
+  );
+  assert.match(
+    webRestore,
+    /restorePendingMovement\(\)[\s\S]*showNextExercise\(\)/,
+  );
   assert.match(instantControls, /setActiveWorkoutSetup\(enabled\)/);
   assert.match(instantControls, /elements\.range\.disabled = activeWorkoutSetup/);
   assert.match(preparationWorker, /mode === "reconfigure"[\s\S]*reconfigureActiveWorkout/);
@@ -1437,8 +1450,16 @@ test("mid-workout modifiers open the setup screen and preserve the active group"
     /ReconfigureActiveWorkout\([\s\S]*lockedSelectionGroupIds[\s\S]*RebalanceNewExercisesByMuscleBalance\([\s\S]*lockedSelectionGroupIds/,
   );
   assert.match(
+    sessionService,
+    /currentSelectionFitsModifiers[\s\S]*protectCurrentSelection[\s\S]*ClearPendingMovement/,
+  );
+  assert.match(
     workoutModule,
     /reconfigureActiveWorkout\([\s\S]*lockedSelectionGroupIds[\s\S]*rebalanceNewExercisesByMuscleBalance\(lockedSelectionGroupIds\)/,
+  );
+  assert.match(
+    workoutModule,
+    /currentSelectionFitsModifiers[\s\S]*protectCurrentSelection[\s\S]*clearPendingMovement/,
   );
 });
 

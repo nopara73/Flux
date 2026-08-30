@@ -1899,11 +1899,20 @@ public class MainActivity : Activity
         }
         else if (returnPhase == WorkoutPhase.Move)
         {
-            WorkoutGroup pendingGroup =
-                _sessionService.GetPendingMovementGroup(_state)
-                ?? throw new InvalidOperationException(
-                    "The paused exercise could not be restored.");
-            RestorePendingMovement(pendingGroup);
+            WorkoutGroup? pendingGroup =
+                _sessionService.GetPendingMovementGroup(_state);
+            if (pendingGroup is not null)
+            {
+                RestorePendingMovement(pendingGroup);
+            }
+            else
+            {
+                // An incompatible current exercise was removed by the new
+                // modifier profile. Show its replacement from a fresh Ready
+                // state instead of restoring the obsolete countdown.
+                StopCountdownTimer();
+                ShowNextExercise();
+            }
         }
         else
         {
