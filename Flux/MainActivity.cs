@@ -80,6 +80,8 @@ public class MainActivity : Activity
     private TextView _durationModifierFeedback = null!;
     private int _modifierFeedbackGeneration;
     private FrameLayout _durationActionBar = null!;
+    private ImageView _durationLockIcon = null!;
+    private ImageView _durationActionIcon = null!;
     private TextView _durationMinutesValue = null!;
     private Button _durationDecreaseButton = null!;
     private SeekBar _durationSeekBar = null!;
@@ -93,6 +95,7 @@ public class MainActivity : Activity
     private LinearLayout _workoutInsetContent = null!;
     private LinearLayout _workoutControlColumn = null!;
     private LinearLayout _workoutHeader = null!;
+    private ImageButton _workoutSetupButton = null!;
     private TextView _workoutProgressText = null!;
     private ProgressBar _workoutProgressBar = null!;
     private View _congratulationsScreen = null!;
@@ -162,11 +165,17 @@ public class MainActivity : Activity
     private PreparedWorkout? _preparedWorkout;
     private int _preparingWorkoutMinutes;
     private WorkoutModifiers _preparingWorkoutModifiers;
+    private bool _preparingWorkoutIsReconfiguration;
+    private string? _preparingProtectedWorkoutGroupId;
     private bool _durationSelectionChangedDuringStartup;
     private bool _activityDestroyed;
     private int _mediaLoadGeneration;
     private int _revealedMediaGeneration = -1;
     private bool _hasRenderedScreen;
+    private bool _editingActiveWorkoutSetup;
+    private WorkoutPhase _workoutSetupReturnPhase = WorkoutPhase.Ready;
+    private bool _workoutSetupShouldResume;
+    private string? _workoutSetupCurrentGroupId;
     private string? _exerciseVideoCacheRoot;
     private AppScreen _appScreen = AppScreen.Duration;
     private WorkoutPhase _workoutPhase = WorkoutPhase.Ready;
@@ -327,7 +336,9 @@ public class MainActivity : Activity
     {
         if (!_applicationStartupCompleted ||
             _activityDestroyed ||
-            _appScreen != AppScreen.Duration)
+            _appScreen != AppScreen.Duration ||
+            (_editingActiveWorkoutSetup &&
+                string.IsNullOrWhiteSpace(_workoutSetupCurrentGroupId)))
         {
             return;
         }
@@ -335,15 +346,21 @@ public class MainActivity : Activity
         int minutes = _selectedWorkoutMinutes;
         WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
             _selectedWorkoutModifiers);
+        bool isReconfiguration = _editingActiveWorkoutSetup;
+        string? protectedWorkoutGroupId = _workoutSetupCurrentGroupId;
         if (_preparedWorkout is { } prepared &&
             prepared.Minutes == minutes &&
-            prepared.Modifiers == modifiers)
+            prepared.Modifiers == modifiers &&
+            prepared.IsReconfiguration == isReconfiguration &&
+            prepared.ProtectedWorkoutGroupId == protectedWorkoutGroupId)
         {
             return;
         }
         if (_workoutPreparationTask is { IsCompleted: false } &&
             _preparingWorkoutMinutes == minutes &&
-            _preparingWorkoutModifiers == modifiers)
+            _preparingWorkoutModifiers == modifiers &&
+            _preparingWorkoutIsReconfiguration == isReconfiguration &&
+            _preparingProtectedWorkoutGroupId == protectedWorkoutGroupId)
         {
             return;
         }
@@ -355,6 +372,8 @@ public class MainActivity : Activity
         _preparedWorkout = null;
         _preparingWorkoutMinutes = minutes;
         _preparingWorkoutModifiers = modifiers;
+        _preparingWorkoutIsReconfiguration = isReconfiguration;
+        _preparingProtectedWorkoutGroupId = protectedWorkoutGroupId;
         string stateJson = JsonSerializer.Serialize(
             _state,
             WorkoutJsonContext.Default.WorkoutState);
@@ -368,12 +387,27 @@ public class MainActivity : Activity
                 ?? throw new InvalidOperationException(
                     "Unable to clone the workout state for preparation.");
             var preparationService = new ExerciseSessionService(exercises);
-            preparationService.PrepareWorkout(
+            if (isReconfiguration)
+            {
+                preparationService.ReconfigureActiveWorkout(
+                    preparedState,
+                    modifiers,
+                    protectedWorkoutGroupId!);
+            }
+            else
+            {
+                preparationService.PrepareWorkout(
+                    preparedState,
+                    minutes,
+                    modifiers);
+            }
+            cancellation.Token.ThrowIfCancellationRequested();
+            return new PreparedWorkout(
                 preparedState,
                 minutes,
-                modifiers);
-            cancellation.Token.ThrowIfCancellationRequested();
-            return new PreparedWorkout(preparedState, minutes, modifiers);
+                modifiers,
+                isReconfiguration,
+                protectedWorkoutGroupId);
         }, cancellation.Token);
         _ = ObserveWorkoutPreparationAsync(
             _workoutPreparationTask,
@@ -400,7 +434,13 @@ public class MainActivity : Activity
                         cancellation) &&
                     !cancellation.IsCancellationRequested &&
                     _appScreen == AppScreen.Duration &&
-                    _state.ActiveWorkoutMinutes == 0 &&
+                    prepared.IsReconfiguration ==
+                        _editingActiveWorkoutSetup &&
+                    prepared.ProtectedWorkoutGroupId ==
+                        _workoutSetupCurrentGroupId &&
+                    (_editingActiveWorkoutSetup
+                        ? _state.ActiveWorkoutMinutes == prepared.Minutes
+                        : _state.ActiveWorkoutMinutes == 0) &&
                     _selectedWorkoutMinutes == prepared.Minutes &&
                     WorkoutModifierPolicy.Normalize(
                         _selectedWorkoutModifiers) == prepared.Modifiers)
@@ -442,6 +482,10 @@ public class MainActivity : Activity
         base.OnResume();
         _activityResumed = true;
         ApplySystemBarAppearance();
+        if (_editingActiveWorkoutSetup)
+        {
+            return;
+        }
         if (_restActive)
         {
             ResumeRestCountdown();
@@ -468,6 +512,25 @@ public class MainActivity : Activity
         CancelUiAnimations();
         base.OnPause();
     }
+
+#pragma warning disable CA1422 // The compatibility override remains required across the app's API range.
+    public override void OnBackPressed()
+    {
+        if (_editingActiveWorkoutSetup)
+        {
+            _workoutPreparationCancellation?.Cancel();
+            _workoutPreparationCancellation?.Dispose();
+            _workoutPreparationCancellation = null;
+            _workoutPreparationTask = null;
+            _preparedWorkout = null;
+            _selectedWorkoutModifiers = _state.ActiveWorkoutModifiers;
+            RestoreWorkoutAfterSetup();
+            return;
+        }
+
+        base.OnBackPressed();
+    }
+#pragma warning restore CA1422
 
     public override void OnConfigurationChanged(
         Android.Content.Res.Configuration newConfig)
@@ -540,6 +603,10 @@ public class MainActivity : Activity
             Resource.Id.duration_modifier_feedback);
         _durationActionBar = FindRequiredView<FrameLayout>(
             Resource.Id.duration_action_bar);
+        _durationLockIcon = FindRequiredView<ImageView>(
+            Resource.Id.duration_lock_icon);
+        _durationActionIcon = FindRequiredView<ImageView>(
+            Resource.Id.duration_action_icon);
         _durationMinutesValue = FindRequiredView<TextView>(
             Resource.Id.duration_minutes_value);
         _durationDecreaseButton = FindRequiredView<Button>(
@@ -563,6 +630,8 @@ public class MainActivity : Activity
             LayoutDirection = LayoutDirection.Ltr,
         };
         _workoutHeader = FindRequiredView<LinearLayout>(Resource.Id.workout_header);
+        _workoutSetupButton = FindRequiredView<ImageButton>(
+            Resource.Id.workout_setup_button);
         _workoutProgressText = FindRequiredView<TextView>(Resource.Id.workout_progress_text);
         _workoutProgressBar = FindRequiredView<ProgressBar>(Resource.Id.workout_progress_bar);
         _congratulationsScreen = FindRequiredView<View>(Resource.Id.congratulations_screen);
@@ -711,6 +780,7 @@ public class MainActivity : Activity
                 GetMirrorFeedbackResourceId(nextEquipment));
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
+        _workoutSetupButton.Click += (_, _) => ShowActiveWorkoutSetup();
         _shuffleButton.Click += (_, _) => ShuffleCurrentExercise();
         _startButton.Click += (_, _) => StartCountdown();
         _repeatAction.Click += (_, _) => RepeatExercise();
@@ -1612,6 +1682,8 @@ public class MainActivity : Activity
 
     private void ShowDurationSelection()
     {
+        _editingActiveWorkoutSetup = false;
+        _workoutSetupCurrentGroupId = null;
         CancelCountdown(resetToStart: false);
         PauseRestCountdown();
         _restActive = false;
@@ -1655,7 +1727,167 @@ public class MainActivity : Activity
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
                 _state.LastWorkoutModifiers));
+        ConfigureDurationScreenForActiveWorkout(editing: false);
         QueueWorkoutPreparation();
+    }
+
+    private void ShowActiveWorkoutSetup()
+    {
+        if (_editingActiveWorkoutSetup ||
+            _appScreen != AppScreen.Workout ||
+            _currentWorkoutGroup is null ||
+            _state.ActiveWorkoutMinutes == 0 ||
+            _state.WorkoutCompleted)
+        {
+            return;
+        }
+
+        _workoutSetupReturnPhase = _workoutPhase;
+        _workoutSetupShouldResume = false;
+        _workoutSetupCurrentGroupId = _currentWorkoutGroup.Id;
+        if (_workoutPhase == WorkoutPhase.Move)
+        {
+            _workoutSetupShouldResume = _countdownActive;
+            if (_countdownActive)
+            {
+                _countdownPausedByUser = false;
+                PauseCountdown();
+            }
+        }
+        else if (_workoutPhase == WorkoutPhase.Rest && _restActive)
+        {
+            _workoutSetupShouldResume = !_state.PendingRestPausedByUser;
+            if (_workoutSetupShouldResume)
+            {
+                long remaining = _sessionService
+                    .GetPendingRestMillisecondsRemaining(
+                        _state,
+                        DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+                if (remaining <= 0)
+                {
+                    CompleteRest();
+                    return;
+                }
+                _sessionService.PauseRest(
+                    _state,
+                    _currentWorkoutGroup,
+                    remaining);
+                _stateStore.Save(_state);
+            }
+            PauseRestCountdown();
+        }
+
+        _exerciseVideo.Pause();
+        _editingActiveWorkoutSetup = true;
+        _selectedWorkoutMinutes = _state.ActiveWorkoutMinutes;
+        _selectedWorkoutModifiers = _state.ActiveWorkoutModifiers;
+        ShowAppScreen(AppScreen.Duration);
+        SetSelectedWorkoutMinutes(_selectedWorkoutMinutes);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.HardFloor,
+            (_selectedWorkoutModifiers & WorkoutModifiers.HardFloor) != 0,
+            _hardFloorModifierButton,
+            Resource.String.hard_floor_modifier_description,
+            Resource.String.hard_floor_modifier_on,
+            Resource.String.hard_floor_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Insect,
+            (_selectedWorkoutModifiers & WorkoutModifiers.Insect) != 0,
+            _insectModifierButton,
+            Resource.String.insect_modifier_description,
+            Resource.String.insect_modifier_on,
+            Resource.String.insect_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Silence,
+            (_selectedWorkoutModifiers & WorkoutModifiers.Silence) != 0,
+            _silenceModifierButton,
+            Resource.String.silence_modifier_description,
+            Resource.String.silence_modifier_on,
+            Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Wall,
+            (_selectedWorkoutModifiers & WorkoutModifiers.Wall) != 0,
+            _wallModifierButton,
+            Resource.String.wall_modifier_description,
+            Resource.String.wall_modifier_on,
+            Resource.String.wall_modifier_off);
+        SetSelectedMirrorEquipment(
+            WorkoutModifierPolicy.GetMirrorEquipment(
+                _selectedWorkoutModifiers));
+        ConfigureDurationScreenForActiveWorkout(editing: true);
+        _beginWorkoutButton.Enabled = true;
+        _beginWorkoutButton.Alpha = 1f;
+        QueueWorkoutPreparation();
+    }
+
+    private void ConfigureDurationScreenForActiveWorkout(bool editing)
+    {
+        _durationSeekBar.Enabled = !editing;
+        _durationDecreaseButton.Enabled = !editing &&
+            GetSupportedMinuteIndex(_selectedWorkoutMinutes) > 0;
+        _durationIncreaseButton.Enabled = !editing &&
+            GetSupportedMinuteIndex(_selectedWorkoutMinutes) <
+                ExerciseSessionService.SupportedWorkoutMinutes.Count - 1;
+        _durationDecreaseButton.Alpha = _durationDecreaseButton.Enabled
+            ? 1f
+            : 0.34f;
+        _durationIncreaseButton.Alpha = _durationIncreaseButton.Enabled
+            ? 1f
+            : 0.34f;
+        _durationStepRow.Alpha = editing ? 0.34f : 1f;
+        _durationOptionLabels.Alpha = editing ? 0.42f : 1f;
+        _durationLockIcon.Visibility = editing
+            ? ViewStates.Visible
+            : ViewStates.Gone;
+        _durationActionIcon.SetImageResource(editing
+            ? Resource.Drawable.ic_phase_active
+            : Resource.Drawable.ic_arrow_forward);
+        _beginWorkoutButton.ContentDescription = editing
+            ? GetString(Resource.String.resume_workout_description)
+            : $"Continue with a {_selectedWorkoutMinutes} minute workout";
+    }
+
+    private void RestoreWorkoutAfterSetup()
+    {
+        WorkoutPhase returnPhase = _workoutSetupReturnPhase;
+        bool shouldResume = _workoutSetupShouldResume;
+        _editingActiveWorkoutSetup = false;
+        ConfigureDurationScreenForActiveWorkout(editing: false);
+
+        if (returnPhase == WorkoutPhase.Rest)
+        {
+            WorkoutGroup pendingGroup = _sessionService.GetPendingRestGroup(_state)
+                ?? throw new InvalidOperationException(
+                    "The paused rest could not be restored.");
+            if (shouldResume && _state.PendingRestPausedByUser)
+            {
+                long remaining = _sessionService
+                    .GetPendingRestMillisecondsRemaining(
+                        _state,
+                        DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+                _sessionService.ResumeRest(
+                    _state,
+                    pendingGroup,
+                    DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + remaining);
+                _stateStore.Save(_state);
+            }
+            RestorePendingRest(pendingGroup);
+        }
+        else if (returnPhase == WorkoutPhase.Move)
+        {
+            WorkoutGroup pendingGroup =
+                _sessionService.GetPendingMovementGroup(_state)
+                ?? throw new InvalidOperationException(
+                    "The paused exercise could not be restored.");
+            RestorePendingMovement(pendingGroup);
+        }
+        else
+        {
+            ShowNextExercise();
+        }
+
+        _workoutSetupCurrentGroupId = null;
+        _workoutSetupShouldResume = false;
     }
 
     private void SetSelectedWorkoutModifier(
@@ -1832,6 +2064,10 @@ public class MainActivity : Activity
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
     {
+        if (userInitiated && _editingActiveWorkoutSetup)
+        {
+            return;
+        }
         int previousOptionIndex = GetSupportedMinuteIndex(_selectedWorkoutMinutes);
         int normalizedMinutes = ExerciseSessionService.NormalizeLastWorkoutMinutes(minutes);
         _selectedWorkoutMinutes = normalizedMinutes;
@@ -1999,12 +2235,20 @@ public class MainActivity : Activity
                 { Minutes: var preparedMinutes, Modifiers: var preparedModifiers }
                 && preparedMinutes == minutes
                 && preparedModifiers == modifiers
+                && _preparedWorkout.IsReconfiguration ==
+                    _editingActiveWorkoutSetup
+                && _preparedWorkout.ProtectedWorkoutGroupId ==
+                    _workoutSetupCurrentGroupId
                     ? _preparedWorkout
                     : null;
             if (prepared is null &&
                 _workoutPreparationTask is { } preparationTask &&
                 _preparingWorkoutMinutes == minutes &&
-                _preparingWorkoutModifiers == modifiers)
+                _preparingWorkoutModifiers == modifiers &&
+                _preparingWorkoutIsReconfiguration ==
+                    _editingActiveWorkoutSetup &&
+                _preparingProtectedWorkoutGroupId ==
+                    _workoutSetupCurrentGroupId)
             {
                 prepared = await preparationTask;
             }
@@ -2024,6 +2268,13 @@ public class MainActivity : Activity
             _workoutPreparationTask = null;
             _preparedWorkout = null;
             _state = prepared.State;
+            if (prepared.IsReconfiguration)
+            {
+                _stateStore.Save(_state);
+                RestoreWorkoutAfterSetup();
+                return;
+            }
+
             _sessionService.ActivatePreparedWorkout(_state);
             _stateStore.Save(_state);
             ShowNextExercise();
@@ -4129,7 +4380,9 @@ public class MainActivity : Activity
     private sealed record PreparedWorkout(
         WorkoutState State,
         int Minutes,
-        WorkoutModifiers Modifiers);
+        WorkoutModifiers Modifiers,
+        bool IsReconfiguration,
+        string? ProtectedWorkoutGroupId);
 
     private sealed record ApplicationStartupResult(
         SqliteExerciseDatabase Database,

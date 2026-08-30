@@ -40,9 +40,27 @@ public sealed class WorkoutSessionLog
 
     public List<WorkoutSelectionChangeLog> SelectionChanges { get; set; } = [];
 
+    public List<WorkoutModifierChangeLog> ModifierChanges { get; set; } = [];
+
     public List<WorkoutBlockLog> Blocks { get; set; } = [];
 
     public List<WorkoutDecisionLog> Decisions { get; set; } = [];
+}
+
+public sealed class WorkoutModifierChangeLog
+{
+    public long ChangedAtUnixMilliseconds { get; set; }
+
+    public WorkoutModifiers PreviousModifiers { get; set; }
+
+    public WorkoutModifiers NewModifiers { get; set; }
+
+    public string ProtectedSelectionGroupId { get; set; } = string.Empty;
+
+    // This is the complete post-change plan, not only a list of differences,
+    // so historical sessions remain reconstructable when atomic sequences
+    // merge or split anatomical slots.
+    public List<WorkoutSelectionSnapshot> PlannedSelections { get; set; } = [];
 }
 
 public sealed class WorkoutSelectionSnapshot

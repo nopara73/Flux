@@ -88,6 +88,17 @@
                                 android:textColor="@color/brand_chartreuse"
                                 android:textSize="13sp" />
                         </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/duration_lock_icon"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginBottom="18dp"
+                            android:contentDescription="@string/workout_duration_locked_description"
+                            android:src="@drawable/ic_lock"
+                            android:tint="@color/brand_chartreuse"
+                            android:visibility="gone" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -349,6 +360,7 @@
                 android:textSize="34sp" />
 
             <ImageView
+                android:id="@+id/duration_action_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"

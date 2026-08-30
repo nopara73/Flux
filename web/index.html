@@ -22,6 +22,9 @@
               <div id="duration-dial" class="duration-dial">
                 <output id="duration-value" class="duration-value" for="duration-range">10</output>
                 <span class="duration-unit" aria-hidden="true">MIN</span>
+                <svg class="duration-lock" viewBox="0 0 24 24" aria-label="Workout duration locked during workout">
+                  <path d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12v10H6Z"></path>
+                </svg>
               </div>
             </div>
 
@@ -169,6 +172,17 @@
                 <span id="execution-playhead" class="execution-playhead" aria-hidden="true"></span>
                 <span id="execution-block-track" class="execution-block-track" aria-hidden="true"></span>
               </div>
+              <button
+                id="workout-setup"
+                class="workout-setup-button"
+                type="button"
+                aria-label="Change workout setup"
+                title="Change workout setup"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M7 14v6"></path>
+                </svg>
+              </button>
             </div>
             <div class="progress-track workout-progress" aria-hidden="true">
               <span id="workout-progress-fill"></span>

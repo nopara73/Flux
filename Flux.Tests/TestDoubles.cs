@@ -107,6 +107,9 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             ActiveSetCountsBySelectionGroupId = new Dictionary<string, int>(
                 state.ActiveSetCountsBySelectionGroupId,
                 StringComparer.Ordinal),
+            ActiveSelectionGroupOrder = [.. state.ActiveSelectionGroupOrder],
+            ActiveModifierProtectedSelectionGroupId =
+                state.ActiveModifierProtectedSelectionGroupId,
             ActiveDirectionPartnerExerciseIds = new Dictionary<string, int>(
                 state.ActiveDirectionPartnerExerciseIds,
                 StringComparer.Ordinal),
@@ -194,6 +197,32 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                     ReplacementRootExerciseId = change.ReplacementRootExerciseId,
                     ReplacementRootExerciseName = change.ReplacementRootExerciseName,
                     ReplacementSelectionScore = change.ReplacementSelectionScore,
+                })
+                .ToList(),
+            ModifierChanges = session.ModifierChanges
+                .Select(change => new WorkoutModifierChangeLog
+                {
+                    ChangedAtUnixMilliseconds = change.ChangedAtUnixMilliseconds,
+                    PreviousModifiers = change.PreviousModifiers,
+                    NewModifiers = change.NewModifiers,
+                    ProtectedSelectionGroupId =
+                        change.ProtectedSelectionGroupId,
+                    PlannedSelections = change.PlannedSelections
+                        .Select(selection => new WorkoutSelectionSnapshot
+                        {
+                            SelectionGroupId = selection.SelectionGroupId,
+                            CoveredWorkoutGroupIds =
+                                [.. selection.CoveredWorkoutGroupIds],
+                            RootExerciseId = selection.RootExerciseId,
+                            RootExerciseName = selection.RootExerciseName,
+                            SelectionScoreAtStart =
+                                selection.SelectionScoreAtStart,
+                            SequenceBlockCount = selection.SequenceBlockCount,
+                            SetCount = selection.SetCount,
+                            WasKeptAtWorkoutStart =
+                                selection.WasKeptAtWorkoutStart,
+                        })
+                        .ToList(),
                 })
                 .ToList(),
             Blocks = session.Blocks

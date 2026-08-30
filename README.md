@@ -162,7 +162,11 @@ Android and web prepare this complete constrained plan in the background while
 the duration screen is visible. Pressing Start only activates the prepared plan
 and timestamps its workout log, so selection work cannot block the Start tap.
 Changing duration or a modifier discards the stale plan and prepares the newly
-selected profile instead.
+selected profile instead. During an active workout, the setup control pauses the
+current movement or rest and reuses this screen with duration locked. Modifier
+changes preserve the completed work and the complete atomic selection currently
+on screen; only selections that have not started are rebuilt. Resume returns to
+the same ready, movement, or rest state without restarting the workout.
 
 The catalog also carries a separate reviewed `muscularDemand` value for every
 exercise. `0` means muscular loading is incidental, `1` means meaningful but
@@ -441,7 +445,8 @@ retain separate stable lineups while sharing durable keeps.
 Every workout started after audit logging was introduced also has one durable,
 append-only local session record. It snapshots the start/end time, duration,
 modifiers, frozen light-day mode, starting Keep set and lineup, every pre-start Shuffle, every actually
-completed 45-second block, and every final Keep/reject decision. Block snapshots
+completed 45-second block, every mid-workout modifier transition and resulting
+future plan, and every final Keep/reject decision. Block snapshots
 include the exercise name, demand, primary and secondary canonical muscles,
 side/direction/media cues, and sequence/set position; decisions include the
 starting score and completed versus planned block count. Completed and

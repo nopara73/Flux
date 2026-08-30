@@ -490,7 +490,22 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 - Kept/unreached slots remain unchanged. An all-kept workout replaces nothing.
 - Persist score updates before clearing pending-rest state; use `scoreApplied` or an equivalent transaction/idempotency guard so process recreation cannot decrement twice.
 
-### 8.6 Abrupt close
+### 8.6 Mid-workout setup
+
+- Expose one unobtrusive setup control in the exercise header. Opening it
+  pauses an active movement or rest and shows the ordinary setup screen rather
+  than adding modifier controls to the workout player.
+- Lock duration for the active workout. Modifiers remain editable and the main
+  action becomes Resume.
+- Preserve every completed selection and the complete atomic selection that is
+  currently on screen, including its allocated repeated sets. Replan only
+  selections that have not started, then return to the same ready, movement, or
+  rest state without starting another workout.
+- Record each applied modifier transition and its complete resulting plan in
+  the active session log. Keeps, downvotes, completed history, and the current
+  selection remain untouched by the transition.
+
+### 8.7 Abrupt close
 
 An actively timed movement or pending rest resumes after process recreation:
 
@@ -503,7 +518,7 @@ An actively timed movement or pending rest resumes after process recreation:
 - When an interruption is finalized rather than restored, apply replacements for all resolved not-kept rounds, retain kept and unreached selections, clear active progress, and preserve last duration.
 - Initialization must be idempotent after process death at every write boundary.
 
-### 8.7 Legacy-state compatibility
+### 8.8 Legacy-state compatibility
 
 On the first capacity-model launch:
 

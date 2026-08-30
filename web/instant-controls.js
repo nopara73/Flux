@@ -39,6 +39,7 @@
   let startQueued = false;
   let handlers = null;
   let feedbackTimer = null;
+  let activeWorkoutSetup = false;
 
   elements.decrease.addEventListener("click", () => stepDuration(-1));
   elements.increase.addEventListener("click", () => stepDuration(1));
@@ -86,6 +87,14 @@
       renderDuration();
       renderModifiers();
       notifySelection(false);
+    },
+    setActiveWorkoutSetup(enabled) {
+      activeWorkoutSetup = enabled === true;
+      document.getElementById("duration-screen")?.classList.toggle(
+        "active-workout-setup",
+        activeWorkoutSetup,
+      );
+      renderDuration();
     },
     markReady() {
       if (!startQueued) {
@@ -136,6 +145,9 @@
   }
 
   function stepDuration(direction) {
+    if (activeWorkoutSetup) {
+      return;
+    }
     const index = durationOptions.indexOf(selectedMinutes);
     selectDurationByIndex(Math.max(
       0,
@@ -144,6 +156,9 @@
   }
 
   function selectDurationByIndex(index) {
+    if (activeWorkoutSetup) {
+      return;
+    }
     const minutes = durationOptions[index];
     if (minutes === undefined || minutes === selectedMinutes) {
       return;
@@ -169,11 +184,15 @@
       "aria-valuetext",
       `${selectedMinutes} minutes. Options: ${durationOptions.join(", ")} minutes`,
     );
-    elements.decrease.disabled = index === 0;
-    elements.increase.disabled = index === durationOptions.length - 1;
+    elements.decrease.disabled = activeWorkoutSetup || index === 0;
+    elements.increase.disabled = activeWorkoutSetup ||
+      index === durationOptions.length - 1;
+    elements.range.disabled = activeWorkoutSetup;
     elements.begin.setAttribute(
       "aria-label",
-      `Start a ${selectedMinutes} minute workout`,
+      activeWorkoutSetup
+        ? "Resume workout"
+        : `Start a ${selectedMinutes} minute workout`,
     );
     elements.labels.forEach((label, labelIndex) => {
       label.classList.toggle("selected", labelIndex === index);

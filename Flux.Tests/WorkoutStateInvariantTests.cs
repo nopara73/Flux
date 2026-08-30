@@ -81,7 +81,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(25, state.Version);
+        Assert.Equal(26, state.Version);
         Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
         Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
             WorkoutExercisePhase.Warmup][exercise.Id]);
@@ -130,7 +130,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(25, state.Version);
+        Assert.Equal(26, state.Version);
         Assert.Contains(
             exercise.Id,
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
@@ -159,7 +159,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(25, state.Version);
+        Assert.Equal(26, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -459,7 +459,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(25, state.Version);
+        Assert.Equal(26, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
             WorkoutModifiers.HardFloor,

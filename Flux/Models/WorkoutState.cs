@@ -2,7 +2,7 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
-    public int Version { get; set; } = 25;
+    public int Version { get; set; } = 26;
 
     public int CatalogRevision { get; set; }
 
@@ -54,6 +54,15 @@ public sealed class WorkoutState
     public HashSet<string> ActiveExtraSetSelectionGroupIds { get; set; } = [];
 
     public Dictionary<string, int> ActiveSetCountsBySelectionGroupId { get; set; } = [];
+
+    // The active schedule keeps a stable logical order even when unfinished
+    // selections are rebuilt after a mid-workout equipment change.
+    public List<string> ActiveSelectionGroupOrder { get; set; } = [];
+
+    // A modifier change takes effect after the exercise currently on screen.
+    // That atomic sequence remains runnable even if the new profile would
+    // normally exclude it (for example, turning Wall off during wall work).
+    public string? ActiveModifierProtectedSelectionGroupId { get; set; }
 
     // Version 16 migration inputs only. Atomic sequences replace both legacy
     // direction-partner allocation and split-side timing in version 17; the

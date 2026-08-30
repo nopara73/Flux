@@ -395,8 +395,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     hardFloorCompatibilityModel,
     /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 22);
-  assert.match(workoutState, /public int Version[^=]*=\s*25/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 23);
+  assert.match(workoutState, /public int Version[^=]*=\s*26/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
@@ -583,7 +583,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.hardFloorCompatibility === "Incompatible"));
   assert.match(
     webApp,
-    /ensureWorkoutPrepared\(minutes, modifiers\)[\s\S]*session\.activatePreparedWorkout\(\)/,
+    /await ensureWorkoutPrepared\([\s\S]*session\.activatePreparedWorkout\(\)/,
   );
   assert.match(durationLayout, /@\+id\/hard_floor_modifier_button/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
@@ -1182,9 +1182,9 @@ test("Android persistence rejects malformed stored shapes without crashing launc
 
 test("workout transport controls are functional and muscle labels stay hidden", async () => {
   const workoutLayout = await source("Flux", "Resources", "layout", "screen_workout.xml");
-  const startControl = workoutLayout.match(
-    /<ImageButton[\s\S]*?android:id="@\+id\/start_button"[\s\S]*?\/>/,
-  )?.[0] ?? "";
+  const startControl = [...workoutLayout.matchAll(/<ImageButton[\s\S]*?\/>/g)]
+    .map((match) => match[0])
+    .find((control) => control.includes('android:id="@+id/start_button"')) ?? "";
   assert.match(startControl, /@drawable\/ic_phase_active/);
   assert.doesNotMatch(startControl, /android:text=/);
   assert.match(workoutLayout, /@\+id\/shuffle_button[\s\S]*@drawable\/ic_shuffle/);
@@ -1311,6 +1311,67 @@ test("workout transport controls are functional and muscle labels stay hidden", 
   );
   assert.doesNotMatch(mainActivity, /_workoutGroupName/);
   assert.doesNotMatch(webApp, /workoutGroupName/);
+});
+
+test("mid-workout modifiers open the setup screen and preserve the active group", () => {
+  assert.match(
+    workoutLayout,
+    /@\+id\/workout_setup_button[\s\S]*@drawable\/ic_tune/,
+  );
+  assert.doesNotMatch(
+    workoutLayout,
+    /hard_floor_modifier_button|insect_modifier_button|silence_modifier_button|wall_modifier_button|mirror_modifier_button/,
+  );
+  assert.match(durationLayout, /@\+id\/duration_lock_icon[\s\S]*@drawable\/ic_lock/);
+  assert.match(durationLayout, /@\+id\/duration_action_icon/);
+  assert.match(webIndex, /id="workout-setup"[\s\S]*Change workout setup/);
+  assert.match(webIndex, /class="duration-lock"/);
+
+  const mobileSetup = methodBody(
+    mainActivity,
+    "private void ShowActiveWorkoutSetup()",
+    "private void ConfigureDurationScreenForActiveWorkout(bool editing)",
+  );
+  assert.match(mobileSetup, /PauseCountdown\(\)/);
+  assert.match(mobileSetup, /PauseRest[\s\S]*PauseRestCountdown\(\)/);
+  assert.match(mobileSetup, /ShowAppScreen\(AppScreen\.Duration\)/);
+  assert.match(mobileSetup, /_state\.ActiveWorkoutMinutes/);
+  assert.match(mobileSetup, /QueueWorkoutPreparation\(\)/);
+  const mobileRestore = methodBody(
+    mainActivity,
+    "private void RestoreWorkoutAfterSetup()",
+    "private void SetSelectedWorkoutModifier(",
+  );
+  assert.match(
+    mobileRestore,
+    /RestorePendingRest[\s\S]*RestorePendingMovement[\s\S]*ShowNextExercise/,
+  );
+  assert.match(mainActivity, /ReconfigureActiveWorkout\([\s\S]*protectedWorkoutGroupId/);
+
+  const webSetup = methodBody(
+    webApp,
+    "function showActiveWorkoutSetup()",
+    "function restoreWorkoutAfterSetup()",
+  );
+  assert.match(webSetup, /pauseMovement\("setup"\)/);
+  assert.match(webSetup, /pauseRest\(currentGroup, remaining\)/);
+  assert.match(webSetup, /showScreen\("duration"\)/);
+  assert.match(webSetup, /queueWorkoutPreparation\(\)/);
+  assert.match(instantControls, /setActiveWorkoutSetup\(enabled\)/);
+  assert.match(instantControls, /elements\.range\.disabled = activeWorkoutSetup/);
+  assert.match(preparationWorker, /mode === "reconfigure"[\s\S]*reconfigureActiveWorkout/);
+
+  assert.match(workoutState, /ActiveSelectionGroupOrder/);
+  assert.match(workoutState, /ActiveModifierProtectedSelectionGroupId/);
+  assert.match(workoutSessionLog, /List<WorkoutModifierChangeLog> ModifierChanges/);
+  assert.match(
+    sessionService,
+    /ReconfigureActiveWorkout\([\s\S]*lockedSelectionGroupIds[\s\S]*RebalanceNewExercisesByMuscleBalance\([\s\S]*lockedSelectionGroupIds/,
+  );
+  assert.match(
+    workoutModule,
+    /reconfigureActiveWorkout\([\s\S]*lockedSelectionGroupIds[\s\S]*rebalanceNewExercisesByMuscleBalance\(lockedSelectionGroupIds\)/,
+  );
 });
 
 test("active movement checkpoints and invalid media recovery match across platforms", async () => {

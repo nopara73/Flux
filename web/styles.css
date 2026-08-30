@@ -162,6 +162,45 @@ button:disabled {
   letter-spacing: 0.18em;
 }
 
+.duration-lock {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  bottom: 18px;
+  z-index: 1;
+  display: none;
+  fill: none;
+  stroke: var(--chartreuse);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.duration-screen.active-workout-setup .duration-lock {
+  display: block;
+}
+
+.duration-screen.active-workout-setup .duration-step-row,
+.duration-screen.active-workout-setup .duration-labels {
+  opacity: 0.38;
+}
+
+.duration-screen.active-workout-setup .forward-arrow::before {
+  width: 0;
+  height: 0;
+  top: 2px;
+  left: 7px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 13px solid var(--graphite);
+  border-radius: 2px;
+  background: transparent;
+}
+
+.duration-screen.active-workout-setup .forward-arrow::after {
+  display: none;
+}
+
 .duration-dial.pulse {
   animation: dial-pulse 160ms ease-out;
 }
@@ -641,6 +680,34 @@ button.modifier-tile:not(:disabled):active {
   position: relative;
   flex: 0 0 auto;
   filter: drop-shadow(0 3px 4px rgb(18 20 22 / 16%));
+}
+
+.workout-setup-button {
+  width: 40px;
+  height: 40px;
+  margin-left: 6px;
+  padding: 8px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 50%;
+  color: var(--secondary);
+  background: transparent;
+}
+
+.workout-setup-button:hover,
+.workout-setup-button:focus-visible {
+  color: var(--graphite);
+  background: rgb(18 20 22 / 7%);
+}
+
+.workout-setup-button svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .execution-block-track {

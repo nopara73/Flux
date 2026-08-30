@@ -61,6 +61,7 @@ const elements = {
   phaseLeft: byId("phase-left"),
   phaseRight: byId("phase-right"),
   workoutHeader: byId("workout-header"),
+  workoutSetup: byId("workout-setup"),
   workoutProgressText: byId("workout-progress-text"),
   workoutProgressFill: byId("workout-progress-fill"),
   exerciseName: byId("exercise-name"),
@@ -138,6 +139,12 @@ let workoutPreparationResolve = null;
 let preparingWorkoutMinutes = 0;
 let preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
 let preparedWorkout = null;
+let preparingWorkoutIsReconfiguration = false;
+let preparingProtectedWorkoutGroupId = null;
+let activeWorkoutSetup = false;
+let workoutSetupReturnPhase = "ready";
+let workoutSetupShouldResume = false;
+let workoutSetupCurrentGroupId = null;
 
 bindEvents();
 renderDuration(selectedMinutes, false);
@@ -228,7 +235,8 @@ function bindEvents() {
         if (userInitiated && !session) {
           startupSelectionChanged = true;
         }
-        if (userInitiated && session?.state.activeWorkoutMinutes === 0) {
+        if (userInitiated &&
+            (session?.state.activeWorkoutMinutes === 0 || activeWorkoutSetup)) {
           queueWorkoutPreparation();
         }
       },
@@ -247,6 +255,7 @@ function bindEvents() {
     elements.mirrorModifier.addEventListener("click", cycleMirrorEquipment);
   }
   elements.shuffleExercise.addEventListener("click", shuffleCurrentExercise);
+  elements.workoutSetup.addEventListener("click", showActiveWorkoutSetup);
   elements.startMovement.addEventListener("click", startMovement);
   elements.repeatExercise.addEventListener("click", repeatMovement);
   elements.playbackToggle.addEventListener("click", toggleMovementPlayback);
@@ -470,6 +479,10 @@ function showScreen(screen) {
 }
 
 function showDuration({ preserveSelection = false } = {}) {
+  activeWorkoutSetup = false;
+  workoutSetupCurrentGroupId = null;
+  elements.durationScreen.classList.remove("active-workout-setup");
+  startupControls?.setActiveWorkoutSetup(false);
   releaseWakeLock();
   stopRuntimeTimers();
   clearExerciseMedia();
@@ -495,20 +508,116 @@ function showDuration({ preserveSelection = false } = {}) {
   }
 }
 
+function showActiveWorkoutSetup() {
+  if (activeWorkoutSetup || !session || !currentGroup ||
+      session.state.activeWorkoutMinutes === 0 ||
+      session.state.workoutCompleted) {
+    return;
+  }
+
+  workoutSetupCurrentGroupId = currentGroup.id;
+  workoutSetupShouldResume = false;
+  if (restActive) {
+    workoutSetupReturnPhase = "rest";
+    workoutSetupShouldResume = !session.state.pendingRestPausedByUser;
+    if (workoutSetupShouldResume) {
+      const remaining = session.getPendingRestMillisecondsRemaining(Date.now());
+      if (remaining <= 0) {
+        completeRest();
+        return;
+      }
+      session.pauseRest(currentGroup, remaining);
+      persistState();
+    }
+    clearInterval(restTimer);
+    restTimer = null;
+  } else if (movementRunning || movementPauseReason) {
+    workoutSetupReturnPhase = "movement";
+    workoutSetupShouldResume = movementRunning;
+    if (movementRunning) {
+      pauseMovement("setup");
+    }
+  } else {
+    workoutSetupReturnPhase = "ready";
+  }
+
+  elements.video.pause();
+  releaseWakeLock();
+  activeWorkoutSetup = true;
+  selectedMinutes = session.state.activeWorkoutMinutes;
+  selectedModifiers = session.state.activeWorkoutModifiers;
+  renderDuration(selectedMinutes, false);
+  renderWorkoutModifiers();
+  startupControls?.setSelection(selectedMinutes, selectedModifiers);
+  startupControls?.setActiveWorkoutSetup(true);
+  elements.durationScreen.classList.add("active-workout-setup");
+  if (!startupControls) {
+    elements.durationDecrease.disabled = true;
+    elements.durationIncrease.disabled = true;
+    elements.durationRange.disabled = true;
+    elements.beginWorkout.setAttribute("aria-label", "Resume workout");
+  }
+  elements.beginWorkout.disabled = false;
+  startupControls?.markReady();
+  showScreen("duration");
+  queueWorkoutPreparation();
+}
+
+function restoreWorkoutAfterSetup() {
+  const returnPhase = workoutSetupReturnPhase;
+  const shouldResume = workoutSetupShouldResume;
+  activeWorkoutSetup = false;
+  elements.durationScreen.classList.remove("active-workout-setup");
+  startupControls?.setActiveWorkoutSetup(false);
+
+  if (returnPhase === "rest") {
+    const pendingGroup = session.getPendingRestGroup();
+    if (!pendingGroup) {
+      throw new Error("The paused rest could not be restored.");
+    }
+    if (shouldResume && session.state.pendingRestPausedByUser) {
+      const now = Date.now();
+      const remaining = session.getPendingRestMillisecondsRemaining(now);
+      session.resumeRest(pendingGroup, now + remaining);
+      persistState();
+    }
+    restorePendingRest();
+  } else if (returnPhase === "movement") {
+    if (!restorePendingMovement()) {
+      throw new Error("The paused exercise could not be restored.");
+    }
+  } else {
+    showNextExercise();
+  }
+
+  workoutSetupCurrentGroupId = null;
+  workoutSetupShouldResume = false;
+}
+
 function queueWorkoutPreparation(
   minutes = selectedMinutes,
   modifiers = selectedModifiers,
 ) {
-  if (!session || !exerciseCatalog || session.state.activeWorkoutMinutes !== 0) {
+  const isReconfiguration = activeWorkoutSetup;
+  const protectedWorkoutGroupId = workoutSetupCurrentGroupId;
+  if (!session || !exerciseCatalog ||
+      (isReconfiguration
+        ? !protectedWorkoutGroupId ||
+          session.state.activeWorkoutMinutes !== minutes
+        : session.state.activeWorkoutMinutes !== 0)) {
     return null;
   }
   if (preparedWorkout?.minutes === minutes &&
-      preparedWorkout.modifiers === modifiers) {
+      preparedWorkout.modifiers === modifiers &&
+      preparedWorkout.isReconfiguration === isReconfiguration &&
+      preparedWorkout.protectedWorkoutGroupId === protectedWorkoutGroupId) {
     return Promise.resolve(preparedWorkout);
   }
   if (workoutPreparationPromise &&
       preparingWorkoutMinutes === minutes &&
-      preparingWorkoutModifiers === modifiers) {
+      preparingWorkoutModifiers === modifiers &&
+      preparingWorkoutIsReconfiguration === isReconfiguration &&
+      preparingProtectedWorkoutGroupId === protectedWorkoutGroupId) {
     return workoutPreparationPromise;
   }
 
@@ -516,6 +625,8 @@ function queueWorkoutPreparation(
   const generation = ++workoutPreparationGeneration;
   preparingWorkoutMinutes = minutes;
   preparingWorkoutModifiers = modifiers;
+  preparingWorkoutIsReconfiguration = isReconfiguration;
+  preparingProtectedWorkoutGroupId = protectedWorkoutGroupId;
   workoutPreparationPromise = new Promise((resolve) => {
     workoutPreparationResolve = resolve;
   });
@@ -549,8 +660,21 @@ function queueWorkoutPreparation(
           exerciseCatalog,
           cloneWorkoutState(session.state),
         );
-        preparedSession.prepareWorkout(minutes, modifiers);
-        complete({ minutes, modifiers, state: preparedSession.state });
+        if (isReconfiguration) {
+          preparedSession.reconfigureActiveWorkout(
+            modifiers,
+            protectedWorkoutGroupId,
+          );
+        } else {
+          preparedSession.prepareWorkout(minutes, modifiers);
+        }
+        complete({
+          minutes,
+          modifiers,
+          state: preparedSession.state,
+          isReconfiguration,
+          protectedWorkoutGroupId,
+        });
       } catch (error) {
         console.error(error);
         complete(null);
@@ -574,7 +698,13 @@ function queueWorkoutPreparation(
         prepareOnMainThread();
         return;
       }
-      complete({ minutes, modifiers, state: event.data.state });
+      complete({
+        minutes,
+        modifiers,
+        state: event.data.state,
+        isReconfiguration,
+        protectedWorkoutGroupId,
+      });
     });
     workoutPreparationWorker.addEventListener("error", (error) => {
       if (generation !== workoutPreparationGeneration) {
@@ -591,6 +721,8 @@ function queueWorkoutPreparation(
       state: session.state,
       minutes,
       modifiers,
+      mode: isReconfiguration ? "reconfigure" : "prepare",
+      protectedWorkoutGroupId,
     });
   } catch (error) {
     console.warn("Background workout preparation is unavailable.", error);
@@ -599,14 +731,23 @@ function queueWorkoutPreparation(
   return workoutPreparationPromise;
 }
 
-async function ensureWorkoutPrepared(minutes, modifiers) {
+async function ensureWorkoutPrepared(
+  minutes,
+  modifiers,
+  isReconfiguration = activeWorkoutSetup,
+  protectedWorkoutGroupId = workoutSetupCurrentGroupId,
+) {
   if (preparedWorkout?.minutes === minutes &&
-      preparedWorkout.modifiers === modifiers) {
+      preparedWorkout.modifiers === modifiers &&
+      preparedWorkout.isReconfiguration === isReconfiguration &&
+      preparedWorkout.protectedWorkoutGroupId === protectedWorkoutGroupId) {
     return preparedWorkout;
   }
   if (!workoutPreparationPromise ||
       preparingWorkoutMinutes !== minutes ||
-      preparingWorkoutModifiers !== modifiers) {
+      preparingWorkoutModifiers !== modifiers ||
+      preparingWorkoutIsReconfiguration !== isReconfiguration ||
+      preparingProtectedWorkoutGroupId !== protectedWorkoutGroupId) {
     queueWorkoutPreparation(minutes, modifiers);
   }
   return workoutPreparationPromise
@@ -624,6 +765,8 @@ function cancelWorkoutPreparation() {
   preparedWorkout = null;
   preparingWorkoutMinutes = 0;
   preparingWorkoutModifiers = WORKOUT_MODIFIERS.None;
+  preparingWorkoutIsReconfiguration = false;
+  preparingProtectedWorkoutGroupId = null;
 }
 
 function cloneWorkoutState(state) {
@@ -648,12 +791,24 @@ async function startWorkout() {
   try {
     const minutes = selectedMinutes;
     const modifiers = selectedModifiers;
-    const prepared = await ensureWorkoutPrepared(minutes, modifiers);
+    const isReconfiguration = activeWorkoutSetup;
+    const protectedWorkoutGroupId = workoutSetupCurrentGroupId;
+    const prepared = await ensureWorkoutPrepared(
+      minutes,
+      modifiers,
+      isReconfiguration,
+      protectedWorkoutGroupId,
+    );
     if (!prepared) {
       throw new Error("The selected workout could not be prepared.");
     }
     cancelWorkoutPreparation();
     session = new WorkoutSession(exerciseCatalog, prepared.state);
+    if (prepared.isReconfiguration) {
+      persistState();
+      restoreWorkoutAfterSetup();
+      return;
+    }
     session.activatePreparedWorkout();
     persistState();
     showNextExercise();
@@ -1033,6 +1188,11 @@ function markMediaReady(generation, playbackConfirmed = false) {
   elements.startMovement.disabled = false;
   const manuallyPaused = movementPauseReason === "user";
   setPlaybackControlsEnabled(movementRunning || manuallyPaused);
+
+  if (activeWorkoutSetup) {
+    elements.video.pause();
+    return;
+  }
 
   if (playbackConfirmed || !movementPauseReason || manuallyPaused) {
     clearMediaRecoveryTimer();
@@ -1776,6 +1936,11 @@ function handleVisibilityChange() {
     }
     clearInterval(restTimer);
     restTimer = null;
+    elements.video.pause();
+    return;
+  }
+
+  if (activeWorkoutSetup) {
     elements.video.pause();
     return;
   }

@@ -76,6 +76,18 @@
                     android:gravity="center"
                     android:importantForAccessibility="no"
                     android:visibility="visible" />
+
+                <ImageButton
+                    android:id="@+id/workout_setup_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/change_workout_setup_description"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_tune"
+                    android:tint="@color/secondary_text"
+                    android:tooltipText="@string/change_workout_setup_description" />
             </LinearLayout>
 
             <ProgressBar
