@@ -48,6 +48,11 @@ The current catalog contains 24 distinct wall-required session movements:
 - `801` — `Wall Roll-Down`
 - `835` — `Wall Lat Stretch`
 
+`Wall Shoulder Slides` uses an equipment-free wall-slide demonstration. The
+previous reviewed source was rejected after a resistance band was found in the
+packaged loop; the replacement shows one complete natural wall-slide cycle
+against a bare wall with no prop.
+
 These are established movements whose wall contact is integral to the exercise,
 not ordinary exercises relabeled because a nearby wall could offer optional
 balance assistance. The wall calf raise and wall tibialis raise remain

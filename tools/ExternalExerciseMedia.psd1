@@ -4728,17 +4728,16 @@
         MirrorForAlternation = $false
     }
     579 = @{
-        File = 'wall-shoulder-slides.mp4'
-        Url = 'https://www.youtube.com/watch?v=GLty-L_JxXk'
-        SourcePage = 'https://www.youtube.com/watch?v=GLty-L_JxXk'
+        File = 'wall-shoulder-slides-no-equipment.mp4'
+        Url = 'https://www.youtube.com/watch?v=oK5PtUf5tZk'
+        SourcePage = 'https://www.youtube.com/watch?v=oK5PtUf5tZk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 38
-        DurationSeconds = 8
+        StartSeconds = 42
+        DurationSeconds = 6
         FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
         MirrorForAlternation = $false
     }
     580 = @{
