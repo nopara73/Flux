@@ -401,9 +401,9 @@ function workoutModifierFeedbackLabel(flag, enabled) {
 function cycleWallEquipment() {
   const currentEquipment = getWallEquipment(selectedModifiers);
   const nextEquipment = currentEquipment === WALL_EQUIPMENT.None
-    ? WALL_EQUIPMENT.SolesStayOff
-    : currentEquipment === WALL_EQUIPMENT.SolesStayOff
-      ? WALL_EQUIPMENT.SolesMayTouch
+    ? WALL_EQUIPMENT.SolesMayTouch
+    : currentEquipment === WALL_EQUIPMENT.SolesMayTouch
+      ? WALL_EQUIPMENT.SolesStayOff
       : WALL_EQUIPMENT.None;
   selectedModifiers = withWallEquipment(selectedModifiers, nextEquipment);
   if (!session) {
@@ -426,9 +426,9 @@ function wallEquipmentFeedbackLabel(equipment) {
 
 function cycleMirrorEquipment() {
   const nextEquipment = getMirrorEquipment(selectedModifiers) === MIRROR_EQUIPMENT.None
-    ? MIRROR_EQUIPMENT.Compact
-    : getMirrorEquipment(selectedModifiers) === MIRROR_EQUIPMENT.Compact
-      ? MIRROR_EQUIPMENT.Tall
+    ? MIRROR_EQUIPMENT.Tall
+    : getMirrorEquipment(selectedModifiers) === MIRROR_EQUIPMENT.Tall
+      ? MIRROR_EQUIPMENT.Compact
       : MIRROR_EQUIPMENT.None;
   selectedModifiers = withMirrorEquipment(selectedModifiers, nextEquipment);
   if (!session) {

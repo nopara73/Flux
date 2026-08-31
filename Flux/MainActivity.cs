@@ -754,9 +754,9 @@ public class MainActivity : Activity
             WallEquipment nextEquipment = WorkoutModifierPolicy
                 .GetWallEquipment(_selectedWorkoutModifiers) switch
             {
-                WallEquipment.None => WallEquipment.SolesStayOff,
-                WallEquipment.SolesStayOff => WallEquipment.SolesMayTouch,
-                WallEquipment.SolesMayTouch => WallEquipment.None,
+                WallEquipment.None => WallEquipment.SolesMayTouch,
+                WallEquipment.SolesMayTouch => WallEquipment.SolesStayOff,
+                WallEquipment.SolesStayOff => WallEquipment.None,
                 _ => throw new InvalidOperationException(
                     "Unknown wall equipment state."),
             };
@@ -768,9 +768,9 @@ public class MainActivity : Activity
             MirrorEquipment nextEquipment = WorkoutModifierPolicy
                 .GetMirrorEquipment(_selectedWorkoutModifiers) switch
             {
-                MirrorEquipment.None => MirrorEquipment.Compact,
-                MirrorEquipment.Compact => MirrorEquipment.Tall,
-                MirrorEquipment.Tall => MirrorEquipment.None,
+                MirrorEquipment.None => MirrorEquipment.Tall,
+                MirrorEquipment.Tall => MirrorEquipment.Compact,
+                MirrorEquipment.Compact => MirrorEquipment.None,
                 _ => throw new InvalidOperationException(
                     "Unknown mirror equipment state."),
             };

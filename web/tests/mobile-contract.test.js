@@ -771,8 +771,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   }
   assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
   assert.match(mainActivity, /GetMirrorFeedbackResourceId[\s\S]*MirrorEquipment\.Compact[\s\S]*compact_mirror_equipment_enabled_feedback[\s\S]*MirrorEquipment\.Tall[\s\S]*tall_mirror_equipment_enabled_feedback/);
-  assert.match(mainActivity, /MirrorEquipment\.None\s*=>\s*MirrorEquipment\.Compact[\s\S]*MirrorEquipment\.Compact\s*=>\s*MirrorEquipment\.Tall[\s\S]*MirrorEquipment\.Tall\s*=>\s*MirrorEquipment\.None/);
-  assert.match(mainActivity, /WallEquipment\.None\s*=>\s*WallEquipment\.SolesStayOff[\s\S]*WallEquipment\.SolesStayOff\s*=>\s*WallEquipment\.SolesMayTouch[\s\S]*WallEquipment\.SolesMayTouch\s*=>\s*WallEquipment\.None/);
+  assert.match(mainActivity, /MirrorEquipment\.None\s*=>\s*MirrorEquipment\.Tall[\s\S]*MirrorEquipment\.Tall\s*=>\s*MirrorEquipment\.Compact[\s\S]*MirrorEquipment\.Compact\s*=>\s*MirrorEquipment\.None/);
+  assert.match(mainActivity, /WallEquipment\.None\s*=>\s*WallEquipment\.SolesMayTouch[\s\S]*WallEquipment\.SolesMayTouch\s*=>\s*WallEquipment\.SolesStayOff[\s\S]*WallEquipment\.SolesStayOff\s*=>\s*WallEquipment\.None/);
   assert.match(durationLayout, /insect_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/insect_mode_disabled_feedback"/);
   assert.match(durationLayout, /hard_floor_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/hard_floor_enabled_feedback"/);
   assert.match(durationLayout, /silence_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/noisy_exercises_disabled_feedback"/);
@@ -784,8 +784,10 @@ test("web and mobile persist one combined duration and modifier selection contex
     instantControls,
     /name === "hardFloor"[\s\S]*Floor surface: hard and slippery floor[\s\S]*Floor surface: stable soft floor/,
   );
-  assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Compact[\s\S]*MIRROR_EQUIPMENT\.Tall/);
-  assert.match(webApp, /cycleWallEquipment[\s\S]*WALL_EQUIPMENT\.None[\s\S]*WALL_EQUIPMENT\.SolesStayOff[\s\S]*WALL_EQUIPMENT\.SolesMayTouch/);
+  assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Tall[\s\S]*MIRROR_EQUIPMENT\.Compact/);
+  assert.match(webApp, /cycleWallEquipment[\s\S]*WALL_EQUIPMENT\.None[\s\S]*WALL_EQUIPMENT\.SolesMayTouch[\s\S]*WALL_EQUIPMENT\.SolesStayOff/);
+  assert.match(instantControls, /cycleMirrorEquipment[\s\S]*!hasMirror[\s\S]*mirror \| modifierFlags\.tallMirror[\s\S]*hasTallMirror[\s\S]*selectedModifiers \|= modifierFlags\.mirror/);
+  assert.match(instantControls, /cycleWallEquipment[\s\S]*!hasWall[\s\S]*wall \| modifierFlags\.soleWallContact[\s\S]*solesMayTouch[\s\S]*selectedModifiers \|= modifierFlags\.wall/);
   assert.match(
     mainActivity,
     /ModifierFeedbackEnterDurationMilliseconds\s*=\s*140L[\s\S]*ModifierFeedbackHoldMilliseconds\s*=\s*1_200L[\s\S]*ModifierFeedbackFadeDurationMilliseconds\s*=\s*700L/,

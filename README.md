@@ -210,12 +210,12 @@ Flux currently provides five composable modifiers, in this UI order:
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
 - **Wall**, disabled by default, cycles through no wall, wall available with
-  soles kept off, and wall available with sole contact allowed. It admits
+  sole contact allowed, and wall available with soles kept off. It admits
   established exercises that genuinely require the selected wall access and
   softly prefers them when all stronger selection priorities tie;
-- **Mirror**, disabled by default, cycles through no mirror, compact mirror, and
-  tall mirror. A compact mirror shows roughly the upper body; a tall mirror can
-  show the full body. Mirror relevance breaks only otherwise remaining ties,
+- **Mirror**, disabled by default, cycles through no mirror, tall mirror, and
+  compact mirror. A compact mirror shows roughly the upper body; a tall mirror
+  can show the full body. Mirror relevance breaks only otherwise remaining ties,
   after real scores, hard-work rotation, contextual keeps, and within-session
   muscle balance.
 

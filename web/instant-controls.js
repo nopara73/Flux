@@ -223,9 +223,9 @@
     const hasTallMirror = (selectedModifiers & modifierFlags.tallMirror) !== 0;
     selectedModifiers &= ~(modifierFlags.mirror | modifierFlags.tallMirror);
     if (!hasMirror) {
-      selectedModifiers |= modifierFlags.mirror;
-    } else if (!hasTallMirror) {
       selectedModifiers |= modifierFlags.mirror | modifierFlags.tallMirror;
+    } else if (hasTallMirror) {
+      selectedModifiers |= modifierFlags.mirror;
     }
     selectionChanged = true;
     renderModifiers();
@@ -240,10 +240,10 @@
     selectedModifiers &=
       ~(modifierFlags.wall | modifierFlags.soleWallContact);
     if (!hasWall) {
-      selectedModifiers |= modifierFlags.wall;
-    } else if (!solesMayTouch) {
       selectedModifiers |=
         modifierFlags.wall | modifierFlags.soleWallContact;
+    } else if (solesMayTouch) {
+      selectedModifiers |= modifierFlags.wall;
     }
     selectionChanged = true;
     renderModifiers();
