@@ -2623,6 +2623,8 @@ public sealed class CatalogMigrationRulesTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = sideSequence,
+            UpperBodyClothingRequirement =
+                ExerciseUpperBodyClothingRequirement.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

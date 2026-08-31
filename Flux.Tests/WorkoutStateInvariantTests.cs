@@ -81,7 +81,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
         Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[
             WorkoutExercisePhase.Warmup][exercise.Id]);
@@ -130,7 +130,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Contains(
             exercise.Id,
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]);
@@ -159,7 +159,7 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Equal(7, state.LastWorkoutMinutes);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
@@ -391,7 +391,9 @@ public sealed class WorkoutStateInvariantTests
             ?? throw new InvalidOperationException("Workout state did not deserialize.");
 
         Assert.Equal(
-            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            WorkoutModifiers.UpperBodyClothing |
+                WorkoutModifiers.HardFloor |
+                WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
     }
@@ -409,21 +411,27 @@ public sealed class WorkoutStateInvariantTests
         var state = new WorkoutState();
 
         Assert.Equal(
-            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            WorkoutModifiers.UpperBodyClothing |
+                WorkoutModifiers.HardFloor |
+                WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
         Assert.False(state.LastWorkoutModifiers.HasFlag(WorkoutModifiers.Mirror));
 
         service.StartWorkout(state, 3);
 
         Assert.Equal(
-            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            WorkoutModifiers.UpperBodyClothing |
+                WorkoutModifiers.HardFloor |
+                WorkoutModifiers.Silence,
             state.LastWorkoutModifiers);
         Assert.Equal(
-            WorkoutModifiers.HardFloor | WorkoutModifiers.Silence,
+            WorkoutModifiers.UpperBodyClothing |
+                WorkoutModifiers.HardFloor |
+                WorkoutModifiers.Silence,
             state.ActiveWorkoutModifiers);
         Assert.All(service.GetActiveGroups(state), group =>
             Assert.True(state.SelectedExerciseIds.ContainsKey(
-                $"p18|{group.SelectionKey}")));
+                $"p146|{group.SelectionKey}")));
     }
 
     [Fact]
@@ -459,10 +467,11 @@ public sealed class WorkoutStateInvariantTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence |
-            WorkoutModifiers.HardFloor,
+            WorkoutModifiers.HardFloor |
+            WorkoutModifiers.UpperBodyClothing,
             state.LastWorkoutModifiers);
         Assert.Equal(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
@@ -480,6 +489,14 @@ public sealed class WorkoutStateInvariantTests
                 $"p17|{group.SelectionKey}"));
             Assert.True(state.SelectedExerciseIds.ContainsKey(
                 $"p19|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p129|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p131|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p145|{group.SelectionKey}"));
+            Assert.True(state.SelectedExerciseIds.ContainsKey(
+                $"p147|{group.SelectionKey}"));
         });
     }
 
@@ -829,6 +846,8 @@ public sealed class WorkoutStateInvariantTests
             ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
             HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
+            UpperBodyClothingRequirement =
+                ExerciseUpperBodyClothingRequirement.Agnostic,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

@@ -6,6 +6,43 @@ namespace Flux.Tests;
 public sealed class WorkoutModifierPolicyTests
 {
     [Fact]
+    public void UpperBodyClothingStatesExcludeOnlyTheOppositeRequirement()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise clothingRequired = Exercise(
+            1,
+            group,
+            upperBodyClothingRequirement:
+                ExerciseUpperBodyClothingRequirement.ClothingRequired);
+        Exercise bareRequired = Exercise(
+            2,
+            group,
+            upperBodyClothingRequirement:
+                ExerciseUpperBodyClothingRequirement.BareUpperBodyRequired);
+        Exercise agnostic = Exercise(3, group);
+
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            clothingRequired,
+            WorkoutModifiers.UpperBodyClothing));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            clothingRequired,
+            WorkoutModifiers.None));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            bareRequired,
+            WorkoutModifiers.UpperBodyClothing));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            bareRequired,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            agnostic,
+            WorkoutModifiers.UpperBodyClothing));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            agnostic,
+            WorkoutModifiers.None));
+    }
+
+    [Fact]
     public void NeutralProfileKeepsBothCompatibleAndExcludedExercisesEligible()
     {
         Exercise compatible = Exercise(
@@ -652,7 +689,10 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(WorkoutModifierPolicy.ValidationProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.ValidationProfiles);
-        Assert.Equal(15, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Equal(21, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Contains(
+            WorkoutModifiers.UpperBodyClothing,
+            WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(WorkoutModifiers.HardFloor, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
@@ -834,9 +874,10 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void MaterialityChecksGrowQuadratically()
     {
-        // Five single-state checks (Hard Floor, Insect, Silence, compact
-        // Mirror, tall Mirror), six directed binary/binary pair edges, and
-        // four edges for each of the three binary/Mirror pairs.
+        // Clothing is a bidirectional setup state, not a restrictive filter,
+        // so materiality remains the five restrictive single-state checks,
+        // six directed binary/binary edges, and four edges for each of the
+        // three binary/Mirror pairs.
         Assert.Equal(
             23,
             WorkoutModifierPolicy.FindMaterialityDeficiencies([]).Count);
@@ -1183,7 +1224,9 @@ public sealed class WorkoutModifierPolicyTests
         ExerciseHardFloorCompatibility hardFloorCompatibility =
             ExerciseHardFloorCompatibility.Compatible,
         bool wallRequired = false,
-        bool soleWallContactRequired = false)
+        bool soleWallContactRequired = false,
+        ExerciseUpperBodyClothingRequirement upperBodyClothingRequirement =
+            ExerciseUpperBodyClothingRequirement.Agnostic)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -1215,6 +1258,7 @@ public sealed class WorkoutModifierPolicyTests
             SessionMovementId = sessionMovementId,
             InsectCompatibility = insectCompatibility,
             HardFloorCompatibility = hardFloorCompatibility,
+            UpperBodyClothingRequirement = upperBodyClothingRequirement,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = minimumMirrorCoverage ??
                 (mirrorRelationship is ExerciseMirrorRelationship.MirrorOnly or

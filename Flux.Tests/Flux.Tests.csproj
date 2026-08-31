@@ -32,6 +32,7 @@
     <Compile Include="..\Flux\Models\ExerciseSequenceBlock.cs" Link="Production\Models\ExerciseSequenceBlock.cs" />
     <Compile Include="..\Flux\Models\ExerciseInsectCompatibility.cs" Link="Production\Models\ExerciseInsectCompatibility.cs" />
     <Compile Include="..\Flux\Models\ExerciseHardFloorCompatibility.cs" Link="Production\Models\ExerciseHardFloorCompatibility.cs" />
+    <Compile Include="..\Flux\Models\ExerciseUpperBodyClothingRequirement.cs" Link="Production\Models\ExerciseUpperBodyClothingRequirement.cs" />
     <Compile Include="..\Flux\Models\ExerciseMirrorCoverage.cs" Link="Production\Models\ExerciseMirrorCoverage.cs" />
     <Compile Include="..\Flux\Models\ExerciseMirrorRelationship.cs" Link="Production\Models\ExerciseMirrorRelationship.cs" />
     <Compile Include="..\Flux\Models\ExerciseMode.cs" Link="Production\Models\ExerciseMode.cs" />

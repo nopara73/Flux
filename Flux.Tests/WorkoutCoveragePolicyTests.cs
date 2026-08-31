@@ -70,6 +70,8 @@ public sealed class WorkoutCoveragePolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            UpperBodyClothingRequirement =
+                ExerciseUpperBodyClothingRequirement.Agnostic,
             Score = 0,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

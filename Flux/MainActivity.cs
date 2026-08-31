@@ -72,6 +72,9 @@ public class MainActivity : Activity
     private LinearLayout _durationStepRow = null!;
     private FrameLayout _durationOptionLabels = null!;
     private LinearLayout _durationModifierGroups = null!;
+    private LinearLayout _durationContextModifierGroup = null!;
+    private LinearLayout _durationEquipmentModifierGroup = null!;
+    private CheckBox _upperBodyClothingModifierButton = null!;
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
@@ -589,6 +592,12 @@ public class MainActivity : Activity
             Resource.Id.duration_option_labels);
         _durationModifierGroups = FindRequiredView<LinearLayout>(
             Resource.Id.duration_modifier_groups);
+        _durationContextModifierGroup = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_context_modifier_group);
+        _durationEquipmentModifierGroup = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_equipment_modifier_group);
+        _upperBodyClothingModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.upper_body_clothing_modifier_button);
         _hardFloorModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.hard_floor_modifier_button);
         _insectModifierButton = FindRequiredView<CheckBox>(
@@ -703,6 +712,21 @@ public class MainActivity : Activity
                     ExerciseSessionService.SupportedWorkoutMinutes[eventArgs.Progress],
                     userInitiated: true);
             }
+        };
+        _upperBodyClothingModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _upperBodyClothingModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.UpperBodyClothing,
+                enabled,
+                _upperBodyClothingModifierButton,
+                Resource.String.upper_body_clothing_modifier_description,
+                Resource.String.upper_body_clothing_modifier_on,
+                Resource.String.upper_body_clothing_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.UpperBodyClothing,
+                enabled));
         };
         _hardFloorModifierButton.Click += (_, _) =>
         {
@@ -973,6 +997,15 @@ public class MainActivity : Activity
 
         if (landscape)
         {
+            _durationModifierGroups.Orientation = Orientation.Horizontal;
+            _durationModifierGroups.SetGravity(GravityFlags.Center);
+            var landscapeEquipmentLayout =
+                (LinearLayout.LayoutParams)
+                    _durationEquipmentModifierGroup.LayoutParameters!;
+            landscapeEquipmentLayout.SetMargins(DpInt(10), 0, 0, 0);
+            landscapeEquipmentLayout.Gravity = GravityFlags.Center;
+            _durationEquipmentModifierGroup.LayoutParameters =
+                landscapeEquipmentLayout;
             _durationScroll.LayoutParameters = new LinearLayout.LayoutParams(
                 0,
                 matchParent,
@@ -1055,6 +1088,15 @@ public class MainActivity : Activity
             matchParent,
             0,
             1f);
+        _durationModifierGroups.Orientation = Orientation.Vertical;
+        _durationModifierGroups.SetGravity(GravityFlags.Center);
+        var portraitEquipmentLayout =
+            (LinearLayout.LayoutParams)
+                _durationEquipmentModifierGroup.LayoutParameters!;
+        portraitEquipmentLayout.SetMargins(0, DpInt(10), 0, 0);
+        portraitEquipmentLayout.Gravity = GravityFlags.Center;
+        _durationEquipmentModifierGroup.LayoutParameters =
+            portraitEquipmentLayout;
         _durationActionBar.LayoutParameters = new LinearLayout.LayoutParams(
             matchParent,
             wrapContent);
@@ -1557,6 +1599,7 @@ public class MainActivity : Activity
         int padding = GetModifierTilePadding(size);
         foreach (CheckBox tile in new[]
                  {
+                     _upperBodyClothingModifierButton,
                      _hardFloorModifierButton,
                      _insectModifierButton,
                      _silenceModifierButton,
@@ -1729,6 +1772,14 @@ public class MainActivity : Activity
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
         SetSelectedWorkoutModifier(
+            WorkoutModifiers.UpperBodyClothing,
+            (_state.LastWorkoutModifiers &
+                WorkoutModifiers.UpperBodyClothing) != 0,
+            _upperBodyClothingModifierButton,
+            Resource.String.upper_body_clothing_modifier_description,
+            Resource.String.upper_body_clothing_modifier_on,
+            Resource.String.upper_body_clothing_modifier_off);
+        SetSelectedWorkoutModifier(
             WorkoutModifiers.HardFloor,
             (_state.LastWorkoutModifiers & WorkoutModifiers.HardFloor) != 0,
             _hardFloorModifierButton,
@@ -1811,6 +1862,14 @@ public class MainActivity : Activity
         _selectedWorkoutModifiers = _state.ActiveWorkoutModifiers;
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_selectedWorkoutMinutes);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.UpperBodyClothing,
+            (_selectedWorkoutModifiers &
+                WorkoutModifiers.UpperBodyClothing) != 0,
+            _upperBodyClothingModifierButton,
+            Resource.String.upper_body_clothing_modifier_description,
+            Resource.String.upper_body_clothing_modifier_on,
+            Resource.String.upper_body_clothing_modifier_off);
         SetSelectedWorkoutModifier(
             WorkoutModifiers.HardFloor,
             (_selectedWorkoutModifiers & WorkoutModifiers.HardFloor) != 0,
@@ -2090,6 +2149,9 @@ public class MainActivity : Activity
         WorkoutModifiers modifier,
         bool enabled) => modifier switch
     {
+        WorkoutModifiers.UpperBodyClothing => enabled
+            ? Resource.String.upper_body_clothing_enabled_feedback
+            : Resource.String.upper_body_clothing_disabled_feedback,
         WorkoutModifiers.HardFloor => enabled
             ? Resource.String.hard_floor_enabled_feedback
             : Resource.String.hard_floor_disabled_feedback,

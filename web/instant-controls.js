@@ -8,6 +8,7 @@
     hardFloor: 16,
     wall: 32,
     soleWallContact: 64,
+    upperBodyClothing: 128,
   });
   const feedbackDurationMs = 2_040;
   const elements = {
@@ -18,6 +19,7 @@
     range: document.getElementById("duration-range"),
     labels: [...(document.getElementById("duration-labels")?.children ?? [])],
     begin: document.getElementById("begin-workout"),
+    upperBodyClothing: document.getElementById("upper-body-clothing-modifier"),
     hardFloor: document.getElementById("hard-floor-modifier"),
     insect: document.getElementById("insect-modifier"),
     silence: document.getElementById("silence-modifier"),
@@ -28,6 +30,7 @@
   };
   if (!elements.dial || !elements.value || !elements.decrease ||
       !elements.increase || !elements.range || !elements.begin ||
+      !elements.upperBodyClothing ||
       !elements.insect || !elements.silence || !elements.wall ||
       !elements.mirror ||
       !elements.feedback) {
@@ -48,6 +51,8 @@
     selectDurationByIndex(Number(elements.range.value));
   });
   elements.begin.addEventListener("click", requestStart);
+  elements.upperBodyClothing.addEventListener("click", () =>
+    toggleModifier("upperBodyClothing"));
   elements.hardFloor?.addEventListener("click", () =>
     toggleModifier("hardFloor"));
   elements.insect.addEventListener("click", () => toggleModifier("insect"));
@@ -127,6 +132,7 @@
   function readInitialModifiers() {
     let modifiers = 0;
     for (const [name, element] of [
+      ["upperBodyClothing", elements.upperBodyClothing],
       ["hardFloor", elements.hardFloor],
       ["insect", elements.insect],
       ["silence", elements.silence],
@@ -252,6 +258,7 @@
   }
 
   function renderModifiers() {
+    renderBinaryModifier(elements.upperBodyClothing, "upperBodyClothing");
     renderBinaryModifier(elements.hardFloor, "hardFloor");
     renderBinaryModifier(elements.insect, "insect");
     renderBinaryModifier(elements.silence, "silence");
@@ -306,6 +313,14 @@
           : "Floor surface: stable soft floor",
       );
     }
+    if (name === "upperBodyClothing") {
+      element.setAttribute(
+        "aria-label",
+        enabled
+          ? "Upper-body clothing: worn"
+          : "Upper-body clothing: not worn",
+      );
+    }
     if (name === "silence") {
       element.setAttribute(
         "aria-label",
@@ -318,6 +333,9 @@
 
   function modifierFeedbackLabel(name) {
     const enabled = (selectedModifiers & modifierFlags[name]) !== 0;
+    if (name === "upperBodyClothing") {
+      return `upper-body clothing ${enabled ? "ON" : "OFF"}`;
+    }
     if (name === "hardFloor") {
       return `hard floor ${enabled ? "ON" : "OFF"}`;
     }

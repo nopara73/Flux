@@ -10,9 +10,12 @@ public sealed class ExerciseSessionService
     public const int MaximumWorkoutMinutes = 90;
     public const int DefaultWorkoutMinutes = 10;
     public const WorkoutModifiers DefaultWorkoutModifiers =
-        WorkoutModifiers.HardFloor | WorkoutModifiers.Silence;
+        WorkoutModifiers.UpperBodyClothing |
+        WorkoutModifiers.HardFloor |
+        WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 26;
+    private const int CurrentStateVersion = 27;
+    private const int ImplicitUpperBodyClothingStateVersion = 27;
     private const int LegacyTrainingDayInferenceStateVersion = 25;
     private const int PersistedLightDayStateVersion = 24;
     private const int PhaseScopedDownvoteStateVersion = 23;
@@ -166,6 +169,11 @@ public sealed class ExerciseSessionService
         if (state.Version < ImplicitHardFloorStateVersion)
         {
             MigrateImplicitHardFloorModifier(state);
+        }
+
+        if (state.Version < ImplicitUpperBodyClothingStateVersion)
+        {
+            MigrateImplicitUpperBodyClothingModifier(state);
         }
 
         state.Version = CurrentStateVersion;
@@ -3823,6 +3831,33 @@ public sealed class ExerciseSessionService
 
         // Preserve the exact profile of a workout already in progress. The new
         // default takes effect when the user next reaches duration selection.
+    }
+
+    private void MigrateImplicitUpperBodyClothingModifier(WorkoutState state)
+    {
+        foreach ((string selectionStorageKey, int exerciseId) in
+                 state.SelectedExerciseIds.ToArray())
+        {
+            if (!TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out string selectionGroupId,
+                    out WorkoutModifiers modifiers))
+            {
+                continue;
+            }
+
+            WorkoutModifiers clothingProfile = NormalizeWorkoutModifiers(
+                modifiers | WorkoutModifiers.UpperBodyClothing);
+            state.SelectedExerciseIds.TryAdd(
+                GetSelectionStorageKey(selectionGroupId, clothingProfile),
+                exerciseId);
+        }
+
+        state.LastWorkoutModifiers = NormalizeWorkoutModifiers(
+            state.LastWorkoutModifiers | WorkoutModifiers.UpperBodyClothing);
+
+        // Preserve the exact profile and checkpoints of a workout already in
+        // progress. The new default applies at the next duration selection.
     }
 
     private void NormalizeSavedLineups(WorkoutState state)

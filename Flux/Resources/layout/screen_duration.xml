@@ -241,6 +241,22 @@
                         android:orientation="horizontal">
 
                         <CheckBox
+                            android:id="@+id/upper_body_clothing_modifier_button"
+                            style="@style/DurationModifierTile"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:checked="true"
+                            android:contentDescription="@string/upper_body_clothing_modifier_description"
+                            android:drawableTint="@color/duration_modifier_icon_tint"
+                            android:drawableTop="@drawable/ic_upper_body_clothing"
+                            android:gravity="center"
+                            android:text=""
+                            android:tooltipText="@string/upper_body_clothing_enabled_feedback" />
+
+                        <CheckBox
                             android:id="@+id/hard_floor_modifier_button"
                             style="@style/DurationModifierTile"
                             android:layout_width="48dp"

@@ -111,6 +111,28 @@ public sealed class CatalogInvariantTests
                 exercises.Single(exercise => exercise.Id == exerciseId)
                     .HardFloorCompatibility));
         Assert.DoesNotContain(exercises, exercise =>
+            exercise.UpperBodyClothingRequirement ==
+                ExerciseUpperBodyClothingRequirement.Unreviewed);
+        Assert.Equal(
+            new HashSet<int> { 134, 137, 175, 579, 580, 801 },
+            exercises.Where(exercise =>
+                    exercise.UpperBodyClothingRequirement ==
+                        ExerciseUpperBodyClothingRequirement.ClothingRequired)
+                .Select(exercise => exercise.Id)
+                .ToHashSet());
+        Assert.Equal(
+            new HashSet<int> { 524, 525, 526, 527, 528 },
+            exercises.Where(exercise =>
+                    exercise.UpperBodyClothingRequirement ==
+                        ExerciseUpperBodyClothingRequirement.BareUpperBodyRequired)
+                .Select(exercise => exercise.Id)
+                .ToHashSet());
+        Assert.Equal(
+            488,
+            exercises.Count(exercise =>
+                exercise.UpperBodyClothingRequirement ==
+                    ExerciseUpperBodyClothingRequirement.Agnostic));
+        Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
             77,
@@ -218,11 +240,12 @@ public sealed class CatalogInvariantTests
         {
             Assert.True(WorkoutModifierPolicy.IsCompatible(
                 exercise,
-                WorkoutModifiers.Wall));
+                WorkoutModifiers.Wall |
+                    WorkoutModifiers.UpperBodyClothing));
         });
         WorkoutModifiers soleWallProfile =
             WorkoutModifierPolicy.WithWallEquipment(
-                WorkoutModifiers.None,
+                WorkoutModifiers.UpperBodyClothing,
                 WallEquipment.SolesMayTouch);
         Assert.All(soleWallRequired, exercise =>
         {
@@ -240,17 +263,17 @@ public sealed class CatalogInvariantTests
                 exercise.InsectCompatibility));
         WorkoutModifierPairCoverageDeficiency[] pairwiseDeficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).ToArray();
-        Assert.Equal(245, pairwiseDeficiencies.Length);
+        Assert.Equal(309, pairwiseDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
                 [3] = 8,
-                [5] = 20,
-                [7] = 15,
-                [10] = 34,
-                [15] = 34,
-                [20] = 43,
-                [30] = 91,
+                [5] = 24,
+                [7] = 17,
+                [10] = 44,
+                [15] = 44,
+                [20] = 55,
+                [30] = 117,
             },
             pairwiseDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)

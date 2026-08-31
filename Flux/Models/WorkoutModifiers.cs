@@ -19,4 +19,8 @@ public enum WorkoutModifiers
     // movements that require sole-to-wall contact; Wall | SoleWallContact
     // allows them. The qualifier is never valid without Wall.
     SoleWallContact = 64,
+    // Whether the user is currently wearing upper-body clothing. This is a
+    // physical setup condition: some contact exercises require clothing while
+    // a small set of physique-inspection exercises require a bare upper body.
+    UpperBodyClothing = 128,
 }

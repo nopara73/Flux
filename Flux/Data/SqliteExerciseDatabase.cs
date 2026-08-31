@@ -40,6 +40,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "direction_sequence",
         "insect_compatibility",
         "hard_floor_compatibility",
+        "upper_body_clothing_requirement",
         "mirror_relationship",
         "mirror_coverage",
         "wall_required",
@@ -236,6 +237,12 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'Unreviewed',
                         'Compatible',
                         'Incompatible')),
+                upper_body_clothing_requirement TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (upper_body_clothing_requirement IN (
+                        'Unreviewed',
+                        'ClothingRequired',
+                        'BareUpperBodyRequired',
+                        'Agnostic')),
                 mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (mirror_relationship IN (
                         'Unreviewed',
@@ -595,6 +602,9 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put(
             "hard_floor_compatibility",
             exercise.HardFloorCompatibility.ToString());
+        values.Put(
+            "upper_body_clothing_requirement",
+            exercise.UpperBodyClothingRequirement.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
         values.Put("wall_required", exercise.WallRequired ? 1 : 0);
@@ -775,17 +785,22 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         cursor.GetString(18)
                             ?? throw new InvalidOperationException(
                                 "An exercise has no hard-floor compatibility review.")),
+                UpperBodyClothingRequirement =
+                    Enum.Parse<ExerciseUpperBodyClothingRequirement>(
+                        cursor.GetString(19)
+                            ?? throw new InvalidOperationException(
+                                "An exercise has no upper-body clothing review.")),
                 MirrorRelationship = Enum.Parse<ExerciseMirrorRelationship>(
-                    cursor.GetString(19)
+                    cursor.GetString(20)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror relationship review.")),
                 MinimumMirrorCoverage = Enum.Parse<ExerciseMirrorCoverage>(
-                    cursor.GetString(20)
+                    cursor.GetString(21)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
-                WallRequired = cursor.GetInt(21) == 1,
-                SoleWallContactRequired = cursor.GetInt(22) == 1,
-                SessionMovementId = cursor.GetInt(23),
+                WallRequired = cursor.GetInt(22) == 1,
+                SoleWallContactRequired = cursor.GetInt(23) == 1,
+                SessionMovementId = cursor.GetInt(24),
             });
         }
 
@@ -939,6 +954,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.DirectionSequence) ||
             !Enum.IsDefined(exercise.InsectCompatibility) ||
             !Enum.IsDefined(exercise.HardFloorCompatibility) ||
+            !Enum.IsDefined(exercise.UpperBodyClothingRequirement) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
             !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
             (exercise.SoleWallContactRequired && !exercise.WallRequired) ||
@@ -1003,6 +1019,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                     member.WallRequired != root.WallRequired ||
                     member.SoleWallContactRequired !=
                         root.SoleWallContactRequired ||
+                    member.UpperBodyClothingRequirement !=
+                        root.UpperBodyClothingRequirement ||
                     block.MediaSegment != ExerciseSequenceMediaSegment.Full &&
                         member.DirectionSequence == ExerciseDirectionSequence.None)
                 {

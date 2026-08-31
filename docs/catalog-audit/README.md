@@ -26,6 +26,12 @@ documented in
 [`../WALL_EQUIPMENT_AUDIT.md`](../WALL_EQUIPMENT_AUDIT.md); the counts above
 remain the frozen outcome of the 479-record baseline review.
 
+The later upper-body-clothing audit classifies the same 499 records without
+adding variants: six require clothing for torso/back contact, five mirror
+bodybuilding poses require a visible bare upper body, and 488 are agnostic.
+Its exhaustive source and review rules are documented in
+[`../UPPER_BODY_CLOTHING_AUDIT.md`](../UPPER_BODY_CLOTHING_AUDIT.md).
+
 [`demonstration_metadata_integrity_2026-08-29.csv`](demonstration_metadata_integrity_2026-08-29.csv)
 has exactly one row per pre-audit exercise. Each changed row records the prior
 metadata, what the final loop actually shows, every exact changed field, and the

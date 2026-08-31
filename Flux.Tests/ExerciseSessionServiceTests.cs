@@ -751,8 +751,11 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
-        Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
+        Assert.Equal(27, state.Version);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor |
+                WorkoutModifiers.UpperBodyClothing,
+            state.LastWorkoutModifiers);
     }
 
     [Fact]
@@ -777,9 +780,11 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Equal(
-            WorkoutModifiers.Insect | WorkoutModifiers.HardFloor,
+            WorkoutModifiers.Insect |
+                WorkoutModifiers.HardFloor |
+                WorkoutModifiers.UpperBodyClothing,
             state.LastWorkoutModifiers);
         Assert.Equal(MirrorEquipment.None,
             WorkoutModifierPolicy.GetMirrorEquipment(state.LastWorkoutModifiers));
@@ -1867,8 +1872,11 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
-        Assert.Equal(WorkoutModifiers.HardFloor, state.LastWorkoutModifiers);
+        Assert.Equal(27, state.Version);
+        Assert.Equal(
+            WorkoutModifiers.HardFloor |
+                WorkoutModifiers.UpperBodyClothing,
+            state.LastWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
         Assert.Empty(state.ActiveDirectionPartnerExerciseIds);
         Assert.Empty(state.ActiveFullSideRoundIds);
@@ -1924,7 +1932,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -3445,7 +3453,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
         service.StartWorkout(state, 3, WorkoutModifiers.None);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.Single(state.LegacyCompletedTrainingDayUnixMilliseconds);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
@@ -3700,7 +3708,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.Equal(easy.Id, state.SelectedExerciseIds[groups[0].Id]);
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
@@ -4593,7 +4601,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(26, state.Version);
+        Assert.Equal(27, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -4976,6 +4984,8 @@ public sealed class ExerciseSessionServiceTests
             SessionMovementId = source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             HardFloorCompatibility = source.HardFloorCompatibility,
+            UpperBodyClothingRequirement =
+                source.UpperBodyClothingRequirement,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
@@ -5014,6 +5024,8 @@ public sealed class ExerciseSessionServiceTests
             SessionMovementId = sessionMovementId ?? source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             HardFloorCompatibility = source.HardFloorCompatibility,
+            UpperBodyClothingRequirement =
+                source.UpperBodyClothingRequirement,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
@@ -5057,6 +5069,8 @@ public sealed class ExerciseSessionServiceTests
                     .ToArray(),
             InsectCompatibility = source.InsectCompatibility,
             HardFloorCompatibility = source.HardFloorCompatibility,
+            UpperBodyClothingRequirement =
+                source.UpperBodyClothingRequirement,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = mirrorRelationship is
                 ExerciseMirrorRelationship.MirrorOnly or
@@ -5107,6 +5121,8 @@ public sealed class ExerciseSessionServiceTests
             SessionMovementId = source.SessionMovementId,
             InsectCompatibility = source.InsectCompatibility,
             HardFloorCompatibility = source.HardFloorCompatibility,
+            UpperBodyClothingRequirement =
+                source.UpperBodyClothingRequirement,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = wallRequired,
@@ -5188,6 +5204,8 @@ public sealed class ExerciseSessionServiceTests
                 directionSequence),
             InsectCompatibility = insectCompatibility,
             HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
+            UpperBodyClothingRequirement =
+                ExerciseUpperBodyClothingRequirement.Agnostic,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

@@ -76,6 +76,19 @@ public static class WorkoutModifierPolicy
     private static readonly ModifierRule[] Rules =
     [
         new(
+            WorkoutModifiers.UpperBodyClothing,
+            exercise => exercise.UpperBodyClothingRequirement !=
+                ExerciseUpperBodyClothingRequirement.Unreviewed,
+            (exercise, profile) => exercise.UpperBodyClothingRequirement switch
+            {
+                ExerciseUpperBodyClothingRequirement.ClothingRequired =>
+                    profile.HasFlag(WorkoutModifiers.UpperBodyClothing),
+                ExerciseUpperBodyClothingRequirement.BareUpperBodyRequired =>
+                    !profile.HasFlag(WorkoutModifiers.UpperBodyClothing),
+                ExerciseUpperBodyClothingRequirement.Agnostic => true,
+                _ => false,
+            }),
+        new(
             WorkoutModifiers.HardFloor,
             exercise => exercise.HardFloorCompatibility !=
                 ExerciseHardFloorCompatibility.Unreviewed,
@@ -930,7 +943,10 @@ public static class WorkoutModifierPolicy
         WorkoutModifiers EnabledStateProfile)>
         GetMaterialityEdges()
     {
-        foreach (ModifierRule rule in Rules)
+        ModifierRule[] materialityRules = Rules
+            .Where(rule => rule.Flag != WorkoutModifiers.UpperBodyClothing)
+            .ToArray();
+        foreach (ModifierRule rule in materialityRules)
         {
             foreach (WorkoutModifiers enabledState in
                      GetRuleStateProfiles(rule).Where(state =>
@@ -940,25 +956,33 @@ public static class WorkoutModifierPolicy
             }
         }
 
-        foreach ((ModifierRule First, ModifierRule Second) pair in
-                 GetModifierRulePairs())
+        for (int firstIndex = 0;
+             firstIndex < materialityRules.Length - 1;
+             firstIndex++)
         {
-            foreach (WorkoutModifiers firstEnabledState in
-                     GetRuleStateProfiles(pair.First).Where(state =>
-                         state != WorkoutModifiers.None))
+            for (int secondIndex = firstIndex + 1;
+                 secondIndex < materialityRules.Length;
+                 secondIndex++)
             {
-                foreach (WorkoutModifiers secondEnabledState in
-                         GetRuleStateProfiles(pair.Second).Where(state =>
-                             state != WorkoutModifiers.None))
+                ModifierRule first = materialityRules[firstIndex];
+                ModifierRule second = materialityRules[secondIndex];
+                foreach (WorkoutModifiers firstEnabledState in
+                     GetRuleStateProfiles(first).Where(state =>
+                         state != WorkoutModifiers.None))
                 {
-                    yield return (
-                        pair.First,
-                        secondEnabledState,
-                        firstEnabledState);
-                    yield return (
-                        pair.Second,
-                        firstEnabledState,
-                        secondEnabledState);
+                    foreach (WorkoutModifiers secondEnabledState in
+                         GetRuleStateProfiles(second).Where(state =>
+                             state != WorkoutModifiers.None))
+                    {
+                        yield return (
+                            first,
+                            secondEnabledState,
+                            firstEnabledState);
+                        yield return (
+                            second,
+                            firstEnabledState,
+                            secondEnabledState);
+                    }
                 }
             }
         }

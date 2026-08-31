@@ -61,6 +61,12 @@ internal static class ExerciseDatabaseMigrationSql
                     'Unreviewed',
                     'Compatible',
                     'Incompatible')),
+            upper_body_clothing_requirement TEXT NOT NULL DEFAULT 'Unreviewed'
+                CHECK (upper_body_clothing_requirement IN (
+                    'Unreviewed',
+                    'ClothingRequired',
+                    'BareUpperBodyRequired',
+                    'Agnostic')),
             mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                 CHECK (mirror_relationship IN (
                     'Unreviewed',
@@ -105,6 +111,7 @@ internal static class ExerciseDatabaseMigrationSql
             equipment, silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
             insect_compatibility, hard_floor_compatibility,
+            upper_body_clothing_requirement,
             mirror_relationship, mirror_coverage,
             wall_required, sole_wall_contact_required,
             session_movement_id)
@@ -115,7 +122,8 @@ internal static class ExerciseDatabaseMigrationSql
                 THEN max_space_meters ELSE 2 END,
             'None', silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
-            insect_compatibility, 'Unreviewed', 'Unreviewed', 'None',
+            insect_compatibility, 'Unreviewed', 'Unreviewed',
+            'Unreviewed', 'None',
             0, 0, 0
         FROM exercises
         """;

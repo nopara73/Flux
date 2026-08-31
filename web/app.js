@@ -32,6 +32,8 @@ const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
 const DIRECTION_SEGMENT_SECONDS = 20;
 const MODIFIER_FEEDBACK_DURATION_MS = 2_040;
 const MODIFIER_FEEDBACK_LABELS = Object.freeze({
+  upperBodyClothingEnabled: "upper-body clothing ON",
+  upperBodyClothingDisabled: "upper-body clothing OFF",
   hardFloorEnabled: "hard floor ON",
   hardFloorDisabled: "hard floor OFF",
   insectEnabled: "insect mode ON",
@@ -55,6 +57,7 @@ const elements = {
   durationRange: byId("duration-range"),
   durationLabels: [...byId("duration-labels").children],
   beginWorkout: byId("begin-workout"),
+  upperBodyClothingModifier: byId("upper-body-clothing-modifier"),
   hardFloorModifier: byId("hard-floor-modifier"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
@@ -355,6 +358,12 @@ function renderDuration(minutes, userInitiated) {
 function workoutModifierTiles() {
   return [
     {
+      element: elements.upperBodyClothingModifier,
+      flag: WORKOUT_MODIFIERS.UpperBodyClothing,
+      enabledLabel: "Upper-body clothing: worn",
+      disabledLabel: "Upper-body clothing: not worn",
+    },
+    {
       element: elements.hardFloorModifier,
       flag: WORKOUT_MODIFIERS.HardFloor,
     },
@@ -380,6 +389,11 @@ function toggleWorkoutModifier(flag) {
 }
 
 function workoutModifierFeedbackLabel(flag, enabled) {
+  if (flag === WORKOUT_MODIFIERS.UpperBodyClothing) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "upperBodyClothingEnabled" : "upperBodyClothingDisabled"
+    ];
+  }
   if (flag === WORKOUT_MODIFIERS.HardFloor) {
     return MODIFIER_FEEDBACK_LABELS[
       enabled ? "hardFloorEnabled" : "hardFloorDisabled"

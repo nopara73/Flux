@@ -185,6 +185,8 @@ public sealed class WorkoutMuscleBalancePolicyTests
                 },
             ],
             InsectCompatibility = ExerciseInsectCompatibility.Compatible,
+            UpperBodyClothingRequirement =
+                ExerciseUpperBodyClothingRequirement.Agnostic,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             MuscularDemand = muscularDemand,
             OnlyFeetTouchGround = true,

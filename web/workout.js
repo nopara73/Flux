@@ -8,6 +8,7 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   HardFloor: 16,
   Wall: 32,
   SoleWallContact: 64,
+  UpperBodyClothing: 128,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
@@ -31,6 +32,12 @@ export const EXERCISE_HARD_FLOOR_COMPATIBILITY = Object.freeze({
   Compatible: "Compatible",
   Incompatible: "Incompatible",
 });
+export const EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT = Object.freeze({
+  Unreviewed: "Unreviewed",
+  ClothingRequired: "ClothingRequired",
+  BareUpperBodyRequired: "BareUpperBodyRequired",
+  Agnostic: "Agnostic",
+});
 export const EXERCISE_MIRROR_RELATIONSHIP = Object.freeze({
   Unreviewed: "Unreviewed",
   MirrorOnly: "MirrorOnly",
@@ -51,6 +58,30 @@ export function getSessionMovementId(exercise) {
 }
 
 const MODIFIER_RULES = Object.freeze([
+  Object.freeze({
+    flag: WORKOUT_MODIFIERS.UpperBodyClothing,
+    isReviewed: (exercise) =>
+      exercise.upperBodyClothingRequirement ===
+        EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.ClothingRequired ||
+      exercise.upperBodyClothingRequirement ===
+        EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.BareUpperBodyRequired ||
+      exercise.upperBodyClothingRequirement ===
+        EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic,
+    isCompatibleForProfile: (exercise, profile) => {
+      const clothingOn =
+        (profile & WORKOUT_MODIFIERS.UpperBodyClothing) !== 0;
+      if (exercise.upperBodyClothingRequirement ===
+          EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.ClothingRequired) {
+        return clothingOn;
+      }
+      if (exercise.upperBodyClothingRequirement ===
+          EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.BareUpperBodyRequired) {
+        return !clothingOn;
+      }
+      return exercise.upperBodyClothingRequirement ===
+        EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic;
+    },
+  }),
   Object.freeze({
     flag: WORKOUT_MODIFIERS.HardFloor,
     isReviewed: (exercise) =>
@@ -227,8 +258,11 @@ export const MINIMUM_BALANCED_MUSCLE_SHARE_NUMERATOR = 1;
 export const MINIMUM_BALANCED_MUSCLE_SHARE_DENOMINATOR = 4;
 export const MUSCLE_BALANCE_MAX_REBALANCE_PASSES = 30;
 export const DEFAULT_WORKOUT_MODIFIERS =
-  WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 23;
+  WORKOUT_MODIFIERS.UpperBodyClothing |
+  WORKOUT_MODIFIERS.HardFloor |
+  WORKOUT_MODIFIERS.Silence;
+export const CURRENT_WORKOUT_STATE_VERSION = 24;
+const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
 const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
 const PERSISTED_LIGHT_DAY_STATE_VERSION = 21;
 const PHASE_SCOPED_DOWNVOTE_STATE_VERSION = 20;
@@ -1568,6 +1602,8 @@ export function isSessionMovementMetadataValid(exercises) {
           member.wallRequired !== root.wallRequired ||
           member.soleWallContactRequired !==
             root.soleWallContactRequired ||
+          member.upperBodyClothingRequirement !==
+            root.upperBodyClothingRequirement ||
           !validSideCues.has(block.sideCue ?? "None") ||
           !validDirectionCues.has(block.directionCue ?? "None") ||
           typeof block.mirrorMedia !== "boolean" ||
@@ -1878,13 +1914,15 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     [exercise.id, exercise]));
   const reviewedExercises = exercises.filter((exercise) =>
     MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
-  const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
-    MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
+  const materialityRules = MODIFIER_RULES.filter((rule) =>
+    rule.flag !== WORKOUT_MODIFIERS.UpperBodyClothing);
+  const rulePairs = materialityRules.flatMap((firstRule, firstIndex) =>
+    materialityRules.slice(firstIndex + 1).map((secondRule) =>
       ({ firstRule, secondRule })));
   const enabledStates = (rule) =>
     getModifierRuleStateProfiles(rule).filter((state) =>
       state !== WORKOUT_MODIFIERS.None);
-  const edges = MODIFIER_RULES.flatMap((rule) =>
+  const edges = materialityRules.flatMap((rule) =>
     enabledStates(rule).map((enabledStateProfile) => ({
       rule,
       baseProfile: WORKOUT_MODIFIERS.None,
@@ -2812,6 +2850,9 @@ function normalizeStateShape(raw) {
   if (state.version < IMPLICIT_HARD_FLOOR_STATE_VERSION) {
     migrateImplicitHardFloorModifier(state);
   }
+  if (state.version < IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION) {
+    migrateImplicitUpperBodyClothingModifier(state);
+  }
   state.version = CURRENT_WORKOUT_STATE_VERSION;
   Object.defineProperty(state, SOURCE_STATE_VERSION, {
     value: sourceVersion,
@@ -2894,6 +2935,31 @@ function migrateImplicitHardFloorModifier(state) {
   );
 
   // Do not alter an in-progress workout's modifier profile during upgrade.
+}
+
+function migrateImplicitUpperBodyClothingModifier(state) {
+  for (const [selectionStorageKey, exerciseId] of
+    Object.entries(state.selectedExerciseIds)) {
+    const match = /^p(\d+)\|(.+)$/.exec(selectionStorageKey);
+    const modifierValue = match ? Number(match[1]) : WORKOUT_MODIFIERS.None;
+    const selectionGroupId = match ? match[2] : selectionStorageKey;
+    if (!selectionGroupId || normalizeWorkoutModifiers(modifierValue) !== modifierValue) {
+      continue;
+    }
+    const clothingProfile = normalizeWorkoutModifiers(
+      modifierValue | WORKOUT_MODIFIERS.UpperBodyClothing,
+    );
+    const clothingKey = `${SELECTION_PROFILE_PREFIX}${clothingProfile}` +
+      `${SELECTION_PROFILE_SEPARATOR}${selectionGroupId}`;
+    if (state.selectedExerciseIds[clothingKey] === undefined) {
+      state.selectedExerciseIds[clothingKey] = exerciseId;
+    }
+  }
+  state.lastWorkoutModifiers = normalizeWorkoutModifiers(
+    state.lastWorkoutModifiers | WORKOUT_MODIFIERS.UpperBodyClothing,
+  );
+
+  // Do not rewrite an in-progress workout's modifier profile or checkpoints.
 }
 
 function uniquePositiveIntegers(value) {

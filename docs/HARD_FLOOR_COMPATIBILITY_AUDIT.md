@@ -1,6 +1,6 @@
 # Hard-floor compatibility audit
 
-Hard Floor is the first workout modifier and is enabled by default. It is one
+Hard Floor is the second workout-context modifier and is enabled by default. It is one
 combined surface contract: the floor is both rigid and slippery. Slipperiness
 is not a separate modifier or optional interpretation. Its two UI states are:
 
@@ -50,7 +50,7 @@ sequence must use one consistent floor classification across all of its blocks.
 Catalog revision 53 rebuilds cached placements for the 97 reclassified
 exercise IDs only when the saved profile has Hard Floor enabled. Soft Floor
 placements remain valid. Scores, keeps, phase feedback, history, and recovery
-state are preserved on both platforms. Android SQLite schema 73 applies the
+state are preserved on both platforms. Android SQLite schema 75 applies the
 same catalog refresh without deleting stored scores.
 
 These counts are audit results, not quotas. Pairwise availability and

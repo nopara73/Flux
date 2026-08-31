@@ -45,6 +45,9 @@ public sealed class Exercise
     public ExerciseHardFloorCompatibility HardFloorCompatibility { get; init; } =
         ExerciseHardFloorCompatibility.Unreviewed;
 
+    public ExerciseUpperBodyClothingRequirement UpperBodyClothingRequirement
+        { get; init; } = ExerciseUpperBodyClothingRequirement.Unreviewed;
+
     public ExerciseMirrorRelationship MirrorRelationship { get; init; } =
         ExerciseMirrorRelationship.Unreviewed;
 
