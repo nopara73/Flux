@@ -1979,15 +1979,36 @@ function playSound(name) {
   }
 }
 
+function pauseActiveWorkoutForBackground() {
+  if (movementRunning) {
+    pauseMovement("user");
+  }
+
+  if (
+    restActive &&
+    session &&
+    currentGroup &&
+    session.state.pendingRestGroupId === currentGroup.id &&
+    !session.state.pendingRestPausedByUser
+  ) {
+    const remaining = session.getPendingRestMillisecondsRemaining(Date.now());
+    if (remaining > 0) {
+      session.pauseRest(currentGroup, remaining);
+      persistState();
+      updateRest();
+      renderRestPlaybackToggle();
+    }
+  }
+
+  clearInterval(restTimer);
+  restTimer = null;
+  elements.video.pause();
+}
+
 function handleVisibilityChange() {
   if (document.hidden) {
     clearMediaRecoveryTimer();
-    if (movementRunning) {
-      pauseMovement("visibility");
-    }
-    clearInterval(restTimer);
-    restTimer = null;
-    elements.video.pause();
+    pauseActiveWorkoutForBackground();
     return;
   }
 
@@ -2017,12 +2038,7 @@ function handleVisibilityChange() {
 
 function handlePageHide() {
   clearMediaRecoveryTimer();
-  if (movementRunning) {
-    pauseMovement("visibility");
-  }
-  clearInterval(restTimer);
-  restTimer = null;
-  elements.video.pause();
+  pauseActiveWorkoutForBackground();
 }
 
 function scheduleMediaRecoveryFailure(generation) {

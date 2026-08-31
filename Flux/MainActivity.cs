@@ -506,7 +506,7 @@ public class MainActivity : Activity
     protected override void OnPause()
     {
         _activityResumed = false;
-        PauseCountdown();
+        PauseActiveWorkoutForBackground();
         PauseRestCountdown();
         _exerciseVideo?.Pause();
         CancelUiAnimations();
@@ -3375,6 +3375,48 @@ public class MainActivity : Activity
                 _countdownPausedByUser);
             _stateStore.Save(_state);
         }
+    }
+
+    private void PauseActiveWorkoutForBackground()
+    {
+        if (_editingActiveWorkoutSetup ||
+            _appScreen != AppScreen.Workout ||
+            _state.WorkoutCompleted)
+        {
+            return;
+        }
+
+        if (_countdownActive)
+        {
+            _countdownPausedByUser = true;
+            _countdownPausedForMediaError = false;
+            PauseCountdown();
+            SetPlaybackControlsAvailability(available: _mediaReady);
+            UpdatePlaybackActionVisual();
+        }
+
+        if (!_restActive ||
+            _state.PendingRestGroupId != _currentWorkoutGroup.Id ||
+            _state.PendingRestPausedByUser)
+        {
+            return;
+        }
+
+        long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long millisecondsRemaining = _sessionService
+            .GetPendingRestMillisecondsRemaining(_state, nowUnixMilliseconds);
+        if (millisecondsRemaining <= 0)
+        {
+            return;
+        }
+
+        _sessionService.PauseRest(
+            _state,
+            _currentWorkoutGroup,
+            millisecondsRemaining);
+        _stateStore.Save(_state);
+        UpdateRestCountdownText();
+        UpdateRestPlaybackActionVisual();
     }
 
     private void ResumeCountdown()

@@ -1586,6 +1586,56 @@ test("active movement checkpoints and invalid media recovery match across platfo
   assert.match(webApp, /visibilitychange[\s\S]*pagehide/);
 });
 
+test("backgrounding pauses movement and rest until playback is resumed", () => {
+  const mobileLifecyclePause = methodBody(
+    mainActivity,
+    "protected override void OnPause()",
+    "#pragma warning disable CA1422",
+  );
+  const mobileBackgroundPause = methodBody(
+    mainActivity,
+    "private void PauseActiveWorkoutForBackground()",
+    "private void ResumeCountdown()",
+  );
+  assert.match(
+    mobileLifecyclePause,
+    /PauseActiveWorkoutForBackground\(\)[\s\S]*PauseRestCountdown\(\)/,
+  );
+  assert.match(
+    mobileBackgroundPause,
+    /_countdownPausedByUser = true[\s\S]*PauseCountdown\(\)[\s\S]*SetPlaybackControlsAvailability/,
+  );
+  assert.match(
+    mobileBackgroundPause,
+    /PendingRestPausedByUser[\s\S]*GetPendingRestMillisecondsRemaining[\s\S]*PauseRest[\s\S]*_stateStore\.Save/,
+  );
+
+  const webBackgroundPause = methodBody(
+    webApp,
+    "function pauseActiveWorkoutForBackground()",
+    "function handleVisibilityChange()",
+  );
+  const webVisibility = methodBody(
+    webApp,
+    "function handleVisibilityChange()",
+    "function handlePageHide()",
+  );
+  const webPageHide = methodBody(
+    webApp,
+    "function handlePageHide()",
+    "function scheduleMediaRecoveryFailure(generation)",
+  );
+  assert.match(webBackgroundPause, /movementRunning[\s\S]*pauseMovement\("user"\)/);
+  assert.match(
+    webBackgroundPause,
+    /pendingRestPausedByUser[\s\S]*getPendingRestMillisecondsRemaining[\s\S]*pauseRest[\s\S]*persistState/,
+  );
+  assert.match(webVisibility, /document\.hidden[\s\S]*pauseActiveWorkoutForBackground\(\)/);
+  assert.match(webVisibility, /movementPauseReason !== "user"/);
+  assert.match(webPageHide, /pauseActiveWorkoutForBackground\(\)/);
+  assert.doesNotMatch(webApp, /pauseMovement\("visibility"\)/);
+});
+
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
     265, 274, 280, 287, 473, 575, 578, 583, 591, 884, 885, 886, 887,
