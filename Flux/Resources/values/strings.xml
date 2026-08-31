@@ -32,8 +32,8 @@
     <string name="silence_modifier_off">Noisy exercises allowed</string>
     <string name="wall_modifier_description">Wall equipment</string>
     <string name="wall_modifier_on">Wall available</string>
-    <string name="wall_modifier_soles_stay_off">Wall available; soles stay off</string>
-    <string name="wall_modifier_soles_may_touch">Wall available; soles may touch</string>
+    <string name="wall_modifier_soles_stay_off">Wall available; no feet on wall</string>
+    <string name="wall_modifier_soles_may_touch">Wall available; feet on wall allowed</string>
     <string name="wall_modifier_off">No wall available</string>
     <string name="mirror_modifier_description">Mirror equipment</string>
     <string name="mirror_modifier_compact">Compact mirror available</string>
@@ -48,8 +48,8 @@
     <string name="insect_mode_disabled_feedback">insect mode OFF</string>
     <string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED</string>
     <string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED</string>
-    <string name="wall_equipment_enabled_feedback">equipment ON: wall, soles stay off</string>
-    <string name="wall_sole_contact_enabled_feedback">equipment ON: wall, soles may touch</string>
+    <string name="wall_equipment_enabled_feedback">equipment ON: wall · no feet on wall</string>
+    <string name="wall_sole_contact_enabled_feedback">equipment ON: wall · feet on wall allowed</string>
     <string name="wall_equipment_disabled_feedback">equipment OFF: wall</string>
     <string name="compact_mirror_equipment_enabled_feedback">equipment ON: compact mirror</string>
     <string name="tall_mirror_equipment_enabled_feedback">equipment ON: tall mirror</string>

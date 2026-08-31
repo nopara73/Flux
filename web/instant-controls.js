@@ -272,8 +272,8 @@
       wallEquipment === "none"
         ? "Wall equipment: no wall available"
         : wallEquipment === "soles-stay-off"
-          ? "Wall equipment: wall available; soles stay off"
-          : "Wall equipment: wall available; soles may touch",
+          ? "Wall equipment: wall available; no feet on wall"
+          : "Wall equipment: wall available; feet on wall allowed",
     );
 
     const hasMirror = (selectedModifiers & modifierFlags.mirror) !== 0;
@@ -332,8 +332,8 @@
       return "equipment OFF: wall";
     }
     return (selectedModifiers & modifierFlags.soleWallContact) !== 0
-      ? "equipment ON: wall, soles may touch"
-      : "equipment ON: wall, soles stay off";
+      ? "equipment ON: wall · feet on wall allowed"
+      : "equipment ON: wall · no feet on wall";
   }
 
   function mirrorFeedbackLabel() {

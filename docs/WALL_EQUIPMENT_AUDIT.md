@@ -4,8 +4,8 @@ Wall is a three-state physical-equipment modifier. It is disabled by default
 and is shown after Silence and before Mirror. Its states cycle in this order:
 
 1. no wall — `equipment OFF: wall`;
-2. wall available, soles kept off — `equipment ON: wall, soles stay off`;
-3. wall available, sole contact allowed — `equipment ON: wall, soles may touch`.
+2. wall available, feet kept off it — `equipment ON: wall · no feet on wall`;
+3. wall available, foot contact allowed — `equipment ON: wall · feet on wall allowed`.
 
 Each catalog record carries explicit `wallRequired` and
 `soleWallContactRequired` Boolean verdicts. Sole contact always implies Wall:

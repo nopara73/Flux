@@ -38,8 +38,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
-  wallSolesStayOff: "equipment ON: wall, soles stay off",
-  wallSolesMayTouch: "equipment ON: wall, soles may touch",
+  wallSolesStayOff: "equipment ON: wall · no feet on wall",
+  wallSolesMayTouch: "equipment ON: wall · feet on wall allowed",
   wallDisabled: "equipment OFF: wall",
   compactMirrorEnabled: "equipment ON: compact mirror",
   tallMirrorEnabled: "equipment ON: tall mirror",
@@ -494,8 +494,8 @@ function renderWorkoutModifiers() {
     wallEquipment === WALL_EQUIPMENT.None
       ? "Wall equipment: no wall available"
       : wallEquipment === WALL_EQUIPMENT.SolesStayOff
-        ? "Wall equipment: wall available; soles stay off"
-        : "Wall equipment: wall available; soles may touch",
+        ? "Wall equipment: wall available; no feet on wall"
+        : "Wall equipment: wall available; feet on wall allowed",
   );
   elements.wallModifier.dataset.wallEquipment =
     wallEquipment === WALL_EQUIPMENT.None
