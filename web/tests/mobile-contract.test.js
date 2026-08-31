@@ -743,7 +743,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
   assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall · no feet on wall<\/string>/);
-  assert.match(strings, /<string name="wall_sole_contact_enabled_feedback">equipment ON: wall · feet on wall allowed<\/string>/);
+  assert.match(strings, /<string name="wall_sole_contact_enabled_feedback">equipment ON: wall<\/string>/);
   assert.match(strings, /<string name="wall_equipment_disabled_feedback">equipment OFF: wall<\/string>/);
   assert.match(strings, /<string name="compact_mirror_equipment_enabled_feedback">equipment ON: compact mirror<\/string>/);
   assert.match(strings, /<string name="tall_mirror_equipment_enabled_feedback">equipment ON: tall mirror<\/string>/);
@@ -761,7 +761,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     "noisy exercises ENABLED",
     "noisy exercises DISABLED",
     "equipment ON: wall · no feet on wall",
-    "equipment ON: wall · feet on wall allowed",
+    "equipment ON: wall",
     "equipment OFF: wall",
     "equipment ON: compact mirror",
     "equipment ON: tall mirror",

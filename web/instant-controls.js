@@ -332,7 +332,7 @@
       return "equipment OFF: wall";
     }
     return (selectedModifiers & modifierFlags.soleWallContact) !== 0
-      ? "equipment ON: wall · feet on wall allowed"
+      ? "equipment ON: wall"
       : "equipment ON: wall · no feet on wall";
   }
 

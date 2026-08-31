@@ -39,7 +39,7 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
   wallSolesStayOff: "equipment ON: wall · no feet on wall",
-  wallSolesMayTouch: "equipment ON: wall · feet on wall allowed",
+  wallSolesMayTouch: "equipment ON: wall",
   wallDisabled: "equipment OFF: wall",
   compactMirrorEnabled: "equipment ON: compact mirror",
   tallMirrorEnabled: "equipment ON: tall mirror",
