@@ -30,6 +30,7 @@
         '285' = @(285, 541)               # Inside-block sides, then alternating integration
         '286' = @(286, 545)               # Outside-block sides, then alternating integration
         '288' = @(288, 758)               # Forward, then backward knee-and-ankle circles on both sides
+        '291' = @(291, 294)               # Inward, then outward alternating knife-hand strikes
         '292' = @(292, 542)               # Standing-bird-dog sides, then alternating integration
         '327' = @(327, 546)               # Horizontal-elbow-strike sides, then alternating integration
         '329' = @(329, 531)               # Shoulder-CAR sides, then alternating integration
@@ -72,7 +73,7 @@
         236, 237, 238, 239, 240, 241, 242, 245, 246, 248, 251, 255,
         257, 258, 260, 262, 263, 265, 266, 268, 269, 270, 271, 272,
         273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284,
-        287, 289, 290, 291, 293, 294, 295, 296, 301,
+        287, 289, 290, 293, 295, 296, 301,
         303, 311, 314, 315, 321, 326, 340, 341, 377, 379, 389,
         390, 391, 394, 395, 396, 397,
         398, 401, 402, 403, 404, 405, 407, 408, 409, 410, 411, 412,

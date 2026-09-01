@@ -623,9 +623,9 @@ test("web and mobile persist one combined duration and modifier selection contex
     typeof exercise.soleWallContactRequired === "boolean"));
   assert.ok(catalog.every((exercise) =>
     !exercise.soleWallContactRequired || exercise.wallRequired));
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 29);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 30);
   assert.equal(catalog.filter((exercise) =>
-    exercise.wallRequired && !exercise.soleWallContactRequired).length, 24);
+    exercise.wallRequired && !exercise.soleWallContactRequired).length, 25);
   assert.deepEqual(
     new Set(catalog.filter((exercise) => exercise.soleWallContactRequired)
       .map((exercise) => exercise.id)),
@@ -873,7 +873,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*78/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*79/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
@@ -1903,7 +1903,7 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
       .map((root) => root.id),
     [
       96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
-      211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
+      211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 291, 292, 327, 329,
       367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
       617, 742, 784, 834, 845, 910, 948, 996,
     ],

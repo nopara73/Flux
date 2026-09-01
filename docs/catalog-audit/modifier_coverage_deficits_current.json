@@ -1,15 +1,15 @@
 {
-  "catalogRevision": 57,
+  "catalogRevision": 58,
   "catalogRecordCount": 501,
-  "catalogSha256": "810957e6b4946fab377b805cf5538031289a6b55c0021bab0d6df621893fd8cb",
+  "catalogSha256": "ebb7b5aa5de9b371be3cf703be4d8b8c7a9532b3233d5b3ba9eb01ead2a6097c",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     "validatorsChanged": false
   },
   "summary": {
-    "pairwiseDeficiencyCount": 309,
+    "pairwiseDeficiencyCount": 303,
     "pairwiseAffectedGroupCount": 38,
-    "hardFloorCategoryDeficiencyCount": 82,
+    "hardFloorCategoryDeficiencyCount": 71,
     "hardFloorCategoryAffectedGroupCount": 24,
     "materialityDeficiencyCount": 0,
     "mirrorCategoryDeficiencyCount": 0,
@@ -37,30 +37,6 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
       "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
@@ -529,30 +505,6 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
       "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
@@ -3138,30 +3090,6 @@
     },
     {
       "minutes": 30,
-      "groupId": "r30.forearm-extensors-supinators",
-      "groupName": "Forearm extensors and supinators",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.forearm-extensors-supinators",
-      "groupName": "Forearm extensors and supinators",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 30,
       "groupId": "r30.breathing-muscles",
       "groupName": "Breathing muscles",
       "firstModifier": 128,
@@ -3737,56 +3665,6 @@
       "requiredExerciseCount": 5
     },
     {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 2,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 2,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 4,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
       "minutes": 5,
       "groupId": "r5.head-neck-shoulder-girdle",
       "groupName": "Head, neck and shoulder girdle",
@@ -3914,56 +3792,6 @@
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
       "matchingExerciseCount": 2,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 2,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 2,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 3,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Incompatible",
-      "partnerModifier": 4,
-      "partnerModifierEnabled": false,
-      "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
     {
@@ -4291,16 +4119,6 @@
       "groupId": "r30.intrinsic-hand",
       "groupName": "Intrinsic hand",
       "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.intrinsic-hand",
-      "groupName": "Intrinsic hand",
-      "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
       "matchingExerciseCount": 4,

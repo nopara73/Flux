@@ -15,9 +15,9 @@ Each exercise has both a relationship and a minimum useful coverage:
 | --- | --- | --- | ---: |
 | `MirrorOnly` | `UpperBody` | Requires compact or tall | 6 |
 | `MirrorOnly` | `FullBody` | Requires tall | 6 |
-| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 27 |
+| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 31 |
 | `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
-| `Agnostic` | `None` | Unaffected | 412 |
+| `Agnostic` | `None` | Unaffected | 408 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
@@ -63,10 +63,10 @@ of four audited reasons:
 4. live plane, path, or symmetry correction.
 
 Merely seeing oneself, comparing oneself with the demonstration, or receiving
-ordinary optional form feedback does not qualify. The current 77 assignments
+ordinary optional form feedback does not qualify. The current 81 assignments
 are an audit result, never a quota, target, cap, or reason to promote or demote
 an exercise. Their coverage split is independently reviewed and must exactly
-partition the same 77 IDs.
+partition the same 81 IDs.
 
 ## Catalog guarantees
 

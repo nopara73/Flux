@@ -56,8 +56,8 @@ public sealed class CatalogInvariantTests
                 !wallRequired.GetBoolean());
         });
         Assert.Equal(121, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(235, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(145, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(233, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(147, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
             [104] = [104, 136, 626],
@@ -94,9 +94,9 @@ public sealed class CatalogInvariantTests
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Unreviewed);
-        Assert.Equal(300, exercises.Count(exercise =>
+        Assert.Equal(303, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Compatible));
-        Assert.Equal(201, exercises.Count(exercise =>
+        Assert.Equal(198, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Incompatible));
         Assert.All(
             new[] { 37, 610, 326 },
@@ -135,12 +135,12 @@ public sealed class CatalogInvariantTests
         Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
-            77,
+            81,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship ==
                     ExerciseMirrorRelationship.BenefitsGreatly));
         Assert.Equal(
-            412,
+            408,
             exercises.Count(exercise =>
                 exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic));
         Assert.Equal(
@@ -153,13 +153,13 @@ public sealed class CatalogInvariantTests
         Assert.Equal(6, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.MirrorOnly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(27, exercises.Count(exercise =>
+        Assert.Equal(31, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.UpperBody));
         Assert.Equal(50, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.BenefitsGreatly &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.FullBody));
-        Assert.Equal(412, exercises.Count(exercise =>
+        Assert.Equal(408, exercises.Count(exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Agnostic &&
             exercise.MinimumMirrorCoverage == ExerciseMirrorCoverage.None));
         Assert.DoesNotContain(exercises, exercise => exercise.Id == 90);
@@ -225,10 +225,10 @@ public sealed class CatalogInvariantTests
         Exercise[] soleWallRequired = wallRequired
             .Where(exercise => exercise.SoleWallContactRequired)
             .ToArray();
-        Assert.Equal(29, wallRequired.Length);
-        Assert.Equal(24, baseWallRequired.Length);
+        Assert.Equal(30, wallRequired.Length);
+        Assert.Equal(25, baseWallRequired.Length);
         Assert.Equal(
-            24,
+            25,
             baseWallRequired
                 .Select(WorkoutModifierPolicy.GetSessionMovementId)
                 .Distinct()
@@ -280,17 +280,17 @@ public sealed class CatalogInvariantTests
                 exercise.InsectCompatibility));
         WorkoutModifierPairCoverageDeficiency[] pairwiseDeficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).ToArray();
-        Assert.Equal(309, pairwiseDeficiencies.Length);
+        Assert.Equal(303, pairwiseDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
-                [3] = 8,
+                [3] = 6,
                 [5] = 23,
-                [7] = 16,
+                [7] = 14,
                 [10] = 44,
                 [15] = 43,
                 [20] = 54,
-                [30] = 121,
+                [30] = 119,
             },
             pairwiseDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
@@ -302,17 +302,17 @@ public sealed class CatalogInvariantTests
             WorkoutModifierPolicy
                 .FindHardFloorCategoryCoverageDeficiencies(exercises)
                 .ToArray();
-        Assert.Equal(82, hardFloorCategoryDeficiencies.Length);
+        Assert.Equal(71, hardFloorCategoryDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
-                [3] = 6,
+                [3] = 1,
                 [5] = 7,
-                [7] = 11,
+                [7] = 6,
                 [10] = 12,
                 [15] = 7,
                 [20] = 13,
-                [30] = 26,
+                [30] = 25,
             },
             hardFloorCategoryDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
@@ -467,7 +467,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(158, timedSideExercises.Length);
+        Assert.Equal(157, timedSideExercises.Length);
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -477,7 +477,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(152, alternatingExercises.Length);
+        Assert.Equal(156, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -532,6 +532,7 @@ public sealed class CatalogInvariantTests
             [285] = [285, 541],
             [286] = [286, 545],
             [288] = [288, 758],
+            [291] = [291, 294],
             [292] = [292, 542],
             [327] = [327, 546],
             [329] = [329, 531],
@@ -588,7 +589,7 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 283,
+            [1] = 282,
             [2] = 118,
             [3] = 28,
             [4] = 15,
@@ -696,12 +697,12 @@ public sealed class CatalogInvariantTests
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
             [279] = ExerciseSideSequence.ScreenRightThenLeft,
-            [283] = ExerciseSideSequence.Continuous,
+            [283] = ExerciseSideSequence.Alternating,
             [289] = ExerciseSideSequence.Continuous,
-            [291] = ExerciseSideSequence.Continuous,
+            [291] = ExerciseSideSequence.Alternating,
             [292] = ExerciseSideSequence.ScreenRightThenLeft,
             [293] = ExerciseSideSequence.ScreenLeftThenRight,
-            [294] = ExerciseSideSequence.ScreenRightThenLeft,
+            [294] = ExerciseSideSequence.Alternating,
             [326] = ExerciseSideSequence.ScreenRightThenLeft,
             [338] = ExerciseSideSequence.ScreenLeftThenRight,
             [31] = ExerciseSideSequence.Alternating,
@@ -815,7 +816,7 @@ public sealed class CatalogInvariantTests
         [
             16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
             213, 220, 225, 256, 258, 269,
-            278, 279, 282, 285, 286, 294, 326, 329,
+            278, 279, 282, 285, 286, 326, 329,
             395, 396, 397, 507, 512, 513, 572, 577, 618, 636,
             685, 745, 834,
         ];
@@ -830,7 +831,7 @@ public sealed class CatalogInvariantTests
             15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
             198, 201, 218, 230, 234, 237, 239, 240, 241, 242, 248,
             251, 257, 262, 263, 266, 268, 270, 275, 283, 289, 291,
-            301, 314, 321, 556,
+            294, 301, 314, 321, 556,
             394, 413, 421, 425, 427, 468, 516, 615, 677, 683, 687,
         ];
         Assert.All(auditedContinuousClarityReplacementIds, exerciseId =>
@@ -885,19 +886,19 @@ public sealed class CatalogInvariantTests
             [215] = "Forearm Pronation-Supination Flow",
             [216] = "Interlaced-Finger Palm-Out Stretch",
             [217] = "Tree Pose Hold",
-            [218] = "Cumbia Two-Step",
+            [218] = "Fingertip Wall Push-Ups",
             [223] = "Inward Controlled Wrist Circles",
             [224] = "Qigong Interlaced Wrist Rolls",
             [225] = "Opposite-Hand Fist-Down Wrist Stretch",
             [231] = "Karate Reverse Punch",
             [232] = "Extended Side Angle Hold",
             [233] = "Standing Wrist Flexion Stretch",
-            [234] = "Merengue Six-Count Step",
+            [234] = "Standing W Extensions",
             [236] = "Bilateral Wrist Figure Eights",
-            [237] = "Salsa Front-and-Back Basic",
-            [239] = "Reggaeton Single-Single-Double Step",
+            [237] = "Standing Overhead Elbow Extensions",
+            [239] = "Standing Reverse Prayer Stretch",
             [240] = "Grapevine Step",
-            [241] = "Basic Mambo Step",
+            [241] = "Isometric Palm Press Hold",
             [242] = "Jazz Square",
             [245] = "Straight-Punch to Shovel-Hook Combo",
             [246] = "Bodyweight Cuban Rotation",
@@ -909,11 +910,12 @@ public sealed class CatalogInvariantTests
             [262] = "Standing Bicycle Crunches",
             [270] = "Goalpost Chest-Opener Hold",
             [282] = "Side-Step Knee Drive with Alternating Side Punches",
-            [283] = "Cha-Cha Basic Step",
+            [283] = "Alternating Palm Strikes",
             [288] = "Forward Knee-and-Ankle Circles",
             [289] = "Fingertip Spider Presses",
             [290] = "Low Palm Scoop to Side Opening",
-            [291] = "Bachata Side-to-Side Basic",
+            [291] = "Inward Knife-Hand Strikes",
+            [294] = "Outward Knife-Hand Strikes",
             [326] = "Rear-Hand Straight Punch",
             [338] = "Overhead Triceps Stretch with Side Bend",
             [390] = "Inhale Arms Up, Exhale Step-Touch",
@@ -945,7 +947,7 @@ public sealed class CatalogInvariantTests
             [512] = "Standing Upper-Back and Neck Hug Stretch",
             [513] = "Single-Leg Head Nods",
             [95] = "Single-Leg Knee-Raise Hold",
-            [556] = "Pony Step",
+            [556] = "Alternating Backfists",
             [561] = "Tiptoe Running Steps with Head Spot",
             [562] = "Ballet Calf Raises with Arm Sweeps",
             [563] = "Hip Airplane with Back Foot on Wall",
@@ -984,6 +986,40 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expected.Value,
                 exercises.Single(exercise => exercise.Id == expected.Key).Name));
+        string[] retiredFillerNames =
+        [
+            "Cumbia Two-Step",
+            "Merengue Six-Count Step",
+            "Salsa Front-and-Back Basic",
+            "Reggaeton Single-Single-Double Step",
+            "Basic Mambo Step",
+            "Cha-Cha Basic Step",
+            "Bachata Side-to-Side Basic",
+            "Five-Position Tendon Glide",
+            "Pony Step",
+        ];
+        Assert.DoesNotContain(exercises, exercise =>
+            retiredFillerNames.Contains(exercise.Name, StringComparer.Ordinal));
+        Exercise fingertipWallPushUps = exercises.Single(exercise => exercise.Id == 218);
+        Assert.True(fingertipWallPushUps.WallRequired);
+        Assert.Equal(
+            CanonicalMuscleGroup.IntrinsicHand,
+            fingertipWallPushUps.PrimaryCanonicalGroup);
+        Assert.Equal(Exercise.MaximumMuscularDemand, fingertipWallPushUps.MuscularDemand);
+        Exercise knifeHandSequence = exercises.Single(exercise => exercise.Id == 291);
+        Assert.Equal(
+            new[] { 291, 294 },
+            knifeHandSequence.SequenceBlocks.Select(block => block.ExerciseId));
+        Assert.All(
+            new[] { 283, 291, 294, 556 },
+            exerciseId =>
+            {
+                Exercise exercise = exercises.Single(candidate => candidate.Id == exerciseId);
+                Assert.Equal(ExerciseSideSequence.Alternating, exercise.SideSequence);
+                Assert.Equal(
+                    ExerciseMirrorRelationship.BenefitsGreatly,
+                    exercise.MirrorRelationship);
+            });
 
         Exercise wideStanceReach = exercises.Single(exercise => exercise.Id == 193);
         Assert.Equal(1, wideStanceReach.MuscularDemand);
@@ -1033,7 +1069,7 @@ public sealed class CatalogInvariantTests
             highKneeSideReach.SecondaryCanonicalGroups);
 
         Assert.Equal(
-            CanonicalMuscleGroup.CalfDeepPosteriorLegAndPlantarFoot,
+            CanonicalMuscleGroup.ElbowExtensors,
             exercises.Single(exercise => exercise.Id == 283).PrimaryCanonicalGroup);
 
         Exercise shadowBoxing = exercises.Single(exercise => exercise.Id == 591);

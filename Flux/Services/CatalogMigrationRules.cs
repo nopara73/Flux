@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 57;
+    public const int CurrentCatalogRevision = 58;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -386,11 +386,17 @@ public static class CatalogMigrationRules
                     new(
                         "Sequential Finger Waves",
                         "exercise_videos/exercise_0218.mp4"),
+                    new(
+                        "Cumbia Two-Step",
+                        "exercise_videos/exercise_0218.mp4"),
                 },
                 [234] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
                         "Straight Fingers to Knuckle Bend",
+                        "exercise_videos/exercise_0234.mp4"),
+                    new(
+                        "Merengue Six-Count Step",
                         "exercise_videos/exercise_0234.mp4"),
                 },
                 [237] = new HashSet<DiscardedStoredExerciseIdentity>
@@ -398,11 +404,17 @@ public static class CatalogMigrationRules
                     new(
                         "Sequential Finger Curl Waves",
                         "exercise_videos/exercise_0237.mp4"),
+                    new(
+                        "Salsa Front-and-Back Basic",
+                        "exercise_videos/exercise_0237.mp4"),
                 },
                 [239] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
                         "Tabletop Tendon Glide",
+                        "exercise_videos/exercise_0239.mp4"),
+                    new(
+                        "Reggaeton Single-Single-Double Step",
                         "exercise_videos/exercise_0239.mp4"),
                 },
                 [240] = new HashSet<DiscardedStoredExerciseIdentity>
@@ -416,6 +428,9 @@ public static class CatalogMigrationRules
                     new(
                         "Open Hand to Hook Fist",
                         "exercise_videos/exercise_0241.mp4"),
+                    new(
+                        "Basic Mambo Step",
+                        "exercise_videos/exercise_0241.mp4"),
                 },
                 [242] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
@@ -428,17 +443,32 @@ public static class CatalogMigrationRules
                     new(
                         "Open Hand to Straight Fist",
                         "exercise_videos/exercise_0283.mp4"),
+                    new(
+                        "Cha-Cha Basic Step",
+                        "exercise_videos/exercise_0283.mp4"),
                 },
                 [291] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
                         "Open Hand to Claw Fist",
                         "exercise_videos/exercise_0291.mp4"),
+                    new(
+                        "Bachata Side-to-Side Basic",
+                        "exercise_videos/exercise_0291.mp4"),
+                },
+                [294] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Five-Position Tendon Glide",
+                        "exercise_videos/exercise_0294.mp4"),
                 },
                 [556] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
                         "Standing Fist Clench and Release",
+                        "exercise_videos/exercise_0556.mp4"),
+                    new(
+                        "Pony Step",
                         "exercise_videos/exercise_0556.mp4"),
                 },
                 [497] = new HashSet<DiscardedStoredExerciseIdentity>
@@ -1149,6 +1179,10 @@ public static class CatalogMigrationRules
                     218, 234, 237, 239, 240, 241, 242, 283, 291, 556,
                 },
                 [57] = new HashSet<int> { 287 },
+                [58] = new HashSet<int>
+                {
+                    218, 234, 237, 239, 241, 283, 291, 294, 556,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1247,6 +1281,10 @@ public static class CatalogMigrationRules
                     218, 234, 237, 239, 240, 241, 242, 283, 291, 556,
                 },
                 [57] = new HashSet<int> { 287 },
+                [58] = new HashSet<int>
+                {
+                    218, 234, 237, 239, 241, 283, 291, 294, 556,
+                },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

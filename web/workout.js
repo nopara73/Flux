@@ -276,7 +276,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 57;
+export const CURRENT_CATALOG_REVISION = 58;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -401,6 +401,9 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     218, 234, 237, 239, 240, 241, 242, 283, 291, 556,
   ])],
   [57, new Set([287])],
+  [58, new Set([
+    218, 234, 237, 239, 241, 283, 291, 294, 556,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -480,6 +483,9 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
     218, 234, 237, 239, 240, 241, 242, 283, 291, 556,
   ])],
   [57, new Set([287])],
+  [58, new Set([
+    218, 234, 237, 239, 241, 283, 291, 294, 556,
+  ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();

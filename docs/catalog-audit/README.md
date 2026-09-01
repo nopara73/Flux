@@ -19,9 +19,9 @@ final catalog of **475** entries:
   **388** `Agnostic`.
 
 The subsequent Wall-equipment implementation added 24 separately reviewed base
-wall movements. Five existing slots
-now contain separately reviewed sole-contact wall movements. Their full
-29-movement inventory and two independent direct-floor contracts are
+wall movements. A later exact fingertip wall-push-up replacement brings the
+current base inventory to 25. Five existing slots contain separately reviewed
+sole-contact wall movements. Their full 30-movement inventory and two independent direct-floor contracts are
 documented in
 [`../WALL_EQUIPMENT_AUDIT.md`](../WALL_EQUIPMENT_AUDIT.md); the counts above
 remain the frozen outcome of the 479-record baseline review.

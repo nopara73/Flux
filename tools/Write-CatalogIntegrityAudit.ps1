@@ -29,7 +29,7 @@ $actualDemonstrations = @{
     267 = 'A static standing T-arm/shoulder hold with both heels remaining down; no calf-raise hold is demonstrated.'
     417 = 'A narrow planted stance with repeated overhead-to-floor reaches and modest knee/hip flexion; no thumb target or explicit gaze tracking is shown.'
     553 = 'A T-raise performed while visibly holding dumbbells, so it is not a zero-equipment exercise.'
-    556 = 'Standing two-hand fist clench and release with breathing; both heels remain down.'
+    556 = 'Alternating planted backfist strikes with visible elbow extension, forearm rotation, and trunk bracing.'
     558 = 'A one-leg circular arm-and-torso sweep performed while using a ballet barre for support.'
     559 = 'A tiptoe side-leg hold with a circular arm sweep performed while using a ballet barre for support.'
     561 = 'Rapid small tiptoe running steps with a full-body turn and a spotting head action.'
@@ -133,7 +133,7 @@ function Get-CorrectionReason {
         252 { return 'The retired false calf hold was removed from the mandatory calf-raise sequence.' }
         253 { return 'The obsolete session-movement link to the retired false calf hold was removed.' }
         417 { return 'The demonstration shows a reach with modest lower-body flexion, not thumb tracking or a hard squat; name, practice, motion, anatomy, and demand now match it.' }
-        556 { return 'The heels never rise; the meaningful action is an easy hand/forearm clench-and-release movement.' }
+        556 { return 'The redundant fist-clench identity was retired; the exact alternating backfist demonstration now determines its name, demand, anatomy, and modifier metadata.' }
         561 { return 'The loop is rapid tiptoe running with spotting rather than a classical bourree; the name and anatomy were narrowed to actions actually shown.' }
         562 { return 'The generic label and inflated whole-body associations were replaced by the exact calf-raise and arm-sweep action.' }
         563 { return 'The exact wall-supported hip-airplane demonstration replaces a redundant calf variation and requires sole-to-wall access.' }

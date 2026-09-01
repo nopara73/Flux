@@ -751,7 +751,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [121, 235, 145],
+    [121, 233, 147],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -1097,10 +1097,10 @@ test("hard floor filters incompatible exercises only while enabled", () => {
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 300);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 303);
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 201);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 198);
 
   for (const exerciseId of [37, 610, 326]) {
     assert.equal(
@@ -1116,6 +1116,49 @@ test("hard floor catalog verdicts include slippery-floor traction", () => {
       EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
     );
   }
+});
+
+test("dance and hand filler are replaced by coherent silent upper-body work", () => {
+  const expectedNames = new Map([
+    [218, "Fingertip Wall Push-Ups"],
+    [234, "Standing W Extensions"],
+    [237, "Standing Overhead Elbow Extensions"],
+    [239, "Standing Reverse Prayer Stretch"],
+    [241, "Isometric Palm Press Hold"],
+    [283, "Alternating Palm Strikes"],
+    [291, "Inward Knife-Hand Strikes"],
+    [294, "Outward Knife-Hand Strikes"],
+    [556, "Alternating Backfists"],
+  ]);
+  for (const [exerciseId, expectedName] of expectedNames) {
+    assert.equal(catalog.find((exercise) => exercise.id === exerciseId)?.name,
+      expectedName);
+  }
+  for (const retiredName of [
+    "Cumbia Two-Step",
+    "Merengue Six-Count Step",
+    "Salsa Front-and-Back Basic",
+    "Reggaeton Single-Single-Double Step",
+    "Basic Mambo Step",
+    "Cha-Cha Basic Step",
+    "Bachata Side-to-Side Basic",
+    "Five-Position Tendon Glide",
+    "Pony Step",
+  ]) {
+    assert.equal(catalog.some((exercise) => exercise.name === retiredName), false);
+  }
+  const wallPushUps = catalog.find((exercise) => exercise.id === 218);
+  assert.equal(wallPushUps.wallRequired, true);
+  assert.equal(wallPushUps.primaryCanonicalGroup, "IntrinsicHand");
+  assert.equal(wallPushUps.muscularDemand, 2);
+  const knifeHandSequence = catalog.find((exercise) => exercise.id === 291);
+  assert.deepEqual(knifeHandSequence.sequenceBlocks.map((block) => block.exerciseId),
+    [291, 294]);
+  assert.ok([283, 291, 294, 556].every((exerciseId) => {
+    const exercise = catalog.find((candidate) => candidate.id === exerciseId);
+    return exercise.sideSequence === "Alternating" &&
+      exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly;
+  }));
 });
 
 test("silence and insect compose as independent positive requirements", () => {
@@ -2283,9 +2326,9 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
       EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic).length, 488);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
-      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 77);
+      EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 81);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 412);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 408);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 12);
@@ -2297,7 +2340,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 6);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
-    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody).length, 27);
+    exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.UpperBody).length, 31);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly &&
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody).length, 50);
@@ -2335,10 +2378,10 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     exercise.wallRequired && !exercise.soleWallContactRequired);
   const soleWallExercises = catalog.filter((exercise) =>
     exercise.soleWallContactRequired);
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 29);
-  assert.equal(baseWallExercises.length, 24);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 30);
+  assert.equal(baseWallExercises.length, 25);
   assert.equal(new Set(baseWallExercises
-    .map((exercise) => exercise.sessionMovementId || exercise.id)).size, 24);
+    .map((exercise) => exercise.sessionMovementId || exercise.id)).size, 25);
   assert.deepEqual(
     new Set(soleWallExercises.map((exercise) => exercise.id)),
     new Set([563, 564, 567, 568, 574]),
@@ -2351,7 +2394,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     [],
   );
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
-  assert.equal(pairwiseDeficiencies.length, 309);
+  assert.equal(pairwiseDeficiencies.length, 303);
   assert.deepEqual(
     Object.fromEntries([...new Set(pairwiseDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2359,12 +2402,12 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         pairwiseDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 8, 5: 23, 7: 16, 10: 44, 15: 43, 20: 54, 30: 121 },
+    { 3: 6, 5: 23, 7: 14, 10: 44, 15: 43, 20: 54, 30: 119 },
   );
   assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 38);
 
   const hardFloorDeficiencies = findHardFloorCategoryCoverageDeficiencies(catalog);
-  assert.equal(hardFloorDeficiencies.length, 82);
+  assert.equal(hardFloorDeficiencies.length, 71);
   assert.deepEqual(
     Object.fromEntries([...new Set(hardFloorDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2372,7 +2415,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         hardFloorDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 6, 5: 7, 7: 11, 10: 12, 15: 7, 20: 13, 30: 26 },
+    { 3: 1, 5: 7, 7: 6, 10: 12, 15: 7, 20: 13, 30: 25 },
   );
   assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 24);
 
@@ -6723,7 +6766,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 57);
+  assert.equal(CURRENT_CATALOG_REVISION, 58);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -6923,6 +6966,62 @@ test("uppercut demonstration revision rebuilds only its workout state and score"
   assert.equal(
     restored.state.exerciseScoreAdjustmentsByPhase[
       WORKOUT_EXERCISE_PHASE.PeakPerformance]["287"],
+    undefined,
+  );
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"],
+    -2,
+  );
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("dance cleanup revision rebuilds changed workout state and resets scores", () => {
+  const changedIds = [218, 234, 237, 239, 241, 283, 291, 294, 556];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(58)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(58)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 57;
+  state.activeWorkoutMinutes = 30;
+  const changedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("ShoulderAbductors")).id;
+  const retainedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("PosteriorThighAndKneeFlexors")).id;
+  state.selectedExerciseIds = {
+    [changedGroupId]: 294,
+    [retainedGroupId]: 15,
+  };
+  state.outcomes = {
+    [changedGroupId]: "x",
+    [retainedGroupId]: "tick",
+  };
+  state.scores = { 294: -4, 15: -2 };
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 294: -4, 15: -2 },
+  };
+  state.pendingRestGroupId = changedGroupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroupId], undefined);
+  assert.equal(restored.state.outcomes[changedGroupId], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroupId], 15);
+  assert.equal(restored.state.scores["294"], undefined);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["294"],
     undefined,
   );
   assert.equal(
@@ -7321,7 +7420,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     .map((root) => root.id);
   assert.deepEqual(multiExerciseSequenceRoots, [
     96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
-    211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 292, 327, 329,
+    211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 291, 292, 327, 329,
     367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
     617, 742, 784, 834, 845, 910, 948, 996,
   ]);

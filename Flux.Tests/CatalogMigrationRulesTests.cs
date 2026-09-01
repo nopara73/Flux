@@ -2247,7 +2247,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(57, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(58, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2482,6 +2482,108 @@ public sealed class CatalogMigrationRulesTests
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
             [exerciseId] = new("Standing Uppercuts", replacement.Video, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
+    }
+
+    [Fact]
+    public void DanceCleanupRevisionRebuildsChangedWorkoutStateAndResetsScores()
+    {
+        HashSet<int> changedIds =
+        [
+            218, 234, 237, 239, 241, 283, 291, 294, 556,
+        ];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[58]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[58]);
+
+        const string changedGroup = "dance-cleanup.changed";
+        const string retainedGroup = "dance-cleanup.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 57,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 294,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 294,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [294] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.DoesNotContain(294, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
+    [InlineData(218, "Cumbia Two-Step")]
+    [InlineData(234, "Merengue Six-Count Step")]
+    [InlineData(237, "Salsa Front-and-Back Basic")]
+    [InlineData(239, "Reggaeton Single-Single-Double Step")]
+    [InlineData(241, "Basic Mambo Step")]
+    [InlineData(283, "Cha-Cha Basic Step")]
+    [InlineData(291, "Bachata Side-to-Side Basic")]
+    [InlineData(294, "Five-Position Tendon Glide")]
+    [InlineData(556, "Pony Step")]
+    public void DanceAndTendonCleanupDiscardsExactPublishedIdentityAndScore(
+        int exerciseId,
+        string oldName)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(oldName, replacement.Video, -7),
         };
 
         IReadOnlySet<int> preserved =

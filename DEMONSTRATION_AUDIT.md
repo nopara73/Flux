@@ -1,46 +1,46 @@
 # Flux demonstration quality audit
 
 Flux now ships a strictly human-demonstrated exercise catalog.
-All **475** bundled exercises show an actual person performing the movement.
+All **501** bundled exercises show an actual person performing the movement.
 Synthetic, schematic, anatomical, and 3D demonstrations are excluded from
 both the runtime catalog and the application package.
 
 | Canonical muscle group | Primary exercises | All meaningful assignments |
 | --- | ---: | ---: |
-| Medial and deep knee extensors | 31 | 160 |
-| Posterior thigh and knee flexors | 20 | 68 |
+| Medial and deep knee extensors | 34 | 169 |
+| Posterior thigh and knee flexors | 20 | 74 |
 | Major hip adductors | 17 | 55 |
-| Lateral knee extensors | 25 | 162 |
-| Gluteal extensors | 14 | 175 |
-| Spinal extensors | 13 | 43 |
-| Calf, deep posterior leg and plantar foot | 34 | 148 |
-| Soleus | 9 | 81 |
-| Scapular girdle | 10 | 144 |
-| Shoulder adductors and extensors | 15 | 64 |
-| Abdominal wall | 12 | 169 |
-| Hip abductors | 27 | 99 |
-| Chest | 13 | 59 |
-| Elbow extensors | 14 | 39 |
-| Hip flexors | 35 | 97 |
-| Anterior/lateral lower leg and dorsal foot | 11 | 44 |
-| Deep hip rotators | 18 | 45 |
-| Shoulder abductors | 19 | 136 |
-| Forearm flexors and pronators | 11 | 64 |
-| Deep and intersegmental back | 21 | 77 |
-| Elbow flexors | 15 | 40 |
-| Breathing muscles | 2 | 39 |
-| Forearm extensors and supinators | 11 | 46 |
-| Rotator cuff | 13 | 54 |
-| Accessory hip adductors | 10 | 38 |
-| Posterior neck and suboccipital muscles | 11 | 32 |
-| Cranial muscles | 22 | 35 |
-| Anterior/lateral neck and hyoid muscles | 11 | 31 |
-| Intrinsic hand | 11 | 43 |
+| Lateral knee extensors | 26 | 170 |
+| Gluteal extensors | 17 | 187 |
+| Spinal extensors | 13 | 45 |
+| Calf, deep posterior leg and plantar foot | 33 | 157 |
+| Soleus | 10 | 86 |
+| Scapular girdle | 14 | 161 |
+| Shoulder adductors and extensors | 16 | 68 |
+| Abdominal wall | 13 | 191 |
+| Hip abductors | 29 | 104 |
+| Chest | 18 | 69 |
+| Elbow extensors | 17 | 51 |
+| Hip flexors | 38 | 103 |
+| Anterior/lateral lower leg and dorsal foot | 12 | 48 |
+| Deep hip rotators | 19 | 49 |
+| Shoulder abductors | 23 | 144 |
+| Forearm flexors and pronators | 8 | 58 |
+| Deep and intersegmental back | 21 | 79 |
+| Elbow flexors | 15 | 41 |
+| Breathing muscles | 2 | 37 |
+| Forearm extensors and supinators | 12 | 40 |
+| Rotator cuff | 14 | 69 |
+| Accessory hip adductors | 11 | 40 |
+| Posterior neck and suboccipital muscles | 11 | 31 |
+| Cranial muscles | 22 | 34 |
+| Anterior/lateral neck and hyoid muscles | 11 | 30 |
+| Intrinsic hand | 5 | 39 |
 | Pelvic floor and perineum | 0 | 45 |
 
 ## Retained source quality
 
-- Direct human-footage demonstrations: **471**
+- Direct human-footage demonstrations: **497**
 - Exact copies of human footage: **0**
 - Exact deterministic transforms of human footage: **4**
 

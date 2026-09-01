@@ -72,8 +72,8 @@ $rows = @(
     New-ClarityReplacement 219 'Alternating High-Knee Cross-Body Pull' 'Low-impact conditioning' 'HighKneeCrossBodyPull' 'Alternating' '6P_JPNPgXig.mp4' $sixUrl 759 12
     New-ClarityReplacement 220 'Karate Rising Block' 'Karate' 'RisingBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 15 24
     New-ClarityReplacement 230 'Prayer Press Raise' 'Standing upper-body conditioning' 'PrayerPressRaise' 'Continuous' 'kfP_9z-BtmA.mp4' $madFitUrl 226 22
-    New-ClarityReplacement 239 'Tabletop Tendon Glide' 'Hand therapy' 'TabletopTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 124 9 10 'crop=ih:ih:(iw-ih)/2:0' $true
-    New-ClarityReplacement 241 'Hook-Fist Tendon Glide' 'Hand therapy' 'HookFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 136 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
+    New-ClarityReplacement 239 'Standing Reverse Prayer Stretch' 'Standing hand and wrist stretching' 'ReversePrayerStretch' 'Continuous' 'reverse-prayer-Svrqn92TzIA.mp4' 'https://www.youtube.com/watch?v=Svrqn92TzIA' 4 16 8 'crop=ih:ih:(iw-ih)/2:0' $false 'Hold' 'Still' 60
+    New-ClarityReplacement 241 'Isometric Palm Press Hold' 'Bodyweight isometrics' 'PalmPressIsometric' 'Continuous' 'palm-press-anxpxp0rbHs.mp4' 'https://www.youtube.com/watch?v=anxpxp0rbHs' 0 9.5 10 'crop=ih*3/4:ih*3/4:iw*0.18:ih*0.1' $false 'Hold' 'Still' 50
     New-ClarityReplacement 242 'Full-Fist Tendon Glide' 'Hand therapy' 'FullFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 166 9 10 'crop=ih:ih:(iw-ih)/2:0' $true
     New-ClarityReplacement 248 'Side-Tap Palm Pushes' 'Low-impact conditioning' 'SideTapPalmPush' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 1043 12
     New-ClarityReplacement 251 'Forward Fold to Overhead Reach' 'Standing mobility' 'ForwardFoldOverheadReach' 'Continuous' 'forward-fold-to-overhead-reach.mp4' 'https://www.youtube.com/watch?v=Busj2ROaneY' 1.76 4 10 'crop=ih:ih:(iw-ih)/2:0' $false 'Repetition' 'Motion' 0 'A full shod human repeatedly moves from a complete forward fold through a broad arm sweep to an overhead reach and back without travel, equipment, or support.'
@@ -89,12 +89,12 @@ $rows = @(
     New-ClarityReplacement 278 'Staggered-Stance Straight Punch' 'Boxing conditioning' 'StraightPunch' 'ScreenRightThenLeft' 'tTkZ9oNMwXs.mp4' 'https://www.youtube.com/watch?v=tTkZ9oNMwXs' 5 10 10
     New-ClarityReplacement 279 'Staggered-Stance Jab-Cross' 'Karate conditioning' 'JabCross' 'ScreenRightThenLeft' 'chuck-norris-private-lesson.mp4' 'https://www.youtube.com/watch?v=TIo6D2CO6uI' 544.45 13.8 8
     New-ClarityReplacement 282 'Side-Step Knee Drive with Alternating Side Punches' 'Low-impact boxing conditioning' 'SideStepKneeDriveSidePunch' 'ScreenLeftThenRight' '6P_JPNPgXig.mp4' $sixUrl 702 12
-    New-ClarityReplacement 283 'Straight-Fist Tendon Glide' 'Hand therapy' 'StraightFistTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 178 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
+    New-ClarityReplacement 283 'Alternating Palm Strikes' 'Karate conditioning' 'PalmStrike' 'Alternating' 'palm-strikes-rfX6clqMrb4.mp4' 'https://www.youtube.com/watch?v=rfX6clqMrb4' 0 8.7 10 'crop=ih:ih:iw-ih:0'
     New-ClarityReplacement 285 'Karate Inside Block' 'Karate' 'InsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 82 24
     New-ClarityReplacement 286 'Karate Outside Block' 'Karate' 'OutsideBlock' 'ScreenRightThenLeft' 'MZWdIHO75hU.mp4' $karateUrl 47 24
     New-ClarityReplacement 287 'Wide-Stance Alternating Uppercuts' 'Boxing conditioning' 'Uppercut' 'Alternating' 'cardio-uppercuts.mp4' 'https://www.youtube.com/watch?v=zIuEdGhLtdY' 20 16 10
-    New-ClarityReplacement 291 'Open-to-Claw Tendon Glide' 'Hand therapy' 'ClawTendonGlide' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 148 10 10 'crop=ih:ih:(iw-ih)/2:0' $true
-    New-ClarityReplacement 294 'Five-Position Tendon Glide' 'Hand therapy' 'TendonGlideSequence' 'ScreenRightThenLeft' 'ZT4lKQ1GcEc.mp4' $handUrl 198 25 10
+    New-ClarityReplacement 291 'Inward Knife-Hand Strikes' 'Karate conditioning' 'InwardKnifeHandStrike' 'Alternating' 'knife-hand-wO_WUzVXyWc.mp4' 'https://www.youtube.com/watch?v=wO_WUzVXyWc' 0 12.6 10 'crop=ih:ih:iw-ih:0'
+    New-ClarityReplacement 294 'Outward Knife-Hand Strikes' 'Karate conditioning' 'OutwardKnifeHandStrike' 'Alternating' 'outward-knife-hand-hvW4IPvBU3E.mp4' 'https://www.youtube.com/watch?v=hvW4IPvBU3E' 0 11.4 10 'crop=ih:ih:iw-ih:0'
     New-ClarityReplacement 314 'Alternating Forward Lunge Pulses' 'Bodyweight conditioning' 'ForwardLungePulse' 'Continuous' 'FGB_9YVUmfY.mp4' $standingUrl 190 25
     New-ClarityReplacement 321 'Side-Tap Alternating Arm Raises' 'Low-impact conditioning' 'SideTapArmRaise' 'Continuous' '6P_JPNPgXig.mp4' $sixUrl 191 12
     New-ClarityReplacement 326 'Rear-Hand Straight Punch' 'Boxing conditioning' 'RearHandStraightPunch' 'ScreenRightThenLeft' 'tTkZ9oNMwXs.mp4' 'https://www.youtube.com/watch?v=tTkZ9oNMwXs' 18 10 10

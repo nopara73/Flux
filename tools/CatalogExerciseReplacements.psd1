@@ -1321,26 +1321,26 @@
     }
     218 = @{
         RetiredName = 'Self-Resisted Wrist-Flexion Pulses'
-        Name = 'Cumbia Two-Step'
-        Practice = 'Cumbia'
-        MotionProfile = 'CumbiaTwoStep'
-        Primary = 'DeepHipRotators'
-        Secondary = @('HipFlexors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        Name = 'Fingertip Wall Push-Ups'
+        Practice = 'Bodyweight strength'
+        MotionProfile = 'FingertipWallPushUp'
+        Primary = 'IntrinsicHand'
+        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'Chest', 'ElbowExtensors', 'ScapularGirdle', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'zumba-latin-basic-steps.mp4'
-            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
-            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            File = 'finger-wall-pushup-wMnDT4y8qWE.mp4'
+            Url = 'https://www.youtube.com/watch?v=wMnDT4y8qWE'
+            SourcePage = 'https://www.youtube.com/watch?v=wMnDT4y8qWE'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 59
-            DurationSeconds = 24
+            StartSeconds = 0
+            DurationSeconds = 17.9
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1633,26 +1633,26 @@
     }
     234 = @{
         RetiredName = 'Karate Flat-Fist Strike (Hiraken)'
-        Name = 'Merengue Six-Count Step'
-        Practice = 'Merengue'
-        MotionProfile = 'MerengueSixCount'
-        Primary = 'HipFlexors'
-        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'DeepHipRotators', 'AbdominalWall')
+        Name = 'Standing W Extensions'
+        Practice = 'Shoulder mobility and conditioning'
+        MotionProfile = 'WExtension'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowExtensors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'zumba-latin-basic-steps.mp4'
-            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
-            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            File = 'standing-w-extensions-silTBfSjo-0.mp4'
+            Url = 'https://www.youtube.com/watch?v=silTBfSjo-0'
+            SourcePage = 'https://www.youtube.com/watch?v=silTBfSjo-0'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 240
-            DurationSeconds = 22
+            StartSeconds = 0
+            DurationSeconds = 8.6
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1685,52 +1685,52 @@
     }
     237 = @{
         RetiredName = 'Forearm Pronation and Supination'
-        Name = 'Salsa Front-and-Back Basic'
-        Practice = 'Salsa'
-        MotionProfile = 'SalsaFrontBackBasic'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('HipFlexors', 'GlutealExtensors', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
+        Name = 'Standing Overhead Elbow Extensions'
+        Practice = 'Standing upper-body conditioning'
+        MotionProfile = 'TricepsExtension'
+        Primary = 'ElbowExtensors'
+        Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'zumba-latin-basic-steps.mp4'
-            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
-            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            File = 'standing-triceps-extensions-Q_0fzjVOlMs.mp4'
+            Url = 'https://www.youtube.com/watch?v=Q_0fzjVOlMs'
+            SourcePage = 'https://www.youtube.com/watch?v=Q_0fzjVOlMs'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 396
-            DurationSeconds = 32
+            StartSeconds = 0
+            DurationSeconds = 9.9
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     239 = @{
         RetiredName = 'Ninja Fireball Hand-Seal Sequence'
-        Name = 'Reggaeton Single-Single-Double Step'
-        Practice = 'Reggaeton'
-        MotionProfile = 'ReggaetonSingleSingleDouble'
-        Primary = 'HipAbductors'
-        Secondary = @('AccessoryHipAdductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'GlutealExtensors', 'AbdominalWall')
+        Name = 'Standing Reverse Prayer Stretch'
+        Practice = 'Standing hand and wrist stretching'
+        MotionProfile = 'ReversePrayerStretch'
+        Primary = 'ForearmExtensorsAndSupinators'
+        Secondary = @('IntrinsicHand')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 60
         Media = @{
-            File = 'zumba-latin-basic-steps.mp4'
-            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
-            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            File = 'reverse-prayer-Svrqn92TzIA.mp4'
+            Url = 'https://www.youtube.com/watch?v=Svrqn92TzIA'
+            SourcePage = 'https://www.youtube.com/watch?v=Svrqn92TzIA'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 619
-            DurationSeconds = 27
-            FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            StartSeconds = 4
+            DurationSeconds = 16
+            FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1763,26 +1763,26 @@
     }
     241 = @{
         RetiredName = 'Ninja Water-Dragon 44 Hand-Seal Sequence'
-        Name = 'Basic Mambo Step'
-        Practice = 'Mambo'
-        MotionProfile = 'MamboBasic'
-        Primary = 'DeepHipRotators'
-        Secondary = @('HipFlexors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        Name = 'Isometric Palm Press Hold'
+        Practice = 'Bodyweight isometrics'
+        MotionProfile = 'PalmPressIsometric'
+        Primary = 'Chest'
+        Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
         SideSequence = 'Continuous'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
         Media = @{
-            File = 'expertvillage-basic-aerobic-dance.mp4'
-            Url = 'https://www.youtube.com/watch?v=2kkGKVpjA4o'
-            SourcePage = 'https://www.youtube.com/watch?v=2kkGKVpjA4o'
+            File = 'palm-press-anxpxp0rbHs.mp4'
+            Url = 'https://www.youtube.com/watch?v=anxpxp0rbHs'
+            SourcePage = 'https://www.youtube.com/watch?v=anxpxp0rbHs'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 61
-            DurationSeconds = 22
+            StartSeconds = 0
+            DurationSeconds = 9.5
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih*3/4:ih*3/4:iw*0.18:ih*0.1'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -2464,26 +2464,26 @@
     }
     283 = @{
         RetiredName = 'Qigong Fist Rotation'
-        Name = 'Cha-Cha Basic Step'
-        Practice = 'Cha-cha-cha'
-        MotionProfile = 'ChaChaBasic'
-        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
-        Secondary = @('Soleus', 'DeepHipRotators', 'HipFlexors', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        Name = 'Alternating Palm Strikes'
+        Practice = 'Karate conditioning'
+        MotionProfile = 'PalmStrike'
+        Primary = 'ElbowExtensors'
+        Secondary = @('Chest', 'IntrinsicHand', 'ForearmFlexorsAndPronators', 'ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'cha-cha-basic-step.mp4'
-            Url = 'https://www.youtube.com/watch?v=ewDI3iakXXA'
-            SourcePage = 'https://www.youtube.com/watch?v=ewDI3iakXXA'
+            File = 'palm-strikes-rfX6clqMrb4.mp4'
+            Url = 'https://www.youtube.com/watch?v=rfX6clqMrb4'
+            SourcePage = 'https://www.youtube.com/watch?v=rfX6clqMrb4'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 76
-            DurationSeconds = 14
+            StartSeconds = 0
+            DurationSeconds = 8.7
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -2646,26 +2646,26 @@
     }
     291 = @{
         RetiredName = 'Black Dragon Enters the Cave'
-        Name = 'Bachata Side-to-Side Basic'
-        Practice = 'Bachata'
-        MotionProfile = 'BachataSideToSideBasic'
-        Primary = 'HipAbductors'
-        Secondary = @('AccessoryHipAdductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        Name = 'Inward Knife-Hand Strikes'
+        Practice = 'Karate conditioning'
+        MotionProfile = 'InwardKnifeHandStrike'
+        Primary = 'Chest'
+        Secondary = @('ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmFlexorsAndPronators', 'AbdominalWall')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'howcast-bachata-side-to-side.mp4'
-            Url = 'https://www.youtube.com/watch?v=dhHGdBBF7Xk'
-            SourcePage = 'https://www.youtube.com/watch?v=dhHGdBBF7Xk'
+            File = 'knife-hand-wO_WUzVXyWc.mp4'
+            Url = 'https://www.youtube.com/watch?v=wO_WUzVXyWc'
+            SourcePage = 'https://www.youtube.com/watch?v=wO_WUzVXyWc'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 8
-            DurationSeconds = 30
+            StartSeconds = 0
+            DurationSeconds = 12.6
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -2724,26 +2724,26 @@
     }
     294 = @{
         RetiredName = 'Tiger-Claw Grip Flow'
-        Name = 'Five-Position Tendon Glide'
-        Practice = 'Hand therapy'
-        MotionProfile = 'TendonGlideSequence'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Outward Knife-Hand Strikes'
+        Practice = 'Karate conditioning'
+        MotionProfile = 'OutwardKnifeHandStrike'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmExtensorsAndSupinators', 'AbdominalWall')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
+            File = 'outward-knife-hand-hvW4IPvBU3E.mp4'
+            Url = 'https://www.youtube.com/watch?v=hvW4IPvBU3E'
+            SourcePage = 'https://www.youtube.com/watch?v=hvW4IPvBU3E'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 198
-            DurationSeconds = 25
+            StartSeconds = 0
+            DurationSeconds = 11.4
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -8398,26 +8398,26 @@
     }
     556 = @{
         RetiredName = 'Prayer-to-Overhead Flow'
-        Name = 'Pony Step'
-        Practice = 'Hip-hop freestyle'
-        MotionProfile = 'PonyStep'
-        Primary = 'HipFlexors'
-        Secondary = @('GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall')
-        SideSequence = 'Continuous'
+        Name = 'Alternating Backfists'
+        Practice = 'Karate conditioning'
+        MotionProfile = 'Backfist'
+        Primary = 'ForearmExtensorsAndSupinators'
+        Secondary = @('ElbowExtensors', 'IntrinsicHand', 'ShoulderAbductors', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'howcast-pony-step.mp4'
-            Url = 'https://www.youtube.com/watch?v=mpxJubVNBQA'
-            SourcePage = 'https://www.youtube.com/watch?v=mpxJubVNBQA'
+            File = 'backfists-ow2-_7CJUXE.mp4'
+            Url = 'https://www.youtube.com/watch?v=ow2-_7CJUXE'
+            SourcePage = 'https://www.youtube.com/watch?v=ow2-_7CJUXE'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 42
-            DurationSeconds = 22
+            StartSeconds = 0
+            DurationSeconds = 10.7
             FramesPerSecond = 10
-            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            Crop = 'crop=ih:ih:iw-ih:0'
             PingPong = $false
             MirrorForAlternation = $false
         }

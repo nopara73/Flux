@@ -30,7 +30,7 @@ repeated sets, aliases, and renamed duplicates cannot pad either result.
 
 ## Reviewed inventory
 
-The current catalog contains 24 distinct base wall session movements:
+The current catalog contains 25 distinct base wall session movements:
 
 - `134` — `Wall Sit`
 - `137` — `Wall Squat`
@@ -42,6 +42,7 @@ The current catalog contains 24 distinct base wall session movements:
 - `166` — `Wall Drill March`
 - `172` — `Wall Knee Drive`
 - `175` — `Wall Sit March`
+- `218` — `Fingertip Wall Push-Ups`
 - `579` — `Wall Shoulder Slides`
 - `580` — `Wall Angel`
 - `584` — `Wall Scapular Push-Up`
@@ -79,8 +80,10 @@ incompatible because Hard Floor means a rigid, slippery surface and their split
 stance requires dependable traction. The five sole-contact movements are also
 incompatible with Hard Floor because Hard Floor means slippery and their
 demonstrated support,
-balance, or traction depends on reliable foot placement. Wall availability does
-not override the independent floor verdict. All 29 final packaged MP4s, crops,
+balance, or traction depends on reliable foot placement. `Fingertip Wall
+Push-Ups` is likewise incompatible because its leaned position depends on foot
+traction. Wall availability does not override the independent floor verdict.
+All 30 final packaged MP4s, crops,
 loops, and applicable hold frames were reviewed against their final names and
 metadata. The catalog
 generator rejects missing verdicts, linked-sequence disagreement, duplicate
