@@ -2568,24 +2568,24 @@
     }
     287 = @{
         RetiredName = 'Self-Resisted Reverse Curl'
-        Name = 'Standing Uppercuts'
+        Name = 'Wide-Stance Alternating Uppercuts'
         Practice = 'Boxing conditioning'
         MotionProfile = 'Uppercut'
         Primary = 'ElbowFlexors'
-        Secondary = @('ForearmExtensorsAndSupinators', 'IntrinsicHand')
-        SideSequence = 'ScreenRightLeadThenLeftLead'
+        Secondary = @('ShoulderAbductors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ADotmBi8lPg.mp4'
-            Url = 'https://www.youtube.com/watch?v=ADotmBi8lPg'
-            SourcePage = 'https://www.youtube.com/watch?v=ADotmBi8lPg'
+            File = 'cardio-uppercuts.mp4'
+            Url = 'https://www.youtube.com/watch?v=zIuEdGhLtdY'
+            SourcePage = 'https://www.youtube.com/watch?v=zIuEdGhLtdY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 12
-            DurationSeconds = 20
+            StartSeconds = 20
+            DurationSeconds = 16
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false

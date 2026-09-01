@@ -873,7 +873,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*77/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*78/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
@@ -1712,7 +1712,7 @@ test("backgrounding pauses movement and rest until playback is resumed", () => {
 
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    265, 274, 280, 287, 473, 575, 578, 583, 591, 884, 885, 886, 887,
+    265, 274, 280, 473, 575, 578, 583, 591, 884, 885, 886, 887,
   ];
   assert.deepEqual(
     catalog
@@ -1744,6 +1744,19 @@ test("lead-stance exercises use the same two-block sequence cues on mobile and w
   assert.match(
     webApp,
     /ShownLeadStance:[\s\S]*"Shown lead stance"[\s\S]*OppositeLeadStance:[\s\S]*"Opposite lead stance"/,
+  );
+});
+
+test("uppercut replacement is a clear one-block alternating floor-safe contract", () => {
+  const uppercuts = catalog.find((exercise) => exercise.id === 287);
+  assert.equal(uppercuts.name, "Wide-Stance Alternating Uppercuts");
+  assert.equal(uppercuts.primaryCanonicalGroup, "ElbowFlexors");
+  assert.equal(uppercuts.sideSequence, "Alternating");
+  assert.equal(uppercuts.sequenceBlocks.length, 1);
+  assert.equal(uppercuts.hardFloorCompatibility, "Incompatible");
+  assert.ok(uppercuts.secondaryCanonicalGroups.includes("AbdominalWall"));
+  assert.ok(
+    uppercuts.secondaryCanonicalGroups.includes("MedialAndDeepKneeExtensors"),
   );
 });
 

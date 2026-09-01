@@ -4180,17 +4180,17 @@
         MirrorForAlternation = $true
     }
     287 = @{
-        File = 'W7J5S5KbSFY.mp4'
-        Url = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
-        SourcePage = 'https://www.youtube.com/watch?v=W7J5S5KbSFY'
+        File = 'cardio-uppercuts.mp4'
+        Url = 'https://www.youtube.com/watch?v=zIuEdGhLtdY'
+        SourcePage = 'https://www.youtube.com/watch?v=zIuEdGhLtdY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 72
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 20
+        DurationSeconds = 16
+        FramesPerSecond = 10
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     288 = @{
         File = 'UNxxjNaO3hk.mp4'

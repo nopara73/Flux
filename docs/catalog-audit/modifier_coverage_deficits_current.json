@@ -1,15 +1,15 @@
 {
-  "catalogRevision": 56,
+  "catalogRevision": 57,
   "catalogRecordCount": 501,
-  "catalogSha256": "7ed092e266c60c44a6a693eebd70598236f3fe9a8ef262fc397dc3c9f5a6994c",
+  "catalogSha256": "810957e6b4946fab377b805cf5538031289a6b55c0021bab0d6df621893fd8cb",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     "validatorsChanged": false
   },
   "summary": {
-    "pairwiseDeficiencyCount": 305,
-    "pairwiseAffectedGroupCount": 37,
-    "hardFloorCategoryDeficiencyCount": 81,
+    "pairwiseDeficiencyCount": 309,
+    "pairwiseAffectedGroupCount": 38,
+    "hardFloorCategoryDeficiencyCount": 82,
     "hardFloorCategoryAffectedGroupCount": 24,
     "materialityDeficiencyCount": 0,
     "mirrorCategoryDeficiencyCount": 0,
@@ -2298,6 +2298,18 @@
     },
     {
       "minutes": 30,
+      "groupId": "r30.intrinsic-hand",
+      "groupName": "Intrinsic hand",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "matchingExerciseCount": 4,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
       "groupId": "r30.anterior-lateral-neck-hyoid",
       "groupName": "Anterior/lateral neck and hyoid muscles",
       "firstModifier": 128,
@@ -3097,7 +3109,7 @@
       "secondModifier": 1,
       "secondModifierEnabled": true,
       "mirrorEquipment": "None",
-      "matchingExerciseCount": 4,
+      "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
     {
@@ -3109,6 +3121,42 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-extensors-supinators",
+      "groupName": "Forearm extensors and supinators",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "matchingExerciseCount": 4,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-extensors-supinators",
+      "groupName": "Forearm extensors and supinators",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "matchingExerciseCount": 4,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-extensors-supinators",
+      "groupName": "Forearm extensors and supinators",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
       "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
@@ -4242,6 +4290,16 @@
       "minutes": 30,
       "groupId": "r30.intrinsic-hand",
       "groupName": "Intrinsic hand",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 4,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.intrinsic-hand",
+      "groupName": "Intrinsic hand",
       "hardFloorCompatibility": "Incompatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -4415,7 +4473,7 @@
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
+      "matchingExerciseCount": 3,
       "requiredExerciseCount": 5
     },
     {

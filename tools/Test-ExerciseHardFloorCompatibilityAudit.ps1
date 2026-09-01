@@ -14,6 +14,7 @@ $ErrorActionPreference = 'Stop'
 
 $requiredIncompatibilityReasons = @(
     'ConcentratedHeelOrForefootLoading'
+    'TractionDependentWallOrBalanceLoading'
     'RepeatedJumpingOrLanding'
     'RunningOrRapidFootImpact'
     'DeliberateStomping'

@@ -72,7 +72,7 @@
     283 = 'ScreenLeftThenRight'
     285 = 'ScreenLeftThenRight'
     286 = 'ScreenLeftThenRight'
-    287 = 'ScreenRightLeadThenLeftLead'
+    287 = 'Alternating'
     338 = 'ScreenLeftThenRight'
     397 = 'ScreenRightThenLeft'
     408 = 'ScreenRightThenLeft'

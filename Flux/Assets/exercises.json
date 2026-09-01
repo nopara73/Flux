@@ -8448,39 +8448,35 @@
   },
   {
     "id": 287,
-    "name": "Standing Uppercuts",
+    "name": "Wide-Stance Alternating Uppercuts",
     "retiredName": "Self-Resisted Reverse Curl",
     "video": "exercise_videos/exercise_0287.mp4",
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
-      "ForearmExtensorsAndSupinators",
-      "IntrinsicHand"
+      "ShoulderAbductors",
+      "AbdominalWall",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "GlutealExtensors"
     ],
     "practice": "Boxing conditioning",
     "motionProfile": "Uppercut",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "ScreenRightLeadThenLeftLead",
+    "sideSequence": "Alternating",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 287,
-        "sideCue": "ShownLeadStance",
+        "sideCue": "None",
         "directionCue": "None",
         "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 287,
-        "sideCue": "OppositeLeadStance",
-        "directionCue": "None",
-        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
-    "hardFloorCompatibility": "Compatible",
+    "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
     "wallRequired": false,
     "soleWallContactRequired": false,

@@ -2247,7 +2247,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(56, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(57, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2403,6 +2403,95 @@ public sealed class CatalogMigrationRulesTests
         Assert.DoesNotContain(241, phaseScores);
         Assert.Equal(-2, phaseScores[15]);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void UppercutDemonstrationRevisionRebuildsOnlyItsWorkoutStateAndScore()
+    {
+        HashSet<int> changedIds = [287];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[57]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[57]);
+
+        const string changedGroup = "uppercut-demonstration.changed";
+        const string retainedGroup = "uppercut-demonstration.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 56,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 287,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 287,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [287] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.DoesNotContain(287, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void UppercutDemonstrationReplacementDiscardsPublishedIdentityAndScore()
+    {
+        const int exerciseId = 287;
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new("Standing Uppercuts", replacement.Video, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
     }
 
     [Theory]

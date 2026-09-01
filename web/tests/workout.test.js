@@ -1097,10 +1097,10 @@ test("hard floor filters incompatible exercises only while enabled", () => {
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 301);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 300);
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 200);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 201);
 
   for (const exerciseId of [37, 610, 326]) {
     assert.equal(
@@ -2351,7 +2351,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     [],
   );
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
-  assert.equal(pairwiseDeficiencies.length, 305);
+  assert.equal(pairwiseDeficiencies.length, 309);
   assert.deepEqual(
     Object.fromEntries([...new Set(pairwiseDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2359,12 +2359,12 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         pairwiseDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 8, 5: 23, 7: 16, 10: 44, 15: 43, 20: 54, 30: 117 },
+    { 3: 8, 5: 23, 7: 16, 10: 44, 15: 43, 20: 54, 30: 121 },
   );
-  assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 37);
+  assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 38);
 
   const hardFloorDeficiencies = findHardFloorCategoryCoverageDeficiencies(catalog);
-  assert.equal(hardFloorDeficiencies.length, 81);
+  assert.equal(hardFloorDeficiencies.length, 82);
   assert.deepEqual(
     Object.fromEntries([...new Set(hardFloorDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2372,7 +2372,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         hardFloorDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 6, 5: 7, 7: 11, 10: 12, 15: 7, 20: 13, 30: 25 },
+    { 3: 6, 5: 7, 7: 11, 10: 12, 15: 7, 20: 13, 30: 26 },
   );
   assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 24);
 
@@ -6423,7 +6423,7 @@ test("complete-direction revision retires duplicates and preserves side-leg scor
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
-test("lead-stance timing revision rebuilds workouts without resetting scores", () => {
+test("lead-stance timing revision preserves scores except later semantic replacements", () => {
   const leadStanceIds = [
     265, 274, 280, 287, 473, 591, 884, 885, 886, 887,
   ];
@@ -6445,7 +6445,10 @@ test("lead-stance timing revision rebuilds workouts without resetting scores", (
 
   for (const exerciseId of leadStanceIds) {
     assert.equal(restored.state.selectedExerciseIds[`changed.${exerciseId}`], undefined);
-    assert.equal(restored.state.scores[String(exerciseId)], -4);
+    assert.equal(
+      restored.state.scores[String(exerciseId)],
+      exerciseId === 287 ? undefined : -4,
+    );
   }
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
@@ -6720,7 +6723,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 56);
+  assert.equal(CURRENT_CATALOG_REVISION, 57);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -6869,6 +6872,62 @@ test("hand-shape replacement revision rebuilds changed workout state and resets 
   assert.equal(
     restored.state.exerciseScoreAdjustmentsByPhase[
       WORKOUT_EXERCISE_PHASE.Warmup]["15"],
+    -2,
+  );
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("uppercut demonstration revision rebuilds only its workout state and score", () => {
+  const changedIds = [287];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(57)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(57)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 56;
+  state.activeWorkoutMinutes = 30;
+  const changedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("ElbowFlexors")).id;
+  const retainedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("PosteriorThighAndKneeFlexors")).id;
+  state.selectedExerciseIds = {
+    [changedGroupId]: 287,
+    [retainedGroupId]: 15,
+  };
+  state.outcomes = {
+    [changedGroupId]: "x",
+    [retainedGroupId]: "tick",
+  };
+  state.scores = { 287: -4, 15: -2 };
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 287: -4, 15: -2 },
+  };
+  state.pendingRestGroupId = changedGroupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroupId], undefined);
+  assert.equal(restored.state.outcomes[changedGroupId], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroupId], 15);
+  assert.equal(restored.state.scores["287"], undefined);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["287"],
+    undefined,
+  );
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"],
     -2,
   );
   assert.equal(restored.state.pendingRestGroupId, null);
