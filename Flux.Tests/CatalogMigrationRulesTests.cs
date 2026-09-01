@@ -2247,7 +2247,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(55, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(56, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2288,7 +2288,7 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(0, state.PendingScoreValue);
         Assert.Contains(563, state.LastKeptExerciseIds);
         Assert.Contains(15, state.LastKeptExerciseIds);
-        Assert.Equal(55, state.CatalogRevision);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
     [Fact]
@@ -2341,7 +2341,109 @@ public sealed class CatalogMigrationRulesTests
         Assert.DoesNotContain(790, phaseScores);
         Assert.DoesNotContain(993, phaseScores);
         Assert.Equal(-2, phaseScores[15]);
-        Assert.Equal(55, state.CatalogRevision);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void HandShapeReplacementRevisionRebuildsChangedWorkoutStateAndResetsScores()
+    {
+        HashSet<int> changedIds =
+        [
+            218, 234, 237, 239, 240, 241, 242, 283, 291, 556,
+        ];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[56]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[56]);
+
+        const string changedGroup = "hand-shape.changed";
+        const string retainedGroup = "hand-shape.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 55,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 241,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 241,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.Warmup] = new()
+                {
+                    [241] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup];
+        Assert.DoesNotContain(241, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
+    [InlineData(218, "Sequential Finger Waves")]
+    [InlineData(234, "Straight Fingers to Knuckle Bend")]
+    [InlineData(237, "Sequential Finger Curl Waves")]
+    [InlineData(239, "Tabletop Tendon Glide")]
+    [InlineData(240, "Hook Fingers to Full Fist")]
+    [InlineData(241, "Open Hand to Hook Fist")]
+    [InlineData(242, "Open Hand to Full Fist")]
+    [InlineData(283, "Open Hand to Straight Fist")]
+    [InlineData(291, "Open Hand to Claw Fist")]
+    [InlineData(556, "Standing Fist Clench and Release")]
+    public void HandShapeReplacementsDiscardExactPublishedIdentityAndScore(
+        int exerciseId,
+        string oldName)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(oldName, replacement.Video, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
     }
 
     [Theory]

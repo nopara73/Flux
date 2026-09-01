@@ -1321,26 +1321,26 @@
     }
     218 = @{
         RetiredName = 'Self-Resisted Wrist-Flexion Pulses'
-        Name = 'Sequential Finger Waves'
-        Practice = 'Hand coordination'
-        MotionProfile = 'SequentialFingerWave'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
+        Name = 'Cumbia Two-Step'
+        Practice = 'Cumbia'
+        MotionProfile = 'CumbiaTwoStep'
+        Primary = 'DeepHipRotators'
+        Secondary = @('HipFlexors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'sequential-finger-waves.mp4'
-            Url = 'https://www.youtube.com/watch?v=8G3iErBm3co'
-            SourcePage = 'https://www.youtube.com/watch?v=8G3iErBm3co'
+            File = 'zumba-latin-basic-steps.mp4'
+            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 36
-            DurationSeconds = 32
+            StartSeconds = 59
+            DurationSeconds = 24
             FramesPerSecond = 10
-            Crop = 'crop=iw:ih*29/36:0:ih/18'
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1633,26 +1633,26 @@
     }
     234 = @{
         RetiredName = 'Karate Flat-Fist Strike (Hiraken)'
-        Name = 'Straight Fingers to Knuckle Bend'
-        Practice = 'Hand and forearm mobility'
-        MotionProfile = 'KnuckleBend'
-        Primary = 'ForearmFlexorsAndPronators'
-        Secondary = @('IntrinsicHand', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenLeftThenRight'
+        Name = 'Merengue Six-Count Step'
+        Practice = 'Merengue'
+        MotionProfile = 'MerengueSixCount'
+        Primary = 'HipFlexors'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'DeepHipRotators', 'AbdominalWall')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'straight-hand-knuckle-bend-flow.mp4'
-            Url = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
-            SourcePage = 'https://www.youtube.com/watch?v=Tsxd2u57Rrg'
+            File = 'zumba-latin-basic-steps.mp4'
+            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 47
-            DurationSeconds = 9.5
+            StartSeconds = 240
+            DurationSeconds = 22
             FramesPerSecond = 10
-            Crop = 'crop=ih*65/72:ih*65/72:iw*25/64:ih*7/144'
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
@@ -1685,131 +1685,131 @@
     }
     237 = @{
         RetiredName = 'Forearm Pronation and Supination'
-        Name = 'Sequential Finger Curl Waves'
-        Practice = 'Hand coordination'
-        MotionProfile = 'FingerWaveRotation'
-        Primary = 'ForearmExtensorsAndSupinators'
-        Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators')
+        Name = 'Salsa Front-and-Back Basic'
+        Practice = 'Salsa'
+        MotionProfile = 'SalsaFrontBackBasic'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('HipFlexors', 'GlutealExtensors', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'wrist-and-finger-wave-rotations.mp4'
-            Url = 'https://www.youtube.com/watch?v=5WhZjAgg4-g'
-            SourcePage = 'https://www.youtube.com/watch?v=5WhZjAgg4-g'
+            File = 'zumba-latin-basic-steps.mp4'
+            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 26
-            DurationSeconds = 24
+            StartSeconds = 396
+            DurationSeconds = 32
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     239 = @{
         RetiredName = 'Ninja Fireball Hand-Seal Sequence'
-        Name = 'Tabletop Tendon Glide'
-        Practice = 'Hand therapy'
-        MotionProfile = 'TabletopTendonGlide'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenRightThenLeft'
-        Mode = 'Repetition'
-        Presentation = 'Motion'
-        HoldFramePercent = 0
-        Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            Human = $true
-            Youtube = $true
-            Video = $true
-            StartSeconds = 124
-            DurationSeconds = 9
-            FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
-            MirrorForAlternation = $false
-        }
-    }
-    240 = @{
-        RetiredName = 'Ninja Shadow-Possession Hand-Seal Sequence'
-        Name = 'Hook Fingers to Full Fist'
-        Practice = 'Hand therapy tendon gliding'
-        MotionProfile = 'FingerMotion'
-        Primary = 'ForearmFlexorsAndPronators'
-        Secondary = @('IntrinsicHand', 'ForearmExtensorsAndSupinators')
+        Name = 'Reggaeton Single-Single-Double Step'
+        Practice = 'Reggaeton'
+        MotionProfile = 'ReggaetonSingleSingleDouble'
+        Primary = 'HipAbductors'
+        Secondary = @('AccessoryHipAdductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'GlutealExtensors', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'hook-to-fist-tendon-glides.mp4'
-            Url = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
-            SourcePage = 'https://www.youtube.com/watch?v=2G6pHQJEbWQ'
+            File = 'zumba-latin-basic-steps.mp4'
+            Url = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
+            SourcePage = 'https://www.youtube.com/watch?v=e5rW7qjd3BY'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 139
-            DurationSeconds = 12
+            StartSeconds = 619
+            DurationSeconds = 27
             FramesPerSecond = 10
-            Crop = 'crop=ih*17/18:ih*3/4:(iw-ih*17/18)/2:ih*5/72,crop=iw*0.88:ih:iw*0.10:0'
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    240 = @{
+        RetiredName = 'Ninja Shadow-Possession Hand-Seal Sequence'
+        Name = 'Grapevine Step'
+        Practice = 'Aerobics'
+        MotionProfile = 'GrapevineStep'
+        Primary = 'AccessoryHipAdductors'
+        Secondary = @('HipAbductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'expertvillage-grapevine.mp4'
+            Url = 'https://www.youtube.com/watch?v=7bSkp_iaKls'
+            SourcePage = 'https://www.youtube.com/watch?v=7bSkp_iaKls'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 17
+            DurationSeconds = 17
+            FramesPerSecond = 10
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
     }
     241 = @{
         RetiredName = 'Ninja Water-Dragon 44 Hand-Seal Sequence'
-        Name = 'Open Hand to Hook Fist'
-        Practice = 'Hand therapy'
-        MotionProfile = 'HookFistTendonGlide'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Basic Mambo Step'
+        Practice = 'Mambo'
+        MotionProfile = 'MamboBasic'
+        Primary = 'DeepHipRotators'
+        Secondary = @('HipFlexors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
+            File = 'expertvillage-basic-aerobic-dance.mp4'
+            Url = 'https://www.youtube.com/watch?v=2kkGKVpjA4o'
+            SourcePage = 'https://www.youtube.com/watch?v=2kkGKVpjA4o'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 136
-            DurationSeconds = 10
+            StartSeconds = 61
+            DurationSeconds = 22
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }
     242 = @{
         RetiredName = 'Ninja Shadow-Clone Hand-Seal Sequence'
-        Name = 'Open Hand to Full Fist'
-        Practice = 'Hand therapy'
-        MotionProfile = 'FullFistTendonGlide'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'Chest')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Jazz Square'
+        Practice = 'Jazz dance'
+        MotionProfile = 'JazzSquare'
+        Primary = 'DeepHipRotators'
+        Secondary = @('AccessoryHipAdductors', 'HipAbductors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
+            File = 'howcast-jazz-square.mp4'
+            Url = 'https://www.youtube.com/watch?v=eCy4sfAcpag'
+            SourcePage = 'https://www.youtube.com/watch?v=eCy4sfAcpag'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 166
-            DurationSeconds = 9
+            StartSeconds = 125
+            DurationSeconds = 8
             FramesPerSecond = 10
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }
@@ -2464,27 +2464,27 @@
     }
     283 = @{
         RetiredName = 'Qigong Fist Rotation'
-        Name = 'Open Hand to Straight Fist'
-        Practice = 'Hand therapy'
-        MotionProfile = 'StraightFistTendonGlide'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Cha-Cha Basic Step'
+        Practice = 'Cha-cha-cha'
+        MotionProfile = 'ChaChaBasic'
+        Primary = 'CalfDeepPosteriorLegAndPlantarFoot'
+        Secondary = @('Soleus', 'DeepHipRotators', 'HipFlexors', 'AbdominalWall')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
+            File = 'cha-cha-basic-step.mp4'
+            Url = 'https://www.youtube.com/watch?v=ewDI3iakXXA'
+            SourcePage = 'https://www.youtube.com/watch?v=ewDI3iakXXA'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 178
-            DurationSeconds = 10
+            StartSeconds = 76
+            DurationSeconds = 14
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }
@@ -2646,27 +2646,27 @@
     }
     291 = @{
         RetiredName = 'Black Dragon Enters the Cave'
-        Name = 'Open Hand to Claw Fist'
-        Practice = 'Hand therapy'
-        MotionProfile = 'ClawTendonGlide'
-        Primary = 'IntrinsicHand'
-        Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Bachata Side-to-Side Basic'
+        Practice = 'Bachata'
+        MotionProfile = 'BachataSideToSideBasic'
+        Primary = 'HipAbductors'
+        Secondary = @('AccessoryHipAdductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall')
+        SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'ZT4lKQ1GcEc.mp4'
-            Url = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
-            SourcePage = 'https://www.youtube.com/watch?v=ZT4lKQ1GcEc'
+            File = 'howcast-bachata-side-to-side.mp4'
+            Url = 'https://www.youtube.com/watch?v=dhHGdBBF7Xk'
+            SourcePage = 'https://www.youtube.com/watch?v=dhHGdBBF7Xk'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 148
-            DurationSeconds = 10
+            StartSeconds = 8
+            DurationSeconds = 30
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
-            PingPong = $true
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+            PingPong = $false
             MirrorForAlternation = $false
         }
     }
@@ -8398,26 +8398,26 @@
     }
     556 = @{
         RetiredName = 'Prayer-to-Overhead Flow'
-        Name = 'Standing Fist Clench and Release'
-        Practice = 'Hand mobility and breathing'
-        MotionProfile = 'FistClenchRelease'
-        Primary = 'ForearmFlexorsAndPronators'
-        Secondary = @('IntrinsicHand', 'BreathingMuscles')
+        Name = 'Pony Step'
+        Practice = 'Hip-hop freestyle'
+        MotionProfile = 'PonyStep'
+        Primary = 'HipFlexors'
+        Secondary = @('GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'tiptoe-raises-fist-clenches.mp4'
-            Url = 'https://www.youtube.com/watch?v=dynisIQLRzo'
-            SourcePage = 'https://www.youtube.com/watch?v=dynisIQLRzo'
+            File = 'howcast-pony-step.mp4'
+            Url = 'https://www.youtube.com/watch?v=mpxJubVNBQA'
+            SourcePage = 'https://www.youtube.com/watch?v=mpxJubVNBQA'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 72
-            DurationSeconds = 12
+            StartSeconds = 42
+            DurationSeconds = 22
             FramesPerSecond = 10
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
             PingPong = $false
             MirrorForAlternation = $false
         }

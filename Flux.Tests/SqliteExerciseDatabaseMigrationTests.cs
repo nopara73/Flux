@@ -41,14 +41,14 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(75)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(76, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(77, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 76)]
+    [InlineData(13, 77)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
@@ -58,6 +58,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(74, 74)]
     [InlineData(75, 75)]
     [InlineData(76, 76)]
+    [InlineData(77, 77)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -173,7 +174,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
                 catalog,
                 exercise => exercise.Id == exerciseId);
             Assert.Equal(
-                exerciseId is 556 or 565
+                exerciseId is 565
                     ? ExerciseHardFloorCompatibility.Compatible
                     : ExerciseHardFloorCompatibility.Incompatible,
                 addedExercise.HardFloorCompatibility);

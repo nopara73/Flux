@@ -55,8 +55,8 @@ public sealed class CatalogInvariantTests
                 soleWallContactRequired.GetBoolean() &&
                 !wallRequired.GetBoolean());
         });
-        Assert.Equal(131, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(225, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(121, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(235, exercises.Count(exercise => exercise.MuscularDemand == 1));
         Assert.Equal(145, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
@@ -94,9 +94,9 @@ public sealed class CatalogInvariantTests
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Unreviewed);
-        Assert.Equal(311, exercises.Count(exercise =>
+        Assert.Equal(301, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Compatible));
-        Assert.Equal(190, exercises.Count(exercise =>
+        Assert.Equal(200, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Incompatible));
         Assert.All(
             new[] { 37, 610, 326 },
@@ -467,7 +467,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(165, timedSideExercises.Length);
+        Assert.Equal(159, timedSideExercises.Length);
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -588,8 +588,8 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 276,
-            [2] = 125,
+            [1] = 282,
+            [2] = 119,
             [3] = 28,
             [4] = 15,
             [5] = 1,
@@ -681,13 +681,13 @@ public sealed class CatalogInvariantTests
             [232] = ExerciseSideSequence.ScreenLeftThenRight,
             [233] = ExerciseSideSequence.ScreenLeftThenRight,
             [225] = ExerciseSideSequence.ScreenLeftThenRight,
-            [234] = ExerciseSideSequence.ScreenLeftThenRight,
+            [234] = ExerciseSideSequence.Continuous,
             [236] = ExerciseSideSequence.Continuous,
             [237] = ExerciseSideSequence.Continuous,
-            [239] = ExerciseSideSequence.ScreenRightThenLeft,
+            [239] = ExerciseSideSequence.Continuous,
             [240] = ExerciseSideSequence.Continuous,
-            [241] = ExerciseSideSequence.ScreenRightThenLeft,
-            [242] = ExerciseSideSequence.ScreenRightThenLeft,
+            [241] = ExerciseSideSequence.Continuous,
+            [242] = ExerciseSideSequence.Continuous,
             [245] = ExerciseSideSequence.ScreenRightThenLeft,
             [256] = ExerciseSideSequence.ScreenRightThenLeft,
             [257] = ExerciseSideSequence.Continuous,
@@ -696,9 +696,9 @@ public sealed class CatalogInvariantTests
             [269] = ExerciseSideSequence.ScreenLeftThenRight,
             [278] = ExerciseSideSequence.ScreenRightThenLeft,
             [279] = ExerciseSideSequence.ScreenRightThenLeft,
-            [283] = ExerciseSideSequence.ScreenRightThenLeft,
+            [283] = ExerciseSideSequence.Continuous,
             [289] = ExerciseSideSequence.Continuous,
-            [291] = ExerciseSideSequence.ScreenRightThenLeft,
+            [291] = ExerciseSideSequence.Continuous,
             [292] = ExerciseSideSequence.ScreenRightThenLeft,
             [293] = ExerciseSideSequence.ScreenLeftThenRight,
             [294] = ExerciseSideSequence.ScreenRightThenLeft,
@@ -814,8 +814,8 @@ public sealed class CatalogInvariantTests
         int[] auditedSidedClarityReplacementIds =
         [
             16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
-            213, 220, 225, 234, 239, 241, 242, 256, 258, 269,
-            278, 279, 282, 283, 285, 286, 291, 294, 326, 329,
+            213, 220, 225, 256, 258, 269,
+            278, 279, 282, 285, 286, 294, 326, 329,
             395, 396, 397, 507, 512, 513, 572, 577, 618, 636,
             685, 745, 834,
         ];
@@ -828,8 +828,9 @@ public sealed class CatalogInvariantTests
         int[] auditedContinuousClarityReplacementIds =
         [
             15, 17, 19, 31, 107, 135, 150, 169, 176, 193, 195,
-            198, 201, 230, 248, 251, 257, 262, 263, 266,
-            268, 270, 275, 289, 301, 314, 321,
+            198, 201, 218, 230, 234, 237, 239, 240, 241, 242, 248,
+            251, 257, 262, 263, 266, 268, 270, 275, 283, 289, 291,
+            301, 314, 321, 556,
             394, 413, 421, 425, 427, 468, 516, 615, 677, 683, 687,
         ];
         Assert.All(auditedContinuousClarityReplacementIds, exerciseId =>
@@ -884,20 +885,20 @@ public sealed class CatalogInvariantTests
             [215] = "Forearm Pronation-Supination Flow",
             [216] = "Interlaced-Finger Palm-Out Stretch",
             [217] = "Tree Pose Hold",
-            [218] = "Sequential Finger Waves",
+            [218] = "Cumbia Two-Step",
             [223] = "Inward Controlled Wrist Circles",
             [224] = "Qigong Interlaced Wrist Rolls",
             [225] = "Opposite-Hand Fist-Down Wrist Stretch",
             [231] = "Karate Reverse Punch",
             [232] = "Extended Side Angle Hold",
             [233] = "Standing Wrist Flexion Stretch",
-            [234] = "Straight Fingers to Knuckle Bend",
+            [234] = "Merengue Six-Count Step",
             [236] = "Bilateral Wrist Figure Eights",
-            [237] = "Sequential Finger Curl Waves",
-            [239] = "Tabletop Tendon Glide",
-            [240] = "Hook Fingers to Full Fist",
-            [241] = "Open Hand to Hook Fist",
-            [242] = "Open Hand to Full Fist",
+            [237] = "Salsa Front-and-Back Basic",
+            [239] = "Reggaeton Single-Single-Double Step",
+            [240] = "Grapevine Step",
+            [241] = "Basic Mambo Step",
+            [242] = "Jazz Square",
             [245] = "Straight-Punch to Shovel-Hook Combo",
             [246] = "Bodyweight Cuban Rotation",
             [248] = "Alternating Side-Tap Palm Pushes",
@@ -908,10 +909,11 @@ public sealed class CatalogInvariantTests
             [262] = "Standing Bicycle Crunches",
             [270] = "Goalpost Chest-Opener Hold",
             [282] = "Side-Step Knee Drive with Alternating Side Punches",
-            [283] = "Open Hand to Straight Fist",
+            [283] = "Cha-Cha Basic Step",
             [288] = "Forward Knee-and-Ankle Circles",
             [289] = "Fingertip Spider Presses",
             [290] = "Low Palm Scoop to Side Opening",
+            [291] = "Bachata Side-to-Side Basic",
             [326] = "Rear-Hand Straight Punch",
             [338] = "Overhead Triceps Stretch with Side Bend",
             [390] = "Inhale Arms Up, Exhale Step-Touch",
@@ -943,7 +945,7 @@ public sealed class CatalogInvariantTests
             [512] = "Standing Upper-Back and Neck Hug Stretch",
             [513] = "Single-Leg Head Nods",
             [95] = "Single-Leg Knee-Raise Hold",
-            [556] = "Standing Fist Clench and Release",
+            [556] = "Pony Step",
             [561] = "Tiptoe Running Steps with Head Spot",
             [562] = "Ballet Calf Raises with Arm Sweeps",
             [563] = "Hip Airplane with Back Foot on Wall",
@@ -1031,7 +1033,7 @@ public sealed class CatalogInvariantTests
             highKneeSideReach.SecondaryCanonicalGroups);
 
         Assert.Equal(
-            CanonicalMuscleGroup.IntrinsicHand,
+            CanonicalMuscleGroup.CalfDeepPosteriorLegAndPlantarFoot,
             exercises.Single(exercise => exercise.Id == 283).PrimaryCanonicalGroup);
 
         Exercise shadowBoxing = exercises.Single(exercise => exercise.Id == 591);

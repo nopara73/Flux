@@ -751,7 +751,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [131, 225, 145],
+    [121, 235, 145],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -1097,10 +1097,10 @@ test("hard floor filters incompatible exercises only while enabled", () => {
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 311);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 301);
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 190);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 200);
 
   for (const exerciseId of [37, 610, 326]) {
     assert.equal(
@@ -6720,7 +6720,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 55);
+  assert.equal(CURRENT_CATALOG_REVISION, 56);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -6767,7 +6767,7 @@ test("sole-wall revision rebuilds changed workout state and resets scores", () =
   assert.equal(restored.state.scores["563"], undefined);
   assert.equal(restored.state.scores["15"], -2);
   assert.equal(restored.state.pendingRestGroupId, null);
-  assert.equal(restored.state.catalogRevision, 55);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
 test("bare-upper-body expansion drops retired slot state and scores", () => {
@@ -6816,7 +6816,63 @@ test("bare-upper-body expansion drops retired slot state and scores", () => {
   assert.equal(restored.state.scores["790"], undefined);
   assert.equal(restored.state.scores["993"], undefined);
   assert.equal(restored.state.scores["15"], -2);
-  assert.equal(restored.state.catalogRevision, 55);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("hand-shape replacement revision rebuilds changed workout state and resets scores", () => {
+  const changedIds = [218, 234, 237, 239, 240, 241, 242, 283, 291, 556];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(56)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(56)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 55;
+  state.activeWorkoutMinutes = 30;
+  const changedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("DeepHipRotators")).id;
+  const retainedGroupId = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("PosteriorThighAndKneeFlexors")).id;
+  state.selectedExerciseIds = {
+    [changedGroupId]: 241,
+    [retainedGroupId]: 15,
+  };
+  state.outcomes = {
+    [changedGroupId]: "x",
+    [retainedGroupId]: "tick",
+  };
+  state.scores = { 241: -4, 15: -2 };
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.Warmup]: { 241: -4, 15: -2 },
+  };
+  state.pendingRestGroupId = changedGroupId;
+  state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
+  state.pendingRestKept = true;
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroupId], undefined);
+  assert.equal(restored.state.outcomes[changedGroupId], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroupId], 15);
+  assert.equal(restored.state.scores["241"], undefined);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup]["241"],
+    undefined,
+  );
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.Warmup]["15"],
+    -2,
+  );
+  assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
 test("unclear exercise replacement revision resets every changed score", () => {
