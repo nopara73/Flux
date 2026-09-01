@@ -4832,16 +4832,15 @@
         MirrorForAlternation = $false
     }
     701 = @{
-        File = 'wall-push-up.mp4'
-        Url = 'https://www.youtube.com/watch?v=wIPJvBQs7RA'
-        SourcePage = 'https://www.youtube.com/watch?v=wIPJvBQs7RA'
+        File = 'wall-push-up-healthy-lifestyle-program.mp4'
+        Url = 'https://www.youtube.com/watch?v=B7ATp1rhcSw'
+        SourcePage = 'https://www.youtube.com/watch?v=B7ATp1rhcSw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 12
-        DurationSeconds = 15
+        StartSeconds = 42
+        DurationSeconds = 8
         FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     702 = @{

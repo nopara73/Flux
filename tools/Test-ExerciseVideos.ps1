@@ -8,6 +8,8 @@ $resolvedAssetsRoot = [IO.Path]::GetFullPath($AssetsRoot)
 $catalogPath = Join-Path $resolvedAssetsRoot 'exercises.json'
 $catalog = @(Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json)
 $failures = [System.Collections.Generic.List[string]]::new()
+$motionFreezeFilter = 'freezedetect=n=-60dB:d=2'
+$maximumMotionFreezeSeconds = 2.0
 $reviewedWorkoutCadenceDurationRanges = @{
     251 = @{ Minimum = 3.9; Maximum = 4.1 }
     231 = @{ Minimum = 7.9; Maximum = 8.1 }
@@ -261,6 +263,70 @@ try {
                 $duration -gt [double]$cadenceRange.Maximum)) {
             $failures.Add(
                 "$($exercise.id): reviewed workout-cadence duration regressed")
+        }
+
+        if ([string]$exercise.mode -eq 'Repetition' -and
+            [string]$exercise.presentation -eq 'Motion') {
+            $freezeProbeOutput = @(& ffmpeg `
+                    -hide_banner `
+                    -nostats `
+                    -i $videoPath `
+                    -vf $motionFreezeFilter `
+                    -an `
+                    -f null `
+                    - 2>&1)
+            if ($LASTEXITCODE -ne 0) {
+                $failures.Add("$($exercise.id): motion-freeze probe failed")
+                continue
+            }
+
+            $freezeProbeText = $freezeProbeOutput -join "`n"
+            $freezeStarts = @(
+                [regex]::Matches(
+                    $freezeProbeText,
+                    'freeze_start: (?<value>[0-9.]+)') |
+                    ForEach-Object {
+                        [double]::Parse(
+                            $_.Groups['value'].Value,
+                            [Globalization.CultureInfo]::InvariantCulture)
+                    })
+            $freezeEnds = @(
+                [regex]::Matches(
+                    $freezeProbeText,
+                    'freeze_end: (?<value>[0-9.]+)') |
+                    ForEach-Object {
+                        [double]::Parse(
+                            $_.Groups['value'].Value,
+                            [Globalization.CultureInfo]::InvariantCulture)
+                    })
+            $freezeDurations = @(
+                [regex]::Matches(
+                    $freezeProbeText,
+                    'freeze_duration: (?<value>[0-9.]+)') |
+                    ForEach-Object {
+                        [double]::Parse(
+                            $_.Groups['value'].Value,
+                            [Globalization.CultureInfo]::InvariantCulture)
+                    })
+            $maximumFreeze = if ($freezeDurations.Count -gt 0) {
+                [double](
+                    $freezeDurations | Measure-Object -Maximum).Maximum
+            }
+            else {
+                0.0
+            }
+            if ($freezeStarts.Count -gt $freezeEnds.Count) {
+                $terminalFreeze = $duration - $freezeStarts[-1]
+                $maximumFreeze = [Math]::Max(
+                    $maximumFreeze,
+                    $terminalFreeze)
+            }
+            if ($maximumFreeze -ge $maximumMotionFreezeSeconds) {
+                $failures.Add(
+                    '{0}: motion presentation contains a {1:0.###}-second freeze' -f
+                    $exercise.id,
+                    $maximumFreeze)
+            }
         }
 
         if ([string]$exercise.mode -eq 'Hold') {
