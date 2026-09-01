@@ -1,14 +1,14 @@
 {
-  "catalogRevision": 54,
-  "catalogRecordCount": 499,
-  "catalogSha256": "259476c78e440f1f11df6b2ae440e0de24d14eb8b6b52185db3cc40ecdcf204f",
+  "catalogRevision": 55,
+  "catalogRecordCount": 501,
+  "catalogSha256": "deea5d3625692b0562f6755a12486206c1add0dba00a320fd8f9182f8b63f099",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     "validatorsChanged": false
   },
   "summary": {
-    "pairwiseDeficiencyCount": 309,
-    "pairwiseAffectedGroupCount": 38,
+    "pairwiseDeficiencyCount": 305,
+    "pairwiseAffectedGroupCount": 37,
     "hardFloorCategoryDeficiencyCount": 81,
     "hardFloorCategoryAffectedGroupCount": 24,
     "materialityDeficiencyCount": 0,
@@ -330,18 +330,6 @@
     },
     {
       "minutes": 5,
-      "groupId": "r5.lower-legs-feet",
-      "groupName": "Lower legs and feet",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 5,
       "groupId": "r5.torso",
       "groupName": "Torso",
       "firstModifier": 16,
@@ -518,18 +506,6 @@
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
       "matchingExerciseCount": 1,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.lower-legs-feet",
-      "groupName": "Lower legs and feet",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {
@@ -1614,18 +1590,6 @@
     },
     {
       "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 15,
       "groupId": "r15.hip-adductors",
       "groupName": "Hip adductors",
       "firstModifier": 16,
@@ -2161,18 +2125,6 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.chest-breathing",
-      "groupName": "Chest and breathing",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
       "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
@@ -2209,7 +2161,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {
@@ -3169,7 +3121,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3181,7 +3133,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3217,7 +3169,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3229,7 +3181,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3241,7 +3193,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3253,7 +3205,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3265,7 +3217,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3277,7 +3229,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3313,7 +3265,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3325,7 +3277,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3337,7 +3289,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3349,7 +3301,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 0,
+      "matchingExerciseCount": 1,
       "requiredExerciseCount": 5
     },
     {
@@ -3613,7 +3565,7 @@
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
-      "matchingExerciseCount": 3,
+      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {

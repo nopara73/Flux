@@ -20840,6 +20840,57 @@
     "silent": true
   },
   {
+    "id": 790,
+    "name": "Mirror Most-Muscular Pose Hold",
+    "retiredName": "Flamenco Chest Circle",
+    "video": "exercise_videos/exercise_0790.mp4",
+    "primaryCanonicalGroup": "ScapularGirdle",
+    "secondaryCanonicalGroups": [
+      "Chest",
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "ElbowFlexors",
+      "ForearmFlexorsAndPronators",
+      "IntrinsicHand",
+      "AbdominalWall",
+      "GlutealExtensors",
+      "MedialAndDeepKneeExtensors",
+      "LateralKneeExtensors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus"
+    ],
+    "practice": "Bodybuilding posing",
+    "motionProfile": "MostMuscularPose",
+    "mode": "Hold",
+    "presentation": "Still",
+    "holdFramePercent": 50,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 790,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Incompatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "BareUpperBodyRequired",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "MirrorOnly",
+    "minimumMirrorCoverage": "FullBody",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "Mirror",
+    "silent": true
+  },
+  {
     "id": 801,
     "name": "Wall Roll-Down",
     "retiredName": null,
@@ -22335,6 +22386,46 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 993,
+    "name": "Mirror Standing Vacuum Repetitions",
+    "retiredName": "Belly-Dance Abdominal Undulation",
+    "video": "exercise_videos/exercise_0993.mp4",
+    "primaryCanonicalGroup": "AbdominalWall",
+    "secondaryCanonicalGroups": [
+      "BreathingMuscles"
+    ],
+    "practice": "Bodybuilding posing",
+    "motionProfile": "StandingVacuum",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 993,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Incompatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "BareUpperBodyRequired",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "MirrorOnly",
+    "minimumMirrorCoverage": "UpperBody",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "Mirror",
     "silent": true
   },
   {

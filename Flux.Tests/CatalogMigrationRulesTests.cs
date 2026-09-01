@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(358, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(360, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -2247,7 +2247,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(54, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(55, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2288,7 +2288,60 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(0, state.PendingScoreValue);
         Assert.Contains(563, state.LastKeptExerciseIds);
         Assert.Contains(15, state.LastKeptExerciseIds);
-        Assert.Equal(54, state.CatalogRevision);
+        Assert.Equal(55, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void BareUpperBodyExpansionRevisionDropsRetiredSlotStateAndScores()
+    {
+        HashSet<int> changedIds = [790, 993];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[55]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[55]);
+
+        const string changedGroup = "bare-upper-body.changed";
+        const string retainedGroup = "bare-upper-body.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 54,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 790,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [790] = -4,
+                    [993] = -3,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.DoesNotContain(790, phaseScores);
+        Assert.DoesNotContain(993, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(55, state.CatalogRevision);
     }
 
     [Theory]

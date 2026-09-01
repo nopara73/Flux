@@ -7,7 +7,7 @@
     # The exercise is a mirror physique-inspection pose whose purpose depends
     # on seeing the uncovered upper-body musculature.
     BareUpperBodyRequired = @(
-        524, 525, 526, 527, 528
+        524, 525, 526, 527, 528, 790, 993
     )
 
     # Explicitly reviewed: clothing state neither enables nor defeats the

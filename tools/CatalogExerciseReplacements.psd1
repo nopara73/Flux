@@ -8916,4 +8916,56 @@
             MirrorForAlternation = $true
         }
     }
+    790 = @{
+        RetiredName = 'Flamenco Chest Circle'
+        Name = 'Mirror Most-Muscular Pose Hold'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'MostMuscularPose'
+        Primary = 'ScapularGirdle'
+        Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'AbdominalWall', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Still'
+        HoldFramePercent = 50
+        Media = @{
+            File = 'bodybuilding-criticalbench.mp4'
+            Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            SourcePage = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 307
+            DurationSeconds = 2
+            Crop = 'crop=ih:ih:(iw-ih)*0.6:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    993 = @{
+        RetiredName = 'Belly-Dance Abdominal Undulation'
+        Name = 'Mirror Standing Vacuum Repetitions'
+        Practice = 'Bodybuilding posing'
+        MotionProfile = 'StandingVacuum'
+        Primary = 'AbdominalWall'
+        Secondary = @('BreathingMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'vacuum-bumstead.mp4'
+            Url = 'https://www.youtube.com/watch?v=Y9yF7Ih49K8'
+            SourcePage = 'https://www.youtube.com/watch?v=Y9yF7Ih49K8'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 354.5
+            DurationSeconds = 31
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            FramesPerSecond = 10
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
 }

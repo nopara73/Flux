@@ -657,7 +657,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "BareUpperBodyRequired")
       .map((exercise) => exercise.id)),
-    new Set([524, 525, 526, 527, 528]),
+    new Set([524, 525, 526, 527, 528, 790, 993]),
   );
   assert.match(
     webApp,
@@ -865,7 +865,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*75/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*76/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,

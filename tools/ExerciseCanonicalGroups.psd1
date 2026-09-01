@@ -501,4 +501,8 @@
     704 = @{ Primary = 'Chest'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff') }
     801 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'AbdominalWall', 'PosteriorThighAndKneeFlexors') }
     835 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'SpinalExtensors', 'DeepAndIntersegmentalBack') }
+
+    # Bare-torso mirror-practice additions.
+    790 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'AbdominalWall', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    993 = @{ Primary = 'AbdominalWall'; Secondary = @('BreathingMuscles') }
 }

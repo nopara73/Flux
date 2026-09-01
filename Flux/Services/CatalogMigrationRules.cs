@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 54;
+    public const int CurrentCatalogRevision = 55;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -926,7 +926,7 @@ public static class CatalogMigrationRules
         608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
-        816, 834, 843, 845, 886, 887, 971, 986, 987, 996, 997, 998, 999,
+        790, 816, 834, 843, 845, 886, 887, 971, 986, 987, 993, 996, 997, 998, 999,
     ];
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
@@ -1080,6 +1080,7 @@ public static class CatalogMigrationRules
                     973, 986, 999,
                 },
                 [54] = new HashSet<int> { 563, 564, 567, 568, 574 },
+                [55] = new HashSet<int> { 790, 993 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1172,6 +1173,7 @@ public static class CatalogMigrationRules
                     569, 570, 571, 574, 575, 578, 581, 582, 583,
                 },
                 [54] = new HashSet<int> { 563, 564, 567, 568, 574 },
+                [55] = new HashSet<int> { 790, 993 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

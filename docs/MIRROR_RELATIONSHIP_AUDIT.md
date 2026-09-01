@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 499 retained exercises are reviewed against physical mirror equipment, not
+The 501 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -13,8 +13,8 @@ Each exercise has both a relationship and a minimum useful coverage:
 
 | Relationship | Coverage | Runtime behavior | Count |
 | --- | --- | --- | ---: |
-| `MirrorOnly` | `UpperBody` | Requires compact or tall | 5 |
-| `MirrorOnly` | `FullBody` | Requires tall | 5 |
+| `MirrorOnly` | `UpperBody` | Requires compact or tall | 6 |
+| `MirrorOnly` | `FullBody` | Requires tall | 6 |
 | `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 27 |
 | `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
 | `Agnostic` | `None` | Unaffected | 412 |
@@ -32,6 +32,7 @@ The upper-body set is:
 - `Smile at Yourself in the Mirror`
 - `Mirror Tutting Box Sequence`
 - `Mirror Arm-Wave Isolation Practice`
+- `Mirror Standing Vacuum Repetitions`
 
 The full-body set is:
 
@@ -40,11 +41,12 @@ The full-body set is:
 - `Mirror Side-Chest Pose Hold`
 - `Mirror Side-Triceps Pose Hold`
 - `Mirror Abdominals-and-Thighs Pose Hold`
+- `Mirror Most-Muscular Pose Hold`
 
 These are established reflection practices with exact human demonstrations.
 The compact-mirror set uses live self-view to isolate an eyebrow, practise
 facial expressions, smile at one's own reflection, and correct the visual
-geometry of tutting and arm-wave illusions. The tall-mirror set contains five standard
+geometry of tutting and arm-wave illusions. The tall-mirror set contains six standard
 bodybuilding poses whose intended whole-body line and contraction are judged
 through live full-body view. The reflection is part of each practice; ordinary
 movements do not become `MirrorOnly` merely because a mirror could offer

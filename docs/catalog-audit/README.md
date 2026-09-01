@@ -19,16 +19,18 @@ final catalog of **475** entries:
   **388** `Agnostic`.
 
 The subsequent Wall-equipment implementation added 24 separately reviewed base
-wall movements, producing the current 499-record catalog. Five existing slots
+wall movements. Five existing slots
 now contain separately reviewed sole-contact wall movements. Their full
 29-movement inventory and two independent direct-floor contracts are
 documented in
 [`../WALL_EQUIPMENT_AUDIT.md`](../WALL_EQUIPMENT_AUDIT.md); the counts above
 remain the frozen outcome of the 479-record baseline review.
 
-The later upper-body-clothing audit classifies the same 499 records without
-adding variants: six require clothing for torso/back contact, five mirror
-bodybuilding poses require a visible bare upper body, and 488 are agnostic.
+The upper-body-clothing audit initially classified those 499 records. Its
+proactive practice review then admitted two established, separately demonstrated
+bare-torso mirror practices, producing the current 501-record catalog: six
+require clothing for torso/back contact, seven require a visible bare upper
+body or abdominal contour, and 488 are agnostic.
 Its exhaustive source and review rules are documented in
 [`../UPPER_BODY_CLOTHING_AUDIT.md`](../UPPER_BODY_CLOTHING_AUDIT.md).
 

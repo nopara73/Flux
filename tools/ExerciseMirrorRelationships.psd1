@@ -4,12 +4,12 @@
     MirrorOnlyByCoverage = @{
         # A compact mirror that shows roughly the upper body is sufficient.
         UpperBody = @(
-            515, 520, 521, 522, 523
+            515, 520, 521, 522, 523, 993
         )
 
         # The whole body must be visible, so these require a tall mirror.
         FullBody = @(
-            524, 525, 526, 527, 528
+            524, 525, 526, 527, 528, 790
         )
     }
 
