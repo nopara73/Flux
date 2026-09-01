@@ -734,19 +734,36 @@ public static class WorkoutModifierPolicy
         IReadOnlyList<WorkoutGroup> groups,
         WorkoutModifiers profile)
     {
+        var candidateMovementIdsByGroupId = groups.ToDictionary(
+            group => group.Id,
+            _ => new HashSet<int>());
+        foreach (Exercise exercise in exercises)
+        {
+            if (exercise.SequenceBlocks.Length != 1 ||
+                !IsSequenceCompatible(exercise, exercisesById, profile))
+            {
+                continue;
+            }
+
+            int movementId = GetSessionMovementId(exercise);
+            foreach (WorkoutGroup[] option in
+                     WorkoutSequencePolicy.GetPlacementOptions(
+                         exercise,
+                         exercisesById,
+                         groups))
+            {
+                if (option.Length == 1 &&
+                    candidateMovementIdsByGroupId.TryGetValue(
+                        option[0].Id,
+                        out HashSet<int>? candidateMovementIds))
+                {
+                    candidateMovementIds.Add(movementId);
+                }
+            }
+        }
+
         int[][] candidateMovementIdsByGroup = groups
-            .Select(group => exercises
-                .Where(exercise =>
-                    exercise.SequenceBlocks.Length == 1 &&
-                    IsSequenceCompatible(exercise, exercisesById, profile) &&
-                    WorkoutSequencePolicy.GetPlacementOptions(
-                        exercise,
-                        exercisesById,
-                        groups).Any(option =>
-                            option.Length == 1 && option[0].Id == group.Id))
-                .Select(GetSessionMovementId)
-                .Distinct()
-                .ToArray())
+            .Select(group => candidateMovementIdsByGroupId[group.Id].ToArray())
             .OrderBy(candidateIds => candidateIds.Length)
             .ToArray();
         var assignedGroupByMovementId = new Dictionary<int, int>();

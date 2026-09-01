@@ -2055,14 +2055,26 @@ export function getMaximumDistinctLineupSize(
   }
   const exercisesById = new Map(exercises.map((exercise) =>
     [exercise.id, exercise]));
+  const candidateOneBlockMovementsByGroupId = new Map(groups.map((group) =>
+    [group.id, new Set()]));
+  for (const exercise of exercises) {
+    if (exercise.sequenceBlocks?.length !== 1 ||
+        !isSequenceCompatible(exercise, exercisesById, modifiers)) {
+      continue;
+    }
+    const movementId = getSessionMovementId(exercise);
+    for (const option of getSequencePlacementOptions(
+      exercise,
+      exercisesById,
+      groups,
+    )) {
+      if (option.length === 1) {
+        candidateOneBlockMovementsByGroupId.get(option[0].id)?.add(movementId);
+      }
+    }
+  }
   const candidateOneBlockMovementsByGroup = groups
-    .map((group) => [...new Set(exercises
-      .filter((exercise) =>
-        exercise.sequenceBlocks?.length === 1 &&
-        isSequenceCompatible(exercise, exercisesById, modifiers) &&
-        getSequencePlacementOptions(exercise, exercisesById, groups)
-          .some((option) => option.length === 1 && option[0].id === group.id))
-      .map(getSessionMovementId))])
+    .map((group) => [...candidateOneBlockMovementsByGroupId.get(group.id)])
     .sort((left, right) => left.length - right.length);
   const assignedOneBlockGroupByMovement = new Map();
   const tryAssignOneBlockMovement = (groupIndex, visitedMovementIds) => {
@@ -5829,67 +5841,87 @@ export class WorkoutSession {
 
     const repeatablePlacements = rankedPlacements.filter(({ anchor }) =>
       !lockedSelectionGroupIds.has(anchor.id));
-    const repeatableCosts = [...new Set(repeatablePlacements.map((placement) =>
-      blockCostByGroup.get(placement.anchor.id)))];
+    const repeatableMetadata = repeatablePlacements.map((placement) => ({
+      placement,
+      groupId: placement.anchor.id,
+      cost: blockCostByGroup.get(placement.anchor.id),
+      setCount: setCountsBySelectionGroupId.get(placement.anchor.id),
+      kept: this.isSequenceKept(placement.anchor.id, placement.root),
+    }));
+    const repeatableCosts = [...new Set(repeatableMetadata.map(({ cost }) => cost))];
     const scheduleOrderedPlacements = this.getScheduleOrderedPlacements(
       rankedPlacements,
     );
-    const getPhaseAfterAddingSet = (candidate) => {
-      let finalBlockOrder = 0;
-      for (const placement of scheduleOrderedPlacements) {
-        const setCount = setCountsBySelectionGroupId.get(placement.anchor.id) +
-          (placement.anchor.id === candidate.anchor.id ? 1 : 0);
-        finalBlockOrder += blockCostByGroup.get(placement.anchor.id) * setCount;
-        if (placement.anchor.id === candidate.anchor.id) {
-          return getWorkoutExercisePhase(finalBlockOrder);
-        }
-      }
-      throw new Error("The repeat candidate is not part of the workout schedule.");
-    };
-    const canFill = (minutes) => {
-      const fillable = new Array(minutes + 1).fill(false);
-      fillable[0] = true;
-      for (let value = 1; value <= minutes; value += 1) {
-        fillable[value] = repeatableCosts.some((cost) =>
-          cost <= value && fillable[value - cost]);
-      }
-      return fillable[minutes];
-    };
+    // Fillability depends only on the available sequence lengths. Build the
+    // unbounded-knapsack table once instead of rebuilding it for every
+    // candidate in every added set.
+    const fillable = new Array(remainingMinutes + 1).fill(false);
+    fillable[0] = true;
+    for (let value = 1; value <= remainingMinutes; value += 1) {
+      fillable[value] = repeatableCosts.some((cost) =>
+        cost <= value && fillable[value - cost]);
+    }
+    const hasPhaseScoreAdjustments = Object.values(
+      this.state.exerciseScoreAdjustmentsByPhase,
+    ).some((adjustments) => Object.keys(adjustments).length > 0);
 
     while (remainingMinutes > 0) {
-      const selectedPlacement = [...repeatablePlacements]
-        .sort((left, right) => {
-          const leftScore = this.getPhaseScoreAdjustment(
-            left.root,
-            getPhaseAfterAddingSet(left),
+      // Compute every candidate's next-set phase in one prefix scan. The old
+      // comparator rescanned the entire schedule for both sides of every sort
+      // comparison, which made long-workout rebalancing needlessly cubic.
+      let phaseAfterAddingSetByGroupId = null;
+      if (hasPhaseScoreAdjustments) {
+        phaseAfterAddingSetByGroupId = new Map();
+        let finalBlockOrder = 0;
+        for (const placement of scheduleOrderedPlacements) {
+          const groupId = placement.anchor.id;
+          const cost = blockCostByGroup.get(groupId);
+          finalBlockOrder += cost * setCountsBySelectionGroupId.get(groupId);
+          phaseAfterAddingSetByGroupId.set(
+            groupId,
+            getWorkoutExercisePhase(finalBlockOrder + cost),
           );
-          const rightScore = this.getPhaseScoreAdjustment(
-            right.root,
-            getPhaseAfterAddingSet(right),
-          );
-          return rightScore - leftScore ||
-          setCountsBySelectionGroupId.get(left.anchor.id) -
-            setCountsBySelectionGroupId.get(right.anchor.id) ||
-          Number(this.isSequenceKept(right.anchor.id, right.root)) -
-            Number(this.isSequenceKept(left.anchor.id, left.root)) ||
-          Number(blockCostByGroup.get(right.anchor.id) === 1) -
-            Number(blockCostByGroup.get(left.anchor.id) === 1);
-        })
-        .find((placement) => {
-          const cost = blockCostByGroup.get(placement.anchor.id);
-          return cost <= remainingMinutes &&
-            canFill(remainingMinutes - cost);
-        });
-      if (!selectedPlacement) {
+        }
+      }
+
+      let selectedMetadata = null;
+      let selectedScore = Number.MIN_SAFE_INTEGER;
+      for (const metadata of repeatableMetadata) {
+        const { placement, groupId, cost, setCount, kept } = metadata;
+        if (cost > remainingMinutes || !fillable[remainingMinutes - cost]) {
+          continue;
+        }
+        const score = hasPhaseScoreAdjustments
+          ? this.getPhaseScoreAdjustment(
+              placement.root,
+              phaseAfterAddingSetByGroupId.get(groupId),
+            )
+          : 0;
+        if (!selectedMetadata ||
+            score > selectedScore ||
+            (score === selectedScore &&
+              (setCount < selectedMetadata.setCount ||
+                (setCount === selectedMetadata.setCount &&
+                  (Number(kept) > Number(selectedMetadata.kept) ||
+                    (kept === selectedMetadata.kept &&
+                      Number(cost === 1) >
+                        Number(selectedMetadata.cost === 1))))))) {
+          selectedMetadata = metadata;
+          selectedScore = score;
+        }
+      }
+      if (!selectedMetadata) {
         throw new Error(
           "The selected sequence lengths cannot fill the workout duration.",
         );
       }
+      const selectedPlacement = selectedMetadata.placement;
+      selectedMetadata.setCount += 1;
       setCountsBySelectionGroupId.set(
         selectedPlacement.anchor.id,
-        setCountsBySelectionGroupId.get(selectedPlacement.anchor.id) + 1,
+        selectedMetadata.setCount,
       );
-      remainingMinutes -= blockCostByGroup.get(selectedPlacement.anchor.id);
+      remainingMinutes -= selectedMetadata.cost;
     }
 
     return {
@@ -5966,6 +5998,13 @@ export class WorkoutSession {
         .map((option) => ({
           groups: option,
           anchor: [...option].sort((left, right) => left.order - right.order)[0],
+        }))
+        .map((option) => ({
+          ...option,
+          allocationBehaviorKey: this.getLongWorkoutAllocationPlacementKey(
+            candidate,
+            option.anchor,
+          ),
         })),
     }));
 
@@ -6013,6 +6052,7 @@ export class WorkoutSession {
       const currentAllocationHasOneSetPerPlacement = [
         ...currentAllocation.setCountsBySelectionGroupId.values(),
       ].every((setCount) => setCount === 1);
+      const replacementAllocationByKey = new Map();
 
       for (const candidateMetadata of rebalanceCandidates) {
         const { candidate, movementId: candidateMovementId } = candidateMetadata;
@@ -6020,7 +6060,11 @@ export class WorkoutSession {
             currentMovementIds.has(candidateMovementId)) {
           continue;
         }
-        for (const { groups: option, anchor } of candidateMetadata.options) {
+        for (const {
+          groups: option,
+          anchor,
+          allocationBehaviorKey,
+        } of candidateMetadata.options) {
           const removedPlacements = [...new Set(option.map((group) =>
             placementByGroupId.get(group.id)))];
           if (removedPlacements.reduce((total, placement) =>
@@ -6110,19 +6154,36 @@ export class WorkoutSession {
             );
           } else {
             const removedPlacementSet = new Set(removedPlacements);
-            const candidatePlacements = [
-              ...currentPlacements.filter((placement) =>
-                !removedPlacementSet.has(placement)),
-              { root: candidate, anchor, coveredGroups: option },
-            ].sort((left, right) => left.anchor.order - right.anchor.order);
             let candidateAllocation;
-            try {
-              candidateAllocation = this.getCachedLongWorkoutAllocation(
-                candidatePlacements,
-                allocationCache,
-                lockedSelectionGroupIds,
+            const replacementAllocationKey = `${removedPlacements
+              .map((placement) => placement.anchor.id)
+              .sort()
+              .join(",")}>${allocationBehaviorKey}`;
+            if (replacementAllocationByKey.has(replacementAllocationKey)) {
+              candidateAllocation = replacementAllocationByKey.get(
+                replacementAllocationKey,
               );
-            } catch {
+            } else {
+              const candidatePlacements = [
+                ...currentPlacements.filter((placement) =>
+                  !removedPlacementSet.has(placement)),
+                { root: candidate, anchor, coveredGroups: option },
+              ].sort((left, right) => left.anchor.order - right.anchor.order);
+              try {
+                candidateAllocation = this.getCachedLongWorkoutAllocation(
+                  candidatePlacements,
+                  allocationCache,
+                  lockedSelectionGroupIds,
+                );
+              } catch {
+                candidateAllocation = null;
+              }
+              replacementAllocationByKey.set(
+                replacementAllocationKey,
+                candidateAllocation,
+              );
+            }
+            if (!candidateAllocation) {
               continue;
             }
             const canonicalLoadDelta = new Map();
@@ -6289,13 +6350,10 @@ export class WorkoutSession {
   ) {
     const signature = placements
       .sort((left, right) => left.anchor.order - right.anchor.order)
-      .map((placement) => [
-        placement.anchor.id,
-        placement.root.sequenceBlocks.length,
-        this.getSequenceExercises(placement.root).some((member) =>
-          member.muscularDemand === HARD_MUSCULAR_DEMAND),
-        this.isSequenceKept(placement.anchor.id, placement.root),
-      ].join(":"))
+      .map((placement) => this.getLongWorkoutAllocationPlacementKey(
+        placement.root,
+        placement.anchor,
+      ))
       .join("|");
     if (allocationCache.has(signature)) {
       const cached = allocationCache.get(signature);
@@ -6315,6 +6373,35 @@ export class WorkoutSession {
       allocationCache.set(signature, null);
       throw error;
     }
+  }
+
+  getLongWorkoutAllocationPlacementKey(root, anchor) {
+    const sequenceExercises = this.getSequenceExercises(root);
+    const keyParts = [
+      anchor.id,
+      root.sequenceBlocks.length,
+      Number(sequenceExercises.some((member) =>
+        member.muscularDemand === HARD_MUSCULAR_DEMAND)),
+      Number(this.isSequenceKept(anchor.id, root)),
+    ];
+    const hasPhaseScoreAdjustments = Object.values(
+      this.state.exerciseScoreAdjustmentsByPhase,
+    ).some((adjustments) => Object.keys(adjustments).length > 0);
+    if (hasPhaseScoreAdjustments) {
+      // Schedule order influences allocation only when a phase can change a
+      // score. Include every phase-sensitive dependency in that case; omit
+      // them when all phase adjustments are empty so behaviorally identical
+      // catalog roots can share an allocation safely.
+      keyParts.push(
+        getMuscularDemandSchedulePriority(
+          getSequenceMuscularDemand(root, this.exercisesById),
+        ),
+        this.getPhaseScoreAdjustment(root, WORKOUT_EXERCISE_PHASE.Warmup),
+        this.getPhaseScoreAdjustment(root, WORKOUT_EXERCISE_PHASE.PeakPerformance),
+        this.getPhaseScoreAdjustment(root, WORKOUT_EXERCISE_PHASE.Fatigued),
+      );
+    }
+    return keyParts.join(":");
   }
 
   calculateScheduledCanonicalLoadEighthUnits(placements, allocation) {

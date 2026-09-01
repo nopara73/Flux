@@ -4789,59 +4789,81 @@ public sealed class ExerciseSessionService
             .ToArray();
         SelectedSequencePlacement[] scheduleOrderedPlacements =
             GetScheduleOrderedPlacements(state, rankedPlacements);
-        WorkoutExercisePhase GetPhaseAfterAddingSet(
-            SelectedSequencePlacement candidate)
+        // Fillability depends only on the available sequence lengths. Build
+        // this unbounded-knapsack table once rather than once per candidate
+        // during every additional-set choice.
+        var fillable = new bool[remainingMinutes + 1];
+        fillable[0] = true;
+        for (int value = 1; value <= remainingMinutes; value++)
         {
-            int finalBlockOrder = 0;
-            foreach (SelectedSequencePlacement placement in
-                     scheduleOrderedPlacements)
-            {
-                int setCount = setCounts[placement.Anchor.Id] +
-                    (placement.Anchor.Id == candidate.Anchor.Id ? 1 : 0);
-                finalBlockOrder +=
-                    blockCostByGroup[placement.Anchor.Id] * setCount;
-                if (placement.Anchor.Id == candidate.Anchor.Id)
-                {
-                    return WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(
-                        finalBlockOrder);
-                }
-            }
-
-            throw new InvalidOperationException(
-                "The repeat candidate is not part of the workout schedule.");
+            fillable[value] = repeatableCosts.Any(cost =>
+                cost <= value && fillable[value - cost]);
         }
-        bool CanFill(int minutes)
-        {
-            var fillable = new bool[minutes + 1];
-            fillable[0] = true;
-            for (int value = 1; value <= minutes; value++)
-            {
-                fillable[value] = repeatableCosts.Any(cost =>
-                    cost <= value && fillable[value - cost]);
-            }
-            return fillable[minutes];
-        }
+        bool hasPhaseScoreAdjustments = state.ExerciseScoreAdjustmentsByPhase
+            .Values
+            .Any(adjustments => adjustments.Count > 0);
 
         while (remainingMinutes > 0)
         {
-            SelectedSequencePlacement? selectedPlacement = repeatablePlacements
-                .OrderByDescending(placement => GetPhaseScoreAdjustment(
-                    state,
-                    placement.Root,
-                    GetPhaseAfterAddingSet(placement)))
-                .ThenBy(placement => setCounts[placement.Anchor.Id])
-                .ThenByDescending(placement => IsSequenceKept(
-                    state,
-                    placement.Anchor.Id,
-                    placement.Root))
-                .ThenByDescending(placement =>
-                    blockCostByGroup[placement.Anchor.Id] == 1)
-                .FirstOrDefault(placement =>
+            // Compute every candidate's next-set phase in one prefix scan.
+            // The former sort comparator rescanned the complete schedule for
+            // both sides of every comparison.
+            Dictionary<string, WorkoutExercisePhase>?
+                phaseAfterAddingSetByGroupId = null;
+            if (hasPhaseScoreAdjustments)
+            {
+                phaseAfterAddingSetByGroupId =
+                    new Dictionary<string, WorkoutExercisePhase>(
+                        StringComparer.Ordinal);
+                int finalBlockOrder = 0;
+                foreach (SelectedSequencePlacement placement in
+                         scheduleOrderedPlacements)
                 {
-                    int cost = blockCostByGroup[placement.Anchor.Id];
-                    return cost <= remainingMinutes &&
-                        CanFill(remainingMinutes - cost);
-                });
+                    string groupId = placement.Anchor.Id;
+                    int cost = blockCostByGroup[groupId];
+                    finalBlockOrder += cost * setCounts[groupId];
+                    phaseAfterAddingSetByGroupId[groupId] =
+                        WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(
+                            finalBlockOrder + cost);
+                }
+            }
+
+            SelectedSequencePlacement? selectedPlacement = null;
+            (int Score, int SetCount, bool Kept, bool OneBlock)? selectedRank =
+                null;
+            foreach (SelectedSequencePlacement placement in repeatablePlacements)
+            {
+                string groupId = placement.Anchor.Id;
+                int cost = blockCostByGroup[groupId];
+                if (cost > remainingMinutes ||
+                    !fillable[remainingMinutes - cost])
+                {
+                    continue;
+                }
+
+                var rank = (
+                    Score: hasPhaseScoreAdjustments
+                        ? GetPhaseScoreAdjustment(
+                            state,
+                            placement.Root,
+                            phaseAfterAddingSetByGroupId![groupId])
+                        : 0,
+                    SetCount: setCounts[groupId],
+                    Kept: IsSequenceKept(state, groupId, placement.Root),
+                    OneBlock: cost == 1);
+                if (selectedRank is null ||
+                    rank.Score > selectedRank.Value.Score ||
+                    rank.Score == selectedRank.Value.Score &&
+                    (rank.SetCount < selectedRank.Value.SetCount ||
+                     rank.SetCount == selectedRank.Value.SetCount &&
+                     (rank.Kept && !selectedRank.Value.Kept ||
+                      rank.Kept == selectedRank.Value.Kept &&
+                      rank.OneBlock && !selectedRank.Value.OneBlock)))
+                {
+                    selectedPlacement = placement;
+                    selectedRank = rank;
+                }
+            }
             if (selectedPlacement is null)
             {
                 throw new InvalidOperationException(
@@ -4950,6 +4972,16 @@ public sealed class ExerciseSessionService
                         Groups = option,
                         Anchor = option.OrderBy(group => group.Order).First(),
                     })
+                    .Select(option => new
+                    {
+                        option.Groups,
+                        option.Anchor,
+                        AllocationBehaviorKey =
+                            GetLongWorkoutAllocationPlacementKey(
+                                state,
+                                candidate,
+                                option.Anchor),
+                    })
                     .ToArray(),
             })
             .ToArray();
@@ -5017,6 +5049,9 @@ public sealed class ExerciseSessionService
                 .SetCountsBySelectionGroupId
                 .Values
                 .All(setCount => setCount == 1);
+            var replacementAllocationByKey =
+                new Dictionary<string, LongWorkoutAllocation?>(
+                    StringComparer.Ordinal);
             foreach (var candidateMetadata in rebalanceCandidates)
             {
                 Exercise candidate = candidateMetadata.Candidate;
@@ -5136,26 +5171,42 @@ public sealed class ExerciseSessionService
                     {
                         HashSet<SelectedSequencePlacement> removedPlacementSet =
                             removedPlacements.ToHashSet();
-                        SelectedSequencePlacement[] candidatePlacements =
-                            currentPlacements
-                                .Where(placement =>
-                                    !removedPlacementSet.Contains(placement))
-                                .Append(new SelectedSequencePlacement(
-                                    candidate,
-                                    anchor,
-                                    option))
-                                .OrderBy(placement => placement.Anchor.Order)
-                                .ToArray();
-                        LongWorkoutAllocation candidateAllocation;
-                        try
+                        string replacementAllocationKey =
+                            string.Join(',', removedPlacements
+                                .Select(placement => placement.Anchor.Id)
+                                .Order(StringComparer.Ordinal)) +
+                            ">" + optionMetadata.AllocationBehaviorKey;
+                        if (!replacementAllocationByKey.TryGetValue(
+                                replacementAllocationKey,
+                                out LongWorkoutAllocation? candidateAllocation))
                         {
-                            candidateAllocation = GetCachedLongWorkoutAllocation(
-                                state,
-                                candidatePlacements,
-                                allocationCache,
-                                lockedSelectionGroupIds);
+                            SelectedSequencePlacement[] candidatePlacements =
+                                currentPlacements
+                                    .Where(placement =>
+                                        !removedPlacementSet.Contains(placement))
+                                    .Append(new SelectedSequencePlacement(
+                                        candidate,
+                                        anchor,
+                                        option))
+                                    .OrderBy(placement => placement.Anchor.Order)
+                                    .ToArray();
+                            try
+                            {
+                                candidateAllocation =
+                                    GetCachedLongWorkoutAllocation(
+                                        state,
+                                        candidatePlacements,
+                                        allocationCache,
+                                        lockedSelectionGroupIds);
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                candidateAllocation = null;
+                            }
+                            replacementAllocationByKey[
+                                replacementAllocationKey] = candidateAllocation;
                         }
-                        catch (InvalidOperationException)
+                        if (candidateAllocation is null)
                         {
                             continue;
                         }
@@ -5388,14 +5439,10 @@ public sealed class ExerciseSessionService
             '|',
             placements
                 .OrderBy(placement => placement.Anchor.Order)
-                .Select(placement =>
-                    $"{placement.Anchor.Id}:" +
-                    $"{placement.Root.SequenceBlocks.Length}:" +
-                    $"{GetSequenceExercises(placement.Root).Any(WorkoutRecoveryPolicy.IsHardExercise)}:" +
-                    IsSequenceKept(
-                        state,
-                        placement.Anchor.Id,
-                        placement.Root)));
+                .Select(placement => GetLongWorkoutAllocationPlacementKey(
+                    state,
+                    placement.Root,
+                    placement.Anchor)));
         if (allocationCache.TryGetValue(
                 signature,
                 out LongWorkoutAllocation? cached))
@@ -5418,6 +5465,49 @@ public sealed class ExerciseSessionService
             allocationCache[signature] = null;
             throw;
         }
+    }
+
+    private string GetLongWorkoutAllocationPlacementKey(
+        WorkoutState state,
+        Exercise root,
+        WorkoutGroup anchor)
+    {
+        Exercise[] sequenceExercises = GetSequenceExercises(root);
+        var keyParts = new List<object>
+        {
+            anchor.Id,
+            root.SequenceBlocks.Length,
+            sequenceExercises.Any(WorkoutRecoveryPolicy.IsHardExercise),
+            IsSequenceKept(state, anchor.Id, root),
+        };
+        bool hasPhaseScoreAdjustments = state.ExerciseScoreAdjustmentsByPhase
+            .Values
+            .Any(adjustments => adjustments.Count > 0);
+        if (hasPhaseScoreAdjustments)
+        {
+            // Schedule order affects allocation only when phase-local scores
+            // exist. In that case the key includes every phase-sensitive
+            // dependency; without them behaviorally identical roots can be
+            // shared safely.
+            keyParts.Add(WorkoutSchedulePolicy.GetMuscularDemandPriority(
+                WorkoutSchedulePolicy.GetSequenceMuscularDemand(
+                    root,
+                    _exercisesById)));
+            keyParts.Add(GetPhaseScoreAdjustment(
+                state,
+                root,
+                WorkoutExercisePhase.Warmup));
+            keyParts.Add(GetPhaseScoreAdjustment(
+                state,
+                root,
+                WorkoutExercisePhase.PeakPerformance));
+            keyParts.Add(GetPhaseScoreAdjustment(
+                state,
+                root,
+                WorkoutExercisePhase.Fatigued));
+        }
+
+        return string.Join(':', keyParts);
     }
 
     private IReadOnlyDictionary<CanonicalMuscleGroup, int>

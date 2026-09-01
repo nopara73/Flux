@@ -245,11 +245,19 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
   );
   assert.match(
     sessionService,
-    /blockCostByGroup[\s\S]*SequenceBlocks\.Length[\s\S]*remainingMinutes[\s\S]*CanFill/,
+    /blockCostByGroup[\s\S]*SequenceBlocks\.Length[\s\S]*remainingMinutes[\s\S]*var fillable[\s\S]*repeatableCosts\.Any/,
   );
   assert.match(
     workoutModule,
-    /blockCostByGroup[\s\S]*sequenceBlocks\.length[\s\S]*remainingMinutes[\s\S]*canFill/,
+    /blockCostByGroup[\s\S]*sequenceBlocks\.length[\s\S]*remainingMinutes[\s\S]*const fillable[\s\S]*repeatableCosts\.some/,
+  );
+  assert.match(
+    sessionService,
+    /GetLongWorkoutAllocationPlacementKey[\s\S]*hasPhaseScoreAdjustments[\s\S]*Warmup[\s\S]*PeakPerformance[\s\S]*Fatigued/,
+  );
+  assert.match(
+    workoutModule,
+    /getLongWorkoutAllocationPlacementKey[\s\S]*hasPhaseScoreAdjustments[\s\S]*Warmup[\s\S]*PeakPerformance[\s\S]*Fatigued/,
   );
   assert.match(
     sessionService,
@@ -1917,11 +1925,11 @@ test("atomic sequences are adjacent units that may satisfy multiple primary slot
   );
   assert.match(
     sessionService,
-    /OrderByDescending\(placement => GetPhaseScoreAdjustment\([\s\S]*ThenBy\(placement => setCounts\[placement\.Anchor\.Id\]\)[\s\S]*ThenByDescending\(placement => IsSequenceKept\([\s\S]*placement\.Anchor\.Id,[\s\S]*placement\.Root\)\)[\s\S]*ThenByDescending\(placement =>[\s\S]*blockCostByGroup\[placement\.Anchor\.Id\] == 1\)/,
+    /phaseAfterAddingSetByGroupId[\s\S]*Score: hasPhaseScoreAdjustments[\s\S]*GetPhaseScoreAdjustment\([\s\S]*SetCount: setCounts\[groupId\][\s\S]*Kept: IsSequenceKept\(state, groupId, placement\.Root\)[\s\S]*OneBlock: cost == 1[\s\S]*rank\.Score > selectedRank\.Value\.Score/,
   );
   assert.match(
     workoutModule,
-    /getPhaseScoreAdjustment\([\s\S]*getPhaseAfterAddingSet[\s\S]*rightScore - leftScore \|\|[\s\S]*setCountsBySelectionGroupId\.get\(left\.anchor\.id\) -[\s\S]*isSequenceKept\(right\.anchor\.id, right\.root\)[\s\S]*isSequenceKept\(left\.anchor\.id, left\.root\)[\s\S]*blockCostByGroup\.get\(right\.anchor\.id\) === 1/,
+    /phaseAfterAddingSetByGroupId[\s\S]*score = hasPhaseScoreAdjustments[\s\S]*getPhaseScoreAdjustment\([\s\S]*setCount < selectedMetadata\.setCount[\s\S]*Number\(kept\)[\s\S]*cost === 1/,
   );
   assert.match(
     sessionService,

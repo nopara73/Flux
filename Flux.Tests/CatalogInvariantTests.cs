@@ -329,7 +329,6 @@ public sealed class CatalogInvariantTests
         WorkoutProfileLineupDeficiency[] lineupDeficiencies =
             WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
         Assert.Empty(lineupDeficiencies);
-        var profileService = new ExerciseSessionService(exercises, new Random(1));
         IReadOnlyDictionary<int, Exercise> exercisesById = exercises
             .ToDictionary(exercise => exercise.Id);
         IReadOnlyDictionary<int, Exercise> sequenceRootByExerciseId = exercises
@@ -338,53 +337,70 @@ public sealed class CatalogInvariantTests
                 .Select(block => (block.ExerciseId, Root: root)))
             .DistinctBy(entry => entry.ExerciseId)
             .ToDictionary(entry => entry.ExerciseId, entry => entry.Root);
-        foreach (WorkoutModifiers profile in WorkoutModifierPolicy.ValidationProfiles)
-        {
-            foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+        Parallel.ForEach(
+            WorkoutModifierPolicy.ValidationProfiles,
+            new ParallelOptions
             {
-                var profileState = new WorkoutState();
-                profileService.StartWorkout(profileState, minutes, profile);
-                WorkoutGroup[] activeGroups = profileService
-                    .GetActiveGroups(profileState)
-                    .ToArray();
-                Exercise[] baseSelections = activeGroups
-                    .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
-                    .Select(rounds => profileService.GetSelectedExercise(
-                        profileState,
-                        rounds.First()))
-                    .ToArray();
-                Assert.Equal(
-                    baseSelections.Length,
-                    baseSelections
-                        .Select(WorkoutModifierPolicy.GetSessionMovementId)
-                        .Distinct()
-                        .Count());
-                Assert.All(profileService.GetActiveGroups(profileState), group =>
-                    Assert.True(WorkoutModifierPolicy.IsCompatible(
-                        profileService.GetSelectedExercise(profileState, group),
-                        profile)));
-                IReadOnlyList<WorkoutGroup> resolutionGroups =
-                    MassGroupingTaxonomy.GetResolution(
-                        minutes > 30 ? 30 : minutes).Groups;
-                Assert.All(
-                    activeGroups.GroupBy(group => group.SelectionKey, StringComparer.Ordinal),
-                    rounds =>
-                    {
-                        Exercise selectedMember = profileService.GetSelectedExercise(
+                MaxDegreeOfParallelism = Math.Max(1, Environment.ProcessorCount),
+            },
+            profile =>
+            {
+                // Profiles are independent. Give each one a deterministic
+                // random stream and service so exhaustive validation can use
+                // separate cores without sharing mutable session state.
+                var profileService = new ExerciseSessionService(
+                    exercises,
+                    new Random(1));
+                foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
+                {
+                    var profileState = new WorkoutState();
+                    profileService.StartWorkout(profileState, minutes, profile);
+                    WorkoutGroup[] activeGroups = profileService
+                        .GetActiveGroups(profileState)
+                        .ToArray();
+                    Exercise[] baseSelections = activeGroups
+                        .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
+                        .Select(rounds => profileService.GetSelectedExercise(
                             profileState,
-                            rounds.First());
-                        Exercise root = sequenceRootByExerciseId[selectedMember.Id];
-                        Assert.Contains(
-                            WorkoutSequencePolicy.GetPlacementOptions(
-                                root,
-                                exercisesById,
-                                resolutionGroups),
-                            placement => placement.Any(group =>
-                                group.Id == rounds.Key));
-                    });
-                Assert.Equal(minutes, activeGroups.Length);
-            }
-        }
+                            rounds.First()))
+                        .ToArray();
+                    Assert.Equal(
+                        baseSelections.Length,
+                        baseSelections
+                            .Select(WorkoutModifierPolicy.GetSessionMovementId)
+                            .Distinct()
+                            .Count());
+                    Assert.All(profileService.GetActiveGroups(profileState), group =>
+                        Assert.True(WorkoutModifierPolicy.IsCompatible(
+                            profileService.GetSelectedExercise(profileState, group),
+                            profile)));
+                    IReadOnlyList<WorkoutGroup> resolutionGroups =
+                        MassGroupingTaxonomy.GetResolution(
+                            minutes > 30 ? 30 : minutes).Groups;
+                    Assert.All(
+                        activeGroups.GroupBy(
+                            group => group.SelectionKey,
+                            StringComparer.Ordinal),
+                        rounds =>
+                        {
+                            Exercise selectedMember =
+                                profileService.GetSelectedExercise(
+                                    profileState,
+                                    rounds.First());
+                            Exercise root =
+                                sequenceRootByExerciseId[selectedMember.Id];
+                            Assert.Contains(
+                                WorkoutSequencePolicy.GetPlacementOptions(
+                                    root,
+                                    exercisesById,
+                                    resolutionGroups),
+                                placement => placement.Any(group =>
+                                    group.Id == rounds.Key));
+                        });
+                    Assert.Equal(minutes, activeGroups.Length);
+                }
+            });
+        var profileService = new ExerciseSessionService(exercises, new Random(1));
         WorkoutModifiers allModifiers = WorkoutModifiers.Insect |
             WorkoutModifiers.Silence |
             WorkoutModifiers.Mirror;

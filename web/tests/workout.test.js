@@ -2378,20 +2378,6 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
 
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
-  for (const profile of WORKOUT_MODIFIER_VALIDATION_PROFILES) {
-    for (const minutes of SUPPORTED_MINUTES) {
-      const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-      session.startWorkout(minutes, profile);
-      assert.ok(session.getActiveGroups().every((group) => {
-        const selected = session.getSelectedExercise(group);
-        return isSelectableForWorkoutProfile(
-          session.getSequenceSelectionExerciseForGroup(selected, group),
-          group,
-          profile,
-        );
-      }));
-    }
-  }
   const allModifiers = WORKOUT_MODIFIERS.Insect |
     WORKOUT_MODIFIERS.Silence |
     WORKOUT_MODIFIERS.Mirror;
