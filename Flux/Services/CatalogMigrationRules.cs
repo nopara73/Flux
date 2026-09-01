@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 58;
+    public const int CurrentCatalogRevision = 59;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -285,7 +285,7 @@ public static class CatalogMigrationRules
                     "Parallel Calf Raises with Hands on Hips"),
                 [565] = new(
                     "Pelvic-Floor Mini Squat to Calf Raise",
-                    "Mini Squat with Forward Reach"),
+                    "Mini-Squat Calf Raises with Forward Reach"),
                 [566] = new(
                     "Parallel Calf Raises for Pelvic-Floor Support",
                     "Parallel Calf Raises"),
@@ -308,6 +308,10 @@ public static class CatalogMigrationRules
                 {
                     "Knee Raise with Overhead Reach",
                     "Single-Side Knee Raise with Two-Arm Pull-Down",
+                },
+                [565] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Mini Squat with Forward Reach",
                 },
                 [21] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -1183,6 +1187,7 @@ public static class CatalogMigrationRules
                 {
                     218, 234, 237, 239, 241, 283, 291, 294, 556,
                 },
+                [59] = new HashSet<int> { 565 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>

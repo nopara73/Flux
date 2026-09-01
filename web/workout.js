@@ -276,7 +276,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 58;
+export const CURRENT_CATALOG_REVISION = 59;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -404,6 +404,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [58, new Set([
     218, 234, 237, 239, 241, 283, 291, 294, 556,
   ])],
+  [59, new Set([565])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -574,7 +575,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [561, ["Tiptoe Bourree Steps with Head Spot", "Tiptoe Running Steps with Head Spot"]],
   [562, ["Ballet Rises with Arm Movement", "Ballet Calf Raises with Arm Sweeps"]],
   [564, ["Calf Raise with Pelvic Floor Contraction", "Parallel Calf Raises with Hands on Hips"]],
-  [565, ["Pelvic-Floor Mini Squat to Calf Raise", "Mini Squat with Forward Reach"]],
+  [565, ["Pelvic-Floor Mini Squat to Calf Raise", "Mini-Squat Calf Raises with Forward Reach"]],
   [566, ["Parallel Calf Raises for Pelvic-Floor Support", "Parallel Calf Raises"]],
   [581, ["Toes-In Calf Raises for Pelvic-Floor Support", "Toes-In Calf Raises"]],
   [582, ["Toes-Out Calf Raises for Pelvic-Floor Support", "Toes-Out Calf Raises"]],
@@ -586,6 +587,7 @@ export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
     "Knee Raise with Overhead Reach",
     "Single-Side Knee Raise with Two-Arm Pull-Down",
   ])],
+  [565, new Set(["Mini Squat with Forward Reach"])],
   [21, new Set(["Alternating Standing-Scale Balance"])],
   [145, new Set(["Alternating Standing Knee Extension"])],
   [231, new Set(["Alternating Karate Reverse Punch"])],

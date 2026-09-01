@@ -751,13 +751,24 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [121, 233, 147],
+    [121, 232, 148],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
   assert.equal(catalog.find((exercise) => exercise.id === 211).muscularDemand, 0);
   assert.equal(catalog.find((exercise) => exercise.id === 264).muscularDemand, 1);
   assert.equal(catalog.find((exercise) => exercise.id === 101).muscularDemand, 2);
+  const miniSquatCalfRaise = catalog.find((exercise) => exercise.id === 565);
+  assert.equal(miniSquatCalfRaise.name,
+    "Mini-Squat Calf Raises with Forward Reach");
+  assert.equal(miniSquatCalfRaise.primaryCanonicalGroup, "Soleus");
+  assert.equal(miniSquatCalfRaise.muscularDemand, 2);
+  assert.equal(
+    miniSquatCalfRaise.hardFloorCompatibility,
+    EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
+  );
+  assert.ok(miniSquatCalfRaise.secondaryCanonicalGroups.includes(
+    "CalfDeepPosteriorLegAndPlantarFoot"));
   assert.equal(hasReviewedMuscularDemand({ muscularDemand: -1 }), false);
   assert.equal(hasReviewedMuscularDemand({ muscularDemand: 3 }), false);
   assert.equal(hasReviewedMuscularDemand({}), false);
@@ -1097,10 +1108,10 @@ test("hard floor filters incompatible exercises only while enabled", () => {
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 303);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 302);
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 198);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 199);
 
   for (const exerciseId of [37, 610, 326]) {
     assert.equal(
@@ -6766,7 +6777,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 58);
+  assert.equal(CURRENT_CATALOG_REVISION, 59);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -7030,6 +7041,42 @@ test("dance cleanup revision rebuilds changed workout state and resets scores", 
     -2,
   );
   assert.equal(restored.state.pendingRestGroupId, null);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("mini-squat calf-raise correction rebuilds placement without erasing feedback", () => {
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(59)],
+    [565],
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(59), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 58;
+  state.activeWorkoutMinutes = 30;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
+  state.selectedExerciseIds[changedGroup.id] = 565;
+  state.outcomes[changedGroup.id] = "tick";
+  state.scores["565"] = -4;
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 565: -4 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(
+    restored.state.selectedExerciseIds[changedGroup.id],
+    undefined,
+  );
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.scores["565"], -4);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["565"],
+    -4,
+  );
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

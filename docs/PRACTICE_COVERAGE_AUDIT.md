@@ -5,7 +5,7 @@ Generated from the runtime catalog and the supplementary movement-practices DAG.
 ## Outcome
 
 - Runtime catalog: **501** exercises. The frozen supplementary practice-coverage delta below contains **5** additions.
-- Exact practice-node provenance: **276**; family-only: **117**; domain-only: **108**; intentionally unmapped: **0**.
+- Exact practice-node provenance: **275**; family-only: **118**; domain-only: **108**; intentionally unmapped: **0**.
 - Primary DAG coverage: **8/18** domains. Including honest cross-links: **11/18** domains and **24/71** families.
 - Newly represented families: **1** — South Asian dance traditions.
 - All additions passed the standing, feet-only, zero-equipment, shoe-agnostic, 2 m × 2 m, quiet, non-jumping, bilateral/alternating, and exact-human-media rules.
@@ -36,7 +36,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 
 | Catalog practice | Exercises |
 |---|---:|
-| Bodyweight conditioning | 74 |
+| Bodyweight conditioning | 73 |
 | Standing mobility and movement practice | 33 |
 | Stretching | 15 |
 | Qigong | 12 |
@@ -48,10 +48,10 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Karate | 10 |
 | Bodyweight cardio conditioning | 9 |
 | Bodyweight strength | 9 |
+| Calf strengthening | 8 |
 | Clinical stretching | 8 |
 | Plyometric conditioning | 8 |
 | Bodybuilding posing | 7 |
-| Calf strengthening | 7 |
 | Karate conditioning | 7 |
 | Low-impact conditioning | 7 |
 | Shoulder mobility | 7 |

@@ -7,14 +7,14 @@ both the runtime catalog and the application package.
 
 | Canonical muscle group | Primary exercises | All meaningful assignments |
 | --- | ---: | ---: |
-| Medial and deep knee extensors | 34 | 169 |
+| Medial and deep knee extensors | 33 | 169 |
 | Posterior thigh and knee flexors | 20 | 74 |
 | Major hip adductors | 17 | 55 |
 | Lateral knee extensors | 26 | 170 |
 | Gluteal extensors | 17 | 187 |
 | Spinal extensors | 13 | 45 |
-| Calf, deep posterior leg and plantar foot | 33 | 157 |
-| Soleus | 10 | 86 |
+| Calf, deep posterior leg and plantar foot | 33 | 158 |
+| Soleus | 11 | 87 |
 | Scapular girdle | 14 | 161 |
 | Shoulder adductors and extensors | 16 | 68 |
 | Abdominal wall | 13 | 191 |

@@ -8,8 +8,8 @@ cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 | Rating | Contract | Current count |
 | --- | --- | ---: |
 | `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 121 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 233 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 147 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 232 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 148 |
 
 Ratings were assigned exercise by exercise. There is no desired distribution,
 quota, or balancing target. Stretching and mobility are not promoted merely
@@ -23,7 +23,9 @@ ratings strictly from the then-current final loops. Later semantic replacements
 are rated from their replacement demonstrations rather than inheriting those
 historical values. The current cleanup rates fingertip wall push-ups and the
 isometric palm press at `2`; the standing upper-body drills and martial strikes
-at `1`; and the reverse-prayer stretch at `0`. No distribution was targeted. See
+at `1`; and the reverse-prayer stretch at `0`. Exercise 565 is also rated `2`
+because its loop repeatedly raises both heels while sustaining a mini squat.
+No distribution was targeted. See
 [`CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
 
 The authoritative reviewed ID lists and rubric live in

@@ -43,8 +43,8 @@ sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 309 exercises
-- `Incompatible`: 190 exercises
+- `Compatible`: 302 exercises
+- `Incompatible`: 199 exercises
 - `Unreviewed`: 0 exercises
 
 Catalog revision 53 rebuilds cached placements for the 97 reclassified
@@ -52,6 +52,11 @@ exercise IDs only when the saved profile has Hard Floor enabled. Soft Floor
 placements remain valid. Scores, keeps, phase feedback, history, and recovery
 state are preserved on both platforms. Android SQLite schema 75 applies the
 same catalog refresh without deleting stored scores.
+
+Catalog revision 59 additionally corrects exercise 565 from a supposed
+heel-down mini squat to the demonstrated mini-squat calf raises. Its cached
+placement is rebuilt while its user score remains intact; Android SQLite
+schema 80 refreshes the corrected identity, anatomy, demand, and floor verdict.
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,
@@ -72,7 +77,7 @@ least five exercises from each exact floor category—`Compatible` and
 `Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
 Floor off still admits both categories at runtime; the category-specific audit
 exists so the larger combined pool cannot conceal a missing soft-floor-only or
-hard-floor-suitable side of a pair. The current validators expose **81**
+hard-floor-suitable side of a pair. The current validators expose **71**
 genuine category deficiencies across **24** group IDs. They remain pinned in
 the Android and web contract tests and in the
 [`current deficit ledger`](catalog-audit/modifier_coverage_deficits_current.json)

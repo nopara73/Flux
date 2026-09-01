@@ -56,8 +56,8 @@ public sealed class CatalogInvariantTests
                 !wallRequired.GetBoolean());
         });
         Assert.Equal(121, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(233, exercises.Count(exercise => exercise.MuscularDemand == 1));
-        Assert.Equal(147, exercises.Count(exercise => exercise.MuscularDemand == 2));
+        Assert.Equal(232, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(148, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
             [104] = [104, 136, 626],
@@ -90,13 +90,23 @@ public sealed class CatalogInvariantTests
         Assert.Equal(0, exercises.Single(exercise => exercise.Id == 211).MuscularDemand);
         Assert.Equal(1, exercises.Single(exercise => exercise.Id == 264).MuscularDemand);
         Assert.Equal(2, exercises.Single(exercise => exercise.Id == 101).MuscularDemand);
+        Exercise miniSquatCalfRaise = exercises.Single(exercise => exercise.Id == 565);
+        Assert.Equal("Mini-Squat Calf Raises with Forward Reach", miniSquatCalfRaise.Name);
+        Assert.Equal(CanonicalMuscleGroup.Soleus, miniSquatCalfRaise.PrimaryCanonicalGroup);
+        Assert.Equal(Exercise.MaximumMuscularDemand, miniSquatCalfRaise.MuscularDemand);
+        Assert.Equal(
+            ExerciseHardFloorCompatibility.Incompatible,
+            miniSquatCalfRaise.HardFloorCompatibility);
+        Assert.Contains(
+            CanonicalMuscleGroup.CalfDeepPosteriorLegAndPlantarFoot,
+            miniSquatCalfRaise.SecondaryCanonicalGroups);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Unreviewed);
-        Assert.Equal(303, exercises.Count(exercise =>
+        Assert.Equal(302, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Compatible));
-        Assert.Equal(198, exercises.Count(exercise =>
+        Assert.Equal(199, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Incompatible));
         Assert.All(
             new[] { 37, 610, 326 },
@@ -952,7 +962,7 @@ public sealed class CatalogInvariantTests
             [562] = "Ballet Calf Raises with Arm Sweeps",
             [563] = "Hip Airplane with Back Foot on Wall",
             [564] = "Standing Foot-to-Wall Press Hold",
-            [565] = "Mini Squat with Forward Reach",
+            [565] = "Mini-Squat Calf Raises with Forward Reach",
             [566] = "Parallel Calf Raises",
             [567] = "Rear-Foot-on-Wall Split Squat",
             [568] = "Toes-on-Wall Calf Stretch",

@@ -36,7 +36,7 @@ $actualDemonstrations = @{
     562 = 'Repeated ballet calf raises coordinated with broad arm sweeps.'
     563 = 'A planted hip airplane performed with the free foot pressing into the wall behind the body.'
     564 = 'A standing isometric glute press with the bent free leg placing the shoe sole against the wall.'
-    565 = 'Repeated mini squats with a forward arm reach; the heels stay down.'
+    565 = 'Repeated bent-knee calf raises performed while holding a mini squat and reaching both arms forward.'
     566 = 'Parallel two-leg calf raises.'
     567 = 'A split squat performed with the rear shoe sole supported against a plain wall.'
     568 = 'A standing calf stretch with the front shoe sole angled against the wall.'
@@ -138,7 +138,7 @@ function Get-CorrectionReason {
         562 { return 'The generic label and inflated whole-body associations were replaced by the exact calf-raise and arm-sweep action.' }
         563 { return 'The exact wall-supported hip-airplane demonstration replaces a redundant calf variation and requires sole-to-wall access.' }
         564 { return 'The exact standing foot-to-wall press replaces a redundant calf variation and requires sole-to-wall access.' }
-        565 { return 'No calf raise or visible pelvic-floor action occurs; the demonstrated mini squat and reach are now authoritative.' }
+        565 { return 'The heels repeatedly rise after the mini-squat position is established; the name, calf-led anatomy, demand, and hard-floor classification now follow that visible action.' }
         566 { return 'A silent loop cannot establish pelvic-floor support; only the visible calf-raise mechanics remain associated.' }
         567 { return 'The exact foot-on-wall split squat replaces a redundant calf variation and requires sole-to-wall access.' }
         568 { return 'The exact toes-on-wall calf stretch replaces a redundant calf variation and requires sole-to-wall access.' }

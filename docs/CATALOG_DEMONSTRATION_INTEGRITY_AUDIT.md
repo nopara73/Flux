@@ -71,7 +71,8 @@ demand-2 exercises. These are audit results; no category total was targeted.
   tiptoe-running/spotting and calf-raise/arm-sweep actions.
 - **564/565/566/581/582:** silent footage cannot establish a voluntary
   pelvic-floor contraction. Their names and anatomy now describe the visible
-  calf raise or mini-squat/reach mechanics.
+  calf-raise mechanics; 565 specifically performs bent-knee calf raises while
+  holding a mini squat and reaching forward.
 - **615:** the name now states the demonstrated alternating hamstring curls.
 
 The ledger records the exact before/after metadata and rationale for all 126

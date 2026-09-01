@@ -8580,11 +8580,11 @@
     }
     565 = @{
         RetiredName = 'Jab-Cross Shoulder Rotation'
-        Name = 'Mini Squat with Forward Reach'
-        Practice = 'Bodyweight conditioning'
-        MotionProfile = 'MiniSquatForwardReach'
-        Primary = 'MedialAndDeepKneeExtensors'
-        Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors')
+        Name = 'Mini-Squat Calf Raises with Forward Reach'
+        Practice = 'Calf strengthening'
+        MotionProfile = 'MiniSquatCalfRaiseForwardReach'
+        Primary = 'Soleus'
+        Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
