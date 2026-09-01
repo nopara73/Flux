@@ -31,6 +31,8 @@ const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
 const DIRECTION_SEGMENT_SECONDS = 20;
 const MODIFIER_FEEDBACK_DURATION_MS = 2_040;
+const EXERCISE_NAME_LONG_PRESS_MS = 500;
+const EXERCISE_NAME_LONG_PRESS_MOVE_TOLERANCE_PX = 12;
 const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   upperBodyClothingEnabled: "upper-body clothing ON",
   upperBodyClothingDisabled: "upper-body clothing OFF",
@@ -153,6 +155,8 @@ let activeWorkoutSetup = false;
 let workoutSetupReturnPhase = "ready";
 let workoutSetupShouldResume = false;
 let workoutSetupCurrentGroupId = null;
+let exerciseNameLongPress = null;
+let lastExerciseNameCopyRequestAt = Number.NEGATIVE_INFINITY;
 
 bindEvents();
 renderDuration(selectedMinutes, false);
@@ -268,6 +272,24 @@ function bindEvents() {
   }
   elements.shuffleExercise.addEventListener("click", shuffleCurrentExercise);
   elements.workoutSetup.addEventListener("click", showActiveWorkoutSetup);
+  elements.exerciseName.addEventListener(
+    "pointerdown",
+    beginExerciseNameLongPress,
+  );
+  elements.exerciseName.addEventListener(
+    "pointermove",
+    moveExerciseNameLongPress,
+  );
+  for (const eventName of ["pointerup", "pointercancel"]) {
+    elements.exerciseName.addEventListener(
+      eventName,
+      finishExerciseNameLongPress,
+    );
+  }
+  elements.exerciseName.addEventListener(
+    "contextmenu",
+    copyExerciseNameFromContextMenu,
+  );
   elements.startMovement.addEventListener("click", startMovement);
   elements.repeatExercise.addEventListener("click", repeatMovement);
   elements.playbackToggle.addEventListener("click", toggleMovementPlayback);
@@ -286,6 +308,108 @@ function byId(id) {
     throw new Error(`Missing element #${id}.`);
   }
   return element;
+}
+
+function beginExerciseNameLongPress(event) {
+  if (event.pointerType !== "touch" && event.pointerType !== "pen") {
+    return;
+  }
+
+  cancelExerciseNameLongPress();
+  const pointerId = event.pointerId;
+  exerciseNameLongPress = {
+    pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    timer: setTimeout(() => {
+      if (exerciseNameLongPress?.pointerId !== pointerId) {
+        return;
+      }
+      exerciseNameLongPress = null;
+      requestExerciseNameCopy();
+    }, EXERCISE_NAME_LONG_PRESS_MS),
+  };
+}
+
+function moveExerciseNameLongPress(event) {
+  if (exerciseNameLongPress?.pointerId !== event.pointerId) {
+    return;
+  }
+
+  const distance = Math.hypot(
+    event.clientX - exerciseNameLongPress.startX,
+    event.clientY - exerciseNameLongPress.startY,
+  );
+  if (distance > EXERCISE_NAME_LONG_PRESS_MOVE_TOLERANCE_PX) {
+    cancelExerciseNameLongPress();
+  }
+}
+
+function finishExerciseNameLongPress(event) {
+  if (exerciseNameLongPress?.pointerId === event.pointerId) {
+    cancelExerciseNameLongPress();
+  }
+}
+
+function cancelExerciseNameLongPress() {
+  clearTimeout(exerciseNameLongPress?.timer);
+  exerciseNameLongPress = null;
+}
+
+function copyExerciseNameFromContextMenu(event) {
+  event.preventDefault();
+  cancelExerciseNameLongPress();
+  requestExerciseNameCopy();
+}
+
+function requestExerciseNameCopy() {
+  const now = performance.now();
+  if (now - lastExerciseNameCopyRequestAt < EXERCISE_NAME_LONG_PRESS_MS) {
+    return;
+  }
+  lastExerciseNameCopyRequestAt = now;
+  void copyDisplayedExerciseName();
+}
+
+async function copyDisplayedExerciseName() {
+  const exerciseName = elements.exerciseName.textContent.trim();
+  if (!exerciseName) {
+    return;
+  }
+
+  try {
+    await writeClipboardText(exerciseName);
+    elements.status.textContent = `${exerciseName} copied.`;
+  } catch (error) {
+    console.error("Unable to copy exercise name.", error);
+    elements.status.textContent = "Unable to copy exercise name.";
+  }
+}
+
+async function writeClipboardText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // A touch long-press can outlive transient clipboard permission on some
+      // browsers. Continue with the gesture-scoped selection fallback.
+    }
+  }
+
+  const helper = document.createElement("textarea");
+  helper.value = text;
+  helper.readOnly = true;
+  helper.style.position = "fixed";
+  helper.style.left = "-9999px";
+  document.body.append(helper);
+  helper.select();
+  helper.setSelectionRange(0, helper.value.length);
+  const copied = document.execCommand("copy");
+  helper.remove();
+  if (!copied) {
+    throw new Error("The browser rejected the clipboard operation.");
+  }
 }
 
 function loadState() {
@@ -939,6 +1063,10 @@ function renderExerciseIdentity(exercise, upcoming = false) {
   elements.exerciseName.setAttribute(
     "aria-label",
     `${upcoming ? "Next block: " : ""}${exercise.name}. ${mode}.`,
+  );
+  elements.exerciseName.setAttribute(
+    "aria-description",
+    "Long press to copy exercise name.",
   );
   elements.holdBadge.hidden = exercise.mode !== "Hold";
 }
@@ -2021,6 +2149,7 @@ function pauseActiveWorkoutForBackground() {
 
 function handleVisibilityChange() {
   if (document.hidden) {
+    cancelExerciseNameLongPress();
     clearMediaRecoveryTimer();
     pauseActiveWorkoutForBackground();
     return;
@@ -2051,6 +2180,7 @@ function handleVisibilityChange() {
 }
 
 function handlePageHide() {
+  cancelExerciseNameLongPress();
   clearMediaRecoveryTimer();
   pauseActiveWorkoutForBackground();
 }

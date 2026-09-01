@@ -702,11 +702,13 @@ button.modifier-tile:not(:disabled):active {
   max-height: 4.8em;
   margin: 8px 0 0;
   overflow: hidden;
+  -webkit-touch-callout: none;
   color: var(--graphite);
   font-size: clamp(16px, 5vw, 23px);
   font-weight: 600;
   line-height: 1.2;
   text-overflow: ellipsis;
+  user-select: none;
 }
 
 .execution-signifier {

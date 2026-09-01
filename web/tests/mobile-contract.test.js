@@ -1148,6 +1148,37 @@ test("Android landscape keeps controls left and the demonstration on the right",
   );
 });
 
+test("exercise names copy from a mobile long press on both platforms", () => {
+  assert.match(
+    workoutLayout,
+    /android:id="@\+id\/exercise_name"[\s\S]*android:longClickable="true"/,
+  );
+  assert.match(
+    strings,
+    /copy_exercise_name_description">Long press to copy exercise name\.<\/string>/,
+  );
+  assert.match(
+    mainActivity,
+    /_exerciseName\.LongClick[\s\S]*CopyDisplayedExerciseName\(\)[\s\S]*eventArgs\.Handled = true/,
+  );
+  assert.match(
+    mainActivity,
+    /CopyDisplayedExerciseName\(\)[\s\S]*ClipboardManager[\s\S]*ClipData\.NewPlainText[\s\S]*FeedbackConstants\.LongPress/,
+  );
+  assert.match(
+    webApp,
+    /exerciseName\.addEventListener\([\s\S]*"pointerdown"[\s\S]*beginExerciseNameLongPress[\s\S]*"contextmenu"[\s\S]*copyExerciseNameFromContextMenu/,
+  );
+  assert.match(
+    webApp,
+    /Math\.hypot[\s\S]*EXERCISE_NAME_LONG_PRESS_MOVE_TOLERANCE_PX[\s\S]*navigator\.clipboard\?\.writeText[\s\S]*document\.execCommand\("copy"\)/,
+  );
+  assert.match(
+    webStyles,
+    /\.exercise-name \{[\s\S]*-webkit-touch-callout: none;[\s\S]*user-select: none;/,
+  );
+});
+
 test("literal work-block timelines and logical exercise progress match", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");

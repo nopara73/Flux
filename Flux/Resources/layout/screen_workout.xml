@@ -111,6 +111,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="start"
                 android:lineSpacingExtra="1dp"
+                android:longClickable="true"
                 android:maxLines="4"
                 android:textColor="@color/primary_text"
                 android:textSize="23sp" />

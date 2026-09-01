@@ -804,6 +804,11 @@ public class MainActivity : Activity
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
         _workoutSetupButton.Click += (_, _) => ShowActiveWorkoutSetup();
+        _exerciseName.LongClick += (_, eventArgs) =>
+        {
+            CopyDisplayedExerciseName();
+            eventArgs.Handled = true;
+        };
         _shuffleButton.Click += (_, _) => ShuffleCurrentExercise();
         _startButton.Click += (_, _) => StartCountdown();
         _repeatAction.Click += (_, _) => RepeatExercise();
@@ -3086,12 +3091,46 @@ public class MainActivity : Activity
         string modeDescription = exercise.Mode == ExerciseMode.Hold
             ? "Hold."
             : "Repetition.";
+        string copyDescription = GetString(
+            Resource.String.copy_exercise_name_description);
         _exerciseName.ContentDescription = upcoming
-            ? $"Next block: {exercise.Name}. {modeDescription}"
-            : $"{exercise.Name}. {modeDescription}";
+            ? $"Next block: {exercise.Name}. {modeDescription} {copyDescription}"
+            : $"{exercise.Name}. {modeDescription} {copyDescription}";
         _exerciseModeBadge.Visibility = exercise.Mode == ExerciseMode.Hold
             ? ViewStates.Visible
             : ViewStates.Gone;
+    }
+
+    private void CopyDisplayedExerciseName()
+    {
+        string exerciseName = _exerciseName.Text?.Trim() ?? string.Empty;
+        if (exerciseName.Length == 0)
+        {
+            return;
+        }
+
+        var clipboard = GetSystemService(
+            Android.Content.Context.ClipboardService)
+            as Android.Content.ClipboardManager;
+        if (clipboard is null)
+        {
+            return;
+        }
+
+        clipboard.PrimaryClip = Android.Content.ClipData.NewPlainText(
+            GetString(Resource.String.exercise_name_clip_label),
+            exerciseName);
+        _exerciseName.PerformHapticFeedback(FeedbackConstants.LongPress);
+
+        // Android 13+ provides its own clipboard preview. Older releases need
+        // an explicit confirmation so the gesture never feels unresponsive.
+        if (!OperatingSystem.IsAndroidVersionAtLeast(33))
+        {
+            Android.Widget.Toast.MakeText(
+                this,
+                Resource.String.exercise_name_copied_feedback,
+                Android.Widget.ToastLength.Short)?.Show();
+        }
     }
 
     private void RestorePendingMovement(WorkoutGroup pendingGroup)
