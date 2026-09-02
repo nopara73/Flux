@@ -2826,6 +2826,188 @@
             MirrorForAlternation = $false
         }
     }
+    302 = @{
+        RetiredName = 'Large Bidirectional Arm Circles'
+        Name = 'Marching Forward Arm Circles'
+        Practice = 'Low-impact conditioning'
+        MotionProfile = 'MarchingForwardArmCircle'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'marching-arm-circles.mp4'
+            Url = 'https://www.youtube.com/watch?v=ZtSWL-2qrkM'
+            SourcePage = 'https://www.youtube.com/watch?v=ZtSWL-2qrkM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0.4
+            DurationSeconds = 13.4
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    304 = @{
+        RetiredName = 'Windmill Arms'
+        Name = 'Marching Backward Arm Circles'
+        Practice = 'Low-impact conditioning'
+        MotionProfile = 'MarchingBackwardArmCircle'
+        Primary = 'ShoulderAbductors'
+        Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'marching-arm-circles.mp4'
+            Url = 'https://www.youtube.com/watch?v=ZtSWL-2qrkM'
+            SourcePage = 'https://www.youtube.com/watch?v=ZtSWL-2qrkM'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 14.4
+            DurationSeconds = 13.4
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    305 = @{
+        RetiredName = 'Cross-Body Arm Swings'
+        Name = 'Standing March with Torso Twist'
+        Practice = 'Low-impact conditioning'
+        MotionProfile = 'MarchingTorsoTwist'
+        Primary = 'DeepAndIntersegmentalBack'
+        Secondary = @('AbdominalWall', 'HipFlexors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle')
+        SideSequence = 'Alternating'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'standing-march-torso-twist.mp4'
+            Url = 'https://www.youtube.com/watch?v=ofv31V3fjcg'
+            SourcePage = 'https://www.youtube.com/watch?v=ofv31V3fjcg'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 7.15
+            FramesPerSecond = 12
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    307 = @{
+        RetiredName = 'Front Arm Raise'
+        Name = 'Self-Resisted Neck Flexion Isometric'
+        Practice = 'Self-resistance'
+        MotionProfile = 'SelfResistedNeckFlexion'
+        Primary = 'AnteriorLateralNeckAndHyoidMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Motion'
+        HoldFramePercent = 55
+        Media = @{
+            File = 'standing-self-resisted-neck-flexion.mp4'
+            Url = 'https://www.youtube.com/watch?v=LTuN2JESRaQ'
+            SourcePage = 'https://www.youtube.com/watch?v=LTuN2JESRaQ'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 8.5
+            DurationSeconds = 23.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    308 = @{
+        RetiredName = 'Lateral Arm Raise'
+        Name = 'Self-Resisted Neck Side-Bend Isometric'
+        Practice = 'Self-resistance'
+        MotionProfile = 'SelfResistedNeckSideBend'
+        Primary = 'AnteriorLateralNeckAndHyoidMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors')
+        SideSequence = 'ScreenLeftThenRight'
+        Mode = 'Hold'
+        Presentation = 'Motion'
+        HoldFramePercent = 55
+        Media = @{
+            File = 'self-resisted-neck-side-bend.mp4'
+            Url = 'https://www.youtube.com/watch?v=kPCXiqTVois'
+            SourcePage = 'https://www.youtube.com/watch?v=kPCXiqTVois'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 12.6
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    309 = @{
+        RetiredName = 'Scaption Raise'
+        Name = 'Self-Resisted Neck Rotation Isometric'
+        Practice = 'Self-resistance'
+        MotionProfile = 'SelfResistedNeckRotation'
+        Primary = 'AnteriorLateralNeckAndHyoidMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors')
+        SideSequence = 'ScreenRightThenLeft'
+        Mode = 'Hold'
+        Presentation = 'Motion'
+        HoldFramePercent = 55
+        Media = @{
+            File = 'self-resisted-neck-rotation.mp4'
+            Url = 'https://www.youtube.com/watch?v=E5ad2c2z_Bc'
+            SourcePage = 'https://www.youtube.com/watch?v=E5ad2c2z_Bc'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 0
+            DurationSeconds = 21
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    310 = @{
+        RetiredName = 'Standing Rear-Delt Sweep'
+        Name = 'Self-Resisted Neck Extension Isometric'
+        Practice = 'Self-resistance'
+        MotionProfile = 'SelfResistedNeckExtension'
+        Primary = 'PosteriorNeckAndSuboccipitalMuscles'
+        Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors')
+        SideSequence = 'Continuous'
+        Mode = 'Hold'
+        Presentation = 'Motion'
+        HoldFramePercent = 55
+        Media = @{
+            File = 'standing-self-resisted-neck-extension.mp4'
+            Url = 'https://www.youtube.com/watch?v=Zd0b7B12IqA'
+            SourcePage = 'https://www.youtube.com/watch?v=Zd0b7B12IqA'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 8.5
+            DurationSeconds = 19.5
+            FramesPerSecond = 10
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     314 = @{
         RetiredName = 'Alternating Forward Lunge with Biceps Curl'
         Name = 'Alternating Forward Lunge Pulses'

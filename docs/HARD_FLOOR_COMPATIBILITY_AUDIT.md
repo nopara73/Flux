@@ -43,7 +43,7 @@ sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 302 exercises
+- `Compatible`: 309 exercises
 - `Incompatible`: 199 exercises
 - `Unreviewed`: 0 exercises
 
@@ -60,13 +60,14 @@ schema 80 refreshes the corrected identity, anatomy, demand, and floor verdict.
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,
-Silence, and Mirror UI states. Of the 29 wall-required movements, the repeated
-wall calf raise and wall tibialis raise are incompatible under the same
-concentrated forefoot/heel rule as equivalent unsupported work. Wall soleus
-stretch and wall calf stretch are also incompatible because their split stance
-requires dependable traction. The five sole-contact movements are incompatible
-because their support, balance, or traction depends on reliable foot placement;
-the remaining 20 are compatible. Because Wall off
+Silence, and Mirror UI states. Of the 30 wall-required movements, ten are
+incompatible: the repeated wall calf raise and wall tibialis raise under the
+same concentrated forefoot/heel rule as equivalent unsupported work; the wall
+soleus and calf stretches because their split stance requires dependable
+traction; fingertip wall push-ups because a low-traction floor can let the feet
+slide under pressing force; and all five sole-contact movements because their
+support, balance, or traction depends on reliable foot placement. The remaining
+20 are compatible. Because Wall off
 excludes them and Wall is not a pairwise quota dimension, they do not hide or
 alter floor-coverage accounting. The validation remains quadratic in the number of
 quota-bearing modifiers; it does not require every state in the full modifier

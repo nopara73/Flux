@@ -32,6 +32,8 @@
         '288' = @(288, 758)               # Forward, then backward knee-and-ankle circles on both sides
         '291' = @(291, 294)               # Inward, then outward alternating knife-hand strikes
         '292' = @(292, 542)               # Standing-bird-dog sides, then alternating integration
+        '302' = @(302, 304)               # Forward, then backward arm circles while marching
+        '307' = @(307, 310)               # Self-resisted neck flexion, then extension
         '327' = @(327, 546)               # Horizontal-elbow-strike sides, then alternating integration
         '329' = @(329, 531)               # Shoulder-CAR sides, then alternating integration
         '367' = @(367, 529)               # Single-leg deadlift sides, then alternating integration
@@ -74,7 +76,7 @@
         257, 258, 260, 262, 263, 265, 266, 268, 269, 270, 271, 272,
         273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284,
         287, 289, 290, 293, 295, 296, 301,
-        303, 311, 314, 315, 321, 326, 340, 341, 377, 379, 389,
+        303, 305, 308, 309, 311, 314, 315, 321, 326, 340, 341, 377, 379, 389,
         390, 391, 394, 395, 396, 397,
         398, 401, 402, 403, 404, 405, 407, 408, 409, 410, 411, 412,
         413, 417, 419, 422, 423, 424, 425, 427, 428, 429, 430, 431,

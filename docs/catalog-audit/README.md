@@ -28,9 +28,12 @@ remain the frozen outcome of the 479-record baseline review.
 
 The upper-body-clothing audit initially classified those 499 records. Its
 proactive practice review then admitted two established, separately demonstrated
-bare-torso mirror practices, producing the current 501-record catalog: six
-require clothing for torso/back contact, seven require a visible bare upper
-body or abdominal contour, and 488 are agnostic.
+bare-torso mirror practices, producing a 501-record catalog. The later reduced
+muscular-demand coverage pass admitted seven separately reviewed exercise
+records forming five session movements, producing the current 508-record
+catalog: six require clothing for torso/back
+contact, seven require a visible bare upper body or abdominal contour, and 495
+are agnostic.
 Its exhaustive source and review rules are documented in
 [`../UPPER_BODY_CLOTHING_AUDIT.md`](../UPPER_BODY_CLOTHING_AUDIT.md).
 

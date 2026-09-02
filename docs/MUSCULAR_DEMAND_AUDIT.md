@@ -1,15 +1,15 @@
 # Muscular-demand audit
 
-The 501 catalog records were individually reviewed against one frozen,
+The 508 catalog records were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 121 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 232 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 148 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 122 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 234 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 152 |
 
 Ratings were assigned exercise by exercise. There is no desired overall
 distribution or balancing target. Stretching and mobility are not promoted merely
@@ -25,7 +25,9 @@ historical values. The current cleanup rates fingertip wall push-ups and the
 isometric palm press at `2`; the standing upper-body drills and martial strikes
 at `1`; and the reverse-prayer stretch at `0`. Exercise 565 is also rated `2`
 because its loop repeatedly raises both heels while sustaining a mini squat.
-No distribution was targeted. See
+The reduced-floor follow-up adds one standing march-and-twist at `0`, two
+direction-specific marching arm-circle blocks at `1`, and four established
+self-resisted neck isometrics at `2`. No distribution was targeted. See
 [`CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
 
 The authoritative reviewed ID lists and rubric live in
@@ -47,7 +49,7 @@ and Light itself is not added as a modifier dimension.
 
 The former five-per-category audit exposed 978 demand-0 deficiencies across 88
 workout-group IDs and 1,320 demand-2 deficiencies across 81. The one-per-category
-audit exposes 207 demand-0 deficiencies across 42 workout-group IDs and 564
+audit exposes 207 demand-0 deficiencies across 42 workout-group IDs and 474
 demand-2 deficiencies across 47. The reduced floor preserves genuine coverage
 without demanding artificial variations for every fine-grained bucket.
 Remaining gaps stay explicit catalog debt until real, worthwhile, exactly

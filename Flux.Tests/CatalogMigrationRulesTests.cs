@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(360, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(367, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -2244,7 +2244,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(60, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(61, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2649,6 +2649,98 @@ public sealed class CatalogMigrationRulesTests
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance][exerciseId]);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
+    {
+        HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
+        Assert.Equal(61, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[61]);
+
+        const string changedGroup = "demand-coverage.changed";
+        const string retainedGroup = "demand-coverage.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 60,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 302,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.X,
+                [retainedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingScoreExerciseId = 302,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [302] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.DoesNotContain(302, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
+    [InlineData(302, "Large Bidirectional Arm Circles")]
+    [InlineData(304, "Windmill Arms")]
+    [InlineData(305, "Cross-Body Arm Swings")]
+    [InlineData(307, "Front Arm Raise")]
+    [InlineData(308, "Lateral Arm Raise")]
+    [InlineData(309, "Scaption Raise")]
+    [InlineData(310, "Standing Rear-Delt Sweep")]
+    public void DemandCoverageReplacementDiscardsRetiredIdentityAndScore(
+        int exerciseId,
+        string oldName)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(oldName, replacement.Video, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored);
+
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
     }
 
     [Theory]

@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 501 retained exercises are reviewed against physical mirror equipment, not
+The 508 retained exercises are reviewed against physical mirror equipment, not
 against whether a timed second-side demonstration is horizontally flipped.
 
 Mirror has three equipment states:
@@ -17,7 +17,7 @@ Each exercise has both a relationship and a minimum useful coverage:
 | `MirrorOnly` | `FullBody` | Requires tall | 6 |
 | `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 31 |
 | `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
-| `Agnostic` | `None` | Unaffected | 408 |
+| `Agnostic` | `None` | Unaffected | 415 |
 
 The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
 `None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships

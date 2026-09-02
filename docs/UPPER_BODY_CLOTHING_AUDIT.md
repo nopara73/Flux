@@ -40,7 +40,7 @@ not be inflated to satisfy modifier coverage.
 - `BareUpperBodyRequired` (7): the five mirror bodybuilding pose holds,
   IDs 524-528, plus Mirror Most-Muscular Pose Hold (790) and Mirror Standing
   Vacuum Repetitions (993).
-- `Agnostic` (488): every other retained exercise.
+- `Agnostic` (495): every other retained exercise.
 - `Unreviewed` (0).
 
 The proactive follow-up audit inspected every existing packaged loop and then

@@ -331,7 +331,7 @@ no relationship or muscle assignment is inflated to hide them. After Hard
 Floor was defined as both rigid and slippery, the current validators expose
 300 pairwise deficiencies across 38 group IDs and 68 floor-category
 deficiencies across 21 group IDs. The reduced demand audit exposes 207 demand-0
-deficiencies across 42 group IDs and 564 demand-2 deficiencies across 47 group
+deficiencies across 42 group IDs and 474 demand-2 deficiencies across 47 group
 IDs. These are explicit catalog debt, not permission to invent
 movements or falsify demand. The stricter floor filter also resolves the former
 Silence materiality deficiency. The reproducible current ledger is
@@ -382,9 +382,9 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 444 schedulable roots from 501 exercise records:
-283 one-block, 117 two-block, 28 three-block, 15 four-block, and one five-block
-root. Forty-nine roots couple multiple named exercise records, including 17
+current semantic audit yields 449 schedulable roots from 508 exercise records:
+284 one-block, 121 two-block, 28 three-block, 15 four-block, and one five-block
+root. Fifty-one roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
 

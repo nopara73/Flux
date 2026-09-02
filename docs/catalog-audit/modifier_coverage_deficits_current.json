@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 60,
-  "catalogRecordCount": 501,
-  "catalogSha256": "ae2e6080fc09968b276474f3acad3773bdd11a3db2c9fab3b6143fa95894abf5",
+  "catalogRevision": 61,
+  "catalogRecordCount": 508,
+  "catalogSha256": "3d0d5e7dc857b40e23fc35372f2fb494b67e4154b95a21c5a60e078ec5179d83",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association, modifier relationship, or muscular-demand rating is inflated to satisfy coverage.",
     "muscularDemandMinimumPerCategoryPerGroup": 1
@@ -11,11 +11,11 @@
     "pairwiseAffectedGroupCount": 38,
     "hardFloorCategoryDeficiencyCount": 68,
     "hardFloorCategoryAffectedGroupCount": 21,
-    "muscularDemandDeficiencyCount": 771,
+    "muscularDemandDeficiencyCount": 681,
     "muscularDemandAffectedGroupCount": 68,
     "demandZeroDeficiencyCount": 207,
     "demandZeroAffectedGroupCount": 42,
-    "demandTwoDeficiencyCount": 564,
+    "demandTwoDeficiencyCount": 474,
     "demandTwoAffectedGroupCount": 47,
     "materialityDeficiencyCount": 0,
     "mirrorCategoryDeficiencyCount": 0,
@@ -4608,70 +4608,7 @@
       "groupId": "r5.head-neck-shoulder-girdle",
       "groupName": "Head, neck and shoulder girdle",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -4689,61 +4626,7 @@
       "groupId": "r5.head-neck-shoulder-girdle",
       "groupName": "Head, neck and shoulder girdle",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -4771,24 +4654,6 @@
       "groupName": "Head, neck and shoulder girdle",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.head-neck-shoulder-girdle",
-      "groupName": "Head, neck and shoulder girdle",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6129,70 +5994,7 @@
       "groupId": "r10.head-neck-scapular-chest-breathing",
       "groupName": "Head, neck, scapular girdle, chest and breathing",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6210,61 +6012,7 @@
       "groupId": "r10.head-neck-scapular-chest-breathing",
       "groupName": "Head, neck, scapular girdle, chest and breathing",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6292,24 +6040,6 @@
       "groupName": "Head, neck, scapular girdle, chest and breathing",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.head-neck-scapular-chest-breathing",
-      "groupName": "Head, neck, scapular girdle, chest and breathing",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6543,70 +6273,7 @@
       "groupId": "r15.head-neck",
       "groupName": "Head and neck",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6624,61 +6291,7 @@
       "groupId": "r15.head-neck",
       "groupName": "Head and neck",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -6706,24 +6319,6 @@
       "groupName": "Head and neck",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -7272,70 +6867,7 @@
       "groupId": "r20.head-neck",
       "groupName": "Head and neck",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -7353,61 +6885,7 @@
       "groupId": "r20.head-neck",
       "groupName": "Head and neck",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -7435,24 +6913,6 @@
       "groupName": "Head and neck",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.head-neck",
-      "groupName": "Head and neck",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -8811,70 +8271,7 @@
       "groupId": "r30.anterior-lateral-neck-hyoid",
       "groupName": "Anterior/lateral neck and hyoid muscles",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -8892,61 +8289,7 @@
       "groupId": "r30.anterior-lateral-neck-hyoid",
       "groupName": "Anterior/lateral neck and hyoid muscles",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -8974,24 +8317,6 @@
       "groupName": "Anterior/lateral neck and hyoid muscles",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-neck-hyoid",
-      "groupName": "Anterior/lateral neck and hyoid muscles",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -9189,70 +8514,7 @@
       "groupId": "r30.posterior-neck-suboccipital",
       "groupName": "Posterior neck and suboccipital muscles",
       "muscularDemand": 2,
-      "profile": 0,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 128,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 16,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
       "profile": 1,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 2,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 4,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 12,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 144,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -9270,61 +8532,7 @@
       "groupId": "r30.posterior-neck-suboccipital",
       "groupName": "Posterior neck and suboccipital muscles",
       "muscularDemand": 2,
-      "profile": 130,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 132,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 140,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
       "profile": 17,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 18,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 20,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 28,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },
@@ -9352,24 +8560,6 @@
       "groupName": "Posterior neck and suboccipital muscles",
       "muscularDemand": 2,
       "profile": 13,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 6,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.posterior-neck-suboccipital",
-      "groupName": "Posterior neck and suboccipital muscles",
-      "muscularDemand": 2,
-      "profile": 14,
       "matchingExerciseCount": 0,
       "requiredExerciseCount": 1
     },

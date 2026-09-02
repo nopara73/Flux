@@ -4,8 +4,8 @@ Generated from the runtime catalog and the supplementary movement-practices DAG.
 
 ## Outcome
 
-- Runtime catalog: **501** exercises. The frozen supplementary practice-coverage delta below contains **5** additions.
-- Exact practice-node provenance: **274**; family-only: **119**; domain-only: **108**; intentionally unmapped: **0**.
+- Runtime catalog: **508** exercises. The frozen supplementary practice-coverage delta below contains **5** additions.
+- Exact practice-node provenance: **274**; family-only: **126**; domain-only: **108**; intentionally unmapped: **0**.
 - Primary DAG coverage: **8/18** domains. Including honest cross-links: **11/18** domains and **24/71** families.
 - Newly represented families: **1** — South Asian dance traditions.
 - All additions passed the standing, feet-only, zero-equipment, shoe-agnostic, 2 m × 2 m, quiet, non-jumping, bilateral/alternating, and exact-human-media rules.
@@ -41,6 +41,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Stretching | 15 |
 | Qigong | 12 |
 | Boxing | 11 |
+| Low-impact conditioning | 11 |
 | Standing bodyweight conditioning | 11 |
 | Vestibular rehabilitation | 11 |
 | Balance training | 10 |
@@ -50,7 +51,6 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Bodyweight strength | 9 |
 | Calf strengthening | 8 |
 | Clinical stretching | 8 |
-| Low-impact conditioning | 8 |
 | Plyometric conditioning | 8 |
 | Bodybuilding posing | 7 |
 | Karate conditioning | 7 |
@@ -69,6 +69,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Oculomotor rehabilitation | 5 |
 | Plyometric landing mechanics | 5 |
 | Rope-free cardio conditioning | 5 |
+| Self-resistance | 5 |
 | Wrist mobility | 5 |
 | Ballet conditioning | 4 |
 | Boxing cardio conditioning | 4 |
@@ -143,7 +144,6 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Popping and waving | 1 |
 | Qigong body tapping | 1 |
 | Qigong shoulder mobility | 1 |
-| Self-resistance | 1 |
 | Standing balance | 1 |
 | Standing balance and mobility | 1 |
 | Standing balance isometrics | 1 |
@@ -178,7 +178,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Military drill, tactical & service movement | 0 | 0 | 0 |
 | Movement education & pedagogy | 1 | 1 | 1 |
 | Outdoor, adventure & survival movement | 0 | 0 | 0 |
-| Physical culture, conditioning & exercise | 331 | 333 | 333 |
+| Physical culture, conditioning & exercise | 338 | 340 | 340 |
 | Play, improvisation & movement exploration | 0 | 0 | 4 |
 | Ritual, devotional & ceremonial movement | 0 | 0 | 26 |
 | Somatics, mind–body & internal arts | 43 | 43 | 44 |
