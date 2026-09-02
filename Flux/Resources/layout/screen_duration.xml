@@ -222,14 +222,22 @@
                         android:text="@string/duration_option_90" />
                 </FrameLayout>
 
-                <LinearLayout
-                    android:id="@+id/duration_modifier_groups"
+                <HorizontalScrollView
+                    android:id="@+id/duration_modifier_scroller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:baselineAligned="false"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:fillViewport="true"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/duration_modifier_groups"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/duration_context_modifier_group"
@@ -373,7 +381,8 @@
                             android:text=""
                             android:tooltipText="@string/mirror_equipment_disabled_feedback" />
                     </LinearLayout>
-                </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:id="@+id/duration_option_segments"

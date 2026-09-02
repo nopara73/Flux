@@ -1358,8 +1358,26 @@ input:focus-visible {
   }
 
   .duration-modifiers {
+    width: 100%;
+    max-width: 100%;
     min-height: 56px;
     margin-top: 16px;
+    padding-block: 4px;
+    flex-wrap: nowrap;
+    justify-content: safe center;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .duration-modifiers::-webkit-scrollbar {
+    display: none;
+  }
+
+  .duration-modifiers > .modifier-group {
+    flex: 0 0 auto;
   }
 
   .modifier-tile {

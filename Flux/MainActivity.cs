@@ -71,6 +71,7 @@ public class MainActivity : Activity
     private LinearLayout _durationControls = null!;
     private LinearLayout _durationStepRow = null!;
     private FrameLayout _durationOptionLabels = null!;
+    private HorizontalScrollView _durationModifierScroller = null!;
     private LinearLayout _durationModifierGroups = null!;
     private LinearLayout _durationContextModifierGroup = null!;
     private LinearLayout _durationIntensityModifierGroup = null!;
@@ -592,6 +593,8 @@ public class MainActivity : Activity
         _durationStepRow = FindRequiredView<LinearLayout>(Resource.Id.duration_step_row);
         _durationOptionLabels = FindRequiredView<FrameLayout>(
             Resource.Id.duration_option_labels);
+        _durationModifierScroller = FindRequiredView<HorizontalScrollView>(
+            Resource.Id.duration_modifier_scroller);
         _durationModifierGroups = FindRequiredView<LinearLayout>(
             Resource.Id.duration_modifier_groups);
         _durationContextModifierGroup = FindRequiredView<LinearLayout>(
@@ -1107,14 +1110,21 @@ public class MainActivity : Activity
                     DpInt(compactLandscape ? 48 : 56));
             _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
-            var modifierGridLayout = new LinearLayout.LayoutParams(
-                wrapContent,
+            var modifierScrollerLayout = new LinearLayout.LayoutParams(
+                matchParent,
                 wrapContent)
             {
                 Gravity = GravityFlags.CenterHorizontal,
             };
-            modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
-            _durationModifierGroups.LayoutParameters = modifierGridLayout;
+            modifierScrollerLayout.TopMargin = DpInt(
+                compactLandscape ? 10 : 16);
+            _durationModifierScroller.LayoutParameters =
+                modifierScrollerLayout;
+            _durationModifierGroups.LayoutParameters =
+                new FrameLayout.LayoutParams(
+                    wrapContent,
+                    wrapContent);
+            _durationModifierScroller.ScrollTo(0, 0);
             SetModifierTileSizes(DpInt(
                 compactLandscape || stackLandscapeModifierGroups ? 48 : 56));
 
@@ -1184,14 +1194,20 @@ public class MainActivity : Activity
             new LinearLayout.LayoutParams(DpInt(64), DpInt(64));
         _durationOptionLabels.SetPadding(0, 0, 0, 0);
 
-        var portraitModifierGridLayout = new LinearLayout.LayoutParams(
-            wrapContent,
+        var portraitModifierScrollerLayout = new LinearLayout.LayoutParams(
+            matchParent,
             wrapContent)
         {
             Gravity = GravityFlags.CenterHorizontal,
         };
-        portraitModifierGridLayout.TopMargin = DpInt(32);
-        _durationModifierGroups.LayoutParameters = portraitModifierGridLayout;
+        portraitModifierScrollerLayout.TopMargin = DpInt(32);
+        _durationModifierScroller.LayoutParameters =
+            portraitModifierScrollerLayout;
+        _durationModifierGroups.LayoutParameters =
+            new FrameLayout.LayoutParams(
+                wrapContent,
+                wrapContent);
+        _durationModifierScroller.ScrollTo(0, 0);
         SetModifierTileSizes(DpInt(48));
 
         var portraitSegmentLayout = new LinearLayout.LayoutParams(

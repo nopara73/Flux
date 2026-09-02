@@ -1625,6 +1625,18 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
 test("duration modifiers separate workout context from available equipment", () => {
   assert.match(
     durationLayout,
+    /HorizontalScrollView[\s\S]*@\+id\/duration_modifier_scroller[\s\S]*fillViewport="true"[\s\S]*@\+id\/duration_modifier_groups/,
+  );
+  assert.match(
+    mainActivity,
+    /FindRequiredView<HorizontalScrollView>[\s\S]*Resource\.Id\.duration_modifier_scroller/,
+  );
+  assert.match(
+    mainActivity,
+    /modifierScrollerLayout[\s\S]*_durationModifierScroller\.LayoutParameters[\s\S]*_durationModifierScroller\.ScrollTo\(0, 0\)/,
+  );
+  assert.match(
+    durationLayout,
     /duration_context_modifier_group[\s\S]*upper_body_clothing_modifier_button[\s\S]*hard_floor_modifier_button[\s\S]*insect_modifier_button[\s\S]*silence_modifier_button[\s\S]*duration_equipment_modifier_group[\s\S]*wall_modifier_button[\s\S]*mirror_modifier_button/,
   );
   assert.match(
@@ -1643,6 +1655,10 @@ test("duration modifiers separate workout context from available equipment", () 
   assert.match(
     webStyles,
     /@media \(max-width: 340px\)[\s\S]*\.duration-modifiers[\s\S]*gap: 8px[\s\S]*\.modifier-group[\s\S]*gap: 4px/,
+  );
+  assert.match(
+    webStyles,
+    /@media \(orientation: landscape\)[\s\S]*\.duration-modifiers\s*\{[\s\S]*flex-wrap: nowrap;[\s\S]*overflow-x: auto;[\s\S]*touch-action: pan-x;/,
   );
 });
 
