@@ -1222,6 +1222,23 @@ test("exercise names copy from a mobile long press on both platforms", () => {
   );
 });
 
+test("static exercises use the same user-facing mode label on both platforms", () => {
+  assert.match(strings, /<string name="hold_badge">STATIC<\/string>/);
+  assert.match(
+    workoutLayout,
+    /android:id="@\+id\/exercise_mode_badge"[\s\S]*android:text="@string\/hold_badge"/,
+  );
+  assert.match(
+    mainActivity,
+    /exercise\.Mode == ExerciseMode\.Hold \? "Static\." : "Repetition\."/,
+  );
+  assert.match(webIndex, /id="hold-badge"[^>]*>STATIC<\/span>/);
+  assert.match(
+    webApp,
+    /exercise\.mode === "Hold" \? "Static" : "Repetition"/,
+  );
+});
+
 test("literal work-block timelines and logical exercise progress match", () => {
   const fullNeckCircles = catalog.find((exercise) => exercise.id === 409);
   assert.equal(fullNeckCircles.name, "Full Neck Circles");

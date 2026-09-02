@@ -3181,14 +3181,14 @@ public class MainActivity : Activity
             _workoutHeader,
             $"Exercise {position} of {totalExercises}. " +
             $"{exercise.Name}. " +
-            (exercise.Mode == ExerciseMode.Hold ? "Hold." : "Repetition."));
+            (exercise.Mode == ExerciseMode.Hold ? "Static." : "Repetition."));
     }
 
     private void RenderExerciseIdentity(Exercise exercise, bool upcoming = false)
     {
         _exerciseName.Text = exercise.Name;
         string modeDescription = exercise.Mode == ExerciseMode.Hold
-            ? "Hold."
+            ? "Static."
             : "Repetition.";
         string copyDescription = GetString(
             Resource.String.copy_exercise_name_description);

@@ -1073,7 +1073,7 @@ function showNextExercise({ preservePendingMovement = false } = {}) {
 
 function renderExerciseIdentity(exercise, upcoming = false) {
   elements.exerciseName.textContent = exercise.name;
-  const mode = exercise.mode === "Hold" ? "Hold" : "Repetition";
+  const mode = exercise.mode === "Hold" ? "Static" : "Repetition";
   elements.exerciseName.setAttribute(
     "aria-label",
     `${upcoming ? "Next block: " : ""}${exercise.name}. ${mode}.`,
