@@ -3778,6 +3778,19 @@ export class WorkoutSession {
       );
     }
 
+    if (!preserveCompletedCurrentSelection) {
+      if (!replannedNextRound) {
+        throw new Error(
+          "The Light-mode upgrade did not retain the current workout slot.",
+        );
+      }
+      this.pauseMovement(
+        replannedNextRound,
+        getMovementCountdownDurationMs(replannedNextRound),
+        true,
+      );
+    }
+
     session.modifierChanges.push({
       changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(),
       previousModifiers: this.state.activeWorkoutModifiers,

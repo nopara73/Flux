@@ -3614,11 +3614,14 @@ test("version 25 replans unfinished active light work without rewriting complete
     restored.state.activeWorkoutSession.blocks[0].rootExerciseId,
     hardRoot.id,
   );
-  assert.equal(restored.state.pendingMovementGroupId, null);
   assert.equal(restored.state.pendingRestGroupId, null);
   const restarted = restored.getNextGroup();
   assert.equal(getSelectionKey(restarted), groups[1].id);
   assert.equal(restarted.sequenceBlockIndex ?? 0, 0);
+  assert.equal(restored.state.pendingMovementGroupId, restarted.id);
+  assert.equal(restored.state.pendingMovementMillisecondsRemaining, 50_000);
+  assert.equal(restored.state.pendingMovementEndsAtUnixMilliseconds, 0);
+  assert.equal(restored.state.pendingMovementPausedByUser, true);
   assert.equal(restored.getSelectedExercise(restarted).muscularDemand, 0);
   assert.ok(restored.getActiveGroups().every((round) =>
     restored.getSelectedExercise(round).muscularDemand === 0));

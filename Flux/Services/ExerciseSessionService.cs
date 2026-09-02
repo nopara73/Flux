@@ -4098,6 +4098,25 @@ public sealed class ExerciseSessionService
                 "The Light-mode upgrade could not preserve completed work.");
         }
 
+        if (!preserveCompletedCurrentSelection)
+        {
+            if (replannedNextRound is null)
+            {
+                throw new InvalidOperationException(
+                    "The Light-mode upgrade did not retain the current workout slot.");
+            }
+            long restartDurationMilliseconds =
+                MovementPhaseSchedule.GetCountdownDurationSeconds(
+                    includePreparation: !IsSequenceContinuationBlock(
+                        state,
+                        replannedNextRound)) * 1_000L;
+            PauseMovement(
+                state,
+                replannedNextRound,
+                restartDurationMilliseconds,
+                pausedByUser: true);
+        }
+
         session.ModifierChanges.Add(new WorkoutModifierChangeLog
         {
             ChangedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds(),

@@ -3847,11 +3847,14 @@ public sealed class ExerciseSessionServiceTests
         Assert.Single(state.ActiveWorkoutSession.Decisions);
         Assert.Single(state.ActiveWorkoutSession.Blocks);
         Assert.Equal(hardRoot.Id, state.ActiveWorkoutSession.Blocks[0].RootExerciseId);
-        Assert.Null(state.PendingMovementGroupId);
         Assert.Null(state.PendingRestGroupId);
         WorkoutGroup restarted = restoredService.GetNextGroup(state)!;
         Assert.Equal(groups[1].Id, restarted.SelectionKey);
         Assert.Equal(0, restarted.SequenceBlockIndex);
+        Assert.Equal(restarted.Id, state.PendingMovementGroupId);
+        Assert.Equal(50_000, state.PendingMovementMillisecondsRemaining);
+        Assert.Equal(0, state.PendingMovementEndsAtUnixMilliseconds);
+        Assert.True(state.PendingMovementPausedByUser);
         Assert.Equal(
             0,
             restoredService.GetSelectedExercise(state, restarted).MuscularDemand);
