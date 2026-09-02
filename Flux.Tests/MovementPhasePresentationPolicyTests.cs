@@ -19,7 +19,6 @@ public sealed class MovementPhasePresentationPolicyTests
         Assert.Equal(
             ExerciseSequenceDirectionCue.Inward,
             presentation.DirectionCue);
-        Assert.Equal(ScreenSide.Left, presentation.ActiveScreenSide);
         Assert.True(presentation.MirrorMedia);
     }
 
@@ -38,6 +37,5 @@ public sealed class MovementPhasePresentationPolicyTests
             ExerciseSequenceDirectionCue.None,
             presentation.DirectionCue);
         Assert.False(presentation.MirrorMedia);
-        Assert.Null(presentation.ActiveScreenSide);
     }
 }

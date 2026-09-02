@@ -5470,13 +5470,11 @@ test("sequence presentation composes side, direction, and mirroring independentl
     sideCue: "ScreenRight",
     directionCue: "Inward",
     mirrorMedia: true,
-    activeScreenSide: "Right",
   });
   assert.deepEqual(getMovementPresentation(group, "Complete"), {
     sideCue: "None",
     directionCue: "None",
     mirrorMedia: false,
-    activeScreenSide: null,
   });
 });
 

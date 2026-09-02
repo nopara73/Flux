@@ -1139,9 +1139,10 @@ test("movement and rest phases use pronounced accents across the surface, media,
     assert.match(webStyles, new RegExp(`--${name.replaceAll("_", "-")}: ${value.toLowerCase()}`));
   }
 
+  assert.doesNotMatch(mainActivity, /RenderSplitWorkoutPhase|SetWorkoutPhaseHalf/);
   assert.match(
     mainActivity,
-    /RenderSplitWorkoutPhase[\s\S]*SetExerciseMediaPhase\(resting: false\)/,
+    /ApplyMovementPhase[\s\S]*RenderFullWorkoutPhase\(Resource\.Color\.move_surface\)/,
   );
   assert.match(
     mainActivity,
@@ -1181,6 +1182,7 @@ test("movement and rest phases use pronounced accents across the surface, media,
     webApp,
     /setFullPhaseSurface[\s\S]*setWorkoutPhaseClass\(kind\)[\s\S]*classList\.toggle\("phase-move"[\s\S]*classList\.toggle\("phase-rest"/,
   );
+  assert.doesNotMatch(webApp, /setSplitPhaseSurface|activeScreenSide/);
   assert.match(
     webStyles,
     /\.workout-screen\.phase-move \.exercise-media-card[\s\S]*\.workout-screen\.phase-rest \.exercise-media-card[\s\S]*\.move-panel\.change \.media-control[\s\S]*\.keep-button/,

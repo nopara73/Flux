@@ -2631,17 +2631,12 @@ export function getMovementPresentation(group, phase) {
       sideCue: "None",
       directionCue: "None",
       mirrorMedia: false,
-      activeScreenSide: null,
     };
   }
-  const sideCue = group?.sequenceSideCue ?? "None";
   return {
-    sideCue,
+    sideCue: group?.sequenceSideCue ?? "None",
     directionCue: group?.sequenceDirectionCue ?? "None",
     mirrorMedia: group?.mirrorSequenceMedia === true,
-    activeScreenSide: sideCue === "ScreenLeft"
-      ? "Left"
-      : sideCue === "ScreenRight" ? "Right" : null,
   };
 }
 

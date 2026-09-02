@@ -1592,11 +1592,7 @@ function applyMovementPhase(phase) {
 
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
-  if (presentation.activeScreenSide) {
-    setSplitPhaseSurface(presentation.activeScreenSide);
-  } else {
-    setFullPhaseSurface("move");
-  }
+  setFullPhaseSurface("move");
   restartMediaForPhase();
 
   elements.status.textContent = `${description}, 45 seconds.`;
@@ -1771,11 +1767,7 @@ function restorePausedMovementMedia(phase) {
   elements.movePanel.classList.remove("change");
   elements.mediaCard.classList.remove("resting");
   setMediaMirrored(presentation.mirrorMedia);
-  if (presentation.activeScreenSide) {
-    setSplitPhaseSurface(presentation.activeScreenSide);
-  } else {
-    setFullPhaseSurface("move");
-  }
+  setFullPhaseSurface("move");
   restartMediaForPhase();
 }
 
@@ -2065,15 +2057,6 @@ function setFullPhaseSurface(kind) {
   elements.phaseLeft.style.backgroundColor = color;
   elements.phaseRight.style.backgroundColor = color;
   setWorkoutPhaseClass(kind);
-  elements.phaseSurface.classList.add("visible");
-}
-
-function setSplitPhaseSurface(activeScreenSide) {
-  elements.phaseLeft.style.backgroundColor =
-    activeScreenSide === "Left" ? "var(--move-surface)" : "var(--rest-surface)";
-  elements.phaseRight.style.backgroundColor =
-    activeScreenSide === "Right" ? "var(--move-surface)" : "var(--rest-surface)";
-  setWorkoutPhaseClass("move");
   elements.phaseSurface.classList.add("visible");
 }
 

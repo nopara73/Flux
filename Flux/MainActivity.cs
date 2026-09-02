@@ -3761,7 +3761,7 @@ public class MainActivity : Activity
             GetCurrentMovementPresentation(state.Phase);
         RenderCountdownPhase();
         SetExerciseMediaMirrored(presentation.MirrorMedia);
-        RenderSequenceBlockWorkoutPhase(presentation);
+        RenderFullWorkoutPhase(Resource.Color.move_surface);
         AnimateMediaPhase(resting: false);
         if (previousPhase is null or MovementPhase.Preparation)
         {
@@ -4029,35 +4029,6 @@ public class MainActivity : Activity
             parts.Add(direction);
         }
         return parts.Count == 0 ? "Move" : string.Join(", ", parts);
-    }
-
-    private void RenderSequenceBlockWorkoutPhase(
-        MovementPhasePresentation presentation)
-    {
-        if (presentation.ActiveScreenSide is ScreenSide activeSide)
-        {
-            RenderSplitWorkoutPhase(activeSide == ScreenSide.Left);
-            return;
-        }
-
-        RenderFullWorkoutPhase(Resource.Color.move_surface);
-    }
-
-    private void RenderSplitWorkoutPhase(bool activeLeft)
-    {
-        _workoutPhaseSurface.Visibility = ViewStates.Visible;
-        SetWorkoutPhaseHalf(_workoutPhaseLeft, active: activeLeft);
-        SetWorkoutPhaseHalf(_workoutPhaseRight, active: !activeLeft);
-        SetExerciseMediaPhase(resting: false);
-        AnimatePhaseSurface();
-    }
-
-    private void SetWorkoutPhaseHalf(View half, bool active)
-    {
-        half.SetBackgroundColor(new Android.Graphics.Color(GetColor(
-            active
-                ? Resource.Color.move_surface
-                : Resource.Color.rest_surface)));
     }
 
     private void RenderFullWorkoutPhase(int colorResource)

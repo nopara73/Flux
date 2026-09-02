@@ -403,10 +403,12 @@ without another preparation phase or Start action. Every block then runs for the
 full 45 seconds. Intermediate rests hide the heart and remain neutral; only the
 final rest presents the one shared Keep/reject decision.
 
-Red means movement. Blue means rest or the inactive side of a side-specific
-block. The workout header uses one literal execution timeline for every
-exercise sequence: each equal segment is one real 45-second work block. Side
-and direction sequences use their actual blue/red/chartreuse cues. An uncued
+Red means movement and blue means rest. Every active work block keeps the full
+red movement surface, including side-specific sequences; side identity stays in
+the compact execution timeline instead of splitting the screen background. The
+workout header uses one literal execution timeline for every exercise sequence:
+each equal segment is one real 45-second work block. Side and direction
+sequences use their actual blue/red/chartreuse cues. An uncued
 three-block sequence made from three genuinely different exercises uses a
 blue/chartreuse/red identity pattern, so it cannot be mistaken for repeated sets;
 extra sets repeat that same pattern. An external playhead marks the current block
