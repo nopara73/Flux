@@ -280,7 +280,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 59;
+export const CURRENT_CATALOG_REVISION = 60;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -409,6 +409,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     218, 234, 237, 239, 241, 283, 291, 294, 556,
   ])],
   [59, new Set([565])],
+  [60, new Set([397])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -518,7 +519,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [231, ["Karate Reverse Punch", "Step-Through Karate Reverse Punch"]],
   [394, ["Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round"]],
   [395, ["Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths"]],
-  [397, ["Staggered-Stance Weight Shift", "Exhale Forward, Inhale Back Weight Shift"]],
+  [397, ["Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Arm Sweep"]],
   [398, ["Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold"]],
   [399, ["Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat"]],
   [400, ["Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down"]],
@@ -598,10 +599,6 @@ export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
   [394, new Set(["Standing Open-and-Close Breathing"])],
   [395, new Set([
     "Standing Overhead Rib-Expansion Breathing",
-  ])],
-  [397, new Set([
-    "Breath-Integrated Weight Shift",
-    "Alternating Breath-Integrated Weight Shift",
   ])],
   [500, new Set(["Controlled Jaw Open and Close"])],
   [398, new Set(["Standing Arm-Expansion Breathing"])],

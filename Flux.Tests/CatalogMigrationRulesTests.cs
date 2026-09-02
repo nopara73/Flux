@@ -343,10 +343,6 @@ public sealed class CatalogMigrationRulesTests
 
     [Theory]
     [InlineData(
-        397,
-        "Alternating Breath-Integrated Weight Shift",
-        "Exhale Forward, Inhale Back Weight Shift")]
-    [InlineData(
         617,
         "Alternating Standing Side-Leg Circles",
         "Standing Forward Side-Leg Circles")]
@@ -762,7 +758,6 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]
     [InlineData(394, "Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round")]
     [InlineData(395, "Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths")]
-    [InlineData(397, "Staggered-Stance Weight Shift", "Exhale Forward, Inhale Back Weight Shift")]
     [InlineData(398, "Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold")]
     [InlineData(399, "Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
     [InlineData(400, "Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]
@@ -809,6 +804,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(511, "Mirror-Guided Lip Pucker", "Lip Pucker")]
     [InlineData(514, "Mirror-Guided Symmetric Smile", "Symmetric Smile")]
     [InlineData(565, "Mini Squat with Forward Reach", "Mini-Squat Calf Raises with Forward Reach")]
+    [InlineData(397, "Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Arm Sweep")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
         int exerciseId,
         string previousName,
@@ -2248,7 +2244,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(59, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(60, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2606,6 +2602,55 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
+    [Fact]
+    public void AlternatingSideTapCorrectionRebuildsWorkoutButPreservesFeedback()
+    {
+        const int exerciseId = 397;
+        const string changedGroup = "alternating-side-tap.changed";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 59,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = exerciseId,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+            },
+            PendingScoreExerciseId = exerciseId,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [exerciseId] = -4,
+                },
+            },
+        };
+
+        Assert.Equal(
+            new HashSet<int> { exerciseId },
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[60]);
+        Assert.DoesNotContain(
+            CatalogMigrationRules.ScoreInvalidationsByRevision,
+            revision => revision.Key == 60);
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(exerciseId, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(
+            -4,
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance][exerciseId]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
     [Theory]
     [InlineData(218, "Cumbia Two-Step")]
     [InlineData(234, "Merengue Six-Count Step")]
@@ -2833,7 +2878,6 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(145, "Alternating Standing Knee Extension", "Standing Knee-Extension Hold")]
     [InlineData(394, "Standing Open-and-Close Breathing", "Inhale Arms Open, Exhale Arms Close and Round")]
     [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Overhead Hold with Deep Ribcage Breaths")]
-    [InlineData(397, "Breath-Integrated Weight Shift", "Exhale Forward, Inhale Back Weight Shift")]
     [InlineData(398, "Standing Arm-Expansion Breathing", "Inhale Arms Open, Exhale Self-Hug and Fold")]
     [InlineData(399, "Shibashi Opening-the-Chest Breathing", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
     [InlineData(400, "Shibashi Separating-the-Clouds Breathing", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]

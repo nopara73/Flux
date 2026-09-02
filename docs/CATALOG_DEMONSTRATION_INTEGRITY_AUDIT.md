@@ -178,9 +178,9 @@ admit filler or false anatomy.
   **475 videos**, **9 directional videos**, and **58 hold frames**. The shared
   source-contract lock covers **108 files** at
   `0c25b8c2e2c708231275045eaaab26501147a2d766298198d3a445188c77b01e`.
-- Real-workout browser inspection covered corrected ID 475 and both sides of
-  corrected two-block ID 397. Its real 15-second transition previewed block 2,
-  the active-segment marker advanced, the second phase used the mirrored media,
-  side accessibility text changed with it, and the console remained clean.
+- Real-workout browser inspection covered corrected ID 475 and the then-current
+  two-block treatment of ID 397. A later full-loop review established that 397's
+  source clip already alternates both sides continuously, so the artificial
+  mirrored second block and unsupported breathing wording were removed.
 
 This audit does not deploy the web app or install an Android package.

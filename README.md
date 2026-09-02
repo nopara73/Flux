@@ -319,8 +319,8 @@ every exact deficit are retained in
 [`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
 no relationship or muscle assignment is inflated to hide them. After Hard
 Floor was defined as both rigid and slippery, the current validators expose
-309 pairwise deficiencies across 38 group IDs and 81 floor-category
-deficiencies across 24 group IDs. The stricter filter also resolves the former
+300 pairwise deficiencies across 38 group IDs and 68 floor-category
+deficiencies across 21 group IDs. The stricter filter also resolves the former
 Silence materiality deficiency. The reproducible current ledger is
 [`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
 All supported profiles still admit a distinct atomic lineup.
@@ -367,9 +367,9 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 443 schedulable roots from 499 exercise records:
-278 one-block, 121 two-block, 28 three-block, 15 four-block, and one five-block
-root. Forty-eight roots couple multiple named exercise records, including 17
+current semantic audit yields 444 schedulable roots from 501 exercise records:
+283 one-block, 117 two-block, 28 three-block, 15 four-block, and one five-block
+root. Forty-nine roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
 

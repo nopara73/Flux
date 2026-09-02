@@ -1,16 +1,16 @@
 {
-  "catalogRevision": 59,
+  "catalogRevision": 60,
   "catalogRecordCount": 501,
-  "catalogSha256": "74e2b7f05e6fdebd8ec2670c401ca2fa6827a6231c631ac46ba3dea58281db78",
+  "catalogSha256": "ae2e6080fc09968b276474f3acad3773bdd11a3db2c9fab3b6143fa95894abf5",
   "policy": {
     "treatment": "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
     "validatorsChanged": false
   },
   "summary": {
-    "pairwiseDeficiencyCount": 303,
+    "pairwiseDeficiencyCount": 300,
     "pairwiseAffectedGroupCount": 38,
-    "hardFloorCategoryDeficiencyCount": 71,
-    "hardFloorCategoryAffectedGroupCount": 24,
+    "hardFloorCategoryDeficiencyCount": 68,
+    "hardFloorCategoryAffectedGroupCount": 21,
     "materialityDeficiencyCount": 0,
     "mirrorCategoryDeficiencyCount": 0,
     "distinctLineupDeficiencyCount": 0
@@ -1546,18 +1546,6 @@
       "groupName": "Hip adductors",
       "firstModifier": 16,
       "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.hip-adductors",
-      "groupName": "Hip adductors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
       "secondModifier": 4,
       "secondModifierEnabled": true,
       "mirrorEquipment": "Compact",
@@ -1850,18 +1838,6 @@
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
       "matchingExerciseCount": 2,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {
@@ -3014,18 +2990,6 @@
       "secondModifierEnabled": true,
       "mirrorEquipment": "Tall",
       "matchingExerciseCount": 2,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {
@@ -3975,16 +3939,6 @@
       "requiredExerciseCount": 5
     },
     {
-      "minutes": 15,
-      "groupId": "r15.hip-adductors",
-      "groupName": "Hip adductors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
-      "requiredExerciseCount": 5
-    },
-    {
       "minutes": 20,
       "groupId": "r20.head-neck",
       "groupName": "Head and neck",
@@ -4042,16 +3996,6 @@
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
       "matchingExerciseCount": 1,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {
@@ -4272,16 +4216,6 @@
       "partnerModifier": 4,
       "partnerModifierEnabled": false,
       "matchingExerciseCount": 1,
-      "requiredExerciseCount": 5
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 4,
       "requiredExerciseCount": 5
     },
     {

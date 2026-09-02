@@ -77,8 +77,8 @@ least five exercises from each exact floor category—`Compatible` and
 `Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
 Floor off still admits both categories at runtime; the category-specific audit
 exists so the larger combined pool cannot conceal a missing soft-floor-only or
-hard-floor-suitable side of a pair. The current validators expose **71**
-genuine category deficiencies across **24** group IDs. They remain pinned in
+hard-floor-suitable side of a pair. The current validators expose **68**
+genuine category deficiencies across **21** group IDs. They remain pinned in
 the Android and web contract tests and in the
 [`current deficit ledger`](catalog-audit/modifier_coverage_deficits_current.json)
 rather than being hidden with false floor or muscle classifications. The

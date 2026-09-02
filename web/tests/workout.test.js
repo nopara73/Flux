@@ -2483,7 +2483,7 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     [],
   );
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
-  assert.equal(pairwiseDeficiencies.length, 303);
+  assert.equal(pairwiseDeficiencies.length, 300);
   assert.deepEqual(
     Object.fromEntries([...new Set(pairwiseDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2491,12 +2491,12 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         pairwiseDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 6, 5: 23, 7: 14, 10: 44, 15: 43, 20: 54, 30: 119 },
+    { 3: 6, 5: 23, 7: 14, 10: 44, 15: 42, 20: 53, 30: 118 },
   );
   assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 38);
 
   const hardFloorDeficiencies = findHardFloorCategoryCoverageDeficiencies(catalog);
-  assert.equal(hardFloorDeficiencies.length, 71);
+  assert.equal(hardFloorDeficiencies.length, 68);
   assert.deepEqual(
     Object.fromEntries([...new Set(hardFloorDeficiencies.map((item) => item.minutes))]
       .sort((left, right) => left - right)
@@ -2504,9 +2504,9 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
         minutes,
         hardFloorDeficiencies.filter((item) => item.minutes === minutes).length,
       ])),
-    { 3: 1, 5: 7, 7: 6, 10: 12, 15: 7, 20: 13, 30: 25 },
+    { 3: 1, 5: 7, 7: 6, 10: 12, 15: 6, 20: 12, 30: 24 },
   );
-  assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 24);
+  assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 21);
 
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
@@ -4550,6 +4550,32 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.ok(overheadBreathingFlow.secondaryCanonicalGroups.includes(
     "BreathingMuscles",
   ));
+  const alternatingSideTap = catalog.find((exercise) => exercise.id === 397);
+  assert.equal(
+    alternatingSideTap.name,
+    "Alternating Side Tap with Diagonal Arm Sweep",
+  );
+  assert.equal(alternatingSideTap.sideSequence, "Alternating");
+  assert.equal(alternatingSideTap.sequenceBlocks.length, 1);
+  assert.deepEqual(
+    {
+      exerciseId: alternatingSideTap.sequenceBlocks[0].exerciseId,
+      sideCue: alternatingSideTap.sequenceBlocks[0].sideCue,
+      mirrorMedia: alternatingSideTap.sequenceBlocks[0].mirrorMedia,
+    },
+    { exerciseId: 397, sideCue: "None", mirrorMedia: false },
+  );
+  assert.equal(alternatingSideTap.primaryCanonicalGroup, "HipAbductors");
+  assert.equal(
+    alternatingSideTap.secondaryCanonicalGroups.includes("BreathingMuscles"),
+    false,
+  );
+  assert.ok(alternatingSideTap.secondaryCanonicalGroups.includes(
+    "AccessoryHipAdductors",
+  ));
+  assert.ok(alternatingSideTap.secondaryCanonicalGroups.includes(
+    "ScapularGirdle",
+  ));
   const wideStanceReach = catalog.find((exercise) => exercise.id === 193);
   assert.equal(wideStanceReach.name, "Wide-Stance Floor-to-Overhead Reach");
   assert.equal(wideStanceReach.muscularDemand, 1);
@@ -5015,7 +5041,7 @@ test("simultaneous and alternating bilateral movements remain one block", () => 
       ownerByExerciseId.set(block.exerciseId, root);
     }
   }
-  for (const exerciseId of [248, 394, 421, 427, 468]) {
+  for (const exerciseId of [248, 394, 397, 421, 427, 468]) {
     const owner = ownerByExerciseId.get(exerciseId);
     assert.equal(
       owner.sequenceBlocks.filter((block) => block.exerciseId === exerciseId).length,
@@ -5023,7 +5049,7 @@ test("simultaneous and alternating bilateral movements remain one block", () => 
     );
   }
   assert.equal(catalog.find((exercise) => exercise.id === 421).sideSequence, "Continuous");
-  for (const exerciseId of [248, 394, 427, 468]) {
+  for (const exerciseId of [248, 394, 397, 427, 468]) {
     assert.equal(
       catalog.find((exercise) => exercise.id === exerciseId).sideSequence,
       "Alternating",
@@ -7097,7 +7123,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 59);
+  assert.equal(CURRENT_CATALOG_REVISION, 60);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -7395,6 +7421,39 @@ test("mini-squat calf-raise correction rebuilds placement without erasing feedba
   assert.equal(
     restored.state.exerciseScoreAdjustmentsByPhase[
       WORKOUT_EXERCISE_PHASE.PeakPerformance]["565"],
+    -4,
+  );
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("alternating side-tap correction rebuilds placement without erasing feedback", () => {
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(60)],
+    [397],
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(60), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 59;
+  state.activeWorkoutMinutes = 30;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("HipAbductors"));
+  state.selectedExerciseIds[changedGroup.id] = 397;
+  state.outcomes[changedGroup.id] = "tick";
+  state.scores["397"] = -4;
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 397: -4 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.scores["397"], -4);
+  assert.equal(
+    restored.state.exerciseScoreAdjustmentsByPhase[
+      WORKOUT_EXERCISE_PHASE.PeakPerformance]["397"],
     -4,
   );
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);

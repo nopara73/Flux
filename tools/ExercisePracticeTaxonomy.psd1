@@ -18,7 +18,7 @@
         389 = 'Ballet'
         394 = 'Breathwork'
         395 = 'Breathwork'
-        397 = 'Breathwork'
+        397 = 'Low-impact aerobics'
         398 = 'Breathwork'
         399 = 'Qigong'
         400 = 'Qigong'

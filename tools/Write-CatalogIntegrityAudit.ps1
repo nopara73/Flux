@@ -26,6 +26,7 @@ if (@($current.id | Sort-Object -Unique).Count -ne $current.Count) {
 $actualDemonstrations = @{
     95 = 'A planted single-leg balance with one knee raised and held; the pelvis is not visibly moved through repetitions.'
     193 = 'A wide planted stance, hip hinge toward the floor, then a rise into a two-arm overhead reach; no repeated squat is performed.'
+    397 = 'Continuous alternating lateral side taps coordinated with a two-arm diagonal sweep across the body; no breathing cadence is established by the silent demonstration.'
     267 = 'A static standing T-arm/shoulder hold with both heels remaining down; no calf-raise hold is demonstrated.'
     417 = 'A narrow planted stance with repeated overhead-to-floor reaches and modest knee/hip flexion; no thumb target or explicit gaze tracking is shown.'
     553 = 'A T-raise performed while visibly holding dumbbells, so it is not a zero-equipment exercise.'
@@ -47,7 +48,7 @@ $actualDemonstrations = @{
 }
 
 $breathLedIds = [Collections.Generic.HashSet[int]]::new()
-foreach ($id in @(390, 391, 392, 394, 395, 397, 398, 399, 400, 401, 407, 480, 484)) {
+foreach ($id in @(390, 391, 392, 394, 395, 398, 399, 400, 401, 407, 480, 484)) {
     [void]$breathLedIds.Add($id)
 }
 $gazeLedIds = [Collections.Generic.HashSet[int]]::new()
@@ -130,6 +131,7 @@ function Get-CorrectionReason {
     switch ($Id) {
         95 { return 'The loop shows an isometric knee-raised balance, not repeated pelvic control; mode, still frame, anatomy, sound, and name now follow the visible hold.' }
         193 { return 'The seed mismatch was confirmed: the loop hinges but does not squat, so the name, motion, anatomy, and demand now follow the hinge/reach.' }
+        397 { return 'The clip itself alternates both side taps within one loop, so a mirrored two-block side sequence was false; the silent low-impact source does not establish the former inhale/exhale wording.' }
         252 { return 'The retired false calf hold was removed from the mandatory calf-raise sequence.' }
         253 { return 'The obsolete session-movement link to the retired false calf hold was removed.' }
         417 { return 'The demonstration shows a reach with modest lower-body flexion, not thumb tracking or a hard squat; name, practice, motion, anatomy, and demand now match it.' }

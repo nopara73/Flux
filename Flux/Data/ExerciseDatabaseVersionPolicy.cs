@@ -4,7 +4,7 @@ internal static class ExerciseDatabaseVersionPolicy
 {
     internal const int MinimumNonDestructiveVersion = 14;
 
-    internal const int CurrentVersion = 80;
+    internal const int CurrentVersion = 81;
 
     internal static bool IsSupportedNonDestructiveUpgrade(
         int oldVersion,

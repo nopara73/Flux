@@ -10010,35 +10010,28 @@
   },
   {
     "id": 397,
-    "name": "Inhale Open, Exhale Cross-Body Side Tap",
+    "name": "Alternating Side Tap with Diagonal Arm Sweep",
     "retiredName": "Exhale Forward, Inhale Back Weight Shift",
     "video": "exercise_videos/exercise_0397.mp4",
     "primaryCanonicalGroup": "HipAbductors",
     "secondaryCanonicalGroups": [
-      "GlutealExtensors",
+      "AccessoryHipAdductors",
       "ShoulderAbductors",
-      "BreathingMuscles"
+      "ScapularGirdle"
     ],
-    "practice": "Breath-led mobility",
+    "practice": "Low-impact conditioning",
     "motionProfile": "SideTapCrossBodySweep",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "ScreenRightThenLeft",
+    "sideSequence": "Alternating",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 397,
-        "sideCue": "ScreenRight",
+        "sideCue": "None",
         "directionCue": "None",
         "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 397,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],

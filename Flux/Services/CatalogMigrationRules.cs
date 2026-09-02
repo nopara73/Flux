@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 59;
+    public const int CurrentCatalogRevision = 60;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -101,8 +101,8 @@ public static class CatalogMigrationRules
                     "Standing Overhead Arm Sweep",
                     "Overhead Hold with Deep Ribcage Breaths"),
                 [397] = new(
-                    "Staggered-Stance Weight Shift",
-                    "Exhale Forward, Inhale Back Weight Shift"),
+                    "Inhale Open, Exhale Cross-Body Side Tap",
+                    "Alternating Side Tap with Diagonal Arm Sweep"),
                 [398] = new(
                     "Standing Hug and Arm Expansion",
                     "Inhale Arms Open, Exhale Self-Hug and Fold"),
@@ -332,11 +332,6 @@ public static class CatalogMigrationRules
                 [395] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Overhead Rib-Expansion Breathing",
-                },
-                [397] = new HashSet<string>(StringComparer.Ordinal)
-                {
-                    "Breath-Integrated Weight Shift",
-                    "Alternating Breath-Integrated Weight Shift",
                 },
                 [500] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -1188,6 +1183,7 @@ public static class CatalogMigrationRules
                     218, 234, 237, 239, 241, 283, 291, 294, 556,
                 },
                 [59] = new HashSet<int> { 565 },
+                [60] = new HashSet<int> { 397 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>

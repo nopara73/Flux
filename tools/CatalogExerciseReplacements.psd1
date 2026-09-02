@@ -3192,12 +3192,12 @@
     }
     397 = @{
         RetiredName = 'Exhale Forward, Inhale Back Weight Shift'
-        Name = 'Inhale Open, Exhale Cross-Body Side Tap'
-        Practice = 'Breath-led mobility'
+        Name = 'Alternating Side Tap with Diagonal Arm Sweep'
+        Practice = 'Low-impact conditioning'
         MotionProfile = 'SideTapCrossBodySweep'
         Primary = 'HipAbductors'
-        Secondary = @('GlutealExtensors', 'ShoulderAbductors', 'BreathingMuscles')
-        SideSequence = 'ScreenRightThenLeft'
+        Secondary = @('AccessoryHipAdductors', 'ShoulderAbductors', 'ScapularGirdle')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
