@@ -154,7 +154,7 @@ const [
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_hard_floor.png"),
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Resources", "drawable", "ic_upper_body_clothing.xml"),
-  source("Flux", "Resources", "drawable", "ic_light_workout.xml"),
+  binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_light_workout.png"),
   source("Flux", "Resources", "drawable", "ic_wall.xml"),
   source("Flux", "Resources", "drawable", "ic_wall_off.xml"),
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_wall_no_sole.png"),
@@ -759,7 +759,19 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /@drawable\/ic_upper_body_clothing/);
   assert.match(durationLayout, /@drawable\/ic_light_workout/);
   assert.match(upperBodyClothingIcon, /<vector[\s\S]*pathData=/);
-  assert.match(lightWorkoutIcon, /<vector[\s\S]*M20\.24,12\.24[\s\S]*M16,8L2,22/);
+  assert.deepEqual(
+    [...lightWorkoutIcon.subarray(0, 8)],
+    [137, 80, 78, 71, 13, 10, 26, 10],
+  );
+  assert.equal(lightWorkoutIcon.readUInt32BE(16), 96);
+  assert.equal(lightWorkoutIcon.readUInt32BE(20), 96);
+  assert.equal(lightWorkoutIcon[25], 6);
+  assert.match(webIndex, /class="modifier-icon light-mode-glyph"/);
+  assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6/);
+  assert.match(
+    webStyles,
+    /\.light-mode-glyph[\s\S]*mask-image:\s*url\("\.\/assets\/ic_light_workout\.png"\)/,
+  );
   assert.notDeepEqual(hardFloorIcon, softFloorIcon);
   assert.deepEqual([...hardFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.deepEqual([...softFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
@@ -772,8 +784,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webStyles, /data-hard-floor="hard"[\s\S]*floor-glyph-hard[\s\S]*data-hard-floor="soft"[\s\S]*floor-glyph-soft/);
   assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_hard_floor\.png"\)/);
   assert.match(webStyles, /mask-image:\s*url\("\.\/assets\/ic_soft_floor\.png"\)/);
-  assert.match(webBuild, /drawable-xxhdpi[\s\S]*ic_hard_floor\.png[\s\S]*ic_soft_floor\.png[\s\S]*ic_wall_no_sole\.png/);
-  assert.match(webBuild, /fingerprintedName\([\s\S]*"ic_hard_floor"[\s\S]*"ic_soft_floor"[\s\S]*"ic_wall_no_sole"/);
+  assert.match(webBuild, /drawable-xxhdpi[\s\S]*ic_hard_floor\.png[\s\S]*ic_soft_floor\.png[\s\S]*ic_wall_no_sole\.png[\s\S]*ic_light_workout\.png/);
+  assert.match(webBuild, /fingerprintedName\([\s\S]*"ic_hard_floor"[\s\S]*"ic_soft_floor"[\s\S]*"ic_wall_no_sole"[\s\S]*"ic_light_workout"/);
   assert.match(
     durationLayout,
     /mirror_modifier_button(?:(?!\/>)[\s\S])*drawableTop="@drawable\/ic_mirror"/,
@@ -866,6 +878,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   ]) {
     assert.match(webApp, new RegExp(label));
   }
+  assert.match(
+    instantControls,
+    /return `light mode \$\{enabled \? "ON" : "OFF"\}`/,
+  );
+  assert.doesNotMatch(instantControls, /light workout \$\{enabled/);
   assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
   assert.match(mainActivity, /GetMirrorFeedbackResourceId[\s\S]*MirrorEquipment\.Compact[\s\S]*compact_mirror_equipment_enabled_feedback[\s\S]*MirrorEquipment\.Tall[\s\S]*tall_mirror_equipment_enabled_feedback/);
   assert.match(mainActivity, /MirrorEquipment\.None\s*=>\s*MirrorEquipment\.Tall[\s\S]*MirrorEquipment\.Tall\s*=>\s*MirrorEquipment\.Compact[\s\S]*MirrorEquipment\.Compact\s*=>\s*MirrorEquipment\.None/);
@@ -910,7 +927,10 @@ test("web and mobile persist one combined duration and modifier selection contex
     webStyles,
     /\.modifier-feedback\.show[\s\S]*2040ms[\s\S]*@keyframes modifier-feedback-blink[\s\S]*7%[\s\S]*11%[\s\S]*66%[\s\S]*100%[\s\S]*opacity:\s*0[\s\S]*scale\(1\.08\)/,
   );
-  assert.match(webIndex, /id="light-workout-modifier"[\s\S]*M20\.24 12\.24a6 6/);
+  assert.match(
+    webIndex,
+    /id="light-workout-modifier"[\s\S]{0,500}class="modifier-icon light-mode-glyph"/,
+  );
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(
     exerciseDatabase,

@@ -426,7 +426,7 @@
       return `insect mode ${enabled ? "ON" : "OFF"}`;
     }
     if (name === "light") {
-      return `light workout ${enabled ? "ON" : "OFF"}`;
+      return `light mode ${enabled ? "ON" : "OFF"}`;
     }
     return enabled ? "noisy exercises DISABLED" : "noisy exercises ENABLED";
   }

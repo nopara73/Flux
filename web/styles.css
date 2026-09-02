@@ -435,6 +435,18 @@ button.modifier-tile:not(:disabled):active {
   stroke-width: 1.8;
 }
 
+.light-mode-glyph {
+  background: currentColor;
+  mask-image: url("./assets/ic_light_workout.png");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("./assets/ic_light_workout.png");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
 .floor-glyph {
   display: none;
   width: 100%;

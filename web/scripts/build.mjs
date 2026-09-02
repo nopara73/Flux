@@ -75,9 +75,17 @@ const wallNoSoleIconPath = path.join(
   "drawable-xxhdpi",
   "ic_wall_no_sole.png",
 );
+const lightWorkoutIconPath = path.join(
+  repositoryRoot,
+  "Flux",
+  "Resources",
+  "drawable-xxhdpi",
+  "ic_light_workout.png",
+);
 const hardFloorIconSource = await readFile(hardFloorIconPath);
 const softFloorIconSource = await readFile(softFloorIconPath);
 const wallNoSoleIconSource = await readFile(wallNoSoleIconPath);
+const lightWorkoutIconSource = await readFile(lightWorkoutIconPath);
 const hardFloorIconName = fingerprintedName(
   "ic_hard_floor",
   "png",
@@ -93,15 +101,22 @@ const wallNoSoleIconName = fingerprintedName(
   "png",
   wallNoSoleIconSource,
 );
+const lightWorkoutIconName = fingerprintedName(
+  "ic_light_workout",
+  "png",
+  lightWorkoutIconSource,
+);
 const stylesTemplate = await readFile(path.join(webRoot, "styles.css"), "utf8");
 const stylesSource = stylesTemplate
   .replaceAll("./assets/ic_hard_floor.png", `./assets/${hardFloorIconName}`)
   .replaceAll("./assets/ic_soft_floor.png", `./assets/${softFloorIconName}`)
-  .replaceAll("./assets/ic_wall_no_sole.png", `./assets/${wallNoSoleIconName}`);
+  .replaceAll("./assets/ic_wall_no_sole.png", `./assets/${wallNoSoleIconName}`)
+  .replaceAll("./assets/ic_light_workout.png", `./assets/${lightWorkoutIconName}`);
 if (stylesSource === stylesTemplate ||
     stylesSource.includes("./assets/ic_hard_floor.png") ||
     stylesSource.includes("./assets/ic_soft_floor.png") ||
-    stylesSource.includes("./assets/ic_wall_no_sole.png")) {
+    stylesSource.includes("./assets/ic_wall_no_sole.png") ||
+    stylesSource.includes("./assets/ic_light_workout.png")) {
   throw new Error("Could not fingerprint the modifier icons.");
 }
 const stylesOutputName = fingerprintedName("styles", "css", stylesSource);
@@ -117,6 +132,10 @@ await copyInto(
 await copyInto(
   wallNoSoleIconPath,
   path.join(outputRoot, "assets", wallNoSoleIconName),
+);
+await copyInto(
+  lightWorkoutIconPath,
+  path.join(outputRoot, "assets", lightWorkoutIconName),
 );
 
 const catalogSource = await readFile(
