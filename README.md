@@ -66,9 +66,9 @@ audits reject missing, overlapping, or anatomically inconsistent mappings.
 The optimizer applies these priorities lexicographically:
 
 1. preserve a valid in-progress lineup while restoring an active workout;
-2. on every fourth consecutive local-calendar training day, prefer complete
-   demand-`0` sequences from each slot's highest available score bucket; this
-   outranks non-demand-`0` Keeps but never reaches into a lower score bucket;
+2. whenever Light mode is active, maximize complete demand-`0` sequences first;
+   saved scores and Keeps then arbitrate among the available demand-`0` choices,
+   while harder work fills only slots that demand-`0` work cannot cover;
 3. give a fresh hard keep, or a suitable highest-score fresh hard exercise, a
    hard-work opportunity;
 4. retain contextual keeps, except demand-`1` and demand-`2` keeps whose

@@ -815,7 +815,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Equal(
             WorkoutModifiers.HardFloor |
                 WorkoutModifiers.UpperBodyClothing,
@@ -844,7 +844,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect |
                 WorkoutModifiers.HardFloor |
@@ -1936,7 +1936,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Equal(
             WorkoutModifiers.HardFloor |
                 WorkoutModifiers.UpperBodyClothing,
@@ -1996,7 +1996,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -3520,7 +3520,7 @@ public sealed class ExerciseSessionServiceTests
             3,
             service.GetDefaultWorkoutModifiers(state));
 
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Single(state.LegacyCompletedTrainingDayUnixMilliseconds);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
@@ -3567,9 +3567,24 @@ public sealed class ExerciseSessionServiceTests
     public void VersionTwentySevenMigratesAnActiveLightWorkoutIntoItsOwnProfile()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
-        Exercise[] exercises = groups
-            .Select((group, index) => QualifiedForGroup(index + 1, group))
-            .ToArray();
+        Exercise hard = CloneWithMuscularDemand(
+            QualifiedForGroup(1, groups[0]),
+            muscularDemand: 2);
+        Exercise lowerScoredEasy = CloneWithMuscularDemand(
+            QualifiedForGroup(99, groups[0], score: -1),
+            muscularDemand: 0);
+        Exercise[] selected = [hard, .. groups
+            .Skip(1)
+            .Select((group, index) => QualifiedForGroup(index + 2, group))];
+        Exercise[] exercises = [.. selected, lowerScoredEasy];
+        Dictionary<string, int> selectedByGroup = groups
+            .Select((group, index) => (
+                GroupId: group.Id,
+                ExerciseId: selected[index].Id))
+            .ToDictionary(
+                entry => entry.GroupId,
+                entry => entry.ExerciseId,
+                StringComparer.Ordinal);
         var state = new WorkoutState
         {
             Version = 27,
@@ -3580,10 +3595,10 @@ public sealed class ExerciseSessionServiceTests
             ActiveWorkoutMinutes = 3,
             ActiveWorkoutModifiers = WorkoutModifiers.Silence,
             ActiveWorkoutIsLightDay = true,
-            SelectedExerciseIds = groups.ToDictionary(
-                group => $"p{(int)WorkoutModifiers.Silence}|{group.Id}",
-                group => exercises.Single(exercise =>
-                    WorkoutCoveragePolicy.IsSelectable(exercise, group)).Id),
+            SelectedExerciseIds = selectedByGroup.ToDictionary(
+                entry => $"p{(int)WorkoutModifiers.Silence}|{entry.Key}",
+                entry => entry.Value,
+                StringComparer.Ordinal),
         };
         var service = new ExerciseSessionService(
             exercises,
@@ -3593,14 +3608,20 @@ public sealed class ExerciseSessionServiceTests
 
         WorkoutModifiers lightProfile = WorkoutModifiers.Silence |
             WorkoutModifiers.Light;
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
         Assert.Equal(lightProfile, state.ActiveWorkoutModifiers);
         Assert.True(state.ActiveWorkoutIsLightDay);
-        Assert.All(groups, group => Assert.Equal(
+        Assert.Equal(
+            hard.Id,
             state.SelectedExerciseIds[
-                $"p{(int)WorkoutModifiers.Silence}|{group.Id}"],
-            state.SelectedExerciseIds[$"p{(int)lightProfile}|{group.Id}"]));
+                $"p{(int)WorkoutModifiers.Silence}|{groups[0].Id}"]);
+        Assert.Equal(
+            lowerScoredEasy.Id,
+            state.SelectedExerciseIds[$"p{(int)lightProfile}|{groups[0].Id}"]);
+        Assert.All(service.GetActiveGroups(state), round => Assert.Equal(
+            0,
+            service.GetSelectedExercise(state, round).MuscularDemand));
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
         Assert.Equal(lightProfile, state.ActiveWorkoutSession.Modifiers);
     }
@@ -3689,7 +3710,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void LightDayNeverPullsDemandZeroFromALowerScoreBucket()
+    public void LightDayPullsDemandZeroFromALowerScoreBucketWithoutChangingScores()
     {
         TimeZoneInfo timeZone = TimeZoneInfo.Utc;
         DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
@@ -3720,8 +3741,137 @@ public sealed class ExerciseSessionServiceTests
 
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.Equal(
-            topScoredHard.Id,
+            lowerScoredEasy.Id,
             state.SelectedExerciseIds[$"p256|{groups[0].Id}"]);
+        Assert.Equal(0, topScoredHard.Score);
+        Assert.Equal(-1, lowerScoredEasy.Score);
+    }
+
+    [Fact]
+    public void VersionTwentyEightReplansUnfinishedActiveLightWorkWithoutRewritingCompletedWork()
+    {
+        DateTimeOffset now = new(2026, 9, 2, 6, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(5).Groups.ToArray();
+        Exercise[] easy = groups
+            .Select((group, index) => CloneWithMuscularDemand(
+                QualifiedForGroup(index + 1, group),
+                muscularDemand: 0))
+            .ToArray();
+        Exercise hardRoot = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(101, groups[1]),
+                102),
+            muscularDemand: 2);
+        Exercise hardMember = CloneWithMuscularDemand(
+            CloneWithLinkedSequenceMember(
+                QualifiedForGroup(102, groups[2]),
+                101),
+            muscularDemand: 2);
+        Exercise hardThird = CloneWithMuscularDemand(
+            QualifiedForGroup(103, groups[3]),
+            muscularDemand: 2);
+        Exercise hardFourth = CloneWithMuscularDemand(
+            QualifiedForGroup(104, groups[4]),
+            muscularDemand: 2);
+        Exercise[] exercises =
+            [.. easy, hardRoot, hardMember, hardThird, hardFourth];
+        var service = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now,
+            TimeZoneInfo.Utc);
+        var state = new WorkoutState();
+        service.StartWorkout(state, 5, WorkoutModifiers.Light);
+        Assert.All(
+            service.GetActiveGroups(state),
+            round => Assert.Equal(
+                0,
+                service.GetSelectedExercise(state, round).MuscularDemand));
+        state.CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision;
+        long sessionId = state.ActiveWorkoutSession!.SessionId;
+        string profilePrefix = $"p{(int)WorkoutModifiers.Light}|";
+        state.SelectedExerciseIds[$"{profilePrefix}{groups[1].Id}"] =
+            hardRoot.Id;
+        state.SelectedExerciseIds[$"{profilePrefix}{groups[2].Id}"] =
+            hardRoot.Id;
+        state.SelectedExerciseIds[$"{profilePrefix}{groups[3].Id}"] =
+            hardThird.Id;
+        state.SelectedExerciseIds[$"{profilePrefix}{groups[4].Id}"] =
+            hardFourth.Id;
+        state.ActiveSetCountsBySelectionGroupId = new()
+        {
+            [groups[0].Id] = 1,
+            [groups[1].Id] = 1,
+            [groups[3].Id] = 1,
+            [groups[4].Id] = 1,
+        };
+        state.ActiveExtraSetSelectionGroupIds.Clear();
+        state.ActiveSelectionGroupOrder.Clear();
+
+        WorkoutGroup completed = service.GetNextGroup(state)!;
+        Assert.Equal(groups[0].Id, completed.SelectionKey);
+        service.RecordOutcome(state, completed, keep: true);
+        state.KeptExerciseRootIdsBySelectionGroupId[groups[0].Id] =
+            [easy[0].Id];
+        state.LastKeptExerciseIds.Add(easy[0].Id);
+        WorkoutGroup firstHardBlock = service.GetNextGroup(state)!;
+        Assert.Equal(groups[1].Id, firstHardBlock.SelectionKey);
+        Assert.Equal(0, firstHardBlock.SequenceBlockIndex);
+        service.BeginRest(
+            state,
+            firstHardBlock,
+            now.ToUnixTimeMilliseconds() + 15_000);
+        service.AdvanceSequence(state, firstHardBlock);
+        WorkoutGroup unfinishedHardBlock = service.GetNextGroup(state)!;
+        Assert.Equal(groups[1].Id, unfinishedHardBlock.SelectionKey);
+        Assert.Equal(1, unfinishedHardBlock.SequenceBlockIndex);
+        service.PauseMovement(
+            state,
+            unfinishedHardBlock,
+            millisecondsRemaining: 30_000,
+            pausedByUser: true);
+        Assert.Single(state.ActiveWorkoutSession.Blocks);
+        Assert.Single(state.ActiveWorkoutSession.Decisions);
+        state.Version = 28;
+
+        var restoredService = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now.AddMinutes(1),
+            TimeZoneInfo.Utc);
+        restoredService.Initialize(state);
+
+        Assert.Equal(29, state.Version);
+        Assert.Equal(sessionId, state.ActiveWorkoutSession!.SessionId);
+        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[completed.Id]);
+        Assert.Single(state.ActiveWorkoutSession.Decisions);
+        Assert.Single(state.ActiveWorkoutSession.Blocks);
+        Assert.Equal(hardRoot.Id, state.ActiveWorkoutSession.Blocks[0].RootExerciseId);
+        Assert.Null(state.PendingMovementGroupId);
+        Assert.Null(state.PendingRestGroupId);
+        WorkoutGroup restarted = restoredService.GetNextGroup(state)!;
+        Assert.Equal(groups[1].Id, restarted.SelectionKey);
+        Assert.Equal(0, restarted.SequenceBlockIndex);
+        Assert.Equal(
+            0,
+            restoredService.GetSelectedExercise(state, restarted).MuscularDemand);
+        Assert.All(
+            restoredService.GetActiveGroups(state),
+            round => Assert.Equal(
+                0,
+                restoredService.GetSelectedExercise(state, round).MuscularDemand));
+        Assert.Contains(
+            easy[0].Id,
+            state.KeptExerciseRootIdsBySelectionGroupId[groups[0].Id]);
+        WorkoutModifierChangeLog migration = Assert.Single(
+            state.ActiveWorkoutSession.ModifierChanges);
+        Assert.Equal(WorkoutModifiers.Light, migration.PreviousModifiers);
+        Assert.Equal(WorkoutModifiers.Light, migration.NewModifiers);
+        Assert.All(migration.PlannedSelections, selection =>
+            Assert.Equal(
+                0,
+                exercises.Single(exercise =>
+                    exercise.Id == selection.RootExerciseId).MuscularDemand));
     }
 
     [Fact]
@@ -3789,7 +3939,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void LightDayShuffleUsesDemandZeroOnlyWhenItExistsInTopBucket()
+    public void LightDayShuffleUsesTheBestAvailableDemandZeroExercise()
     {
         DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -3865,7 +4015,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.Equal(
             easy.Id,
@@ -4760,7 +4910,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(28, state.Version);
+        Assert.Equal(29, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(

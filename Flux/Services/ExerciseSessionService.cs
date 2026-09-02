@@ -14,7 +14,8 @@ public sealed class ExerciseSessionService
         WorkoutModifiers.HardFloor |
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 28;
+    private const int CurrentStateVersion = 29;
+    private const int DominantLightModeStateVersion = 29;
     private const int ExplicitLightModeStateVersion = 28;
     private const int ImplicitUpperBodyClothingStateVersion = 27;
     private const int LegacyTrainingDayInferenceStateVersion = 25;
@@ -195,6 +196,22 @@ public sealed class ExerciseSessionService
             MigrateExplicitLightMode(state);
         }
 
+        bool shouldMigrateDominantLightLineup =
+            loadedStateVersion < DominantLightModeStateVersion &&
+            state.ActiveWorkoutMinutes > 0 &&
+            !state.WorkoutCompleted &&
+            !state.CompletionAcknowledged &&
+            state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light);
+        bool shouldMigrateActiveLightLineup =
+            shouldMigrateDominantLightLineup &&
+            (state.ActiveWorkoutSession is not null ||
+             state.Outcomes.Count > 0 ||
+             state.PendingMovementGroupId is not null ||
+             state.PendingRestGroupId is not null);
+        bool shouldMigratePreparedDominantLightLineup =
+            shouldMigrateDominantLightLineup &&
+            !shouldMigrateActiveLightLineup;
+
         state.Version = CurrentStateVersion;
         state.LastWorkoutMinutes = NormalizeLastWorkoutMinutes(state.LastWorkoutMinutes);
         state.LastWorkoutModifiers = WorkoutModifierPolicy
@@ -250,11 +267,22 @@ public sealed class ExerciseSessionService
         // selection. Clear stale checkpoints before lineup arbitration.
         NormalizePendingRest(state);
         NormalizeActiveModifierTransitionProtection(state);
-        RepairActiveLineup(
-            state,
-            preserveCurrentSelections: !shouldMigratePreparedLightDay);
-        NormalizeActiveLongWorkoutAllocation(state);
-        if (shouldMigratePreparedLightDay)
+        if (shouldMigrateActiveLightLineup)
+        {
+            MigrateActiveLightLineup(state);
+        }
+        else
+        {
+            RepairActiveLineup(
+                state,
+                preserveCurrentSelections:
+                    !shouldMigratePreparedLightDay &&
+                    !shouldMigratePreparedDominantLightLineup);
+            NormalizeActiveLongWorkoutAllocation(state);
+        }
+        if ((shouldMigratePreparedLightDay ||
+             shouldMigratePreparedDominantLightLineup) &&
+            !shouldMigrateActiveLightLineup)
         {
             RebalanceNewExercisesByMuscleBalance(state);
             SetActiveLongWorkoutAllocation(state);
@@ -783,18 +811,20 @@ public sealed class ExerciseSessionService
 
         if (state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light))
         {
-            WorkoutExercisePhase phase = GetExercisePhase(group);
-            int highestReplacementScore = candidates.Max(candidate =>
-                GetSelectionScore(state, candidate.Exercise, phase));
             List<ShuffleCandidate> lightCandidates = candidates
-                .Where(candidate =>
-                    IsDemandZeroSequence(candidate.Exercise) &&
-                    GetSelectionScore(state, candidate.Exercise, phase) ==
-                        highestReplacementScore)
+                .Where(candidate => IsDemandZeroSequence(candidate.Exercise))
                 .ToList();
             if (lightCandidates.Count > 0)
             {
-                candidates = lightCandidates;
+                WorkoutExercisePhase phase = GetExercisePhase(group);
+                int highestLightScore = lightCandidates.Max(candidate =>
+                    GetSelectionScore(state, candidate.Exercise, phase));
+                candidates = lightCandidates
+                    .Where(candidate => GetSelectionScore(
+                        state,
+                        candidate.Exercise,
+                        phase) == highestLightScore)
+                    .ToList();
             }
         }
 
@@ -1756,18 +1786,8 @@ public sealed class ExerciseSessionService
             Exercise exercise,
             WorkoutGroup preferenceSlot)
         {
-            if (!modifiers.HasFlag(WorkoutModifiers.Light) ||
-                !IsDemandZeroSequence(exercise))
-            {
-                return false;
-            }
-
-            WorkoutExercisePhase phase = GetProjectedSelectionPhase(
-                state,
-                preferenceSlot,
-                groups.Count);
-            return GetSelectionScore(state, exercise, phase) ==
-                highestScoreByGroup[preferenceSlot.Id];
+            return modifiers.HasFlag(WorkoutModifiers.Light) &&
+                IsDemandZeroSequence(exercise);
         }
 
         BigInteger CalculateUtility(
@@ -3947,6 +3967,151 @@ public sealed class ExerciseSessionService
         }
     }
 
+    private void MigrateActiveLightLineup(WorkoutState state)
+    {
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
+        SelectedSequencePlacement[] priorPlacements =
+            GetSelectedSequencePlacements(state);
+        SelectedSequencePlacement[] priorOrderedPlacements =
+            GetScheduleOrderedPlacements(state, priorPlacements);
+        WorkoutGroup[] priorRounds = GetActiveGroups(state).ToArray();
+        WorkoutGroup? currentRound = GetNextGroup(state);
+        if (currentRound is null)
+        {
+            RepairActiveLineup(state);
+            NormalizeActiveLongWorkoutAllocation(state);
+            return;
+        }
+
+        WorkoutSessionLog session = EnsureActiveWorkoutSession(
+            state,
+            startedBeforeLogging: true);
+        bool preserveCompletedCurrentSelection =
+            GetPendingRestGroup(state)?.Id == currentRound.Id;
+        HashSet<string> lockedSelectionGroupIds = session.Decisions
+            .Select(decision => decision.SelectionGroupId)
+            .Where(selectionGroupId => !string.IsNullOrWhiteSpace(
+                selectionGroupId))
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (WorkoutGroup decidedRound in priorRounds.Where(round =>
+                     state.Outcomes.TryGetValue(
+                         round.Id,
+                         out ExerciseOutcome outcome) &&
+                     outcome is ExerciseOutcome.Tick or ExerciseOutcome.X))
+        {
+            lockedSelectionGroupIds.Add(decidedRound.SelectionKey);
+        }
+        if (preserveCompletedCurrentSelection)
+        {
+            lockedSelectionGroupIds.Add(currentRound.SelectionKey);
+        }
+        else
+        {
+            lockedSelectionGroupIds.Remove(currentRound.SelectionKey);
+        }
+
+        SelectedSequencePlacement[] lockedPlacements = priorPlacements
+            .Where(placement => lockedSelectionGroupIds.Contains(
+                placement.Anchor.Id))
+            .ToArray();
+        Dictionary<string, int> lockedExerciseIdsByGroup = lockedPlacements
+            .SelectMany(placement => placement.CoveredGroups.Select(group =>
+                (GroupId: group.Id, RootId: placement.Root.Id)))
+            .ToDictionary(
+                entry => entry.GroupId,
+                entry => entry.RootId,
+                StringComparer.Ordinal);
+        Dictionary<string, int> lockedSetCountsBySelectionGroupId =
+            lockedPlacements.ToDictionary(
+                placement => placement.Anchor.Id,
+                placement => state.ActiveSetCountsBySelectionGroupId
+                    .GetValueOrDefault(placement.Anchor.Id, 1),
+                StringComparer.Ordinal);
+        HashSet<string> protectedBaseGroupIds =
+            lockedExerciseIdsByGroup.Keys.ToHashSet(StringComparer.Ordinal);
+
+        IReadOnlyDictionary<string, int> replannedLineup =
+            ChooseBestDistinctLineup(
+                state,
+                selectionGroups,
+                state.ActiveWorkoutModifiers,
+                currentExerciseIds: lockedExerciseIdsByGroup,
+                allowSavedSelectionException: true,
+                modifierTransitionProtectedGroupIds: protectedBaseGroupIds);
+
+        if (!preserveCompletedCurrentSelection)
+        {
+            foreach (WorkoutGroup currentSelectionRound in priorRounds.Where(
+                         round => round.SelectionKey ==
+                             currentRound.SelectionKey))
+            {
+                state.Outcomes.Remove(currentSelectionRound.Id);
+            }
+            ClearPendingMovement(state);
+            ClearPendingRest(state);
+            state.ActiveModifierProtectedSelectionGroupId = null;
+        }
+
+        ApplyDistinctLineup(
+            state,
+            selectionGroups,
+            replannedLineup,
+            clearChangedProgress: false);
+        UpdateSelectionOrderAfterReconfiguration(
+            state,
+            priorOrderedPlacements);
+        RebalanceNewExercisesByMuscleBalance(
+            state,
+            lockedSelectionGroupIds);
+        UpdateSelectionOrderAfterReconfiguration(
+            state,
+            priorOrderedPlacements);
+        ApplyLongWorkoutAllocation(
+            state,
+            ChooseLongWorkoutAllocation(
+                state,
+                lockedSelectionGroupIds));
+
+        WorkoutGroup[] replannedRounds = GetActiveGroups(state).ToArray();
+        bool changedLockedSelection = lockedExerciseIdsByGroup.Any(entry =>
+            state.SelectedExerciseIds.GetValueOrDefault(
+                GetSelectionStorageKey(
+                    entry.Key,
+                    state.ActiveWorkoutModifiers)) != entry.Value);
+        bool changedLockedSetCount =
+            lockedSetCountsBySelectionGroupId.Any(entry =>
+                state.ActiveSetCountsBySelectionGroupId.GetValueOrDefault(
+                    entry.Key,
+                    1) != entry.Value);
+        WorkoutGroup? replannedNextRound = GetNextGroup(state);
+        if (changedLockedSelection ||
+            changedLockedSetCount ||
+            state.Outcomes.Keys.Any(outcomeGroupId =>
+                replannedRounds.All(round => round.Id != outcomeGroupId)) ||
+            (preserveCompletedCurrentSelection &&
+                replannedNextRound?.Id != currentRound.Id) ||
+            (!preserveCompletedCurrentSelection &&
+                replannedNextRound?.SelectionKey !=
+                    currentRound.SelectionKey))
+        {
+            throw new InvalidOperationException(
+                "The Light-mode upgrade could not preserve completed work.");
+        }
+
+        session.ModifierChanges.Add(new WorkoutModifierChangeLog
+        {
+            ChangedAtUnixMilliseconds = GetCurrentUnixTimeMilliseconds(),
+            PreviousModifiers = state.ActiveWorkoutModifiers,
+            NewModifiers = state.ActiveWorkoutModifiers,
+            ProtectedSelectionGroupId = preserveCompletedCurrentSelection
+                ? currentRound.SelectionKey
+                : string.Empty,
+            PlannedSelections = CreateCurrentSelectionSnapshots(
+                state,
+                session),
+        });
+    }
+
     private static void AddLightModifierToLegacyLightSession(
         WorkoutSessionLog session)
     {
@@ -5198,9 +5363,9 @@ public sealed class ExerciseSessionService
                             IsDemandZeroSequence(placement.Root)) &&
                         !IsDemandZeroSequence(candidate))
                     {
-                        // Muscle balancing is subordinate to the day-mode
-                        // choice. It may improve one easy lineup with another,
-                        // but cannot undo an available top-bucket easy choice.
+                        // Muscle balancing is subordinate to Light mode. It may
+                        // improve one demand-zero lineup with another, but it
+                        // cannot replace demand-zero work with harder work.
                         continue;
                     }
 

@@ -263,7 +263,8 @@ export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.UpperBodyClothing |
   WORKOUT_MODIFIERS.HardFloor |
   WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 25;
+export const CURRENT_WORKOUT_STATE_VERSION = 26;
+const DOMINANT_LIGHT_MODE_STATE_VERSION = 26;
 const EXPLICIT_LIGHT_MODE_STATE_VERSION = 25;
 const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
 const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
@@ -3537,6 +3538,21 @@ export class WorkoutSession {
         currentUnixTimeMilliseconds,
         this.state.legacyCompletedTrainingDayUnixMilliseconds,
       );
+    const shouldMigrateDominantLightLineup =
+      this.loadedStateVersion < DOMINANT_LIGHT_MODE_STATE_VERSION &&
+      this.state.activeWorkoutMinutes > 0 &&
+      !this.state.workoutCompleted &&
+      !this.state.completionAcknowledged &&
+      (this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0;
+    const shouldMigrateActiveLightLineup =
+      shouldMigrateDominantLightLineup &&
+      (this.state.activeWorkoutSession !== null ||
+       Object.keys(this.state.outcomes).length > 0 ||
+       this.state.pendingMovementGroupId !== null ||
+       this.state.pendingRestGroupId !== null);
+    const shouldMigratePreparedDominantLightLineup =
+      shouldMigrateDominantLightLineup &&
+      !shouldMigrateActiveLightLineup;
     if (shouldMigratePreparedLightDay) {
       enableLightModeForExistingActiveWorkout(this.state);
       this.carrySlotPreferencesForward();
@@ -3558,9 +3574,18 @@ export class WorkoutSession {
 
     this.normalizePendingRest();
     this.normalizeActiveModifierTransitionProtection();
-    this.repairActiveLineup(!shouldMigratePreparedLightDay);
-    this.normalizeActiveLongWorkoutAllocation();
-    if (shouldMigratePreparedLightDay) {
+    if (shouldMigrateActiveLightLineup) {
+      this.migrateActiveLightLineup();
+    } else {
+      this.repairActiveLineup(
+        !shouldMigratePreparedLightDay &&
+          !shouldMigratePreparedDominantLightLineup,
+      );
+      this.normalizeActiveLongWorkoutAllocation();
+    }
+    if ((shouldMigratePreparedLightDay ||
+         shouldMigratePreparedDominantLightLineup) &&
+        !shouldMigrateActiveLightLineup) {
       this.rebalanceNewExercisesByMuscleBalance();
       this.setActiveLongWorkoutAllocation();
     }
@@ -3650,6 +3675,118 @@ export class WorkoutSession {
       keptExerciseIdsAtStart,
       false,
     );
+  }
+
+  migrateActiveLightLineup() {
+    const selectionGroups = this.getSelectionGroups();
+    const priorPlacements = this.getSelectedSequencePlacements();
+    const priorOrderedPlacements = this.getScheduleOrderedPlacements(
+      priorPlacements,
+    );
+    const priorRounds = this.getActiveGroups();
+    const currentRound = this.getNextGroup();
+    if (!currentRound) {
+      this.repairActiveLineup();
+      this.normalizeActiveLongWorkoutAllocation();
+      return;
+    }
+
+    const session = this.ensureActiveWorkoutSession(true);
+    const preserveCompletedCurrentSelection =
+      this.getPendingRestGroup()?.id === currentRound.id;
+    const lockedSelectionGroupIds = new Set(session.decisions
+      .map((decision) => decision.selectionGroupId)
+      .filter((selectionGroupId) =>
+        typeof selectionGroupId === "string" && selectionGroupId.length > 0));
+    for (const decidedRound of priorRounds.filter((round) =>
+      ["tick", "x"].includes(this.state.outcomes[round.id]))) {
+      lockedSelectionGroupIds.add(getSelectionKey(decidedRound));
+    }
+    if (preserveCompletedCurrentSelection) {
+      lockedSelectionGroupIds.add(getSelectionKey(currentRound));
+    } else {
+      lockedSelectionGroupIds.delete(getSelectionKey(currentRound));
+    }
+
+    const lockedPlacements = priorPlacements.filter((placement) =>
+      lockedSelectionGroupIds.has(placement.anchor.id));
+    const lockedExerciseIdsByGroup = new Map(lockedPlacements.flatMap(
+      (placement) => placement.coveredGroups.map((group) =>
+        [group.id, placement.root.id]),
+    ));
+    const lockedSetCountsBySelectionGroupId = new Map(lockedPlacements.map(
+      (placement) => [
+        placement.anchor.id,
+        this.state.activeSetCountsBySelectionGroupId[placement.anchor.id] ?? 1,
+      ],
+    ));
+    const protectedBaseGroupIds = new Set(lockedExerciseIdsByGroup.keys());
+    const replannedLineup = this.chooseBestDistinctLineup(
+      selectionGroups,
+      this.state.activeWorkoutModifiers,
+      {
+        currentExerciseIds: lockedExerciseIdsByGroup,
+        allowSavedSelectionException: true,
+        modifierTransitionProtectedGroupIds: protectedBaseGroupIds,
+      },
+    );
+
+    if (!preserveCompletedCurrentSelection) {
+      for (const currentSelectionRound of priorRounds.filter((round) =>
+        getSelectionKey(round) === getSelectionKey(currentRound))) {
+        delete this.state.outcomes[currentSelectionRound.id];
+      }
+      this.clearPendingMovement();
+      this.clearPendingRest();
+      this.state.activeModifierProtectedSelectionGroupId = null;
+    }
+
+    this.applyDistinctLineup(selectionGroups, replannedLineup, false);
+    this.updateSelectionOrderAfterReconfiguration(priorOrderedPlacements);
+    this.rebalanceNewExercisesByMuscleBalance(lockedSelectionGroupIds);
+    this.updateSelectionOrderAfterReconfiguration(priorOrderedPlacements);
+    this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation(
+      lockedSelectionGroupIds,
+    ));
+
+    const replannedRounds = this.getActiveGroups();
+    const changedLockedSelection = [...lockedExerciseIdsByGroup].some(
+      ([groupId, exerciseId]) => this.state.selectedExerciseIds[
+        this.getSelectionStorageKey(
+          groupId,
+          this.state.activeWorkoutModifiers,
+        )
+      ] !== exerciseId,
+    );
+    const changedLockedSetCount = [...lockedSetCountsBySelectionGroupId].some(
+      ([selectionGroupId, setCount]) =>
+        (this.state.activeSetCountsBySelectionGroupId[
+          selectionGroupId
+        ] ?? 1) !== setCount,
+    );
+    const replannedNextRound = this.getNextGroup();
+    if (changedLockedSelection || changedLockedSetCount ||
+        Object.keys(this.state.outcomes).some((outcomeGroupId) =>
+          !replannedRounds.some((round) => round.id === outcomeGroupId)) ||
+        (preserveCompletedCurrentSelection &&
+          replannedNextRound?.id !== currentRound.id) ||
+        (!preserveCompletedCurrentSelection &&
+          (!replannedNextRound ||
+            getSelectionKey(replannedNextRound) !== getSelectionKey(currentRound)))) {
+      throw new Error(
+        "The Light-mode upgrade could not preserve completed work.",
+      );
+    }
+
+    session.modifierChanges.push({
+      changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(),
+      previousModifiers: this.state.activeWorkoutModifiers,
+      newModifiers: this.state.activeWorkoutModifiers,
+      protectedSelectionGroupId: preserveCompletedCurrentSelection
+        ? getSelectionKey(currentRound)
+        : "",
+      plannedSelections: this.createCurrentSelectionSnapshots(session),
+    });
   }
 
   reconfigureActiveWorkout(modifiers, currentWorkoutGroupId) {
@@ -4000,15 +4137,15 @@ export class WorkoutSession {
 
     let replacementCandidates = candidates;
     if ((this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0) {
-      const phase = this.getExercisePhase(group);
-      const highestReplacementScore = Math.max(...candidates.map((candidate) =>
-        this.getSelectionScore(candidate.exercise, phase)));
       const lightCandidates = candidates.filter((candidate) =>
-        this.isDemandZeroSequence(candidate.exercise) &&
-        this.getSelectionScore(candidate.exercise, phase) ===
-          highestReplacementScore);
+        this.isDemandZeroSequence(candidate.exercise));
       if (lightCandidates.length > 0) {
-        replacementCandidates = lightCandidates;
+        const phase = this.getExercisePhase(group);
+        const highestLightScore = Math.max(...lightCandidates.map((candidate) =>
+          this.getSelectionScore(candidate.exercise, phase)));
+        replacementCandidates = lightCandidates.filter((candidate) =>
+          this.getSelectionScore(candidate.exercise, phase) ===
+            highestLightScore);
       }
     }
 
@@ -4945,16 +5082,8 @@ export class WorkoutSession {
       : 0n;
 
     const hasLightDayOpportunity = (exercise, preferenceSlot) => {
-      if ((modifiers & WORKOUT_MODIFIERS.Light) === 0 ||
-          !this.isDemandZeroSequence(exercise)) {
-        return false;
-      }
-      const phase = this.getProjectedSelectionPhase(
-        preferenceSlot,
-        groups.length,
-      );
-      return this.getSelectionScore(exercise, phase) ===
-        highestScoreByGroup.get(preferenceSlot.id);
+      return (modifiers & WORKOUT_MODIFIERS.Light) !== 0 &&
+        this.isDemandZeroSequence(exercise);
     };
 
     const calculateUtility = (exercise, evaluationGroup, includeSlotPreference) => {

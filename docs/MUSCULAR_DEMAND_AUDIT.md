@@ -55,10 +55,11 @@ lower-score exercise is never pulled upward by recovery rotation.
 Every fourth consecutive local-calendar training day defaults the session's
 explicit Light control to ON. The feather control can also be enabled on an
 ordinary day or disabled on an automatic light day, before or during the
-workout. Within each slot's highest saved-score bucket, a sequence whose every
-distinct member is demand `0` then outranks hard opportunities and Keeps. It
-does not promote a demand-`0` sequence from a lower bucket, delete a displaced
-Keep, or exclude nonzero work when the top bucket has no demand-`0` option.
+workout. Flux first maximizes sequences whose every distinct member is demand
+`0`. Saved score, Keep, recovery, and equipment preferences then arbitrate
+among those light choices. A harder sequence fills a slot only when the
+compatible catalog cannot cover it with demand-`0` work; displaced Keeps and
+user scores remain persisted unchanged.
 Completed session history supplies the default cadence; interrupted sessions
 and duplicate completions on the same date do not advance it. Light itself is
 session-scoped and is not copied into the next session's remembered physical

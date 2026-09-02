@@ -3315,11 +3315,20 @@ test("recovery day defaults to light but explicit regular mode remains regular",
 
 test("version 24 migrates an active light workout into its own profile", () => {
   const groups = RESOLUTIONS.get(3).groups;
-  const exercises = groups.map((group, index) => exercise(
+  const selected = groups.map((group, index) => exercise(
     index + 1,
     group.canonicalGroups[0],
     group.canonicalGroups.slice(1),
+    0,
   ));
+  selected[0].muscularDemand = 2;
+  const lowerScoredEasy = exercise(
+    99,
+    groups[0].canonicalGroups[0],
+    groups[0].canonicalGroups.slice(1),
+    -1,
+  );
+  const exercises = [...selected, lowerScoredEasy];
   const state = createDefaultState();
   state.version = 24;
   state.catalogRevision = CURRENT_CATALOG_REVISION;
@@ -3331,7 +3340,7 @@ test("version 24 migrates an active light workout into its own profile", () => {
   state.activeWorkoutIsLightDay = true;
   state.selectedExerciseIds = Object.fromEntries(groups.map((group, index) => [
     `p${WORKOUT_MODIFIERS.Silence}|${group.id}`,
-    exercises[index].id,
+    selected[index].id,
   ]));
   const session = new WorkoutSession(exercises, state, () => 0);
 
@@ -3342,14 +3351,14 @@ test("version 24 migrates an active light workout into its own profile", () => {
   assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
   assert.equal(session.state.activeWorkoutModifiers, lightProfile);
   assert.equal(session.state.activeWorkoutIsLightDay, true);
-  for (const group of groups) {
-    assert.equal(
-      session.state.selectedExerciseIds[
-        `p${WORKOUT_MODIFIERS.Silence}|${group.id}`
-      ],
-      session.state.selectedExerciseIds[`p${lightProfile}|${group.id}`],
-    );
-  }
+  assert.equal(session.state.selectedExerciseIds[
+    `p${WORKOUT_MODIFIERS.Silence}|${groups[0].id}`
+  ], selected[0].id);
+  assert.equal(session.state.selectedExerciseIds[
+    `p${lightProfile}|${groups[0].id}`
+  ], lowerScoredEasy.id);
+  assert.ok(session.getActiveGroups().every((round) =>
+    session.getSelectedExercise(round).muscularDemand === 0));
   assert.equal(session.state.activeWorkoutSession.isLightDay, true);
   assert.equal(session.state.activeWorkoutSession.modifiers, lightProfile);
 });
@@ -3374,7 +3383,7 @@ test("legacy day inference rejects sparse hard-work evidence", () => {
   assert.deepEqual(inferred, []);
 });
 
-test("light day top-bucket demand zero outranks a hard keep without deleting it", () => {
+test("light day demand zero outranks a hard keep without deleting it", () => {
   const now = new Date(2026, 7, 29, 8).getTime();
   const groups = RESOLUTIONS.get(3).groups;
   const hardKeep = exercise(
@@ -3436,7 +3445,7 @@ test("light day top-bucket demand zero outranks a hard keep without deleting it"
   assert.equal(restored.activeWorkoutSession.isLightDay, true);
 });
 
-test("light day does not pull demand zero from a lower score bucket", () => {
+test("light day pulls demand zero from a lower score bucket without changing scores", () => {
   const now = new Date(2026, 7, 29, 8).getTime();
   const groups = RESOLUTIONS.get(3).groups;
   const topScoredHard = exercise(
@@ -3477,8 +3486,151 @@ test("light day does not pull demand zero from a lower score bucket", () => {
     session.state.selectedExerciseIds[
       `p${WORKOUT_MODIFIERS.Light}|${groups[0].id}`
     ],
-    topScoredHard.id,
+    lowerScoredEasy.id,
   );
+  assert.equal(topScoredHard.score, 0);
+  assert.equal(lowerScoredEasy.score, -1);
+});
+
+test("version 25 replans unfinished active light work without rewriting completed work", () => {
+  const now = Date.UTC(2026, 8, 2, 6);
+  const groups = RESOLUTIONS.get(5).groups;
+  const easy = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const hardRoot = exercise(
+    101,
+    groups[1].canonicalGroups[0],
+    groups[1].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const hardMember = exercise(
+    102,
+    groups[2].canonicalGroups[0],
+    groups[2].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  hardRoot.sequenceBlocks = [
+    { ...hardRoot.sequenceBlocks[0] },
+    { ...hardMember.sequenceBlocks[0] },
+  ];
+  hardMember.sequenceBlocks = [];
+  const hardThird = exercise(
+    103,
+    groups[3].canonicalGroups[0],
+    groups[3].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const hardFourth = exercise(
+    104,
+    groups[4].canonicalGroups[0],
+    groups[4].canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  );
+  const exercises = [
+    ...easy,
+    hardRoot,
+    hardMember,
+    hardThird,
+    hardFourth,
+  ];
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(5, WORKOUT_MODIFIERS.Light);
+  assert.ok(session.getActiveGroups().every((round) =>
+    session.getSelectedExercise(round).muscularDemand === 0));
+  session.state.catalogRevision = CURRENT_CATALOG_REVISION;
+  const profilePrefix = `p${WORKOUT_MODIFIERS.Light}|`;
+  session.state.selectedExerciseIds[`${profilePrefix}${groups[1].id}`] =
+    hardRoot.id;
+  session.state.selectedExerciseIds[`${profilePrefix}${groups[2].id}`] =
+    hardRoot.id;
+  session.state.selectedExerciseIds[`${profilePrefix}${groups[3].id}`] =
+    hardThird.id;
+  session.state.selectedExerciseIds[`${profilePrefix}${groups[4].id}`] =
+    hardFourth.id;
+  session.state.activeSetCountsBySelectionGroupId = {
+    [groups[0].id]: 1,
+    [groups[1].id]: 1,
+    [groups[3].id]: 1,
+    [groups[4].id]: 1,
+  };
+  session.state.activeExtraSetSelectionGroupIds = [];
+  session.state.activeSelectionGroupOrder = [];
+
+  const completed = session.getNextGroup();
+  assert.equal(getSelectionKey(completed), groups[0].id);
+  session.recordOutcome(completed, true);
+  session.state.keptExerciseRootIdsBySelectionGroupId[groups[0].id] =
+    [easy[0].id];
+  session.state.lastKeptExerciseIds.push(easy[0].id);
+  const firstHardBlock = session.getNextGroup();
+  assert.equal(getSelectionKey(firstHardBlock), groups[1].id);
+  assert.equal(firstHardBlock.sequenceBlockIndex, 0);
+  session.beginRest(firstHardBlock, now + 15_000);
+  session.advanceSequence(firstHardBlock);
+  const unfinishedHardBlock = session.getNextGroup();
+  assert.equal(getSelectionKey(unfinishedHardBlock), groups[1].id);
+  assert.equal(unfinishedHardBlock.sequenceBlockIndex, 1);
+  session.pauseMovement(unfinishedHardBlock, 30_000, true);
+  assert.equal(session.state.activeWorkoutSession.blocks.length, 1);
+  assert.equal(session.state.activeWorkoutSession.decisions.length, 1);
+  const sessionId = session.state.activeWorkoutSession.sessionId;
+  session.state.version = 25;
+
+  const restored = new WorkoutSession(
+    exercises,
+    JSON.parse(JSON.stringify(session.state)),
+    () => 0,
+    () => now + 60_000,
+  );
+  restored.initialize();
+
+  assert.equal(restored.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.equal(restored.state.activeWorkoutSession.sessionId, sessionId);
+  assert.equal(restored.state.outcomes[completed.id], "tick");
+  assert.equal(restored.state.activeWorkoutSession.decisions.length, 1);
+  assert.equal(restored.state.activeWorkoutSession.blocks.length, 1);
+  assert.equal(
+    restored.state.activeWorkoutSession.blocks[0].rootExerciseId,
+    hardRoot.id,
+  );
+  assert.equal(restored.state.pendingMovementGroupId, null);
+  assert.equal(restored.state.pendingRestGroupId, null);
+  const restarted = restored.getNextGroup();
+  assert.equal(getSelectionKey(restarted), groups[1].id);
+  assert.equal(restarted.sequenceBlockIndex ?? 0, 0);
+  assert.equal(restored.getSelectedExercise(restarted).muscularDemand, 0);
+  assert.ok(restored.getActiveGroups().every((round) =>
+    restored.getSelectedExercise(round).muscularDemand === 0));
+  assert.ok(restored.state.keptExerciseRootIdsBySelectionGroupId[groups[0].id]
+    .includes(easy[0].id));
+  assert.equal(restored.state.activeWorkoutSession.modifierChanges.length, 1);
+  const migration = restored.state.activeWorkoutSession.modifierChanges[0];
+  assert.equal(migration.previousModifiers, WORKOUT_MODIFIERS.Light);
+  assert.equal(migration.newModifiers, WORKOUT_MODIFIERS.Light);
+  assert.ok(migration.plannedSelections.every((selection) =>
+    exercises.find((candidate) => candidate.id === selection.rootExerciseId)
+      .muscularDemand === 0));
 });
 
 test("light day requires every block of an atomic sequence to be demand zero", () => {
@@ -3536,7 +3688,7 @@ test("light day requires every block of an atomic sequence to be demand zero", (
     .includes(mixedRoot.id), false);
 });
 
-test("light-day shuffle stays demand zero when the top bucket has an option", () => {
+test("light-day shuffle uses the best available demand-zero exercise", () => {
   const now = new Date(2026, 7, 29, 8).getTime();
   const groups = RESOLUTIONS.get(3).groups;
   const easyOne = exercise(1, groups[0].canonicalGroups[0],

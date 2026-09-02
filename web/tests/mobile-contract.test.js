@@ -229,6 +229,10 @@ test("web and mobile persist the same complete workout audit trail", () => {
   assert.match(workoutModule, /getDefaultWorkoutModifiers/);
   assert.match(workoutModule, /getPersistentSetupModifiers/);
   assert.match(sessionService, /lightDayOpportunityWeight/);
+  assert.match(sessionService, /DominantLightModeStateVersion\s*=\s*29/);
+  assert.match(workoutModule, /DOMINANT_LIGHT_MODE_STATE_VERSION\s*=\s*26/);
+  assert.match(sessionService, /MigrateActiveLightLineup/);
+  assert.match(workoutModule, /migrateActiveLightLineup/);
   assert.match(
     workoutModule,
     /activeWorkoutIsLightDay[\s\S]*isLightWorkoutDayDue[\s\S]*lightDayOpportunityWeight/,
@@ -438,8 +442,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     upperBodyClothingRequirementModel,
     /Unreviewed[\s\S]*ClothingRequired[\s\S]*BareUpperBodyRequired[\s\S]*Agnostic/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 25);
-  assert.match(workoutState, /public int Version[^=]*=\s*28/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 26);
+  assert.match(workoutState, /public int Version[^=]*=\s*29/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
