@@ -827,8 +827,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="insect_mode_disabled_feedback">insect mode OFF<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
-  assert.match(strings, /<string name="light_workout_enabled_feedback">light workout ON<\/string>/);
-  assert.match(strings, /<string name="light_workout_disabled_feedback">light workout OFF<\/string>/);
+  assert.match(strings, /<string name="light_workout_enabled_feedback">light mode ON<\/string>/);
+  assert.match(strings, /<string name="light_workout_disabled_feedback">light mode OFF<\/string>/);
   assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall · no feet on wall<\/string>/);
   assert.match(strings, /<string name="wall_sole_contact_enabled_feedback">equipment ON: wall<\/string>/);
   assert.match(strings, /<string name="wall_equipment_disabled_feedback">equipment OFF: wall<\/string>/);
@@ -851,8 +851,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     "insect mode OFF",
     "noisy exercises ENABLED",
     "noisy exercises DISABLED",
-    "light workout ON",
-    "light workout OFF",
+    "light mode ON",
+    "light mode OFF",
     "equipment ON: wall · no feet on wall",
     "equipment ON: wall",
     "equipment OFF: wall",
