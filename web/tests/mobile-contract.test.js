@@ -25,6 +25,7 @@ import {
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
@@ -514,6 +515,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
+    /MinimumExercisesPerMuscularDemandCategoryPerGroup\s*=\s*5[\s\S]*FindMuscularDemandCoverageDeficiencies[\s\S]*Exercise\.MinimumMuscularDemand[\s\S]*Exercise\.MaximumMuscularDemand/,
+  );
+  assert.match(
+    modifierPolicy,
     /requiresMirrorRelevance[\s\S]*IsMirrorRelevant\(exercise\)/,
   );
   assert.match(
@@ -523,6 +528,13 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.equal(
     MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
     integerConstant(modifierPolicy, "MinimumExercisesPerPairStatePerGroup"),
+  );
+  assert.equal(
+    MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
+    integerConstant(
+      modifierPolicy,
+      "MinimumExercisesPerMuscularDemandCategoryPerGroup",
+    ),
   );
   assert.equal(
     MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
@@ -581,6 +593,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     workoutModule,
+    /MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP\s*=\s*5[\s\S]*findMuscularDemandCoverageDeficiencies[\s\S]*MINIMUM_MUSCULAR_DEMAND[\s\S]*MAXIMUM_MUSCULAR_DEMAND/,
+  );
+  assert.match(
+    workoutModule,
     /matchingExerciseCount:[\s\S]*MODIFIER_RULES\.every\(\(rule\)\s*=>\s*rule\.isReviewed\(exercise\)\)/,
   );
   assert.match(
@@ -595,6 +611,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   for (const heavyCatalogInvariant of [
     "findWorkoutModifierPairCoverageDeficiencies",
+    "findMuscularDemandCoverageDeficiencies",
     "findWorkoutModifierMaterialityDeficiencies",
     "findWorkoutProfileLineupDeficiencies",
   ]) {
@@ -608,6 +625,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webApp, /isSessionMovementMetadataValid/);
   for (const heavyCatalogInvariant of [
     "FindPairwiseCoverageDeficiencies",
+    "FindMuscularDemandCoverageDeficiencies",
     "FindMaterialityDeficiencies",
     "FindDistinctLineupDeficiencies",
   ]) {

@@ -193,6 +193,7 @@ const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
 const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
+export const MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP = 5;
 export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
 export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
 export const MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS = 5;
@@ -1888,6 +1889,47 @@ export function findHardFloorCategoryCoverageDeficiencies(exercises) {
         result.matchingExerciseCount < result.requiredExerciseCount)));
 }
 
+export function findMuscularDemandCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const requiredCategories = [
+    MINIMUM_MUSCULAR_DEMAND,
+    MAXIMUM_MUSCULAR_DEMAND,
+  ];
+
+  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
+    resolution.groups.flatMap((group) =>
+      requiredCategories.flatMap((muscularDemand) =>
+        WORKOUT_MODIFIER_VALIDATION_PROFILES.map((profile) => {
+          const matchingExerciseCount = new Set(exercises
+            .filter((exercise) =>
+              isSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                profile,
+              ) && isSequenceMuscularDemandCategoryForGroup(
+                exercise,
+                exercisesById,
+                group,
+                muscularDemand,
+              ))
+            .map(getSessionMovementId)).size;
+          return {
+            minutes,
+            groupId: group.id,
+            groupName: group.displayName,
+            muscularDemand,
+            profile,
+            matchingExerciseCount,
+            requiredExerciseCount:
+              MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
+          };
+        }))))
+    .filter((result) =>
+      result.matchingExerciseCount < result.requiredExerciseCount);
+}
+
 function isSequenceHardFloorCategory(
   exercise,
   exercisesById,
@@ -1899,6 +1941,32 @@ function isSequenceHardFloorCategory(
       .every((exerciseId) =>
         exercisesById.get(exerciseId)?.hardFloorCompatibility ===
           hardFloorCompatibility);
+}
+
+function isSequenceMuscularDemandCategoryForGroup(
+  exercise,
+  exercisesById,
+  group,
+  muscularDemand,
+) {
+  const members = [...new Set(exercise?.sequenceBlocks?.map((block) =>
+    block.exerciseId) ?? [])]
+    .map((exerciseId) => exercisesById.get(exerciseId))
+    .filter(Boolean);
+  if (members.length === 0) {
+    return false;
+  }
+
+  if (muscularDemand === MINIMUM_MUSCULAR_DEMAND) {
+    return members.every((member) =>
+      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND);
+  }
+  if (muscularDemand === MAXIMUM_MUSCULAR_DEMAND) {
+    return members.some((member) =>
+      member.muscularDemand === MAXIMUM_MUSCULAR_DEMAND &&
+      group.canonicalGroups.includes(member.primaryCanonicalGroup));
+  }
+  return false;
 }
 
 export function findMirrorCategoryDeficiencies(exercises) {

@@ -1,6 +1,6 @@
 # Muscular-demand audit
 
-The 501 selectable exercises were individually reviewed against one frozen,
+The 501 catalog records were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
@@ -11,8 +11,8 @@ cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 | `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 232 |
 | `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 148 |
 
-Ratings were assigned exercise by exercise. There is no desired distribution,
-quota, or balancing target. Stretching and mobility are not promoted merely
+Ratings were assigned exercise by exercise. There is no desired overall
+distribution or balancing target. Stretching and mobility are not promoted merely
 because a muscle is named; unloaded striking and rhythmic cardio do not become
 `2` merely because they are fast; demanding squat/lunge patterns, substantial
 bodyweight isometrics, self-resistance, and repeated plyometric work qualify
@@ -34,6 +34,22 @@ The generated rating for each named exercise is shipped as `muscularDemand` in
 [`Flux/Assets/exercises.json`](../Flux/Assets/exercises.json). Catalog generation
 fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
+
+Catalog availability now has a separate five-per-category floor for demand 0
+and demand 2. At every workout resolution and each of the 21 deduplicated
+single/pair modifier profiles, every muscle bucket must have five distinct
+qualifying session movements. An all-light sequence counts only when every
+distinct member is demand 0. A hard sequence counts for a bucket only when one
+of its demand-2 members has its primary canonical muscle in that bucket. The
+audit deduplicates `SessionMovementId`; sides, directions, blocks, repeated
+sets, aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota,
+and Light itself is not added as a modifier dimension.
+
+The first pinned run exposes 978 demand-0 deficiencies across 88 workout-group
+IDs and 1,320 demand-2 deficiencies across 81. They remain explicit catalog
+debt until real, worthwhile, exactly demonstrated movements close them. The
+floor never justifies inventing an exercise, altering truthful anatomy, or
+changing a truthful demand rating.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
 `score`; it never creates hardness points or rewrites votes. Completing a

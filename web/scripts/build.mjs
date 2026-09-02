@@ -7,6 +7,7 @@ import {
   CURRENT_CATALOG_REVISION,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findMuscularDemandCoverageDeficiencies,
   findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
@@ -181,6 +182,8 @@ const pairwiseDeficiencies =
   findWorkoutModifierPairCoverageDeficiencies(catalog);
 const hardFloorCategoryDeficiencies =
   findHardFloorCategoryCoverageDeficiencies(catalog);
+const muscularDemandDeficiencies =
+  findMuscularDemandCoverageDeficiencies(catalog);
 const materialityDeficiencies =
   findWorkoutModifierMaterialityDeficiencies(catalog);
 const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
@@ -201,15 +204,43 @@ const integrityDeficitReport = JSON.parse(await readFile(
 const catalogSha256 = createHash("sha256")
   .update(normalizeLineEndings(catalogSource))
   .digest("hex");
+const expectedIntegritySummary = {
+  pairwiseDeficiencyCount: pairwiseDeficiencies.length,
+  pairwiseAffectedGroupCount: affectedGroupCount(pairwiseDeficiencies),
+  hardFloorCategoryDeficiencyCount: hardFloorCategoryDeficiencies.length,
+  hardFloorCategoryAffectedGroupCount:
+    affectedGroupCount(hardFloorCategoryDeficiencies),
+  muscularDemandDeficiencyCount: muscularDemandDeficiencies.length,
+  muscularDemandAffectedGroupCount:
+    affectedGroupCount(muscularDemandDeficiencies),
+  demandZeroDeficiencyCount: muscularDemandDeficiencies.filter((item) =>
+    item.muscularDemand === 0).length,
+  demandZeroAffectedGroupCount: affectedGroupCount(
+    muscularDemandDeficiencies.filter((item) => item.muscularDemand === 0),
+  ),
+  demandTwoDeficiencyCount: muscularDemandDeficiencies.filter((item) =>
+    item.muscularDemand === 2).length,
+  demandTwoAffectedGroupCount: affectedGroupCount(
+    muscularDemandDeficiencies.filter((item) => item.muscularDemand === 2),
+  ),
+  materialityDeficiencyCount: materialityDeficiencies.length,
+  mirrorCategoryDeficiencyCount: mirrorCategoryDeficiencies.length,
+  distinctLineupDeficiencyCount: distinctLineupDeficiencies.length,
+};
 const integrityDebtMatches =
   integrityDeficitReport.catalogRevision === CURRENT_CATALOG_REVISION &&
   integrityDeficitReport.catalogRecordCount === catalog.length &&
   integrityDeficitReport.catalogSha256 === catalogSha256 &&
   integrityDeficitReport.policy?.validatorsChanged === false &&
+  exactlyEqual(integrityDeficitReport.summary, expectedIntegritySummary) &&
   exactlyEqual(integrityDeficitReport.pairwise, pairwiseDeficiencies) &&
   exactlyEqual(
     integrityDeficitReport.hardFloorCategory,
     hardFloorCategoryDeficiencies,
+  ) &&
+  exactlyEqual(
+    integrityDeficitReport.muscularDemand,
+    muscularDemandDeficiencies,
   ) &&
   exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
   exactlyEqual(integrityDeficitReport.mirrorCategory, mirrorCategoryDeficiencies) &&
@@ -395,6 +426,10 @@ function normalizeLineEndings(text) {
 
 function exactlyEqual(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function affectedGroupCount(deficiencies) {
+  return new Set(deficiencies.map((deficiency) => deficiency.groupId)).size;
 }
 
 async function walk(directory) {

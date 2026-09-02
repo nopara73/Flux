@@ -333,6 +333,50 @@ public sealed class CatalogInvariantTests
                 .Select(deficiency => deficiency.GroupId)
                 .Distinct()
                 .Count());
+        WorkoutMuscularDemandCoverageDeficiency[] muscularDemandDeficiencies =
+            WorkoutModifierPolicy
+                .FindMuscularDemandCoverageDeficiencies(exercises)
+                .ToArray();
+        Assert.Equal(2_298, muscularDemandDeficiencies.Length);
+        Assert.Equal(
+            new Dictionary<int, int>
+            {
+                [Exercise.MinimumMuscularDemand] = 978,
+                [Exercise.MaximumMuscularDemand] = 1_320,
+            },
+            muscularDemandDeficiencies
+                .GroupBy(deficiency => deficiency.MuscularDemand)
+                .ToDictionary(group => group.Key, group => group.Count()));
+        Assert.Equal(
+            new Dictionary<int, int>
+            {
+                [3] = 96,
+                [5] = 150,
+                [7] = 178,
+                [10] = 248,
+                [15] = 332,
+                [20] = 502,
+                [30] = 792,
+            },
+            muscularDemandDeficiencies
+                .GroupBy(deficiency => deficiency.Minutes)
+                .ToDictionary(group => group.Key, group => group.Count()));
+        Assert.Equal(
+            88,
+            muscularDemandDeficiencies
+                .Where(deficiency => deficiency.MuscularDemand ==
+                    Exercise.MinimumMuscularDemand)
+                .Select(deficiency => deficiency.GroupId)
+                .Distinct()
+                .Count());
+        Assert.Equal(
+            81,
+            muscularDemandDeficiencies
+                .Where(deficiency => deficiency.MuscularDemand ==
+                    Exercise.MaximumMuscularDemand)
+                .Select(deficiency => deficiency.GroupId)
+                .Distinct()
+                .Count());
         WorkoutModifierMaterialityDeficiency[] materialityDeficiencies =
             WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).ToArray();
         Assert.Empty(materialityDeficiencies);

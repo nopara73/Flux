@@ -263,14 +263,15 @@ behavior is coverage-aware:
   mirror but receive mirror preference only with a tall mirror;
 - `Agnostic` exercises are unaffected.
 
-Light is deliberately outside catalog pairwise, materiality, and coverage
-quotas because it changes ranking without excluding or admitting an exercise.
+Light is deliberately outside catalog pairwise and materiality checks as a
+modifier axis because it changes ranking without excluding or admitting an
+exercise. Demand-0 availability is audited independently below.
 Wall is also outside the pairwise, per-muscle, and duration quota system. It
 instead has two direct catalog invariants: at least 20 distinct
 wall-required session movements that do not require sole contact, plus at least
 five distinct sole-contact wall movements. Sides, directions, sequence blocks,
 repeated sets, aliases, and names cannot multiply either count. The current
-audited inventory contains 24 base-wall movements and five sole-wall movements.
+audited inventory contains 25 base-wall movements and five sole-wall movements.
 
 For every existing non-Wall modifier pair, duration, and workout group, the catalog must provide
 at least five exercises under every real state. Two binary modifiers have four
@@ -283,6 +284,15 @@ upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
 Relationship labels are never promoted to hide a genuine gap. Every supported
 duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
+
+Muscular-demand coverage is a fixed two-category audit over those same 21
+deduplicated single/pair profiles; demand is not another modifier axis. Every
+workout group at every 3-, 5-, 7-, 10-, 15-, 20-, and 30-minute resolution must
+have at least five demand-0 and five demand-2 session movements. Demand 0 counts
+only when every distinct sequence member is demand 0. Demand 2 counts for a
+group only when a demand-2 member's primary canonical muscle belongs to that
+group. `SessionMovementId` deduplicates aliases, and sides, directions, blocks,
+sets, and names never multiply either floor. Demand 1 has no catalog quota.
 
 Hard Floor also has an explicit category-preservation check. For every workout
 group, at least five combined hard-and-slippery-compatible and five incompatible
@@ -297,7 +307,7 @@ and Silence must remove at least five exercises or 5% of the previous candidate
 pool, whichever is larger. Mirror must actually prefer at least that many
 compatible exercises for compact and tall equipment independently. Each
 materiality-audited modifier must affect at least 10% of the canonical buckets,
-both alone and with its paired modifier enabled. The current 77
+both alone and with its paired modifier enabled. The current 81
 `BenefitsGreatly` assignments are
 an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
@@ -308,7 +318,7 @@ pairwise catalog audit. Its exact catalog partition is recorded in
 [`docs/UPPER_BODY_CLOTHING_AUDIT.md`](docs/UPPER_BODY_CLOTHING_AUDIT.md).
 Hard-floor classifications and their review criteria are
 recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
-Wall's three-state contract, separate direct floors, and reviewed 29-movement
+Wall's three-state contract, separate direct floors, and reviewed 30-movement
 inventory are recorded in
 [`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
 
@@ -320,14 +330,19 @@ every exact deficit are retained in
 no relationship or muscle assignment is inflated to hide them. After Hard
 Floor was defined as both rigid and slippery, the current validators expose
 300 pairwise deficiencies across 38 group IDs and 68 floor-category
-deficiencies across 21 group IDs. The stricter filter also resolves the former
+deficiencies across 21 group IDs. The demand audit additionally exposes 978
+demand-0 deficiencies across 88 group IDs and 1,320 demand-2 deficiencies
+across 81 group IDs. These are explicit catalog debt, not permission to invent
+movements or falsify demand. The stricter floor filter also resolves the former
 Silence materiality deficiency. The reproducible current ledger is
 [`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
 All supported profiles still admit a distinct atomic lineup.
 
 The pairwise guarantees grow quadratically with the number of quota-bearing
-modifiers. Wall's two direct floors remain constant-size and do not create new
-pairwise edges or arbitrary all-modifier intersections.
+modifiers. The two demand categories multiply that existing profile audit by a
+fixed factor of two; they do not create new modifier combinations. Wall's two
+direct floors remain constant-size and do not create new pairwise edges or
+arbitrary all-modifier intersections.
 
 ### Atomic exercise sequences
 

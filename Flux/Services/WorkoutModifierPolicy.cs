@@ -25,6 +25,15 @@ public sealed record WorkoutHardFloorCategoryCoverageDeficiency(
     int MatchingExerciseCount,
     int RequiredExerciseCount);
 
+public sealed record WorkoutMuscularDemandCoverageDeficiency(
+    int Minutes,
+    string GroupId,
+    string GroupName,
+    int MuscularDemand,
+    WorkoutModifiers Profile,
+    int MatchingExerciseCount,
+    int RequiredExerciseCount);
+
 public sealed record WorkoutMirrorCategoryDeficiency(
     ExerciseMirrorRelationship Relationship,
     ExerciseMirrorCoverage MinimumCoverage,
@@ -59,6 +68,7 @@ public sealed record WorkoutModifierMaterialityDeficiency(
 public static class WorkoutModifierPolicy
 {
     public const int MinimumExercisesPerPairStatePerGroup = 5;
+    public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 5;
     public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumWallRequiredSessionMovements = 20;
     public const int MinimumSoleWallContactRequiredSessionMovements = 5;
@@ -614,6 +624,55 @@ public static class WorkoutModifierPolicy
             .ToArray();
     }
 
+    public static IReadOnlyList<WorkoutMuscularDemandCoverageDeficiency>
+        FindMuscularDemandCoverageDeficiencies(
+            IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        IReadOnlyDictionary<int, Exercise> exercisesById = exercises
+            .ToDictionary(exercise => exercise.Id);
+        int[] requiredCategories =
+        [
+            Exercise.MinimumMuscularDemand,
+            Exercise.MaximumMuscularDemand,
+        ];
+
+        return MassGroupingTaxonomy.SupportedMinutes
+            .SelectMany(minutes =>
+                MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
+                    requiredCategories.SelectMany(muscularDemand =>
+                        ValidationProfiles.Select(profile =>
+                        {
+                            int matchingExerciseCount = exercises
+                                .Where(exercise =>
+                                    IsSequenceUnitEligible(
+                                        exercise,
+                                        exercisesById,
+                                        group,
+                                        profile) &&
+                                    IsSequenceMuscularDemandCategoryForGroup(
+                                        exercise,
+                                        exercisesById,
+                                        group,
+                                        muscularDemand))
+                                .Select(GetSessionMovementId)
+                                .Distinct()
+                                .Count();
+                            return new WorkoutMuscularDemandCoverageDeficiency(
+                                minutes,
+                                group.Id,
+                                group.DisplayName,
+                                muscularDemand,
+                                profile,
+                                matchingExerciseCount,
+                                MinimumExercisesPerMuscularDemandCategoryPerGroup);
+                        }))))
+            .Where(deficiency =>
+                deficiency.MatchingExerciseCount <
+                    deficiency.RequiredExerciseCount)
+            .ToArray();
+    }
+
     public static IReadOnlyList<WorkoutProfileLineupDeficiency>
         FindDistinctLineupDeficiencies(IReadOnlyCollection<Exercise> exercises)
     {
@@ -871,6 +930,34 @@ public static class WorkoutModifierPolicy
                 .All(exerciseId =>
                     exercisesById.TryGetValue(exerciseId, out Exercise? member) &&
                     member.HardFloorCompatibility == category);
+    }
+
+    private static bool IsSequenceMuscularDemandCategoryForGroup(
+        Exercise exercise,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        WorkoutGroup group,
+        int muscularDemand)
+    {
+        Exercise[] members = exercise.SequenceBlocks
+            .Select(block => exercisesById.GetValueOrDefault(block.ExerciseId))
+            .Where(member => member is not null)
+            .Select(member => member!)
+            .DistinctBy(member => member.Id)
+            .ToArray();
+        if (members.Length == 0)
+        {
+            return false;
+        }
+
+        return muscularDemand switch
+        {
+            Exercise.MinimumMuscularDemand => members.All(member =>
+                member.MuscularDemand == Exercise.MinimumMuscularDemand),
+            Exercise.MaximumMuscularDemand => members.Any(member =>
+                member.MuscularDemand == Exercise.MaximumMuscularDemand &&
+                group.CanonicalGroups.Contains(member.PrimaryCanonicalGroup)),
+            _ => false,
+        };
     }
 
     private static WorkoutModifiers[] CreatePairwiseValidationProfiles()

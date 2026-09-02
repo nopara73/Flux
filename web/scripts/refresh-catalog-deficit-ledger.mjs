@@ -7,6 +7,7 @@ import {
   CURRENT_CATALOG_REVISION,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findMuscularDemandCoverageDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
@@ -33,6 +34,7 @@ const catalog = JSON.parse(catalogSource);
 const pairwise = findWorkoutModifierPairCoverageDeficiencies(catalog);
 const hardFloorCategory =
   findHardFloorCategoryCoverageDeficiencies(catalog);
+const muscularDemand = findMuscularDemandCoverageDeficiencies(catalog);
 const materiality = findWorkoutModifierMaterialityDeficiencies(catalog);
 const mirrorCategory = findMirrorCategoryDeficiencies(catalog);
 const distinctLineup = findWorkoutProfileLineupDeficiencies(catalog);
@@ -44,7 +46,7 @@ const report = {
     .update(catalogSource.replaceAll("\r\n", "\n"))
     .digest("hex"),
   policy: {
-    treatment: "Detected deficits are preserved explicitly; no anatomical association or modifier relationship is inflated to satisfy coverage.",
+    treatment: "Detected deficits are preserved explicitly; no anatomical association, modifier relationship, or muscular-demand rating is inflated to satisfy coverage.",
     validatorsChanged: false,
   },
   summary: {
@@ -53,12 +55,25 @@ const report = {
     hardFloorCategoryDeficiencyCount: hardFloorCategory.length,
     hardFloorCategoryAffectedGroupCount:
       affectedGroupCount(hardFloorCategory),
+    muscularDemandDeficiencyCount: muscularDemand.length,
+    muscularDemandAffectedGroupCount: affectedGroupCount(muscularDemand),
+    demandZeroDeficiencyCount: muscularDemand.filter((item) =>
+      item.muscularDemand === 0).length,
+    demandZeroAffectedGroupCount: affectedGroupCount(
+      muscularDemand.filter((item) => item.muscularDemand === 0),
+    ),
+    demandTwoDeficiencyCount: muscularDemand.filter((item) =>
+      item.muscularDemand === 2).length,
+    demandTwoAffectedGroupCount: affectedGroupCount(
+      muscularDemand.filter((item) => item.muscularDemand === 2),
+    ),
     materialityDeficiencyCount: materiality.length,
     mirrorCategoryDeficiencyCount: mirrorCategory.length,
     distinctLineupDeficiencyCount: distinctLineup.length,
   },
   pairwise,
   hardFloorCategory,
+  muscularDemand,
   materiality,
   mirrorCategory,
   distinctLineup,

@@ -715,7 +715,7 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void LightIsSupportedButNeverPersistedOrAddedToCatalogQuotas()
+    public void LightIsSupportedButNeverPersistedOrUsedAsAQuotaAxis()
     {
         WorkoutModifiers profile = WorkoutModifiers.Insect |
             WorkoutModifiers.Light;
@@ -819,6 +819,113 @@ public sealed class WorkoutModifierPolicyTests
             WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
                 [.. compatible, .. incompatible, fifthIncompatible]),
             result => result.Minutes == 30 && result.GroupId == group.Id);
+    }
+
+    [Fact]
+    public void DemandCoverageRequiresWholeLightSequencesAndSlotOwnedHardMembers()
+    {
+        WorkoutGroup targetGroup = MassGroupingTaxonomy.GetResolution(30).Groups[0];
+        WorkoutGroup otherGroup = MassGroupingTaxonomy.GetResolution(30).Groups[1];
+        CanonicalMuscleGroup target = targetGroup.CanonicalGroups.Single();
+        CanonicalMuscleGroup other = otherGroup.CanonicalGroups.Single();
+        Exercise pureLight = Exercise(1, target, muscularDemand: 0);
+        Exercise mixedRoot = Exercise(
+            2,
+            target,
+            sequenceBlocks:
+            [
+                new ExerciseSequenceBlock { ExerciseId = 2, MirrorMedia = false },
+                new ExerciseSequenceBlock { ExerciseId = 3, MirrorMedia = false },
+            ],
+            muscularDemand: 0);
+        Exercise mixedMember = Exercise(
+            3,
+            target,
+            sequenceBlocks: [],
+            muscularDemand: 1);
+        Exercise hardElsewhereRoot = Exercise(
+            4,
+            target,
+            sequenceBlocks:
+            [
+                new ExerciseSequenceBlock { ExerciseId = 4, MirrorMedia = false },
+                new ExerciseSequenceBlock { ExerciseId = 5, MirrorMedia = false },
+            ],
+            muscularDemand: 0);
+        Exercise hardElsewhereMember = Exercise(
+            5,
+            other,
+            sequenceBlocks: [],
+            muscularDemand: 2);
+        Exercise hardForTargetRoot = Exercise(
+            6,
+            other,
+            sequenceBlocks:
+            [
+                new ExerciseSequenceBlock { ExerciseId = 6, MirrorMedia = false },
+                new ExerciseSequenceBlock { ExerciseId = 7, MirrorMedia = false },
+            ],
+            muscularDemand: 1);
+        Exercise hardForTargetMember = Exercise(
+            7,
+            target,
+            sequenceBlocks: [],
+            muscularDemand: 2);
+        Exercise duplicateHardA = Exercise(
+            8,
+            target,
+            sessionMovementId: 99,
+            muscularDemand: 2);
+        Exercise duplicateHardB = Exercise(
+            9,
+            target,
+            sessionMovementId: 99,
+            muscularDemand: 2);
+
+        WorkoutMuscularDemandCoverageDeficiency[] deficiencies =
+            WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(
+                [
+                    pureLight,
+                    mixedRoot,
+                    mixedMember,
+                    hardElsewhereRoot,
+                    hardElsewhereMember,
+                    hardForTargetRoot,
+                    hardForTargetMember,
+                    duplicateHardA,
+                    duplicateHardB,
+                ])
+            .Where(result =>
+                result.Minutes == 30 &&
+                result.GroupId == targetGroup.Id &&
+                result.Profile == WorkoutModifiers.None)
+            .ToArray();
+
+        Assert.Equal(2, deficiencies.Length);
+        Assert.Equal(
+            1,
+            deficiencies.Single(result => result.MuscularDemand == 0)
+                .MatchingExerciseCount);
+        Assert.Equal(
+            2,
+            deficiencies.Single(result => result.MuscularDemand == 2)
+                .MatchingExerciseCount);
+    }
+
+    [Fact]
+    public void DemandCoverageUsesFiveDistinctSessionMovementsPerCategory()
+    {
+        WorkoutGroup targetGroup = MassGroupingTaxonomy.GetResolution(30).Groups[0];
+        CanonicalMuscleGroup target = targetGroup.CanonicalGroups.Single();
+        Exercise[] exercises = Enumerable.Range(1, 5)
+            .Select(id => Exercise(id, target, muscularDemand: 0))
+            .Concat(Enumerable.Range(6, 5)
+                .Select(id => Exercise(id, target, muscularDemand: 2)))
+            .ToArray();
+
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(exercises),
+            result => result.Minutes == 30 && result.GroupId == targetGroup.Id);
     }
 
     [Fact]
@@ -1244,7 +1351,8 @@ public sealed class WorkoutModifierPolicyTests
         bool wallRequired = false,
         bool soleWallContactRequired = false,
         ExerciseUpperBodyClothingRequirement upperBodyClothingRequirement =
-            ExerciseUpperBodyClothingRequirement.Agnostic)
+            ExerciseUpperBodyClothingRequirement.Agnostic,
+        int muscularDemand = 0)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
             new[] { secondaryCanonicalGroup, tertiaryCanonicalGroup }
@@ -1285,6 +1393,7 @@ public sealed class WorkoutModifierPolicyTests
                     : ExerciseMirrorCoverage.None),
             WallRequired = wallRequired,
             SoleWallContactRequired = soleWallContactRequired,
+            MuscularDemand = muscularDemand,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
             MaxSpaceMeters = 2,

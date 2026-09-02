@@ -25,6 +25,7 @@ import {
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
   MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
@@ -55,6 +56,7 @@ import {
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
+  findMuscularDemandCoverageDeficiencies,
   findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
   findWorkoutProfileLineupDeficiencies,
@@ -2508,6 +2510,32 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
   );
   assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 21);
 
+  const muscularDemandDeficiencies =
+    findMuscularDemandCoverageDeficiencies(catalog);
+  assert.equal(muscularDemandDeficiencies.length, 2_298);
+  assert.deepEqual(
+    Object.fromEntries([MINIMUM_MUSCULAR_DEMAND, MAXIMUM_MUSCULAR_DEMAND]
+      .map((muscularDemand) => [
+        muscularDemand,
+        muscularDemandDeficiencies.filter((item) =>
+          item.muscularDemand === muscularDemand).length,
+      ])),
+    { 0: 978, 2: 1_320 },
+  );
+  assert.deepEqual(
+    Object.fromEntries(SUPPORTED_MINUTES.slice(0, 7).map((minutes) => [
+      minutes,
+      muscularDemandDeficiencies.filter((item) => item.minutes === minutes).length,
+    ])),
+    { 3: 96, 5: 150, 7: 178, 10: 248, 15: 332, 20: 502, 30: 792 },
+  );
+  assert.equal(new Set(muscularDemandDeficiencies
+    .filter((item) => item.muscularDemand === MINIMUM_MUSCULAR_DEMAND)
+    .map((item) => item.groupId)).size, 88);
+  assert.equal(new Set(muscularDemandDeficiencies
+    .filter((item) => item.muscularDemand === MAXIMUM_MUSCULAR_DEMAND)
+    .map((item) => item.groupId)).size, 81);
+
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
   const allModifiers = WORKOUT_MODIFIERS.Insect |
@@ -2642,6 +2670,116 @@ test("hard-floor pairwise floor counts compatible and incompatible categories se
     ]).filter((result) =>
       result.minutes === 30 && result.groupId === targetGroup.id),
     [],
+  );
+});
+
+test("demand coverage requires whole light sequences and slot-owned hard members", () => {
+  const [targetGroup, otherGroup] = RESOLUTIONS.get(30).groups;
+  const target = targetGroup.canonicalGroups[0];
+  const other = otherGroup.canonicalGroups[0];
+  const pureLight = exercise(1, target, [], 0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0);
+  const mixedRoot = {
+    ...exercise(2, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0),
+    sequenceBlocks: [{ exerciseId: 2 }, { exerciseId: 3 }],
+  };
+  const mixedMember = {
+    ...exercise(3, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 1),
+    sequenceBlocks: [],
+  };
+  const hardElsewhereRoot = {
+    ...exercise(4, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0),
+    sequenceBlocks: [{ exerciseId: 4 }, { exerciseId: 5 }],
+  };
+  const hardElsewhereMember = {
+    ...exercise(5, other, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
+    sequenceBlocks: [],
+  };
+  const hardForTargetRoot = {
+    ...exercise(6, other, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 1),
+    sequenceBlocks: [{ exerciseId: 6 }, { exerciseId: 7 }],
+  };
+  const hardForTargetMember = {
+    ...exercise(7, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
+    sequenceBlocks: [],
+  };
+  const duplicateHardA = {
+    ...exercise(8, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
+    sessionMovementId: 99,
+  };
+  const duplicateHardB = {
+    ...exercise(9, target, [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
+    sessionMovementId: 99,
+  };
+
+  const deficiencies = findMuscularDemandCoverageDeficiencies([
+    pureLight,
+    mixedRoot,
+    mixedMember,
+    hardElsewhereRoot,
+    hardElsewhereMember,
+    hardForTargetRoot,
+    hardForTargetMember,
+    duplicateHardA,
+    duplicateHardB,
+  ]).filter((result) =>
+    result.minutes === 30 &&
+    result.groupId === targetGroup.id &&
+    result.profile === WORKOUT_MODIFIERS.None);
+
+  assert.equal(deficiencies.length, 2);
+  assert.equal(
+    deficiencies.find((result) => result.muscularDemand === 0)
+      .matchingExerciseCount,
+    1,
+  );
+  assert.equal(
+    deficiencies.find((result) => result.muscularDemand === 2)
+      .matchingExerciseCount,
+    2,
+  );
+});
+
+test("demand coverage uses five distinct session movements per category", () => {
+  const targetGroup = RESOLUTIONS.get(30).groups[0];
+  const target = targetGroup.canonicalGroups[0];
+  const exercises = [
+    ...Array.from({ length: 5 }, (_, index) => exercise(
+      index + 1,
+      target,
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+      0,
+    )),
+    ...Array.from({ length: 5 }, (_, index) => exercise(
+      index + 6,
+      target,
+      [],
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+      2,
+    )),
+  ];
+
+  assert.deepEqual(
+    findMuscularDemandCoverageDeficiencies(exercises).filter((result) =>
+      result.minutes === 30 && result.groupId === targetGroup.id),
+    [],
+  );
+  assert.equal(
+    MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
+    5,
   );
 });
 

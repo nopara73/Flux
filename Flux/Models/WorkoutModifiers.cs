@@ -25,6 +25,7 @@ public enum WorkoutModifiers
     UpperBodyClothing = 128,
     // A session-scoped workout-intensity choice. Unlike the physical setup and
     // equipment flags, Light changes candidate priority rather than exercise
-    // compatibility and deliberately stays outside catalog coverage quotas.
+    // compatibility. It is not a quota axis; demand-zero availability is
+    // audited independently across the existing modifier profiles.
     Light = 256,
 }
