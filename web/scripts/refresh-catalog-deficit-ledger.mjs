@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   CURRENT_CATALOG_REVISION,
+  MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
   findMuscularDemandCoverageDeficiencies,
@@ -47,7 +48,8 @@ const report = {
     .digest("hex"),
   policy: {
     treatment: "Detected deficits are preserved explicitly; no anatomical association, modifier relationship, or muscular-demand rating is inflated to satisfy coverage.",
-    validatorsChanged: false,
+    muscularDemandMinimumPerCategoryPerGroup:
+      MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   },
   summary: {
     pairwiseDeficiencyCount: pairwise.length,

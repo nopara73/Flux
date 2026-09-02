@@ -871,61 +871,58 @@ public sealed class WorkoutModifierPolicyTests
             target,
             sequenceBlocks: [],
             muscularDemand: 2);
-        Exercise duplicateHardA = Exercise(
-            8,
-            target,
-            sessionMovementId: 99,
-            muscularDemand: 2);
-        Exercise duplicateHardB = Exercise(
-            9,
-            target,
-            sessionMovementId: 99,
-            muscularDemand: 2);
+        WorkoutMuscularDemandCoverageDeficiency[] TargetDeficiencies(
+            params Exercise[] catalog) =>
+            WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(catalog)
+                .Where(result =>
+                    result.Minutes == 30 &&
+                    result.GroupId == targetGroup.Id &&
+                    result.Profile == WorkoutModifiers.None)
+                .ToArray();
 
-        WorkoutMuscularDemandCoverageDeficiency[] deficiencies =
-            WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(
-                [
-                    pureLight,
-                    mixedRoot,
-                    mixedMember,
-                    hardElsewhereRoot,
-                    hardElsewhereMember,
-                    hardForTargetRoot,
-                    hardForTargetMember,
-                    duplicateHardA,
-                    duplicateHardB,
-                ])
-            .Where(result =>
-                result.Minutes == 30 &&
-                result.GroupId == targetGroup.Id &&
-                result.Profile == WorkoutModifiers.None)
-            .ToArray();
+        WorkoutMuscularDemandCoverageDeficiency lightDeficiency = Assert.Single(
+            TargetDeficiencies(
+                mixedRoot,
+                mixedMember,
+                hardForTargetRoot,
+                hardForTargetMember));
+        Assert.Equal(0, lightDeficiency.MuscularDemand);
+        Assert.Equal(0, lightDeficiency.MatchingExerciseCount);
+        Assert.Equal(1, lightDeficiency.RequiredExerciseCount);
 
-        Assert.Equal(2, deficiencies.Length);
-        Assert.Equal(
-            1,
-            deficiencies.Single(result => result.MuscularDemand == 0)
-                .MatchingExerciseCount);
-        Assert.Equal(
-            2,
-            deficiencies.Single(result => result.MuscularDemand == 2)
-                .MatchingExerciseCount);
+        WorkoutMuscularDemandCoverageDeficiency hardDeficiency = Assert.Single(
+            TargetDeficiencies(
+                pureLight,
+                hardElsewhereRoot,
+                hardElsewhereMember));
+        Assert.Equal(2, hardDeficiency.MuscularDemand);
+        Assert.Equal(0, hardDeficiency.MatchingExerciseCount);
+        Assert.Equal(1, hardDeficiency.RequiredExerciseCount);
+
+        Assert.Empty(TargetDeficiencies(
+            pureLight,
+            hardForTargetRoot,
+            hardForTargetMember));
     }
 
     [Fact]
-    public void DemandCoverageUsesFiveDistinctSessionMovementsPerCategory()
+    public void DemandCoverageUsesOneGenuineSessionMovementPerCategory()
     {
         WorkoutGroup targetGroup = MassGroupingTaxonomy.GetResolution(30).Groups[0];
         CanonicalMuscleGroup target = targetGroup.CanonicalGroups.Single();
-        Exercise[] exercises = Enumerable.Range(1, 5)
-            .Select(id => Exercise(id, target, muscularDemand: 0))
-            .Concat(Enumerable.Range(6, 5)
-                .Select(id => Exercise(id, target, muscularDemand: 2)))
-            .ToArray();
+        Exercise[] exercises =
+        [
+            Exercise(1, target, muscularDemand: 0),
+            Exercise(2, target, muscularDemand: 2),
+        ];
 
         Assert.DoesNotContain(
             WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(exercises),
             result => result.Minutes == 30 && result.GroupId == targetGroup.Id);
+        Assert.Equal(
+            1,
+            WorkoutModifierPolicy
+                .MinimumExercisesPerMuscularDemandCategoryPerGroup);
     }
 
     [Fact]

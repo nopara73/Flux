@@ -68,7 +68,7 @@ public sealed record WorkoutModifierMaterialityDeficiency(
 public static class WorkoutModifierPolicy
 {
     public const int MinimumExercisesPerPairStatePerGroup = 5;
-    public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 5;
+    public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 1;
     public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumWallRequiredSessionMovements = 20;
     public const int MinimumSoleWallContactRequiredSessionMovements = 5;

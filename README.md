@@ -288,7 +288,7 @@ reusing a session movement.
 Muscular-demand coverage is a fixed two-category audit over those same 21
 deduplicated single/pair profiles; demand is not another modifier axis. Every
 workout group at every 3-, 5-, 7-, 10-, 15-, 20-, and 30-minute resolution must
-have at least five demand-0 and five demand-2 session movements. Demand 0 counts
+have at least one genuine demand-0 and one genuine demand-2 session movement. Demand 0 counts
 only when every distinct sequence member is demand 0. Demand 2 counts for a
 group only when a demand-2 member's primary canonical muscle belongs to that
 group. `SessionMovementId` deduplicates aliases, and sides, directions, blocks,
@@ -330,9 +330,9 @@ every exact deficit are retained in
 no relationship or muscle assignment is inflated to hide them. After Hard
 Floor was defined as both rigid and slippery, the current validators expose
 300 pairwise deficiencies across 38 group IDs and 68 floor-category
-deficiencies across 21 group IDs. The demand audit additionally exposes 978
-demand-0 deficiencies across 88 group IDs and 1,320 demand-2 deficiencies
-across 81 group IDs. These are explicit catalog debt, not permission to invent
+deficiencies across 21 group IDs. The reduced demand audit exposes 207 demand-0
+deficiencies across 42 group IDs and 564 demand-2 deficiencies across 47 group
+IDs. These are explicit catalog debt, not permission to invent
 movements or falsify demand. The stricter floor filter also resolves the former
 Silence materiality deficiency. The reproducible current ledger is
 [`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).

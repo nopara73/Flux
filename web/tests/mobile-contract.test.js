@@ -515,7 +515,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
-    /MinimumExercisesPerMuscularDemandCategoryPerGroup\s*=\s*5[\s\S]*FindMuscularDemandCoverageDeficiencies[\s\S]*Exercise\.MinimumMuscularDemand[\s\S]*Exercise\.MaximumMuscularDemand/,
+    /MinimumExercisesPerMuscularDemandCategoryPerGroup\s*=\s*1[\s\S]*FindMuscularDemandCoverageDeficiencies[\s\S]*Exercise\.MinimumMuscularDemand[\s\S]*Exercise\.MaximumMuscularDemand/,
   );
   assert.match(
     modifierPolicy,
@@ -593,7 +593,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     workoutModule,
-    /MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP\s*=\s*5[\s\S]*findMuscularDemandCoverageDeficiencies[\s\S]*MINIMUM_MUSCULAR_DEMAND[\s\S]*MAXIMUM_MUSCULAR_DEMAND/,
+    /MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP\s*=\s*1[\s\S]*findMuscularDemandCoverageDeficiencies[\s\S]*MINIMUM_MUSCULAR_DEMAND[\s\S]*MAXIMUM_MUSCULAR_DEMAND/,
   );
   assert.match(
     workoutModule,

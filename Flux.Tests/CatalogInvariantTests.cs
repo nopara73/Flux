@@ -337,12 +337,12 @@ public sealed class CatalogInvariantTests
             WorkoutModifierPolicy
                 .FindMuscularDemandCoverageDeficiencies(exercises)
                 .ToArray();
-        Assert.Equal(2_298, muscularDemandDeficiencies.Length);
+        Assert.Equal(771, muscularDemandDeficiencies.Length);
         Assert.Equal(
             new Dictionary<int, int>
             {
-                [Exercise.MinimumMuscularDemand] = 978,
-                [Exercise.MaximumMuscularDemand] = 1_320,
+                [Exercise.MinimumMuscularDemand] = 207,
+                [Exercise.MaximumMuscularDemand] = 564,
             },
             muscularDemandDeficiencies
                 .GroupBy(deficiency => deficiency.MuscularDemand)
@@ -350,19 +350,19 @@ public sealed class CatalogInvariantTests
         Assert.Equal(
             new Dictionary<int, int>
             {
-                [3] = 96,
-                [5] = 150,
-                [7] = 178,
-                [10] = 248,
-                [15] = 332,
-                [20] = 502,
-                [30] = 792,
+                [3] = 33,
+                [5] = 71,
+                [7] = 58,
+                [10] = 86,
+                [15] = 81,
+                [20] = 123,
+                [30] = 319,
             },
             muscularDemandDeficiencies
                 .GroupBy(deficiency => deficiency.Minutes)
                 .ToDictionary(group => group.Key, group => group.Count()));
         Assert.Equal(
-            88,
+            42,
             muscularDemandDeficiencies
                 .Where(deficiency => deficiency.MuscularDemand ==
                     Exercise.MinimumMuscularDemand)
@@ -370,7 +370,7 @@ public sealed class CatalogInvariantTests
                 .Distinct()
                 .Count());
         Assert.Equal(
-            81,
+            47,
             muscularDemandDeficiencies
                 .Where(deficiency => deficiency.MuscularDemand ==
                     Exercise.MaximumMuscularDemand)

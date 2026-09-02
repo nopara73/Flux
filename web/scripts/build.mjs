@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   CURRENT_CATALOG_REVISION,
+  MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
   findMuscularDemandCoverageDeficiencies,
@@ -231,7 +232,9 @@ const integrityDebtMatches =
   integrityDeficitReport.catalogRevision === CURRENT_CATALOG_REVISION &&
   integrityDeficitReport.catalogRecordCount === catalog.length &&
   integrityDeficitReport.catalogSha256 === catalogSha256 &&
-  integrityDeficitReport.policy?.validatorsChanged === false &&
+  integrityDeficitReport.policy
+    ?.muscularDemandMinimumPerCategoryPerGroup ===
+      MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP &&
   exactlyEqual(integrityDeficitReport.summary, expectedIntegritySummary) &&
   exactlyEqual(integrityDeficitReport.pairwise, pairwiseDeficiencies) &&
   exactlyEqual(

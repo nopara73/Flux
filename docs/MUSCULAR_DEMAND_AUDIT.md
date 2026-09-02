@@ -35,19 +35,23 @@ The generated rating for each named exercise is shipped as `muscularDemand` in
 fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
-Catalog availability now has a separate five-per-category floor for demand 0
+Catalog availability now has a separate one-per-category floor for demand 0
 and demand 2. At every workout resolution and each of the 21 deduplicated
-single/pair modifier profiles, every muscle bucket must have five distinct
-qualifying session movements. An all-light sequence counts only when every
+single/pair modifier profiles, every muscle bucket must have one genuine
+qualifying session movement. An all-light sequence counts only when every
 distinct member is demand 0. A hard sequence counts for a bucket only when one
 of its demand-2 members has its primary canonical muscle in that bucket. The
 audit deduplicates `SessionMovementId`; sides, directions, blocks, repeated
 sets, aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota,
 and Light itself is not added as a modifier dimension.
 
-The first pinned run exposes 978 demand-0 deficiencies across 88 workout-group
-IDs and 1,320 demand-2 deficiencies across 81. They remain explicit catalog
-debt until real, worthwhile, exactly demonstrated movements close them. The
+The former five-per-category audit exposed 978 demand-0 deficiencies across 88
+workout-group IDs and 1,320 demand-2 deficiencies across 81. The one-per-category
+audit exposes 207 demand-0 deficiencies across 42 workout-group IDs and 564
+demand-2 deficiencies across 47. The reduced floor preserves genuine coverage
+without demanding artificial variations for every fine-grained bucket.
+Remaining gaps stay explicit catalog debt until real, worthwhile, exactly
+demonstrated movements close them. The
 floor never justifies inventing an exercise, altering truthful anatomy, or
 changing a truthful demand rating.
 

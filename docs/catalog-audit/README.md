@@ -51,7 +51,7 @@ debt rather than making the checks green through filler or false associations.
 [`modifier_coverage_deficits_current.json`](modifier_coverage_deficits_current.json)
 is regenerated with `npm run refresh:catalog-deficit-ledger` from `web/` and is
 the ledger enforced by the production build. It also contains the later
-five-per-bucket demand-0 and demand-2 audit over the existing modifier profiles;
+one-per-bucket demand-0 and demand-2 audit over the existing modifier profiles;
 the frozen 2026-08-29 artifact predates that validator and remains unchanged.
 The methodology, summary, evidence, migrations, and correction classes are in
 [`../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
