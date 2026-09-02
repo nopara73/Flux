@@ -23,4 +23,8 @@ public enum WorkoutModifiers
     // physical setup condition: some contact exercises require clothing while
     // a small set of physique-inspection exercises require a bare upper body.
     UpperBodyClothing = 128,
+    // A session-scoped workout-intensity choice. Unlike the physical setup and
+    // equipment flags, Light changes candidate priority rather than exercise
+    // compatibility and deliberately stays outside catalog coverage quotas.
+    Light = 256,
 }

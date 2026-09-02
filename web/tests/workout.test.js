@@ -69,6 +69,7 @@ import {
   getMovementDurationMs,
   getMovementPhaseState,
   getMovementPresentation,
+  getPersistentSetupModifiers,
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
@@ -1756,6 +1757,69 @@ test("reenabling mirror restores the current mirror-profile selection", () => {
   assert.equal(session.state.activeWorkoutSession.modifierChanges.length, 2);
 });
 
+test("light replans current work and disabling it restores the regular profile", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const hard = groups.map((group, index) => exercise(
+    22_600 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+    undefined,
+    true,
+    2,
+  ));
+  const easy = groups.map((group, index) => exercise(
+    22_601 + index * 2,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+    0,
+  ));
+  const now = 1_800_000_000_000;
+  const state = createDefaultState();
+  state.selectedExerciseIds = Object.fromEntries(groups.map((group, index) => [
+    group.id,
+    hard[index].id,
+  ]));
+  state.keptExerciseRootIdsBySelectionGroupId = Object.fromEntries(
+    groups.map((group, index) => [group.id, [hard[index].id]]),
+  );
+  const session = new WorkoutSession(
+    [...hard, ...easy],
+    state,
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  const regularGroup = session.getNextGroup();
+  const regularExercise = session.getSelectedExercise(regularGroup);
+  assert.equal(regularExercise.muscularDemand, 2);
+  session.beginMovement(regularGroup, 28_000, now + 28_000);
+
+  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.Light, regularGroup.id);
+
+  const lightGroup = session.getNextGroup();
+  assert.equal(getSelectionKey(lightGroup), getSelectionKey(regularGroup));
+  assert.equal(session.getSelectedExercise(lightGroup).muscularDemand, 0);
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Light);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.pendingMovementGroupId, null);
+
+  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.None, lightGroup.id);
+
+  const restoredGroup = session.getNextGroup();
+  assert.equal(getSelectionKey(restoredGroup), getSelectionKey(regularGroup));
+  assert.equal(session.getSelectedExercise(restoredGroup).id, regularExercise.id);
+  assert.equal(session.state.activeWorkoutIsLightDay, false);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.deepEqual(
+    session.state.activeWorkoutSession.modifierChanges.map((change) =>
+      change.newModifiers),
+    [WORKOUT_MODIFIERS.Light, WORKOUT_MODIFIERS.None],
+  );
+});
+
 test("upper-body clothing excludes only exercises requiring the opposite state", () => {
   const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
   const clothingRequired = {
@@ -2081,6 +2145,20 @@ test("validation profiles remain pairwise with compact and tall mirror states", 
   ));
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.every((profile) =>
     (profile & WORKOUT_MODIFIERS.Wall) === 0));
+  assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.every((profile) =>
+    (profile & WORKOUT_MODIFIERS.Light) === 0));
+  assert.equal(
+    normalizeWorkoutModifiers(
+      WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Light,
+    ),
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Light,
+  );
+  assert.equal(
+    getPersistentSetupModifiers(
+      WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Light,
+    ),
+    WORKOUT_MODIFIERS.Insect,
+  );
 });
 
 test("insect selection is composed with score and coverage instead of post-filtered", () => {
@@ -3196,13 +3274,84 @@ test("version 21 recovers a contiguous legacy day for tomorrow's light workout",
   const session = new WorkoutSession(exercises, state, () => 0, () => now);
 
   session.initialize();
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  session.startWorkout(3, session.getDefaultWorkoutModifiers());
 
   assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
   assert.equal(session.state.legacyCompletedTrainingDayUnixMilliseconds.length, 1);
   assert.equal(session.state.activeWorkoutIsLightDay, true);
   assert.equal(session.state.activeWorkoutSession.isLightDay, true);
   assert.equal(session.state.workoutHistory.length, 2);
+});
+
+test("recovery day defaults to light but explicit regular mode remains regular", () => {
+  const now = new Date(2026, 7, 29, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+  ));
+  const state = createDefaultState();
+  state.lastWorkoutModifiers = WORKOUT_MODIFIERS.Insect |
+    WORKOUT_MODIFIERS.Light;
+  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+  const session = new WorkoutSession(exercises, state, () => 0, () => now);
+
+  assert.equal(
+    session.getDefaultWorkoutModifiers(),
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Light,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.activeWorkoutIsLightDay, false);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.activeWorkoutSession.isLightDay, false);
+});
+
+test("version 24 migrates an active light workout into its own profile", () => {
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+  ));
+  const state = createDefaultState();
+  state.version = 24;
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.lastWorkoutMinutes = 3;
+  state.lastWorkoutModifiers = WORKOUT_MODIFIERS.Silence |
+    WORKOUT_MODIFIERS.Light;
+  state.activeWorkoutMinutes = 3;
+  state.activeWorkoutModifiers = WORKOUT_MODIFIERS.Silence;
+  state.activeWorkoutIsLightDay = true;
+  state.selectedExerciseIds = Object.fromEntries(groups.map((group, index) => [
+    `p${WORKOUT_MODIFIERS.Silence}|${group.id}`,
+    exercises[index].id,
+  ]));
+  const session = new WorkoutSession(exercises, state, () => 0);
+
+  session.initialize();
+
+  const lightProfile = WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Light;
+  assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(session.state.activeWorkoutModifiers, lightProfile);
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  for (const group of groups) {
+    assert.equal(
+      session.state.selectedExerciseIds[
+        `p${WORKOUT_MODIFIERS.Silence}|${group.id}`
+      ],
+      session.state.selectedExerciseIds[`p${lightProfile}|${group.id}`],
+    );
+  }
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
+  assert.equal(session.state.activeWorkoutSession.modifiers, lightProfile);
 });
 
 test("legacy day inference rejects sparse hard-work evidence", () => {
@@ -3270,10 +3419,15 @@ test("light day top-bucket demand zero outranks a hard keep without deleting it"
     () => now,
   );
 
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  session.startWorkout(3, WORKOUT_MODIFIERS.Light);
 
   assert.equal(session.state.activeWorkoutIsLightDay, true);
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], easy.id);
+  assert.equal(
+    session.state.selectedExerciseIds[
+      `p${WORKOUT_MODIFIERS.Light}|${groups[0].id}`
+    ],
+    easy.id,
+  );
   assert.ok(session.state.keptExerciseRootIdsBySelectionGroupId[groups[0].id]
     .includes(hardKeep.id));
   assert.equal(session.state.activeWorkoutSession.isLightDay, true);
@@ -3316,10 +3470,15 @@ test("light day does not pull demand zero from a lower score bucket", () => {
     () => now,
   );
 
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  session.startWorkout(3, WORKOUT_MODIFIERS.Light);
 
   assert.equal(session.state.activeWorkoutIsLightDay, true);
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], topScoredHard.id);
+  assert.equal(
+    session.state.selectedExerciseIds[
+      `p${WORKOUT_MODIFIERS.Light}|${groups[0].id}`
+    ],
+    topScoredHard.id,
+  );
 });
 
 test("light day requires every block of an atomic sequence to be demand zero", () => {
@@ -3362,12 +3521,18 @@ test("light day requires every block of an atomic sequence to be demand zero", (
     () => now,
   );
 
-  session.startWorkout(5, WORKOUT_MODIFIERS.None);
+  session.startWorkout(5, WORKOUT_MODIFIERS.Light);
 
   assert.equal(session.state.activeWorkoutIsLightDay, true);
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], easyFirst.id);
-  assert.equal(session.state.selectedExerciseIds[groups[1].id], easySecond.id);
-  assert.equal(Object.values(session.state.selectedExerciseIds)
+  assert.equal(session.state.selectedExerciseIds[
+    `p${WORKOUT_MODIFIERS.Light}|${groups[0].id}`
+  ], easyFirst.id);
+  assert.equal(session.state.selectedExerciseIds[
+    `p${WORKOUT_MODIFIERS.Light}|${groups[1].id}`
+  ], easySecond.id);
+  assert.equal(Object.entries(session.state.selectedExerciseIds)
+    .filter(([key]) => key.startsWith(`p${WORKOUT_MODIFIERS.Light}|`))
+    .map(([, value]) => value)
     .includes(mixedRoot.id), false);
 });
 
@@ -3395,7 +3560,7 @@ test("light-day shuffle stays demand zero when the top bucket has an option", ()
     () => 0,
     () => now,
   );
-  session.startWorkout(3, WORKOUT_MODIFIERS.None);
+  session.startWorkout(3, WORKOUT_MODIFIERS.Light);
 
   const result = session.shuffleNextExercise(session.getNextGroup());
 
@@ -3439,7 +3604,9 @@ test("version twenty prepared workout recognizes an existing light-day streak", 
 
   assert.equal(session.state.version, CURRENT_WORKOUT_STATE_VERSION);
   assert.equal(session.state.activeWorkoutIsLightDay, true);
-  assert.equal(session.state.selectedExerciseIds[groups[0].id], easy.id);
+  assert.equal(session.state.selectedExerciseIds[
+    `p${WORKOUT_MODIFIERS.Light}|${groups[0].id}`
+  ], easy.id);
   assert.equal(session.state.activeWorkoutSession.isLightDay, true);
 });
 

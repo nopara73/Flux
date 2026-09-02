@@ -9,6 +9,7 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   Wall: 32,
   SoleWallContact: 64,
   UpperBodyClothing: 128,
+  Light: 256,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
@@ -182,7 +183,8 @@ export const SUPPORTED_WORKOUT_MODIFIER_MASK = MODIFIER_RULES.reduce(
   (mask, rule) => mask | rule.flag,
   WORKOUT_MODIFIERS.TallMirror |
     WORKOUT_MODIFIERS.Wall |
-    WORKOUT_MODIFIERS.SoleWallContact,
+    WORKOUT_MODIFIERS.SoleWallContact |
+    WORKOUT_MODIFIERS.Light,
 );
 export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
   createWorkoutModifierValidationProfiles(),
@@ -261,7 +263,8 @@ export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.UpperBodyClothing |
   WORKOUT_MODIFIERS.HardFloor |
   WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 24;
+export const CURRENT_WORKOUT_STATE_VERSION = 25;
+const EXPLICIT_LIGHT_MODE_STATE_VERSION = 25;
 const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
 const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
 const PERSISTED_LIGHT_DAY_STATE_VERSION = 21;
@@ -2532,6 +2535,10 @@ export function normalizeWorkoutModifiers(modifiers) {
   return normalized;
 }
 
+export function getPersistentSetupModifiers(modifiers) {
+  return normalizeWorkoutModifiers(modifiers) & ~WORKOUT_MODIFIERS.Light;
+}
+
 export function getMirrorEquipment(modifiers) {
   const normalized = normalizeWorkoutModifiers(modifiers);
   if ((normalized & WORKOUT_MODIFIERS.Mirror) === 0) {
@@ -2883,6 +2890,9 @@ function normalizeStateShape(raw) {
   if (state.version < IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION) {
     migrateImplicitUpperBodyClothingModifier(state);
   }
+  if (state.version < EXPLICIT_LIGHT_MODE_STATE_VERSION) {
+    migrateExplicitLightMode(state);
+  }
   state.version = CURRENT_WORKOUT_STATE_VERSION;
   Object.defineProperty(state, SOURCE_STATE_VERSION, {
     value: sourceVersion,
@@ -2990,6 +3000,71 @@ function migrateImplicitUpperBodyClothingModifier(state) {
   );
 
   // Do not rewrite an in-progress workout's modifier profile or checkpoints.
+}
+
+function migrateExplicitLightMode(state) {
+  state.lastWorkoutModifiers = getPersistentSetupModifiers(
+    state.lastWorkoutModifiers,
+  );
+  for (const session of state.workoutHistory) {
+    addLightModifierToLegacyLightSession(session);
+  }
+  if (state.activeWorkoutSession?.isLightDay === true) {
+    addLightModifierToLegacyLightSession(state.activeWorkoutSession);
+  }
+  if (state.activeWorkoutMinutes > 0 && state.activeWorkoutIsLightDay) {
+    enableLightModeForExistingActiveWorkout(state);
+  }
+}
+
+function enableLightModeForExistingActiveWorkout(state) {
+  const previousProfile = normalizeWorkoutModifiers(
+    state.activeWorkoutModifiers & ~WORKOUT_MODIFIERS.Light,
+  );
+  const lightProfile = normalizeWorkoutModifiers(
+    previousProfile | WORKOUT_MODIFIERS.Light,
+  );
+  for (const [selectionStorageKey, exerciseId] of
+    Object.entries(state.selectedExerciseIds)) {
+    const match = /^p(\d+)\|(.+)$/.exec(selectionStorageKey);
+    const storedProfile = match
+      ? normalizeWorkoutModifiers(Number(match[1]))
+      : WORKOUT_MODIFIERS.None;
+    const selectionGroupId = match ? match[2] : selectionStorageKey;
+    if (!selectionGroupId || storedProfile !== previousProfile) {
+      continue;
+    }
+    const lightKey = lightProfile === WORKOUT_MODIFIERS.None
+      ? selectionGroupId
+      : `${SELECTION_PROFILE_PREFIX}${lightProfile}` +
+        `${SELECTION_PROFILE_SEPARATOR}${selectionGroupId}`;
+    if (state.selectedExerciseIds[lightKey] === undefined) {
+      state.selectedExerciseIds[lightKey] = exerciseId;
+    }
+  }
+  state.activeWorkoutModifiers = lightProfile;
+  state.activeWorkoutIsLightDay = true;
+  if (state.activeWorkoutSession) {
+    state.activeWorkoutSession.isLightDay = true;
+    addLightModifierToLegacyLightSession(state.activeWorkoutSession);
+  }
+}
+
+function addLightModifierToLegacyLightSession(session) {
+  if (!session || session.isLightDay !== true) {
+    return;
+  }
+  session.modifiers = normalizeWorkoutModifiers(
+    session.modifiers | WORKOUT_MODIFIERS.Light,
+  );
+  for (const change of session.modifierChanges ?? []) {
+    change.previousModifiers = normalizeWorkoutModifiers(
+      change.previousModifiers | WORKOUT_MODIFIERS.Light,
+    );
+    change.newModifiers = normalizeWorkoutModifiers(
+      change.newModifiers | WORKOUT_MODIFIERS.Light,
+    );
+  }
 }
 
 function uniquePositiveIntegers(value) {
@@ -3294,6 +3369,22 @@ export function isLightWorkoutDayDue(
     (consecutivePriorDays + 1) % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE === 0;
 }
 
+export function getDefaultWorkoutModifiers(
+  persistentSetupModifiers,
+  workoutHistory,
+  nowUnixMilliseconds,
+  legacyCompletedTrainingDayUnixMilliseconds = [],
+) {
+  const modifiers = getPersistentSetupModifiers(persistentSetupModifiers);
+  return isLightWorkoutDayDue(
+    workoutHistory,
+    nowUnixMilliseconds,
+    legacyCompletedTrainingDayUnixMilliseconds,
+  )
+    ? modifiers | WORKOUT_MODIFIERS.Light
+    : modifiers;
+}
+
 export function inferLegacyCompletedTrainingDays(
   workoutHistory,
   lastHardWorkByPrimaryMuscle,
@@ -3408,6 +3499,15 @@ export class WorkoutSession {
     return value;
   }
 
+  getDefaultWorkoutModifiers() {
+    return getDefaultWorkoutModifiers(
+      this.state.lastWorkoutModifiers,
+      this.state.workoutHistory,
+      this.getCurrentUnixTimeMilliseconds(),
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
+    );
+  }
+
   initialize() {
     const currentUnixTimeMilliseconds = this.getCurrentUnixTimeMilliseconds();
     if (this.loadedStateVersion < LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION) {
@@ -3438,9 +3538,11 @@ export class WorkoutSession {
         this.state.legacyCompletedTrainingDayUnixMilliseconds,
       );
     if (shouldMigratePreparedLightDay) {
-      this.state.activeWorkoutIsLightDay = true;
+      enableLightModeForExistingActiveWorkout(this.state);
       this.carrySlotPreferencesForward();
     }
+    this.state.activeWorkoutIsLightDay =
+      (this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0;
 
     if (this.state.activeWorkoutMinutes === 0) {
       this.finalizeActiveWorkoutSession("Interrupted");
@@ -3505,14 +3607,11 @@ export class WorkoutSession {
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
     this.state.lastWorkoutMinutes = minutes;
-    this.state.lastWorkoutModifiers = modifiers;
+    this.state.lastWorkoutModifiers = getPersistentSetupModifiers(modifiers);
     this.state.activeWorkoutMinutes = minutes;
     this.state.activeWorkoutModifiers = modifiers;
-    this.state.activeWorkoutIsLightDay = isLightWorkoutDayDue(
-      this.state.workoutHistory,
-      workoutStartedAtUnixMilliseconds,
-      this.state.legacyCompletedTrainingDayUnixMilliseconds,
-    );
+    this.state.activeWorkoutIsLightDay =
+      (modifiers & WORKOUT_MODIFIERS.Light) !== 0;
     this.state.activeSelectionGroupOrder = [];
     this.state.activeModifierProtectedSelectionGroupId = null;
     this.state.outcomes = {};
@@ -3524,7 +3623,9 @@ export class WorkoutSession {
     // rejection feedback is stored by workout phase.
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.carrySlotPreferencesForward();
-    this.repairActiveLineup(!this.state.activeWorkoutIsLightDay);
+    this.repairActiveLineup(
+      (modifiers & WORKOUT_MODIFIERS.Light) === 0,
+    );
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
   }
@@ -3570,9 +3671,13 @@ export class WorkoutSession {
 
     const previousModifiers = this.state.activeWorkoutModifiers;
     const previousLastModifiers = this.state.lastWorkoutModifiers;
+    const previousIsLightDay = this.state.activeWorkoutIsLightDay;
     modifiers = normalizeWorkoutModifiers(modifiers);
+    const targetIsLightDay =
+      (modifiers & WORKOUT_MODIFIERS.Light) !== 0;
     if (modifiers === previousModifiers) {
-      this.state.lastWorkoutModifiers = modifiers;
+      this.state.lastWorkoutModifiers = getPersistentSetupModifiers(modifiers);
+      this.state.activeWorkoutIsLightDay = targetIsLightDay;
       return;
     }
 
@@ -3639,8 +3744,9 @@ export class WorkoutSession {
     const pendingMovementPausedBefore =
       this.state.pendingMovementPausedByUser;
     try {
-      this.state.lastWorkoutModifiers = modifiers;
+      this.state.lastWorkoutModifiers = getPersistentSetupModifiers(modifiers);
       this.state.activeWorkoutModifiers = modifiers;
+      this.state.activeWorkoutIsLightDay = targetIsLightDay;
       this.state.activeModifierProtectedSelectionGroupId =
         preserveCompletedCurrentSelection
           ? getSelectionKey(currentRound)
@@ -3744,6 +3850,7 @@ export class WorkoutSession {
       this.state.pendingMovementPausedByUser = pendingMovementPausedBefore;
       this.state.activeWorkoutModifiers = previousModifiers;
       this.state.lastWorkoutModifiers = previousLastModifiers;
+      this.state.activeWorkoutIsLightDay = previousIsLightDay;
       throw error;
     }
   }
@@ -3892,7 +3999,7 @@ export class WorkoutSession {
     }
 
     let replacementCandidates = candidates;
-    if (this.state.activeWorkoutIsLightDay) {
+    if ((this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0) {
       const phase = this.getExercisePhase(group);
       const highestReplacementScore = Math.max(...candidates.map((candidate) =>
         this.getSelectionScore(candidate.exercise, phase)));
@@ -4838,7 +4945,7 @@ export class WorkoutSession {
       : 0n;
 
     const hasLightDayOpportunity = (exercise, preferenceSlot) => {
-      if (!this.state.activeWorkoutIsLightDay ||
+      if ((modifiers & WORKOUT_MODIFIERS.Light) === 0 ||
           !this.isDemandZeroSequence(exercise)) {
         return false;
       }
@@ -6094,7 +6201,8 @@ export class WorkoutSession {
             continue;
           }
 
-          if (this.state.activeWorkoutIsLightDay &&
+          if ((this.state.activeWorkoutModifiers &
+                WORKOUT_MODIFIERS.Light) !== 0 &&
               removedPlacements.some((placement) =>
                 this.isDemandZeroSequence(placement.root)) &&
               !this.isDemandZeroSequence(candidate)) {
@@ -7043,7 +7151,8 @@ export class WorkoutSession {
       endedAtUnixMilliseconds: 0,
       workoutMinutes: this.state.activeWorkoutMinutes,
       modifiers: this.state.activeWorkoutModifiers,
-      isLightDay: this.state.activeWorkoutIsLightDay,
+      isLightDay:
+        (this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0,
       status: "InProgress",
       startedBeforeLogging: startedBeforeLogging === true,
       keptExerciseIdsAtStart: normalizedKeptExerciseIdsAtStart,

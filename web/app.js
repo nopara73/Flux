@@ -42,6 +42,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
+  lightEnabled: "light workout ON",
+  lightDisabled: "light workout OFF",
   wallSolesStayOff: "equipment ON: wall · no feet on wall",
   wallSolesMayTouch: "equipment ON: wall",
   wallDisabled: "equipment OFF: wall",
@@ -63,6 +65,7 @@ const elements = {
   hardFloorModifier: byId("hard-floor-modifier"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
+  lightModifier: byId("light-workout-modifier"),
   wallModifier: byId("wall-modifier"),
   mirrorModifier: byId("mirror-modifier"),
   modifierFeedback: byId("modifier-feedback"),
@@ -214,7 +217,7 @@ async function bootstrap() {
     persistState();
     if (!startupSelectionChanged) {
       selectedMinutes = session.state.lastWorkoutMinutes;
-      selectedModifiers = session.state.lastWorkoutModifiers;
+      selectedModifiers = session.getDefaultWorkoutModifiers();
     }
     renderDuration(selectedMinutes, false);
     renderWorkoutModifiers();
@@ -498,6 +501,12 @@ function workoutModifierTiles() {
       enabledLabel: "Quiet exercise filter: quiet exercises only",
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
+    {
+      element: elements.lightModifier,
+      flag: WORKOUT_MODIFIERS.Light,
+      enabledLabel: "Workout intensity: light workout",
+      disabledLabel: "Workout intensity: regular workout",
+    },
   ];
 }
 
@@ -531,6 +540,11 @@ function workoutModifierFeedbackLabel(flag, enabled) {
   if (flag === WORKOUT_MODIFIERS.Silence) {
     return MODIFIER_FEEDBACK_LABELS[
       enabled ? "noisyDisabled" : "noisyEnabled"
+    ];
+  }
+  if (flag === WORKOUT_MODIFIERS.Light) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "lightEnabled" : "lightDisabled"
     ];
   }
   throw new RangeError(`Unknown workout modifier: ${flag}`);
@@ -677,7 +691,7 @@ function showDuration({ preserveSelection = false } = {}) {
   currentExercise = null;
   if (!preserveSelection) {
     selectedMinutes = session?.state.lastWorkoutMinutes ?? selectedMinutes;
-    selectedModifiers = session?.state.lastWorkoutModifiers ?? selectedModifiers;
+    selectedModifiers = session?.getDefaultWorkoutModifiers() ?? selectedModifiers;
   }
   renderDuration(selectedMinutes, false);
   renderWorkoutModifiers();

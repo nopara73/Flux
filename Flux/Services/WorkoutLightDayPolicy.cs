@@ -8,6 +8,24 @@ public static class WorkoutLightDayPolicy
     public const int ConsecutivePriorDaysRequired = TrainingDaysPerCycle - 1;
     public const int MinimumLegacyHardPrimaryMuscles = 3;
 
+    public static WorkoutModifiers GetDefaultWorkoutModifiers(
+        WorkoutModifiers persistentSetupModifiers,
+        IEnumerable<WorkoutSessionLog> workoutHistory,
+        long nowUnixMilliseconds,
+        TimeZoneInfo? localTimeZone = null,
+        IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
+    {
+        WorkoutModifiers modifiers = WorkoutModifierPolicy
+            .GetPersistentSetupModifiers(persistentSetupModifiers);
+        return IsLightDayDue(
+                workoutHistory,
+                nowUnixMilliseconds,
+                localTimeZone,
+                legacyCompletedTrainingDayUnixMilliseconds)
+            ? modifiers | WorkoutModifiers.Light
+            : modifiers;
+    }
+
     public static bool IsLightDayDue(
         IEnumerable<WorkoutSessionLog> workoutHistory,
         long nowUnixMilliseconds,

@@ -121,15 +121,26 @@ their workout logs when possible and otherwise projected into the phase where
 that slot would have executed.
 
 A completed workout on each of the three immediately preceding local calendar
-days makes the fourth day a light day. The four-day cadence repeats inside a
-longer uninterrupted daily streak, so days 4, 8, 12, and so on are light rather
-than every day after day 3. Interrupted or merely prepared workouts do not
-count, and multiple completed workouts on one date still count as one day. The
-mode is a selection priority, not a filter: an all-demand-`0` sequence wins only
-when it already belongs to the slot's highest saved-score bucket. If that bucket
-has no such sequence, the normal Keep, hard-rotation, recovery, Mirror, and
-anatomical priorities apply. A selected light-day alternative does not erase a
-saved non-demand-`0` Keep.
+days makes the fourth day default to a light workout. The four-day cadence
+repeats inside a longer uninterrupted daily streak, so days 4, 8, 12, and so on
+default to Light rather than every day after day 3. Interrupted or merely
+prepared workouts do not count, and multiple completed workouts on one date
+still count as one day. A dedicated feather control exposes this intensity
+choice before the workout and in the same setup screen used to change
+conditions mid-workout. The automatic default can be turned off, and Light can
+also be turned on for any ordinary day. It is session-scoped: the last physical
+conditions and equipment remain remembered, while yesterday's manual Light
+choice does not silently make the next workout light.
+
+Light is a selection priority, not a filter: an all-demand-`0` sequence wins
+only when it already belongs to the slot's highest saved-score bucket. If that
+bucket has no such sequence, the normal Keep, hard-rotation, recovery, Mirror,
+and anatomical priorities apply. A selected light alternative does not erase a
+saved non-demand-`0` Keep. Changing Light during a workout follows the same
+atomic replanning contract as every other modifier: completed work stays fixed,
+the unfinished current selection is reconsidered immediately, and turning
+Light back off restores the independently retained regular-profile lineup when
+it is still the best valid plan.
 
 A separate soft within-session rebalancer audits the resulting lineup with the
 complete workload table: demand-`0` contributes 0.25 for its primary muscle and
@@ -200,7 +211,9 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
-Flux currently provides six composable modifiers, in this UI order:
+Flux currently provides seven composable controls in three visually separate
+groups: four workout conditions, one intensity choice, and two equipment
+choices. In UI order:
 
 - **Upper-body clothing**, enabled by default and shown first, is a real
   two-state setup constraint. ON excludes movements that require visible bare
@@ -214,6 +227,13 @@ Flux currently provides six composable modifiers, in this UI order:
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
+- **Light workout**, shown alone as the intensity group, is automatically ON
+  for every fourth day of a consecutive daily streak and otherwise OFF by
+  default. It can be changed manually before or during a workout. It does not
+  change catalog eligibility or user scores; within each slot's highest
+  preference bucket it places all-demand-`0` sequences ahead of Keeps and hard
+  opportunities. If that bucket contains no all-demand-`0` choice, it changes
+  nothing;
 - **Wall**, disabled by default, cycles through no wall, wall available with
   sole contact allowed, and wall available with soles kept off. It admits
   established exercises that genuinely require the selected wall access and
@@ -243,8 +263,10 @@ behavior is coverage-aware:
   mirror but receive mirror preference only with a tall mirror;
 - `Agnostic` exercises are unaffected.
 
-Wall is deliberately outside the pairwise, per-muscle, and duration quota
-system. It instead has two direct catalog invariants: at least 20 distinct
+Light is deliberately outside catalog pairwise, materiality, and coverage
+quotas because it changes ranking without excluding or admitting an exercise.
+Wall is also outside the pairwise, per-muscle, and duration quota system. It
+instead has two direct catalog invariants: at least 20 distinct
 wall-required session movements that do not require sole contact, plus at least
 five distinct sole-contact wall movements. Sides, directions, sequence blocks,
 repeated sets, aliases, and names cannot multiply either count. The current
@@ -469,11 +491,14 @@ ledger is documented in
 
 Duration, modifier profile, lineups, keeps, scores, active progress, active
 movement checkpoints, and pending rest are stored locally. Modifier combinations
-retain separate stable lineups while sharing durable keeps.
+retain separate stable lineups while sharing durable keeps. The active session
+stores its explicit Light state and its own reversible lineup profile, while
+the remembered next-session setup intentionally omits Light so the consecutive-
+day policy can derive the next default afresh.
 
 Every workout started after audit logging was introduced also has one durable,
 append-only local session record. It snapshots the start/end time, duration,
-modifiers, frozen light-day mode, starting Keep set and lineup, every pre-start Shuffle, every actually
+modifiers, starting Light state, starting Keep set and lineup, every pre-start Shuffle, every actually
 completed 45-second block, every mid-workout modifier transition and resulting
 future plan, and every final Keep/reject decision. Block snapshots
 include the exercise name, demand, primary and secondary canonical muscles,

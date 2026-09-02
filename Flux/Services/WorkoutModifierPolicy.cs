@@ -119,7 +119,8 @@ public static class WorkoutModifierPolicy
         Rules.Aggregate(
             WorkoutModifiers.TallMirror |
                 WorkoutModifiers.Wall |
-                WorkoutModifiers.SoleWallContact,
+                WorkoutModifiers.SoleWallContact |
+                WorkoutModifiers.Light,
             (mask, rule) => mask | rule.Flag);
 
     private static readonly IReadOnlyList<WorkoutModifiers> ProfilesForValidation =
@@ -129,6 +130,10 @@ public static class WorkoutModifierPolicy
 
     public static IReadOnlyList<WorkoutModifiers> ValidationProfiles =>
         ProfilesForValidation;
+
+    public static WorkoutModifiers GetPersistentSetupModifiers(
+        WorkoutModifiers modifiers) =>
+        Normalize(modifiers) & ~WorkoutModifiers.Light;
 
     public static int GetSessionMovementId(Exercise exercise)
     {

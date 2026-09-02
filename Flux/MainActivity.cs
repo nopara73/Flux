@@ -73,11 +73,13 @@ public class MainActivity : Activity
     private FrameLayout _durationOptionLabels = null!;
     private LinearLayout _durationModifierGroups = null!;
     private LinearLayout _durationContextModifierGroup = null!;
+    private LinearLayout _durationIntensityModifierGroup = null!;
     private LinearLayout _durationEquipmentModifierGroup = null!;
     private CheckBox _upperBodyClothingModifierButton = null!;
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private CheckBox _lightModifierButton = null!;
     private CheckBox _wallModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
     private TextView _durationModifierFeedback = null!;
@@ -594,6 +596,8 @@ public class MainActivity : Activity
             Resource.Id.duration_modifier_groups);
         _durationContextModifierGroup = FindRequiredView<LinearLayout>(
             Resource.Id.duration_context_modifier_group);
+        _durationIntensityModifierGroup = FindRequiredView<LinearLayout>(
+            Resource.Id.duration_intensity_modifier_group);
         _durationEquipmentModifierGroup = FindRequiredView<LinearLayout>(
             Resource.Id.duration_equipment_modifier_group);
         _upperBodyClothingModifierButton = FindRequiredView<CheckBox>(
@@ -604,6 +608,8 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _lightModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.light_workout_modifier_button);
         _wallModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.wall_modifier_button);
         _mirrorModifierButton = FindRequiredView<CheckBox>(
@@ -771,6 +777,21 @@ public class MainActivity : Activity
                 userInitiated: true);
             ShowModifierFeedback(GetModifierFeedbackResourceId(
                 WorkoutModifiers.Silence,
+                enabled));
+        };
+        _lightModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _lightModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Light,
+                enabled,
+                _lightModifierButton,
+                Resource.String.light_workout_modifier_description,
+                Resource.String.light_workout_modifier_on,
+                Resource.String.light_workout_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Light,
                 enabled));
         };
         _wallModifierButton.Click += (_, _) =>
@@ -971,8 +992,11 @@ public class MainActivity : Activity
         int matchParent = ViewGroup.LayoutParams.MatchParent;
         int wrapContent = ViewGroup.LayoutParams.WrapContent;
         var resources = Resources!;
+        int screenWidthDp = resources.Configuration!.ScreenWidthDp;
         bool compactLandscape = landscape &&
-            resources.Configuration!.ScreenWidthDp < 640;
+            screenWidthDp < 640;
+        bool stackLandscapeModifierGroups = landscape &&
+            screenWidthDp < 760;
         int iconSize = compactLandscape
             ? DpInt(32)
             : resources.GetDimensionPixelSize(Resource.Dimension.duration_icon_size);
@@ -1002,12 +1026,29 @@ public class MainActivity : Activity
 
         if (landscape)
         {
-            _durationModifierGroups.Orientation = Orientation.Horizontal;
+            _durationModifierGroups.Orientation = stackLandscapeModifierGroups
+                ? Orientation.Vertical
+                : Orientation.Horizontal;
             _durationModifierGroups.SetGravity(GravityFlags.Center);
+            var landscapeIntensityLayout =
+                (LinearLayout.LayoutParams)
+                    _durationIntensityModifierGroup.LayoutParameters!;
+            landscapeIntensityLayout.SetMargins(
+                stackLandscapeModifierGroups ? 0 : DpInt(10),
+                stackLandscapeModifierGroups ? DpInt(8) : 0,
+                0,
+                0);
+            landscapeIntensityLayout.Gravity = GravityFlags.Center;
+            _durationIntensityModifierGroup.LayoutParameters =
+                landscapeIntensityLayout;
             var landscapeEquipmentLayout =
                 (LinearLayout.LayoutParams)
                     _durationEquipmentModifierGroup.LayoutParameters!;
-            landscapeEquipmentLayout.SetMargins(DpInt(10), 0, 0, 0);
+            landscapeEquipmentLayout.SetMargins(
+                stackLandscapeModifierGroups ? 0 : DpInt(10),
+                stackLandscapeModifierGroups ? DpInt(8) : 0,
+                0,
+                0);
             landscapeEquipmentLayout.Gravity = GravityFlags.Center;
             _durationEquipmentModifierGroup.LayoutParameters =
                 landscapeEquipmentLayout;
@@ -1074,7 +1115,8 @@ public class MainActivity : Activity
             };
             modifierGridLayout.TopMargin = DpInt(compactLandscape ? 10 : 16);
             _durationModifierGroups.LayoutParameters = modifierGridLayout;
-            SetModifierTileSizes(DpInt(compactLandscape ? 48 : 56));
+            SetModifierTileSizes(DpInt(
+                compactLandscape || stackLandscapeModifierGroups ? 48 : 56));
 
             var segmentLayout = new LinearLayout.LayoutParams(
                 matchParent,
@@ -1095,6 +1137,13 @@ public class MainActivity : Activity
             1f);
         _durationModifierGroups.Orientation = Orientation.Vertical;
         _durationModifierGroups.SetGravity(GravityFlags.Center);
+        var portraitIntensityLayout =
+            (LinearLayout.LayoutParams)
+                _durationIntensityModifierGroup.LayoutParameters!;
+        portraitIntensityLayout.SetMargins(0, DpInt(10), 0, 0);
+        portraitIntensityLayout.Gravity = GravityFlags.Center;
+        _durationIntensityModifierGroup.LayoutParameters =
+            portraitIntensityLayout;
         var portraitEquipmentLayout =
             (LinearLayout.LayoutParams)
                 _durationEquipmentModifierGroup.LayoutParameters!;
@@ -1608,6 +1657,7 @@ public class MainActivity : Activity
                      _hardFloorModifierButton,
                      _insectModifierButton,
                      _silenceModifierButton,
+                     _lightModifierButton,
                      _wallModifierButton,
                      _mirrorModifierButton,
                  })
@@ -1776,9 +1826,10 @@ public class MainActivity : Activity
 
         ShowAppScreen(AppScreen.Duration);
         SetSelectedWorkoutMinutes(_state.LastWorkoutMinutes);
+        WorkoutModifiers defaultModifiers = GetDefaultDurationModifiers();
         SetSelectedWorkoutModifier(
             WorkoutModifiers.UpperBodyClothing,
-            (_state.LastWorkoutModifiers &
+            (defaultModifiers &
                 WorkoutModifiers.UpperBodyClothing) != 0,
             _upperBodyClothingModifierButton,
             Resource.String.upper_body_clothing_modifier_description,
@@ -1786,31 +1837,38 @@ public class MainActivity : Activity
             Resource.String.upper_body_clothing_modifier_off);
         SetSelectedWorkoutModifier(
             WorkoutModifiers.HardFloor,
-            (_state.LastWorkoutModifiers & WorkoutModifiers.HardFloor) != 0,
+            (defaultModifiers & WorkoutModifiers.HardFloor) != 0,
             _hardFloorModifierButton,
             Resource.String.hard_floor_modifier_description,
             Resource.String.hard_floor_modifier_on,
             Resource.String.hard_floor_modifier_off);
         SetSelectedWorkoutModifier(
             WorkoutModifiers.Insect,
-            (_state.LastWorkoutModifiers & WorkoutModifiers.Insect) != 0,
+            (defaultModifiers & WorkoutModifiers.Insect) != 0,
             _insectModifierButton,
             Resource.String.insect_modifier_description,
             Resource.String.insect_modifier_on,
             Resource.String.insect_modifier_off);
         SetSelectedWorkoutModifier(
             WorkoutModifiers.Silence,
-            (_state.LastWorkoutModifiers & WorkoutModifiers.Silence) != 0,
+            (defaultModifiers & WorkoutModifiers.Silence) != 0,
             _silenceModifierButton,
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Light,
+            (defaultModifiers & WorkoutModifiers.Light) != 0,
+            _lightModifierButton,
+            Resource.String.light_workout_modifier_description,
+            Resource.String.light_workout_modifier_on,
+            Resource.String.light_workout_modifier_off);
         SetSelectedWallEquipment(
             WorkoutModifierPolicy.GetWallEquipment(
-                _state.LastWorkoutModifiers));
+                defaultModifiers));
         SetSelectedMirrorEquipment(
             WorkoutModifierPolicy.GetMirrorEquipment(
-                _state.LastWorkoutModifiers));
+                defaultModifiers));
         ConfigureDurationScreenForActiveWorkout(editing: false);
         QueueWorkoutPreparation();
     }
@@ -1896,6 +1954,13 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Light,
+            (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0,
+            _lightModifierButton,
+            Resource.String.light_workout_modifier_description,
+            Resource.String.light_workout_modifier_on,
+            Resource.String.light_workout_modifier_off);
         SetSelectedWallEquipment(
             WorkoutModifierPolicy.GetWallEquipment(
                 _selectedWorkoutModifiers));
@@ -1906,6 +1971,21 @@ public class MainActivity : Activity
         _beginWorkoutButton.Enabled = true;
         _beginWorkoutButton.Alpha = 1f;
         QueueWorkoutPreparation();
+    }
+
+    private WorkoutModifiers GetDefaultDurationModifiers()
+    {
+        long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        return _sessionService is not null
+            ? _sessionService.GetDefaultWorkoutModifiers(
+                _state,
+                nowUnixMilliseconds)
+            : WorkoutLightDayPolicy.GetDefaultWorkoutModifiers(
+                _state.LastWorkoutModifiers,
+                _state.WorkoutHistory,
+                nowUnixMilliseconds,
+                TimeZoneInfo.Local,
+                _state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
     private void ConfigureDurationScreenForActiveWorkout(bool editing)
@@ -2166,6 +2246,9 @@ public class MainActivity : Activity
         WorkoutModifiers.Silence => enabled
             ? Resource.String.noisy_exercises_disabled_feedback
             : Resource.String.noisy_exercises_enabled_feedback,
+        WorkoutModifiers.Light => enabled
+            ? Resource.String.light_workout_enabled_feedback
+            : Resource.String.light_workout_disabled_feedback,
         WorkoutModifiers.Wall => enabled
             ? Resource.String.wall_equipment_enabled_feedback
             : Resource.String.wall_equipment_disabled_feedback,

@@ -1,4 +1,5 @@
 (() => {
+  const storageKey = "flux.workout.state.v1";
   const durationOptions = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
   const modifierFlags = Object.freeze({
     insect: 1,
@@ -9,6 +10,7 @@
     wall: 32,
     soleWallContact: 64,
     upperBodyClothing: 128,
+    light: 256,
   });
   const feedbackDurationMs = 2_040;
   const elements = {
@@ -23,6 +25,7 @@
     hardFloor: document.getElementById("hard-floor-modifier"),
     insect: document.getElementById("insect-modifier"),
     silence: document.getElementById("silence-modifier"),
+    light: document.getElementById("light-workout-modifier"),
     wall: document.getElementById("wall-modifier"),
     mirror: document.getElementById("mirror-modifier"),
     feedback: document.getElementById("modifier-feedback"),
@@ -31,14 +34,17 @@
   if (!elements.dial || !elements.value || !elements.decrease ||
       !elements.increase || !elements.range || !elements.begin ||
       !elements.upperBodyClothing ||
-      !elements.insect || !elements.silence || !elements.wall ||
+      !elements.insect || !elements.silence || !elements.light || !elements.wall ||
       !elements.mirror ||
       !elements.feedback) {
     return;
   }
 
-  let selectedMinutes = Number(elements.value.textContent) || 10;
-  let selectedModifiers = readInitialModifiers();
+  const persistedSetup = readPersistedSetup();
+  let selectedMinutes = persistedSetup?.selectedMinutes ??
+    (Number(elements.value.textContent) || 10);
+  let selectedModifiers = persistedSetup?.selectedModifiers ??
+    readInitialModifiers();
   let selectionChanged = false;
   let startQueued = false;
   let handlers = null;
@@ -57,6 +63,7 @@
     toggleModifier("hardFloor"));
   elements.insect.addEventListener("click", () => toggleModifier("insect"));
   elements.silence.addEventListener("click", () => toggleModifier("silence"));
+  elements.light.addEventListener("click", () => toggleModifier("light"));
   elements.wall.addEventListener("click", cycleWallEquipment);
   elements.mirror.addEventListener("click", cycleMirrorEquipment);
 
@@ -136,6 +143,7 @@
       ["hardFloor", elements.hardFloor],
       ["insect", elements.insect],
       ["silence", elements.silence],
+      ["light", elements.light],
     ]) {
       if (element?.getAttribute("aria-pressed") === "true") {
         modifiers |= modifierFlags[name];
@@ -154,6 +162,72 @@
       modifiers |= modifierFlags.wall | modifierFlags.soleWallContact;
     }
     return modifiers;
+  }
+
+  function readPersistedSetup() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(storageKey));
+      if (!raw || typeof raw !== "object") {
+        return null;
+      }
+      const selectedMinutes = durationOptions.includes(raw.lastWorkoutMinutes)
+        ? raw.lastWorkoutMinutes
+        : 10;
+      const storedModifiers = Number.isInteger(raw.lastWorkoutModifiers)
+        ? raw.lastWorkoutModifiers & ~modifierFlags.light
+        : readInitialModifiers();
+      return {
+        selectedMinutes,
+        selectedModifiers: isLightWorkoutDue(raw)
+          ? storedModifiers | modifierFlags.light
+          : storedModifiers,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  function isLightWorkoutDue(state) {
+    const today = localCalendarDayNumber(Date.now());
+    const completedDays = new Set((Array.isArray(state.workoutHistory)
+      ? state.workoutHistory
+      : [])
+      .filter((session) => session?.status === "Completed")
+      .map((session) => localCalendarDayNumber(
+        Number(session.startedAtUnixMilliseconds) > 0
+          ? session.startedAtUnixMilliseconds
+          : session.endedAtUnixMilliseconds,
+      ))
+      .filter((day) => day !== null));
+    for (const timestamp of Array.isArray(
+      state.legacyCompletedTrainingDayUnixMilliseconds,
+    ) ? state.legacyCompletedTrainingDayUnixMilliseconds : []) {
+      const day = localCalendarDayNumber(timestamp);
+      if (day !== null) {
+        completedDays.add(day);
+      }
+    }
+    let consecutivePriorDays = 0;
+    for (let day = today - 1; completedDays.has(day); day -= 1) {
+      consecutivePriorDays += 1;
+    }
+    return consecutivePriorDays >= 3 &&
+      (consecutivePriorDays + 1) % 4 === 0;
+  }
+
+  function localCalendarDayNumber(timestamp) {
+    if (!Number.isSafeInteger(timestamp) || timestamp <= 0) {
+      return null;
+    }
+    const localTime = new Date(timestamp);
+    if (Number.isNaN(localTime.getTime())) {
+      return null;
+    }
+    return Math.trunc(Date.UTC(
+      localTime.getFullYear(),
+      localTime.getMonth(),
+      localTime.getDate(),
+    ) / 86_400_000);
   }
 
   function stepDuration(direction) {
@@ -262,6 +336,7 @@
     renderBinaryModifier(elements.hardFloor, "hardFloor");
     renderBinaryModifier(elements.insect, "insect");
     renderBinaryModifier(elements.silence, "silence");
+    renderBinaryModifier(elements.light, "light");
 
     const hasWall = (selectedModifiers & modifierFlags.wall) !== 0;
     const solesMayTouch =
@@ -329,6 +404,14 @@
           : "Quiet exercise filter: noisy exercises allowed",
       );
     }
+    if (name === "light") {
+      element.setAttribute(
+        "aria-label",
+        enabled
+          ? "Workout intensity: light workout"
+          : "Workout intensity: regular workout",
+      );
+    }
   }
 
   function modifierFeedbackLabel(name) {
@@ -341,6 +424,9 @@
     }
     if (name === "insect") {
       return `insect mode ${enabled ? "ON" : "OFF"}`;
+    }
+    if (name === "light") {
+      return `light workout ${enabled ? "ON" : "OFF"}`;
     }
     return enabled ? "noisy exercises DISABLED" : "noisy exercises ENABLED";
   }

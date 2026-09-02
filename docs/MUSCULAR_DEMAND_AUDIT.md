@@ -52,13 +52,17 @@ preferred. Available-equipment relevance for Wall and Mirror is a lower-order
 tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
 
-Every fourth consecutive local-calendar training day adds a higher-order light
-day preference. Within each slot's highest saved-score bucket, a sequence whose
-every distinct member is demand `0` outranks hard opportunities and Keeps. It
+Every fourth consecutive local-calendar training day defaults the session's
+explicit Light control to ON. The feather control can also be enabled on an
+ordinary day or disabled on an automatic light day, before or during the
+workout. Within each slot's highest saved-score bucket, a sequence whose every
+distinct member is demand `0` then outranks hard opportunities and Keeps. It
 does not promote a demand-`0` sequence from a lower bucket, delete a displaced
 Keep, or exclude nonzero work when the top bucket has no demand-`0` option.
-Completed session history supplies the cadence; interrupted sessions and
-duplicate completions on the same date do not advance it.
+Completed session history supplies the default cadence; interrupted sessions
+and duplicate completions on the same date do not advance it. Light itself is
+session-scoped and is not copied into the next session's remembered physical
+setup.
 
 The separate within-session muscle rebalancer uses the same reviewed rating
 without changing it:

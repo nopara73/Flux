@@ -101,6 +101,7 @@ const [
   hardFloorIcon,
   softFloorIcon,
   upperBodyClothingIcon,
+  lightWorkoutIcon,
   wallIcon,
   wallOffIcon,
   wallNoSoleIcon,
@@ -153,6 +154,7 @@ const [
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_hard_floor.png"),
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_soft_floor.png"),
   source("Flux", "Resources", "drawable", "ic_upper_body_clothing.xml"),
+  source("Flux", "Resources", "drawable", "ic_light_workout.xml"),
   source("Flux", "Resources", "drawable", "ic_wall.xml"),
   source("Flux", "Resources", "drawable", "ic_wall_off.xml"),
   binarySource("Flux", "Resources", "drawable-xxhdpi", "ic_wall_no_sole.png"),
@@ -174,6 +176,8 @@ test("web duration choices match the mobile workout contract", () => {
 });
 
 test("web and mobile persist the same complete workout audit trail", () => {
+  assert.equal(WORKOUT_MODIFIERS.Light, 256);
+  assert.match(workoutModifiers, /Light\s*=\s*256/);
   for (const field of [
     "SessionId",
     "StartedAtUnixMilliseconds",
@@ -220,6 +224,10 @@ test("web and mobile persist the same complete workout audit trail", () => {
   assert.match(workoutModule, /inferLegacyCompletedTrainingDays/);
   assert.match(sessionService, /ActiveWorkoutIsLightDay/);
   assert.match(sessionService, /IsLightDayDue/);
+  assert.match(sessionService, /GetDefaultWorkoutModifiers/);
+  assert.match(sessionService, /GetPersistentSetupModifiers/);
+  assert.match(workoutModule, /getDefaultWorkoutModifiers/);
+  assert.match(workoutModule, /getPersistentSetupModifiers/);
   assert.match(sessionService, /lightDayOpportunityWeight/);
   assert.match(
     workoutModule,
@@ -268,7 +276,7 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
 test("web and mobile carry keeps across duration resolutions", () => {
   assert.match(
     sessionService,
-    /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !state\.ActiveWorkoutIsLightDay\);/,
+    /PrepareWorkout\([\s\S]*CarrySlotPreferencesForward\(state\);[\s\S]*RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !modifiers\.HasFlag\(\s*WorkoutModifiers\.Light\)\);/,
   );
   assert.match(
     sessionService,
@@ -337,11 +345,11 @@ test("web and mobile apply the same multi-resolution muscle balancing", () => {
   );
   assert.match(
     sessionService,
-    /RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !state\.ActiveWorkoutIsLightDay\);[\s\S]*RebalanceNewExercisesByMuscleBalance\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
+    /RepairActiveLineup\(\s*state,\s*preserveCurrentSelections: !modifiers\.HasFlag\(\s*WorkoutModifiers\.Light\)\);[\s\S]*RebalanceNewExercisesByMuscleBalance\(state\);[\s\S]*SetActiveLongWorkoutAllocation\(state\);/,
   );
   assert.match(
     workoutModule,
-    /this\.repairActiveLineup\(!this\.state\.activeWorkoutIsLightDay\);[\s\S]*this\.rebalanceNewExercisesByMuscleBalance\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
+    /this\.repairActiveLineup\(\s*\(modifiers & WORKOUT_MODIFIERS\.Light\) === 0,\s*\);[\s\S]*this\.rebalanceNewExercisesByMuscleBalance\(\);[\s\S]*this\.setActiveLongWorkoutAllocation\(\);/,
   );
   assert.match(
     muscleBalancePolicy,
@@ -430,8 +438,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     upperBodyClothingRequirementModel,
     /Unreviewed[\s\S]*ClothingRequired[\s\S]*BareUpperBodyRequired[\s\S]*Agnostic/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 24);
-  assert.match(workoutState, /public int Version[^=]*=\s*27/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 25);
+  assert.match(workoutState, /public int Version[^=]*=\s*28/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
@@ -451,11 +459,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
   assert.match(
     sessionService,
-    /PrepareWorkout\([\s\S]*state\.LastWorkoutModifiers\s*=\s*modifiers;[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
+    /PrepareWorkout\([\s\S]*GetPersistentSetupModifiers\(modifiers\)[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
   );
   assert.match(
     workoutModule,
-    /prepareWorkout\(minutes, modifiers[\s\S]*this\.state\.lastWorkoutModifiers\s*=\s*modifiers;[\s\S]*this\.state\.activeWorkoutModifiers\s*=\s*modifiers;/,
+    /prepareWorkout\(minutes, modifiers[\s\S]*getPersistentSetupModifiers\(modifiers\)[\s\S]*this\.state\.activeWorkoutModifiers\s*=\s*modifiers;/,
   );
   assert.match(
     sessionService,
@@ -675,6 +683,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /@\+id\/hard_floor_modifier_button/);
   assert.match(durationLayout, /@\+id\/insect_modifier_button/);
   assert.match(durationLayout, /@\+id\/silence_modifier_button/);
+  assert.match(durationLayout, /@\+id\/light_workout_modifier_button/);
   assert.match(durationLayout, /@\+id\/wall_modifier_button/);
   assert.match(durationLayout, /@\+id\/mirror_modifier_button/);
   assert.match(durationLayout, /@drawable\/ic_mirror/);
@@ -696,12 +705,24 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.ok(
     durationLayout.indexOf("@+id/silence_modifier_button") <
+      durationLayout.indexOf("@+id/duration_intensity_modifier_group") &&
+      durationLayout.indexOf("@+id/duration_intensity_modifier_group") <
+      durationLayout.indexOf("@+id/light_workout_modifier_button") &&
+      durationLayout.indexOf("@+id/light_workout_modifier_button") <
+      durationLayout.indexOf("@+id/duration_equipment_modifier_group") &&
+      durationLayout.indexOf("@+id/duration_equipment_modifier_group") <
       durationLayout.indexOf("@+id/wall_modifier_button") &&
       durationLayout.indexOf("@+id/wall_modifier_button") <
       durationLayout.indexOf("@+id/mirror_modifier_button"),
   );
   assert.ok(
     webIndex.indexOf('id="silence-modifier"') <
+      webIndex.indexOf("modifier-intensity-group") &&
+      webIndex.indexOf("modifier-intensity-group") <
+      webIndex.indexOf('id="light-workout-modifier"') &&
+      webIndex.indexOf('id="light-workout-modifier"') <
+      webIndex.indexOf("modifier-equipment-group") &&
+      webIndex.indexOf("modifier-equipment-group") <
       webIndex.indexOf('id="wall-modifier"') &&
       webIndex.indexOf('id="wall-modifier"') <
       webIndex.indexOf('id="mirror-modifier"'),
@@ -732,7 +753,9 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(durationLayout, /@drawable\/ic_hard_floor/);
   assert.match(durationLayout, /@drawable\/ic_upper_body_clothing/);
+  assert.match(durationLayout, /@drawable\/ic_light_workout/);
   assert.match(upperBodyClothingIcon, /<vector[\s\S]*pathData=/);
+  assert.match(lightWorkoutIcon, /<vector[\s\S]*M20\.24,12\.24[\s\S]*M16,8L2,22/);
   assert.notDeepEqual(hardFloorIcon, softFloorIcon);
   assert.deepEqual([...hardFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.deepEqual([...softFloorIcon.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
@@ -787,6 +810,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webIndex, /id="upper-body-clothing-modifier"/);
   assert.match(webIndex, /id="hard-floor-modifier"/);
   assert.match(webIndex, /id="silence-modifier"/);
+  assert.match(webIndex, /id="light-workout-modifier"/);
   assert.match(webIndex, /id="wall-modifier"/);
   assert.match(webIndex, /id="mirror-modifier"/);
   assert.match(webIndex, /class="mirror-glyph mirror-glyph-compact"/);
@@ -794,6 +818,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.doesNotMatch(webIndex, /mirror-mode-label/);
   assert.doesNotMatch(webApp, /mirrorModeLabel/);
   assert.match(webIndex, /Quiet exercise filter: quiet exercises only/);
+  assert.match(webIndex, /aria-label="Workout intensity"/);
+  assert.match(webIndex, /Workout intensity: regular workout/);
   assert.match(durationLayout, /@\+id\/duration_modifier_feedback/);
   assert.match(durationLayout, /@drawable\/duration_modifier_feedback_background/);
   assert.match(webIndex, /id="modifier-feedback"[\s\S]*role="status"[\s\S]*aria-live="polite"/);
@@ -801,6 +827,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="insect_mode_disabled_feedback">insect mode OFF<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_enabled_feedback">noisy exercises ENABLED<\/string>/);
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
+  assert.match(strings, /<string name="light_workout_enabled_feedback">light workout ON<\/string>/);
+  assert.match(strings, /<string name="light_workout_disabled_feedback">light workout OFF<\/string>/);
   assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall · no feet on wall<\/string>/);
   assert.match(strings, /<string name="wall_sole_contact_enabled_feedback">equipment ON: wall<\/string>/);
   assert.match(strings, /<string name="wall_equipment_disabled_feedback">equipment OFF: wall<\/string>/);
@@ -823,6 +851,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     "insect mode OFF",
     "noisy exercises ENABLED",
     "noisy exercises DISABLED",
+    "light workout ON",
+    "light workout OFF",
     "equipment ON: wall · no feet on wall",
     "equipment ON: wall",
     "equipment OFF: wall",
@@ -840,6 +870,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /upper_body_clothing_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/upper_body_clothing_enabled_feedback"/);
   assert.match(durationLayout, /hard_floor_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/hard_floor_enabled_feedback"/);
   assert.match(durationLayout, /silence_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/noisy_exercises_disabled_feedback"/);
+  assert.match(durationLayout, /light_workout_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/light_workout_disabled_feedback"/);
   assert.match(durationLayout, /wall_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/wall_equipment_disabled_feedback"/);
   assert.match(durationLayout, /mirror_modifier_button(?:(?!\/>)[\s\S])*tooltipText="@string\/mirror_equipment_disabled_feedback"/);
   assert.match(webApp, /showWorkoutModifierFeedback\(workoutModifierFeedbackLabel\(flag, enabled\)\)/);
@@ -847,6 +878,14 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(
     instantControls,
     /name === "hardFloor"[\s\S]*Floor surface: hard and slippery floor[\s\S]*Floor surface: stable soft floor/,
+  );
+  assert.match(
+    instantControls,
+    /readPersistedSetup[\s\S]*isLightWorkoutDue[\s\S]*consecutivePriorDays >= 3/,
+  );
+  assert.match(
+    instantControls,
+    /renderBinaryModifier\(elements\.light, "light"\)/,
   );
   assert.match(webApp, /cycleMirrorEquipment[\s\S]*MIRROR_EQUIPMENT\.None[\s\S]*MIRROR_EQUIPMENT\.Tall[\s\S]*MIRROR_EQUIPMENT\.Compact/);
   assert.match(webApp, /cycleWallEquipment[\s\S]*WALL_EQUIPMENT\.None[\s\S]*WALL_EQUIPMENT\.SolesMayTouch[\s\S]*WALL_EQUIPMENT\.SolesStayOff/);
@@ -867,7 +906,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     webStyles,
     /\.modifier-feedback\.show[\s\S]*2040ms[\s\S]*@keyframes modifier-feedback-blink[\s\S]*7%[\s\S]*11%[\s\S]*66%[\s\S]*100%[\s\S]*opacity:\s*0[\s\S]*scale\(1\.08\)/,
   );
-  assert.doesNotMatch(webIndex, /M20\.24 12\.24a6 6 0 0 0-8\.49-8\.49L5 10\.5V19h8\.5Z/);
+  assert.match(webIndex, /id="light-workout-modifier"[\s\S]*M20\.24 12\.24a6 6/);
   assert.doesNotMatch(webIndex, /M3\.27 2 2 3\.27/);
   assert.match(
     exerciseDatabase,

@@ -709,6 +709,24 @@ public sealed class WorkoutModifierPolicyTests
         Assert.DoesNotContain(
             WorkoutModifierPolicy.ValidationProfiles,
             profile => profile.HasFlag(WorkoutModifiers.Wall));
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.ValidationProfiles,
+            profile => profile.HasFlag(WorkoutModifiers.Light));
+    }
+
+    [Fact]
+    public void LightIsSupportedButNeverPersistedOrAddedToCatalogQuotas()
+    {
+        WorkoutModifiers profile = WorkoutModifiers.Insect |
+            WorkoutModifiers.Light;
+
+        Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile));
+        Assert.Equal(
+            WorkoutModifiers.Insect,
+            WorkoutModifierPolicy.GetPersistentSetupModifiers(profile));
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.ValidationProfiles,
+            candidate => candidate.HasFlag(WorkoutModifiers.Light));
     }
 
     [Fact]

@@ -14,7 +14,8 @@ public sealed class ExerciseSessionService
         WorkoutModifiers.HardFloor |
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 27;
+    private const int CurrentStateVersion = 28;
+    private const int ExplicitLightModeStateVersion = 28;
     private const int ImplicitUpperBodyClothingStateVersion = 27;
     private const int LegacyTrainingDayInferenceStateVersion = 25;
     private const int PersistedLightDayStateVersion = 24;
@@ -92,6 +93,19 @@ public sealed class ExerciseSessionService
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
         WorkoutMinutes;
+
+    public WorkoutModifiers GetDefaultWorkoutModifiers(
+        WorkoutState state,
+        long? nowUnixMilliseconds = null)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        return WorkoutLightDayPolicy.GetDefaultWorkoutModifiers(
+            state.LastWorkoutModifiers,
+            state.WorkoutHistory,
+            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds(),
+            _localTimeZone,
+            state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
 
     public void Initialize(WorkoutState state)
     {
@@ -176,10 +190,16 @@ public sealed class ExerciseSessionService
             MigrateImplicitUpperBodyClothingModifier(state);
         }
 
+        if (state.Version < ExplicitLightModeStateVersion)
+        {
+            MigrateExplicitLightMode(state);
+        }
+
         state.Version = CurrentStateVersion;
         state.LastWorkoutMinutes = NormalizeLastWorkoutMinutes(state.LastWorkoutMinutes);
-        state.LastWorkoutModifiers = NormalizeWorkoutModifiers(
-            state.LastWorkoutModifiers);
+        state.LastWorkoutModifiers = WorkoutModifierPolicy
+            .GetPersistentSetupModifiers(
+                state.LastWorkoutModifiers);
         state.ActiveWorkoutModifiers = NormalizeWorkoutModifiers(
             state.ActiveWorkoutModifiers);
         NormalizeSavedLineups(state);
@@ -189,9 +209,11 @@ public sealed class ExerciseSessionService
             // Older builds may have persisted an unstarted background plan.
             // Re-evaluate that plan from its already persisted session history
             // so installing the update on day four takes effect immediately.
-            state.ActiveWorkoutIsLightDay = true;
+            EnableLightModeForExistingActiveWorkout(state);
             CarrySlotPreferencesForward(state);
         }
+        state.ActiveWorkoutIsLightDay = state.ActiveWorkoutModifiers
+            .HasFlag(WorkoutModifiers.Light);
 
         if (migratedLegacyState && state.ActiveWorkoutMinutes > 0)
         {
@@ -312,12 +334,12 @@ public sealed class ExerciseSessionService
         state.Version = CurrentStateVersion;
         modifiers = NormalizeWorkoutModifiers(modifiers);
         state.LastWorkoutMinutes = minutes;
-        state.LastWorkoutModifiers = modifiers;
+        state.LastWorkoutModifiers = WorkoutModifierPolicy
+            .GetPersistentSetupModifiers(modifiers);
         state.ActiveWorkoutMinutes = minutes;
         state.ActiveWorkoutModifiers = modifiers;
-        state.ActiveWorkoutIsLightDay = IsLightDayDue(
-            state,
-            workoutStartedAtUnixMilliseconds);
+        state.ActiveWorkoutIsLightDay = modifiers.HasFlag(
+            WorkoutModifiers.Light);
         state.ActiveSelectionGroupOrder.Clear();
         state.ActiveModifierProtectedSelectionGroupId = null;
         state.Outcomes.Clear();
@@ -332,7 +354,8 @@ public sealed class ExerciseSessionService
         CarrySlotPreferencesForward(state);
         RepairActiveLineup(
             state,
-            preserveCurrentSelections: !state.ActiveWorkoutIsLightDay);
+            preserveCurrentSelections: !modifiers.HasFlag(
+                WorkoutModifiers.Light));
         RebalanceNewExercisesByMuscleBalance(state);
         SetActiveLongWorkoutAllocation(state);
     }
@@ -392,10 +415,14 @@ public sealed class ExerciseSessionService
 
         WorkoutModifiers previousModifiers = state.ActiveWorkoutModifiers;
         WorkoutModifiers lastModifiersBefore = state.LastWorkoutModifiers;
+        bool previousIsLightDay = state.ActiveWorkoutIsLightDay;
         modifiers = NormalizeWorkoutModifiers(modifiers);
+        bool targetIsLightDay = modifiers.HasFlag(WorkoutModifiers.Light);
         if (modifiers == previousModifiers)
         {
-            state.LastWorkoutModifiers = modifiers;
+            state.LastWorkoutModifiers = WorkoutModifierPolicy
+                .GetPersistentSetupModifiers(modifiers);
+            state.ActiveWorkoutIsLightDay = targetIsLightDay;
             return;
         }
 
@@ -476,8 +503,10 @@ public sealed class ExerciseSessionService
         bool pendingMovementPausedBefore = state.PendingMovementPausedByUser;
         try
         {
-            state.LastWorkoutModifiers = modifiers;
+            state.LastWorkoutModifiers = WorkoutModifierPolicy
+                .GetPersistentSetupModifiers(modifiers);
             state.ActiveWorkoutModifiers = modifiers;
+            state.ActiveWorkoutIsLightDay = targetIsLightDay;
             state.ActiveModifierProtectedSelectionGroupId =
                 preserveCompletedCurrentSelection
                     ? currentRound.SelectionKey
@@ -600,6 +629,7 @@ public sealed class ExerciseSessionService
             state.PendingMovementPausedByUser = pendingMovementPausedBefore;
             state.ActiveWorkoutModifiers = previousModifiers;
             state.LastWorkoutModifiers = lastModifiersBefore;
+            state.ActiveWorkoutIsLightDay = previousIsLightDay;
             throw;
         }
     }
@@ -751,7 +781,7 @@ public sealed class ExerciseSessionService
             return null;
         }
 
-        if (state.ActiveWorkoutIsLightDay)
+        if (state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light))
         {
             WorkoutExercisePhase phase = GetExercisePhase(group);
             int highestReplacementScore = candidates.Max(candidate =>
@@ -1726,7 +1756,7 @@ public sealed class ExerciseSessionService
             Exercise exercise,
             WorkoutGroup preferenceSlot)
         {
-            if (!state.ActiveWorkoutIsLightDay ||
+            if (!modifiers.HasFlag(WorkoutModifiers.Light) ||
                 !IsDemandZeroSequence(exercise))
             {
                 return false;
@@ -3177,7 +3207,8 @@ public sealed class ExerciseSessionService
             StartedAtUnixMilliseconds = startedAtUnixMilliseconds,
             WorkoutMinutes = state.ActiveWorkoutMinutes,
             Modifiers = state.ActiveWorkoutModifiers,
-            IsLightDay = state.ActiveWorkoutIsLightDay,
+            IsLightDay = state.ActiveWorkoutModifiers.HasFlag(
+                WorkoutModifiers.Light),
             Status = WorkoutSessionStatus.InProgress,
             StartedBeforeLogging = startedBeforeLogging,
             KeptExerciseIdsAtStart = keptExerciseIdsAtStart
@@ -3858,6 +3889,81 @@ public sealed class ExerciseSessionService
 
         // Preserve the exact profile and checkpoints of a workout already in
         // progress. The new default applies at the next duration selection.
+    }
+
+    private void MigrateExplicitLightMode(WorkoutState state)
+    {
+        state.LastWorkoutModifiers = WorkoutModifierPolicy
+            .GetPersistentSetupModifiers(state.LastWorkoutModifiers);
+
+        foreach (WorkoutSessionLog session in state.WorkoutHistory)
+        {
+            AddLightModifierToLegacyLightSession(session);
+        }
+
+        if (state.ActiveWorkoutSession is { } activeSession &&
+            activeSession.IsLightDay)
+        {
+            AddLightModifierToLegacyLightSession(activeSession);
+        }
+
+        if (state.ActiveWorkoutMinutes > 0 && state.ActiveWorkoutIsLightDay)
+        {
+            EnableLightModeForExistingActiveWorkout(state);
+        }
+    }
+
+    private void EnableLightModeForExistingActiveWorkout(
+        WorkoutState state)
+    {
+        WorkoutModifiers previousProfile = NormalizeWorkoutModifiers(
+            state.ActiveWorkoutModifiers & ~WorkoutModifiers.Light);
+        WorkoutModifiers lightProfile = NormalizeWorkoutModifiers(
+            previousProfile | WorkoutModifiers.Light);
+
+        foreach ((string selectionStorageKey, int exerciseId) in
+                 state.SelectedExerciseIds.ToArray())
+        {
+            if (!TryParseSelectionStorageKey(
+                    selectionStorageKey,
+                    out string selectionGroupId,
+                    out WorkoutModifiers storedProfile) ||
+                storedProfile != previousProfile)
+            {
+                continue;
+            }
+
+            state.SelectedExerciseIds.TryAdd(
+                GetSelectionStorageKey(selectionGroupId, lightProfile),
+                exerciseId);
+        }
+
+        state.ActiveWorkoutModifiers = lightProfile;
+        state.ActiveWorkoutIsLightDay = true;
+        if (state.ActiveWorkoutSession is { } activeSession)
+        {
+            activeSession.IsLightDay = true;
+            AddLightModifierToLegacyLightSession(activeSession);
+        }
+    }
+
+    private static void AddLightModifierToLegacyLightSession(
+        WorkoutSessionLog session)
+    {
+        if (!session.IsLightDay)
+        {
+            return;
+        }
+
+        session.Modifiers = NormalizeWorkoutModifiers(
+            session.Modifiers | WorkoutModifiers.Light);
+        foreach (WorkoutModifierChangeLog change in session.ModifierChanges)
+        {
+            change.PreviousModifiers = NormalizeWorkoutModifiers(
+                change.PreviousModifiers | WorkoutModifiers.Light);
+            change.NewModifiers = NormalizeWorkoutModifiers(
+                change.NewModifiers | WorkoutModifiers.Light);
+        }
     }
 
     private void NormalizeSavedLineups(WorkoutState state)
@@ -5086,7 +5192,8 @@ public sealed class ExerciseSessionService
                         continue;
                     }
 
-                    if (state.ActiveWorkoutIsLightDay &&
+                    if (state.ActiveWorkoutModifiers.HasFlag(
+                            WorkoutModifiers.Light) &&
                         removedPlacements.Any(placement =>
                             IsDemandZeroSequence(placement.Root)) &&
                         !IsDemandZeroSequence(candidate))
