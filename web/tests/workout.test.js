@@ -7,6 +7,7 @@ import test from "node:test";
 import {
   ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES,
   APPROVED_EXERCISE_CORRECTIONS,
+  BROAD_COVERAGE_RESOLUTION_MINUTES,
   CURRENT_WORKOUT_STATE_VERSION,
   CURRENT_CATALOG_REVISION,
   EXERCISE_HARD_FLOOR_COMPATIBILITY,
@@ -24,7 +25,8 @@ import {
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
-  MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
@@ -76,6 +78,7 @@ import {
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
   getMuscularDemandSchedulePriority,
+  getMinimumExercisesPerModifierPairStatePerGroup,
   getSelectionKey,
   getSequenceMuscularDemand,
   getSessionMovementId,
@@ -2435,7 +2438,7 @@ test("a keep and downvote for one exercise remain independent across phases", ()
   );
 });
 
-test("reviewed production catalog keeps genuine modifier deficits explicit", () => {
+test("reviewed production catalog satisfies the enforceable coverage hierarchy", () => {
   assert.deepEqual(new Set(catalog.filter((exercise) =>
     exercise.upperBodyClothingRequirement ===
       EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.ClothingRequired)
@@ -2517,56 +2520,22 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
     [],
   );
   const pairwiseDeficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog);
-  assert.equal(pairwiseDeficiencies.length, 300);
-  assert.deepEqual(
-    Object.fromEntries([...new Set(pairwiseDeficiencies.map((item) => item.minutes))]
-      .sort((left, right) => left - right)
-      .map((minutes) => [
-        minutes,
-        pairwiseDeficiencies.filter((item) => item.minutes === minutes).length,
-      ])),
-    { 3: 6, 5: 23, 7: 14, 10: 44, 15: 42, 20: 53, 30: 118 },
+  assert.deepEqual(pairwiseDeficiencies, []);
+  assert.equal(
+    getMinimumExercisesPerModifierPairStatePerGroup(3),
+    MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
   );
-  assert.equal(new Set(pairwiseDeficiencies.map((item) => item.groupId)).size, 38);
+  assert.equal(
+    getMinimumExercisesPerModifierPairStatePerGroup(30),
+    MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
+  );
 
   const hardFloorDeficiencies = findHardFloorCategoryCoverageDeficiencies(catalog);
-  assert.equal(hardFloorDeficiencies.length, 68);
-  assert.deepEqual(
-    Object.fromEntries([...new Set(hardFloorDeficiencies.map((item) => item.minutes))]
-      .sort((left, right) => left - right)
-      .map((minutes) => [
-        minutes,
-        hardFloorDeficiencies.filter((item) => item.minutes === minutes).length,
-      ])),
-    { 3: 1, 5: 7, 7: 6, 10: 12, 15: 6, 20: 12, 30: 24 },
-  );
-  assert.equal(new Set(hardFloorDeficiencies.map((item) => item.groupId)).size, 21);
+  assert.deepEqual(hardFloorDeficiencies, []);
 
   const muscularDemandDeficiencies =
     findMuscularDemandCoverageDeficiencies(catalog);
-  assert.equal(muscularDemandDeficiencies.length, 681);
-  assert.deepEqual(
-    Object.fromEntries([MINIMUM_MUSCULAR_DEMAND, MAXIMUM_MUSCULAR_DEMAND]
-      .map((muscularDemand) => [
-        muscularDemand,
-        muscularDemandDeficiencies.filter((item) =>
-          item.muscularDemand === muscularDemand).length,
-      ])),
-    { 0: 207, 2: 474 },
-  );
-  assert.deepEqual(
-    Object.fromEntries(SUPPORTED_MINUTES.slice(0, 7).map((minutes) => [
-      minutes,
-      muscularDemandDeficiencies.filter((item) => item.minutes === minutes).length,
-    ])),
-    { 3: 33, 5: 56, 7: 58, 10: 71, 15: 66, 20: 108, 30: 289 },
-  );
-  assert.equal(new Set(muscularDemandDeficiencies
-    .filter((item) => item.muscularDemand === MINIMUM_MUSCULAR_DEMAND)
-    .map((item) => item.groupId)).size, 42);
-  assert.equal(new Set(muscularDemandDeficiencies
-    .filter((item) => item.muscularDemand === MAXIMUM_MUSCULAR_DEMAND)
-    .map((item) => item.groupId)).size, 47);
+  assert.deepEqual(muscularDemandDeficiencies, []);
 
   assert.deepEqual(findWorkoutModifierMaterialityDeficiencies(catalog), []);
   assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
@@ -2589,55 +2558,56 @@ test("reviewed production catalog keeps genuine modifier deficits explicit", () 
   }
 });
 
-test("pairwise floor counts the four relaxed UI toggle states", () => {
-  const groups = RESOLUTIONS.get(30).groups;
-  const targetGroup = groups[0];
+test("pairwise floor keeps five choices in broad body regions", () => {
+  const groups = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups;
+  const targetGroup = groups[1];
+  const primary = targetGroup.canonicalGroups[0];
+  const secondary = targetGroup.canonicalGroups.slice(1, 3);
   const exercises = [
     ...Array.from({ length: 4 }, (_, index) => exercise(
       index + 1,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
     )),
-    exercise(5, targetGroup.canonicalGroups[0], [], 0,
+    exercise(5, primary, secondary, 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, false),
-    exercise(6, targetGroup.canonicalGroups[0], [], 0,
+    exercise(6, primary, secondary, 0,
       EXERCISE_INSECT_COMPATIBILITY.Incompatible, true),
-    exercise(7, targetGroup.canonicalGroups[0], [], 0,
+    exercise(7, primary, secondary, 0,
       EXERCISE_INSECT_COMPATIBILITY.Incompatible, false),
   ];
 
   const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
     .filter((result) =>
-      result.minutes === 30 &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
       result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Silence);
 
   assert.equal(deficiencies.length, 1);
-  assert.equal(deficiencies[0].firstModifier, WORKOUT_MODIFIERS.Insect);
   assert.equal(deficiencies[0].firstModifierEnabled, true);
-  assert.equal(deficiencies[0].secondModifier, WORKOUT_MODIFIERS.Silence);
   assert.equal(deficiencies[0].secondModifierEnabled, true);
   assert.equal(deficiencies[0].matchingExerciseCount, 4);
   assert.equal(
     deficiencies[0].requiredExerciseCount,
-    MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+    MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
   );
 
   exercises.push(exercise(
     8,
-    targetGroup.canonicalGroups[0],
-    [],
+    primary,
+    secondary,
     0,
     EXERCISE_INSECT_COMPATIBILITY.Compatible,
     true,
   ));
   assert.deepEqual(
     findWorkoutModifierPairCoverageDeficiencies(exercises).filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
+      result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Silence),
     [],
@@ -2645,12 +2615,14 @@ test("pairwise floor counts the four relaxed UI toggle states", () => {
 });
 
 test("hard-floor pairwise floor counts compatible and incompatible categories separately", () => {
-  const targetGroup = RESOLUTIONS.get(30).groups[0];
+  const targetGroup = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups[1];
+  const primary = targetGroup.canonicalGroups[0];
+  const secondary = targetGroup.canonicalGroups.slice(1, 3);
   const compatible = Array.from({ length: 5 }, (_, index) => ({
     ...exercise(
       index + 1,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
@@ -2661,8 +2633,8 @@ test("hard-floor pairwise floor counts compatible and incompatible categories se
   const incompatible = Array.from({ length: 4 }, (_, index) => ({
     ...exercise(
       index + 6,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
@@ -2675,7 +2647,8 @@ test("hard-floor pairwise floor counts compatible and incompatible categories se
     ...compatible,
     ...incompatible,
   ]).filter((result) =>
-    result.minutes === 30 && result.groupId === targetGroup.id);
+    result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
+    result.groupId === targetGroup.id);
 
   assert.equal(deficiencies.length, 5);
   assert.ok(deficiencies.every((deficiency) =>
@@ -2686,8 +2659,8 @@ test("hard-floor pairwise floor counts compatible and incompatible categories se
   incompatible.push({
     ...exercise(
       10,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
@@ -2700,29 +2673,32 @@ test("hard-floor pairwise floor counts compatible and incompatible categories se
       ...compatible,
       ...incompatible,
     ]).filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id),
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
+      result.groupId === targetGroup.id),
     [],
   );
 });
 
 test("demand coverage requires whole light sequences and slot-owned hard members", () => {
-  const [targetGroup, otherGroup] = RESOLUTIONS.get(30).groups;
-  const target = targetGroup.canonicalGroups[0];
+  const groups = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups;
+  const targetGroup = groups[1];
+  const otherGroup = groups[0];
+  const target = targetGroup.canonicalGroups;
   const other = otherGroup.canonicalGroups[0];
-  const pureLight = exercise(1, target, [], 0,
+  const pureLight = exercise(1, target[0], target.slice(1, 3), 0,
     EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0);
   const mixedRoot = {
-    ...exercise(2, target, [], 0,
+    ...exercise(2, target[0], target.slice(1, 3), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0),
     sequenceBlocks: [{ exerciseId: 2 }, { exerciseId: 3 }],
   };
   const mixedMember = {
-    ...exercise(3, target, [], 0,
+    ...exercise(3, target[0], [], 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 1),
     sequenceBlocks: [],
   };
   const hardElsewhereRoot = {
-    ...exercise(4, target, [], 0,
+    ...exercise(4, target[0], target.slice(1, 3), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 0),
     sequenceBlocks: [{ exerciseId: 4 }, { exerciseId: 5 }],
   };
@@ -2732,18 +2708,18 @@ test("demand coverage requires whole light sequences and slot-owned hard members
     sequenceBlocks: [],
   };
   const hardForTargetRoot = {
-    ...exercise(6, other, [], 0,
+    ...exercise(6, other, target.slice(1, 3), 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 1),
     sequenceBlocks: [{ exerciseId: 6 }, { exerciseId: 7 }],
   };
   const hardForTargetMember = {
-    ...exercise(7, target, [], 0,
+    ...exercise(7, target[0], [], 0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
     sequenceBlocks: [],
   };
   const targetDeficiencies = (catalog) =>
     findMuscularDemandCoverageDeficiencies(catalog).filter((result) =>
-      result.minutes === 30 &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
       result.groupId === targetGroup.id &&
       result.profile === WORKOUT_MODIFIERS.None);
 
@@ -2753,7 +2729,7 @@ test("demand coverage requires whole light sequences and slot-owned hard members
     hardForTargetRoot,
     hardForTargetMember,
   ]), [{
-    minutes: 30,
+    minutes: BROAD_COVERAGE_RESOLUTION_MINUTES,
     groupId: targetGroup.id,
     groupName: targetGroup.displayName,
     muscularDemand: 0,
@@ -2767,7 +2743,7 @@ test("demand coverage requires whole light sequences and slot-owned hard members
     hardElsewhereRoot,
     hardElsewhereMember,
   ]), [{
-    minutes: 30,
+    minutes: BROAD_COVERAGE_RESOLUTION_MINUTES,
     groupId: targetGroup.id,
     groupName: targetGroup.displayName,
     muscularDemand: 2,
@@ -2784,13 +2760,13 @@ test("demand coverage requires whole light sequences and slot-owned hard members
 });
 
 test("demand coverage uses one genuine session movement per category", () => {
-  const targetGroup = RESOLUTIONS.get(30).groups[0];
-  const target = targetGroup.canonicalGroups[0];
+  const targetGroup = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups[1];
+  const target = targetGroup.canonicalGroups;
   const exercises = [
     exercise(
       1,
-      target,
-      [],
+      target[0],
+      target.slice(1, 3),
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
@@ -2798,8 +2774,8 @@ test("demand coverage uses one genuine session movement per category", () => {
     ),
     exercise(
       2,
-      target,
-      [],
+      target[0],
+      target.slice(1, 3),
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
@@ -2809,7 +2785,8 @@ test("demand coverage uses one genuine session movement per category", () => {
 
   assert.deepEqual(
     findMuscularDemandCoverageDeficiencies(exercises).filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id),
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
+      result.groupId === targetGroup.id),
     [],
   );
   assert.equal(
@@ -2818,24 +2795,67 @@ test("demand coverage uses one genuine session movement per category", () => {
   );
 });
 
-test("mirror-on pairwise floors require mirror-relevant relationships", () => {
+test("fine pairwise buckets measure availability without forcing mirror preference", () => {
   const targetGroup = RESOLUTIONS.get(30).groups[0];
-  const agnosticExercises = Array.from({ length: 5 }, (_, index) => ({
+  const agnosticExercise = {
     ...exercise(
-      index + 1,
+      1,
       targetGroup.canonicalGroups[0],
       [],
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
     ),
     mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
-  }));
+  };
 
-  const deficiencies = findWorkoutModifierPairCoverageDeficiencies(
-    agnosticExercises,
-  )
+  assert.deepEqual(
+    findWorkoutModifierPairCoverageDeficiencies([agnosticExercise])
+      .filter((result) =>
+        result.minutes === 30 &&
+        result.groupId === targetGroup.id &&
+        result.firstModifier === WORKOUT_MODIFIERS.Insect &&
+        result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
+        result.secondModifierEnabled),
+    [],
+  );
+  assert.equal(
+    getMinimumExercisesPerModifierPairStatePerGroup(30),
+    MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
+  );
+});
+
+test("broad pairwise buckets require mirror-relevant movements", () => {
+  const targetGroup = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups[0];
+  const groups = targetGroup.canonicalGroups;
+  const catalog = [];
+  for (let index = 0; index < 5; index += 1) {
+    const rootId = index * 2 + 1;
+    const memberId = rootId + 1;
+    catalog.push({
+      ...exercise(
+        rootId,
+        groups[0],
+        groups.slice(1, 3),
+        0,
+        EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      ),
+      sequenceBlocks: [{ exerciseId: rootId }, { exerciseId: memberId }],
+    });
+    catalog.push({
+      ...exercise(
+        memberId,
+        groups[3],
+        groups.slice(4, 6),
+        0,
+        EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      ),
+      sequenceBlocks: [],
+    });
+  }
+
+  const deficiencies = findWorkoutModifierPairCoverageDeficiencies(catalog)
     .filter((result) =>
-      result.minutes === 30 &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
       result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
@@ -2844,34 +2864,18 @@ test("mirror-on pairwise floors require mirror-relevant relationships", () => {
   assert.equal(deficiencies.length, 4);
   assert.ok(deficiencies.every((result) => result.matchingExerciseCount === 0));
 
+  const mirrorRelevantCatalog = catalog.map((candidate) =>
+    candidate.sequenceBlocks.length === 0
+      ? candidate
+      : {
+          ...candidate,
+          mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
+          minimumMirrorCoverage: EXERCISE_MIRROR_COVERAGE.UpperBody,
+        });
   assert.deepEqual(
-    findWorkoutModifierPairCoverageDeficiencies(agnosticExercises)
+    findWorkoutModifierPairCoverageDeficiencies(mirrorRelevantCatalog)
       .filter((result) =>
-        result.minutes === 30 &&
-        result.groupId === targetGroup.id &&
-        result.firstModifier === WORKOUT_MODIFIERS.Insect &&
-        result.secondModifier === WORKOUT_MODIFIERS.Mirror &&
-        !result.secondModifierEnabled),
-    [],
-  );
-
-  const greatlyBenefitedExercises = Array.from({ length: 5 }, (_, index) => ({
-    ...exercise(
-      6 + index,
-      targetGroup.canonicalGroups[0],
-      [],
-      0,
-      EXERCISE_INSECT_COMPATIBILITY.Compatible,
-    ),
-    mirrorRelationship: EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
-    minimumMirrorCoverage: EXERCISE_MIRROR_COVERAGE.UpperBody,
-  }));
-  assert.deepEqual(
-    findWorkoutModifierPairCoverageDeficiencies([
-      ...agnosticExercises,
-      ...greatlyBenefitedExercises,
-    ]).filter((result) =>
-      result.minutes === 30 &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
       result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Mirror),
@@ -2880,20 +2884,22 @@ test("mirror-on pairwise floors require mirror-relevant relationships", () => {
 });
 
 test("pairwise floor never counts unreviewed modifier metadata", () => {
-  const targetGroup = RESOLUTIONS.get(30).groups[0];
+  const targetGroup = RESOLUTIONS.get(BROAD_COVERAGE_RESOLUTION_MINUTES).groups[1];
+  const primary = targetGroup.canonicalGroups[0];
+  const secondary = targetGroup.canonicalGroups.slice(1, 3);
   const exercises = [
     ...Array.from({ length: 4 }, (_, index) => exercise(
       index + 1,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Compatible,
       true,
     )),
     exercise(
       5,
-      targetGroup.canonicalGroups[0],
-      [],
+      primary,
+      secondary,
       0,
       EXERCISE_INSECT_COMPATIBILITY.Unreviewed,
       true,
@@ -2902,7 +2908,8 @@ test("pairwise floor never counts unreviewed modifier metadata", () => {
 
   const deficiencies = findWorkoutModifierPairCoverageDeficiencies(exercises)
     .filter((result) =>
-      result.minutes === 30 && result.groupId === targetGroup.id &&
+      result.minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
+      result.groupId === targetGroup.id &&
       result.firstModifier === WORKOUT_MODIFIERS.Insect &&
       result.secondModifier === WORKOUT_MODIFIERS.Silence);
 
@@ -7296,7 +7303,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 61);
+  assert.equal(CURRENT_CATALOG_REVISION, 62);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -7670,6 +7677,46 @@ test("demand coverage expansion resets reused exercise identities", () => {
   assert.equal(restored.state.scores["15"], -2);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["302"], undefined);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("coverage hierarchy revision rebuilds changed placements without resetting feedback", () => {
+  const changedIds = [248, 281, 286, 367, 393, 529, 537, 545];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(62)],
+    changedIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(62), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 61;
+  state.activeWorkoutMinutes = 30;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("PosteriorThighAndKneeFlexors"));
+  const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
+  state.selectedExerciseIds[changedGroup.id] = 367;
+  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.outcomes[changedGroup.id] = "x";
+  state.outcomes[retainedGroup.id] = "tick";
+  state.scores["367"] = -4;
+  state.scores["15"] = -2;
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 367: -4, 15: -2 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.scores["367"], -4);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["367"], -4);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);

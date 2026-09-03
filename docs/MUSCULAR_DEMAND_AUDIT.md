@@ -38,24 +38,23 @@ fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
 Catalog availability now has a separate one-per-category floor for demand 0
-and demand 2. At every workout resolution and each of the 21 deduplicated
-single/pair modifier profiles, every muscle bucket must have one genuine
-qualifying session movement. An all-light sequence counts only when every
-distinct member is demand 0. A hard sequence counts for a bucket only when one
-of its demand-2 members has its primary canonical muscle in that bucket. The
-audit deduplicates `SessionMovementId`; sides, directions, blocks, repeated
-sets, aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota,
-and Light itself is not added as a modifier dimension.
+and demand 2 across each of the 21 deduplicated single/pair modifier profiles.
+The audit uses the three broad 3-minute body regions; applying demand quotas to
+every fine anatomical leaf would require artificial variations rather than
+protect useful light and hard choices. An all-light sequence counts only when
+every distinct member is demand 0 and one member's primary canonical muscle
+belongs to the region. A hard sequence counts only when one of its demand-2
+members owns the region through its primary canonical muscle. The audit
+deduplicates `SessionMovementId`; sides, directions, blocks, repeated sets,
+aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota, and
+Light itself is not added as a modifier dimension.
 
-The former five-per-category audit exposed 978 demand-0 deficiencies across 88
-workout-group IDs and 1,320 demand-2 deficiencies across 81. The one-per-category
-audit exposes 207 demand-0 deficiencies across 42 workout-group IDs and 474
-demand-2 deficiencies across 47. The reduced floor preserves genuine coverage
-without demanding artificial variations for every fine-grained bucket.
-Remaining gaps stay explicit catalog debt until real, worthwhile, exactly
-demonstrated movements close them. The
-floor never justifies inventing an exercise, altering truthful anatomy, or
-changing a truthful demand rating.
+The former all-resolution one-per-category rule exposed 207 demand-0 and 474
+demand-2 deficiencies despite a usable catalog, because it treated every fine
+leaf as a separate intensity inventory. Under the broad-region contract, the
+current catalog has zero demand-category deficits. Android tests and the web
+production build fail on any regression. The floor never justifies inventing
+an exercise, altering truthful anatomy, or changing a truthful demand rating.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
 `score`; it never creates hardness points or rewrites votes. Completing a

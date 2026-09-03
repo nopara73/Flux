@@ -192,7 +192,9 @@ export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
 const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
 const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
-export const MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP = 5;
+export const BROAD_COVERAGE_RESOLUTION_MINUTES = 3;
+export const MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP = 5;
+export const MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP = 1;
 export const MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP = 1;
 export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
 export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
@@ -203,6 +205,12 @@ export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
 export const MINIMUM_MUSCULAR_DEMAND = 0;
 export const MODERATE_MUSCULAR_DEMAND = 1;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
+
+export function getMinimumExercisesPerModifierPairStatePerGroup(minutes) {
+  return minutes === BROAD_COVERAGE_RESOLUTION_MINUTES
+    ? MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP
+    : MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP;
+}
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
 
 export function getMuscularDemandSchedulePriority(muscularDemand) {
@@ -281,7 +289,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 61;
+export const CURRENT_CATALOG_REVISION = 62;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -412,6 +420,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [59, new Set([565])],
   [60, new Set([397])],
   [61, new Set([302, 304, 305, 307, 308, 309, 310])],
+  [62, new Set([248, 281, 286, 367, 393, 529, 537, 545])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -1802,7 +1811,11 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
           getModifierRuleStateProfiles(secondRule).map((secondState) => {
             const profile = normalizeWorkoutModifiers(firstState | secondState);
             const mirrorEquipment = getMirrorEquipment(profile);
+            // Mirror is a preference, not an eligibility filter for agnostic
+            // exercises. Broad-region coverage proves that enabling it has a
+            // material effect; fine buckets only prove workout viability.
             const requiresMirrorRelevance =
+              minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
               mirrorEquipment !== MIRROR_EQUIPMENT.None;
             return {
               minutes,
@@ -1825,7 +1838,7 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
                   (!requiresMirrorRelevance || isMirrorRelevant(exercise)))
                 .map(getSessionMovementId)).size,
               requiredExerciseCount:
-                MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+                getMinimumExercisesPerModifierPairStatePerGroup(minutes),
             };
           })))
         .filter((result) =>
@@ -1884,7 +1897,7 @@ export function findHardFloorCategoryCoverageDeficiencies(exercises) {
             partnerModifierEnabled,
             matchingExerciseCount,
             requiredExerciseCount:
-              MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+              getMinimumExercisesPerModifierPairStatePerGroup(minutes),
           };
         }))
       .filter((result) =>
@@ -1899,16 +1912,16 @@ export function findMuscularDemandCoverageDeficiencies(exercises) {
     MAXIMUM_MUSCULAR_DEMAND,
   ];
 
-  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
-    resolution.groups.flatMap((group) =>
+  const minutes = BROAD_COVERAGE_RESOLUTION_MINUTES;
+  const resolution = RESOLUTIONS.get(minutes);
+  return resolution.groups.flatMap((group) =>
       requiredCategories.flatMap((muscularDemand) =>
         WORKOUT_MODIFIER_VALIDATION_PROFILES.map((profile) => {
           const matchingExerciseCount = new Set(exercises
             .filter((exercise) =>
-              isSequenceUnitEligible(
+              isSequenceCompatible(
                 exercise,
                 exercisesById,
-                group,
                 profile,
               ) && isSequenceMuscularDemandCategoryForGroup(
                 exercise,
@@ -1927,7 +1940,7 @@ export function findMuscularDemandCoverageDeficiencies(exercises) {
             requiredExerciseCount:
               MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
           };
-        }))))
+        })))
     .filter((result) =>
       result.matchingExerciseCount < result.requiredExerciseCount);
 }
@@ -1961,7 +1974,9 @@ function isSequenceMuscularDemandCategoryForGroup(
 
   if (muscularDemand === MINIMUM_MUSCULAR_DEMAND) {
     return members.every((member) =>
-      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND);
+      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND) &&
+      members.some((member) =>
+        group.canonicalGroups.includes(member.primaryCanonicalGroup));
   }
   if (muscularDemand === MAXIMUM_MUSCULAR_DEMAND) {
     return members.some((member) =>

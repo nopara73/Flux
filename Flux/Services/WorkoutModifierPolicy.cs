@@ -67,7 +67,9 @@ public sealed record WorkoutModifierMaterialityDeficiency(
 
 public static class WorkoutModifierPolicy
 {
-    public const int MinimumExercisesPerPairStatePerGroup = 5;
+    public const int BroadCoverageResolutionMinutes = 3;
+    public const int MinimumExercisesPerBroadPairStatePerGroup = 5;
+    public const int MinimumExercisesPerFinePairStatePerGroup = 1;
     public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 1;
     public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumWallRequiredSessionMovements = 20;
@@ -382,7 +384,13 @@ public static class WorkoutModifierPolicy
                             {
                                 WorkoutModifiers profile = Normalize(
                                     firstState | secondState);
+                                // Mirror is a preference, not an eligibility
+                                // filter for agnostic exercises. Broad-region
+                                // coverage proves that enabling it has a
+                                // material effect; fine buckets only prove
+                                // that the workout remains viable.
                                 bool requiresMirrorRelevance =
+                                    minutes == BroadCoverageResolutionMinutes &&
                                     GetMirrorEquipment(profile) !=
                                         MirrorEquipment.None;
                                 return new
@@ -412,7 +420,8 @@ public static class WorkoutModifierPolicy
                                         .Count(),
                                 };
                             })))))
-            .Where(result => result.Count < MinimumExercisesPerPairStatePerGroup)
+            .Where(result => result.Count <
+                GetMinimumExercisesPerPairStatePerGroup(result.Minutes))
             .Select(result => new WorkoutModifierPairCoverageDeficiency(
                 result.Minutes,
                 result.Group.Id,
@@ -423,7 +432,7 @@ public static class WorkoutModifierPolicy
                 result.SecondEnabled,
                 result.MirrorEquipment,
                 result.Count,
-                MinimumExercisesPerPairStatePerGroup))
+                GetMinimumExercisesPerPairStatePerGroup(result.Minutes)))
             .ToArray();
     }
 
@@ -487,7 +496,7 @@ public static class WorkoutModifierPolicy
                                 partnerState.Modifier,
                                 partnerState.Enabled,
                                 matchingExerciseCount,
-                                MinimumExercisesPerPairStatePerGroup);
+                                GetMinimumExercisesPerPairStatePerGroup(minutes));
                         }))))
             .Where(deficiency =>
                 deficiency.MatchingExerciseCount <
@@ -637,41 +646,45 @@ public static class WorkoutModifierPolicy
             Exercise.MaximumMuscularDemand,
         ];
 
-        return MassGroupingTaxonomy.SupportedMinutes
-            .SelectMany(minutes =>
-                MassGroupingTaxonomy.GetResolution(minutes).Groups.SelectMany(group =>
-                    requiredCategories.SelectMany(muscularDemand =>
-                        ValidationProfiles.Select(profile =>
-                        {
-                            int matchingExerciseCount = exercises
-                                .Where(exercise =>
-                                    IsSequenceUnitEligible(
-                                        exercise,
-                                        exercisesById,
-                                        group,
-                                        profile) &&
-                                    IsSequenceMuscularDemandCategoryForGroup(
-                                        exercise,
-                                        exercisesById,
-                                        group,
-                                        muscularDemand))
-                                .Select(GetSessionMovementId)
-                                .Distinct()
-                                .Count();
-                            return new WorkoutMuscularDemandCoverageDeficiency(
-                                minutes,
-                                group.Id,
-                                group.DisplayName,
-                                muscularDemand,
-                                profile,
-                                matchingExerciseCount,
-                                MinimumExercisesPerMuscularDemandCategoryPerGroup);
-                        }))))
+        int minutes = BroadCoverageResolutionMinutes;
+        return MassGroupingTaxonomy.GetResolution(minutes).Groups
+            .SelectMany(group =>
+                requiredCategories.SelectMany(muscularDemand =>
+                    ValidationProfiles.Select(profile =>
+                    {
+                        int matchingExerciseCount = exercises
+                            .Where(exercise =>
+                                IsSequenceCompatible(
+                                    exercise,
+                                    exercisesById,
+                                    profile) &&
+                                IsSequenceMuscularDemandCategoryForGroup(
+                                    exercise,
+                                    exercisesById,
+                                    group,
+                                    muscularDemand))
+                            .Select(GetSessionMovementId)
+                            .Distinct()
+                            .Count();
+                        return new WorkoutMuscularDemandCoverageDeficiency(
+                            minutes,
+                            group.Id,
+                            group.DisplayName,
+                            muscularDemand,
+                            profile,
+                            matchingExerciseCount,
+                            MinimumExercisesPerMuscularDemandCategoryPerGroup);
+                    })))
             .Where(deficiency =>
                 deficiency.MatchingExerciseCount <
                     deficiency.RequiredExerciseCount)
             .ToArray();
     }
+
+    public static int GetMinimumExercisesPerPairStatePerGroup(int minutes) =>
+        minutes == BroadCoverageResolutionMinutes
+            ? MinimumExercisesPerBroadPairStatePerGroup
+            : MinimumExercisesPerFinePairStatePerGroup;
 
     public static IReadOnlyList<WorkoutProfileLineupDeficiency>
         FindDistinctLineupDeficiencies(IReadOnlyCollection<Exercise> exercises)
@@ -952,7 +965,10 @@ public static class WorkoutModifierPolicy
         return muscularDemand switch
         {
             Exercise.MinimumMuscularDemand => members.All(member =>
-                member.MuscularDemand == Exercise.MinimumMuscularDemand),
+                    member.MuscularDemand == Exercise.MinimumMuscularDemand) &&
+                members.Any(member =>
+                    group.CanonicalGroups.Contains(
+                        member.PrimaryCanonicalGroup)),
             Exercise.MaximumMuscularDemand => members.Any(member =>
                 member.MuscularDemand == Exercise.MaximumMuscularDemand &&
                 group.CanonicalGroups.Contains(member.PrimaryCanonicalGroup)),

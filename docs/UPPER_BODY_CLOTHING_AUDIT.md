@@ -67,11 +67,12 @@ Android catalog tests and the web parity contract pin the same IDs and counts.
 ## Coverage and persistence
 
 Upper-body clothing participates in the existing quadratic pairwise catalog
-audit at every workout resolution and muscle bucket. Wall remains outside that
-pairwise system under its separate singleton rules. Clothing is not included
-in the restrictive-modifier materiality calculation because neither state is a
-simple relaxation of the other; the pairwise audit still exposes every genuine
-availability deficit.
+audit. Each state must retain five session movements in every broad 3-minute
+body region and at least one in every finer 5- through 30-minute muscle bucket.
+Wall remains outside that pairwise system under its separate singleton rules.
+Clothing is not included in the restrictive-modifier materiality calculation
+because neither state is a simple relaxation of the other; the pairwise audit
+still exposes every genuine availability deficit.
 
 Stored modifier-specific lineups are copied to the new default-ON profile
 during migration, so existing keeps and phase-specific rejection history remain

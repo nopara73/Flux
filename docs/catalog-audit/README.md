@@ -47,17 +47,28 @@ frame, and equipment review dimensions.
 is the frozen output of the unchanged pairwise modifier validators at that
 audit baseline. Wall is not a pairwise quota dimension, so the totals remained
 directly comparable after the 24-record extension. The later combined
-hard-and-slippery floor contract changes candidate membership, so current
-deficit counts are pinned by the Android and web contract tests instead of
-rewriting this dated artifact. The ledger deliberately preserves real catalog
-debt rather than making the checks green through filler or false associations.
+hard-and-slippery floor contract changes candidate membership, so this dated
+artifact is not rewritten. The live hierarchical contract requires five
+movements in broad regions and one in fine buckets, with broad-only demand
+coverage; Android and web CI require every live deficit array to be empty.
 [`modifier_coverage_deficits_current.json`](modifier_coverage_deficits_current.json)
-is regenerated with `npm run refresh:catalog-deficit-ledger` from `web/` and is
-the ledger enforced by the production build. It also contains the later
-one-per-bucket demand-0 and demand-2 audit over the existing modifier profiles;
-the frozen 2026-08-29 artifact predates that validator and remains unchanged.
+is regenerated with `npm run refresh:catalog-deficit-ledger` from `web/`. It is
+a reproducible diagnostic snapshot, not a waiver: the production build fails
+when pairwise, hard-floor-category, or muscular-demand deficits are nonzero,
+even if the snapshot is refreshed. The frozen 2026-08-29 artifact predates the
+hierarchical validator and remains unchanged.
 The methodology, summary, evidence, migrations, and correction classes are in
 [`../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](../CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
+
+Catalog revision 62 closes the live hierarchical gaps without adding an
+exercise, changing a demand rating, or promoting a mirror/floor relationship.
+It corrects under-recorded secondary anatomy already required by the packaged
+demonstrations: scapular/rotator-cuff control in side-tap palm pushes, overhead
+punches, and outside blocks (IDs 248, 281, 286, and 545); abdominal bracing in
+single-leg deadlifts (367 and 529); and calf/deep-hip stabilization in
+deadlift-to-runner-march variants (393 and 537). Cached placements for those
+IDs are rebuilt while all scores, Keeps, phase feedback, history, and recovery
+state remain intact.
 
 ## Historical usability audit
 

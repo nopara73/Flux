@@ -6,6 +6,7 @@ import test from "node:test";
 
 import {
   APPROVED_EXERCISE_CORRECTIONS,
+  BROAD_COVERAGE_RESOLUTION_MINUTES,
   CURRENT_CATALOG_REVISION,
   CURRENT_WORKOUT_STATE_VERSION,
   DEFAULT_WORKOUT_MODIFIERS,
@@ -24,7 +25,8 @@ import {
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
   MODERATE_RECOVERY_WINDOW_MS,
-  MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
@@ -511,7 +513,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
-    /MinimumExercisesPerPairStatePerGroup\s*=\s*5[\s\S]*FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies/,
+    /BroadCoverageResolutionMinutes\s*=\s*3[\s\S]*MinimumExercisesPerBroadPairStatePerGroup\s*=\s*5[\s\S]*MinimumExercisesPerFinePairStatePerGroup\s*=\s*1[\s\S]*FindPairwiseCoverageDeficiencies[\s\S]*FindMaterialityDeficiencies/,
   );
   assert.match(
     modifierPolicy,
@@ -526,8 +528,16 @@ test("web and mobile persist one combined duration and modifier selection contex
     /GetRuleStateProfiles[\s\S]*WorkoutModifiers\.Mirror \| WorkoutModifiers\.TallMirror/,
   );
   assert.equal(
-    MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP,
-    integerConstant(modifierPolicy, "MinimumExercisesPerPairStatePerGroup"),
+    BROAD_COVERAGE_RESOLUTION_MINUTES,
+    integerConstant(modifierPolicy, "BroadCoverageResolutionMinutes"),
+  );
+  assert.equal(
+    MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
+    integerConstant(modifierPolicy, "MinimumExercisesPerBroadPairStatePerGroup"),
+  );
+  assert.equal(
+    MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
+    integerConstant(modifierPolicy, "MinimumExercisesPerFinePairStatePerGroup"),
   );
   assert.equal(
     MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
@@ -589,7 +599,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     workoutModule,
-    /MODIFIER_RULES[\s\S]*MINIMUM_EXERCISES_PER_MODIFIER_PAIR_STATE_PER_GROUP\s*=\s*5[\s\S]*findWorkoutModifierPairCoverageDeficiencies[\s\S]*findWorkoutModifierMaterialityDeficiencies/,
+    /MODIFIER_RULES[\s\S]*BROAD_COVERAGE_RESOLUTION_MINUTES\s*=\s*3[\s\S]*MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP\s*=\s*5[\s\S]*MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP\s*=\s*1[\s\S]*findWorkoutModifierPairCoverageDeficiencies[\s\S]*findWorkoutModifierMaterialityDeficiencies/,
   );
   assert.match(
     workoutModule,
@@ -619,6 +629,18 @@ test("web and mobile persist one combined duration and modifier selection contex
     assert.doesNotMatch(webApp, new RegExp(heavyCatalogInvariant));
   }
   assert.match(webBuild, /failedCatalogInvariants[\s\S]*Catalog failed build-time invariants/);
+  assert.match(
+    webBuild,
+    /hierarchical modifier-pair coverage"\s*,\s*pairwiseDeficiencies\.length === 0/,
+  );
+  assert.match(
+    webBuild,
+    /hierarchical hard-floor category coverage"\s*,[\s\S]*hardFloorCategoryDeficiencies\.length === 0/,
+  );
+  assert.match(
+    webBuild,
+    /broad muscular-demand coverage"\s*,\s*muscularDemandDeficiencies\.length === 0/,
+  );
   assert.match(webApp, /findMirrorCategoryDeficiencies/);
   assert.match(webApp, /findWallRequiredCatalogDeficiencies/);
   assert.match(webApp, /isModifierMetadataComplete/);
@@ -632,6 +654,10 @@ test("web and mobile persist one combined duration and modifier selection contex
     assert.match(catalogInvariantTests, new RegExp(heavyCatalogInvariant));
     assert.doesNotMatch(exerciseDatabase, new RegExp(heavyCatalogInvariant));
   }
+  assert.match(
+    catalogInvariantTests,
+    /Assert\.Empty\(pairwiseDeficiencies\)[\s\S]*Assert\.Empty\(hardFloorCategoryDeficiencies\)[\s\S]*Assert\.Empty\(muscularDemandDeficiencies\)/,
+  );
   assert.match(exerciseDatabase, /FindMirrorCategoryDeficiencies/);
   assert.match(exerciseDatabase, /FindWallRequiredCatalogDeficiencies/);
   assert.match(
@@ -954,7 +980,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*82/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*83/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,

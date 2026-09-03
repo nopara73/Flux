@@ -4,7 +4,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  BROAD_COVERAGE_RESOLUTION_MINUTES,
   CURRENT_CATALOG_REVISION,
+  MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
+  MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   findHardFloorCategoryCoverageDeficiencies,
   findMirrorCategoryDeficiencies,
@@ -47,7 +50,12 @@ const report = {
     .update(catalogSource.replaceAll("\r\n", "\n"))
     .digest("hex"),
   policy: {
-    treatment: "Detected deficits are preserved explicitly; no anatomical association, modifier relationship, or muscular-demand rating is inflated to satisfy coverage.",
+    treatment: "Every enforceable coverage category must have zero deficits; the ledger is diagnostic and cannot authorize catalog debt.",
+    broadCoverageResolutionMinutes: BROAD_COVERAGE_RESOLUTION_MINUTES,
+    broadModifierPairMinimumPerStatePerGroup:
+      MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
+    fineModifierPairMinimumPerStatePerGroup:
+      MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
     muscularDemandMinimumPerCategoryPerGroup:
       MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   },

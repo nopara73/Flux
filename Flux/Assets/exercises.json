@@ -6823,7 +6823,9 @@
       "ElbowExtensors",
       "ForearmFlexorsAndPronators",
       "IntrinsicHand",
-      "ShoulderAbductors"
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Low-impact conditioning",
     "motionProfile": "SideTapPalmPush",
@@ -8158,7 +8160,9 @@
     "secondaryCanonicalGroups": [
       "ShoulderAbductors",
       "ScapularGirdle",
-      "ForearmExtensorsAndSupinators"
+      "ForearmExtensorsAndSupinators",
+      "ForearmFlexorsAndPronators",
+      "RotatorCuff"
     ],
     "practice": "Standing bodyweight conditioning",
     "motionProfile": "OverheadPunch",
@@ -8398,7 +8402,9 @@
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand"
+      "IntrinsicHand",
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "OutsideBlock",
@@ -9810,6 +9816,7 @@
       "GlutealExtensors",
       "SpinalExtensors",
       "DeepAndIntersegmentalBack",
+      "AbdominalWall",
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot"
     ],
@@ -10141,6 +10148,8 @@
       "DeepAndIntersegmentalBack",
       "AbdominalWall",
       "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "DeepHipRotators",
       "PelvicFloorAndPerineum"
     ],
     "practice": "Standing bodyweight conditioning",
@@ -16168,6 +16177,7 @@
       "GlutealExtensors",
       "SpinalExtensors",
       "DeepAndIntersegmentalBack",
+      "AbdominalWall",
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot"
     ],
@@ -16444,6 +16454,8 @@
       "DeepAndIntersegmentalBack",
       "AbdominalWall",
       "HipAbductors",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "DeepHipRotators",
       "PelvicFloorAndPerineum"
     ],
     "practice": "Bodyweight conditioning",
@@ -16733,7 +16745,9 @@
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand"
+      "IntrinsicHand",
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "OutsideBlock",

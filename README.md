@@ -273,12 +273,16 @@ five distinct sole-contact wall movements. Sides, directions, sequence blocks,
 repeated sets, aliases, and names cannot multiply either count. The current
 audited inventory contains 25 base-wall movements and five sole-wall movements.
 
-For every existing non-Wall modifier pair, duration, and workout group, the catalog must provide
-at least five exercises under every real state. Two binary modifiers have four
-states; a pair involving Mirror has six because Mirror has off, compact, and
-tall states. In a mirror-equipped state, only `MirrorOnly` and
-`BenefitsGreatly` count toward that five-exercise relevance floor, after actual
-equipment compatibility is applied. Separately, each of the five global mirror
+For every existing non-Wall modifier pair and real UI state, the catalog uses a
+hierarchical availability contract. Each of the three broad 3-minute body
+regions must retain at least five selectable session movements. Finer 5- through
+30-minute anatomical buckets must retain at least one. Two binary modifiers
+have four states; a pair involving Mirror has six because Mirror has off,
+compact, and tall states. In a mirror-equipped broad state, only `MirrorOnly`
+and `BenefitsGreatly` count toward the five-movement relevance floor, after
+actual equipment compatibility is applied. Fine buckets measure real
+availability, so selectable `Agnostic` movements count there. Separately, each
+of the five global mirror
 classification cells—`MirrorOnly` upper/full body, `BenefitsGreatly`
 upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
 Relationship labels are never promoted to hide a genuine gap. Every supported
@@ -286,21 +290,22 @@ duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
 
 Muscular-demand coverage is a fixed two-category audit over those same 21
-deduplicated single/pair profiles; demand is not another modifier axis. Every
-workout group at every 3-, 5-, 7-, 10-, 15-, 20-, and 30-minute resolution must
-have at least one genuine demand-0 and one genuine demand-2 session movement. Demand 0 counts
-only when every distinct sequence member is demand 0. Demand 2 counts for a
-group only when a demand-2 member's primary canonical muscle belongs to that
-group. `SessionMovementId` deduplicates aliases, and sides, directions, blocks,
-sets, and names never multiply either floor. Demand 1 has no catalog quota.
+deduplicated single/pair profiles; demand is not another modifier axis. Each of
+the three broad 3-minute body regions must have at least one genuine demand-0
+and one genuine demand-2 session movement. Demand 0 counts only when every
+distinct sequence member is demand 0 and a member's primary canonical muscle
+belongs to that region. Demand 2 uses the same primary ownership rule for its
+hard member. `SessionMovementId` deduplicates aliases, and sides, directions,
+blocks, sets, and names never multiply either floor. Demand 1 has no catalog
+quota.
 
-Hard Floor also has an explicit category-preservation check. For every workout
-group, at least five combined hard-and-slippery-compatible and five incompatible
-sequences must remain available with Insect off/on, Silence off/on, and Mirror
-off. This prevents the relaxed soft-floor state from passing merely because it
-contains five exercises in total while one floor category is effectively
-absent. The check uses the same pairwise state model; it does not enumerate
-three- or four-modifier combinations.
+Hard Floor also has an explicit category-preservation check. With Insect
+off/on, Silence off/on, and Mirror off, each broad region must retain at least
+five combined hard-and-slippery-compatible and five incompatible session
+movements; each finer bucket must retain at least one of each. This prevents the
+relaxed soft-floor state from passing merely because one floor category is
+effectively absent. The check uses the same hierarchical pairwise state model;
+it does not enumerate three- or four-modifier combinations.
 
 A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
 and Silence must remove at least five exercises or 5% of the previous candidate
@@ -325,21 +330,20 @@ inventory are recorded in
 The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
 anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
 deficiencies, and one Silence materiality deficiency. That frozen baseline and
-every exact deficit are retained in
+its exact historical deficits are retained in
 [`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
-no relationship or muscle assignment is inflated to hide them. After Hard
-Floor was defined as both rigid and slippery, the current validators expose
-300 pairwise deficiencies across 38 group IDs and 68 floor-category
-deficiencies across 21 group IDs. The reduced demand audit exposes 207 demand-0
-deficiencies across 42 group IDs and 474 demand-2 deficiencies across 47 group
-IDs. These are explicit catalog debt, not permission to invent
-movements or falsify demand. The stricter floor filter also resolves the former
-Silence materiality deficiency. The reproducible current ledger is
+no relationship or muscle assignment may be inflated to hide a gap. The
+hierarchical policy makes the live contract both meaningful and achievable:
+broad regions protect real variety, fine buckets protect reachability, and
+demand checks protect broad light/hard availability. The current catalog has
+zero pairwise, floor-category, demand-category, materiality, mirror-category,
+or distinct-lineup deficits. The reproducible current ledger is
 [`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
-All supported profiles still admit a distinct atomic lineup.
+Production builds and Android tests fail on any nonzero live deficit; updating
+the ledger cannot bless a regression.
 
 The pairwise guarantees grow quadratically with the number of quota-bearing
-modifiers. The two demand categories multiply that existing profile audit by a
+modifiers. The two demand categories multiply the broad profile audit by a
 fixed factor of two; they do not create new modifier combinations. Wall's two
 direct floors remain constant-size and do not create new pairwise edges or
 arbitrary all-modifier intersections.

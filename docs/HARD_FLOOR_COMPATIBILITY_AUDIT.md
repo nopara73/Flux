@@ -73,15 +73,16 @@ alter floor-coverage accounting. The validation remains quadratic in the number 
 quota-bearing modifiers; it does not require every state in the full modifier
 power set.
 
-In addition to ordinary pairwise viability, every workout group must retain at
-least five exercises from each exact floor category—`Compatible` and
-`Incompatible`—with Insect off/on, Silence off/on, and Mirror off. Turning Hard
-Floor off still admits both categories at runtime; the category-specific audit
-exists so the larger combined pool cannot conceal a missing soft-floor-only or
-hard-floor-suitable side of a pair. The current validators expose **68**
-genuine category deficiencies across **21** group IDs. They remain pinned in
-the Android and web contract tests and in the
+In addition to ordinary pairwise viability, the three broad 3-minute regions
+must retain at least five session movements from each exact floor
+category—`Compatible` and `Incompatible`—with Insect off/on, Silence off/on,
+and Mirror off. Every finer 5- through 30-minute bucket must retain at least one
+from each category. Turning Hard Floor off still admits both categories at
+runtime; the category-specific audit exists so the larger combined pool cannot
+conceal a missing soft-floor-only or hard-floor-suitable side of a pair. The
+current Android and web validators report zero deficits and fail CI on any
+regression. The diagnostic
 [`current deficit ledger`](catalog-audit/modifier_coverage_deficits_current.json)
-rather than being hidden with false floor or muscle classifications. The
+cannot authorize a nonzero result. The
 [`2026-08-29 deficit report`](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
 is intentionally retained as the pre-slipperiness baseline.

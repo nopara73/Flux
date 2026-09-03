@@ -600,21 +600,69 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void MirrorOnPairwiseFloorRequiresMirrorRelevantRelationships()
+    public void FinePairwiseBucketsMeasureAvailabilityWithoutForcingMirrorPreference()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
         CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
-        Exercise[] agnosticExercises = Enumerable.Range(1, 5)
-            .Select(id => Exercise(
-                id,
-                primary,
-                mirrorRelationship: ExerciseMirrorRelationship.Agnostic))
-            .ToArray();
+        Exercise agnosticExercise = Exercise(
+            1,
+            primary,
+            mirrorRelationship: ExerciseMirrorRelationship.Agnostic);
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
+                [agnosticExercise]),
+            result => result.Minutes == 30 &&
+                result.GroupId == group.Id &&
+                result.FirstModifier == WorkoutModifiers.Insect &&
+                result.SecondModifier == WorkoutModifiers.Mirror &&
+                result.SecondModifierEnabled);
+        Assert.Equal(
+            1,
+            WorkoutModifierPolicy.GetMinimumExercisesPerPairStatePerGroup(30));
+    }
+
+    [Fact]
+    public void BroadPairwiseBucketsRequireMirrorRelevantMovements()
+    {
+        WorkoutGroup group = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[0];
+        CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
+        var catalog = new List<Exercise>();
+        for (int index = 0; index < 5; index++)
+        {
+            int rootId = index * 2 + 1;
+            int memberId = rootId + 1;
+            catalog.Add(Exercise(
+                rootId,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
+                sequenceBlocks:
+                [
+                    new ExerciseSequenceBlock
+                    {
+                        ExerciseId = rootId,
+                        MirrorMedia = false,
+                    },
+                    new ExerciseSequenceBlock
+                    {
+                        ExerciseId = memberId,
+                        MirrorMedia = false,
+                    },
+                ]));
+            catalog.Add(Exercise(
+                memberId,
+                canonicalGroups[3],
+                canonicalGroups[4],
+                canonicalGroups[5],
+                sequenceBlocks: []));
+        }
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
-            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                    agnosticExercises)
-                .Where(result => result.Minutes == 30 &&
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(catalog)
+                .Where(result => result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                     result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
                     result.SecondModifier == WorkoutModifiers.Mirror &&
@@ -625,27 +673,44 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(deficiencies, deficiency =>
             Assert.Equal(0, deficiency.MatchingExerciseCount));
 
-        Assert.DoesNotContain(
-            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                agnosticExercises),
-            result => result.Minutes == 30 &&
-                result.GroupId == group.Id &&
-                result.FirstModifier == WorkoutModifiers.Insect &&
-                result.SecondModifier == WorkoutModifiers.Mirror &&
-                !result.SecondModifierEnabled);
-
-        Exercise[] greatlyBenefitedExercises = Enumerable.Range(6, 5)
-            .Select(id => Exercise(
-                id,
-                primary,
+        var mirrorRelevantCatalog = new List<Exercise>();
+        for (int index = 0; index < 5; index++)
+        {
+            int rootId = index * 2 + 11;
+            int memberId = rootId + 1;
+            mirrorRelevantCatalog.Add(Exercise(
+                rootId,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 mirrorRelationship:
                     ExerciseMirrorRelationship.BenefitsGreatly,
-                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody))
-            .ToArray();
+                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
+                sequenceBlocks:
+                [
+                    new ExerciseSequenceBlock
+                    {
+                        ExerciseId = rootId,
+                        MirrorMedia = false,
+                    },
+                    new ExerciseSequenceBlock
+                    {
+                        ExerciseId = memberId,
+                        MirrorMedia = false,
+                    },
+                ]));
+            mirrorRelevantCatalog.Add(Exercise(
+                memberId,
+                canonicalGroups[3],
+                canonicalGroups[4],
+                canonicalGroups[5],
+                sequenceBlocks: []));
+        }
         Assert.DoesNotContain(
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                agnosticExercises.Concat(greatlyBenefitedExercises).ToArray()),
-            result => result.Minutes == 30 &&
+                mirrorRelevantCatalog),
+            result => result.Minutes ==
+                    WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                 result.GroupId == group.Id &&
                 result.FirstModifier == WorkoutModifiers.Insect &&
                 result.SecondModifier == WorkoutModifiers.Mirror);
@@ -732,12 +797,16 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void PairwiseAvailabilityTreatsDisabledModifiersAsRelaxed()
     {
-        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        WorkoutGroup group = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
         Exercise[] exercises = Enumerable.Range(1, 5)
             .Select(id => Exercise(
                 id,
-                primary,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Compatible,
                 silent: true))
             .ToArray();
@@ -745,7 +814,9 @@ public sealed class WorkoutModifierPolicyTests
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
                 .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id &&
+                    result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
+                    result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
                     result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
@@ -756,7 +827,9 @@ public sealed class WorkoutModifierPolicyTests
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
                     exercises.Take(4).ToArray())
                 .Where(result =>
-                    result.Minutes == 30 && result.GroupId == group.Id &&
+                    result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
+                    result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
                     result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
@@ -777,19 +850,25 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void HardFloorCategoryCoverageDoesNotLetCompatibleExercisesHideTheReleasedSet()
     {
-        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        WorkoutGroup group = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
         Exercise[] compatible = Enumerable.Range(1, 5)
             .Select(id => Exercise(
                 id,
-                primary,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 hardFloorCompatibility:
                     ExerciseHardFloorCompatibility.Compatible))
             .ToArray();
         Exercise[] incompatible = Enumerable.Range(6, 4)
             .Select(id => Exercise(
                 id,
-                primary,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 hardFloorCompatibility:
                     ExerciseHardFloorCompatibility.Incompatible))
             .ToArray();
@@ -797,7 +876,8 @@ public sealed class WorkoutModifierPolicyTests
         WorkoutHardFloorCategoryCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
                     compatible.Concat(incompatible).ToArray())
-                .Where(result => result.Minutes == 30 &&
+                .Where(result => result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                     result.GroupId == group.Id)
                 .ToArray();
 
@@ -812,26 +892,41 @@ public sealed class WorkoutModifierPolicyTests
 
         Exercise fifthIncompatible = Exercise(
             10,
-            primary,
+            canonicalGroups[0],
+            canonicalGroups[1],
+            canonicalGroups[2],
             hardFloorCompatibility:
                 ExerciseHardFloorCompatibility.Incompatible);
         Assert.DoesNotContain(
             WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
                 [.. compatible, .. incompatible, fifthIncompatible]),
-            result => result.Minutes == 30 && result.GroupId == group.Id);
+            result => result.Minutes ==
+                    WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
+                result.GroupId == group.Id);
     }
 
     [Fact]
     public void DemandCoverageRequiresWholeLightSequencesAndSlotOwnedHardMembers()
     {
-        WorkoutGroup targetGroup = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        WorkoutGroup otherGroup = MassGroupingTaxonomy.GetResolution(30).Groups[1];
-        CanonicalMuscleGroup target = targetGroup.CanonicalGroups.Single();
-        CanonicalMuscleGroup other = otherGroup.CanonicalGroups.Single();
-        Exercise pureLight = Exercise(1, target, muscularDemand: 0);
+        WorkoutGroup targetGroup = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        WorkoutGroup otherGroup = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[0];
+        CanonicalMuscleGroup[] target = targetGroup.CanonicalGroups.ToArray();
+        CanonicalMuscleGroup other = otherGroup.CanonicalGroups.First();
+        Exercise pureLight = Exercise(
+            1,
+            target[0],
+            target[1],
+            target[2],
+            muscularDemand: 0);
         Exercise mixedRoot = Exercise(
             2,
-            target,
+            target[0],
+            target[1],
+            target[2],
             sequenceBlocks:
             [
                 new ExerciseSequenceBlock { ExerciseId = 2, MirrorMedia = false },
@@ -840,12 +935,14 @@ public sealed class WorkoutModifierPolicyTests
             muscularDemand: 0);
         Exercise mixedMember = Exercise(
             3,
-            target,
+            target[0],
             sequenceBlocks: [],
             muscularDemand: 1);
         Exercise hardElsewhereRoot = Exercise(
             4,
-            target,
+            target[0],
+            target[1],
+            target[2],
             sequenceBlocks:
             [
                 new ExerciseSequenceBlock { ExerciseId = 4, MirrorMedia = false },
@@ -860,6 +957,8 @@ public sealed class WorkoutModifierPolicyTests
         Exercise hardForTargetRoot = Exercise(
             6,
             other,
+            target[1],
+            target[2],
             sequenceBlocks:
             [
                 new ExerciseSequenceBlock { ExerciseId = 6, MirrorMedia = false },
@@ -868,14 +967,15 @@ public sealed class WorkoutModifierPolicyTests
             muscularDemand: 1);
         Exercise hardForTargetMember = Exercise(
             7,
-            target,
+            target[0],
             sequenceBlocks: [],
             muscularDemand: 2);
         WorkoutMuscularDemandCoverageDeficiency[] TargetDeficiencies(
             params Exercise[] catalog) =>
             WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(catalog)
                 .Where(result =>
-                    result.Minutes == 30 &&
+                    result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                     result.GroupId == targetGroup.Id &&
                     result.Profile == WorkoutModifiers.None)
                 .ToArray();
@@ -908,17 +1008,21 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void DemandCoverageUsesOneGenuineSessionMovementPerCategory()
     {
-        WorkoutGroup targetGroup = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        CanonicalMuscleGroup target = targetGroup.CanonicalGroups.Single();
+        WorkoutGroup targetGroup = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        CanonicalMuscleGroup[] target = targetGroup.CanonicalGroups.ToArray();
         Exercise[] exercises =
         [
-            Exercise(1, target, muscularDemand: 0),
-            Exercise(2, target, muscularDemand: 2),
+            Exercise(1, target[0], target[1], target[2], muscularDemand: 0),
+            Exercise(2, target[0], target[1], target[2], muscularDemand: 2),
         ];
 
         Assert.DoesNotContain(
             WorkoutModifierPolicy.FindMuscularDemandCoverageDeficiencies(exercises),
-            result => result.Minutes == 30 && result.GroupId == targetGroup.Id);
+            result => result.Minutes ==
+                    WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
+                result.GroupId == targetGroup.Id);
         Assert.Equal(
             1,
             WorkoutModifierPolicy
@@ -928,27 +1032,30 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void PairwiseAvailabilityCountsTheActualNestedCandidateSets()
     {
-        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        WorkoutGroup group = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
         Exercise[] exercises =
         [
-            Exercise(1, primary,
+            Exercise(1, canonicalGroups[0], canonicalGroups[1], canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Incompatible,
                 silent: false),
-            Exercise(2, primary,
+            Exercise(2, canonicalGroups[0], canonicalGroups[1], canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Incompatible,
                 silent: true),
-            Exercise(3, primary,
+            Exercise(3, canonicalGroups[0], canonicalGroups[1], canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Compatible,
                 silent: false),
-            Exercise(4, primary,
+            Exercise(4, canonicalGroups[0], canonicalGroups[1], canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Compatible,
                 silent: true),
         ];
 
         Dictionary<(bool Insect, bool Silence), int> counts =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
-                .Where(result => result.Minutes == 30 &&
+                .Where(result => result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                     result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
                     result.SecondModifier == WorkoutModifiers.Silence)
@@ -967,22 +1074,29 @@ public sealed class WorkoutModifierPolicyTests
     [Fact]
     public void PairwiseAvailabilityNeverCountsUnreviewedMetadata()
     {
-        WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];
-        CanonicalMuscleGroup primary = group.CanonicalGroups.Single();
+        WorkoutGroup group = MassGroupingTaxonomy
+            .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
+            .Groups[1];
+        CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
         Exercise[] exercises = Enumerable.Range(1, 4)
             .Select(id => Exercise(
                 id,
-                primary,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Compatible))
             .Append(Exercise(
                 5,
-                primary,
+                canonicalGroups[0],
+                canonicalGroups[1],
+                canonicalGroups[2],
                 insectCompatibility: ExerciseInsectCompatibility.Unreviewed))
             .ToArray();
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
-                .Where(result => result.Minutes == 30 &&
+                .Where(result => result.Minutes ==
+                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
                     result.GroupId == group.Id &&
                     result.FirstModifier == WorkoutModifiers.Insect &&
                     result.SecondModifier == WorkoutModifiers.Silence)
