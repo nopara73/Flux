@@ -2025,33 +2025,13 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
-    [Theory]
-    [InlineData(
-        439,
-        "Pogo Bounces with Fixed-Gaze Head Turns",
-        "Feet-Together Fixed-Gaze Head Turns",
-        "Bidirectional Triangle-Path Saccades")]
-    [InlineData(
-        442,
-        "Pogo Bounces with Fixed-Gaze Head Nods",
-        "Feet-Together Fixed-Gaze Head Nods",
-        "Near-Point Convergence")]
-    [InlineData(
-        444,
-        "Pogo Bounces with Fixed-Gaze Head Tilts",
-        "Feet-Together Fixed-Gaze Head Tilts",
-        "Vertical Gaze Stabilization")]
-    [InlineData(
-        478,
-        "Eye-Tracking Rotational Jumps",
-        "Step-Out Pivot with Thumb Tracking",
-        "Dance Head Accent Front")]
-    public void HardFloorCoverageAcceptsPublishedVersion68IdentityAndResetsIt(
-        int exerciseId,
-        string version68Name,
-        string currentName,
-        string baselineRetiredName)
+    [Fact]
+    public void HardFloorCoverageAcceptsPublishedVersion68IdentityAndResetsIt()
     {
+        const int exerciseId = 478;
+        const string version68Name = "Eye-Tracking Rotational Jumps";
+        const string currentName = "Step-Out Pivot with Thumb Tracking";
+        const string baselineRetiredName = "Dance Head Accent Front";
         string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
@@ -2071,6 +2051,51 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(-7, stored[exerciseId].Score);
 
         stored[exerciseId] = new(version68Name, "wrong.mp4", -7);
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored));
+    }
+
+    [Theory]
+    [InlineData(
+        439,
+        "Feet-Together Fixed-Gaze Head Turns",
+        "Pogo Bounces with Fixed-Gaze Head Turns",
+        "Bidirectional Triangle-Path Saccades")]
+    [InlineData(
+        442,
+        "Feet-Together Fixed-Gaze Head Nods",
+        "Pogo Bounces with Fixed-Gaze Head Nods",
+        "Near-Point Convergence")]
+    [InlineData(
+        444,
+        "Feet-Together Fixed-Gaze Head Tilts",
+        "Pogo Bounces with Fixed-Gaze Head Tilts",
+        "Vertical Gaze Stabilization")]
+    public void PogoIdentityCorrectionPreservesFeedbackForTheUnchangedDemonstration(
+        int exerciseId,
+        string previousName,
+        string currentName,
+        string baselineRetiredName)
+    {
+        string video = $"exercise_videos/exercise_{exerciseId:D4}.mp4";
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(previousName, video, -7),
+        };
+        Exercise replacement = Exercise(
+            exerciseId,
+            currentName,
+            video,
+            retiredName: baselineRetiredName);
+
+        IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
+            [replacement],
+            stored);
+
+        Assert.Contains(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+
+        stored[exerciseId] = new(previousName, "wrong.mp4", -7);
         Assert.Throws<InvalidOperationException>(() =>
             CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored));
     }
@@ -2244,7 +2269,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(62, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2285,6 +2310,61 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(0, state.PendingScoreValue);
         Assert.Contains(563, state.LastKeptExerciseIds);
         Assert.Contains(15, state.LastKeptExerciseIds);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void PogoIdentityCorrectionRebuildsPlacementsWithoutResettingFeedback()
+    {
+        HashSet<int> changedIds = [439, 442, 444];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[63]);
+        Assert.DoesNotContain(
+            CatalogMigrationRules.ScoreInvalidationsByRevision,
+            revision => revision.Key == 63);
+
+        const string changedGroup = "pogo-identity.changed";
+        const string retainedGroup = "pogo-identity.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 62,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 444,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+                [retainedGroup] = ExerciseOutcome.X,
+            },
+            PendingScoreExerciseId = 444,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [444] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(444, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.Equal(-4, phaseScores[444]);
+        Assert.Equal(-2, phaseScores[15]);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
@@ -2655,7 +2735,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(62, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -2714,7 +2794,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(62, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);

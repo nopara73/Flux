@@ -43,8 +43,8 @@ sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 309 exercises
-- `Incompatible`: 199 exercises
+- `Compatible`: 306 exercises
+- `Incompatible`: 202 exercises
 - `Unreviewed`: 0 exercises
 
 Catalog revision 53 rebuilds cached placements for the 97 reclassified
@@ -57,6 +57,20 @@ Catalog revision 59 additionally corrects exercise 565 from a supposed
 heel-down mini squat to the demonstrated mini-squat calf raises. Its cached
 placement is rebuilt while its user score remains intact; Android SQLite
 schema 80 refreshes the corrected identity, anatomy, demand, and floor verdict.
+
+Catalog revision 63 restores the truthful pogo-bounce identities of exercises
+439, 442, and 444. Their unchanged demonstrations combine continuous compact
+pogo bouncing with fixed-gaze head turns, nods, or tilts; they are therefore
+classified under `RepeatedJumpingOrLanding` and cannot run on the rigid,
+slippery Hard Floor profile. Their impact anatomy, moderate demand, and natural
+execution noise are restored at the same time. Cached placements are rebuilt,
+while scores, Keeps, phase feedback, history, and recovery remain intact.
+Android SQLite schema 84 refreshes the corrected metadata in place.
+
+The audit also rejects any honestly named or profiled jump, hop, pogo, bounce,
+jack, or bound if it is marked Hard Floor compatible. This guards the entire
+current airborne-impact catalog rather than relying only on the three corrected
+IDs.
 
 These counts are audit results, not quotas. Pairwise availability and
 materiality are validated separately against the real Hard Floor, Insect,

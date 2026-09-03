@@ -289,7 +289,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 62;
+export const CURRENT_CATALOG_REVISION = 63;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -421,6 +421,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [60, new Set([397])],
   [61, new Set([302, 304, 305, 307, 308, 309, 310])],
   [62, new Set([248, 281, 286, 367, 393, 529, 537, 545])],
+  [63, new Set([439, 442, 444])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -588,6 +589,9 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [528, ["Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Pose Hold"]],
   [193, ["Wide-Squat Floor-to-Overhead Reach", "Wide-Stance Floor-to-Overhead Reach"]],
   [417, ["Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach"]],
+  [439, ["Feet-Together Fixed-Gaze Head Turns", "Pogo Bounces with Fixed-Gaze Head Turns"]],
+  [442, ["Feet-Together Fixed-Gaze Head Nods", "Pogo Bounces with Fixed-Gaze Head Nods"]],
+  [444, ["Feet-Together Fixed-Gaze Head Tilts", "Pogo Bounces with Fixed-Gaze Head Tilts"]],
   [556, ["Tiptoe Raises with Fist Clenches", "Standing Fist Clench and Release"]],
   [561, ["Tiptoe Bourree Steps with Head Spot", "Tiptoe Running Steps with Head Spot"]],
   [562, ["Ballet Rises with Arm Movement", "Ballet Calf Raises with Arm Sweeps"]],

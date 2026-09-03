@@ -29,6 +29,9 @@ $actualDemonstrations = @{
     397 = 'Continuous alternating lateral side taps coordinated with a two-arm diagonal sweep across the body; no breathing cadence is established by the silent demonstration.'
     267 = 'A static standing T-arm/shoulder hold with both heels remaining down; no calf-raise hold is demonstrated.'
     417 = 'A narrow planted stance with repeated overhead-to-floor reaches and modest knee/hip flexion; no thumb target or explicit gaze tracking is shown.'
+    439 = 'Continuous compact pogo bounces while the gaze stays fixed and the head repeatedly turns left and right.'
+    442 = 'Continuous compact pogo bounces while the gaze stays fixed and the head repeatedly nods up and down.'
+    444 = 'Continuous compact pogo bounces while the gaze stays fixed and the head repeatedly tilts side to side.'
     553 = 'A T-raise performed while visibly holding dumbbells, so it is not a zero-equipment exercise.'
     556 = 'Alternating planted backfist strikes with visible elbow extension, forearm rotation, and trunk bracing.'
     558 = 'A one-leg circular arm-and-torso sweep performed while using a ballet barre for support.'
@@ -58,7 +61,7 @@ foreach ($id in @(410, 411, 412, 413, 478)) {
 $pelvicEvidenceIds = [Collections.Generic.HashSet[int]]::new()
 foreach ($id in @(
     32, 58, 92, 119, 167, 168, 169, 282, 295, 296, 390, 393,
-    413, 420, 428, 431, 432, 433, 434, 435, 440, 441, 443, 445,
+    413, 420, 428, 431, 432, 433, 434, 435, 439, 440, 441, 442, 443, 444, 445,
     448, 450, 452, 458, 462, 463, 464, 465, 469, 471, 472, 475,
     476, 488, 537, 548, 561, 575, 578, 583, 613)) {
     [void]$pelvicEvidenceIds.Add($id)
@@ -135,6 +138,9 @@ function Get-CorrectionReason {
         252 { return 'The retired false calf hold was removed from the mandatory calf-raise sequence.' }
         253 { return 'The obsolete session-movement link to the retired false calf hold was removed.' }
         417 { return 'The demonstration shows a reach with modest lower-body flexion, not thumb tracking or a hard squat; name, practice, motion, anatomy, and demand now match it.' }
+        439 { return 'The unchanged loop visibly includes continuous pogo bouncing; the name, practice, motion, demand, anatomy, sound, insect verdict, and soft-floor-only verdict now follow the complete demonstrated movement.' }
+        442 { return 'The unchanged loop visibly includes continuous pogo bouncing; the name, practice, motion, demand, anatomy, sound, insect verdict, and soft-floor-only verdict now follow the complete demonstrated movement.' }
+        444 { return 'The unchanged loop visibly includes continuous pogo bouncing; the name, practice, motion, demand, anatomy, sound, insect verdict, and soft-floor-only verdict now follow the complete demonstrated movement.' }
         556 { return 'The redundant fist-clench identity was retired; the exact alternating backfist demonstration now determines its name, demand, anatomy, and modifier metadata.' }
         561 { return 'The loop is rapid tiptoe running with spotting rather than a classical bourree; the name and anatomy were narrowed to actions actually shown.' }
         562 { return 'The generic label and inflated whole-body associations were replaced by the exact calf-raise and arm-sweep action.' }

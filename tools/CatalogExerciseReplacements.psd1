@@ -4257,17 +4257,17 @@
     }
     439 = @{
         RetiredName = 'Bidirectional Triangle-Path Saccades'
-        Name = 'Feet-Together Fixed-Gaze Head Turns'
-        Practice = 'Gaze stabilization and neck mobility'
-        MotionProfile = 'FixedGazeHeadTurn'
+        Name = 'Pogo Bounces with Fixed-Gaze Head Turns'
+        Practice = 'Vestibular and neck conditioning'
+        MotionProfile = 'PogoHeadTurn'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'feet-together-fixed-gaze-head-turns.mp4'
+            File = 'pogo-bounces-head-turns.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true
@@ -4335,17 +4335,17 @@
     }
     442 = @{
         RetiredName = 'Near-Point Convergence'
-        Name = 'Feet-Together Fixed-Gaze Head Nods'
-        Practice = 'Gaze stabilization and neck mobility'
-        MotionProfile = 'FixedGazeHeadNod'
+        Name = 'Pogo Bounces with Fixed-Gaze Head Nods'
+        Practice = 'Vestibular and neck conditioning'
+        MotionProfile = 'PogoHeadNod'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
-        Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles')
+        Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'feet-together-fixed-gaze-head-nods.mp4'
+            File = 'pogo-bounces-head-nods.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true
@@ -4387,17 +4387,17 @@
     }
     444 = @{
         RetiredName = 'Vertical Gaze Stabilization'
-        Name = 'Feet-Together Fixed-Gaze Head Tilts'
-        Practice = 'Gaze stabilization and neck mobility'
-        MotionProfile = 'FixedGazeHeadTilt'
+        Name = 'Pogo Bounces with Fixed-Gaze Head Tilts'
+        Practice = 'Vestibular and neck conditioning'
+        MotionProfile = 'PogoHeadTilt'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
-        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles')
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum')
         SideSequence = 'Continuous'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'feet-together-fixed-gaze-head-tilts.mp4'
+            File = 'pogo-bounces-head-tilts.mp4'
             Url = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             SourcePage = 'https://www.youtube.com/watch?v=HwwWY89VnYw'
             Human = $true

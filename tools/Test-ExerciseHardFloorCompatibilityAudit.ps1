@@ -82,6 +82,25 @@ foreach ($compatibilityReview in @(
     }
 }
 
+# Any truthful catalog identity or motion profile that explicitly describes
+# repeated airborne impact must remain soft-floor-only. This semantic guard
+# prevents a future compatibility regression for a pogo, jump, hop, bounce,
+# jack, or bound that remains honestly identified in the catalog.
+$airborneImpactNamePattern =
+    '(?i)\b(?:jump(?:ing|s)?|hop(?:ping|s)?|pogo|bounce(?:s)?|jack(?:s)?|bound(?:s|ing)?)\b'
+$airborneImpactProfilePattern = '(?:Jump|Hop|Pogo|Bounce|Jack|Bound)'
+$hardFloorAirborneImpactExercises = @(
+    $catalog | Where-Object {
+        ([string]$_.name -match $airborneImpactNamePattern -or
+            [string]$_.motionProfile -match $airborneImpactProfilePattern) -and
+        [string]$_.hardFloorCompatibility -ne 'Incompatible'
+    })
+if ($hardFloorAirborneImpactExercises.Count -gt 0) {
+    throw (
+        'Airborne-impact exercises cannot be Hard Floor compatible: {0}.' -f
+        (@($hardFloorAirborneImpactExercises.id) -join ', '))
+}
+
 $recordsById = @{}
 foreach ($exercise in $catalog) {
     $recordsById[[int]$exercise.id] = $exercise

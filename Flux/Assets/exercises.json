@@ -12215,16 +12215,21 @@
   },
   {
     "id": 439,
-    "name": "Feet-Together Fixed-Gaze Head Turns",
+    "name": "Pogo Bounces with Fixed-Gaze Head Turns",
     "retiredName": "Bidirectional Triangle-Path Saccades",
     "video": "exercise_videos/exercise_0439.mp4",
     "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
     "secondaryCanonicalGroups": [
       "PosteriorNeckAndSuboccipitalMuscles",
-      "CranialMuscles"
+      "CranialMuscles",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "BreathingMuscles",
+      "PelvicFloorAndPerineum"
     ],
-    "practice": "Gaze stabilization and neck mobility",
-    "motionProfile": "FixedGazeHeadTurn",
+    "practice": "Vestibular and neck conditioning",
+    "motionProfile": "PogoHeadTurn",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
@@ -12239,20 +12244,20 @@
         "mediaSegment": "Full"
       }
     ],
-    "insectCompatibility": "Incompatible",
-    "hardFloorCompatibility": "Compatible",
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
     "wallRequired": false,
     "soleWallContactRequired": false,
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
     "score": 0,
-    "muscularDemand": 0,
+    "muscularDemand": 1,
     "onlyFeetTouchGround": true,
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": false
   },
   {
     "id": 440,
@@ -12347,16 +12352,21 @@
   },
   {
     "id": 442,
-    "name": "Feet-Together Fixed-Gaze Head Nods",
+    "name": "Pogo Bounces with Fixed-Gaze Head Nods",
     "retiredName": "Near-Point Convergence",
     "video": "exercise_videos/exercise_0442.mp4",
     "primaryCanonicalGroup": "PosteriorNeckAndSuboccipitalMuscles",
     "secondaryCanonicalGroups": [
       "AnteriorLateralNeckAndHyoidMuscles",
-      "CranialMuscles"
+      "CranialMuscles",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "BreathingMuscles",
+      "PelvicFloorAndPerineum"
     ],
-    "practice": "Gaze stabilization and neck mobility",
-    "motionProfile": "FixedGazeHeadNod",
+    "practice": "Vestibular and neck conditioning",
+    "motionProfile": "PogoHeadNod",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
@@ -12371,20 +12381,20 @@
         "mediaSegment": "Full"
       }
     ],
-    "insectCompatibility": "Incompatible",
-    "hardFloorCompatibility": "Compatible",
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
     "wallRequired": false,
     "soleWallContactRequired": false,
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
     "score": 0,
-    "muscularDemand": 0,
+    "muscularDemand": 1,
     "onlyFeetTouchGround": true,
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": false
   },
   {
     "id": 443,
@@ -12435,16 +12445,21 @@
   },
   {
     "id": 444,
-    "name": "Feet-Together Fixed-Gaze Head Tilts",
+    "name": "Pogo Bounces with Fixed-Gaze Head Tilts",
     "retiredName": "Vertical Gaze Stabilization",
     "video": "exercise_videos/exercise_0444.mp4",
     "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
     "secondaryCanonicalGroups": [
       "PosteriorNeckAndSuboccipitalMuscles",
-      "CranialMuscles"
+      "CranialMuscles",
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "Soleus",
+      "AnteriorLateralLowerLegAndDorsalFoot",
+      "BreathingMuscles",
+      "PelvicFloorAndPerineum"
     ],
-    "practice": "Gaze stabilization and neck mobility",
-    "motionProfile": "FixedGazeHeadTilt",
+    "practice": "Vestibular and neck conditioning",
+    "motionProfile": "PogoHeadTilt",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
@@ -12459,20 +12474,20 @@
         "mediaSegment": "Full"
       }
     ],
-    "insectCompatibility": "Incompatible",
-    "hardFloorCompatibility": "Compatible",
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
     "wallRequired": false,
     "soleWallContactRequired": false,
     "mirrorRelationship": "Agnostic",
     "minimumMirrorCoverage": "None",
     "score": 0,
-    "muscularDemand": 0,
+    "muscularDemand": 1,
     "onlyFeetTouchGround": true,
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": false
   },
   {
     "id": 445,

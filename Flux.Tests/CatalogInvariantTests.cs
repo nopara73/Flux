@@ -55,8 +55,8 @@ public sealed class CatalogInvariantTests
                 soleWallContactRequired.GetBoolean() &&
                 !wallRequired.GetBoolean());
         });
-        Assert.Equal(122, exercises.Count(exercise => exercise.MuscularDemand == 0));
-        Assert.Equal(234, exercises.Count(exercise => exercise.MuscularDemand == 1));
+        Assert.Equal(119, exercises.Count(exercise => exercise.MuscularDemand == 0));
+        Assert.Equal(237, exercises.Count(exercise => exercise.MuscularDemand == 1));
         Assert.Equal(152, exercises.Count(exercise => exercise.MuscularDemand == 2));
         Dictionary<int, int[]> expectedSessionMovements = new()
         {
@@ -145,9 +145,9 @@ public sealed class CatalogInvariantTests
             exercise.InsectCompatibility == ExerciseInsectCompatibility.Unreviewed);
         Assert.DoesNotContain(exercises, exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Unreviewed);
-        Assert.Equal(309, exercises.Count(exercise =>
+        Assert.Equal(306, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Compatible));
-        Assert.Equal(199, exercises.Count(exercise =>
+        Assert.Equal(202, exercises.Count(exercise =>
             exercise.HardFloorCompatibility == ExerciseHardFloorCompatibility.Incompatible));
         Assert.All(
             new[] { 37, 610, 326 },
@@ -161,6 +161,42 @@ public sealed class CatalogInvariantTests
                 ExerciseHardFloorCompatibility.Compatible,
                 exercises.Single(exercise => exercise.Id == exerciseId)
                     .HardFloorCompatibility));
+        var pogoHeadMovements = new Dictionary<int, string>
+        {
+            [439] = "Pogo Bounces with Fixed-Gaze Head Turns",
+            [442] = "Pogo Bounces with Fixed-Gaze Head Nods",
+            [444] = "Pogo Bounces with Fixed-Gaze Head Tilts",
+        };
+        Assert.All(pogoHeadMovements, expected =>
+        {
+            Exercise exercise = exercises.Single(candidate =>
+                candidate.Id == expected.Key);
+            Assert.Equal(expected.Value, exercise.Name);
+            Assert.StartsWith("PogoHead", exercise.MotionProfile);
+            Assert.Equal(1, exercise.MuscularDemand);
+            Assert.False(exercise.Silent);
+            Assert.Equal(
+                ExerciseInsectCompatibility.Compatible,
+                exercise.InsectCompatibility);
+            Assert.Equal(
+                ExerciseHardFloorCompatibility.Incompatible,
+                exercise.HardFloorCompatibility);
+            Assert.Contains(
+                CanonicalMuscleGroup.CalfDeepPosteriorLegAndPlantarFoot,
+                exercise.SecondaryCanonicalGroups);
+        });
+        Exercise[] airborneImpactExercises = exercises.Where(exercise =>
+            System.Text.RegularExpressions.Regex.IsMatch(
+                exercise.Name,
+                @"(?i)\b(?:jump(?:ing|s)?|hop(?:ping|s)?|pogo|bounce(?:s)?|jack(?:s)?|bound(?:s|ing)?)\b") ||
+            System.Text.RegularExpressions.Regex.IsMatch(
+                exercise.MotionProfile,
+                @"(?:Jump|Hop|Pogo|Bounce|Jack|Bound)"))
+            .ToArray();
+        Assert.NotEmpty(airborneImpactExercises);
+        Assert.All(airborneImpactExercises, exercise => Assert.Equal(
+            ExerciseHardFloorCompatibility.Incompatible,
+            exercise.HardFloorCompatibility));
         Assert.DoesNotContain(exercises, exercise =>
             exercise.UpperBodyClothingRequirement ==
                 ExerciseUpperBodyClothingRequirement.Unreviewed);

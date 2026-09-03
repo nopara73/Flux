@@ -70,6 +70,16 @@ deadlift-to-runner-march variants (393 and 537). Cached placements for those
 IDs are rebuilt while all scores, Keeps, phase feedback, history, and recovery
 state remain intact.
 
+Catalog revision 63 corrects a later regression in IDs 439, 442, and 444. Their
+packaged loops never stopped demonstrating continuous pogo bounces with
+fixed-gaze head turns, nods, or tilts, but their catalog identities had been
+softened into stationary feet-together neck drills. The honest pogo names,
+moderate demand, impact anatomy, execution noise, insect compatibility, and
+soft-floor-only classification are restored without changing the media or
+discarding user feedback. Cached placements alone are rebuilt. A semantic
+hard-floor audit now rejects every honestly named or profiled jump, hop, pogo,
+bounce, jack, or bound marked compatible with the rigid slippery surface.
+
 ## Historical usability audit
 
 The earlier review started from 410 original entries: 130 were retained and

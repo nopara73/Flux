@@ -81,7 +81,6 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Breath-led mobility | 3 |
 | Calisthenics | 3 |
 | Coordination training | 3 |
-| Gaze stabilization and neck mobility | 3 |
 | Hand mobility | 3 |
 | Jaw mobility | 3 |
 | Running drills | 3 |
@@ -89,6 +88,7 @@ The frozen 236-record capacity audit remains the baseline. Every addition above 
 | Standing hand and wrist stretching | 3 |
 | Standing strength and balance | 3 |
 | Standing stretching | 3 |
+| Vestibular and neck conditioning | 3 |
 | Aerobics | 2 |
 | Balance and vestibular training | 2 |
 | Bodyweight cardio boxing | 2 |
