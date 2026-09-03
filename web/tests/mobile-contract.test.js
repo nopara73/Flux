@@ -111,6 +111,7 @@ const [
   atomicSequenceLineupSolver,
   workoutSequencePolicy,
   workoutSchedulePolicy,
+  lightWorkoutCountdownBadge,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -164,6 +165,7 @@ const [
   source("Flux", "Services", "AtomicSequenceLineupSolver.cs"),
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
   source("Flux", "Services", "WorkoutSchedulePolicy.cs"),
+  source("Flux", "Resources", "drawable", "light_workout_countdown_badge.xml"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -227,10 +229,13 @@ test("web and mobile persist the same complete workout audit trail", () => {
   assert.match(workoutModule, /inferLegacyCompletedTrainingDays/);
   assert.match(sessionService, /ActiveWorkoutIsLightDay/);
   assert.match(sessionService, /IsLightDayDue/);
+  assert.match(sessionService, /GetTrainingDaysUntilLightDay/);
   assert.match(sessionService, /GetDefaultWorkoutModifiers/);
   assert.match(sessionService, /GetPersistentSetupModifiers/);
   assert.match(workoutModule, /getDefaultWorkoutModifiers/);
+  assert.match(workoutModule, /getTrainingDaysUntilLightWorkout/);
   assert.match(workoutModule, /getPersistentSetupModifiers/);
+  assert.match(lightDayPolicy, /GetTrainingDaysUntilLightDay/);
   assert.match(sessionService, /lightDayOpportunityWeight/);
   assert.match(sessionService, /DominantLightModeStateVersion\s*=\s*29/);
   assert.match(workoutModule, /DOMINANT_LIGHT_MODE_STATE_VERSION\s*=\s*26/);
@@ -871,6 +876,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(webIndex, /id="hard-floor-modifier"/);
   assert.match(webIndex, /id="silence-modifier"/);
   assert.match(webIndex, /id="light-workout-modifier"/);
+  assert.match(webIndex, /id="light-workout-countdown"/);
   assert.match(webIndex, /id="wall-modifier"/);
   assert.match(webIndex, /id="mirror-modifier"/);
   assert.match(webIndex, /class="mirror-glyph mirror-glyph-compact"/);
@@ -946,7 +952,35 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     instantControls,
-    /readPersistedSetup[\s\S]*isLightWorkoutDue[\s\S]*consecutivePriorDays >= 3/,
+    /readPersistedSetup[\s\S]*getTrainingDaysUntilLightWorkout[\s\S]*return 3 - consecutivePriorDays % 4/,
+  );
+  assert.match(
+    lightDayPolicy,
+    /ConsecutivePriorDaysRequired[\s\S]*GetTrainingDaysUntilLightDay[\s\S]*consecutivePriorDays % TrainingDaysPerCycle/,
+  );
+  assert.match(
+    mainActivity,
+    /UpdateLightModifierPresentation[\s\S]*GetTrainingDaysUntilLightMode[\s\S]*ViewStates\.Gone[\s\S]*ViewStates\.Visible/,
+  );
+  assert.match(
+    durationLayout,
+    /light_workout_modifier_container[\s\S]*light_workout_modifier_button[\s\S]*light_workout_countdown_badge/,
+  );
+  assert.match(
+    lightWorkoutCountdownBadge,
+    /android:shape="oval"[\s\S]*brand_chartreuse[\s\S]*brand_graphite/,
+  );
+  assert.match(
+    webApp,
+    /renderLightModeCountdown[\s\S]*lightCountdown\.hidden = enabled/,
+  );
+  assert.match(
+    instantControls,
+    /lightDaysRemaining[\s\S]*lightCountdown\.hidden = enabled/,
+  );
+  assert.match(
+    webStyles,
+    /\.light-mode-countdown[\s\S]*position:\s*absolute[\s\S]*border-radius:\s*50%[\s\S]*\.light-mode-countdown\[hidden\]/,
   );
   assert.match(
     instantControls,

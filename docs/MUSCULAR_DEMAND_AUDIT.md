@@ -84,7 +84,10 @@ user scores remain persisted unchanged.
 Completed session history supplies the default cadence; interrupted sessions
 and duplicate completions on the same date do not advance it. Light itself is
 session-scoped and is not copied into the next session's remembered physical
-setup.
+setup. When Light is OFF, its tile reports the remaining consecutive training
+days in the current cadence (`3`, `2`, `1`, or `0`). The badge is hidden whenever
+Light is ON, including the automatic fourth day; switching that automatic Light
+day OFF reveals `0`.
 
 The separate within-session muscle rebalancer uses the same reviewed rating
 without changing it:

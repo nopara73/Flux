@@ -77,6 +77,7 @@ import {
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
+  getTrainingDaysUntilLightWorkout,
   getMuscularDemandSchedulePriority,
   getMinimumExercisesPerModifierPairStatePerGroup,
   getSelectionKey,
@@ -3461,6 +3462,61 @@ test("version 21 recovers a contiguous legacy day for tomorrow's light workout",
   assert.equal(session.state.activeWorkoutIsLightDay, true);
   assert.equal(session.state.activeWorkoutSession.isLightDay, true);
   assert.equal(session.state.workoutHistory.length, 2);
+});
+
+test("light countdown shows training days remaining throughout the repeating cadence", () => {
+  const dayOne = new Date(2026, 7, 26, 8).getTime();
+  const history = [];
+
+  assert.equal(getTrainingDaysUntilLightWorkout(history, dayOne), 3);
+  history.push(completedWorkoutSession(1, dayOne));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 27, 8).getTime(),
+  ), 2);
+  history.push(completedWorkoutSession(
+    2,
+    new Date(2026, 7, 27, 8).getTime(),
+  ));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 28, 8).getTime(),
+  ), 1);
+  history.push(completedWorkoutSession(
+    3,
+    new Date(2026, 7, 28, 8).getTime(),
+  ));
+  const dayFour = new Date(2026, 7, 29, 8).getTime();
+  assert.equal(getTrainingDaysUntilLightWorkout(history, dayFour), 0);
+  assert.equal(isLightWorkoutDayDue(history, dayFour), true);
+
+  history.push(completedWorkoutSession(4, dayFour));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 30, 8).getTime(),
+  ), 3);
+});
+
+test("manual light mode is never remembered as the next session default", () => {
+  const now = new Date(2026, 7, 26, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.map((group, index) => exercise(
+    index + 1,
+    group.canonicalGroups[0],
+    group.canonicalGroups.slice(1),
+  ));
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+
+  session.startWorkout(3, WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Light);
+
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.Silence);
+  assert.equal(session.getDefaultWorkoutModifiers(), WORKOUT_MODIFIERS.Silence);
 });
 
 test("recovery day defaults to light but explicit regular mode remains regular", () => {

@@ -3528,6 +3528,78 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void LightDayCountdownTracksTrainingDaysAcrossTheRepeatingCadence()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux countdown UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux countdown UTC+07",
+            "Flux countdown UTC+07");
+        DateTimeOffset dayOne = new(
+            2026,
+            8,
+            26,
+            8,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        var history = new List<WorkoutSessionLog>();
+
+        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.ToUnixTimeMilliseconds(),
+            timeZone));
+        history.Add(CompletedSession(1, dayOne));
+        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.AddDays(1).ToUnixTimeMilliseconds(),
+            timeZone));
+        history.Add(CompletedSession(2, dayOne.AddDays(1)));
+        Assert.Equal(1, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.AddDays(2).ToUnixTimeMilliseconds(),
+            timeZone));
+        history.Add(CompletedSession(3, dayOne.AddDays(2)));
+        Assert.Equal(0, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.AddDays(3).ToUnixTimeMilliseconds(),
+            timeZone));
+
+        history.Add(CompletedSession(4, dayOne.AddDays(3)));
+        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.AddDays(4).ToUnixTimeMilliseconds(),
+            timeZone));
+    }
+
+    [Fact]
+    public void ManualLightModeIsNotRememberedAsTheNextSessionDefault()
+    {
+        DateTimeOffset now = new(2026, 8, 26, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] exercises = groups
+            .Select((group, index) => QualifiedForGroup(index + 1, group))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            exercises,
+            new AlwaysZeroRandom(),
+            () => now,
+            TimeZoneInfo.Utc);
+        var state = new WorkoutState();
+
+        service.StartWorkout(
+            state,
+            3,
+            WorkoutModifiers.Silence | WorkoutModifiers.Light);
+
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
+        Assert.Equal(
+            WorkoutModifiers.Silence,
+            service.GetDefaultWorkoutModifiers(state));
+    }
+
+    [Fact]
     public void RecoveryDayDefaultsToLightButAnExplicitRegularWorkoutStaysRegular()
     {
         DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);

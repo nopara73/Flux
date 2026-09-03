@@ -108,6 +108,18 @@ public sealed class ExerciseSessionService
             state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
+    public int GetTrainingDaysUntilLightDay(
+        WorkoutState state,
+        long? nowUnixMilliseconds = null)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        return WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            state.WorkoutHistory,
+            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds(),
+            _localTimeZone,
+            state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
+
     public void Initialize(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);

@@ -32,6 +32,39 @@ public static class WorkoutLightDayPolicy
         TimeZoneInfo? localTimeZone = null,
         IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
     {
+        return GetTrainingDaysUntilLightDay(
+            workoutHistory,
+            nowUnixMilliseconds,
+            localTimeZone,
+            legacyCompletedTrainingDayUnixMilliseconds) == 0;
+    }
+
+    public static int GetTrainingDaysUntilLightDay(
+        IEnumerable<WorkoutSessionLog> workoutHistory,
+        long nowUnixMilliseconds,
+        TimeZoneInfo? localTimeZone = null,
+        IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
+    {
+        int consecutivePriorDays = GetConsecutivePriorTrainingDays(
+            workoutHistory,
+            nowUnixMilliseconds,
+            localTimeZone,
+            legacyCompletedTrainingDayUnixMilliseconds);
+
+        // A new or broken streak starts on cycle day one and therefore shows
+        // three training days remaining. Day four (and every fourth
+        // uninterrupted training day after it) shows zero when Light has been
+        // explicitly switched off.
+        return ConsecutivePriorDaysRequired -
+            consecutivePriorDays % TrainingDaysPerCycle;
+    }
+
+    private static int GetConsecutivePriorTrainingDays(
+        IEnumerable<WorkoutSessionLog> workoutHistory,
+        long nowUnixMilliseconds,
+        TimeZoneInfo? localTimeZone,
+        IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds)
+    {
         ArgumentNullException.ThrowIfNull(workoutHistory);
         if (nowUnixMilliseconds <= 0)
         {
@@ -66,12 +99,7 @@ public static class WorkoutLightDayPolicy
         {
             consecutivePriorDays++;
         }
-
-        // Day four of an uninterrupted daily streak is light, then the same
-        // four-day cadence repeats. Completing a light workout therefore does
-        // not make every later day in the streak light as well.
-        return consecutivePriorDays >= ConsecutivePriorDaysRequired &&
-            (consecutivePriorDays + 1) % TrainingDaysPerCycle == 0;
+        return consecutivePriorDays;
     }
 
     public static IReadOnlyList<long> InferLegacyCompletedTrainingDays(

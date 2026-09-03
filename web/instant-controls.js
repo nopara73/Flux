@@ -26,6 +26,7 @@
     insect: document.getElementById("insect-modifier"),
     silence: document.getElementById("silence-modifier"),
     light: document.getElementById("light-workout-modifier"),
+    lightCountdown: document.getElementById("light-workout-countdown"),
     wall: document.getElementById("wall-modifier"),
     mirror: document.getElementById("mirror-modifier"),
     feedback: document.getElementById("modifier-feedback"),
@@ -34,7 +35,8 @@
   if (!elements.dial || !elements.value || !elements.decrease ||
       !elements.increase || !elements.range || !elements.begin ||
       !elements.upperBodyClothing ||
-      !elements.insect || !elements.silence || !elements.light || !elements.wall ||
+      !elements.insect || !elements.silence || !elements.light ||
+      !elements.lightCountdown || !elements.wall ||
       !elements.mirror ||
       !elements.feedback) {
     return;
@@ -45,6 +47,7 @@
     (Number(elements.value.textContent) || 10);
   let selectedModifiers = persistedSetup?.selectedModifiers ??
     readInitialModifiers();
+  let lightDaysRemaining = persistedSetup?.lightDaysRemaining ?? 3;
   let selectionChanged = false;
   let startQueued = false;
   let handlers = null;
@@ -81,6 +84,9 @@
     get selectionChanged() {
       return selectionChanged;
     },
+    get lightDaysRemaining() {
+      return lightDaysRemaining;
+    },
     get startQueued() {
       return startQueued;
     },
@@ -100,6 +106,17 @@
       renderDuration();
       renderModifiers();
       notifySelection(false);
+    },
+    setLightDaysRemaining(daysRemaining) {
+      if (!Number.isInteger(daysRemaining) ||
+          daysRemaining < 0 || daysRemaining >= 4) {
+        return;
+      }
+      if (lightDaysRemaining === daysRemaining) {
+        return;
+      }
+      lightDaysRemaining = daysRemaining;
+      renderModifiers();
     },
     setActiveWorkoutSetup(enabled) {
       activeWorkoutSetup = enabled === true;
@@ -176,11 +193,13 @@
       const storedModifiers = Number.isInteger(raw.lastWorkoutModifiers)
         ? raw.lastWorkoutModifiers & ~modifierFlags.light
         : readInitialModifiers();
+      const lightDaysRemaining = getTrainingDaysUntilLightWorkout(raw);
       return {
         selectedMinutes,
         selectedModifiers: isLightWorkoutDue(raw)
           ? storedModifiers | modifierFlags.light
           : storedModifiers,
+        lightDaysRemaining,
       };
     } catch {
       return null;
@@ -188,6 +207,10 @@
   }
 
   function isLightWorkoutDue(state) {
+    return getTrainingDaysUntilLightWorkout(state) === 0;
+  }
+
+  function getTrainingDaysUntilLightWorkout(state) {
     const today = localCalendarDayNumber(Date.now());
     const completedDays = new Set((Array.isArray(state.workoutHistory)
       ? state.workoutHistory
@@ -211,8 +234,7 @@
     for (let day = today - 1; completedDays.has(day); day -= 1) {
       consecutivePriorDays += 1;
     }
-    return consecutivePriorDays >= 3 &&
-      (consecutivePriorDays + 1) % 4 === 0;
+    return 3 - consecutivePriorDays % 4;
   }
 
   function localCalendarDayNumber(timestamp) {
@@ -405,11 +427,18 @@
       );
     }
     if (name === "light") {
+      elements.lightCountdown.textContent = String(lightDaysRemaining);
+      elements.lightCountdown.hidden = enabled;
+      const scheduleDescription = lightDaysRemaining === 0
+        ? "Automatic light mode is due today."
+        : `${lightDaysRemaining} training day${lightDaysRemaining === 1
+          ? ""
+          : "s"} until automatic light mode.`;
       element.setAttribute(
         "aria-label",
         enabled
           ? "Workout intensity: light workout"
-          : "Workout intensity: regular workout",
+          : `Workout intensity: regular workout. ${scheduleDescription}`,
       );
     }
   }

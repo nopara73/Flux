@@ -80,7 +80,9 @@ public class MainActivity : Activity
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private FrameLayout _lightModifierContainer = null!;
     private CheckBox _lightModifierButton = null!;
+    private TextView _lightModifierCountdownBadge = null!;
     private CheckBox _wallModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
     private TextView _durationModifierFeedback = null!;
@@ -611,8 +613,12 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _lightModifierContainer = FindRequiredView<FrameLayout>(
+            Resource.Id.light_workout_modifier_container);
         _lightModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.light_workout_modifier_button);
+        _lightModifierCountdownBadge = FindRequiredView<TextView>(
+            Resource.Id.light_workout_countdown_badge);
         _wallModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.wall_modifier_button);
         _mirrorModifierButton = FindRequiredView<CheckBox>(
@@ -1673,7 +1679,6 @@ public class MainActivity : Activity
                      _hardFloorModifierButton,
                      _insectModifierButton,
                      _silenceModifierButton,
-                     _lightModifierButton,
                      _wallModifierButton,
                      _mirrorModifierButton,
                  })
@@ -1681,6 +1686,14 @@ public class MainActivity : Activity
             tile.LayoutParameters = CreateModifierTileLayout(size);
             tile.SetPadding(padding, padding, padding, padding);
         }
+        _lightModifierContainer.LayoutParameters =
+            CreateModifierTileLayout(size);
+        _lightModifierButton.LayoutParameters =
+            new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MatchParent,
+                ViewGroup.LayoutParams.MatchParent,
+                GravityFlags.Center);
+        _lightModifierButton.SetPadding(padding, padding, padding, padding);
 
         UpdateMirrorModifierPresentation(
             WorkoutModifierPolicy.GetMirrorEquipment(
@@ -2004,6 +2017,39 @@ public class MainActivity : Activity
                 _state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
+    private int GetTrainingDaysUntilLightMode()
+    {
+        long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        return _sessionService is not null
+            ? _sessionService.GetTrainingDaysUntilLightDay(
+                _state,
+                nowUnixMilliseconds)
+            : WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+                _state.WorkoutHistory,
+                nowUnixMilliseconds,
+                TimeZoneInfo.Local,
+                _state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
+
+    private void UpdateLightModifierPresentation(bool enabled)
+    {
+        int trainingDaysRemaining = GetTrainingDaysUntilLightMode();
+        _lightModifierCountdownBadge.Text = trainingDaysRemaining.ToString();
+        _lightModifierCountdownBadge.Visibility = enabled
+            ? ViewStates.Gone
+            : ViewStates.Visible;
+
+        string description = GetString(
+            Resource.String.light_workout_modifier_description);
+        _lightModifierButton.ContentDescription = enabled
+            ? $"{description}: light mode on"
+            : trainingDaysRemaining == 0
+                ? $"{description}: automatic light mode is due today"
+                : $"{description}: {trainingDaysRemaining} training " +
+                    $"day{(trainingDaysRemaining == 1 ? string.Empty : "s")} " +
+                    "until automatic light mode";
+    }
+
     private void ConfigureDurationScreenForActiveWorkout(bool editing)
     {
         _durationSeekBar.Enabled = !editing;
@@ -2103,6 +2149,10 @@ public class MainActivity : Activity
             UpdateHardFloorModifierPresentation(enabled);
         }
         button.ContentDescription = GetString(descriptionResourceId);
+        if (modifier == WorkoutModifiers.Light)
+        {
+            UpdateLightModifierPresentation(enabled);
+        }
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
             button.TooltipText = GetString(
@@ -2122,7 +2172,9 @@ public class MainActivity : Activity
 
         _durationSelectionChangedDuringStartup |=
             !_applicationStartupCompleted;
-        AnimateModifierTile(button);
+        AnimateModifierTile(modifier == WorkoutModifiers.Light
+            ? _lightModifierContainer
+            : button);
         QueueWorkoutPreparation();
     }
 
@@ -2230,7 +2282,7 @@ public class MainActivity : Activity
                 nameof(equipment), equipment, null),
         };
 
-    private static void AnimateModifierTile(CheckBox button)
+    private static void AnimateModifierTile(View button)
     {
         button.PerformHapticFeedback(FeedbackConstants.ClockTick);
         button.Animate()?.Cancel();

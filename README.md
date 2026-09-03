@@ -130,7 +130,11 @@ choice before the workout and in the same setup screen used to change
 conditions mid-workout. The automatic default can be turned off, and Light can
 also be turned on for any ordinary day. It is session-scoped: the last physical
 conditions and equipment remain remembered, while yesterday's manual Light
-choice does not silently make the next workout light.
+choice does not silently make the next workout light. While Light is OFF, the
+corner badge shows the number of additional consecutive training days until the
+next automatic Light workout (`3`, `2`, `1`, then `0`). Light hides the badge
+whenever it is ON; consequently, `0` appears only when an automatically enabled
+Light day has been explicitly switched back OFF.
 
 Light is a selection priority, not a filter: an all-demand-`0` sequence wins
 only when it already belongs to the slot's highest saved-score bucket. If that

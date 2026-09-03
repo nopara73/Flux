@@ -3419,6 +3419,18 @@ export function isLightWorkoutDayDue(
   nowUnixMilliseconds,
   legacyCompletedTrainingDayUnixMilliseconds = [],
 ) {
+  return getTrainingDaysUntilLightWorkout(
+    workoutHistory,
+    nowUnixMilliseconds,
+    legacyCompletedTrainingDayUnixMilliseconds,
+  ) === 0;
+}
+
+export function getTrainingDaysUntilLightWorkout(
+  workoutHistory,
+  nowUnixMilliseconds,
+  legacyCompletedTrainingDayUnixMilliseconds = [],
+) {
   const today = getLocalCalendarDayNumber(nowUnixMilliseconds);
   if (today === null) {
     throw new RangeError("Current workout time must be positive Unix milliseconds.");
@@ -3443,8 +3455,8 @@ export function isLightWorkoutDayDue(
   for (let day = today - 1; completedTrainingDays.has(day); day -= 1) {
     consecutivePriorDays += 1;
   }
-  return consecutivePriorDays >= LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 &&
-    (consecutivePriorDays + 1) % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE === 0;
+  return LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 -
+    consecutivePriorDays % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE;
 }
 
 export function getDefaultWorkoutModifiers(
@@ -3580,6 +3592,14 @@ export class WorkoutSession {
   getDefaultWorkoutModifiers() {
     return getDefaultWorkoutModifiers(
       this.state.lastWorkoutModifiers,
+      this.state.workoutHistory,
+      this.getCurrentUnixTimeMilliseconds(),
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
+    );
+  }
+
+  getTrainingDaysUntilLightWorkout() {
+    return getTrainingDaysUntilLightWorkout(
       this.state.workoutHistory,
       this.getCurrentUnixTimeMilliseconds(),
       this.state.legacyCompletedTrainingDayUnixMilliseconds,

@@ -66,6 +66,7 @@ const elements = {
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
   lightModifier: byId("light-workout-modifier"),
+  lightCountdown: byId("light-workout-countdown"),
   wallModifier: byId("wall-modifier"),
   mirrorModifier: byId("mirror-modifier"),
   modifierFeedback: byId("modifier-feedback"),
@@ -634,6 +635,8 @@ function renderWorkoutModifiers() {
     }
   }
 
+  renderLightModeCountdown();
+
   const wallEquipment = getWallEquipment(selectedModifiers);
   const wallEnabled = wallEquipment !== WALL_EQUIPMENT.None;
   elements.wallModifier.setAttribute("aria-pressed", String(wallEnabled));
@@ -670,6 +673,32 @@ function renderWorkoutModifiers() {
       : `Mirror equipment: ${mirrorEquipment.toLowerCase()} mirror available`,
   );
   elements.mirrorModifier.dataset.mirrorEquipment = mirrorEquipment.toLowerCase();
+}
+
+function renderLightModeCountdown() {
+  const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Light) !== 0;
+  const candidateDaysRemaining = session
+    ? session.getTrainingDaysUntilLightWorkout()
+    : startupControls?.lightDaysRemaining;
+  const daysRemaining = Number.isInteger(candidateDaysRemaining) &&
+      candidateDaysRemaining >= 0 && candidateDaysRemaining <= 3
+    ? candidateDaysRemaining
+    : 3;
+  if (startupControls?.lightDaysRemaining !== daysRemaining) {
+    startupControls?.setLightDaysRemaining?.(daysRemaining);
+  }
+  elements.lightCountdown.textContent = String(daysRemaining);
+  elements.lightCountdown.hidden = enabled;
+  if (!enabled) {
+    const scheduleDescription = daysRemaining === 0
+      ? "Automatic light mode is due today."
+      : `${daysRemaining} training day${daysRemaining === 1 ? "" : "s"} ` +
+        "until automatic light mode.";
+    elements.lightModifier.setAttribute(
+      "aria-label",
+      `Workout intensity: regular workout. ${scheduleDescription}`,
+    );
+  }
 }
 
 function showScreen(screen) {

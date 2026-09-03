@@ -447,6 +447,30 @@ button.modifier-tile:not(:disabled):active {
   -webkit-mask-size: contain;
 }
 
+.light-mode-countdown {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--graphite);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--graphite);
+  background: var(--chartreuse);
+  box-shadow: 0 1px 3px rgb(18 20 22 / 24%);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.light-mode-countdown[hidden] {
+  display: none;
+}
+
 .floor-glyph {
   display: none;
   width: 100%;

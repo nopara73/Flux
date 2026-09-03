@@ -322,21 +322,43 @@
                         android:elevation="1dp"
                         android:orientation="horizontal">
 
-                        <CheckBox
-                            android:id="@+id/light_workout_modifier_button"
-                            style="@style/DurationModifierTile"
+                        <FrameLayout
+                            android:id="@+id/light_workout_modifier_container"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_margin="5dp"
-                            android:layout_gravity="center"
-                            android:button="@null"
-                            android:checked="false"
-                            android:contentDescription="@string/light_workout_modifier_description"
-                            android:drawableTint="@color/duration_modifier_icon_tint"
-                            android:drawableTop="@drawable/ic_light_workout"
-                            android:gravity="center"
-                            android:text=""
-                            android:tooltipText="@string/light_workout_disabled_feedback" />
+                            android:layout_gravity="center">
+
+                            <CheckBox
+                                android:id="@+id/light_workout_modifier_button"
+                                style="@style/DurationModifierTile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:button="@null"
+                                android:checked="false"
+                                android:contentDescription="@string/light_workout_modifier_description"
+                                android:drawableTint="@color/duration_modifier_icon_tint"
+                                android:drawableTop="@drawable/ic_light_workout"
+                                android:gravity="center"
+                                android:text=""
+                                android:tooltipText="@string/light_workout_disabled_feedback" />
+
+                            <TextView
+                                android:id="@+id/light_workout_countdown_badge"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="top|end"
+                                android:background="@drawable/light_workout_countdown_badge"
+                                android:elevation="4dp"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:importantForAccessibility="no"
+                                android:text="3"
+                                android:textColor="@color/brand_graphite"
+                                android:textSize="11sp" />
+                        </FrameLayout>
                     </LinearLayout>
 
                     <LinearLayout
