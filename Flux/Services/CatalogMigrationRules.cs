@@ -882,6 +882,10 @@ public static class CatalogMigrationRules
                     "Counterclockwise-First Full Neck Circles",
                     "Single-Leg Thumb-Focus Head Turns",
                 },
+                [507] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Side Knee Raise with Elbow Pull",
+                },
                 [513] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Single-Leg Thumb-Focus Head Nods",

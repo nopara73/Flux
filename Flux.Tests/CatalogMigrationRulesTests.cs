@@ -3282,6 +3282,7 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(501, "Counterclockwise-First Full Neck Circles", "Standing Horizontal Saccades")]
     [InlineData(501, "Single-Leg Thumb-Focus Head Turns", "Standing Horizontal Saccades")]
     [InlineData(504, "Hands-Behind-Head Splenius-Capitis Stretch", "Vertical Eye-Head Shifts Between Thumbs")]
+    [InlineData(507, "Single-Side Knee Raise with Elbow Pull", "Firm Eye Close and Full Open")]
     [InlineData(513, "Single-Leg Thumb-Focus Head Nods", "Scapular Retraction")]
     [InlineData(843, "Standing Scalene Wrist-Anchor Stretch", "Standing Cobra Pose")]
     [InlineData(572, "Cossack Side-to-Side Shifts", "Tai Chi White Crane Opens Wings")]
