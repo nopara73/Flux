@@ -2354,6 +2354,73 @@ test("a warmup downvote reselects an alternative without global exclusion", () =
   assert.notEqual(session.getSelectedExercise(session.getActiveGroups()[0]).id, rejectedId);
 });
 
+test("demand-ordered warmup uses its actual phase when selecting next workout", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const target = groups.find((group) => group.id === "r30.spinal-extensors");
+  const rejected = exercise(
+    1000,
+    target.canonicalGroups[0],
+    target.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    true,
+    0,
+  );
+  const alternative = exercise(
+    1001,
+    target.canonicalGroups[0],
+    target.canonicalGroups.slice(1),
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    true,
+    0,
+  );
+  const fixedExercises = groups
+    .filter((group) => group.id !== target.id)
+    .map((group, index) => exercise(
+      index + 1,
+      group.canonicalGroups[0],
+      group.canonicalGroups.slice(1),
+      0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible,
+      true,
+      1,
+    ));
+  const state = createDefaultState();
+  state.catalogRevision = CURRENT_CATALOG_REVISION;
+  state.selectedExerciseIds = Object.fromEntries(fixedExercises.map((item) => [
+    groups.find((group) =>
+      group.canonicalGroups.includes(item.primaryCanonicalGroup)).id,
+    item.id,
+  ]));
+  state.selectedExerciseIds[target.id] = rejected.id;
+  state.keptExerciseRootIdsBySelectionGroupId = Object.fromEntries(
+    Object.entries(state.selectedExerciseIds).map(([groupId, exerciseId]) => [
+      groupId,
+      [exerciseId],
+    ]),
+  );
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.Warmup]: { [rejected.id]: -1 },
+  };
+  const session = new WorkoutSession(
+    [rejected, alternative, ...fixedExercises],
+    state,
+    () => 0,
+  );
+
+  session.startWorkout(60, WORKOUT_MODIFIERS.None);
+
+  assert.equal(session.state.selectedExerciseIds[target.id], alternative.id);
+  const finalTargetBlock = session.getActiveGroups()
+    .filter((group) => getSelectionKey(group) === target.id)
+    .at(-1);
+  assert.equal(
+    getWorkoutExercisePhase(finalTargetBlock.order),
+    WORKOUT_EXERCISE_PHASE.Warmup,
+  );
+});
+
 test("short-workout keeps carry into matching long-workout slots", () => {
   const session = new WorkoutSession(
     reviewedInsectCatalog(),

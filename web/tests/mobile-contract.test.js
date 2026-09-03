@@ -316,6 +316,22 @@ test("web and mobile scope rejection feedback to the same workout phases", () =>
     /Dictionary<WorkoutExercisePhase, Dictionary<int, int>>[\s\S]*ExerciseScoreAdjustmentsByPhase/,
   );
   assert.match(workoutModule, /exerciseScoreAdjustmentsByPhase/);
+  assert.match(
+    sessionService,
+    /SetActiveLongWorkoutAllocation\(state\);[\s\S]*ReconcileLineupWithScheduledPhases\(state\);/,
+  );
+  assert.match(
+    sessionService,
+    /ReconcileLineupWithScheduledPhases[\s\S]*GetScheduledPhaseByGroupId[\s\S]*scheduledPhaseByGroupId:\s*scheduledPhaseByGroupId/,
+  );
+  assert.match(
+    workoutModule,
+    /this\.setActiveLongWorkoutAllocation\(\);[\s\S]*this\.reconcileLineupWithScheduledPhases\(\);/,
+  );
+  assert.match(
+    workoutModule,
+    /reconcileLineupWithScheduledPhases[\s\S]*getScheduledPhaseByGroupId[\s\S]*scheduledPhaseByGroupId/,
+  );
 });
 
 test("web and mobile apply the same multi-resolution muscle balancing", () => {

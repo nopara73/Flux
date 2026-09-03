@@ -109,7 +109,10 @@ duration resolutions at all: they follow the exercise sequence root and the
 three execution phases.
 
 At the start of every session, the global assignment evaluates anatomical Keeps
-and the adjustment for each candidate's projected execution phase. A fresh hard
+and the adjustment for the phase in which each candidate's final block is
+actually scheduled after demand ordering and repeated-set allocation. Selection
+and allocation are reconciled until that real phase assignment is stable; the
+unrelated anatomical bucket order is never used as the final phase. A fresh hard
 keep, or a fresh suitable hard exercise already in the highest available score
 bucket for that phase, gets an opportunity ahead of a non-hard keep. During
 recovery, an affected demand-`1` or demand-`2` keep loses only its current lineup

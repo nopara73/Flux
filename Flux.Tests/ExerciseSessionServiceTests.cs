@@ -929,6 +929,66 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
+    public void DemandOrderedWarmupUsesItsActualPhaseWhenSelectingNextWorkout()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy
+            .GetResolution(30)
+            .Groups
+            .ToArray();
+        WorkoutGroup target = groups.Single(group =>
+            group.Id == "r30.spinal-extensors");
+        Exercise rejected = CloneWithMuscularDemand(
+            QualifiedForGroup(1000, target),
+            muscularDemand: 0);
+        Exercise alternative = CloneWithMuscularDemand(
+            QualifiedForGroup(1001, target),
+            muscularDemand: 0);
+        Exercise[] fixedExercises = groups
+            .Where(group => group.Id != target.Id)
+            .Select((group, index) => CloneWithMuscularDemand(
+                QualifiedForGroup(index + 1, group),
+                muscularDemand: 1))
+            .ToArray();
+        var service = new ExerciseSessionService(
+            [rejected, alternative, .. fixedExercises],
+            new AlwaysZeroRandom());
+        var selectedExerciseIds = fixedExercises.ToDictionary(
+            exercise => MassGroupingTaxonomy.GetGroup(
+                30,
+                exercise.PrimaryCanonicalGroup).Id,
+            exercise => exercise.Id,
+            StringComparer.Ordinal);
+        selectedExerciseIds[target.Id] = rejected.Id;
+        var keeps = selectedExerciseIds.ToDictionary(
+            entry => entry.Key,
+            entry => new HashSet<int> { entry.Value },
+            StringComparer.Ordinal);
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            SelectedExerciseIds = selectedExerciseIds,
+            KeptExerciseRootIdsBySelectionGroupId = keeps,
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.Warmup] = new()
+                {
+                    [rejected.Id] = -1,
+                },
+            },
+        };
+
+        service.StartWorkout(state, 60, WorkoutModifiers.None);
+
+        Assert.Equal(alternative.Id, state.SelectedExerciseIds[target.Id]);
+        WorkoutGroup finalTargetBlock = service.GetActiveGroups(state)
+            .Last(group => group.SelectionKey == target.Id);
+        Assert.Equal(
+            WorkoutExercisePhase.Warmup,
+            WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(
+                finalTargetBlock.Order));
+    }
+
+    [Fact]
     public void ShortWorkoutKeepsCarryIntoTheMatchingLongWorkoutSlots()
     {
         var service = new ExerciseSessionService(

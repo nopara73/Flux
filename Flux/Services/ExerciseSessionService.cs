@@ -398,6 +398,7 @@ public sealed class ExerciseSessionService
                 WorkoutModifiers.Light));
         RebalanceNewExercisesByMuscleBalance(state);
         SetActiveLongWorkoutAllocation(state);
+        ReconcileLineupWithScheduledPhases(state);
     }
 
     public void ActivatePreparedWorkout(WorkoutState state)
@@ -1652,7 +1653,9 @@ public sealed class ExerciseSessionService
         bool allowSavedSelectionException = false,
         IReadOnlyDictionary<string, HashSet<int>>?
             carriedKeepRootIdsBySelectionGroupId = null,
-        IReadOnlySet<string>? modifierTransitionProtectedGroupIds = null)
+        IReadOnlySet<string>? modifierTransitionProtectedGroupIds = null,
+        IReadOnlyDictionary<string, WorkoutExercisePhase>?
+            scheduledPhaseByGroupId = null)
     {
         if (groups.Count == 0)
         {
@@ -1716,6 +1719,13 @@ public sealed class ExerciseSessionService
         bool IsAllowed(Exercise exercise, WorkoutGroup group) =>
             allowedGroupIdsByExerciseId.GetValueOrDefault(exercise.Id)?
                 .Contains(group.Id) == true;
+        WorkoutExercisePhase GetSelectionPhase(WorkoutGroup group) =>
+            scheduledPhaseByGroupId is not null &&
+            scheduledPhaseByGroupId.TryGetValue(
+                group.Id,
+                out WorkoutExercisePhase scheduledPhase)
+                ? scheduledPhase
+                : GetProjectedSelectionPhase(state, group, groups.Count);
         Shuffle(candidates);
 
         int[] orderedScores = candidates
@@ -1724,7 +1734,7 @@ public sealed class ExerciseSessionService
                 .Select(group => GetSelectionScore(
                     state,
                     exercise,
-                    GetProjectedSelectionPhase(state, group, groups.Count))))
+                    GetSelectionPhase(group))))
             .Distinct()
             .Order()
             .ToArray();
@@ -1738,7 +1748,7 @@ public sealed class ExerciseSessionService
                 .Select(exercise => GetSelectionScore(
                     state,
                     exercise,
-                    GetProjectedSelectionPhase(state, group, groups.Count)))
+                    GetSelectionPhase(group)))
                 .DefaultIfEmpty(int.MinValue)
                 .Max(),
             StringComparer.Ordinal);
@@ -1835,10 +1845,7 @@ public sealed class ExerciseSessionService
                  carriedKeepRootIdsBySelectionGroupId
                      .GetValueOrDefault(evaluationGroup.Id)?
                      .Contains(GetSequenceRoot(exercise).Id) == true);
-            WorkoutExercisePhase phase = GetProjectedSelectionPhase(
-                state,
-                evaluationGroup,
-                groups.Count);
+            WorkoutExercisePhase phase = GetSelectionPhase(evaluationGroup);
             int selectionScore = includeSlotPreference
                 ? GetSelectionScore(state, exercise, phase)
                 : 0;
@@ -5838,6 +5845,101 @@ public sealed class ExerciseSessionService
 
     private void SetActiveLongWorkoutAllocation(WorkoutState state) =>
         ApplyLongWorkoutAllocation(state, ChooseLongWorkoutAllocation(state));
+
+    private void ReconcileLineupWithScheduledPhases(WorkoutState state)
+    {
+        if (state.ExerciseScoreAdjustmentsByPhase.Values.All(
+                adjustments => adjustments.Count == 0))
+        {
+            return;
+        }
+
+        WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
+        if (selectionGroups.Length == 0)
+        {
+            return;
+        }
+
+        // Candidate scores are phase-local, while demand ordering and repeated
+        // sets determine the phase in which a selected sequence actually ends.
+        // Resolve that circular dependency to a stable lineup rather than
+        // estimating phase from the unrelated anatomical bucket order.
+        var seenLineups = new HashSet<string>(StringComparer.Ordinal);
+        for (int pass = 0; pass < selectionGroups.Length; pass++)
+        {
+            Dictionary<string, int> currentLineup = selectionGroups.ToDictionary(
+                group => group.Id,
+                group => state.SelectedExerciseIds[GetSelectionStorageKey(
+                    group.Id,
+                    state.ActiveWorkoutModifiers)],
+                StringComparer.Ordinal);
+            string signature = string.Join(
+                ',',
+                selectionGroups.Select(group => currentLineup[group.Id]));
+            if (!seenLineups.Add(signature))
+            {
+                break;
+            }
+
+            LongWorkoutAllocation allocation = ChooseLongWorkoutAllocation(state);
+            ApplyLongWorkoutAllocation(state, allocation);
+            IReadOnlyDictionary<string, WorkoutExercisePhase>
+                scheduledPhaseByGroupId = GetScheduledPhaseByGroupId(
+                    state,
+                    allocation);
+            IReadOnlyDictionary<string, int> nextLineup =
+                ChooseBestDistinctLineup(
+                    state,
+                    selectionGroups,
+                    state.ActiveWorkoutModifiers,
+                    currentExerciseIds: currentLineup,
+                    scheduledPhaseByGroupId: scheduledPhaseByGroupId);
+            if (selectionGroups.All(group =>
+                    nextLineup[group.Id] == currentLineup[group.Id]))
+            {
+                return;
+            }
+
+            ApplyDistinctLineup(
+                state,
+                selectionGroups,
+                nextLineup,
+                clearChangedProgress: false);
+        }
+
+        SetActiveLongWorkoutAllocation(state);
+    }
+
+    private IReadOnlyDictionary<string, WorkoutExercisePhase>
+        GetScheduledPhaseByGroupId(
+            WorkoutState state,
+            LongWorkoutAllocation allocation)
+    {
+        Dictionary<string, WorkoutExercisePhase> phaseBySelectionGroupId =
+            CreateWorkoutSchedule(
+                    state,
+                    allocation.SetCountsBySelectionGroupId)
+                .GroupBy(group => group.SelectionKey, StringComparer.Ordinal)
+                .ToDictionary(
+                    groups => groups.Key,
+                    groups => WorkoutExercisePhasePolicy.FromOneBasedBlockOrder(
+                        groups.Max(group => group.Order)),
+                    StringComparer.Ordinal);
+        var result = new Dictionary<string, WorkoutExercisePhase>(
+            StringComparer.Ordinal);
+        foreach (SelectedSequencePlacement placement in
+                 GetSelectedSequencePlacements(state))
+        {
+            WorkoutExercisePhase phase = phaseBySelectionGroupId[
+                placement.Anchor.Id];
+            foreach (WorkoutGroup coveredGroup in placement.CoveredGroups)
+            {
+                result[coveredGroup.Id] = phase;
+            }
+        }
+
+        return result;
+    }
 
     private static void ApplyLongWorkoutAllocation(
         WorkoutState state,

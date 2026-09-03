@@ -3763,6 +3763,7 @@ export class WorkoutSession {
     );
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
+    this.reconcileLineupWithScheduledPhases();
   }
 
   activatePreparedWorkout() {
@@ -5090,6 +5091,7 @@ export class WorkoutSession {
       allowSavedSelectionException = false,
       carriedKeepRootIdsBySelectionGroupId = new Map(),
       modifierTransitionProtectedGroupIds = new Set(),
+      scheduledPhaseByGroupId = new Map(),
     } = {},
   ) {
     if (groups.length === 0) {
@@ -5131,12 +5133,15 @@ export class WorkoutSession {
     }
     const isAllowed = (exercise, group) =>
       allowedGroupIdsByExerciseId.get(exercise.id)?.has(group.id) ?? false;
+    const getSelectionPhase = (group) =>
+      scheduledPhaseByGroupId.get(group.id) ??
+        this.getProjectedSelectionPhase(group, groups.length);
     this.shuffle(candidates);
     const orderedScores = [...new Set(candidates.flatMap((exercise) => groups
       .filter((group) => isAllowed(exercise, group))
       .map((group) => this.getSelectionScore(
         exercise,
-        this.getProjectedSelectionPhase(group, groups.length),
+        getSelectionPhase(group),
       ))))]
       .sort((left, right) => left - right);
     const scoreRanks = new Map(orderedScores.map((score, rank) => [score, rank]));
@@ -5145,7 +5150,7 @@ export class WorkoutSession {
         .filter((exercise) => isAllowed(exercise, group))
         .map((exercise) => this.getSelectionScore(
           exercise,
-          this.getProjectedSelectionPhase(group, groups.length),
+          getSelectionPhase(group),
         ));
       return [
         group.id,
@@ -5235,10 +5240,7 @@ export class WorkoutSession {
         (this.isSequenceKept(evaluationGroup.id, exercise) ||
          carriedKeepRootIdsBySelectionGroupId.get(evaluationGroup.id)
            ?.has(this.getSequenceRoot(exercise).id) === true);
-      const phase = this.getProjectedSelectionPhase(
-        evaluationGroup,
-        groups.length,
-      );
+      const phase = getSelectionPhase(evaluationGroup);
       const selectionScore = includeSlotPreference
         ? this.getSelectionScore(exercise, phase)
         : 0;
@@ -6799,6 +6801,78 @@ export class WorkoutSession {
 
   setActiveLongWorkoutAllocation() {
     this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation());
+  }
+
+  reconcileLineupWithScheduledPhases() {
+    const hasPhaseScoreAdjustments = Object.values(
+      this.state.exerciseScoreAdjustmentsByPhase,
+    ).some((adjustments) => Object.keys(adjustments).length > 0);
+    if (!hasPhaseScoreAdjustments) {
+      return;
+    }
+
+    const selectionGroups = this.getSelectionGroups();
+    if (selectionGroups.length === 0) {
+      return;
+    }
+
+    // Demand ordering and repeated sets determine the phase in which a
+    // sequence actually ends. Iterate to a stable lineup so a phase-local
+    // downvote is never evaluated from the unrelated anatomical bucket order.
+    const seenLineups = new Set();
+    for (let pass = 0; pass < selectionGroups.length; pass += 1) {
+      const currentLineup = new Map(selectionGroups.map((group) => [
+        group.id,
+        this.state.selectedExerciseIds[this.getSelectionStorageKey(
+          group.id,
+          this.state.activeWorkoutModifiers,
+        )],
+      ]));
+      const signature = selectionGroups
+        .map((group) => currentLineup.get(group.id))
+        .join(",");
+      if (seenLineups.has(signature)) {
+        break;
+      }
+      seenLineups.add(signature);
+
+      const allocation = this.chooseLongWorkoutAllocation();
+      this.applyLongWorkoutAllocation(allocation);
+      const scheduledPhaseByGroupId = this.getScheduledPhaseByGroupId(allocation);
+      const nextLineup = this.chooseBestDistinctLineup(
+        selectionGroups,
+        this.state.activeWorkoutModifiers,
+        { currentExerciseIds: currentLineup, scheduledPhaseByGroupId },
+      );
+      if (selectionGroups.every((group) =>
+        nextLineup.get(group.id) === currentLineup.get(group.id))) {
+        return;
+      }
+      this.applyDistinctLineup(selectionGroups, nextLineup, false);
+    }
+
+    this.setActiveLongWorkoutAllocation();
+  }
+
+  getScheduledPhaseByGroupId(allocation) {
+    const phaseBySelectionGroupId = new Map();
+    for (const group of this.createActiveWorkoutSchedule(
+      allocation.setCountsBySelectionGroupId,
+    )) {
+      phaseBySelectionGroupId.set(
+        getSelectionKey(group),
+        getWorkoutExercisePhase(group.order),
+      );
+    }
+
+    const result = new Map();
+    for (const placement of this.getSelectedSequencePlacements()) {
+      const phase = phaseBySelectionGroupId.get(placement.anchor.id);
+      for (const coveredGroup of placement.coveredGroups) {
+        result.set(coveredGroup.id, phase);
+      }
+    }
+    return result;
   }
 
   applyLongWorkoutAllocation(allocation) {
