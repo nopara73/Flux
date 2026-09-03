@@ -73,6 +73,7 @@ public sealed class CatalogInvariantTests
             [231] = [231, 685],
             [256] = [256, 845],
             [261] = [261, 677],
+            [262] = [262, 507],
             [514] = [514, 521],
             [755] = [755, 756],
         };
@@ -549,7 +550,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(158, timedSideExercises.Length);
+        Assert.Equal(157, timedSideExercises.Length);
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -559,7 +560,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(158, alternatingExercises.Length);
+        Assert.Equal(159, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -669,8 +670,8 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 291,
-            [2] = 128,
+            [1] = 292,
+            [2] = 127,
             [3] = 28,
             [4] = 11,
         };
@@ -822,7 +823,7 @@ public sealed class CatalogInvariantTests
             [473] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [482] = ExerciseSideSequence.Continuous,
             [483] = ExerciseSideSequence.Continuous,
-            [507] = ExerciseSideSequence.ScreenRightThenLeft,
+            [507] = ExerciseSideSequence.Alternating,
             [508] = ExerciseSideSequence.Alternating,
             [512] = ExerciseSideSequence.ScreenRightThenLeft,
             [513] = ExerciseSideSequence.ScreenLeftThenRight,
@@ -899,7 +900,7 @@ public sealed class CatalogInvariantTests
             16, 20, 47, 97, 117, 179, 180, 184, 186, 211,
             213, 220, 225, 256, 258, 269,
             278, 279, 282, 285, 286, 326, 329,
-            395, 396, 507, 512, 513, 572, 577, 618, 636,
+            395, 396, 512, 513, 572, 577, 618, 636,
             685, 745, 834,
         ];
         Assert.All(auditedSidedClarityReplacementIds, exerciseId =>
@@ -914,7 +915,7 @@ public sealed class CatalogInvariantTests
             198, 201, 218, 230, 234, 237, 239, 240, 241, 242, 248,
             251, 257, 262, 263, 266, 268, 270, 275, 283, 289, 291,
             294, 301, 314, 321, 556,
-            394, 397, 413, 421, 425, 427, 468, 516, 615, 677, 683, 687,
+            394, 397, 413, 421, 425, 427, 468, 507, 516, 615, 677, 683, 687,
         ];
         Assert.All(auditedContinuousClarityReplacementIds, exerciseId =>
             Assert.False(
@@ -1019,7 +1020,7 @@ public sealed class CatalogInvariantTests
             [483] = "Standing Diagonal Head Turns",
             [490] = "Track One Thumb Side to Side",
             [501] = "Keep Eyes on Thumb While Turning Head",
-            [507] = "Single-Side Knee Raise with Elbow Pull",
+            [507] = "Alternating Cross-Body Knee-to-Elbow Crunch",
             [508] = "Side-Step with Two-Arm Overhead Reach",
             [510] = "Clasped-Hands Chest-Opening Forward-Fold Hold",
             [996] = "Partial Pistol Squat",
@@ -1135,13 +1136,32 @@ public sealed class CatalogInvariantTests
             exercise.Id is 267 or 553 or 558 or 559);
 
         int[] explicitSingleSideKneeExerciseIds =
-            [395, 507, 577, 618, 654, 834, 915];
+            [395, 577, 618, 654, 834, 915];
         Assert.All(explicitSingleSideKneeExerciseIds, exerciseId =>
         {
             Exercise exercise = exercises.Single(candidate => candidate.Id == exerciseId);
             Assert.StartsWith("Single-Side ", exercise.Name);
             Assert.True(exercise.SideSequence.UsesTimedSides());
         });
+        Exercise alternatingKneeCrunch =
+            exercises.Single(exercise => exercise.Id == 507);
+        Assert.Equal(
+            "Alternating Cross-Body Knee-to-Elbow Crunch",
+            alternatingKneeCrunch.Name);
+        Assert.Equal(
+            ExerciseSideSequence.Alternating,
+            alternatingKneeCrunch.SideSequence);
+        Assert.Equal(
+            CanonicalMuscleGroup.AbdominalWall,
+            alternatingKneeCrunch.PrimaryCanonicalGroup);
+        Assert.Contains(
+            CanonicalMuscleGroup.HipFlexors,
+            alternatingKneeCrunch.SecondaryCanonicalGroups);
+        Assert.DoesNotContain(
+            CanonicalMuscleGroup.ScapularGirdle,
+            alternatingKneeCrunch.SecondaryCanonicalGroups);
+        Assert.Single(alternatingKneeCrunch.SequenceBlocks);
+        Assert.Equal(262, alternatingKneeCrunch.SessionMovementId);
         Exercise highKneeSideReach = exercises.Single(exercise => exercise.Id == 618);
         Assert.Equal(
             CanonicalMuscleGroup.HipFlexors,

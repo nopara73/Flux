@@ -106,7 +106,7 @@ $rows = @(
     New-ClarityReplacement 396 'Single-Leg Knee-Lift Balance Hold' 'Standing balance' 'KneeLiftBalance' 'ScreenLeftThenRight' '2_lCvBvHRFI.mp4' $eleniUrl 135 20 8 'crop=ih:ih:(iw-ih)/2:0' $false 'Hold' 'Still' 50
     New-ClarityReplacement 397 'Alternating Side Tap with Diagonal Arm Sweep' 'Low-impact conditioning' 'SideTapCrossBodySweep' 'Alternating' '6P_JPNPgXig.mp4' $sixUrl 78 12
     New-ClarityReplacement 425 'Feet-Together Head Turns' 'Balance and vestibular training' 'FeetTogetherHeadTurn' 'Continuous' 'candidate-narrow-head-turns-tilts.mp4' 'https://www.youtube.com/watch?v=81sfTXQ6zjc' 0 9 10
-    New-ClarityReplacement 507 'Single-Side Knee Raise with Elbow Pull' 'Standing upper-back conditioning' 'KneeRaiseElbowPull' 'ScreenRightThenLeft' '6P_JPNPgXig.mp4' $sixUrl 532 12
+    New-ClarityReplacement 507 'Alternating Cross-Body Knee-to-Elbow Crunch' 'Standing core conditioning' 'CoreCrunch' 'Alternating' '6P_JPNPgXig.mp4' $sixUrl 532 12
     New-ClarityReplacement 508 'Side-Step with Two-Arm Overhead Reach' 'Standing upper-body conditioning' 'SideStepOverheadReach' 'Alternating' '6P_JPNPgXig.mp4' $sixUrl 816 12
     New-ClarityReplacement 513 'Single-Leg Head Nods' 'Vestibular rehabilitation' 'SingleLegHeadNod' 'ScreenLeftThenRight' 'candidate-single-leg-head-turns-b3.mp4' 'https://www.youtube.com/watch?v=mgZaPNn8_PE' 32.2 7.2 10
     New-ClarityReplacement 516 'Bent-Elbow Shoulder Circles' 'Shoulder mobility' 'BentElbowShoulderCircle' 'Continuous' 'OJs2AfEUzaA.mp4' 'https://www.youtube.com/watch?v=OJs2AfEUzaA' 4 5.6 10 'crop=ih*0.82:ih*0.82:(iw-ih*0.82)/2:ih*0.18'

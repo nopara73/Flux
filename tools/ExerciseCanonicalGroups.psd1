@@ -324,7 +324,7 @@
     504 = @{ Primary = 'PosteriorNeckAndSuboccipitalMuscles'; Secondary = @('AnteriorLateralNeckAndHyoidMuscles') }
     505 = @{ Primary = 'CranialMuscles'; Secondary = @() }
     506 = @{ Primary = 'CranialMuscles'; Secondary = @() }
-    507 = @{ Primary = 'ScapularGirdle'; Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'HipFlexors', 'AbdominalWall') }
+    507 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
     508 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall') }
     509 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'AbdominalWall') }
     510 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'SpinalExtensors') }

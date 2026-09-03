@@ -7345,7 +7345,8 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 262
   },
   {
     "id": 263,
@@ -15199,36 +15200,27 @@
   },
   {
     "id": 507,
-    "name": "Single-Side Knee Raise with Elbow Pull",
+    "name": "Alternating Cross-Body Knee-to-Elbow Crunch",
     "retiredName": "Firm Eye Close and Full Open",
     "video": "exercise_videos/exercise_0507.mp4",
-    "primaryCanonicalGroup": "ScapularGirdle",
+    "primaryCanonicalGroup": "AbdominalWall",
     "secondaryCanonicalGroups": [
-      "ShoulderAdductorsAndExtensors",
-      "ElbowFlexors",
       "HipFlexors",
-      "AbdominalWall"
+      "DeepAndIntersegmentalBack"
     ],
-    "practice": "Standing upper-back conditioning",
-    "motionProfile": "KneeRaiseElbowPull",
+    "practice": "Standing core conditioning",
+    "motionProfile": "CoreCrunch",
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "ScreenRightThenLeft",
+    "sideSequence": "Alternating",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 507,
-        "sideCue": "ScreenRight",
+        "sideCue": "None",
         "directionCue": "None",
         "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 507,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -15245,7 +15237,8 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 262
   },
   {
     "id": 508,

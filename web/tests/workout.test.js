@@ -760,6 +760,20 @@ const catalog = JSON.parse(
   await readFile(path.join(repositoryRoot, "Flux", "Assets", "exercises.json"), "utf8"),
 );
 
+test("alternating cross-body knee crunch metadata matches its demonstration", () => {
+  const exercise = catalog.find((candidate) => candidate.id === 507);
+  assert.equal(exercise.name,
+    "Alternating Cross-Body Knee-to-Elbow Crunch");
+  assert.equal(exercise.sideSequence, "Alternating");
+  assert.equal(exercise.primaryCanonicalGroup, "AbdominalWall");
+  assert.ok(exercise.secondaryCanonicalGroups.includes("HipFlexors"));
+  assert.equal(exercise.secondaryCanonicalGroups.includes("ScapularGirdle"),
+    false);
+  assert.equal(exercise.sequenceBlocks.length, 1);
+  assert.equal(exercise.sessionMovementId, 262);
+  assert.equal(getSessionMovementId(exercise), 262);
+});
+
 test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.equal(MINIMUM_MUSCULAR_DEMAND, 0);
   assert.equal(MAXIMUM_MUSCULAR_DEMAND, 2);
@@ -4869,6 +4883,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
       231: [231, 685],
       256: [256, 845],
       261: [261, 677],
+      262: [262, 507],
       514: [514, 521],
       755: [755, 756],
     },
@@ -4969,7 +4984,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(backwardSideLegCircles.primaryCanonicalGroup, "HipAbductors");
   assert.notEqual(forwardSideLegCircles.video, backwardSideLegCircles.video);
 
-  for (const exerciseId of [395, 507, 577, 618, 654, 915]) {
+  for (const exerciseId of [395, 577, 618, 654, 915]) {
     const exercise = catalog.find((candidate) => candidate.id === exerciseId);
     assert.match(exercise.name, /^Single-Side /);
     assert.equal(exercise.sequenceBlocks.length, 2);
@@ -7474,7 +7489,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 64);
+  assert.equal(CURRENT_CATALOG_REVISION, 65);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -7974,6 +7989,47 @@ test("independent variations replace coupled placements without resetting feedba
   );
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["177"], -4);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("knee crunch metadata correction rebuilds placement and resets feedback", () => {
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(65)],
+    [507],
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(65)],
+    [507],
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 64;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("AbdominalWall"));
+  const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
+  state.selectedExerciseIds[changedGroup.id] = 507;
+  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.outcomes[changedGroup.id] = "tick";
+  state.outcomes[retainedGroup.id] = "x";
+  state.pendingScoreExerciseId = 507;
+  state.pendingScoreValue = -4;
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 507: -4, 15: -2 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.pendingScoreExerciseId, undefined);
+  assert.equal(restored.state.pendingScoreValue, undefined);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["507"], undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);

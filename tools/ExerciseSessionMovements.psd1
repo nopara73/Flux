@@ -17,6 +17,7 @@
         '231' = @(231, 685)      # Karate reverse punch
         '256' = @(256, 845)      # Overhead side stretch
         '261' = @(261, 677)      # Bent-elbow reverse fly
+        '262' = @(262, 507)      # Standing cross-body bicycle crunch
         '514' = @(514, 521)      # Symmetric smile / mirror smiling practice
         '755' = @(755, 756)      # Outward wrist circles
     }

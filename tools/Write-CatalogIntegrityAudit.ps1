@@ -27,6 +27,7 @@ $actualDemonstrations = @{
     95 = 'A planted single-leg balance with one knee raised and held; the pelvis is not visibly moved through repetitions.'
     193 = 'A wide planted stance, hip hinge toward the floor, then a rise into a two-arm overhead reach; no repeated squat is performed.'
     397 = 'Continuous alternating lateral side taps coordinated with a two-arm diagonal sweep across the body; no breathing cadence is established by the silent demonstration.'
+    507 = 'The demonstrator continuously alternates raised knees toward the opposite elbow while both hands remain beside the head.'
     267 = 'A static standing T-arm/shoulder hold with both heels remaining down; no calf-raise hold is demonstrated.'
     417 = 'A narrow planted stance with repeated overhead-to-floor reaches and modest knee/hip flexion; no thumb target or explicit gaze tracking is shown.'
     439 = 'Continuous compact pogo bounces while the gaze stays fixed and the head repeatedly turns left and right.'

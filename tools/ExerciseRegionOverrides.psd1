@@ -92,7 +92,7 @@
     504 = 'HEAD'
     505 = 'HEAD'
     506 = 'HEAD'
-    507 = 'HEAD'
+    507 = 'CORE'
     508 = 'HEAD'
     509 = 'HEAD'
     510 = 'HEAD'

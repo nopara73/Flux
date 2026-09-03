@@ -5972,12 +5972,12 @@
     }
     507 = @{
         RetiredName = 'Firm Eye Close and Full Open'
-        Name = 'Single-Side Knee Raise with Elbow Pull'
-        Practice = 'Standing upper-back conditioning'
-        MotionProfile = 'KneeRaiseElbowPull'
-        Primary = 'ScapularGirdle'
-        Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'HipFlexors', 'AbdominalWall')
-        SideSequence = 'ScreenRightThenLeft'
+        Name = 'Alternating Cross-Body Knee-to-Elbow Crunch'
+        Practice = 'Standing core conditioning'
+        MotionProfile = 'CoreCrunch'
+        Primary = 'AbdominalWall'
+        Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack')
+        SideSequence = 'Alternating'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
