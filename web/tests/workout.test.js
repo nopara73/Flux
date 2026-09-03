@@ -288,24 +288,28 @@ test("execution timeline contains only real work blocks", () => {
       id: "punch.set1.block1",
       order: 1,
       selectionGroupId: "punch",
+      setNumber: 1,
       sequenceSideCue: "ScreenRight",
     },
     {
       id: "punch.set1.block2",
       order: 2,
       selectionGroupId: "punch",
+      setNumber: 1,
       sequenceSideCue: "ScreenLeft",
     },
     {
       id: "punch.set2.block1",
       order: 3,
       selectionGroupId: "punch",
+      setNumber: 2,
       sequenceSideCue: "ScreenRight",
     },
     {
       id: "punch.set2.block2",
       order: 4,
       selectionGroupId: "punch",
+      setNumber: 2,
       sequenceSideCue: "ScreenLeft",
     },
   ];
@@ -314,6 +318,7 @@ test("execution timeline contains only real work blocks", () => {
     getWorkoutExecutionTimeline(groups, groups[2]),
     {
       blocks: ["blue", "red", "blue", "red"],
+      setStartBlockIndices: [0, 2],
       currentBlockIndex: 2,
     },
   );
@@ -321,6 +326,7 @@ test("execution timeline contains only real work blocks", () => {
     getWorkoutExecutionTimeline(groups, groups[0], true),
     {
       blocks: ["blue", "red", "blue", "red"],
+      setStartBlockIndices: [0, 2],
       currentBlockIndex: 1,
     },
   );
@@ -361,6 +367,7 @@ test("three distinct uncued exercises use the three-phase palette", () => {
     getWorkoutExecutionTimeline(groups, groups[4]),
     {
       blocks: ["blue", "neutral", "red", "blue", "neutral", "red"],
+      setStartBlockIndices: [0, 3],
       currentBlockIndex: 4,
     },
   );
@@ -401,6 +408,7 @@ test("three distinct exercises preserve real side and direction cues", () => {
     getWorkoutExecutionTimeline(groups, groups[1]),
     {
       blocks: ["blue", "red", "blue"],
+      setStartBlockIndices: [0],
       currentBlockIndex: 1,
     },
   );
@@ -4783,7 +4791,7 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
     {
       104: [104, 136, 626],
       113: [113, 135],
-      115: [115, 997],
+      115: [115, 996, 997],
       117: [117, 123],
       120: [120, 184],
       124: [124, 636],
@@ -4798,6 +4806,16 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
       755: [755, 756],
     },
   );
+  const exercisesById = new Map(catalog.map((exercise) => [exercise.id, exercise]));
+  for (const root of catalog.filter((exercise) =>
+    new Set(exercise.sequenceBlocks.map((block) => block.exerciseId)).size > 1)) {
+    assert.equal(
+      new Set(root.sequenceBlocks.map((block) =>
+        exercisesById.get(block.exerciseId).mode)).size,
+      1,
+      `${root.name} must not force repetition and static variants together`,
+    );
+  }
   const breathingExercises = catalog.filter(
     (exercise) => exercise.primaryCanonicalGroup === "BreathingMuscles",
   );
@@ -7389,7 +7407,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 63);
+  assert.equal(CURRENT_CATALOG_REVISION, 64);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -7847,6 +7865,53 @@ test("pogo identity correction rebuilds placements without resetting feedback", 
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
+test("independent variations replace coupled placements without resetting feedback", () => {
+  const changedIds = [
+    104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
+    256, 261, 626, 677, 845, 996, 997,
+  ];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(64)],
+    changedIds,
+  );
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(64), false);
+
+  const state = createDefaultState();
+  state.catalogRevision = 63;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("DeepHipRotators"));
+  const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
+  state.selectedExerciseIds[changedGroup.id] = 177;
+  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.outcomes[changedGroup.id] = "tick";
+  state.outcomes[retainedGroup.id] = "x";
+  state.scores["177"] = -4;
+  state.scores["15"] = -2;
+  state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id] = [177];
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 177: -4, 15: -2 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.scores["177"], -4);
+  assert.equal(restored.state.scores["15"], -2);
+  assert.deepEqual(
+    restored.state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id],
+    [177],
+  );
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["177"], -4);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
 test("unclear exercise replacement revision resets every changed score", () => {
   const changedIds = [
     211, 213, 214, 215, 218, 223, 224,
@@ -8233,10 +8298,10 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
     .map((root) => root.id);
   assert.deepEqual(multiExerciseSequenceRoots, [
-    96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
-    211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 291, 292, 302, 307, 327, 329,
+    96, 115, 143, 160, 178, 179, 180, 181,
+    211, 214, 220, 223, 252, 264, 285, 286, 288, 291, 292, 302, 307, 327, 329,
     367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
-    617, 742, 784, 834, 845, 910, 948, 996,
+    617, 742, 784, 834, 910, 948,
   ]);
   assert.ok(holds.length > 0);
   assert.ok(holds.some((item) => item.presentation === "Still"));

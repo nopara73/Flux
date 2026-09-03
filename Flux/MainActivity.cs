@@ -3352,18 +3352,31 @@ public class MainActivity : Activity
             selectUpcomingBlock);
         _executionTimeline.SetTimeline(
             timeline.Blocks,
+            timeline.SetStartBlockIndices,
             timeline.CurrentBlockIndex);
-        int position = timeline.CurrentBlockIndex + 1;
-        int total = timeline.Blocks.Count;
-        string description =
-            $"Work block {position} of {total}. " +
+        int currentSetIndex = timeline.SetStartBlockIndices
+            .TakeWhile(index => index <= timeline.CurrentBlockIndex)
+            .Count() - 1;
+        int currentSetStart = timeline.SetStartBlockIndices[currentSetIndex];
+        int currentSetEnd = currentSetIndex + 1 <
+                timeline.SetStartBlockIndices.Count
+            ? timeline.SetStartBlockIndices[currentSetIndex + 1]
+            : timeline.Blocks.Count;
+        int blockPosition = timeline.CurrentBlockIndex - currentSetStart + 1;
+        int blocksInSet = currentSetEnd - currentSetStart;
+        string setDescription = timeline.SetStartBlockIndices.Count > 1
+            ? $"Set {currentSetIndex + 1} of " +
+                $"{timeline.SetStartBlockIndices.Count}. "
+            : string.Empty;
+        string description = setDescription +
+            $"Work block {blockPosition} of {blocksInSet}. " +
             "Each colored segment is one 45-second work block. " +
             "The 15-second transitions are shown separately.";
         _executionTimeline.ContentDescription = description;
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
-            _executionTimeline.TooltipText =
-                $"Work block {position} of {total}";
+            _executionTimeline.TooltipText = setDescription +
+                $"Work block {blockPosition} of {blocksInSet}";
         }
         _executionSignifierHost.Visibility = ViewStates.Visible;
     }

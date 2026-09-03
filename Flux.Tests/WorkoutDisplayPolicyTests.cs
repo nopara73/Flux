@@ -90,6 +90,7 @@ public sealed class WorkoutDisplayPolicyTests
                 WorkoutBlockAccent.Red,
             ],
             timeline.Blocks);
+        Assert.Equal([0, 2], timeline.SetStartBlockIndices);
         Assert.Equal(2, timeline.CurrentBlockIndex);
     }
 
@@ -111,6 +112,8 @@ public sealed class WorkoutDisplayPolicyTests
             selectUpcomingBlock: true);
 
         Assert.Equal(playing.Blocks, transition.Blocks);
+        Assert.Equal([0], playing.SetStartBlockIndices);
+        Assert.Equal(playing.SetStartBlockIndices, transition.SetStartBlockIndices);
         Assert.Equal(0, playing.CurrentBlockIndex);
         Assert.Equal(1, transition.CurrentBlockIndex);
     }
@@ -190,6 +193,7 @@ public sealed class WorkoutDisplayPolicyTests
                 WorkoutBlockAccent.Red,
             ],
             timeline.Blocks);
+        Assert.Equal([0, 3], timeline.SetStartBlockIndices);
         Assert.Equal(4, timeline.CurrentBlockIndex);
     }
 

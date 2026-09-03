@@ -6,7 +6,7 @@
     Families = @{
         '104' = @(104, 136, 626) # Sumo / wide turned-out squat
         '113' = @(113, 135)      # Overhead squat
-        '115' = @(115, 997)      # Full pistol squat
+        '115' = @(115, 996, 997) # Full, partial, and held pistol squat
         '117' = @(117, 123)      # Lateral lunge
         '120' = @(120, 184)      # Split squat
         '124' = @(124, 636)      # Curtsy lunge with side crunch

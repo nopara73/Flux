@@ -1346,7 +1346,8 @@ test("literal work-block timelines and logical exercise progress match", () => {
   assert.match(workoutLayout, /@\+id\/execution_signifier/);
   assert.doesNotMatch(workoutLayout, /sequence_signifier_icon|set_signifier_icon/);
   assert.match(webIndex, /id="workout-progress-text"[\s\S]*id="execution-signifier"[\s\S]*id="exercise-name"[\s\S]*id="exercise-media-card"/);
-  assert.match(webIndex, /id="execution-playhead"[\s\S]*id="execution-block-track"/);
+  assert.match(webIndex, /id="execution-block-track"/);
+  assert.doesNotMatch(webIndex, /id="execution-playhead"/);
   assert.doesNotMatch(webIndex, /sequence-signifier-icon|set-signifier-icon/);
   assert.doesNotMatch(webIndex, /unilateral-signifier|bidirectional-signifier/);
   assert.match(
@@ -1368,7 +1369,7 @@ test("literal work-block timelines and logical exercise progress match", () => {
   );
   assert.match(
     workoutDisplayPolicy,
-    /Distinct\(StringComparer\.Ordinal\)[\s\S]*GetTimeline[\s\S]*UsesThreeDistinctExercisePalette/,
+    /Distinct\(StringComparer\.Ordinal\)[\s\S]*GetTimeline[\s\S]*SetNumber != blocks[\s\S]*UsesThreeDistinctExercisePalette/,
   );
   assert.match(
     workoutDisplayPolicy,
@@ -1380,7 +1381,7 @@ test("literal work-block timelines and logical exercise progress match", () => {
   );
   assert.match(
     workoutTimelineView,
-    /for \(int index = 0; index < _blocks\.Length; index\+\+\)[\s\S]*DrawRoundRect[\s\S]*_currentBlockIndex[\s\S]*DrawPath/,
+    /_setStartBlockIndices[\s\S]*for \(int setIndex = 0; setIndex < setCount; setIndex\+\+\)[\s\S]*DrawRoundRect[\s\S]*_currentBlockIndex[\s\S]*DrawPath/,
   );
   const webTimeline = methodBody(
     webApp,
@@ -1389,7 +1390,7 @@ test("literal work-block timelines and logical exercise progress match", () => {
   );
   assert.match(
     webTimeline,
-    /getWorkoutExecutionTimeline[\s\S]*execution-work-block[\s\S]*executionPlayhead\.style\.left/,
+    /getWorkoutExecutionTimeline[\s\S]*setStartBlockIndices[\s\S]*execution-set[\s\S]*execution-work-block[\s\S]*classList\.add\("current"\)/,
   );
   assert.match(
     webApp,
@@ -1399,8 +1400,8 @@ test("literal work-block timelines and logical exercise progress match", () => {
     workoutModule,
     /getWorkoutDisplayProgress[\s\S]*getWorkoutExecutionTimeline[\s\S]*usesThreeDistinctExercisePalette[\s\S]*getThreeDistinctExerciseAccent[\s\S]*getWorkoutBlockAccent/,
   );
-  assert.match(webStyles, /\.execution-block-track[\s\S]*grid-template-columns[\s\S]*\.execution-work-block\.blue[\s\S]*var\(--rest-accent\)[\s\S]*\.execution-work-block\.red[\s\S]*var\(--move-accent\)[\s\S]*\.execution-work-block\.neutral[\s\S]*var\(--chartreuse\)/);
-  assert.match(webStyles, /\.execution-playhead[\s\S]*border-top: 7px solid var\(--graphite\)/);
+  assert.match(webStyles, /\.execution-block-track[\s\S]*\.execution-set[\s\S]*grid-template-columns[\s\S]*\.execution-work-block\.blue[\s\S]*var\(--rest-accent\)[\s\S]*\.execution-work-block\.red[\s\S]*var\(--move-accent\)[\s\S]*\.execution-work-block\.neutral[\s\S]*var\(--chartreuse\)/);
+  assert.match(webStyles, /\.execution-work-block\.current::before[\s\S]*border-top: 7px solid var\(--graphite\)/);
   assert.doesNotMatch(workoutLayout, /side_phase_label|countdown_phase_icon/);
   assert.doesNotMatch(mainActivity, /_sidePhaseLabel|_countdownPhaseIcon|GetMovementCueIcon/);
   assert.doesNotMatch(webIndex, /side-phase-label|movement-cue|BIDIRECTIONAL|UNILATERAL/);
@@ -2109,10 +2110,10 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
       .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
       .map((root) => root.id),
     [
-      96, 104, 113, 115, 120, 123, 143, 160, 177, 178, 179, 180, 181,
-      211, 214, 220, 223, 252, 261, 264, 285, 286, 288, 291, 292, 302, 307, 327, 329,
+      96, 115, 143, 160, 178, 179, 180, 181,
+      211, 214, 220, 223, 252, 264, 285, 286, 288, 291, 292, 302, 307, 327, 329,
       367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
-      617, 742, 784, 834, 845, 910, 948, 996,
+      617, 742, 784, 834, 910, 948,
     ],
   );
 });

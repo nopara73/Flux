@@ -289,7 +289,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 63;
+export const CURRENT_CATALOG_REVISION = 64;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -422,6 +422,10 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [61, new Set([302, 304, 305, 307, 308, 309, 310])],
   [62, new Set([248, 281, 286, 367, 393, 529, 537, 545])],
   [63, new Set([439, 442, 444])],
+  [64, new Set([
+    104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
+    256, 261, 626, 677, 845, 996, 997,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -989,6 +993,11 @@ export function getWorkoutExecutionTimeline(
       usesThreeExercisePalette
         ? getThreeDistinctExerciseAccent(group)
         : getWorkoutBlockAccent(group)),
+    setStartBlockIndices: timelineGroups
+      .map((group, index) => ({ setNumber: group.setNumber ?? 1, index }))
+      .filter((entry, index, entries) => index === 0 ||
+        entry.setNumber !== entries[index - 1].setNumber)
+      .map((entry) => entry.index),
     currentBlockIndex,
   };
 }

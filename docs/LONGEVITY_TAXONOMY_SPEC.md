@@ -453,6 +453,9 @@ Multi-category tags remain scientifically and analytically useful, but the requi
 - Every retained record must be declared in exactly one mandatory sequence or
   in the explicit standalone inventory. There is no implicit standalone
   fallback; generation rejects unreviewed, overlapping, or orphaned records.
+- Repetition and isometric-hold variants remain independent selectable
+  movements. A shared movement identity prevents duplication within one
+  workout; it does not force the variants into one mandatory sequence.
 - For candidate priority, a sequence uses the hardest member whose primary
   muscle belongs to the slot being filled. Recovery timestamps are still
   recorded from each completed block's own exercise identity.
@@ -543,7 +546,9 @@ Unqualified/removed exercises retain their historical database identity only for
 - Duration remains 3–20 minutes, defaulting to the last valid value or 10.
 - Show logical exercise progress immediately and accessibly. A multi-block
   sequence and all of its repeated sets count once while their individual
-  45-second work blocks remain visible in the execution timeline.
+  45-second work blocks remain visible in the execution timeline. Repeated sets
+  use separate outlined groups so they cannot be mistaken for additional
+  side, direction, or linked-exercise blocks in one set.
 - Keep the human demonstration as the primary visual; preserve existing Ready, Move, Rest, and Done states, testing shortcut, hold/repetition playback behavior, one rest action, and one Done action.
 - Do not imply clinical efficacy, “years added,” or a personalized prescription.
 

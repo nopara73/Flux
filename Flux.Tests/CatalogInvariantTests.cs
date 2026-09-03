@@ -62,7 +62,7 @@ public sealed class CatalogInvariantTests
         {
             [104] = [104, 136, 626],
             [113] = [113, 135],
-            [115] = [115, 997],
+            [115] = [115, 996, 997],
             [117] = [117, 123],
             [120] = [120, 184],
             [124] = [124, 636],
@@ -592,14 +592,9 @@ public sealed class CatalogInvariantTests
         Dictionary<int, int[]> auditedMultiMemberSequences = new()
         {
             [96] = [96, 540],
-            [104] = [104, 626],
-            [113] = [113, 135],
             [115] = [115, 532],
-            [120] = [120, 184],
-            [123] = [123, 117, 199],
             [143] = [143, 538],
             [160] = [160, 533],
-            [177] = [177, 186],
             [178] = [178, 535],
             [179] = [179, 539],
             [180] = [180, 534],
@@ -609,7 +604,6 @@ public sealed class CatalogInvariantTests
             [220] = [220, 543],
             [223] = [223, 756],
             [252] = [252, 253, 254],
-            [261] = [261, 677],
             [264] = [264, 406],
             [285] = [285, 541],
             [286] = [286, 545],
@@ -638,10 +632,8 @@ public sealed class CatalogInvariantTests
             [742] = [742, 338],
             [784] = [784, 969, 1000],
             [834] = [834, 914],
-            [845] = [845, 256],
             [910] = [910, 962],
             [948] = [948, 949],
-            [996] = [996, 997],
         };
         int[] actualMultiMemberRoots = exercises
             .Where(root => root.SequenceBlocks
@@ -670,14 +662,17 @@ public sealed class CatalogInvariantTests
             Assert.Equal(
                 expectedBlocks,
                 root.SequenceBlocks.Select(block => block.ExerciseId).ToArray());
+            Assert.Single(root.SequenceBlocks
+                .Select(block => exercises.Single(exercise =>
+                    exercise.Id == block.ExerciseId).Mode)
+                .Distinct());
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 284,
-            [2] = 121,
+            [1] = 291,
+            [2] = 128,
             [3] = 28,
-            [4] = 15,
-            [5] = 1,
+            [4] = 11,
         };
         Dictionary<int, int> actualSequenceBlockDistribution = exercises
             .Where(exercise => exercise.SequenceBlocks.Length > 0)

@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 63;
+    public const int CurrentCatalogRevision = 64;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -1200,6 +1200,11 @@ public static class CatalogMigrationRules
                     248, 281, 286, 367, 393, 529, 537, 545,
                 },
                 [63] = new HashSet<int> { 439, 442, 444 },
+                [64] = new HashSet<int>
+                {
+                    104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
+                    256, 261, 626, 677, 845, 996, 997,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>

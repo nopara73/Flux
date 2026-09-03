@@ -1268,13 +1268,6 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 626,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1620,13 +1613,6 @@
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 135,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -1810,7 +1796,22 @@
     "holdFramePercent": 5,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 117,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 117,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -1944,20 +1945,6 @@
       },
       {
         "exerciseId": 120,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 184,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 184,
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
@@ -2096,27 +2083,6 @@
         "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": true,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 117,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 117,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 199,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
         "mediaSegment": "Full"
       }
     ],
@@ -2641,7 +2607,15 @@
     "holdFramePercent": 38,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 135,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Compatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -4353,20 +4327,6 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 186,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 186,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -4731,7 +4691,22 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 184,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 184,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -4815,7 +4790,22 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 186,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 186,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Compatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -5331,7 +5321,15 @@
     "holdFramePercent": 0,
     "sideSequence": "Alternating",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 199,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Compatible",
     "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -7086,7 +7084,22 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 256,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 256,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Compatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -7270,13 +7283,6 @@
     "sequenceBlocks": [
       {
         "exerciseId": 261,
-        "sideCue": "None",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 677,
         "sideCue": "None",
         "directionCue": "None",
         "mirrorMedia": false,
@@ -19394,7 +19400,15 @@
     "holdFramePercent": 55,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 626,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Incompatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -19815,7 +19829,15 @@
     "holdFramePercent": 33,
     "sideSequence": "Continuous",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 677,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Compatible",
     "upperBodyClothingRequirement": "Agnostic",
@@ -21687,20 +21709,6 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 256,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 256,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Incompatible",
@@ -22786,20 +22794,6 @@
         "directionCue": "None",
         "mirrorMedia": true,
         "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 997,
-        "sideCue": "ScreenLeft",
-        "directionCue": "None",
-        "mirrorMedia": false,
-        "mediaSegment": "Full"
-      },
-      {
-        "exerciseId": 997,
-        "sideCue": "ScreenRight",
-        "directionCue": "None",
-        "mirrorMedia": true,
-        "mediaSegment": "Full"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -22815,7 +22809,8 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 115
   },
   {
     "id": 997,
@@ -22837,7 +22832,22 @@
     "holdFramePercent": 50,
     "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
-    "sequenceBlocks": [],
+    "sequenceBlocks": [
+      {
+        "exerciseId": 997,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 997,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      }
+    ],
     "insectCompatibility": "Incompatible",
     "hardFloorCompatibility": "Compatible",
     "upperBodyClothingRequirement": "Agnostic",

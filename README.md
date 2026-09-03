@@ -378,6 +378,9 @@ Sequence structure is derived from the demonstrated movement:
   awkward or redundant variants are omitted.
 - Distinct established exercises that are useful only together may be linked in
   one sequence.
+- A repetition and an isometric hold remain separate selectable exercises;
+  sharing a movement family does not make either one mandatory preparation for
+  the other.
 
 Scheduling never splits an atomic sequence to obtain the demand order. A
 sequence's scheduling demand is the highest `muscularDemand` among all of its
@@ -390,9 +393,9 @@ Every retained catalog record has an explicit scheduling verdict in
 `tools/ExerciseSequences.psd1`: it is either a member of exactly one mandatory
 sequence or is deliberately listed as standalone. Generation rejects implicit
 standalone defaults, orphans, overlaps, and hidden members used as roots. The
-current semantic audit yields 449 schedulable roots from 508 exercise records:
-284 one-block, 121 two-block, 28 three-block, 15 four-block, and one five-block
-root. Fifty-one roots couple multiple named exercise records, including 17
+current semantic audit yields 458 schedulable roots from 508 exercise records:
+291 one-block, 128 two-block, 28 three-block, and 11 four-block roots.
+Forty-three roots couple multiple named exercise records, including 17
 exact alternating integrations. These counts are pinned audit results, not
 quotas; an awkward block must not be added merely to increase a bucket.
 
@@ -434,9 +437,10 @@ each equal segment is one real 45-second work block. Side and direction
 sequences use their actual blue/red/chartreuse cues. An uncued
 three-block sequence made from three genuinely different exercises uses a
 blue/chartreuse/red identity pattern, so it cannot be mistaken for repeated sets;
-extra sets repeat that same pattern. An external playhead marks the current block
-without changing the segment. The 15-second rests remain in the separate rest
-timer and never appear as timeline segments or gaps. The main header counter
+extra sets repeat that same pattern in their own outlined set group rather than
+being flattened into one apparent giant sequence. An external playhead marks
+the current block without changing the segment. The 15-second rests remain in
+the separate rest timer and never appear as timeline segments. The main header counter
 counts each selected sequence once, so it remains
 unchanged across that sequence's sides, directions, linked exercises, and
 repeated sets. The workout controls follow a media-player model: shuffle

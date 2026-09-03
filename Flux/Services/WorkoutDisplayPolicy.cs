@@ -13,6 +13,7 @@ public readonly record struct WorkoutDisplayProgress(int Position, int Total);
 
 public sealed record WorkoutExecutionTimeline(
     IReadOnlyList<WorkoutBlockAccent> Blocks,
+    IReadOnlyList<int> SetStartBlockIndices,
     int CurrentBlockIndex);
 
 public static class WorkoutDisplayPolicy
@@ -82,6 +83,12 @@ public static class WorkoutDisplayPolicy
                 .Select(group => usesThreeDistinctExercisePalette
                     ? GetThreeDistinctExerciseAccent(group)
                     : GetAccent(group))
+                .ToArray(),
+            blocks
+                .Select((group, index) => (group.SetNumber, Index: index))
+                .Where(entry => entry.Index == 0 ||
+                    entry.SetNumber != blocks[entry.Index - 1].SetNumber)
+                .Select(entry => entry.Index)
                 .ToArray(),
             currentBlockIndex);
     }

@@ -2269,7 +2269,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(64, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2364,6 +2364,71 @@ public sealed class CatalogMigrationRulesTests
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance];
         Assert.Equal(-4, phaseScores[444]);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void IndependentVariationRevisionRebuildsCoupledPlacementsWithoutResettingFeedback()
+    {
+        HashSet<int> changedIds =
+        [
+            104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
+            256, 261, 626, 677, 845, 996, 997,
+        ];
+        Assert.Equal(64, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
+        Assert.DoesNotContain(
+            CatalogMigrationRules.ScoreInvalidationsByRevision,
+            revision => revision.Key == 64);
+
+        const string changedGroup = "independent-variation.changed";
+        const string retainedGroup = "independent-variation.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 63,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 177,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+                [retainedGroup] = ExerciseOutcome.X,
+            },
+            PendingScoreExerciseId = 177,
+            PendingScoreValue = -4,
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [changedGroup] = [177],
+            },
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [177] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal(177, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal([177], state.KeptExerciseRootIdsBySelectionGroupId[changedGroup]);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.Equal(-4, phaseScores[177]);
         Assert.Equal(-2, phaseScores[15]);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
@@ -2735,7 +2800,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(64, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -2794,7 +2859,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(63, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(64, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);

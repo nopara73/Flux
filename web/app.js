@@ -84,7 +84,6 @@ const elements = {
   holdFrame: byId("hold-frame"),
   holdBadge: byId("hold-badge"),
   executionSignifier: byId("execution-signifier"),
-  executionPlayhead: byId("execution-playhead"),
   executionBlockTrack: byId("execution-block-track"),
   mediaScrim: byId("media-scrim"),
   mediaError: byId("media-error"),
@@ -1201,37 +1200,54 @@ function renderExecutionTimeline(group, selectUpcomingBlock = false) {
     selectUpcomingBlock,
   );
   const blockCount = timeline.blocks.length;
-  const currentPosition = timeline.currentBlockIndex + 1;
+  const currentSetIndex = timeline.setStartBlockIndices
+    .findLastIndex((index) => index <= timeline.currentBlockIndex);
+  const currentSetStart = timeline.setStartBlockIndices[currentSetIndex];
+  const currentSetEnd = timeline.setStartBlockIndices[currentSetIndex + 1] ??
+    blockCount;
+  const currentBlockPosition = timeline.currentBlockIndex - currentSetStart + 1;
+  const currentSetBlockCount = currentSetEnd - currentSetStart;
+  const setElements = timeline.setStartBlockIndices.map((startIndex, setIndex) => {
+    const endIndex = timeline.setStartBlockIndices[setIndex + 1] ?? blockCount;
+    const set = document.createElement("span");
+    set.className = "execution-set";
+    set.style.setProperty(
+      "--execution-set-block-count",
+      String(endIndex - startIndex),
+    );
+    set.append(...timeline.blocks.slice(startIndex, endIndex).map(
+      (accent, indexWithinSet) => {
+        const block = document.createElement("span");
+        block.className = `execution-work-block ${accent}`;
+        if (startIndex + indexWithinSet === timeline.currentBlockIndex) {
+          block.classList.add("current");
+        }
+        return block;
+      },
+    ));
+    return set;
+  });
   elements.executionBlockTrack.replaceChildren(
-    ...timeline.blocks.map((accent) => {
-      const block = document.createElement("span");
-      block.className = `execution-work-block ${accent}`;
-      return block;
-    }),
+    ...setElements,
   );
-  elements.executionBlockTrack.style.setProperty(
-    "--execution-block-count",
-    String(blockCount),
-  );
-  const timelineWidth = Math.min(166, Math.max(42, 28 + blockCount * 21));
-  const trackContentWidth = timelineWidth - 12;
-  const trackGap = blockCount === 1
-    ? 0
-    : Math.min(3, trackContentWidth / (blockCount * 2));
-  const blockWidth =
-    (trackContentWidth - trackGap * (blockCount - 1)) / blockCount;
-  const playheadCenter = 6 +
-    timeline.currentBlockIndex * (blockWidth + trackGap) +
-    blockWidth / 2;
+  const setCount = timeline.setStartBlockIndices.length;
+  const timelineWidth = Math.min(166, Math.max(
+    42,
+    setCount * 12 + blockCount * 21 +
+      (blockCount - setCount) * 3 + (setCount - 1) * 5,
+  ));
   elements.executionSignifier.style.width = `${timelineWidth}px`;
-  elements.executionPlayhead.style.left = `${playheadCenter}px`;
-  const description =
-    `Work block ${currentPosition} of ${blockCount}. ` +
+  const setDescription = setCount > 1
+    ? `Set ${currentSetIndex + 1} of ${setCount}. `
+    : "";
+  const description = setDescription +
+    `Work block ${currentBlockPosition} of ${currentSetBlockCount}. ` +
     "Each colored segment is one 45-second work block. " +
     "The 15-second transitions are shown separately.";
   elements.executionSignifier.setAttribute("aria-label", description);
   elements.executionSignifier.title =
-    `Work block ${currentPosition} of ${blockCount}`;
+    setDescription +
+    `Work block ${currentBlockPosition} of ${currentSetBlockCount}`;
 }
 
 function showReadyPanel() {

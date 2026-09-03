@@ -16,6 +16,7 @@ public sealed class WorkoutBlockTimelineView : View
     private const float BorderDp = 3f;
     private const float InnerPaddingDp = 3f;
     private const float PreferredGapDp = 3f;
+    private const float SetGapDp = 5f;
     private const float SegmentWidthDp = 21f;
 
     private readonly Paint _paint = new(PaintFlags.AntiAlias);
@@ -26,6 +27,7 @@ public sealed class WorkoutBlockTimelineView : View
     private readonly int _redColor;
     private readonly int _neutralColor;
     private WorkoutBlockAccent[] _blocks = [WorkoutBlockAccent.Neutral];
+    private int[] _setStartBlockIndices = [0];
     private int _currentBlockIndex;
 
     public WorkoutBlockTimelineView(Context context)
@@ -46,9 +48,11 @@ public sealed class WorkoutBlockTimelineView : View
 
     public void SetTimeline(
         IReadOnlyList<WorkoutBlockAccent> blocks,
+        IReadOnlyList<int> setStartBlockIndices,
         int currentBlockIndex)
     {
         ArgumentNullException.ThrowIfNull(blocks);
+        ArgumentNullException.ThrowIfNull(setStartBlockIndices);
         if (blocks.Count == 0)
         {
             throw new ArgumentException(
@@ -59,8 +63,19 @@ public sealed class WorkoutBlockTimelineView : View
         {
             throw new ArgumentOutOfRangeException(nameof(currentBlockIndex));
         }
+        if (setStartBlockIndices.Count == 0 ||
+            setStartBlockIndices[0] != 0 ||
+            setStartBlockIndices.Any(index => index < 0 || index >= blocks.Count) ||
+            !setStartBlockIndices.SequenceEqual(
+                setStartBlockIndices.Distinct().Order()))
+        {
+            throw new ArgumentException(
+                "Set boundaries must be unique ascending block indices starting at zero.",
+                nameof(setStartBlockIndices));
+        }
 
         _blocks = blocks.ToArray();
+        _setStartBlockIndices = setStartBlockIndices.ToArray();
         _currentBlockIndex = currentBlockIndex;
         RequestLayout();
         Invalidate();
@@ -68,8 +83,12 @@ public sealed class WorkoutBlockTimelineView : View
 
     protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
+        int setCount = _setStartBlockIndices.Length;
         float desiredWidthDp = Math.Clamp(
-            28f + _blocks.Length * SegmentWidthDp,
+            setCount * (2f * (BorderDp + InnerPaddingDp)) +
+                _blocks.Length * SegmentWidthDp +
+                (_blocks.Length - setCount) * PreferredGapDp +
+                (setCount - 1) * SetGapDp,
             MinimumWidthDp,
             MaximumWidthDp);
         SetMeasuredDimension(
@@ -86,56 +105,76 @@ public sealed class WorkoutBlockTimelineView : View
         float border = Dp(BorderDp);
         float innerPadding = Dp(InnerPaddingDp);
         float cornerRadius = Dp(11f);
-        var outer = new RectF(0f, trackTop, Width, trackBottom);
-        _paint.Color = new Color(_graphiteColor);
-        canvas.DrawRoundRect(outer, cornerRadius, cornerRadius, _paint);
-
-        var inner = new RectF(
-            border,
-            trackTop + border,
-            Width - border,
-            trackBottom - border);
-        _paint.Color = new Color(_surfaceColor);
-        canvas.DrawRoundRect(
-            inner,
-            Math.Max(0f, cornerRadius - border),
-            Math.Max(0f, cornerRadius - border),
-            _paint);
-
-        float contentLeft = inner.Left + innerPadding;
-        float contentRight = inner.Right - innerPadding;
-        float contentTop = inner.Top + innerPadding;
-        float contentBottom = inner.Bottom - innerPadding;
-        float contentWidth = Math.Max(1f, contentRight - contentLeft);
-        float gap = _blocks.Length == 1
-            ? 0f
-            : Math.Min(
-                Dp(PreferredGapDp),
-                contentWidth / (_blocks.Length * 2f));
-        float segmentWidth = Math.Max(
-            1f,
-            (contentWidth - gap * (_blocks.Length - 1)) / _blocks.Length);
+        int setCount = _setStartBlockIndices.Length;
+        float setGap = setCount == 1 ? 0f : Dp(SetGapDp);
+        float blockGap = Dp(PreferredGapDp);
+        float frameOverhead = 2f * (border + innerPadding);
+        float availableForSegments = Width -
+            setGap * (setCount - 1) -
+            frameOverhead * setCount -
+            blockGap * (_blocks.Length - setCount);
+        float segmentWidth = Math.Max(1f, availableForSegments / _blocks.Length);
         float segmentRadius = Math.Min(Dp(4f), segmentWidth / 3f);
+        float frameLeft = 0f;
+        float currentCenter = 0f;
 
-        for (int index = 0; index < _blocks.Length; index++)
+        for (int setIndex = 0; setIndex < setCount; setIndex++)
         {
-            float left = contentLeft + index * (segmentWidth + gap);
-            var segment = new RectF(
-                left,
-                contentTop,
-                left + segmentWidth,
-                contentBottom);
-            _paint.Color = new Color(GetBlockColor(_blocks[index]));
+            int startIndex = _setStartBlockIndices[setIndex];
+            int endIndex = setIndex + 1 < setCount
+                ? _setStartBlockIndices[setIndex + 1]
+                : _blocks.Length;
+            int blockCount = endIndex - startIndex;
+            float frameWidth = frameOverhead +
+                blockCount * segmentWidth +
+                (blockCount - 1) * blockGap;
+            var outer = new RectF(
+                frameLeft,
+                trackTop,
+                frameLeft + frameWidth,
+                trackBottom);
+            _paint.Color = new Color(_graphiteColor);
+            canvas.DrawRoundRect(outer, cornerRadius, cornerRadius, _paint);
+
+            var inner = new RectF(
+                outer.Left + border,
+                outer.Top + border,
+                outer.Right - border,
+                outer.Bottom - border);
+            _paint.Color = new Color(_surfaceColor);
             canvas.DrawRoundRect(
-                segment,
-                segmentRadius,
-                segmentRadius,
+                inner,
+                Math.Max(0f, cornerRadius - border),
+                Math.Max(0f, cornerRadius - border),
                 _paint);
+
+            float contentLeft = inner.Left + innerPadding;
+            float contentTop = inner.Top + innerPadding;
+            float contentBottom = inner.Bottom - innerPadding;
+            for (int index = startIndex; index < endIndex; index++)
+            {
+                float left = contentLeft +
+                    (index - startIndex) * (segmentWidth + blockGap);
+                var segment = new RectF(
+                    left,
+                    contentTop,
+                    left + segmentWidth,
+                    contentBottom);
+                _paint.Color = new Color(GetBlockColor(_blocks[index]));
+                canvas.DrawRoundRect(
+                    segment,
+                    segmentRadius,
+                    segmentRadius,
+                    _paint);
+                if (index == _currentBlockIndex)
+                {
+                    currentCenter = segment.CenterX();
+                }
+            }
+
+            frameLeft += frameWidth + setGap;
         }
 
-        float currentCenter = contentLeft +
-            _currentBlockIndex * (segmentWidth + gap) +
-            segmentWidth / 2f;
         float markerTop = trackTop - Dp(10f);
         float markerBottom = trackTop - Dp(3f);
         float markerHalfWidth = Dp(5f);

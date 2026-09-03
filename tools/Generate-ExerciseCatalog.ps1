@@ -3894,6 +3894,11 @@ foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 
 
     $members = @($blocks | ForEach-Object { [int]$_.exerciseId } |
         Sort-Object -Unique)
+    if (@($members | ForEach-Object {
+                [string]$recordsById[$_]['mode']
+            } | Sort-Object -Unique).Count -ne 1) {
+        $sequenceViolations.Add($rootId)
+    }
     foreach ($memberId in $members) {
         $member = $recordsById[$memberId]
         if ($memberId -ne $rootId -and @($member['sequenceBlocks']).Count -ne 0) {

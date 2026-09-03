@@ -8,14 +8,9 @@
     # blocks and records one outcome only after the final block.
     Sequences = @{
         '96' = @(96, 540)                 # Figure-four squat sides, then alternating integration
-        '104' = @(104, 626)               # Sumo squat repetitions, then hold
-        '113' = @(113, 135)               # Overhead squat repetitions, then hold
         '115' = @(115, 532)               # Pistol squat sides, then alternating integration
-        '120' = @(120, 184)               # Split-squat pulses, then holds on both sides
-        '123' = @(123, 117, 199)          # Lateral-lunge repetitions, holds, then side-to-side integration
         '143' = @(143, 538)               # Reverse-lunge/front-kick sides, then alternating integration
         '160' = @(160, 533)               # Standing donkey-kick sides, then alternating integration
-        '177' = @(177, 186)               # Hip-airplane repetitions, then holds on both sides
         '178' = @(178, 535)               # Crescent-kick sides, then alternating integration
         '179' = @(179, 539)               # Hip-hinge rear-leg-raise sides, then alternating integration
         '180' = @(180, 534)               # Front-snap-kick sides, then alternating integration
@@ -25,7 +20,6 @@
         '220' = @(220, 543)               # Rising-block sides, then alternating integration
         '223' = @(223, 756)               # Inward, then outward controlled wrist circles on both sides
         '252' = @(252, 253, 254)          # Three calf-raise foot angles
-        '261' = @(261, 677)               # Reverse-fly repetitions, then hold
         '264' = @(264, 406)               # Synchronous arm circles, then windmill-style integration
         '285' = @(285, 541)               # Inside-block sides, then alternating integration
         '286' = @(286, 545)               # Outside-block sides, then alternating integration
@@ -54,10 +48,8 @@
         '742' = @(742, 338)               # Triceps stretch, then triceps stretch with side bend
         '784' = @(784, 969, 1000)         # Mountain, chair, and standing forward-fold holds
         '834' = @(834, 914)               # Diagonal knee-pull sides, then alternating integration
-        '845' = @(845, 256)               # Overhead side-stretch repetitions, then holds
         '910' = @(910, 962)               # Pilates knee-lift-twist sides, then alternating integration
         '948' = @(948, 949)               # Wood chop, then reverse wood chop on both sides
-        '996' = @(996, 997)               # Partial pistol-squat repetitions, then bottom holds on both sides
     }
 
     # These records were reviewed and deliberately remain complete one-member
@@ -65,15 +57,15 @@
     StandaloneIds = @(
         15, 16, 17, 19, 20, 21, 31, 32, 37, 41, 47, 56,
         58, 59, 60, 92, 93, 94, 95, 97, 98, 99, 100,
-        101, 102, 103, 105, 107, 108, 109, 110, 111, 112, 114, 116,
-        118, 119, 121, 122, 124, 125, 126, 127, 128, 129, 130, 131, 132,
-        133, 136, 138, 139, 140, 141, 142, 144, 145, 146, 147,
+        101, 102, 103, 104, 105, 107, 108, 109, 110, 111, 112, 113, 114, 116,
+        117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132,
+        133, 135, 136, 138, 139, 140, 141, 142, 144, 145, 146, 147,
         148, 150, 151, 152, 154, 156, 159, 161, 167, 168, 169, 170,
-        171, 173, 174, 176, 182, 183, 185, 187, 188, 190, 191,
-        192, 193, 194, 195, 196, 197, 198, 200, 201, 203, 212, 215,
+        171, 173, 174, 176, 177, 182, 183, 184, 185, 186, 187, 188, 190, 191,
+        192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 203, 212, 215,
         216, 217, 218, 219, 224, 225, 227, 228, 230, 231, 233, 234,
         236, 237, 238, 239, 240, 241, 242, 245, 246, 248, 251, 255,
-        257, 258, 260, 262, 263, 265, 266, 268, 269, 270, 271, 272,
+        256, 257, 258, 260, 261, 262, 263, 265, 266, 268, 269, 270, 271, 272,
         273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284,
         287, 289, 290, 293, 295, 296, 301,
         303, 305, 308, 309, 311, 314, 315, 321, 326, 340, 341, 377, 379, 389,
@@ -91,12 +83,12 @@
         549, 550, 551, 552, 554, 555, 556, 557,
         560, 561, 562, 563, 564, 565, 567, 568, 569, 570,
         571, 572, 573, 574, 575, 576, 577, 578, 583, 588, 591,
-        608, 609, 611, 613, 614, 615, 616, 618, 619, 625, 632, 636,
-        647, 648, 649, 654, 666, 678, 681, 683, 684, 685, 686, 687,
+        608, 609, 611, 613, 614, 615, 616, 618, 619, 625, 626, 632, 636,
+        647, 648, 649, 654, 666, 677, 678, 681, 683, 684, 685, 686, 687,
         712, 733, 740, 741, 743, 744, 745, 746, 747, 748, 750, 751,
         752, 804, 816, 818, 825, 831, 836, 843, 884, 885, 886, 887,
         905, 906, 915, 939, 943, 954,
-        958, 960, 971, 973, 986, 987, 998, 999,
+        845, 958, 960, 971, 973, 986, 987, 996, 997, 998, 999,
         134, 137, 149, 153, 162, 163, 165, 166, 172, 175,
         579, 580, 584, 585, 586, 587, 603, 633,
         701, 702, 703, 704, 790, 801, 835, 993
