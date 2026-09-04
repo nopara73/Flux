@@ -289,8 +289,24 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 66;
+export const CURRENT_CATALOG_REVISION = 67;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
+const MATERIAL_TRAINING_ASSOCIATIONS_CATALOG_REVISION = 67;
+// Revision 67 removed false AbdominalWall associations. Limit the migration
+// to identities that actually lost that association so unrelated historical
+// selections keep their original meaning.
+const MATERIAL_TRAINING_ASSOCIATION_CHANGED_EXERCISE_IDS = new Set([
+  31, 41, 56, 94, 95, 98, 99, 100, 113, 114, 115, 118, 119, 120, 126,
+  129, 133, 134, 135, 137, 143, 144, 146, 149, 151, 153, 154, 159, 166,
+  167, 168, 169, 172, 173, 175, 184, 192, 195, 196, 201, 212, 217, 218,
+  230, 231, 232, 237, 242, 245, 251, 256, 260, 263, 265, 266, 269, 271,
+  272, 274, 275, 276, 280, 282, 283, 287, 288, 291, 294, 296, 326, 327,
+  338, 367, 393, 396, 403, 406, 428, 429, 430, 431, 432, 433, 434, 435,
+  437, 440, 443, 448, 452, 457, 461, 472, 473, 484, 487, 508, 509, 529,
+  532, 537, 538, 546, 556, 560, 584, 591, 603, 608, 611, 613, 616, 617,
+  620, 632, 636, 647, 654, 681, 685, 701, 702, 703, 758, 816, 818, 831,
+  845, 886, 887, 915, 939, 943, 958, 969, 971, 986, 996, 997,
+]);
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -428,6 +444,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [65, new Set([507])],
   [66, new Set([524, 525, 526, 527, 528, 790])],
+  [67, new Set([911, 913, 916, 917])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -513,6 +530,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [61, new Set([302, 304, 305, 307, 308, 309, 310])],
   [65, new Set([507])],
   [66, new Set([524, 525, 526, 527, 528, 790])],
+  [67, new Set([911, 913, 916, 917])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -7381,6 +7399,21 @@ export class WorkoutSession {
       this.exercises,
       SCOPED_SCORE_INVALIDATIONS_BY_REVISION,
     );
+    const semanticallyInvalidSelectionStorageKeys =
+      this.state.catalogRevision < MATERIAL_TRAINING_ASSOCIATIONS_CATALOG_REVISION
+        ? new Set(Object.entries(this.state.selectedExerciseIds)
+          .filter(([selectionStorageKey, rootExerciseId]) => {
+            const { selectionGroupId } =
+              this.parseSelectionStorageKey(selectionStorageKey);
+            return this.isMaterialTrainingAssociationAffectedRoot(
+              rootExerciseId,
+            ) && !this.isValidPreferenceRoot(
+              selectionGroupId,
+              rootExerciseId,
+            );
+          })
+          .map(([selectionStorageKey]) => selectionStorageKey))
+        : new Set();
 
     for (const [exerciseId, previousIdentity] of Object.entries(previousIdentities)) {
       const currentIdentity = currentIdentities[exerciseId];
@@ -7399,9 +7432,12 @@ export class WorkoutSession {
       }
     }
 
-    if (changedExerciseIds.size > 0 || hardFloorInvalidatedExerciseIds.size > 0) {
+    if (changedExerciseIds.size > 0 ||
+        hardFloorInvalidatedExerciseIds.size > 0 ||
+        semanticallyInvalidSelectionStorageKeys.size > 0) {
       const affectedSelectionStorageKeys = Object.entries(this.state.selectedExerciseIds)
         .filter(([selectionStorageKey, exerciseId]) =>
+          semanticallyInvalidSelectionStorageKeys.has(selectionStorageKey) ||
           changedExerciseIds.has(exerciseId) ||
           (hardFloorInvalidatedExerciseIds.has(exerciseId) &&
             (this.parseSelectionStorageKey(selectionStorageKey).modifiers &
@@ -7421,6 +7457,10 @@ export class WorkoutSession {
         if (this.resolveLegacySelectionKey(this.state.pendingRestGroupId) ===
             parsed.selectionGroupId) {
           this.clearPendingRest();
+        }
+        if (this.resolveLegacySelectionKey(this.state.pendingMovementGroupId) ===
+            parsed.selectionGroupId) {
+          this.clearPendingMovement();
         }
       }
     }
@@ -7457,6 +7497,17 @@ export class WorkoutSession {
       CURRENT_CATALOG_REVISION,
     );
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
+  }
+
+  isMaterialTrainingAssociationAffectedRoot(rootId) {
+    if (MATERIAL_TRAINING_ASSOCIATION_CHANGED_EXERCISE_IDS.has(rootId)) {
+      return true;
+    }
+    const root = this.exercisesById.get(rootId);
+    return root?.sequenceBlocks.some((block) =>
+      MATERIAL_TRAINING_ASSOCIATION_CHANGED_EXERCISE_IDS.has(
+        block.exerciseId,
+      )) === true;
   }
 
   ensureActiveWorkoutSession(startedBeforeLogging) {

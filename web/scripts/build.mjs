@@ -175,8 +175,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 508) {
-  throw new Error(`Expected 508 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 512) {
+  throw new Error(`Expected 512 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 const pairwiseDeficiencies =

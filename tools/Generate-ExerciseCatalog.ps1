@@ -45,6 +45,8 @@ $canonicalGroupKeys = @(
     $canonicalGroups | ForEach-Object { [string]$_.StableKey })
 $rawExerciseCanonicalGroups = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
+$abdominalSecondaryTrainingReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseAbdominalSecondaryTraining.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $stillExercisePresentations = Import-PowerShellDataFile -LiteralPath (
@@ -115,6 +117,7 @@ $requiredMirrorBenefitsGreatlyCriteria = @(
     'DanceAndAlignmentSensitivePoses'
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
+    'SubtlePelvicPositionFeedback'
 )
 $mirrorOnlyByCoverage = $mirrorRelationshipReview.MirrorOnlyByCoverage
 if ($mirrorOnlyByCoverage -isnot [System.Collections.IDictionary] -or
@@ -560,6 +563,39 @@ if ($invalidCanonicalAssignmentIds.Count -gt 0 -or
     $catalogAssignmentDifference.Count -gt 0 -or
     $invalidCanonicalAssignments.Count -gt 0) {
     throw 'The canonical exercise assignment map must cover every retained stable ID exactly once with one valid primary and unique valid secondaries.'
+}
+
+$requiredAbdominalSecondaryCategories = @(
+    'DynamicTrunkWork'
+    'HighTensionAntiMovement'
+    'IntentionalWholeBodyPosing'
+)
+$actualAbdominalSecondaryCategories = @(
+    $abdominalSecondaryTrainingReview.Keys | Where-Object {
+        [string]$_ -ne 'RubricVersion'
+    })
+$reviewedAbdominalSecondaryExerciseIds = @(
+    foreach ($category in $requiredAbdominalSecondaryCategories) {
+        $abdominalSecondaryTrainingReview[$category] |
+            ForEach-Object { [int]$_ }
+    })
+$catalogAbdominalSecondaryExerciseIds = @(
+    $exerciseCanonicalGroups.GetEnumerator() | Where-Object {
+        'AbdominalWall' -in @($_.Value.Secondary)
+    } | ForEach-Object { [int]$_.Key })
+if ([int]$abdominalSecondaryTrainingReview.RubricVersion -ne 1 -or
+    @(Compare-Object `
+            $requiredAbdominalSecondaryCategories `
+            $actualAbdominalSecondaryCategories).Count -gt 0 -or
+    $reviewedAbdominalSecondaryExerciseIds.Count -ne
+        @($reviewedAbdominalSecondaryExerciseIds | Sort-Object -Unique).Count -or
+    @($reviewedAbdominalSecondaryExerciseIds | Where-Object {
+            $_ -notin $retainedExerciseIds
+        }).Count -gt 0 -or
+    @(Compare-Object `
+            @($reviewedAbdominalSecondaryExerciseIds | Sort-Object) `
+            @($catalogAbdominalSecondaryExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'AbdominalWall secondaries must exactly match the reviewed material-training audit.'
 }
 
 $invalidSessionMovementFamilies = @(

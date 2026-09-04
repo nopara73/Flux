@@ -7,9 +7,29 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 66;
+    public const int CurrentCatalogRevision = 67;
     private const int HardFloorSlipperinessCatalogRevision = 53;
+    private const int MaterialTrainingAssociationsCatalogRevision = 67;
     private const int LastCumulativeWorkoutStateRevision = 3;
+
+    // Revision 67 removed AbdominalWall from these exercises because ordinary
+    // bracing is not material abdominal training. Revalidate only preferences
+    // that contain one of these identities; this is an anatomy migration, not
+    // a reason to reinterpret every unrelated historical slot.
+    private static readonly HashSet<int>
+        MaterialTrainingAssociationChangedExerciseIdSet =
+    [
+        31, 41, 56, 94, 95, 98, 99, 100, 113, 114, 115, 118, 119, 120, 126,
+        129, 133, 134, 135, 137, 143, 144, 146, 149, 151, 153, 154, 159, 166,
+        167, 168, 169, 172, 173, 175, 184, 192, 195, 196, 201, 212, 217, 218,
+        230, 231, 232, 237, 242, 245, 251, 256, 260, 263, 265, 266, 269, 271,
+        272, 274, 275, 276, 280, 282, 283, 287, 288, 291, 294, 296, 326, 327,
+        338, 367, 393, 396, 403, 406, 428, 429, 430, 431, 432, 433, 434, 435,
+        437, 440, 443, 448, 452, 457, 461, 472, 473, 484, 487, 508, 509, 529,
+        532, 537, 538, 546, 556, 560, 584, 591, 603, 608, 611, 613, 616, 617,
+        620, 632, 636, 647, 654, 681, 685, 701, 702, 703, 758, 816, 818, 831,
+        845, 886, 887, 915, 939, 943, 958, 969, 971, 986, 996, 997,
+    ];
 
     private sealed record PriorReviewedReplacementIdentity(
         string Name,
@@ -1055,7 +1075,7 @@ public static class CatalogMigrationRules
         608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
-        790, 816, 834, 843, 845, 886, 887, 971, 986, 987, 993, 996, 997, 998, 999,
+        790, 816, 834, 843, 845, 886, 887, 911, 913, 916, 917, 971, 986, 987, 993, 996, 997, 998, 999,
     ];
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
@@ -1234,6 +1254,7 @@ public static class CatalogMigrationRules
                 },
                 [65] = new HashSet<int> { 507 },
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
+                [67] = new HashSet<int> { 911, 913, 916, 917 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1339,6 +1360,7 @@ public static class CatalogMigrationRules
                 [61] = new HashSet<int> { 302, 304, 305, 307, 308, 309, 310 },
                 [65] = new HashSet<int> { 507 },
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
+                [67] = new HashSet<int> { 911, 913, 916, 917 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -1693,6 +1715,27 @@ public static class CatalogMigrationRules
         state.ActiveDirectionPartnerExerciseIds ??= [];
         state.ActiveFullSideRoundIds ??= [];
         state.PendingScoreUpdates ??= [];
+        bool reconcileMaterialTrainingAssociations =
+            state.CatalogRevision < MaterialTrainingAssociationsCatalogRevision &&
+            exercisesById is not null;
+        HashSet<string> semanticallyInvalidSelectionStorageKeys =
+            reconcileMaterialTrainingAssociations
+                ? state.SelectedExerciseIds
+                    .Where(selection =>
+                    {
+                        (string selectionGroupId, _) =
+                            ParseSelectionStorageKey(selection.Key);
+                        return IsMaterialTrainingAssociationAffectedRoot(
+                                selection.Value,
+                                exercisesById!) &&
+                            !IsValidPreferenceRoot(
+                                selectionGroupId,
+                                selection.Value,
+                                exercisesById!);
+                    })
+                    .Select(selection => selection.Key)
+                    .ToHashSet(StringComparer.Ordinal)
+                : [];
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(
                 state.CatalogRevision,
@@ -1713,6 +1756,8 @@ public static class CatalogMigrationRules
                 Parsed = ParseSelectionStorageKey(selection.Key),
             })
             .Where(selection =>
+                semanticallyInvalidSelectionStorageKeys.Contains(
+                    selection.StorageKey) ||
                 invalidatedExerciseIds.Contains(selection.ExerciseId) ||
                 (hardFloorInvalidatedExerciseIds.Contains(selection.ExerciseId) &&
                     (WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) &
@@ -1748,6 +1793,20 @@ public static class CatalogMigrationRules
             state.PendingRestMillisecondsRemaining = 0;
             state.PendingRestPausedByUser = false;
             state.PendingRestKept = false;
+        }
+        if (state.PendingMovementGroupId is not null &&
+            selectionGroupsWithRetiredSelections.Contains(
+                GetSelectionGroupIdFromRoundId(state.PendingMovementGroupId)))
+        {
+            state.PendingMovementGroupId = null;
+            state.PendingMovementEndsAtUnixMilliseconds = 0;
+            state.PendingMovementMillisecondsRemaining = 0;
+            state.PendingMovementPausedByUser = false;
+        }
+
+        if (reconcileMaterialTrainingAssociations)
+        {
+            ReconcileInvalidSlotKeeps(state, exercisesById!);
         }
 
         if (scoreInvalidatedExerciseIds.Contains(state.PendingScoreExerciseId))
@@ -1826,6 +1885,92 @@ public static class CatalogMigrationRules
                 scoreInvalidatedExerciseIds.Contains(block.ExerciseId));
     }
 
+    private static void ReconcileInvalidSlotKeeps(
+        WorkoutState state,
+        IReadOnlyDictionary<int, Exercise> exercisesById)
+    {
+        foreach (string selectionGroupId in
+                 state.KeptExerciseRootIdsBySelectionGroupId.Keys.ToArray())
+        {
+            state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]
+                .RemoveWhere(rootId =>
+                    IsMaterialTrainingAssociationAffectedRoot(
+                        rootId,
+                        exercisesById) &&
+                    !IsValidPreferenceRoot(
+                        selectionGroupId,
+                        rootId,
+                        exercisesById));
+            if (state.KeptExerciseRootIdsBySelectionGroupId[
+                    selectionGroupId].Count == 0)
+            {
+                state.KeptExerciseRootIdsBySelectionGroupId.Remove(
+                    selectionGroupId);
+            }
+        }
+
+        state.LastKeptExerciseIds = state
+            .KeptExerciseRootIdsBySelectionGroupId
+            .Values
+            .SelectMany(rootIds => rootIds)
+            .Distinct()
+            .Where(exercisesById.ContainsKey)
+            .SelectMany(rootId => exercisesById[rootId].SequenceBlocks.Length > 0
+                ? exercisesById[rootId].SequenceBlocks
+                    .Select(block => block.ExerciseId)
+                : [rootId])
+            .Where(exercisesById.ContainsKey)
+            .ToHashSet();
+    }
+
+    private static bool IsValidPreferenceRoot(
+        string selectionGroupId,
+        int rootId,
+        IReadOnlyDictionary<int, Exercise> exercisesById)
+    {
+        if (!exercisesById.TryGetValue(rootId, out Exercise? root) ||
+            root.SequenceBlocks.Length == 0)
+        {
+            return false;
+        }
+
+        foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
+        {
+            WorkoutResolution resolution =
+                MassGroupingTaxonomy.GetResolution(minutes);
+            if (resolution.Groups.All(group => group.Id != selectionGroupId))
+            {
+                continue;
+            }
+
+            return WorkoutSequencePolicy.GetPlacementOptions(
+                    root,
+                    exercisesById,
+                    resolution.Groups)
+                .Any(option => option
+                    .OrderBy(group => group.Order)
+                    .First()
+                    .Id == selectionGroupId);
+        }
+
+        return false;
+    }
+
+    private static bool IsMaterialTrainingAssociationAffectedRoot(
+        int rootId,
+        IReadOnlyDictionary<int, Exercise> exercisesById)
+    {
+        if (MaterialTrainingAssociationChangedExerciseIdSet.Contains(rootId))
+        {
+            return true;
+        }
+
+        return exercisesById.TryGetValue(rootId, out Exercise? root) &&
+            root.SequenceBlocks.Any(block =>
+                MaterialTrainingAssociationChangedExerciseIdSet.Contains(
+                    block.ExerciseId));
+    }
+
     private static (string SelectionGroupId, WorkoutModifiers Modifiers)
         ParseSelectionStorageKey(string storageKey)
     {
@@ -1845,6 +1990,20 @@ public static class CatalogMigrationRules
 
     private static string GetSelectionGroupIdFromRoundId(string roundId)
     {
+        string? currentSelectionGroupId = MassGroupingTaxonomy.SupportedMinutes
+            .SelectMany(minutes =>
+                MassGroupingTaxonomy.GetResolution(minutes).Groups)
+            .Select(group => group.Id)
+            .Where(groupId =>
+                string.Equals(roundId, groupId, StringComparison.Ordinal) ||
+                roundId.StartsWith(groupId + ".", StringComparison.Ordinal))
+            .OrderByDescending(groupId => groupId.Length)
+            .FirstOrDefault();
+        if (currentSelectionGroupId is not null)
+        {
+            return currentSelectionGroupId;
+        }
+
         const string directionMarker = ".direction";
         int directionIndex = roundId.LastIndexOf(
             directionMarker,

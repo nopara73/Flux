@@ -700,9 +700,9 @@ test("web and mobile persist one combined duration and modifier selection contex
     typeof exercise.soleWallContactRequired === "boolean"));
   assert.ok(catalog.every((exercise) =>
     !exercise.soleWallContactRequired || exercise.wallRequired));
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 30);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 32);
   assert.equal(catalog.filter((exercise) =>
-    exercise.wallRequired && !exercise.soleWallContactRequired).length, 25);
+    exercise.wallRequired && !exercise.soleWallContactRequired).length, 27);
   assert.deepEqual(
     new Set(catalog.filter((exercise) => exercise.soleWallContactRequired)
       .map((exercise) => exercise.id)),
@@ -736,7 +736,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "ClothingRequired")
       .map((exercise) => exercise.id)),
-    new Set([134, 137, 175, 579, 580, 801]),
+    new Set([134, 137, 175, 579, 580, 801, 913]),
   );
   assert.deepEqual(
     new Set(catalog.filter((exercise) =>
@@ -1030,7 +1030,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*85/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*86/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
@@ -1978,7 +1978,10 @@ test("uppercut replacement is a clear one-block alternating floor-safe contract"
   assert.equal(uppercuts.sideSequence, "Alternating");
   assert.equal(uppercuts.sequenceBlocks.length, 1);
   assert.equal(uppercuts.hardFloorCompatibility, "Incompatible");
-  assert.ok(uppercuts.secondaryCanonicalGroups.includes("AbdominalWall"));
+  assert.equal(
+    uppercuts.secondaryCanonicalGroups.includes("AbdominalWall"),
+    false,
+  );
   assert.ok(
     uppercuts.secondaryCanonicalGroups.includes("MedialAndDeepKneeExtensors"),
   );

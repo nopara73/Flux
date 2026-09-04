@@ -2,28 +2,28 @@
     # Stable exercise-oriented canonical assignments. Primary drives scheduling; Secondary contains only meaningful training targets.
     15 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipAbductors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot') }
     16 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('HipAbductors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    17 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    17 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     19 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('HipAbductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
     20 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
     21 = @{ Primary = 'SpinalExtensors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    31 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall') }
+    31 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors') }
     32 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'DeepAndIntersegmentalBack', 'PelvicFloorAndPerineum') }
     37 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
-    41 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    41 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     47 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'DeepAndIntersegmentalBack', 'AnteriorLateralLowerLegAndDorsalFoot') }
-    56 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'AbdominalWall', 'ShoulderAbductors') }
+    56 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'ShoulderAbductors') }
     58 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'PelvicFloorAndPerineum') }
     59 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('ShoulderAbductors', 'HipAbductors', 'AccessoryHipAdductors', 'AbdominalWall') }
     60 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
     92 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors', 'PelvicFloorAndPerineum') }
     93 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('GlutealExtensors', 'HipAbductors', 'MajorHipAdductors') }
-    94 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall') }
-    95 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    94 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    95 = @{ Primary = 'HipFlexors'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     96 = @{ Primary = 'DeepHipRotators'; Secondary = @('GlutealExtensors', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     97 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
-    98 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'HipAbductors', 'AccessoryHipAdductors', 'AbdominalWall') }
-    99 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
-    100 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    98 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'HipAbductors', 'AccessoryHipAdductors') }
+    99 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    100 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     101 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors') }
     102 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle') }
     103 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
@@ -35,54 +35,54 @@
     110 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors') }
     111 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors') }
     112 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
-    113 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'ShoulderAbductors') }
-    114 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
-    115 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    113 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'ShoulderAbductors') }
+    114 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors') }
+    115 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     116 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'DeepHipRotators') }
     117 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors') }
-    118 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall') }
-    119 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'HipFlexors', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    120 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall') }
+    118 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors') }
+    119 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'HipFlexors', 'AnteriorLateralLowerLegAndDorsalFoot', 'PelvicFloorAndPerineum') }
+    120 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     121 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors') }
     122 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors') }
     123 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors') }
     124 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AccessoryHipAdductors', 'HipFlexors', 'AbdominalWall') }
-    125 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors') }
-    126 = @{ Primary = 'HipAbductors'; Secondary = @('LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
+    125 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'SpinalExtensors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors') }
+    126 = @{ Primary = 'HipAbductors'; Secondary = @('LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors') }
     127 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
     128 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AccessoryHipAdductors', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff') }
-    129 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
+    129 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     130 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     131 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
-    132 = @{ Primary = 'AbdominalWall'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors') }
-    133 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall') }
-    135 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
+    132 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('AbdominalWall', 'LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors') }
+    133 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle') }
+    135 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors') }
     136 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     138 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     139 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors') }
     140 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors') }
     141 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     142 = @{ Primary = 'HipAbductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors') }
-    143 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AbdominalWall') }
-    144 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall') }
+    143 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
+    144 = @{ Primary = 'HipFlexors'; Secondary = @() }
     145 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'AnteriorLateralLowerLegAndDorsalFoot') }
-    146 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
+    146 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack') }
     147 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles') }
     148 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors') }
     150 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'HipFlexors') }
-    151 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall') }
+    151 = @{ Primary = 'HipFlexors'; Secondary = @() }
     152 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors') }
-    154 = @{ Primary = 'HipFlexors'; Secondary = @('HipAbductors', 'AbdominalWall', 'DeepHipRotators') }
+    154 = @{ Primary = 'HipFlexors'; Secondary = @('HipAbductors', 'DeepHipRotators') }
     156 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('HipAbductors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'MajorHipAdductors') }
-    159 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall') }
+    159 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipAbductors', 'DeepHipRotators') }
     160 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors') }
     161 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipFlexors', 'HipAbductors') }
-    167 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'PelvicFloorAndPerineum') }
-    168 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('HipFlexors', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    169 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    167 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'ShoulderAbductors', 'PelvicFloorAndPerineum') }
+    168 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('HipFlexors', 'AnteriorLateralLowerLegAndDorsalFoot', 'PelvicFloorAndPerineum') }
+    169 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'PelvicFloorAndPerineum') }
     170 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
     171 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('AnteriorLateralLowerLegAndDorsalFoot', 'HipFlexors') }
-    173 = @{ Primary = 'HipFlexors'; Secondary = @('HipAbductors', 'AbdominalWall') }
+    173 = @{ Primary = 'HipFlexors'; Secondary = @('HipAbductors') }
     174 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AbdominalWall') }
     176 = @{ Primary = 'DeepHipRotators'; Secondary = @('DeepAndIntersegmentalBack', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall') }
     177 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
@@ -92,32 +92,32 @@
     181 = @{ Primary = 'HipAbductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators') }
     182 = @{ Primary = 'HipFlexors'; Secondary = @('DeepHipRotators', 'AbdominalWall', 'HipAbductors', 'MajorHipAdductors') }
     183 = @{ Primary = 'HipAbductors'; Secondary = @('HipFlexors', 'DeepHipRotators', 'MajorHipAdductors', 'AbdominalWall', 'GlutealExtensors') }
-    184 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall') }
+    184 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     185 = @{ Primary = 'DeepHipRotators'; Secondary = @('DeepAndIntersegmentalBack', 'HipAbductors', 'AccessoryHipAdductors', 'ScapularGirdle', 'RotatorCuff') }
     186 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipFlexors', 'HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
     187 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot') }
     188 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors') }
     190 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators') }
     191 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @() }
-    192 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    192 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     193 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ScapularGirdle') }
     194 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('DeepAndIntersegmentalBack') }
-    195 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall') }
-    196 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall') }
+    195 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    196 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors', 'DeepHipRotators') }
     197 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     198 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     199 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors') }
     200 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
-    201 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
+    201 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
     203 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'Chest', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     211 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('IntrinsicHand') }
-    212 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'Soleus', 'AbdominalWall') }
+    212 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'Soleus') }
     213 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('IntrinsicHand') }
     214 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('ForearmExtensorsAndSupinators') }
     215 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('ForearmExtensorsAndSupinators') }
     216 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('IntrinsicHand') }
-    217 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall') }
-    218 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'Chest', 'ElbowExtensors', 'ScapularGirdle', 'AbdominalWall') }
+    217 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
+    218 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'Chest', 'ElbowExtensors', 'ScapularGirdle') }
     219 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ElbowFlexors', 'HipFlexors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     220 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff') }
     223 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ForearmFlexorsAndPronators', 'ElbowFlexors') }
@@ -125,65 +125,65 @@
     225 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('IntrinsicHand') }
     227 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('RotatorCuff', 'ScapularGirdle', 'AbdominalWall') }
     228 = @{ Primary = 'RotatorCuff'; Secondary = @('ScapularGirdle') }
-    230 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors', 'AbdominalWall') }
-    231 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall') }
-    232 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'MajorHipAdductors', 'GlutealExtensors', 'HipAbductors', 'AbdominalWall') }
+    230 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors') }
+    231 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand') }
+    232 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'MajorHipAdductors', 'GlutealExtensors', 'HipAbductors') }
     233 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('IntrinsicHand') }
     234 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowExtensors') }
     236 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators') }
-    237 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall') }
+    237 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
     238 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('ForearmExtensorsAndSupinators') }
     239 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('IntrinsicHand') }
     240 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('HipAbductors', 'DeepHipRotators', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
     241 = @{ Primary = 'Chest'; Secondary = @('IntrinsicHand', 'ForearmFlexorsAndPronators', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle') }
-    242 = @{ Primary = 'DeepHipRotators'; Secondary = @('AccessoryHipAdductors', 'HipAbductors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall') }
-    245 = @{ Primary = 'Chest'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'AbdominalWall', 'ElbowExtensors', 'ScapularGirdle') }
+    242 = @{ Primary = 'DeepHipRotators'; Secondary = @('AccessoryHipAdductors', 'HipAbductors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    245 = @{ Primary = 'Chest'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ElbowFlexors', 'ElbowExtensors', 'ScapularGirdle') }
     246 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
     248 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff') }
-    251 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle') }
+    251 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
     252 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot') }
     253 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot') }
     254 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AccessoryHipAdductors') }
     255 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
-    256 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'AbdominalWall', 'DeepAndIntersegmentalBack') }
+    256 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'DeepAndIntersegmentalBack') }
     257 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     258 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'ElbowFlexors') }
-    260 = @{ Primary = 'HipFlexors'; Secondary = @('LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    260 = @{ Primary = 'HipFlexors'; Secondary = @('LateralKneeExtensors', 'MedialAndDeepKneeExtensors', 'GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     261 = @{ Primary = 'ScapularGirdle'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'RotatorCuff') }
     262 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'ElbowExtensors', 'SpinalExtensors') }
-    263 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'SpinalExtensors', 'AbdominalWall') }
+    263 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'SpinalExtensors') }
     264 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
-    265 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'RotatorCuff', 'AbdominalWall') }
-    266 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'AbdominalWall') }
+    265 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'RotatorCuff') }
+    266 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     268 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
-    269 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall') }
+    269 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
     270 = @{ Primary = 'Chest'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff') }
-    271 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall', 'ShoulderAbductors') }
-    272 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'AbdominalWall') }
+    271 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'ShoulderAbductors') }
+    272 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors') }
     273 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
-    274 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'AbdominalWall', 'GlutealExtensors') }
-    275 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall') }
-    276 = @{ Primary = 'ElbowFlexors'; Secondary = @('ShoulderAbductors', 'Chest', 'AbdominalWall', 'RotatorCuff') }
+    274 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'GlutealExtensors') }
+    275 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
+    276 = @{ Primary = 'ElbowFlexors'; Secondary = @('ShoulderAbductors', 'Chest', 'RotatorCuff') }
     277 = @{ Primary = 'Chest'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'IntrinsicHand') }
     278 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     279 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators') }
-    280 = @{ Primary = 'Chest'; Secondary = @('RotatorCuff', 'AbdominalWall', 'ElbowFlexors', 'ForearmExtensorsAndSupinators', 'ScapularGirdle') }
+    280 = @{ Primary = 'Chest'; Secondary = @('RotatorCuff', 'ElbowFlexors', 'ForearmExtensorsAndSupinators', 'ScapularGirdle') }
     281 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'RotatorCuff') }
-    282 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'HipFlexors', 'HipAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    283 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'IntrinsicHand', 'ForearmFlexorsAndPronators', 'ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall') }
+    282 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ShoulderAbductors', 'HipFlexors', 'HipAbductors', 'PelvicFloorAndPerineum') }
+    283 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'IntrinsicHand', 'ForearmFlexorsAndPronators', 'ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle') }
     284 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'HipAbductors') }
     285 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand') }
     286 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ScapularGirdle', 'RotatorCuff') }
-    287 = @{ Primary = 'ElbowFlexors'; Secondary = @('ShoulderAbductors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
-    288 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('DeepHipRotators', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    287 = @{ Primary = 'ElbowFlexors'; Secondary = @('ShoulderAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
+    288 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     289 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     290 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
-    291 = @{ Primary = 'Chest'; Secondary = @('ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmFlexorsAndPronators', 'AbdominalWall') }
+    291 = @{ Primary = 'Chest'; Secondary = @('ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmFlexorsAndPronators') }
     292 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'AbdominalWall', 'GlutealExtensors', 'ShoulderAbductors') }
     293 = @{ Primary = 'IntrinsicHand'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
-    294 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmExtensorsAndSupinators', 'AbdominalWall') }
+    294 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ScapularGirdle', 'ElbowExtensors', 'IntrinsicHand', 'ForearmExtensorsAndSupinators') }
     295 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'PelvicFloorAndPerineum') }
-    296 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    296 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
     301 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'ElbowExtensors') }
     302 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     303 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'RotatorCuff') }
@@ -197,35 +197,35 @@
     314 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors') }
     315 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle') }
     321 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff', 'AccessoryHipAdductors', 'HipAbductors') }
-    326 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall') }
-    327 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'RotatorCuff', 'AbdominalWall', 'ShoulderAdductorsAndExtensors') }
+    326 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand') }
+    327 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'RotatorCuff', 'ShoulderAdductorsAndExtensors') }
     329 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
-    338 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAdductorsAndExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
+    338 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAdductorsAndExtensors', 'DeepAndIntersegmentalBack') }
     340 = @{ Primary = 'ElbowExtensors'; Secondary = @('AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'BreathingMuscles') }
     341 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ElbowExtensors', 'Chest', 'ForearmExtensorsAndSupinators') }
-    367 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    367 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     377 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     379 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowFlexors', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'RotatorCuff') }
     389 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ElbowFlexors') }
     390 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ShoulderAdductorsAndExtensors', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     391 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles') }
     392 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'BreathingMuscles') }
-    393 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'DeepHipRotators', 'PelvicFloorAndPerineum') }
+    393 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'DeepHipRotators', 'PelvicFloorAndPerineum') }
     394 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'Chest', 'ScapularGirdle', 'BreathingMuscles') }
     395 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAbductors', 'AbdominalWall', 'BreathingMuscles') }
-    396 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall') }
+    396 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'HipAbductors', 'DeepHipRotators') }
     397 = @{ Primary = 'HipAbductors'; Secondary = @('AccessoryHipAdductors', 'ShoulderAbductors', 'ScapularGirdle') }
     398 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('Chest', 'ScapularGirdle', 'PosteriorThighAndKneeFlexors', 'BreathingMuscles') }
     399 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'Chest', 'ScapularGirdle', 'BreathingMuscles') }
     400 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles') }
     401 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('ShoulderAdductorsAndExtensors', 'Chest', 'ScapularGirdle', 'BreathingMuscles') }
     402 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAbductors') }
-    403 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
+    403 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack') }
     404 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'IntrinsicHand') }
     405 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
-    406 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAbductors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
+    406 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAbductors', 'SpinalExtensors', 'DeepAndIntersegmentalBack') }
     407 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff', 'BreathingMuscles') }
-    408 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle', 'CranialMuscles', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
+    408 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'SpinalExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'CranialMuscles', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     409 = @{ Primary = 'PosteriorNeckAndSuboccipitalMuscles'; Secondary = @('AnteriorLateralNeckAndHyoidMuscles') }
     410 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CranialMuscles', 'ShoulderAbductors', 'ScapularGirdle') }
     411 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CranialMuscles', 'ShoulderAbductors', 'ScapularGirdle') }
@@ -245,40 +245,40 @@
     425 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles') }
     426 = @{ Primary = 'HipAbductors'; Secondary = @('MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'Chest', 'ScapularGirdle') }
     427 = @{ Primary = 'HipFlexors'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors') }
-    428 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'ScapularGirdle', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
-    429 = @{ Primary = 'HipFlexors'; Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles') }
-    430 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall', 'BreathingMuscles') }
-    431 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    432 = @{ Primary = 'DeepHipRotators'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    433 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    434 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'AbdominalWall', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
-    435 = @{ Primary = 'HipFlexors'; Secondary = @('Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    428 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ScapularGirdle', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
+    429 = @{ Primary = 'HipFlexors'; Secondary = @('PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles') }
+    430 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles') }
+    431 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    432 = @{ Primary = 'DeepHipRotators'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    433 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    434 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'HipAbductors', 'DeepHipRotators', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
+    435 = @{ Primary = 'HipFlexors'; Secondary = @('Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
     436 = @{ Primary = 'HipAbductors'; Secondary = @('MajorHipAdductors', 'Chest', 'ElbowExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    437 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    437 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     438 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     439 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
-    440 = @{ Primary = 'HipFlexors'; Secondary = @('Chest', 'ScapularGirdle', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    440 = @{ Primary = 'HipFlexors'; Secondary = @('Chest', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
     441 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Chest', 'ScapularGirdle', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     442 = @{ Primary = 'PosteriorNeckAndSuboccipitalMuscles'; Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
-    443 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowExtensors', 'Chest', 'ShoulderAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    443 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowExtensors', 'Chest', 'ShoulderAbductors', 'PelvicFloorAndPerineum') }
     444 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     445 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     446 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle') }
     447 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'ShoulderAbductors') }
-    448 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    448 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum') }
     449 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall') }
     450 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum') }
     451 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'ShoulderAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    452 = @{ Primary = 'DeepHipRotators'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    452 = @{ Primary = 'DeepHipRotators'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
     453 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepHipRotators', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'BreathingMuscles') }
     454 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     455 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ElbowFlexors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     456 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ElbowFlexors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    457 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'ElbowFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    457 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'HipFlexors', 'ElbowFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     458 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum') }
     459 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'HipAbductors', 'MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     460 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    461 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall') }
+    461 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     462 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     463 = @{ Primary = 'HipFlexors'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     464 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'ForearmExtensorsAndSupinators', 'ForearmFlexorsAndPronators', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
@@ -289,16 +289,16 @@
     469 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     470 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles') }
     471 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipAbductors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'PelvicFloorAndPerineum') }
-    472 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AbdominalWall', 'PelvicFloorAndPerineum') }
-    473 = @{ Primary = 'ElbowFlexors'; Secondary = @('AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles') }
+    472 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'PelvicFloorAndPerineum') }
+    473 = @{ Primary = 'ElbowFlexors'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles') }
     476 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'BreathingMuscles', 'PelvicFloorAndPerineum') }
     478 = @{ Primary = 'DeepHipRotators'; Secondary = @('CranialMuscles', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     479 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ShoulderAbductors', 'ScapularGirdle', 'HipAbductors', 'MajorHipAdductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     480 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'PosteriorThighAndKneeFlexors', 'BreathingMuscles') }
-    484 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'AbdominalWall', 'CranialMuscles', 'BreathingMuscles') }
+    484 = @{ Primary = 'MajorHipAdductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'CranialMuscles', 'BreathingMuscles') }
     485 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     486 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors') }
-    487 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowFlexors', 'AbdominalWall') }
+    487 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ElbowFlexors') }
     488 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipAbductors', 'PelvicFloorAndPerineum') }
     489 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors') }
     474 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles') }
@@ -325,8 +325,8 @@
     505 = @{ Primary = 'CranialMuscles'; Secondary = @() }
     506 = @{ Primary = 'CranialMuscles'; Secondary = @() }
     507 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
-    508 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot', 'AbdominalWall') }
-    509 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'AbdominalWall') }
+    508 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'AnteriorLateralLowerLegAndDorsalFoot') }
+    509 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors') }
     510 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'SpinalExtensors') }
     511 = @{ Primary = 'CranialMuscles'; Secondary = @() }
     512 = @{ Primary = 'PosteriorNeckAndSuboccipitalMuscles'; Secondary = @('SpinalExtensors', 'DeepAndIntersegmentalBack') }
@@ -344,16 +344,16 @@
     526 = @{ Primary = 'Chest'; Secondary = @('ElbowFlexors', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     527 = @{ Primary = 'ElbowExtensors'; Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'Chest', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     528 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'Chest', 'ShoulderAbductors', 'ElbowFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
-    529 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    529 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     530 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'DeepHipRotators') }
     531 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
-    532 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    532 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     533 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors') }
     534 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'HipFlexors') }
     535 = @{ Primary = 'DeepHipRotators'; Secondary = @('HipFlexors', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     536 = @{ Primary = 'HipAbductors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators') }
-    537 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'DeepHipRotators', 'PelvicFloorAndPerineum') }
-    538 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AbdominalWall') }
+    537 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors', 'HipFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'HipAbductors', 'CalfDeepPosteriorLegAndPlantarFoot', 'DeepHipRotators', 'PelvicFloorAndPerineum') }
+    538 = @{ Primary = 'HipFlexors'; Secondary = @('GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     539 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     540 = @{ Primary = 'DeepHipRotators'; Secondary = @('GlutealExtensors', 'HipAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     541 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'IntrinsicHand') }
@@ -363,7 +363,7 @@
     519 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ElbowFlexors', 'ScapularGirdle') }
     544 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ShoulderAbductors', 'ElbowExtensors', 'ScapularGirdle', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     545 = @{ Primary = 'ElbowFlexors'; Secondary = @('ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'ScapularGirdle', 'RotatorCuff') }
-    546 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'RotatorCuff', 'AbdominalWall', 'ShoulderAdductorsAndExtensors') }
+    546 = @{ Primary = 'ElbowFlexors'; Secondary = @('Chest', 'RotatorCuff', 'ShoulderAdductorsAndExtensors') }
     547 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle') }
     548 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'PelvicFloorAndPerineum') }
     572 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
@@ -371,35 +371,35 @@
     576 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'RotatorCuff') }
     577 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'ShoulderAbductors', 'AbdominalWall', 'DeepAndIntersegmentalBack') }
     588 = @{ Primary = 'ScapularGirdle'; Secondary = @('RotatorCuff', 'ShoulderAbductors') }
-    591 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'RotatorCuff', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    608 = @{ Primary = 'DeepHipRotators'; Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors') }
+    591 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'RotatorCuff', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    608 = @{ Primary = 'DeepHipRotators'; Secondary = @('DeepAndIntersegmentalBack', 'HipAbductors') }
     609 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepHipRotators') }
     610 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'ShoulderAbductors', 'ScapularGirdle') }
-    611 = @{ Primary = 'DeepHipRotators'; Secondary = @('AbdominalWall', 'DeepAndIntersegmentalBack', 'HipAbductors', 'MajorHipAdductors', 'GlutealExtensors') }
+    611 = @{ Primary = 'DeepHipRotators'; Secondary = @('DeepAndIntersegmentalBack', 'HipAbductors', 'MajorHipAdductors', 'GlutealExtensors') }
     612 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'DeepHipRotators') }
-    613 = @{ Primary = 'HipFlexors'; Secondary = @('AnteriorLateralLowerLegAndDorsalFoot', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'AbdominalWall', 'PelvicFloorAndPerineum') }
+    613 = @{ Primary = 'HipFlexors'; Secondary = @('AnteriorLateralLowerLegAndDorsalFoot', 'CalfDeepPosteriorLegAndPlantarFoot', 'ShoulderAbductors', 'PelvicFloorAndPerineum') }
     614 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('ForearmExtensorsAndSupinators', 'ElbowFlexors', 'RotatorCuff', 'ScapularGirdle') }
     615 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('GlutealExtensors') }
-    616 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
-    617 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'AbdominalWall') }
+    616 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack') }
+    617 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors') }
     618 = @{ Primary = 'HipFlexors'; Secondary = @('SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'ShoulderAbductors') }
     619 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
-    620 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'AbdominalWall') }
+    620 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors') }
     625 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall') }
     626 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
-    632 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall') }
-    636 = @{ Primary = 'GlutealExtensors'; Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors', 'AbdominalWall') }
-    647 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle') }
+    632 = @{ Primary = 'HipFlexors'; Secondary = @() }
+    636 = @{ Primary = 'GlutealExtensors'; Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'PosteriorThighAndKneeFlexors') }
+    647 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
     648 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'SpinalExtensors') }
     649 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'DeepHipRotators') }
-    654 = @{ Primary = 'HipAbductors'; Secondary = @('HipFlexors', 'GlutealExtensors', 'AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle') }
+    654 = @{ Primary = 'HipAbductors'; Secondary = @('HipFlexors', 'GlutealExtensors', 'ShoulderAbductors', 'ScapularGirdle') }
     666 = @{ Primary = 'SpinalExtensors'; Secondary = @('GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'DeepAndIntersegmentalBack') }
     677 = @{ Primary = 'ScapularGirdle'; Secondary = @('ShoulderAdductorsAndExtensors', 'RotatorCuff', 'ShoulderAbductors') }
     678 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle') }
-    681 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ElbowFlexors', 'AbdominalWall', 'ScapularGirdle', 'RotatorCuff') }
+    681 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ElbowFlexors', 'ScapularGirdle', 'RotatorCuff') }
     683 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'Chest') }
     684 = @{ Primary = 'AbdominalWall'; Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'DeepHipRotators') }
-    685 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand', 'AbdominalWall') }
+    685 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ForearmFlexorsAndPronators', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'IntrinsicHand') }
     686 = @{ Primary = 'DeepHipRotators'; Secondary = @('GlutealExtensors') }
     687 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'ElbowExtensors', 'Chest', 'ShoulderAbductors') }
     712 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'DeepAndIntersegmentalBack', 'ShoulderAdductorsAndExtensors') }
@@ -418,41 +418,41 @@
     752 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ForearmFlexorsAndPronators') }
     755 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @('ForearmExtensorsAndSupinators') }
     756 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ForearmFlexorsAndPronators', 'ElbowFlexors') }
-    758 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('DeepHipRotators', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    758 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('DeepHipRotators', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     784 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle', 'Chest') }
     804 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'ShoulderAbductors') }
-    816 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'SpinalExtensors', 'DeepHipRotators') }
-    818 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'AbdominalWall', 'ScapularGirdle') }
+    816 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'DeepHipRotators') }
+    818 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'ScapularGirdle') }
     825 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'AbdominalWall') }
-    831 = @{ Primary = 'ScapularGirdle'; Secondary = @('HipFlexors', 'AbdominalWall', 'ShoulderAbductors', 'RotatorCuff') }
+    831 = @{ Primary = 'ScapularGirdle'; Secondary = @('HipFlexors', 'ShoulderAbductors', 'RotatorCuff') }
     834 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ElbowFlexors', 'AccessoryHipAdductors', 'HipAbductors') }
     836 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'ScapularGirdle') }
     843 = @{ Primary = 'AnteriorLateralNeckAndHyoidMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'ScapularGirdle') }
-    845 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('AbdominalWall', 'ScapularGirdle') }
+    845 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle') }
     884 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     885 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'AbdominalWall', 'DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    886 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    887 = @{ Primary = 'SpinalExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    905 = @{ Primary = 'AbdominalWall'; Secondary = @('MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepAndIntersegmentalBack') }
+    886 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'SpinalExtensors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    887 = @{ Primary = 'SpinalExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    905 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AbdominalWall', 'SpinalExtensors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'DeepAndIntersegmentalBack') }
     906 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
-    910 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'HipFlexors') }
+    910 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepAndIntersegmentalBack', 'HipFlexors') }
     914 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'ShoulderAdductorsAndExtensors') }
-    915 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'ShoulderAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
-    939 = @{ Primary = 'SpinalExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'HipFlexors', 'DeepAndIntersegmentalBack', 'AbdominalWall') }
-    943 = @{ Primary = 'HipFlexors'; Secondary = @('AbdominalWall', 'ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles') }
-    948 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'ShoulderAdductorsAndExtensors', 'Chest') }
+    915 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAbductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
+    939 = @{ Primary = 'SpinalExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'HipFlexors', 'DeepAndIntersegmentalBack') }
+    943 = @{ Primary = 'HipFlexors'; Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'BreathingMuscles') }
+    948 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepAndIntersegmentalBack', 'ShoulderAdductorsAndExtensors', 'Chest') }
     949 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepAndIntersegmentalBack', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors') }
-    954 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'ShoulderAbductors') }
-    958 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall') }
+    954 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepAndIntersegmentalBack', 'ShoulderAbductors') }
+    958 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @() }
     960 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
     962 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'DeepAndIntersegmentalBack') }
-    969 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'AbdominalWall') }
-    971 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'HipAbductors', 'AbdominalWall') }
-    973 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'AbdominalWall', 'DeepAndIntersegmentalBack') }
-    986 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors', 'AbdominalWall') }
+    969 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors') }
+    971 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'HipAbductors') }
+    973 = @{ Primary = 'GlutealExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'HipFlexors', 'AbdominalWall', 'SpinalExtensors', 'DeepAndIntersegmentalBack') }
+    986 = @{ Primary = 'MajorHipAdductors'; Secondary = @('AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors') }
     987 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    996 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
-    997 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'AbdominalWall', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    996 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
+    997 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'CalfDeepPosteriorLegAndPlantarFoot') }
     998 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'DeepHipRotators', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     999 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors', 'HipAbductors', 'Soleus', 'CalfDeepPosteriorLegAndPlantarFoot') }
     1000 = @{ Primary = 'PosteriorThighAndKneeFlexors'; Secondary = @('SpinalExtensors', 'DeepAndIntersegmentalBack') }
@@ -462,9 +462,9 @@
     552 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ShoulderAbductors', 'ScapularGirdle') }
     554 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle') }
     555 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ElbowFlexors', 'ElbowExtensors') }
-    556 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ElbowExtensors', 'IntrinsicHand', 'ShoulderAbductors', 'RotatorCuff', 'ScapularGirdle', 'AbdominalWall') }
+    556 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @('ElbowExtensors', 'IntrinsicHand', 'ShoulderAbductors', 'RotatorCuff', 'ScapularGirdle') }
     557 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ElbowExtensors', 'Chest', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'ForearmFlexorsAndPronators') }
-    560 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'DeepAndIntersegmentalBack', 'SpinalExtensors', 'AbdominalWall') }
+    560 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'DeepAndIntersegmentalBack', 'SpinalExtensors') }
     561 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'AnteriorLateralLowerLegAndDorsalFoot', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles', 'CranialMuscles', 'PelvicFloorAndPerineum') }
     562 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'MajorHipAdductors', 'ShoulderAbductors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle') }
     563 = @{ Primary = 'HipAbductors'; Secondary = @('DeepHipRotators', 'GlutealExtensors', 'PosteriorThighAndKneeFlexors', 'DeepAndIntersegmentalBack', 'CalfDeepPosteriorLegAndPlantarFoot') }
@@ -484,27 +484,27 @@
     583 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'ForearmFlexorsAndPronators', 'PelvicFloorAndPerineum') }
 
     # Exact wall-equipment additions.
-    134 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'Soleus', 'AbdominalWall') }
-    137 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'Soleus', 'AbdominalWall') }
-    149 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'DeepHipRotators', 'AbdominalWall') }
-    153 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall') }
+    134 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'Soleus') }
+    137 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'Soleus') }
+    149 = @{ Primary = 'HipAbductors'; Secondary = @('GlutealExtensors', 'DeepHipRotators') }
+    153 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'HipAbductors') }
     162 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus') }
     163 = @{ Primary = 'Soleus'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot') }
     165 = @{ Primary = 'AnteriorLateralLowerLegAndDorsalFoot'; Secondary = @('CalfDeepPosteriorLegAndPlantarFoot') }
-    166 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall') }
-    172 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus', 'AbdominalWall') }
-    175 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'Soleus', 'AbdominalWall') }
+    166 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    172 = @{ Primary = 'HipFlexors'; Secondary = @('MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
+    175 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'HipFlexors', 'Soleus') }
     579 = @{ Primary = 'ScapularGirdle'; Secondary = @('ShoulderAbductors', 'RotatorCuff', 'ElbowExtensors') }
     580 = @{ Primary = 'ScapularGirdle'; Secondary = @('RotatorCuff', 'ShoulderAbductors', 'Chest') }
-    584 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'RotatorCuff', 'ElbowExtensors', 'AbdominalWall') }
+    584 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'RotatorCuff', 'ElbowExtensors') }
     585 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ScapularGirdle') }
     586 = @{ Primary = 'ShoulderAbductors'; Secondary = @('RotatorCuff', 'ScapularGirdle', 'Chest') }
     587 = @{ Primary = 'RotatorCuff'; Secondary = @('ScapularGirdle', 'ShoulderAdductorsAndExtensors') }
-    603 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'HipAbductors', 'AbdominalWall') }
+    603 = @{ Primary = 'GlutealExtensors'; Secondary = @('PosteriorThighAndKneeFlexors', 'HipAbductors') }
     633 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus') }
-    701 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall') }
-    702 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall') }
-    703 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ScapularGirdle', 'RotatorCuff', 'AbdominalWall') }
+    701 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ScapularGirdle', 'RotatorCuff') }
+    702 = @{ Primary = 'ElbowExtensors'; Secondary = @('Chest', 'ScapularGirdle', 'RotatorCuff') }
+    703 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ScapularGirdle', 'RotatorCuff') }
     704 = @{ Primary = 'Chest'; Secondary = @('ShoulderAdductorsAndExtensors', 'ScapularGirdle', 'RotatorCuff') }
     801 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('SpinalExtensors', 'AbdominalWall', 'PosteriorThighAndKneeFlexors') }
     835 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'SpinalExtensors', 'DeepAndIntersegmentalBack') }
@@ -512,4 +512,8 @@
     # Bare-torso mirror-practice additions.
     790 = @{ Primary = 'ScapularGirdle'; Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'AbdominalWall', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus') }
     993 = @{ Primary = 'AbdominalWall'; Secondary = @('BreathingMuscles') }
+    911 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'HipAbductors') }
+    913 = @{ Primary = 'AbdominalWall'; Secondary = @('HipFlexors', 'ShoulderAbductors') }
+    916 = @{ Primary = 'AbdominalWall'; Secondary = @('DeepAndIntersegmentalBack', 'SpinalExtensors') }
+    917 = @{ Primary = 'DeepAndIntersegmentalBack'; Secondary = @('AbdominalWall', 'SpinalExtensors') }
 }

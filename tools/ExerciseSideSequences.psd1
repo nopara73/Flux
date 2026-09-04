@@ -145,6 +145,7 @@
     886 = 'ScreenRightLeadThenLeftLead'
     887 = 'ScreenRightLeadThenLeftLead'
     910 = 'ScreenLeftThenRight'
+    911 = 'ScreenLeftThenRight'
     915 = 'ScreenLeftThenRight'
     939 = 'ScreenLeftThenRight'
     948 = 'ScreenRightThenLeft'

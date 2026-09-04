@@ -17,6 +17,7 @@ $requiredBenefitsGreatlyCriteria = @(
     'DanceAndAlignmentSensitivePoses'
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
+    'SubtlePelvicPositionFeedback'
 )
 $requiredCoverageCategories = @('UpperBody', 'FullBody')
 $minimumExercisesPerMirrorCategory = 5
