@@ -41,6 +41,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         "insect_compatibility",
         "hard_floor_compatibility",
         "upper_body_clothing_requirement",
+        "shy_compatibility",
         "mirror_relationship",
         "mirror_coverage",
         "wall_required",
@@ -243,6 +244,11 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         'ClothingRequired',
                         'BareUpperBodyRequired',
                         'Agnostic')),
+                shy_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                    CHECK (shy_compatibility IN (
+                        'Unreviewed',
+                        'Compatible',
+                        'Incompatible')),
                 mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                     CHECK (mirror_relationship IN (
                         'Unreviewed',
@@ -605,6 +611,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         values.Put(
             "upper_body_clothing_requirement",
             exercise.UpperBodyClothingRequirement.ToString());
+        values.Put("shy_compatibility", exercise.ShyCompatibility.ToString());
         values.Put("mirror_relationship", exercise.MirrorRelationship.ToString());
         values.Put("mirror_coverage", exercise.MinimumMirrorCoverage.ToString());
         values.Put("wall_required", exercise.WallRequired ? 1 : 0);
@@ -790,17 +797,21 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         cursor.GetString(19)
                             ?? throw new InvalidOperationException(
                                 "An exercise has no upper-body clothing review.")),
-                MirrorRelationship = Enum.Parse<ExerciseMirrorRelationship>(
+                ShyCompatibility = Enum.Parse<ExerciseShyCompatibility>(
                     cursor.GetString(20)
+                        ?? throw new InvalidOperationException(
+                            "An exercise has no Shy compatibility review.")),
+                MirrorRelationship = Enum.Parse<ExerciseMirrorRelationship>(
+                    cursor.GetString(21)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror relationship review.")),
                 MinimumMirrorCoverage = Enum.Parse<ExerciseMirrorCoverage>(
-                    cursor.GetString(21)
+                    cursor.GetString(22)
                         ?? throw new InvalidOperationException(
                             "An exercise has no mirror coverage review.")),
-                WallRequired = cursor.GetInt(22) == 1,
-                SoleWallContactRequired = cursor.GetInt(23) == 1,
-                SessionMovementId = cursor.GetInt(24),
+                WallRequired = cursor.GetInt(23) == 1,
+                SoleWallContactRequired = cursor.GetInt(24) == 1,
+                SessionMovementId = cursor.GetInt(25),
             });
         }
 
@@ -955,6 +966,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
             !Enum.IsDefined(exercise.InsectCompatibility) ||
             !Enum.IsDefined(exercise.HardFloorCompatibility) ||
             !Enum.IsDefined(exercise.UpperBodyClothingRequirement) ||
+            !Enum.IsDefined(exercise.ShyCompatibility) ||
             !Enum.IsDefined(exercise.MirrorRelationship) ||
             !Enum.IsDefined(exercise.MinimumMirrorCoverage) ||
             (exercise.SoleWallContactRequired && !exercise.WallRequired) ||
@@ -1021,6 +1033,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                         root.SoleWallContactRequired ||
                     member.UpperBodyClothingRequirement !=
                         root.UpperBodyClothingRequirement ||
+                    member.ShyCompatibility != root.ShyCompatibility ||
                     block.MediaSegment != ExerciseSequenceMediaSegment.Full &&
                         member.DirectionSequence == ExerciseDirectionSequence.None)
                 {

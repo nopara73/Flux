@@ -97,6 +97,42 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void ShyFiltersOnlyReviewedIncompatibleExercises()
+    {
+        CanonicalMuscleGroup group =
+            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
+        Exercise compatible = Exercise(
+            1,
+            group,
+            shyCompatibility: ExerciseShyCompatibility.Compatible);
+        Exercise incompatible = Exercise(
+            2,
+            group,
+            shyCompatibility: ExerciseShyCompatibility.Incompatible);
+        Exercise unreviewed = Exercise(
+            3,
+            group,
+            shyCompatibility: ExerciseShyCompatibility.Unreviewed);
+
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            compatible,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            incompatible,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsCompatible(
+            compatible,
+            WorkoutModifiers.Shy));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            incompatible,
+            WorkoutModifiers.Shy));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            unreviewed,
+            WorkoutModifiers.Shy));
+        Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete([unreviewed]));
+    }
+
+    [Fact]
     public void SilenceAndInsectComposeAsIndependentPositiveRequirements()
     {
         Exercise quietBug = Exercise(
@@ -754,12 +790,13 @@ public sealed class WorkoutModifierPolicyTests
         Assert.All(WorkoutModifierPolicy.ValidationProfiles, profile =>
             Assert.Equal(profile, WorkoutModifierPolicy.Normalize(profile)));
         Assert.Contains(WorkoutModifiers.None, WorkoutModifierPolicy.ValidationProfiles);
-        Assert.Equal(21, WorkoutModifierPolicy.ValidationProfiles.Count);
+        Assert.Equal(28, WorkoutModifierPolicy.ValidationProfiles.Count);
         Assert.Contains(
             WorkoutModifiers.UpperBodyClothing,
             WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(WorkoutModifiers.HardFloor, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(WorkoutModifiers.Silence, WorkoutModifierPolicy.ValidationProfiles);
+        Assert.Contains(WorkoutModifiers.Shy, WorkoutModifierPolicy.ValidationProfiles);
         Assert.Contains(
             WorkoutModifiers.Insect | WorkoutModifiers.Silence,
             WorkoutModifierPolicy.ValidationProfiles);
@@ -1111,11 +1148,11 @@ public sealed class WorkoutModifierPolicyTests
     public void MaterialityChecksGrowQuadratically()
     {
         // Clothing is a bidirectional setup state, not a restrictive filter,
-        // so materiality remains the five restrictive single-state checks,
-        // six directed binary/binary edges, and four edges for each of the
-        // three binary/Mirror pairs.
+        // so materiality is six restrictive single-state checks, twelve
+        // directed binary/binary edges, and four edges for each of the four
+        // binary/Mirror pairs.
         Assert.Equal(
-            23,
+            34,
             WorkoutModifierPolicy.FindMaterialityDeficiencies([]).Count);
     }
 
@@ -1463,6 +1500,8 @@ public sealed class WorkoutModifierPolicyTests
         bool soleWallContactRequired = false,
         ExerciseUpperBodyClothingRequirement upperBodyClothingRequirement =
             ExerciseUpperBodyClothingRequirement.Agnostic,
+        ExerciseShyCompatibility shyCompatibility =
+            ExerciseShyCompatibility.Compatible,
         int muscularDemand = 0)
     {
         CanonicalMuscleGroup[] secondaryCanonicalGroups =
@@ -1496,6 +1535,7 @@ public sealed class WorkoutModifierPolicyTests
             InsectCompatibility = insectCompatibility,
             HardFloorCompatibility = hardFloorCompatibility,
             UpperBodyClothingRequirement = upperBodyClothingRequirement,
+            ShyCompatibility = shyCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = minimumMirrorCoverage ??
                 (mirrorRelationship is ExerciseMirrorRelationship.MirrorOnly or

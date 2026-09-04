@@ -80,6 +80,7 @@ public class MainActivity : Activity
     private CheckBox _hardFloorModifierButton = null!;
     private CheckBox _insectModifierButton = null!;
     private CheckBox _silenceModifierButton = null!;
+    private CheckBox _shyModifierButton = null!;
     private FrameLayout _lightModifierContainer = null!;
     private CheckBox _lightModifierButton = null!;
     private TextView _lightModifierCountdownBadge = null!;
@@ -613,6 +614,8 @@ public class MainActivity : Activity
             Resource.Id.insect_modifier_button);
         _silenceModifierButton = FindRequiredView<CheckBox>(
             Resource.Id.silence_modifier_button);
+        _shyModifierButton = FindRequiredView<CheckBox>(
+            Resource.Id.shy_modifier_button);
         _lightModifierContainer = FindRequiredView<FrameLayout>(
             Resource.Id.light_workout_modifier_container);
         _lightModifierButton = FindRequiredView<CheckBox>(
@@ -786,6 +789,21 @@ public class MainActivity : Activity
                 userInitiated: true);
             ShowModifierFeedback(GetModifierFeedbackResourceId(
                 WorkoutModifiers.Silence,
+                enabled));
+        };
+        _shyModifierButton.Click += (_, _) =>
+        {
+            bool enabled = _shyModifierButton.Checked;
+            SetSelectedWorkoutModifier(
+                WorkoutModifiers.Shy,
+                enabled,
+                _shyModifierButton,
+                Resource.String.shy_modifier_description,
+                Resource.String.shy_modifier_on,
+                Resource.String.shy_modifier_off,
+                userInitiated: true);
+            ShowModifierFeedback(GetModifierFeedbackResourceId(
+                WorkoutModifiers.Shy,
                 enabled));
         };
         _lightModifierButton.Click += (_, _) =>
@@ -1679,6 +1697,7 @@ public class MainActivity : Activity
                      _hardFloorModifierButton,
                      _insectModifierButton,
                      _silenceModifierButton,
+                     _shyModifierButton,
                      _wallModifierButton,
                      _mirrorModifierButton,
                  })
@@ -1886,6 +1905,13 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
         SetSelectedWorkoutModifier(
+            WorkoutModifiers.Shy,
+            (defaultModifiers & WorkoutModifiers.Shy) != 0,
+            _shyModifierButton,
+            Resource.String.shy_modifier_description,
+            Resource.String.shy_modifier_on,
+            Resource.String.shy_modifier_off);
+        SetSelectedWorkoutModifier(
             WorkoutModifiers.Light,
             (defaultModifiers & WorkoutModifiers.Light) != 0,
             _lightModifierButton,
@@ -1983,6 +2009,13 @@ public class MainActivity : Activity
             Resource.String.silence_modifier_description,
             Resource.String.silence_modifier_on,
             Resource.String.silence_modifier_off);
+        SetSelectedWorkoutModifier(
+            WorkoutModifiers.Shy,
+            (_selectedWorkoutModifiers & WorkoutModifiers.Shy) != 0,
+            _shyModifierButton,
+            Resource.String.shy_modifier_description,
+            Resource.String.shy_modifier_on,
+            Resource.String.shy_modifier_off);
         SetSelectedWorkoutModifier(
             WorkoutModifiers.Light,
             (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0,
@@ -2314,6 +2347,9 @@ public class MainActivity : Activity
         WorkoutModifiers.Silence => enabled
             ? Resource.String.noisy_exercises_disabled_feedback
             : Resource.String.noisy_exercises_enabled_feedback,
+        WorkoutModifiers.Shy => enabled
+            ? Resource.String.shy_mode_enabled_feedback
+            : Resource.String.shy_mode_disabled_feedback,
         WorkoutModifiers.Light => enabled
             ? Resource.String.light_workout_enabled_feedback
             : Resource.String.light_workout_disabled_feedback,

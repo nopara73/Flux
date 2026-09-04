@@ -220,8 +220,8 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
-Flux currently provides seven composable controls in three visually separate
-groups: four workout conditions, one intensity choice, and two equipment
+Flux currently provides eight composable controls in three visually separate
+groups: five workout conditions, one intensity choice, and two equipment
 choices. In UI order:
 
 - **Upper-body clothing**, enabled by default and shown first, is a real
@@ -236,6 +236,9 @@ choices. In UI order:
 - **Insect** favors demonstrations that keep most of the body visibly and
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
+- **Shy**, disabled by default, removes movements reviewed as specifically
+  awkward around uninvolved observers while retaining ordinary recognizable
+  strength, cardio, mobility, stretching, balance, and compact boxing work;
 - **Light workout**, shown alone as the intensity group, is automatically ON
   after three consecutive regular training days and otherwise OFF by default.
   A completed Light workout resets that cadence, while overriding a due Light
@@ -263,7 +266,7 @@ in every state. Mirror never
 horizontally flips demonstration media; reviewed atomic side blocks remain a
 separate exercise-sequence behavior.
 
-Turning Hard Floor, Insect, or Silence off relaxes its requirement. Upper-body
+Turning Hard Floor, Insect, Silence, or Shy off relaxes its requirement. Upper-body
 clothing instead selects between two opposite physical states. Mirror
 behavior is coverage-aware:
 
@@ -300,7 +303,7 @@ Relationship labels are never promoted to hide a genuine gap. Every supported
 duration and profile must also admit a capacity-exact atomic lineup without
 reusing a session movement.
 
-Muscular-demand coverage is a fixed two-category audit over those same 21
+Muscular-demand coverage is a fixed two-category audit over those same 28
 deduplicated single/pair profiles; demand is not another modifier axis. Each of
 the three broad 3-minute body regions must have at least one genuine demand-0
 and one genuine demand-2 session movement. Demand 0 counts only when every
@@ -319,11 +322,11 @@ effectively absent. The check uses the same hierarchical pairwise state model;
 it does not enumerate three- or four-modifier combinations.
 
 A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
-and Silence must remove at least five exercises or 5% of the previous candidate
-pool, whichever is larger. Mirror must actually prefer at least that many
+Silence, and Shy must remove at least five exercises or 5% of the previous
+candidate pool, whichever is larger. Mirror must actually prefer at least that many
 compatible exercises for compact and tall equipment independently. Each
 materiality-audited modifier must affect at least 10% of the canonical buckets,
-both alone and with its paired modifier enabled. The current 81
+both alone and with its paired modifier enabled. The current 83
 `BenefitsGreatly` assignments are
 an audited result, not a target or ceiling. Ordinary form checking never
 qualifies, and relationship labels cannot be promoted to satisfy coverage or
@@ -332,6 +335,8 @@ one-direction restrictive-materiality test because each state can exclude the
 opposite requirement; it remains fully reviewed and participates in the normal
 pairwise catalog audit. Its exact catalog partition is recorded in
 [`docs/UPPER_BODY_CLOTHING_AUDIT.md`](docs/UPPER_BODY_CLOTHING_AUDIT.md).
+Shy's ordinary-observer review boundary and exhaustive catalog partition are
+recorded in [`docs/SHY_MODE_AUDIT.md`](docs/SHY_MODE_AUDIT.md).
 Hard-floor classifications and their review criteria are
 recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
 Wall's three-state contract, separate direct floors, and reviewed 30-movement

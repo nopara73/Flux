@@ -363,6 +363,31 @@ public sealed class CatalogInvariantTests
                 exercise.UpperBodyClothingRequirement ==
                     ExerciseUpperBodyClothingRequirement.Agnostic));
         Assert.DoesNotContain(exercises, exercise =>
+            exercise.ShyCompatibility == ExerciseShyCompatibility.Unreviewed);
+        HashSet<int> shyIncompatibleExerciseIds =
+        [
+            20, 58, 92, 93, 160, 178, 180, 181, 182, 183, 242, 276,
+            285, 286, 291, 294, 327, 408, 411, 412, 413, 414, 415,
+            416, 418, 419, 442, 444, 449, 478, 480, 484, 485, 486, 489,
+            490, 491, 492, 493, 495, 497, 499, 500,
+            501, 505, 506, 511, 513, 514, 515, 517, 518, 519, 520, 521,
+            522, 523, 524, 525, 526, 527, 528, 533, 534, 535, 536, 541,
+            545, 546, 556, 560, 561, 562, 588, 603, 614, 619, 666, 681,
+            684, 790, 916, 917, 993,
+        ];
+        Assert.Equal(
+            shyIncompatibleExerciseIds,
+            exercises.Where(exercise =>
+                    exercise.ShyCompatibility ==
+                        ExerciseShyCompatibility.Incompatible)
+                .Select(exercise => exercise.Id)
+                .ToHashSet());
+        Assert.Equal(428, exercises.Count(exercise =>
+            exercise.ShyCompatibility == ExerciseShyCompatibility.Compatible));
+        Assert.Equal(
+            ExerciseShyCompatibility.Compatible,
+            exercises.Single(exercise => exercise.Id == 439).ShyCompatibility);
+        Assert.DoesNotContain(exercises, exercise =>
             exercise.MirrorRelationship == ExerciseMirrorRelationship.Unreviewed);
         Assert.Equal(
             83,

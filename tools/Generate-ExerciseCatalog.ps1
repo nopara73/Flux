@@ -94,6 +94,15 @@ $bareUpperBodyRequiredExerciseIds = @(
 $upperBodyClothingAgnosticExerciseIds = @(
     $upperBodyClothingRequirementReview.Agnostic |
         ForEach-Object { [int]$_ })
+$shyCompatibilityReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseShyCompatibility.psd1') -SkipLimitCheck
+$shyCompatibleExerciseIds = @(
+    $shyCompatibilityReview.Compatible |
+        ForEach-Object { [int]$_ })
+$shyIncompatibleExerciseIds = @(
+    $shyCompatibilityReview.IncompatibleByReason.Values |
+        ForEach-Object { $_ } |
+        ForEach-Object { [int]$_ })
 $wallRequirementReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseWallRequirements.psd1') -SkipLimitCheck
 $wallRequiredExerciseIds = @(
@@ -323,6 +332,17 @@ if ($allUpperBodyClothingReviewedExerciseIds.Count -ne
             @($allUpperBodyClothingReviewedExerciseIds | Sort-Object) `
             @($retainedExerciseIds | Sort-Object)).Count -gt 0) {
     throw 'Every retained exercise must have exactly one reviewed upper-body clothing requirement.'
+}
+
+$allShyReviewedExerciseIds = @(
+    $shyCompatibleExerciseIds +
+    $shyIncompatibleExerciseIds)
+if ($allShyReviewedExerciseIds.Count -ne
+        @($allShyReviewedExerciseIds | Sort-Object -Unique).Count -or
+    @(Compare-Object `
+            @($allShyReviewedExerciseIds | Sort-Object) `
+            @($retainedExerciseIds | Sort-Object)).Count -gt 0) {
+    throw 'Every retained exercise must have exactly one reviewed Shy compatibility classification.'
 }
 
 if ([int]$muscularDemandReview.RubricVersion -ne 1 -or
@@ -3485,6 +3505,13 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             else {
                 'Agnostic'
             }
+            shyCompatibility = if (
+                $exerciseId -in $shyCompatibleExerciseIds) {
+                'Compatible'
+            }
+            else {
+                'Incompatible'
+            }
             wallRequired = $exerciseId -in $wallRequiredExerciseIds
             soleWallContactRequired =
                 $exerciseId -in $soleWallContactRequiredExerciseIds
@@ -3844,6 +3871,8 @@ $constraintViolations = $records | Where-Object {
         'Compatible', 'Incompatible') -or
     $_['upperBodyClothingRequirement'] -notin @(
         'ClothingRequired', 'BareUpperBodyRequired', 'Agnostic') -or
+    $_['shyCompatibility'] -notin @(
+        'Compatible', 'Incompatible') -or
     -not ($_['wallRequired'] -is [bool]) -or
     -not ($_['soleWallContactRequired'] -is [bool]) -or
     ([bool]$_['soleWallContactRequired'] -and
@@ -3949,6 +3978,10 @@ foreach ($root in $records | Where-Object { @($_['sequenceBlocks']).Count -gt 0 
         }
         if ([string]$member['upperBodyClothingRequirement'] -ne
                 [string]$root['upperBodyClothingRequirement']) {
+            $sequenceViolations.Add($rootId)
+        }
+        if ([string]$member['shyCompatibility'] -ne
+                [string]$root['shyCompatibility']) {
             $sequenceViolations.Add($rootId)
         }
     }

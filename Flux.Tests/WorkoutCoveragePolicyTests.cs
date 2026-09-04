@@ -72,6 +72,7 @@ public sealed class WorkoutCoveragePolicyTests
             SideSequence = ExerciseSideSequence.Continuous,
             UpperBodyClothingRequirement =
                 ExerciseUpperBodyClothingRequirement.Agnostic,
+            ShyCompatibility = ExerciseShyCompatibility.Compatible,
             Score = 0,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

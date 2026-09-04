@@ -48,6 +48,9 @@ public sealed class Exercise
     public ExerciseUpperBodyClothingRequirement UpperBodyClothingRequirement
         { get; init; } = ExerciseUpperBodyClothingRequirement.Unreviewed;
 
+    public ExerciseShyCompatibility ShyCompatibility { get; init; } =
+        ExerciseShyCompatibility.Unreviewed;
+
     public ExerciseMirrorRelationship MirrorRelationship { get; init; } =
         ExerciseMirrorRelationship.Unreviewed;
 

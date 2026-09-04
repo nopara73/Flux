@@ -848,6 +848,7 @@ public sealed class WorkoutStateInvariantTests
             HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
             UpperBodyClothingRequirement =
                 ExerciseUpperBodyClothingRequirement.Agnostic,
+            ShyCompatibility = ExerciseShyCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

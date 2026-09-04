@@ -10,6 +10,7 @@ export const WORKOUT_MODIFIERS = Object.freeze({
   SoleWallContact: 64,
   UpperBodyClothing: 128,
   Light: 256,
+  Shy: 512,
 });
 export const MIRROR_EQUIPMENT = Object.freeze({
   None: "None",
@@ -38,6 +39,11 @@ export const EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT = Object.freeze({
   ClothingRequired: "ClothingRequired",
   BareUpperBodyRequired: "BareUpperBodyRequired",
   Agnostic: "Agnostic",
+});
+export const EXERCISE_SHY_COMPATIBILITY = Object.freeze({
+  Unreviewed: "Unreviewed",
+  Compatible: "Compatible",
+  Incompatible: "Incompatible",
 });
 export const EXERCISE_MIRROR_RELATIONSHIP = Object.freeze({
   Unreviewed: "Unreviewed",
@@ -109,6 +115,15 @@ const MODIFIER_RULES = Object.freeze([
     isReviewed: (exercise) => typeof exercise.silent === "boolean",
     isCompatibleForProfile: (exercise, profile) =>
       (profile & WORKOUT_MODIFIERS.Silence) === 0 || exercise.silent === true,
+  }),
+  Object.freeze({
+    flag: WORKOUT_MODIFIERS.Shy,
+    isReviewed: (exercise) =>
+      exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible ||
+      exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible,
+    isCompatibleForProfile: (exercise, profile) =>
+      (profile & WORKOUT_MODIFIERS.Shy) === 0 ||
+      exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible,
   }),
   Object.freeze({
     flag: WORKOUT_MODIFIERS.Mirror,
@@ -289,7 +304,9 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 67;
+// Revision 68 adds exhaustive Shy compatibility metadata. Shy is a new,
+// default-off profile bit, so existing selections and feedback stay valid.
+export const CURRENT_CATALOG_REVISION = 68;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 const MATERIAL_TRAINING_ASSOCIATIONS_CATALOG_REVISION = 67;
 // Revision 67 removed false AbdominalWall associations. Limit the migration
@@ -1676,6 +1693,7 @@ export function isSessionMovementMetadataValid(exercises) {
             root.soleWallContactRequired ||
           member.upperBodyClothingRequirement !==
             root.upperBodyClothingRequirement ||
+          member.shyCompatibility !== root.shyCompatibility ||
           !validSideCues.has(block.sideCue ?? "None") ||
           !validDirectionCues.has(block.directionCue ?? "None") ||
           typeof block.mirrorMedia !== "boolean" ||

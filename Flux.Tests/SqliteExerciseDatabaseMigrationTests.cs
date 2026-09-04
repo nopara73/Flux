@@ -59,16 +59,17 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(83)]
     [InlineData(84)]
     [InlineData(85)]
+    [InlineData(86)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(86, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(87, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 86)]
+    [InlineData(13, 87)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
@@ -88,6 +89,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(84, 84)]
     [InlineData(85, 85)]
     [InlineData(86, 86)]
+    [InlineData(87, 87)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -509,8 +511,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         command.CommandText =
             """
             SELECT name, video, score, equipment,
-                hard_floor_compatibility, mirror_relationship,
-                mirror_coverage, wall_required,
+                hard_floor_compatibility, shy_compatibility,
+                mirror_relationship, mirror_coverage, wall_required,
                 sole_wall_contact_required, session_movement_id
             FROM exercises
             WHERE id = 528
@@ -524,10 +526,11 @@ public sealed class SqliteExerciseDatabaseMigrationTests
         Assert.Equal("None", reader.GetString(3));
         Assert.Equal("Unreviewed", reader.GetString(4));
         Assert.Equal("Unreviewed", reader.GetString(5));
-        Assert.Equal("None", reader.GetString(6));
-        Assert.Equal(0, reader.GetInt32(7));
+        Assert.Equal("Unreviewed", reader.GetString(6));
+        Assert.Equal("None", reader.GetString(7));
         Assert.Equal(0, reader.GetInt32(8));
         Assert.Equal(0, reader.GetInt32(9));
+        Assert.Equal(0, reader.GetInt32(10));
         Assert.False(reader.Read());
     }
 

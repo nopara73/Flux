@@ -122,6 +122,14 @@ public static class WorkoutModifierPolicy
             (exercise, profile) =>
                 !profile.HasFlag(WorkoutModifiers.Silence) || exercise.Silent),
         new(
+            WorkoutModifiers.Shy,
+            exercise => exercise.ShyCompatibility !=
+                ExerciseShyCompatibility.Unreviewed,
+            (exercise, profile) =>
+                !profile.HasFlag(WorkoutModifiers.Shy) ||
+                exercise.ShyCompatibility ==
+                    ExerciseShyCompatibility.Compatible),
+        new(
             WorkoutModifiers.Mirror,
             IsMirrorMetadataReviewed,
             IsMirrorCompatible),

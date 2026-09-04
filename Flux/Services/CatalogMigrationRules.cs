@@ -7,7 +7,9 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 67;
+    // Revision 68 adds exhaustive Shy compatibility metadata. Shy is a new,
+    // default-off profile bit, so existing selections and feedback stay valid.
+    public const int CurrentCatalogRevision = 68;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int MaterialTrainingAssociationsCatalogRevision = 67;
     private const int LastCumulativeWorkoutStateRevision = 3;

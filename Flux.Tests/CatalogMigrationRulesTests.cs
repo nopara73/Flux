@@ -2280,7 +2280,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(67, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2387,7 +2387,7 @@ public sealed class CatalogMigrationRulesTests
             104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
             256, 261, 626, 677, 845, 996, 997,
         ];
-        Assert.Equal(67, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
@@ -2563,13 +2563,16 @@ public sealed class CatalogMigrationRulesTests
     public void MaterialTrainingRevisionRemovesOnlyAnatomicallyInvalidSlotsAndKeeps()
     {
         HashSet<int> addedIds = [911, 913, 916, 917];
-        Assert.Equal(67, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[67]);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.ScoreInvalidationsByRevision[67]);
+        Assert.False(
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(68));
+        Assert.False(CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(68));
 
         Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
                 File.ReadAllText(Path.Combine(
@@ -3024,7 +3027,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(67, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -3083,7 +3086,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(67, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);
@@ -3586,6 +3589,7 @@ public sealed class CatalogMigrationRulesTests
             SideSequence = sideSequence,
             UpperBodyClothingRequirement =
                 ExerciseUpperBodyClothingRequirement.Agnostic,
+            ShyCompatibility = ExerciseShyCompatibility.Compatible,
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,

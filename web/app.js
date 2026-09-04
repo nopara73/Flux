@@ -42,6 +42,8 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   insectDisabled: "insect mode OFF",
   noisyEnabled: "noisy exercises ENABLED",
   noisyDisabled: "noisy exercises DISABLED",
+  shyEnabled: "shy mode ON",
+  shyDisabled: "shy mode OFF",
   lightEnabled: "light mode ON",
   lightDisabled: "light mode OFF",
   wallSolesStayOff: "equipment ON: wall · no feet on wall",
@@ -65,6 +67,7 @@ const elements = {
   hardFloorModifier: byId("hard-floor-modifier"),
   insectModifier: byId("insect-modifier"),
   silenceModifier: byId("silence-modifier"),
+  shyModifier: byId("shy-modifier"),
   lightModifier: byId("light-workout-modifier"),
   lightCountdown: byId("light-workout-countdown"),
   wallModifier: byId("wall-modifier"),
@@ -502,6 +505,12 @@ function workoutModifierTiles() {
       disabledLabel: "Quiet exercise filter: noisy exercises allowed",
     },
     {
+      element: elements.shyModifier,
+      flag: WORKOUT_MODIFIERS.Shy,
+      enabledLabel: "Shy mode: public-friendly exercises only",
+      disabledLabel: "Shy mode: off; all exercises allowed",
+    },
+    {
       element: elements.lightModifier,
       flag: WORKOUT_MODIFIERS.Light,
       enabledLabel: "Workout intensity: light workout",
@@ -540,6 +549,11 @@ function workoutModifierFeedbackLabel(flag, enabled) {
   if (flag === WORKOUT_MODIFIERS.Silence) {
     return MODIFIER_FEEDBACK_LABELS[
       enabled ? "noisyDisabled" : "noisyEnabled"
+    ];
+  }
+  if (flag === WORKOUT_MODIFIERS.Shy) {
+    return MODIFIER_FEEDBACK_LABELS[
+      enabled ? "shyEnabled" : "shyDisabled"
     ];
   }
   if (flag === WORKOUT_MODIFIERS.Light) {

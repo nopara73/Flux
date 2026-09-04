@@ -11,6 +11,7 @@ import {
   CURRENT_WORKOUT_STATE_VERSION,
   CURRENT_CATALOG_REVISION,
   EXERCISE_HARD_FLOOR_COMPATIBILITY,
+  EXERCISE_SHY_COMPATIBILITY,
   EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT,
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
@@ -1221,6 +1222,34 @@ test("hard floor filters incompatible exercises only while enabled", () => {
     incompatible, WORKOUT_MODIFIERS.HardFloor), false);
 });
 
+test("shy mode filters only reviewed incompatible exercises while enabled", () => {
+  const primary = RESOLUTIONS.get(30).groups[0].canonicalGroups[0];
+  const compatible = {
+    ...exercise(1, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    shyCompatibility: EXERCISE_SHY_COMPATIBILITY.Compatible,
+  };
+  const incompatible = {
+    ...exercise(2, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    shyCompatibility: EXERCISE_SHY_COMPATIBILITY.Incompatible,
+  };
+  const unreviewed = {
+    ...exercise(3, primary, [], 0, EXERCISE_INSECT_COMPATIBILITY.Compatible),
+    shyCompatibility: EXERCISE_SHY_COMPATIBILITY.Unreviewed,
+  };
+
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    compatible, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    incompatible, WORKOUT_MODIFIERS.None), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    compatible, WORKOUT_MODIFIERS.Shy), true);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    incompatible, WORKOUT_MODIFIERS.Shy), false);
+  assert.equal(isCompatibleWithWorkoutModifiers(
+    unreviewed, WORKOUT_MODIFIERS.Shy), false);
+  assert.equal(isModifierMetadataComplete([unreviewed]), false);
+});
+
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
       exercise.hardFloorCompatibility ===
@@ -2306,13 +2335,14 @@ test("incompatible modifier transition replaces current repeated set", () => {
 });
 
 test("validation profiles remain pairwise with compact and tall mirror states", () => {
-  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 21);
+  assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 28);
   assert.equal(
     new Set(WORKOUT_MODIFIER_VALIDATION_PROFILES).size,
     WORKOUT_MODIFIER_VALIDATION_PROFILES.length,
   );
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.None));
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.Insect));
+  assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.Shy));
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(
     WORKOUT_MODIFIERS.UpperBodyClothing));
   assert.ok(WORKOUT_MODIFIER_VALIDATION_PROFILES.includes(WORKOUT_MODIFIERS.Mirror));
@@ -2657,6 +2687,14 @@ test("reviewed production catalog satisfies the enforceable coverage hierarchy",
   assert.equal(catalog.filter((exercise) =>
     exercise.upperBodyClothingRequirement ===
       EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic).length, 498);
+  assert.equal(catalog.filter((exercise) =>
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 428);
+  assert.equal(catalog.filter((exercise) =>
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 84);
+  assert.equal(catalog.find((exercise) => exercise.id === 413).shyCompatibility,
+    EXERCISE_SHY_COMPATIBILITY.Incompatible);
+  assert.equal(catalog.find((exercise) => exercise.id === 439).shyCompatibility,
+    EXERCISE_SHY_COMPATIBILITY.Compatible);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 83);
@@ -3151,7 +3189,7 @@ test("modifier materiality rejects token and pairwise-redundant filters", () => 
       true,
     ));
   const tokenDeficiencies = findWorkoutModifierMaterialityDeficiencies(tokenCatalog);
-  assert.equal(tokenDeficiencies.length, 23);
+  assert.equal(tokenDeficiencies.length, 34);
   assert.ok(tokenDeficiencies.every((deficiency) =>
     deficiency.materialExerciseCount === 0));
 
@@ -7652,7 +7690,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 67);
+  assert.equal(CURRENT_CATALOG_REVISION, 68);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -8247,7 +8285,7 @@ test("bodybuilding posing revision replaces static work and resets feedback", ()
 
 test("material-training revision removes only anatomically invalid slots and keeps", () => {
   const addedIds = [911, 913, 916, 917];
-  assert.equal(CURRENT_CATALOG_REVISION, 67);
+  assert.equal(CURRENT_CATALOG_REVISION, 68);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(67)],
     addedIds,
@@ -8256,6 +8294,8 @@ test("material-training revision removes only anatomically invalid slots and kee
     [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(67)],
     addedIds,
   );
+  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(68), false);
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(68), false);
 
   const invalidAbdominalSlot = "r30.abdominal-wall";
   const validChestSlot = "r30.chest";
@@ -8804,6 +8844,7 @@ function exercise(
     hardFloorCompatibility,
     upperBodyClothingRequirement:
       EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic,
+    shyCompatibility: EXERCISE_SHY_COMPATIBILITY.Compatible,
     wallRequired: false,
     soleWallContactRequired: false,
     mirrorRelationship,

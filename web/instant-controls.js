@@ -11,6 +11,7 @@
     soleWallContact: 64,
     upperBodyClothing: 128,
     light: 256,
+    shy: 512,
   });
   const feedbackDurationMs = 2_040;
   const elements = {
@@ -25,6 +26,7 @@
     hardFloor: document.getElementById("hard-floor-modifier"),
     insect: document.getElementById("insect-modifier"),
     silence: document.getElementById("silence-modifier"),
+    shy: document.getElementById("shy-modifier"),
     light: document.getElementById("light-workout-modifier"),
     lightCountdown: document.getElementById("light-workout-countdown"),
     wall: document.getElementById("wall-modifier"),
@@ -35,7 +37,8 @@
   if (!elements.dial || !elements.value || !elements.decrease ||
       !elements.increase || !elements.range || !elements.begin ||
       !elements.upperBodyClothing ||
-      !elements.insect || !elements.silence || !elements.light ||
+      !elements.insect || !elements.silence || !elements.shy ||
+      !elements.light ||
       !elements.lightCountdown || !elements.wall ||
       !elements.mirror ||
       !elements.feedback) {
@@ -66,6 +69,7 @@
     toggleModifier("hardFloor"));
   elements.insect.addEventListener("click", () => toggleModifier("insect"));
   elements.silence.addEventListener("click", () => toggleModifier("silence"));
+  elements.shy.addEventListener("click", () => toggleModifier("shy"));
   elements.light.addEventListener("click", () => toggleModifier("light"));
   elements.wall.addEventListener("click", cycleWallEquipment);
   elements.mirror.addEventListener("click", cycleMirrorEquipment);
@@ -160,6 +164,7 @@
       ["hardFloor", elements.hardFloor],
       ["insect", elements.insect],
       ["silence", elements.silence],
+      ["shy", elements.shy],
       ["light", elements.light],
     ]) {
       if (element?.getAttribute("aria-pressed") === "true") {
@@ -381,6 +386,7 @@
     renderBinaryModifier(elements.hardFloor, "hardFloor");
     renderBinaryModifier(elements.insect, "insect");
     renderBinaryModifier(elements.silence, "silence");
+    renderBinaryModifier(elements.shy, "shy");
     renderBinaryModifier(elements.light, "light");
 
     const hasWall = (selectedModifiers & modifierFlags.wall) !== 0;
@@ -449,6 +455,14 @@
           : "Quiet exercise filter: noisy exercises allowed",
       );
     }
+    if (name === "shy") {
+      element.setAttribute(
+        "aria-label",
+        enabled
+          ? "Shy mode: public-friendly exercises only"
+          : "Shy mode: off; all exercises allowed",
+      );
+    }
     if (name === "light") {
       elements.lightCountdown.textContent = String(lightDaysRemaining);
       elements.lightCountdown.hidden = enabled;
@@ -479,6 +493,9 @@
     }
     if (name === "light") {
       return `light mode ${enabled ? "ON" : "OFF"}`;
+    }
+    if (name === "shy") {
+      return `shy mode ${enabled ? "ON" : "OFF"}`;
     }
     return enabled ? "noisy exercises DISABLED" : "noisy exercises ENABLED";
   }

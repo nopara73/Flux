@@ -5533,6 +5533,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             UpperBodyClothingRequirement =
                 source.UpperBodyClothingRequirement,
+            ShyCompatibility = source.ShyCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
@@ -5573,6 +5574,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             UpperBodyClothingRequirement =
                 source.UpperBodyClothingRequirement,
+            ShyCompatibility = source.ShyCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = source.WallRequired,
@@ -5618,6 +5620,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             UpperBodyClothingRequirement =
                 source.UpperBodyClothingRequirement,
+            ShyCompatibility = source.ShyCompatibility,
             MirrorRelationship = mirrorRelationship,
             MinimumMirrorCoverage = mirrorRelationship is
                 ExerciseMirrorRelationship.MirrorOnly or
@@ -5670,6 +5673,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = source.HardFloorCompatibility,
             UpperBodyClothingRequirement =
                 source.UpperBodyClothingRequirement,
+            ShyCompatibility = source.ShyCompatibility,
             MirrorRelationship = source.MirrorRelationship,
             MinimumMirrorCoverage = source.MinimumMirrorCoverage,
             WallRequired = wallRequired,
@@ -5753,6 +5757,7 @@ public sealed class ExerciseSessionServiceTests
             HardFloorCompatibility = ExerciseHardFloorCompatibility.Compatible,
             UpperBodyClothingRequirement =
                 ExerciseUpperBodyClothingRequirement.Agnostic,
+            ShyCompatibility = ExerciseShyCompatibility.Compatible,
             MirrorRelationship = ExerciseMirrorRelationship.Agnostic,
             Score = score,
             OnlyFeetTouchGround = true,

@@ -67,6 +67,11 @@ internal static class ExerciseDatabaseMigrationSql
                     'ClothingRequired',
                     'BareUpperBodyRequired',
                     'Agnostic')),
+            shy_compatibility TEXT NOT NULL DEFAULT 'Unreviewed'
+                CHECK (shy_compatibility IN (
+                    'Unreviewed',
+                    'Compatible',
+                    'Incompatible')),
             mirror_relationship TEXT NOT NULL DEFAULT 'Unreviewed'
                 CHECK (mirror_relationship IN (
                     'Unreviewed',
@@ -112,6 +117,7 @@ internal static class ExerciseDatabaseMigrationSql
             hold_frame_percent, side_sequence, direction_sequence,
             insect_compatibility, hard_floor_compatibility,
             upper_body_clothing_requirement,
+            shy_compatibility,
             mirror_relationship, mirror_coverage,
             wall_required, sole_wall_contact_required,
             session_movement_id)
@@ -123,7 +129,7 @@ internal static class ExerciseDatabaseMigrationSql
             'None', silent, exercise_mode, presentation,
             hold_frame_percent, side_sequence, direction_sequence,
             insect_compatibility, 'Unreviewed', 'Unreviewed',
-            'Unreviewed', 'None',
+            'Unreviewed', 'Unreviewed', 'None',
             0, 0, 0
         FROM exercises
         """;
