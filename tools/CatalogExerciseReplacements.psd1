@@ -2890,16 +2890,16 @@
         Presentation = 'Motion'
         HoldFramePercent = 0
         Media = @{
-            File = 'standing-march-torso-twist.mp4'
-            Url = 'https://www.youtube.com/watch?v=ofv31V3fjcg'
-            SourcePage = 'https://www.youtube.com/watch?v=ofv31V3fjcg'
+            File = 'twisting-march-arZliEOfOcc.mp4'
+            Url = 'https://www.youtube.com/watch?v=arZliEOfOcc'
+            SourcePage = 'https://www.youtube.com/watch?v=arZliEOfOcc'
             Human = $true
             Youtube = $true
             Video = $true
-            StartSeconds = 0
-            DurationSeconds = 7.15
+            StartSeconds = 5.667
+            DurationSeconds = 4.6
             FramesPerSecond = 12
-            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            Crop = 'crop=ih:ih:(iw-ih)*0.8:0'
             PingPong = $false
             MirrorForAlternation = $false
         }
