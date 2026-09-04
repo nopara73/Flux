@@ -3520,7 +3520,7 @@ test("fresh hard work outranks a non-hard keep and soft mirror preference", () =
   assert.ok(session.state.lastKeptExerciseIds.includes(nonHardKeep.id));
 });
 
-test("light day repeats on every fourth day of one uninterrupted training streak", () => {
+test("a completed light workout starts the next four-day cadence", () => {
   const dayFour = new Date(2026, 7, 29, 8).getTime();
   const history = [1, 2, 3].map((sessionId) => completedWorkoutSession(
     sessionId,
@@ -3534,7 +3534,7 @@ test("light day repeats on every fourth day of one uninterrupted training streak
   assert.equal(LIGHT_DAY_TRAINING_DAYS_PER_CYCLE, 4);
   assert.equal(isLightWorkoutDayDue(history, dayFour), true);
 
-  history.push(completedWorkoutSession(4, dayFour));
+  history.push(completedWorkoutSession(4, dayFour, true));
   assert.equal(isLightWorkoutDayDue(
     history,
     new Date(2026, 7, 30, 8).getTime(),
@@ -3548,6 +3548,32 @@ test("light day repeats on every fourth day of one uninterrupted training streak
     history,
     new Date(2026, 8, 2, 8).getTime(),
   ), true);
+});
+
+test("a regular workout on a due day does not skip the light workout", () => {
+  const dayFour = new Date(2026, 7, 29, 8).getTime();
+  const history = [1, 2, 3].map((sessionId) => completedWorkoutSession(
+    sessionId,
+    new Date(2026, 7, 25 + sessionId, 8).getTime(),
+  ));
+
+  assert.equal(isLightWorkoutDayDue(history, dayFour), true);
+
+  history.push(completedWorkoutSession(4, dayFour));
+  assert.equal(isLightWorkoutDayDue(
+    history,
+    new Date(2026, 7, 30, 8).getTime(),
+  ), true);
+
+  history.push(completedWorkoutSession(
+    5,
+    new Date(2026, 7, 30, 8).getTime(),
+    true,
+  ));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 31, 8).getTime(),
+  ), 3);
 });
 
 test("version 21 recovers a contiguous legacy day for tomorrow's light workout", () => {
@@ -3591,6 +3617,10 @@ test("light countdown shows training days remaining throughout the repeating cad
   history.push(completedWorkoutSession(1, dayOne));
   assert.equal(getTrainingDaysUntilLightWorkout(
     history,
+    new Date(2026, 7, 26, 9).getTime(),
+  ), 2);
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
     new Date(2026, 7, 27, 8).getTime(),
   ), 2);
   history.push(completedWorkoutSession(
@@ -3606,14 +3636,46 @@ test("light countdown shows training days remaining throughout the repeating cad
     new Date(2026, 7, 28, 8).getTime(),
   ));
   const dayFour = new Date(2026, 7, 29, 8).getTime();
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 28, 9).getTime(),
+  ), 0);
   assert.equal(getTrainingDaysUntilLightWorkout(history, dayFour), 0);
   assert.equal(isLightWorkoutDayDue(history, dayFour), true);
 
-  history.push(completedWorkoutSession(4, dayFour));
+  history.push(completedWorkoutSession(4, dayFour, true));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    new Date(2026, 7, 29, 9).getTime(),
+  ), 3);
   assert.equal(getTrainingDaysUntilLightWorkout(
     history,
     new Date(2026, 7, 30, 8).getTime(),
   ), 3);
+});
+
+test("light countdown uses the latest light workout instead of legacy streak modulo", () => {
+  const firstLoggedDay = new Date(2026, 7, 28, 7).getTime();
+  const today = new Date(2026, 8, 4, 6, 33).getTime();
+  const history = Array.from({ length: 7 }, (_, index) => completedWorkoutSession(
+    index + 1,
+    firstLoggedDay + index * 24 * 60 * 60_000,
+    index === 5,
+  ));
+  const legacyDay = new Date(2026, 7, 27, 7).getTime();
+
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    today,
+    [legacyDay],
+  ), 2);
+
+  history.push(completedWorkoutSession(8, today));
+  assert.equal(getTrainingDaysUntilLightWorkout(
+    history,
+    today + 60 * 60_000,
+    [legacyDay],
+  ), 1);
 });
 
 test("manual light mode is never remembered as the next session default", () => {
@@ -8468,13 +8530,20 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
 });
 
-function completedWorkoutSession(sessionId, startedAtUnixMilliseconds) {
+function completedWorkoutSession(
+  sessionId,
+  startedAtUnixMilliseconds,
+  isLightDay = false,
+) {
   return {
     sessionId,
     startedAtUnixMilliseconds,
     endedAtUnixMilliseconds: startedAtUnixMilliseconds + 3 * 60_000,
     workoutMinutes: 3,
-    modifiers: WORKOUT_MODIFIERS.None,
+    modifiers: isLightDay
+      ? WORKOUT_MODIFIERS.Light
+      : WORKOUT_MODIFIERS.None,
+    isLightDay,
     status: "Completed",
   };
 }

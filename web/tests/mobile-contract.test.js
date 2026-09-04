@@ -968,11 +968,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     instantControls,
-    /readPersistedSetup[\s\S]*getTrainingDaysUntilLightWorkout[\s\S]*return 3 - consecutivePriorDays % 4/,
+    /readPersistedSetup[\s\S]*getTrainingDaysUntilLightWorkout[\s\S]*completedDays = new Map[\s\S]*completedDays\.has\(today\) \? today : today - 1[\s\S]*return 3 - consecutiveRegularDays/,
   );
   assert.match(
     lightDayPolicy,
-    /ConsecutivePriorDaysRequired[\s\S]*GetTrainingDaysUntilLightDay[\s\S]*consecutivePriorDays % TrainingDaysPerCycle/,
+    /GetTrainingDaysUntilLightDay[\s\S]*ConsecutivePriorDaysRequired - consecutiveRegularDays[\s\S]*Dictionary<int, bool>[\s\S]*ContainsKey\(today\)/,
   );
   assert.match(
     mainActivity,

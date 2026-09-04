@@ -73,21 +73,25 @@ preferred. Available-equipment relevance for Wall and Mirror is a lower-order
 tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
 
-Every fourth consecutive local-calendar training day defaults the session's
-explicit Light control to ON. The feather control can also be enabled on an
-ordinary day or disabled on an automatic light day, before or during the
-workout. Flux first maximizes sequences whose every distinct member is demand
-`0`. Saved score, Keep, recovery, and equipment preferences then arbitrate
-among those light choices. A harder sequence fills a slot only when the
-compatible catalog cannot cover it with demand-`0` work; displaced Keeps and
-user scores remain persisted unchanged.
-Completed session history supplies the default cadence; interrupted sessions
-and duplicate completions on the same date do not advance it. Light itself is
-session-scoped and is not copied into the next session's remembered physical
-setup. When Light is OFF, its tile reports the remaining consecutive training
-days in the current cadence (`3`, `2`, `1`, or `0`). The badge is hidden whenever
-Light is ON, including the automatic fourth day; switching that automatic Light
-day OFF reveals `0`.
+Three consecutive local-calendar days with completed regular workouts make
+Light due for the next workout. A completed Light workout resets the countdown
+to `3`, producing the normal day-4/8/12 cadence; a regular workout completed
+while Light is due leaves the countdown at `0` rather than silently skipping
+recovery. The feather control can still be enabled on an ordinary day or
+disabled on an automatic light day, before or during the workout. Flux first
+maximizes sequences whose every distinct member is demand `0`. Saved score,
+Keep, recovery, and equipment preferences then arbitrate among those light
+choices. A harder sequence fills a slot only when the compatible catalog cannot
+cover it with demand-`0` work; displaced Keeps and user scores remain persisted
+unchanged.
+
+Completed session history supplies the cadence; interrupted sessions do not
+advance it. Multiple completions on one local date count once, and any completed
+Light workout on that date resets the cadence. Light itself is session-scoped
+and is not copied into the next session's remembered physical setup. When Light
+is OFF, its tile reports the remaining consecutive regular training days (`3`,
+`2`, `1`, or `0`) and updates immediately after today's completion. The badge is
+hidden whenever Light is ON.
 
 The separate within-session muscle rebalancer uses the same reviewed rating
 without changing it:

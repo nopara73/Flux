@@ -3451,27 +3451,46 @@ export function getTrainingDaysUntilLightWorkout(
     throw new RangeError("Current workout time must be positive Unix milliseconds.");
   }
 
-  const completedTrainingDays = new Set((Array.isArray(workoutHistory)
-    ? workoutHistory
-    : [])
-    .filter((session) => session?.status === "Completed")
-    .map((session) => getLocalCalendarDayNumber(
+  const completedTrainingDays = new Map();
+  for (const session of Array.isArray(workoutHistory) ? workoutHistory : []) {
+    if (session?.status !== "Completed") {
+      continue;
+    }
+    const dayNumber = getLocalCalendarDayNumber(
       positiveSafeIntegerOrZero(session.startedAtUnixMilliseconds) ||
         positiveSafeIntegerOrZero(session.endedAtUnixMilliseconds),
-    ))
-    .filter((dayNumber) => dayNumber !== null));
+    );
+    if (dayNumber === null) {
+      continue;
+    }
+    const isLightDay = session.isLightDay === true ||
+      (integerOrZero(session.modifiers) & WORKOUT_MODIFIERS.Light) !== 0;
+    completedTrainingDays.set(
+      dayNumber,
+      isLightDay || completedTrainingDays.get(dayNumber) === true,
+    );
+  }
   for (const dayNumber of uniquePositiveIntegers(
     legacyCompletedTrainingDayUnixMilliseconds,
   ).map(getLocalCalendarDayNumber).filter((day) => day !== null)) {
-    completedTrainingDays.add(dayNumber);
+    if (!completedTrainingDays.has(dayNumber)) {
+      completedTrainingDays.set(dayNumber, false);
+    }
   }
 
-  let consecutivePriorDays = 0;
-  for (let day = today - 1; completedTrainingDays.has(day); day -= 1) {
-    consecutivePriorDays += 1;
+  let day = completedTrainingDays.has(today) ? today : today - 1;
+  let consecutiveRegularDays = 0;
+  while (completedTrainingDays.has(day)) {
+    if (completedTrainingDays.get(day) === true) {
+      break;
+    }
+    consecutiveRegularDays += 1;
+    if (consecutiveRegularDays >= LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1) {
+      return 0;
+    }
+    day -= 1;
   }
-  return LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 -
-    consecutivePriorDays % LIGHT_DAY_TRAINING_DAYS_PER_CYCLE;
+  return LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 - consecutiveRegularDays;
 }
 
 export function getDefaultWorkoutModifiers(

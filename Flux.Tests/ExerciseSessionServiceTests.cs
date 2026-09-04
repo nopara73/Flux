@@ -3480,7 +3480,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void FourthConsecutiveTrainingDayRepeatsAsAFourDayLightCadence()
+    public void CompletedLightWorkoutStartsTheNextFourDayCadence()
     {
         TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
             "Flux test UTC+07",
@@ -3514,7 +3514,7 @@ public sealed class ExerciseSessionServiceTests
             dayFour.ToUnixTimeMilliseconds(),
             timeZone));
 
-        history.Add(CompletedSession(4, dayFour));
+        history.Add(CompletedSession(4, dayFour, isLightDay: true));
         Assert.False(WorkoutLightDayPolicy.IsLightDayDue(
             history,
             dayFour.AddDays(1).ToUnixTimeMilliseconds(),
@@ -3525,6 +3525,46 @@ public sealed class ExerciseSessionServiceTests
         Assert.True(WorkoutLightDayPolicy.IsLightDayDue(
             history,
             dayFour.AddDays(4).ToUnixTimeMilliseconds(),
+            timeZone));
+    }
+
+    [Fact]
+    public void RegularWorkoutOnDueDayDoesNotSkipTheLightWorkout()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux due-day UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux due-day UTC+07",
+            "Flux due-day UTC+07");
+        DateTimeOffset dayFour = new(
+            2026,
+            8,
+            29,
+            8,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        List<WorkoutSessionLog> history = Enumerable.Range(1, 3)
+            .Select(index => CompletedSession(
+                index,
+                dayFour.AddDays(index - 4)))
+            .ToList();
+
+        Assert.True(WorkoutLightDayPolicy.IsLightDayDue(
+            history,
+            dayFour.ToUnixTimeMilliseconds(),
+            timeZone));
+
+        history.Add(CompletedSession(4, dayFour));
+        Assert.True(WorkoutLightDayPolicy.IsLightDayDue(
+            history,
+            dayFour.AddDays(1).ToUnixTimeMilliseconds(),
+            timeZone));
+
+        history.Add(CompletedSession(5, dayFour.AddDays(1), isLightDay: true));
+        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayFour.AddDays(2).ToUnixTimeMilliseconds(),
             timeZone));
     }
 
@@ -3612,6 +3652,10 @@ public sealed class ExerciseSessionServiceTests
         history.Add(CompletedSession(1, dayOne));
         Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
             history,
+            dayOne.AddHours(1).ToUnixTimeMilliseconds(),
+            timeZone));
+        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
             dayOne.AddDays(1).ToUnixTimeMilliseconds(),
             timeZone));
         history.Add(CompletedSession(2, dayOne.AddDays(1)));
@@ -3622,14 +3666,68 @@ public sealed class ExerciseSessionServiceTests
         history.Add(CompletedSession(3, dayOne.AddDays(2)));
         Assert.Equal(0, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
             history,
+            dayOne.AddDays(2).AddHours(1).ToUnixTimeMilliseconds(),
+            timeZone));
+        Assert.Equal(0, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
             dayOne.AddDays(3).ToUnixTimeMilliseconds(),
             timeZone));
 
-        history.Add(CompletedSession(4, dayOne.AddDays(3)));
+        history.Add(CompletedSession(4, dayOne.AddDays(3), isLightDay: true));
+        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            dayOne.AddDays(3).AddHours(1).ToUnixTimeMilliseconds(),
+            timeZone));
         Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
             history,
             dayOne.AddDays(4).ToUnixTimeMilliseconds(),
             timeZone));
+    }
+
+    [Fact]
+    public void LightCountdownUsesLatestLightWorkoutInsteadOfLegacyStreakModulo()
+    {
+        TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
+            "Flux phone UTC+07",
+            TimeSpan.FromHours(7),
+            "Flux phone UTC+07",
+            "Flux phone UTC+07");
+        DateTimeOffset today = new(
+            2026,
+            9,
+            4,
+            6,
+            33,
+            0,
+            TimeSpan.FromHours(7));
+        DateTimeOffset firstLoggedDay = new(
+            2026,
+            8,
+            28,
+            7,
+            0,
+            0,
+            TimeSpan.FromHours(7));
+        List<WorkoutSessionLog> history = Enumerable.Range(1, 7)
+            .Select(index => CompletedSession(
+                index,
+                firstLoggedDay.AddDays(index - 1),
+                isLightDay: index == 6))
+            .ToList();
+        long legacyDay = firstLoggedDay.AddDays(-1).ToUnixTimeMilliseconds();
+
+        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            today.ToUnixTimeMilliseconds(),
+            timeZone,
+            [legacyDay]));
+
+        history.Add(CompletedSession(8, today));
+        Assert.Equal(1, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            history,
+            today.AddHours(1).ToUnixTimeMilliseconds(),
+            timeZone,
+            [legacyDay]));
     }
 
     [Fact]
@@ -5386,7 +5484,8 @@ public sealed class ExerciseSessionServiceTests
 
     private static WorkoutSessionLog CompletedSession(
         long sessionId,
-        DateTimeOffset startedAt)
+        DateTimeOffset startedAt,
+        bool isLightDay = false)
     {
         return new WorkoutSessionLog
         {
@@ -5395,6 +5494,10 @@ public sealed class ExerciseSessionServiceTests
             EndedAtUnixMilliseconds = startedAt.AddMinutes(3)
                 .ToUnixTimeMilliseconds(),
             WorkoutMinutes = 3,
+            Modifiers = isLightDay
+                ? WorkoutModifiers.Light
+                : WorkoutModifiers.None,
+            IsLightDay = isLightDay,
             Status = WorkoutSessionStatus.Completed,
         };
     }

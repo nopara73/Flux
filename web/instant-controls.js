@@ -212,29 +212,52 @@
 
   function getTrainingDaysUntilLightWorkout(state) {
     const today = localCalendarDayNumber(Date.now());
-    const completedDays = new Set((Array.isArray(state.workoutHistory)
+    const completedDays = new Map();
+    for (const session of Array.isArray(state.workoutHistory)
       ? state.workoutHistory
-      : [])
-      .filter((session) => session?.status === "Completed")
-      .map((session) => localCalendarDayNumber(
+      : []) {
+      if (session?.status !== "Completed") {
+        continue;
+      }
+      const day = localCalendarDayNumber(
         Number(session.startedAtUnixMilliseconds) > 0
           ? session.startedAtUnixMilliseconds
           : session.endedAtUnixMilliseconds,
-      ))
-      .filter((day) => day !== null));
+      );
+      if (day === null) {
+        continue;
+      }
+      const modifiers = Number.isInteger(session.modifiers)
+        ? session.modifiers
+        : 0;
+      const isLightDay = session.isLightDay === true ||
+        (modifiers & modifierFlags.light) !== 0;
+      completedDays.set(
+        day,
+        isLightDay || completedDays.get(day) === true,
+      );
+    }
     for (const timestamp of Array.isArray(
       state.legacyCompletedTrainingDayUnixMilliseconds,
     ) ? state.legacyCompletedTrainingDayUnixMilliseconds : []) {
       const day = localCalendarDayNumber(timestamp);
-      if (day !== null) {
-        completedDays.add(day);
+      if (day !== null && !completedDays.has(day)) {
+        completedDays.set(day, false);
       }
     }
-    let consecutivePriorDays = 0;
-    for (let day = today - 1; completedDays.has(day); day -= 1) {
-      consecutivePriorDays += 1;
+    let day = completedDays.has(today) ? today : today - 1;
+    let consecutiveRegularDays = 0;
+    while (completedDays.has(day)) {
+      if (completedDays.get(day) === true) {
+        break;
+      }
+      consecutiveRegularDays += 1;
+      if (consecutiveRegularDays >= 3) {
+        return 0;
+      }
+      day -= 1;
     }
-    return 3 - consecutivePriorDays % 4;
+    return 3 - consecutiveRegularDays;
   }
 
   function localCalendarDayNumber(timestamp) {

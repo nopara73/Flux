@@ -123,21 +123,23 @@ truthful phase provenance. Version-22 slot-scoped downvotes are migrated from
 their workout logs when possible and otherwise projected into the phase where
 that slot would have executed.
 
-A completed workout on each of the three immediately preceding local calendar
-days makes the fourth day default to a light workout. The four-day cadence
-repeats inside a longer uninterrupted daily streak, so days 4, 8, 12, and so on
-default to Light rather than every day after day 3. Interrupted or merely
-prepared workouts do not count, and multiple completed workouts on one date
-still count as one day. A dedicated feather control exposes this intensity
-choice before the workout and in the same setup screen used to change
-conditions mid-workout. The automatic default can be turned off, and Light can
-also be turned on for any ordinary day. It is session-scoped: the last physical
+A completed regular workout on each of three consecutive local calendar days
+makes the next workout default to Light. Completing a Light workout resets the
+countdown to `3`; under the normal automatic cadence, days 4, 8, 12, and so on
+are therefore Light. Completing a regular workout after Light is already due
+does not skip the recovery opportunity: the countdown remains `0` until a Light
+workout is completed. Interrupted or merely prepared workouts do not count,
+and multiple completions on one date count as one training day; if any of them
+is Light, that date resets the cadence. A break between training dates also
+starts a new count. A dedicated feather control exposes this intensity choice
+before the workout and in the same setup screen used to change conditions
+mid-workout. The automatic default can be turned off, and Light can also be
+turned on for any ordinary day. It is session-scoped: the last physical
 conditions and equipment remain remembered, while yesterday's manual Light
 choice does not silently make the next workout light. While Light is OFF, the
-corner badge shows the number of additional consecutive training days until the
-next automatic Light workout (`3`, `2`, `1`, then `0`). Light hides the badge
-whenever it is ON; consequently, `0` appears only when an automatically enabled
-Light day has been explicitly switched back OFF.
+corner badge shows the number of additional consecutive regular training days
+until Light is due (`3`, `2`, `1`, then `0`), updating immediately after a
+workout is completed. Light hides the badge whenever it is ON.
 
 Light is a selection priority, not a filter: an all-demand-`0` sequence wins
 only when it already belongs to the slot's highest saved-score bucket. If that
@@ -235,8 +237,10 @@ choices. In UI order:
   continuously moving at a useful pace;
 - **Silence**, enabled by default, admits only naturally quiet movements;
 - **Light workout**, shown alone as the intensity group, is automatically ON
-  for every fourth day of a consecutive daily streak and otherwise OFF by
-  default. It can be changed manually before or during a workout. It does not
+  after three consecutive regular training days and otherwise OFF by default.
+  A completed Light workout resets that cadence, while overriding a due Light
+  day with regular work leaves Light due. It can be changed manually before or
+  during a workout. It does not
   change catalog eligibility or user scores; within each slot's highest
   preference bucket it places all-demand-`0` sequences ahead of Keeps and hard
   opportunities. If that bucket contains no all-demand-`0` choice, it changes
@@ -540,10 +544,11 @@ interrupted records are finalized idempotently and never mutate scores. Because
 history stores snapshots as well as IDs, later catalog edits cannot rewrite what
 happened. This makes exact hard-block and prior-session Keep-repeat comparisons
 possible; sessions completed before this version cannot be reconstructed.
-Light-day detection is derived from these completed-session timestamps, so an
-upgrade recognizes an existing three-day streak without fabricating a new
-counter. An unstarted lineup prepared by an older build is rebuilt during that
-migration; a workout already in progress is never reclassified.
+Light-day detection is derived from completed-session timestamps and their
+recorded Light state. Legacy inferred dates bridge history from releases that
+predate session logging, but a newer completed Light workout always resets the
+active cadence. An unstarted lineup prepared by an older build is rebuilt during
+that migration; a workout already in progress is never reclassified.
 Movement start and resume checkpoints use Android's non-blocking preference
 apply so the Play control responds without waiting for a disk flush; pausing,
 finishing, and score-changing actions still commit synchronously.

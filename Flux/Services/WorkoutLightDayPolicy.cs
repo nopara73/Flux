@@ -45,21 +45,20 @@ public static class WorkoutLightDayPolicy
         TimeZoneInfo? localTimeZone = null,
         IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
     {
-        int consecutivePriorDays = GetConsecutivePriorTrainingDays(
+        int consecutiveRegularDays = GetConsecutiveRegularTrainingDays(
             workoutHistory,
             nowUnixMilliseconds,
             localTimeZone,
             legacyCompletedTrainingDayUnixMilliseconds);
 
-        // A new or broken streak starts on cycle day one and therefore shows
-        // three training days remaining. Day four (and every fourth
-        // uninterrupted training day after it) shows zero when Light has been
-        // explicitly switched off.
-        return ConsecutivePriorDaysRequired -
-            consecutivePriorDays % TrainingDaysPerCycle;
+        // The badge describes the next workout. A completed regular workout
+        // today therefore advances it immediately, while a completed Light
+        // workout starts a fresh three-regular-day cycle. Once Light is due,
+        // regular workouts do not silently skip the recovery opportunity.
+        return ConsecutivePriorDaysRequired - consecutiveRegularDays;
     }
 
-    private static int GetConsecutivePriorTrainingDays(
+    private static int GetConsecutiveRegularTrainingDays(
         IEnumerable<WorkoutSessionLog> workoutHistory,
         long nowUnixMilliseconds,
         TimeZoneInfo? localTimeZone,
@@ -73,33 +72,55 @@ public static class WorkoutLightDayPolicy
 
         TimeZoneInfo timeZone = localTimeZone ?? TimeZoneInfo.Local;
         int today = GetLocalDayNumber(nowUnixMilliseconds, timeZone);
-        HashSet<int> completedTrainingDays = workoutHistory
-            .Where(session =>
-                session is not null &&
-                session.Status == WorkoutSessionStatus.Completed)
-            .Select(session => session.StartedAtUnixMilliseconds > 0
+        var completedTrainingDays = new Dictionary<int, bool>();
+        foreach (WorkoutSessionLog session in workoutHistory.Where(session =>
+                     session is not null &&
+                     session.Status == WorkoutSessionStatus.Completed))
+        {
+            long timestamp = session.StartedAtUnixMilliseconds > 0
                 ? session.StartedAtUnixMilliseconds
-                : session.EndedAtUnixMilliseconds)
-            .Where(timestamp => timestamp > 0)
-            .Select(timestamp => TryGetLocalDayNumber(timestamp, timeZone))
-            .Where(dayNumber => dayNumber.HasValue)
-            .Select(dayNumber => dayNumber!.Value)
-            .ToHashSet();
+                : session.EndedAtUnixMilliseconds;
+            int? dayNumber = timestamp > 0
+                ? TryGetLocalDayNumber(timestamp, timeZone)
+                : null;
+            if (!dayNumber.HasValue)
+            {
+                continue;
+            }
+
+            bool isLightDay = session.IsLightDay ||
+                (session.Modifiers & WorkoutModifiers.Light) != 0;
+            completedTrainingDays[dayNumber.Value] = isLightDay ||
+                completedTrainingDays.GetValueOrDefault(dayNumber.Value);
+        }
         foreach (int dayNumber in (legacyCompletedTrainingDayUnixMilliseconds ?? [])
                      .Where(timestamp => timestamp > 0)
                      .Select(timestamp => TryGetLocalDayNumber(timestamp, timeZone))
                      .Where(dayNumber => dayNumber.HasValue)
                      .Select(dayNumber => dayNumber!.Value))
         {
-            completedTrainingDays.Add(dayNumber);
+            completedTrainingDays.TryAdd(dayNumber, false);
         }
 
-        int consecutivePriorDays = 0;
-        for (int day = today - 1; completedTrainingDays.Contains(day); day--)
+        int day = completedTrainingDays.ContainsKey(today)
+            ? today
+            : today - 1;
+        int consecutiveRegularDays = 0;
+        while (completedTrainingDays.TryGetValue(day, out bool isLightDay))
         {
-            consecutivePriorDays++;
+            if (isLightDay)
+            {
+                break;
+            }
+
+            consecutiveRegularDays++;
+            if (consecutiveRegularDays >= ConsecutivePriorDaysRequired)
+            {
+                return ConsecutivePriorDaysRequired;
+            }
+            day--;
         }
-        return consecutivePriorDays;
+        return consecutiveRegularDays;
     }
 
     public static IReadOnlyList<long> InferLegacyCompletedTrainingDays(
