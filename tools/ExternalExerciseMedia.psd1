@@ -4702,16 +4702,16 @@
         MirrorForAlternation = $false
     }
     172 = @{
-        File = 'wall-knee-drive-hop.mp4'
-        Url = 'https://www.youtube.com/watch?v=WpBE5TdWwY8'
-        SourcePage = 'https://www.youtube.com/watch?v=WpBE5TdWwY8'
+        File = 'wall-drill-knee-drives-igRNX0B6Wyo.mp4'
+        Url = 'https://www.youtube.com/watch?v=igRNX0B6Wyo'
+        SourcePage = 'https://www.youtube.com/watch?v=igRNX0B6Wyo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 15
-        DurationSeconds = 17
+        StartSeconds = 4.75
+        DurationSeconds = 9.75
         FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        Crop = 'crop=ih:ih:iw*0.15625:0'
         MirrorForAlternation = $false
     }
     175 = @{
