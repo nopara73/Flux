@@ -17,6 +17,7 @@ $requiredBenefitsGreatlyCriteria = @(
     'DanceAndAlignmentSensitivePoses'
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
+    'GazeStabilityFeedback'
     'SubtlePelvicPositionFeedback'
 )
 $requiredCoverageCategories = @('UpperBody', 'FullBody')
