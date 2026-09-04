@@ -158,6 +158,85 @@ public sealed class WorkoutRecoveryPolicyTests
         Assert.DoesNotContain(easy.PrimaryCanonicalGroup.ToString(), meaningfulHistory.Keys);
     }
 
+    [Fact]
+    public void RecoveryLightRequiresFourFifthsOfSelectableDemandMuscles()
+    {
+        CanonicalMuscleGroup[] muscles =
+        [
+            CanonicalMuscleGroup.GlutealExtensors,
+            CanonicalMuscleGroup.Chest,
+            CanonicalMuscleGroup.ElbowFlexors,
+            CanonicalMuscleGroup.Soleus,
+            CanonicalMuscleGroup.AbdominalWall,
+        ];
+        Exercise[] exercises = muscles
+            .Select((muscle, index) => Exercise(
+                index + 1,
+                muscle,
+                muscularDemand: Flux.Models.Exercise.ModerateMuscularDemand))
+            .ToArray();
+        var meaningfulHistory = muscles
+            .Take(4)
+            .ToDictionary(
+                muscle => muscle.ToString(),
+                _ => Now - (long)TimeSpan.FromHours(1).TotalMilliseconds);
+
+        WorkoutRecoveryLightStatus active = WorkoutRecoveryLightPolicy.Evaluate(
+            exercises,
+            meaningfulHistory,
+            new Dictionary<string, long>(),
+            Now);
+        WorkoutRecoveryLightStatus inactive = WorkoutRecoveryLightPolicy.Evaluate(
+            exercises,
+            meaningfulHistory
+                .Where(entry => entry.Key != muscles[3].ToString())
+                .ToDictionary(),
+            new Dictionary<string, long>(),
+            Now);
+
+        Assert.True(active.IsActive);
+        Assert.Equal(4, active.RecoveringMuscleCount);
+        Assert.Equal(5, active.EligibleMuscleCount);
+        Assert.False(inactive.IsActive);
+        Assert.Equal(3, inactive.RecoveringMuscleCount);
+    }
+
+    [Fact]
+    public void RecoveryLightRequiresEveryAvailableDemandPathToRecover()
+    {
+        CanonicalMuscleGroup muscle = CanonicalMuscleGroup.GlutealExtensors;
+        Exercise[] exercises =
+        [
+            Exercise(1, muscle, Flux.Models.Exercise.ModerateMuscularDemand),
+            Exercise(2, muscle, Flux.Models.Exercise.MaximumMuscularDemand),
+        ];
+        var meaningfulHistory = new Dictionary<string, long>
+        {
+            [muscle.ToString()] = Now -
+                (long)TimeSpan.FromHours(1).TotalMilliseconds,
+        };
+
+        WorkoutRecoveryLightStatus freshHardPath =
+            WorkoutRecoveryLightPolicy.Evaluate(
+                exercises,
+                meaningfulHistory,
+                new Dictionary<string, long>(),
+                Now);
+        WorkoutRecoveryLightStatus allPathsRecovering =
+            WorkoutRecoveryLightPolicy.Evaluate(
+                exercises,
+                meaningfulHistory,
+                new Dictionary<string, long>
+                {
+                    [muscle.ToString()] = Now -
+                        (long)TimeSpan.FromHours(20).TotalMilliseconds,
+                },
+                Now);
+
+        Assert.False(freshHardPath.IsActive);
+        Assert.True(allPathsRecovering.IsActive);
+    }
+
     private static Exercise Exercise(
         int id,
         CanonicalMuscleGroup primary,

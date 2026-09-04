@@ -51,6 +51,7 @@
   let selectedModifiers = persistedSetup?.selectedModifiers ??
     readInitialModifiers();
   let lightDaysRemaining = persistedSetup?.lightDaysRemaining ?? 3;
+  let recoveryLightMode = false;
   let selectionChanged = false;
   let startQueued = false;
   let handlers = null;
@@ -120,6 +121,14 @@
         return;
       }
       lightDaysRemaining = daysRemaining;
+      renderModifiers();
+    },
+    setRecoveryLightMode(enabled) {
+      const next = enabled === true;
+      if (recoveryLightMode === next) {
+        return;
+      }
+      recoveryLightMode = next;
       renderModifiers();
     },
     setActiveWorkoutSetup(enabled) {
@@ -340,6 +349,9 @@
   }
 
   function toggleModifier(name) {
+    if (name === "light" && recoveryLightMode) {
+      return;
+    }
     const flag = modifierFlags[name];
     selectedModifiers ^= flag;
     selectionChanged = true;
@@ -427,7 +439,10 @@
     if (!element) {
       return;
     }
-    const enabled = (selectedModifiers & modifierFlags[name]) !== 0;
+    const explicitlyEnabled =
+      (selectedModifiers & modifierFlags[name]) !== 0;
+    const enabled = explicitlyEnabled ||
+      (name === "light" && recoveryLightMode);
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", modifierFeedbackLabel(name));
     if (name === "hardFloor") {
@@ -464,6 +479,8 @@
       );
     }
     if (name === "light") {
+      element.disabled = recoveryLightMode;
+      element.setAttribute("aria-disabled", String(element.disabled));
       elements.lightCountdown.textContent = String(lightDaysRemaining);
       elements.lightCountdown.hidden = enabled;
       const scheduleDescription = lightDaysRemaining === 0
@@ -473,7 +490,9 @@
           : "s"} until automatic light mode.`;
       element.setAttribute(
         "aria-label",
-        enabled
+        recoveryLightMode
+          ? "Workout intensity: effectively light while muscles recover"
+          : enabled
           ? "Workout intensity: light workout"
           : `Workout intensity: regular workout. ${scheduleDescription}`,
       );
@@ -492,7 +511,7 @@
       return `insect mode ${enabled ? "ON" : "OFF"}`;
     }
     if (name === "light") {
-      return `light mode ${enabled ? "ON" : "OFF"}`;
+      return `light mode ${enabled || recoveryLightMode ? "ON" : "OFF"}`;
     }
     if (name === "shy") {
       return `shy mode ${enabled ? "ON" : "OFF"}`;

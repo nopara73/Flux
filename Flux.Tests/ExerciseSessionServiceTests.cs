@@ -7,6 +7,68 @@ namespace Flux.Tests;
 public sealed class ExerciseSessionServiceTests
 {
     [Fact]
+    public void RecoveryLightUsesOnlyDemandPathsSelectableForCurrentModifiers()
+    {
+        long now = new DateTimeOffset(
+            2026, 8, 24, 12, 0, 0, TimeSpan.Zero)
+            .ToUnixTimeMilliseconds();
+        CanonicalMuscleGroup[] includedMuscles =
+        [
+            CanonicalMuscleGroup.GlutealExtensors,
+            CanonicalMuscleGroup.Chest,
+            CanonicalMuscleGroup.ElbowFlexors,
+            CanonicalMuscleGroup.Soleus,
+            CanonicalMuscleGroup.AbdominalWall,
+        ];
+        Exercise[] included = includedMuscles
+            .Select((muscle, index) => CloneWithMuscularDemand(
+                Exercise(
+                    index + 1,
+                    muscle,
+                    0,
+                    ExerciseSideSequence.Continuous,
+                    ExerciseInsectCompatibility.Compatible),
+                Flux.Models.Exercise.ModerateMuscularDemand))
+            .ToArray();
+        Exercise filteredFresh = CloneWithMuscularDemand(
+            Exercise(
+                100,
+                CanonicalMuscleGroup.SpinalExtensors,
+                0,
+                ExerciseSideSequence.Continuous,
+                ExerciseInsectCompatibility.Incompatible),
+            Flux.Models.Exercise.ModerateMuscularDemand);
+        var service = new ExerciseSessionService(
+            [.. included, filteredFresh],
+            utcNowProvider: () =>
+                DateTimeOffset.FromUnixTimeMilliseconds(now));
+        var state = new WorkoutState
+        {
+            LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle =
+                includedMuscles
+                    .Take(4)
+                    .ToDictionary(
+                        muscle => muscle.ToString(),
+                        _ => now - (long)TimeSpan.FromHours(1)
+                            .TotalMilliseconds),
+        };
+
+        WorkoutRecoveryLightStatus neutral = service.GetRecoveryLightStatus(
+            state,
+            WorkoutModifiers.None,
+            now);
+        WorkoutRecoveryLightStatus insect = service.GetRecoveryLightStatus(
+            state,
+            WorkoutModifiers.Insect,
+            now);
+
+        Assert.False(neutral.IsActive);
+        Assert.Equal(6, neutral.EligibleMuscleCount);
+        Assert.True(insect.IsActive);
+        Assert.Equal(5, insect.EligibleMuscleCount);
+    }
+
+    [Fact]
     public void MuscleBalanceReplacesAnUnkeptChoiceOnlyWhenEverySlotScoreIsPreserved()
     {
         (WorkoutGroup[] groups, Exercise[] selected, WorkoutState state) =

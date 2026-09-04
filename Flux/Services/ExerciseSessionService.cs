@@ -120,6 +120,29 @@ public sealed class ExerciseSessionService
             state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
+    public WorkoutRecoveryLightStatus GetRecoveryLightStatus(
+        WorkoutState state,
+        WorkoutModifiers modifiers,
+        long? nowUnixMilliseconds = null)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        WorkoutModifiers physicalProfile = WorkoutModifierPolicy.Normalize(
+            modifiers & ~WorkoutModifiers.Light);
+        Exercise[] selectableExercises = _exercises
+            .Where(root => root.SequenceBlocks.Length > 0)
+            .Where(root => GetSequenceExercises(root).All(member =>
+                IsCompatibleWithModifiers(member, physicalProfile)))
+            .SelectMany(GetSequenceExercises)
+            .DistinctBy(exercise => exercise.Id)
+            .ToArray();
+
+        return WorkoutRecoveryLightPolicy.Evaluate(
+            selectableExercises,
+            state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+            state.LastHardWorkUnixMillisecondsByPrimaryMuscle,
+            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds());
+    }
+
     public void Initialize(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);

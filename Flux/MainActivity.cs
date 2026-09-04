@@ -491,6 +491,11 @@ public class MainActivity : Activity
         base.OnResume();
         _activityResumed = true;
         ApplySystemBarAppearance();
+        if (_appScreen == AppScreen.Duration && _applicationStartupCompleted)
+        {
+            UpdateLightModifierPresentation(
+                (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
+        }
         if (_editingActiveWorkoutSetup)
         {
             return;
@@ -2066,21 +2071,43 @@ public class MainActivity : Activity
 
     private void UpdateLightModifierPresentation(bool enabled)
     {
+        bool recoveryLightMode = _sessionService is not null &&
+            _sessionService.GetRecoveryLightStatus(
+                _state,
+                _selectedWorkoutModifiers).IsActive;
+        bool effectivelyEnabled = enabled || recoveryLightMode;
+        _lightModifierButton.Checked = effectivelyEnabled;
+        _lightModifierButton.Enabled = !recoveryLightMode;
         int trainingDaysRemaining = GetTrainingDaysUntilLightMode();
         _lightModifierCountdownBadge.Text = trainingDaysRemaining.ToString();
-        _lightModifierCountdownBadge.Visibility = enabled
+        _lightModifierCountdownBadge.Visibility = effectivelyEnabled
             ? ViewStates.Gone
             : ViewStates.Visible;
 
         string description = GetString(
             Resource.String.light_workout_modifier_description);
-        _lightModifierButton.ContentDescription = enabled
+        _lightModifierButton.ContentDescription = recoveryLightMode
+            ? $"{description}: effectively light while muscles recover"
+            : enabled
             ? $"{description}: light mode on"
             : trainingDaysRemaining == 0
                 ? $"{description}: automatic light mode is due today"
                 : $"{description}: {trainingDaysRemaining} training " +
                     $"day{(trainingDaysRemaining == 1 ? string.Empty : "s")} " +
                     "until automatic light mode";
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _lightModifierButton.TooltipText = GetString(effectivelyEnabled
+                ? Resource.String.light_workout_enabled_feedback
+                : Resource.String.light_workout_disabled_feedback);
+        }
+        if (OperatingSystem.IsAndroidVersionAtLeast(30))
+        {
+            _lightModifierButton.StateDescription = GetString(
+                effectivelyEnabled
+                    ? Resource.String.light_workout_modifier_on
+                    : Resource.String.light_workout_modifier_off);
+        }
     }
 
     private void ConfigureDurationScreenForActiveWorkout(bool editing)
@@ -2197,6 +2224,8 @@ public class MainActivity : Activity
                 ? enabledStateResourceId
                 : disabledStateResourceId);
         }
+        UpdateLightModifierPresentation(
+            (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
 
         if (!userInitiated)
         {
@@ -2239,6 +2268,8 @@ public class MainActivity : Activity
         {
             _mirrorModifierButton.StateDescription = GetString(stateResourceId);
         }
+        UpdateLightModifierPresentation(
+            (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
 
         if (userInitiated)
         {
@@ -2279,6 +2310,8 @@ public class MainActivity : Activity
         {
             _wallModifierButton.StateDescription = GetString(stateResourceId);
         }
+        UpdateLightModifierPresentation(
+            (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
 
         if (userInitiated)
         {

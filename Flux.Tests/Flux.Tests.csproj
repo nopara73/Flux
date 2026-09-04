@@ -63,6 +63,7 @@
     <Compile Include="..\Flux\Services\WorkoutModifierPolicy.cs" Link="Production\Services\WorkoutModifierPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutMuscleBalancePolicy.cs" Link="Production\Services\WorkoutMuscleBalancePolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutRecoveryPolicy.cs" Link="Production\Services\WorkoutRecoveryPolicy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutRecoveryLightPolicy.cs" Link="Production\Services\WorkoutRecoveryLightPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutSchedulePolicy.cs" Link="Production\Services\WorkoutSchedulePolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutSequencePolicy.cs" Link="Production\Services\WorkoutSequencePolicy.cs" />
   </ItemGroup>

@@ -16,6 +16,8 @@ import {
   EXERCISE_INSECT_COMPATIBILITY,
   EXERCISE_MIRROR_COVERAGE,
   EXERCISE_MIRROR_RELATIONSHIP,
+  RECOVERY_LIGHT_MINIMUM_SHARE_DENOMINATOR,
+  RECOVERY_LIGHT_MINIMUM_SHARE_NUMERATOR,
   HARD_PRIMARY_MUSCLE_LOAD_EIGHTH_UNITS,
   HARD_SECONDARY_MUSCLE_LOAD_EIGHTH_UNITS,
   HARD_MUSCULAR_DEMAND,
@@ -55,6 +57,7 @@ import {
   compareMuscleBalanceEvaluations,
   createWorkoutSchedule,
   createDefaultState,
+  evaluateRecoveryLightMode,
   findHardFloorCategoryCoverageDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
@@ -1001,6 +1004,76 @@ test("muscular recovery uses persisted rolling primary-muscle windows", () => {
     now - 1,
   );
   assert.equal("activeRecoveryExcludedExerciseIds" in restored, false);
+});
+
+test("recovery-light requires four fifths of selectable muscles to have no fresh demand path", () => {
+  const now = Date.UTC(2026, 7, 22, 12);
+  const muscles = [
+    "GlutealExtensors",
+    "Chest",
+    "ElbowFlexors",
+    "Soleus",
+    "AbdominalWall",
+  ];
+  const exercises = muscles.map((muscle, index) => exercise(
+    index + 1,
+    muscle,
+    [],
+    0,
+    EXERCISE_INSECT_COMPATIBILITY.Compatible,
+    true,
+    MODERATE_MUSCULAR_DEMAND,
+  ));
+  const meaningfulRecovery = Object.fromEntries(muscles.slice(0, 4).map(
+    (muscle) => [muscle, now - 60 * 60 * 1000],
+  ));
+
+  const active = evaluateRecoveryLightMode(
+    exercises,
+    WORKOUT_MODIFIERS.None,
+    meaningfulRecovery,
+    {},
+    now,
+  );
+  delete meaningfulRecovery[muscles[3]];
+  const inactive = evaluateRecoveryLightMode(
+    exercises,
+    WORKOUT_MODIFIERS.None,
+    meaningfulRecovery,
+    {},
+    now,
+  );
+
+  assert.equal(RECOVERY_LIGHT_MINIMUM_SHARE_NUMERATOR, 4);
+  assert.equal(RECOVERY_LIGHT_MINIMUM_SHARE_DENOMINATOR, 5);
+  assert.deepEqual(active, {
+    recoveringMuscleCount: 4,
+    eligibleMuscleCount: 5,
+    isActive: true,
+  });
+  assert.equal(inactive.recoveringMuscleCount, 3);
+  assert.equal(inactive.isActive, false);
+
+  const mixedDemand = [
+    exercise(11, muscles[0], [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 1),
+    exercise(12, muscles[0], [], 0,
+      EXERCISE_INSECT_COMPATIBILITY.Compatible, true, 2),
+  ];
+  assert.equal(evaluateRecoveryLightMode(
+    mixedDemand,
+    WORKOUT_MODIFIERS.None,
+    { [muscles[0]]: now - 60 * 60 * 1000 },
+    {},
+    now,
+  ).isActive, false);
+  assert.equal(evaluateRecoveryLightMode(
+    mixedDemand,
+    WORKOUT_MODIFIERS.None,
+    { [muscles[0]]: now - 60 * 60 * 1000 },
+    { [muscles[0]]: now - 20 * 60 * 60 * 1000 },
+    now,
+  ).isActive, true);
 });
 
 test("duration inventory and legacy normalization match Flux", () => {

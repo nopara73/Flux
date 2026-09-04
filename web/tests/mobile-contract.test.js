@@ -77,6 +77,7 @@ const [
   modifierPolicy,
   muscleBalancePolicy,
   recoveryPolicy,
+  recoveryLightPolicy,
   lightDayPolicy,
   exerciseDatabase,
   catalogInvariantTests,
@@ -133,6 +134,7 @@ const [
   source("Flux", "Services", "WorkoutModifierPolicy.cs"),
   source("Flux", "Services", "WorkoutMuscleBalancePolicy.cs"),
   source("Flux", "Services", "WorkoutRecoveryPolicy.cs"),
+  source("Flux", "Services", "WorkoutRecoveryLightPolicy.cs"),
   source("Flux", "Services", "WorkoutLightDayPolicy.cs"),
   source("Flux", "Data", "SqliteExerciseDatabase.cs"),
   source("Flux.Tests", "CatalogInvariantTests.cs"),
@@ -992,7 +994,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   }
   assert.match(
     instantControls,
-    /return `light mode \$\{enabled \? "ON" : "OFF"\}`/,
+    /return `light mode \$\{enabled \|\| recoveryLightMode \? "ON" : "OFF"\}`/,
   );
   assert.doesNotMatch(instantControls, /light workout \$\{enabled/);
   assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
@@ -1245,6 +1247,30 @@ test("web and mobile apply rolling muscular recovery by primary muscle", () => {
     workoutModule,
     /const baseUtilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*const anchorUtilities = groups\.map\(\(\) => candidates\.map\(\(\) => 0n\)\)[\s\S]*utilitiesByGroup/,
   );
+  assert.match(
+    recoveryLightPolicy,
+    /MinimumRecoveryShareNumerator\s*=\s*4[\s\S]*MinimumRecoveryShareDenominator\s*=\s*5/,
+  );
+  assert.match(
+    recoveryLightPolicy,
+    /Exercise\.ModerateMuscularDemand\s*=>/,
+  );
+  assert.match(recoveryLightPolicy, /IsPrimaryMuscle.*ModerateRecovery/);
+  assert.match(
+    recoveryLightPolicy,
+    /Exercise\.MaximumMuscularDemand\s*=>/,
+  );
+  assert.match(recoveryLightPolicy, /IsPrimaryMuscleRecovering/);
+  assert.match(
+    sessionService,
+    /GetRecoveryLightStatus[\s\S]*modifiers & ~WorkoutModifiers\.Light[\s\S]*IsCompatibleWithModifiers/,
+  );
+  assert.match(
+    workoutModule,
+    /evaluateRecoveryLightMode[\s\S]*modifiers & ~WORKOUT_MODIFIERS\.Light[\s\S]*isCompatibleWithWorkoutModifiers/,
+  );
+  assert.match(mainActivity, /_lightModifierButton\.Enabled = !recoveryLightMode/);
+  assert.match(webApp, /element\.disabled = recoveryLightMode/);
 });
 
 test("runtime media and the deployable web shell are content-addressed", () => {

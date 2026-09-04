@@ -22,6 +22,8 @@ export const WALL_EQUIPMENT = Object.freeze({
   SolesStayOff: "SolesStayOff",
   SolesMayTouch: "SolesMayTouch",
 });
+export const RECOVERY_LIGHT_MINIMUM_SHARE_NUMERATOR = 4;
+export const RECOVERY_LIGHT_MINIMUM_SHARE_DENOMINATOR = 5;
 export const EXERCISE_INSECT_COMPATIBILITY = Object.freeze({
   Unreviewed: "Unreviewed",
   Compatible: "Compatible",
@@ -2427,6 +2429,85 @@ export function findWorkoutProfileLineupDeficiencies(exercises) {
   });
 }
 
+export function evaluateRecoveryLightMode(
+  exercises,
+  modifiers,
+  lastMeaningfulWorkByPrimaryMuscle,
+  lastHardWorkByPrimaryMuscle,
+  nowUnixMilliseconds = Date.now(),
+) {
+  if (!Array.isArray(exercises)) {
+    throw new TypeError("Recovery-light evaluation requires an exercise catalog.");
+  }
+
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const physicalProfile = normalizeWorkoutModifiers(
+    modifiers & ~WORKOUT_MODIFIERS.Light,
+  );
+  const selectableMembers = exercises
+    .filter((root) => Array.isArray(root.sequenceBlocks) &&
+      root.sequenceBlocks.length > 0)
+    .map((root) => getSequenceMembers(root, exercisesById))
+    .filter((members) => members.every((member) =>
+      isCompatibleWithWorkoutModifiers(member, physicalProfile)))
+    .flat();
+
+  const availableDemandByMuscle = new Map();
+  for (const exercise of selectableMembers) {
+    if (exercise.muscularDemand !== MODERATE_MUSCULAR_DEMAND &&
+        exercise.muscularDemand !== HARD_MUSCULAR_DEMAND) {
+      continue;
+    }
+    if (!availableDemandByMuscle.has(exercise.primaryCanonicalGroup)) {
+      availableDemandByMuscle.set(exercise.primaryCanonicalGroup, new Set());
+    }
+    availableDemandByMuscle.get(exercise.primaryCanonicalGroup)
+      .add(exercise.muscularDemand);
+  }
+
+  let recoveringMuscleCount = 0;
+  for (const [muscle, demands] of availableDemandByMuscle) {
+    const everyDemandIsRecovering = [...demands].every((demand) =>
+      demand === MODERATE_MUSCULAR_DEMAND
+        ? isPrimaryMuscleWithinModerateRecovery(
+          lastMeaningfulWorkByPrimaryMuscle,
+          muscle,
+          nowUnixMilliseconds,
+        )
+        : isPrimaryMuscleRecovering(
+          lastHardWorkByPrimaryMuscle,
+          muscle,
+          nowUnixMilliseconds,
+        ));
+    if (everyDemandIsRecovering) {
+      recoveringMuscleCount += 1;
+    }
+  }
+
+  const eligibleMuscleCount = availableDemandByMuscle.size;
+  return {
+    recoveringMuscleCount,
+    eligibleMuscleCount,
+    isActive: eligibleMuscleCount > 0 &&
+      recoveringMuscleCount * RECOVERY_LIGHT_MINIMUM_SHARE_DENOMINATOR >=
+        eligibleMuscleCount * RECOVERY_LIGHT_MINIMUM_SHARE_NUMERATOR,
+  };
+}
+
+function isPrimaryMuscleWithinModerateRecovery(
+  lastMeaningfulWorkByPrimaryMuscle,
+  primaryMuscle,
+  nowUnixMilliseconds,
+) {
+  return isPrimaryMuscleWithinRecoveryWindow(
+    lastMeaningfulWorkByPrimaryMuscle,
+    primaryMuscle,
+    nowUnixMilliseconds,
+    MODERATE_RECOVERY_WINDOW_MS,
+  );
+}
+
 export function getRequiredDistinctLineupSize(groups, modifiers) {
   return groups.filter((group) =>
     isSelectionGroupAvailable(group, modifiers)).length;
@@ -4393,6 +4474,16 @@ export class WorkoutSession {
           modifiers,
         ) || retained.has(group.id))
       : [];
+  }
+
+  getRecoveryLightStatus(modifiers = this.state.activeWorkoutModifiers) {
+    return evaluateRecoveryLightMode(
+      this.exercises,
+      modifiers,
+      this.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle,
+      this.state.lastHardWorkUnixMillisecondsByPrimaryMuscle,
+      this.getCurrentUnixTimeMilliseconds(),
+    );
   }
 
   getNextGroup() {

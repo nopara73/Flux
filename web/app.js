@@ -520,6 +520,9 @@ function workoutModifierTiles() {
 }
 
 function toggleWorkoutModifier(flag) {
+  if (flag === WORKOUT_MODIFIERS.Light && isRecoveryLightModeActive()) {
+    return;
+  }
   selectedModifiers ^= flag;
   if (!session) {
     startupSelectionChanged = true;
@@ -632,9 +635,16 @@ function showWorkoutModifierFeedback(message) {
 function renderWorkoutModifiers() {
   for (const { element, flag, enabledLabel, disabledLabel } of
     workoutModifierTiles()) {
-    const enabled = (selectedModifiers & flag) !== 0;
+    const explicitlyEnabled = (selectedModifiers & flag) !== 0;
+    const recoveryLightMode = flag === WORKOUT_MODIFIERS.Light &&
+      isRecoveryLightModeActive();
+    const enabled = explicitlyEnabled || recoveryLightMode;
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", workoutModifierFeedbackLabel(flag, enabled));
+    if (flag === WORKOUT_MODIFIERS.Light) {
+      element.disabled = recoveryLightMode;
+      element.setAttribute("aria-disabled", String(recoveryLightMode));
+    }
     if (flag === WORKOUT_MODIFIERS.HardFloor) {
       element.dataset.hardFloor = enabled ? "hard" : "soft";
       element.setAttribute(
@@ -689,7 +699,9 @@ function renderWorkoutModifiers() {
 }
 
 function renderLightModeCountdown() {
-  const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Light) !== 0;
+  const recoveryLightMode = isRecoveryLightModeActive();
+  const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Light) !== 0 ||
+    recoveryLightMode;
   const candidateDaysRemaining = session
     ? session.getTrainingDaysUntilLightWorkout()
     : startupControls?.lightDaysRemaining;
@@ -702,6 +714,14 @@ function renderLightModeCountdown() {
   }
   elements.lightCountdown.textContent = String(daysRemaining);
   elements.lightCountdown.hidden = enabled;
+  startupControls?.setRecoveryLightMode?.(recoveryLightMode);
+  if (recoveryLightMode) {
+    elements.lightModifier.setAttribute(
+      "aria-label",
+      "Workout intensity: effectively light while muscles recover",
+    );
+    return;
+  }
   if (!enabled) {
     const scheduleDescription = daysRemaining === 0
       ? "Automatic light mode is due today."
@@ -712,6 +732,10 @@ function renderLightModeCountdown() {
       `Workout intensity: regular workout. ${scheduleDescription}`,
     );
   }
+}
+
+function isRecoveryLightModeActive() {
+  return session?.getRecoveryLightStatus(selectedModifiers).isActive === true;
 }
 
 function showScreen(screen) {
@@ -2212,8 +2236,13 @@ function handleVisibilityChange() {
   }
 
   if (activeWorkoutSetup) {
+    renderWorkoutModifiers();
     elements.video.pause();
     return;
+  }
+
+  if (!elements.durationScreen.hidden) {
+    renderWorkoutModifiers();
   }
 
   if (restActive) {
