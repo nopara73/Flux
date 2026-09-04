@@ -7,7 +7,7 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    public const int CurrentCatalogRevision = 65;
+    public const int CurrentCatalogRevision = 66;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
@@ -251,20 +251,23 @@ public static class CatalogMigrationRules
                     "Arm-Wave Isolation Practice",
                     "Mirror Arm-Wave Isolation Practice"),
                 [524] = new(
-                    "Front Double-Biceps Pose Hold",
-                    "Mirror Front Double-Biceps Pose Hold"),
+                    "Mirror Front Double-Biceps Pose Hold",
+                    "Mirror Front Double-Biceps Posing"),
                 [525] = new(
-                    "Front Lat-Spread Pose Hold",
-                    "Mirror Front Lat-Spread Pose Hold"),
+                    "Mirror Front Lat-Spread Pose Hold",
+                    "Mirror Front Lat-Spread Posing"),
                 [526] = new(
-                    "Side-Chest Pose Hold",
-                    "Mirror Side-Chest Pose Hold"),
+                    "Mirror Side-Chest Pose Hold",
+                    "Mirror Side-Chest Posing"),
                 [527] = new(
-                    "Side-Triceps Pose Hold",
-                    "Mirror Side-Triceps Pose Hold"),
+                    "Mirror Side-Triceps Pose Hold",
+                    "Mirror Side-Triceps Posing"),
                 [528] = new(
-                    "Abdominals-and-Thighs Pose Hold",
-                    "Mirror Abdominals-and-Thighs Pose Hold"),
+                    "Mirror Abdominals-and-Thighs Pose Hold",
+                    "Mirror Abdominals-and-Thighs Posing"),
+                [790] = new(
+                    "Mirror Most-Muscular Pose Hold",
+                    "Mirror Most-Muscular Posing"),
                 [193] = new(
                     "Wide-Squat Floor-to-Overhead Reach",
                     "Wide-Stance Floor-to-Overhead Reach"),
@@ -317,6 +320,26 @@ public static class CatalogMigrationRules
                 {
                     "Knee Raise with Overhead Reach",
                     "Single-Side Knee Raise with Two-Arm Pull-Down",
+                },
+                [524] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Front Double-Biceps Pose Hold",
+                },
+                [525] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Front Lat-Spread Pose Hold",
+                },
+                [526] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Side-Chest Pose Hold",
+                },
+                [527] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Side-Triceps Pose Hold",
+                },
+                [528] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Abdominals-and-Thighs Pose Hold",
                 },
                 [565] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -1210,6 +1233,7 @@ public static class CatalogMigrationRules
                     256, 261, 626, 677, 845, 996, 997,
                 },
                 [65] = new HashSet<int> { 507 },
+                [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1314,6 +1338,7 @@ public static class CatalogMigrationRules
                 },
                 [61] = new HashSet<int> { 302, 304, 305, 307, 308, 309, 310 },
                 [65] = new HashSet<int> { 507 },
+                [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =

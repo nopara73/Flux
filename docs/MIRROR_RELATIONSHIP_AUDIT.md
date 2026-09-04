@@ -36,12 +36,12 @@ The upper-body set is:
 
 The full-body set is:
 
-- `Mirror Front Double-Biceps Pose Hold`
-- `Mirror Front Lat-Spread Pose Hold`
-- `Mirror Side-Chest Pose Hold`
-- `Mirror Side-Triceps Pose Hold`
-- `Mirror Abdominals-and-Thighs Pose Hold`
-- `Mirror Most-Muscular Pose Hold`
+- `Mirror Front Double-Biceps Posing`
+- `Mirror Front Lat-Spread Posing`
+- `Mirror Side-Chest Posing`
+- `Mirror Side-Triceps Posing`
+- `Mirror Abdominals-and-Thighs Posing`
+- `Mirror Most-Muscular Posing`
 
 These are established reflection practices with exact human demonstrations.
 The compact-mirror set uses live self-view to isolate an eyebrow, practise

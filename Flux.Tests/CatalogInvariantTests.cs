@@ -268,14 +268,23 @@ public sealed class CatalogInvariantTests
                 .Select(exercise => exercise.Id)
                 .ToHashSet());
         Exercise mostMuscularPose = exercises.Single(exercise => exercise.Id == 790);
-        Assert.Equal("Mirror Most-Muscular Pose Hold", mostMuscularPose.Name);
+        Assert.Equal("Mirror Most-Muscular Posing", mostMuscularPose.Name);
         Assert.Equal(CanonicalMuscleGroup.ScapularGirdle,
             mostMuscularPose.PrimaryCanonicalGroup);
-        Assert.Equal(ExerciseMode.Hold, mostMuscularPose.Mode);
-        Assert.Equal(ExercisePresentation.Still, mostMuscularPose.Presentation);
+        Assert.Equal(ExerciseMode.Repetition, mostMuscularPose.Mode);
+        Assert.Equal(ExercisePresentation.Motion, mostMuscularPose.Presentation);
         Assert.Equal(Exercise.MaximumMuscularDemand, mostMuscularPose.MuscularDemand);
         Assert.Equal(ExerciseHardFloorCompatibility.Compatible,
             mostMuscularPose.HardFloorCompatibility);
+        int[] bodybuildingPosingIds = [524, 525, 526, 527, 528, 790];
+        Assert.All(bodybuildingPosingIds, exerciseId =>
+        {
+            Exercise pose = exercises.Single(exercise => exercise.Id == exerciseId);
+            Assert.EndsWith(" Posing", pose.Name);
+            Assert.Equal(ExerciseMode.Repetition, pose.Mode);
+            Assert.Equal(ExercisePresentation.Motion, pose.Presentation);
+            Assert.Equal(0, pose.HoldFramePercent);
+        });
         Exercise standingVacuum = exercises.Single(exercise => exercise.Id == 993);
         Assert.Equal("Mirror Standing Vacuum Repetitions", standingVacuum.Name);
         Assert.Equal(CanonicalMuscleGroup.AbdominalWall,

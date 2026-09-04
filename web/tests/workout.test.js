@@ -2599,12 +2599,19 @@ test("reviewed production catalog satisfies the enforceable coverage hierarchy",
     exercise.minimumMirrorCoverage === EXERCISE_MIRROR_COVERAGE.FullBody)
     .map((exercise) => exercise.id)), new Set([524, 525, 526, 527, 528, 790]));
   const mostMuscularPose = catalog.find((exercise) => exercise.id === 790);
-  assert.equal(mostMuscularPose.name, "Mirror Most-Muscular Pose Hold");
+  assert.equal(mostMuscularPose.name, "Mirror Most-Muscular Posing");
   assert.equal(mostMuscularPose.primaryCanonicalGroup, "ScapularGirdle");
-  assert.equal(mostMuscularPose.mode, "Hold");
-  assert.equal(mostMuscularPose.presentation, "Still");
+  assert.equal(mostMuscularPose.mode, "Repetition");
+  assert.equal(mostMuscularPose.presentation, "Motion");
   assert.equal(mostMuscularPose.muscularDemand, 2);
   assert.equal(mostMuscularPose.hardFloorCompatibility, "Compatible");
+  for (const exerciseId of [524, 525, 526, 527, 528, 790]) {
+    const pose = catalog.find((exercise) => exercise.id === exerciseId);
+    assert.match(pose.name, / Posing$/);
+    assert.equal(pose.mode, "Repetition");
+    assert.equal(pose.presentation, "Motion");
+    assert.equal(pose.holdFramePercent, 0);
+  }
   const standingVacuum = catalog.find((exercise) => exercise.id === 993);
   assert.equal(standingVacuum.name, "Mirror Standing Vacuum Repetitions");
   assert.equal(standingVacuum.primaryCanonicalGroup, "AbdominalWall");
@@ -6489,9 +6496,16 @@ test("second clarity corrections preserve earlier browser memory", () => {
 
       const owner = currentCatalog.find((item) => item.sequenceBlocks
         .some((block) => block.exerciseId === exerciseId));
+      const isUnavailableWithoutMirror = currentExercise.mirrorRelationship ===
+        EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly;
+      const isUnavailableWithoutWall = currentExercise.wallRequired;
       assert.equal(
         restored.state.selectedExerciseIds[group.id],
-        owner.id === exerciseId ? exerciseId : undefined,
+        owner.id === exerciseId &&
+          !isUnavailableWithoutMirror &&
+          !isUnavailableWithoutWall
+          ? exerciseId
+          : undefined,
       );
       assert.equal(restored.getScore(currentExercise), -4);
     }
@@ -7551,7 +7565,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 65);
+  assert.equal(CURRENT_CATALOG_REVISION, 66);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -8092,6 +8106,53 @@ test("knee crunch metadata correction rebuilds placement and resets feedback", (
   assert.equal(restored.state.pendingScoreValue, undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["507"], undefined);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("bodybuilding posing revision replaces static work and resets feedback", () => {
+  const changedIds = [524, 525, 526, 527, 528, 790];
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(66)],
+    changedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(66)],
+    changedIds,
+  );
+
+  const state = createDefaultState();
+  state.catalogRevision = 65;
+  const changedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("AbdominalWall"));
+  const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
+    group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
+  state.selectedExerciseIds[changedGroup.id] = 528;
+  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.outcomes[changedGroup.id] = "tick";
+  state.outcomes[retainedGroup.id] = "x";
+  state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id] = [528];
+  state.pendingScoreExerciseId = 528;
+  state.pendingScoreValue = -4;
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 528: -4, 15: -2 },
+  };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
+  assert.equal(restored.state.outcomes[changedGroup.id], undefined);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.deepEqual(
+    restored.state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id],
+    [528],
+  );
+  assert.equal(restored.state.pendingScoreExerciseId, undefined);
+  assert.equal(restored.state.pendingScoreValue, undefined);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["528"], undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);

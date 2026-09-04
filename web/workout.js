@@ -289,7 +289,7 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-export const CURRENT_CATALOG_REVISION = 65;
+export const CURRENT_CATALOG_REVISION = 66;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
 export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
@@ -427,6 +427,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     256, 261, 626, 677, 845, 996, 997,
   ])],
   [65, new Set([507])],
+  [66, new Set([524, 525, 526, 527, 528, 790])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -511,6 +512,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [61, new Set([302, 304, 305, 307, 308, 309, 310])],
   [65, new Set([507])],
+  [66, new Set([524, 525, 526, 527, 528, 790])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -588,11 +590,12 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [515, ["One-Eyebrow Isolation Practice", "Mirror One-Eyebrow Isolation Practice"]],
   [522, ["Tutting Box Sequence", "Mirror Tutting Box Sequence"]],
   [523, ["Arm-Wave Isolation Practice", "Mirror Arm-Wave Isolation Practice"]],
-  [524, ["Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Pose Hold"]],
-  [525, ["Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Pose Hold"]],
-  [526, ["Side-Chest Pose Hold", "Mirror Side-Chest Pose Hold"]],
-  [527, ["Side-Triceps Pose Hold", "Mirror Side-Triceps Pose Hold"]],
-  [528, ["Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Pose Hold"]],
+  [524, ["Mirror Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing"]],
+  [525, ["Mirror Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing"]],
+  [526, ["Mirror Side-Chest Pose Hold", "Mirror Side-Chest Posing"]],
+  [527, ["Mirror Side-Triceps Pose Hold", "Mirror Side-Triceps Posing"]],
+  [528, ["Mirror Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing"]],
+  [790, ["Mirror Most-Muscular Pose Hold", "Mirror Most-Muscular Posing"]],
   [193, ["Wide-Squat Floor-to-Overhead Reach", "Wide-Stance Floor-to-Overhead Reach"]],
   [417, ["Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach"]],
   [439, ["Feet-Together Fixed-Gaze Head Turns", "Pogo Bounces with Fixed-Gaze Head Turns"]],
@@ -614,6 +617,11 @@ export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
     "Knee Raise with Overhead Reach",
     "Single-Side Knee Raise with Two-Arm Pull-Down",
   ])],
+  [524, new Set(["Front Double-Biceps Pose Hold"])],
+  [525, new Set(["Front Lat-Spread Pose Hold"])],
+  [526, new Set(["Side-Chest Pose Hold"])],
+  [527, new Set(["Side-Triceps Pose Hold"])],
+  [528, new Set(["Abdominals-and-Thighs Pose Hold"])],
   [565, new Set(["Mini Squat with Forward Reach"])],
   [21, new Set(["Alternating Standing-Scale Balance"])],
   [145, new Set(["Alternating Standing Knee Extension"])],

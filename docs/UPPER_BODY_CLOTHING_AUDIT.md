@@ -37,8 +37,8 @@ not be inflated to satisfy modifier coverage.
 - `ClothingRequired` (6): Wall Sit (134), Wall Squat (137), Wall Sit March
   (175), Wall Shoulder Slides (579), Wall Angel (580), and Wall Roll-Down
   (801).
-- `BareUpperBodyRequired` (7): the five mirror bodybuilding pose holds,
-  IDs 524-528, plus Mirror Most-Muscular Pose Hold (790) and Mirror Standing
+- `BareUpperBodyRequired` (7): the five mirror bodybuilding posing practices,
+  IDs 524-528, plus Mirror Most-Muscular Posing (790) and Mirror Standing
   Vacuum Repetitions (993).
 - `Agnostic` (495): every other retained exercise.
 - `Unreviewed` (0).

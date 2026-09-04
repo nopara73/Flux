@@ -803,6 +803,17 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(500, "Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening")]
     [InlineData(511, "Mirror-Guided Lip Pucker", "Lip Pucker")]
     [InlineData(514, "Mirror-Guided Symmetric Smile", "Symmetric Smile")]
+    [InlineData(524, "Mirror Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing")]
+    [InlineData(524, "Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing")]
+    [InlineData(525, "Mirror Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing")]
+    [InlineData(525, "Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing")]
+    [InlineData(526, "Mirror Side-Chest Pose Hold", "Mirror Side-Chest Posing")]
+    [InlineData(526, "Side-Chest Pose Hold", "Mirror Side-Chest Posing")]
+    [InlineData(527, "Mirror Side-Triceps Pose Hold", "Mirror Side-Triceps Posing")]
+    [InlineData(527, "Side-Triceps Pose Hold", "Mirror Side-Triceps Posing")]
+    [InlineData(528, "Mirror Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing")]
+    [InlineData(528, "Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing")]
+    [InlineData(790, "Mirror Most-Muscular Pose Hold", "Mirror Most-Muscular Posing")]
     [InlineData(565, "Mini Squat with Forward Reach", "Mini-Squat Calf Raises with Forward Reach")]
     [InlineData(397, "Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Arm Sweep")]
     public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
@@ -2269,7 +2280,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(65, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(66, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2376,7 +2387,7 @@ public sealed class CatalogMigrationRulesTests
             104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
             256, 261, 626, 677, 845, 996, 997,
         ];
-        Assert.Equal(65, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(66, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
@@ -2484,6 +2495,66 @@ public sealed class CatalogMigrationRulesTests
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance];
         Assert.DoesNotContain(507, phaseScores);
+        Assert.Equal(-2, phaseScores[15]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void BodybuildingPosingRevisionRebuildsStaticPlacementsAndResetsFeedback()
+    {
+        HashSet<int> changedIds = [524, 525, 526, 527, 528, 790];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[66]);
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[66]);
+
+        const string changedGroup = "bodybuilding-posing.changed";
+        const string retainedGroup = "bodybuilding-posing.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 65,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 528,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+                [retainedGroup] = ExerciseOutcome.X,
+            },
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [changedGroup] = [528],
+            },
+            PendingScoreExerciseId = 528,
+            PendingScoreValue = -4,
+            ExerciseScoreAdjustmentsByPhase = new Dictionary<
+                WorkoutExercisePhase,
+                Dictionary<int, int>>
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [528] = -4,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.Equal([528], state.KeptExerciseRootIdsBySelectionGroupId[changedGroup]);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Dictionary<int, int> phaseScores =
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance];
+        Assert.DoesNotContain(528, phaseScores);
         Assert.Equal(-2, phaseScores[15]);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
@@ -2855,7 +2926,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(65, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(66, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -2914,7 +2985,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(65, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(66, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);

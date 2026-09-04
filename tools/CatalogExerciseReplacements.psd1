@@ -7803,15 +7803,15 @@
     }
     524 = @{
         RetiredName = 'Standing W Raise'
-        Name = 'Mirror Front Double-Biceps Pose Hold'
+        Name = 'Mirror Front Double-Biceps Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'FrontDoubleBicepsPose'
         Primary = 'ElbowFlexors'
         Secondary = @('ShoulderAbductors', 'ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'Chest', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators', 'IntrinsicHand', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 33
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
@@ -7829,15 +7829,15 @@
     }
     525 = @{
         RetiredName = 'Standing Y Raise'
-        Name = 'Mirror Front Lat-Spread Pose Hold'
+        Name = 'Mirror Front Lat-Spread Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'FrontLatSpreadPose'
         Primary = 'ShoulderAdductorsAndExtensors'
         Secondary = @('ScapularGirdle', 'Chest', 'ShoulderAbductors', 'RotatorCuff', 'AbdominalWall', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
@@ -7855,15 +7855,15 @@
     }
     526 = @{
         RetiredName = 'Standing T Raise'
-        Name = 'Mirror Side-Chest Pose Hold'
+        Name = 'Mirror Side-Chest Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'SideChestPose'
         Primary = 'Chest'
         Secondary = @('ElbowFlexors', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
@@ -7881,15 +7881,15 @@
     }
     527 = @{
         RetiredName = 'Standing I Raise'
-        Name = 'Mirror Side-Triceps Pose Hold'
+        Name = 'Mirror Side-Triceps Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'SideTricepsPose'
         Primary = 'ElbowExtensors'
         Secondary = @('ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ScapularGirdle', 'Chest', 'ForearmFlexorsAndPronators', 'AbdominalWall', 'PosteriorThighAndKneeFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'ScreenLeftThenRight'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
@@ -7907,15 +7907,15 @@
     }
     528 = @{
         RetiredName = 'Goalpost Open-and-Close'
-        Name = 'Mirror Abdominals-and-Thighs Pose Hold'
+        Name = 'Mirror Abdominals-and-Thighs Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'AbdominalsAndThighsPose'
         Primary = 'AbdominalWall'
         Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'Chest', 'ShoulderAbductors', 'ElbowFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 25
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
@@ -9100,15 +9100,15 @@
     }
     790 = @{
         RetiredName = 'Flamenco Chest Circle'
-        Name = 'Mirror Most-Muscular Pose Hold'
+        Name = 'Mirror Most-Muscular Posing'
         Practice = 'Bodybuilding posing'
         MotionProfile = 'MostMuscularPose'
         Primary = 'ScapularGirdle'
         Secondary = @('Chest', 'ShoulderAdductorsAndExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'ForearmFlexorsAndPronators', 'IntrinsicHand', 'AbdominalWall', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
         SideSequence = 'Continuous'
-        Mode = 'Hold'
-        Presentation = 'Still'
-        HoldFramePercent = 50
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
         Media = @{
             File = 'bodybuilding-criticalbench.mp4'
             Url = 'https://www.youtube.com/watch?v=Kfai0n5xYXs'
