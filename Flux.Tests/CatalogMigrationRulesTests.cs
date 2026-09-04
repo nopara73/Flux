@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(371, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(373, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -2280,7 +2280,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2387,7 +2387,7 @@ public sealed class CatalogMigrationRulesTests
             104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
             256, 261, 626, 677, 845, 996, 997,
         ];
-        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
@@ -2563,16 +2563,19 @@ public sealed class CatalogMigrationRulesTests
     public void MaterialTrainingRevisionRemovesOnlyAnatomicallyInvalidSlotsAndKeeps()
     {
         HashSet<int> addedIds = [911, 913, 916, 917];
-        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[67]);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.ScoreInvalidationsByRevision[67]);
-        Assert.False(
-            CatalogMigrationRules.WorkoutStateInvalidationsByRevision.ContainsKey(68));
-        Assert.False(CatalogMigrationRules.ScoreInvalidationsByRevision.ContainsKey(68));
+        Assert.Equal(
+            new HashSet<int> { 918, 919 },
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[69]);
+        Assert.Equal(
+            new HashSet<int> { 918, 919 },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[69]);
 
         Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
                 File.ReadAllText(Path.Combine(
@@ -2656,6 +2659,102 @@ public sealed class CatalogMigrationRulesTests
             WorkoutExercisePhase.PeakPerformance][701]);
         Assert.Equal(-2, state.ExerciseScoreAdjustmentsByPhase[
             WorkoutExercisePhase.PeakPerformance][910]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision,
+            state.CatalogRevision);
+    }
+
+    [Fact]
+    public void TrainingClaimRevisionRemovesOnlyNewlyInvalidSlotFeedback()
+    {
+        HashSet<int> addedIds = [918, 919];
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(
+            addedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[69]);
+        Assert.Equal(
+            addedIds,
+            CatalogMigrationRules.ScoreInvalidationsByRevision[69]);
+
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "exercises.json")),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The test catalog is missing.");
+        IReadOnlyDictionary<int, Exercise> exercisesById = catalog
+            .ToDictionary(exercise => exercise.Id);
+        const string invalidPelvicFloorSlot = "r30.pelvic-floor-perineum";
+        const string validHipFlexorSlot = "r30.hip-flexors";
+        const string invalidRound =
+            $"{invalidPelvicFloorSlot}.set1.block1";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 68,
+            ActiveWorkoutMinutes = 30,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [invalidPelvicFloorSlot] = 613,
+                [validHipFlexorSlot] = 613,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [invalidRound] = ExerciseOutcome.Tick,
+                [validHipFlexorSlot] = ExerciseOutcome.X,
+            },
+            PendingMovementGroupId = invalidRound,
+            PendingMovementEndsAtUnixMilliseconds = 123456,
+            PendingMovementMillisecondsRemaining = 4000,
+            PendingMovementPausedByUser = true,
+            PendingScoreExerciseId = 613,
+            PendingScoreValue = -1,
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [invalidPelvicFloorSlot] = [613],
+                [validHipFlexorSlot] = [613],
+            },
+            LastKeptExerciseIds = [613],
+            ExerciseScoreAdjustmentsBySelectionGroupId = new()
+            {
+                [invalidPelvicFloorSlot] = new() { [613] = -2 },
+                [validHipFlexorSlot] = new() { [613] = -1 },
+            },
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [613] = -3,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(
+            state,
+            exercisesById));
+
+        Assert.DoesNotContain(invalidPelvicFloorSlot, state.SelectedExerciseIds);
+        Assert.Equal(613, state.SelectedExerciseIds[validHipFlexorSlot]);
+        Assert.DoesNotContain(invalidRound, state.Outcomes);
+        Assert.Equal(ExerciseOutcome.X, state.Outcomes[validHipFlexorSlot]);
+        Assert.Null(state.PendingMovementGroupId);
+        Assert.DoesNotContain(
+            invalidPelvicFloorSlot,
+            state.KeptExerciseRootIdsBySelectionGroupId);
+        Assert.Equal(
+            [613],
+            state.KeptExerciseRootIdsBySelectionGroupId[validHipFlexorSlot]);
+        Assert.DoesNotContain(
+            invalidPelvicFloorSlot,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId);
+        Assert.Equal(
+            -1,
+            state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                validHipFlexorSlot][613]);
+        Assert.Equal(-3, state.ExerciseScoreAdjustmentsByPhase[
+            WorkoutExercisePhase.PeakPerformance][613]);
+        Assert.Equal(613, state.PendingScoreExerciseId);
+        Assert.Equal(-1, state.PendingScoreValue);
+        Assert.Equal([613], state.LastKeptExerciseIds);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision,
             state.CatalogRevision);
     }
@@ -3027,7 +3126,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -3086,7 +3185,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(68, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);

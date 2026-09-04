@@ -28,6 +28,9 @@ on:
       - "tools/Test-ExerciseMirrorRelationshipAudit.ps1"
       - "tools/ExerciseSessionMovements.psd1"
       - "tools/Test-ExerciseSessionMovementAudit.ps1"
+      - "tools/CanonicalMuscleGroups.psd1"
+      - "tools/ExerciseSecondaryTrainingClaims.psd1"
+      - "tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1"
   workflow_dispatch:
 
 permissions:
@@ -75,6 +78,9 @@ jobs:
             /tools/Test-ExerciseMirrorRelationshipAudit.ps1
             /tools/ExerciseSessionMovements.psd1
             /tools/Test-ExerciseSessionMovementAudit.ps1
+            /tools/CanonicalMuscleGroups.psd1
+            /tools/ExerciseSecondaryTrainingClaims.psd1
+            /tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1
           sparse-checkout-cone-mode: false
 
       - name: Validate mirror relationship audit
@@ -84,6 +90,10 @@ jobs:
       - name: Validate session movement audit
         shell: pwsh
         run: ./tools/Test-ExerciseSessionMovementAudit.ps1
+
+      - name: Validate muscle training claims
+        shell: pwsh
+        run: ./tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1
 
       - name: Set up Node.js
         uses: actions/setup-node@v6

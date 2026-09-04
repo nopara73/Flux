@@ -59,6 +59,12 @@ public sealed class WorkoutState
     // selections are rebuilt after a mid-workout equipment change.
     public List<string> ActiveSelectionGroupOrder { get; set; } = [];
 
+    // Modifier changes may make an already completed anatomical slot
+    // unavailable for the new profile. Retain only those completed slots in
+    // the active schedule so elapsed work still counts toward its duration;
+    // an unfinished unavailable slot is replanned away immediately.
+    public HashSet<string> ActiveModifierRetainedSelectionGroupIds { get; set; } = [];
+
     // Unfinished current work is replanned normally for every modifier change.
     // This exception exists only for a block already completed and resting, so
     // recorded work is not rewritten retroactively.

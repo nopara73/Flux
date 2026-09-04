@@ -8,7 +8,6 @@
     "secondaryCanonicalGroups": [
       "GlutealExtensors",
       "HipAbductors",
-      "DeepAndIntersegmentalBack",
       "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Bodyweight conditioning",
@@ -243,7 +242,8 @@
       "GlutealExtensors",
       "PosteriorThighAndKneeFlexors",
       "DeepAndIntersegmentalBack",
-      "CalfDeepPosteriorLegAndPlantarFoot"
+      "CalfDeepPosteriorLegAndPlantarFoot",
+      "AbdominalWall"
     ],
     "practice": "Balance training",
     "motionProfile": "BackBalance",
@@ -336,9 +336,7 @@
     "primaryCanonicalGroup": "CalfDeepPosteriorLegAndPlantarFoot",
     "secondaryCanonicalGroups": [
       "Soleus",
-      "AnteriorLateralLowerLegAndDorsalFoot",
-      "DeepAndIntersegmentalBack",
-      "PelvicFloorAndPerineum"
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Gait retraining",
     "motionProfile": "WalkingStep",
@@ -471,7 +469,6 @@
     "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
     "secondaryCanonicalGroups": [
       "PosteriorNeckAndSuboccipitalMuscles",
-      "DeepAndIntersegmentalBack",
       "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Balance and vestibular training",
@@ -566,8 +563,7 @@
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "ShoulderAbductors",
-      "PelvicFloorAndPerineum"
+      "ShoulderAbductors"
     ],
     "practice": "Bhangra",
     "motionProfile": "WalkingStep",
@@ -706,8 +702,7 @@
     "secondaryCanonicalGroups": [
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "HipAbductors",
-      "PelvicFloorAndPerineum"
+      "HipAbductors"
     ],
     "practice": "Capoeira",
     "motionProfile": "WalkingStep",
@@ -1910,8 +1905,7 @@
     "secondaryCanonicalGroups": [
       "Soleus",
       "HipFlexors",
-      "AnteriorLateralLowerLegAndDorsalFoot",
-      "PelvicFloorAndPerineum"
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "LegBalance",
@@ -3920,8 +3914,7 @@
       "LateralKneeExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "ShoulderAbductors",
-      "PelvicFloorAndPerineum"
+      "ShoulderAbductors"
     ],
     "practice": "Running drills",
     "motionProfile": "KneeLift",
@@ -3963,8 +3956,7 @@
     "primaryCanonicalGroup": "PosteriorThighAndKneeFlexors",
     "secondaryCanonicalGroups": [
       "HipFlexors",
-      "AnteriorLateralLowerLegAndDorsalFoot",
-      "PelvicFloorAndPerineum"
+      "AnteriorLateralLowerLegAndDorsalFoot"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "KneeLift",
@@ -4008,8 +4000,7 @@
       "ShoulderAdductorsAndExtensors",
       "ShoulderAbductors",
       "ScapularGirdle",
-      "ElbowFlexors",
-      "PelvicFloorAndPerineum"
+      "ElbowFlexors"
     ],
     "practice": "Low-impact conditioning",
     "motionProfile": "HighKneePulldown",
@@ -5157,9 +5148,7 @@
     "retiredName": "Ballet Degage Devant",
     "video": "exercise_videos/exercise_0194.mp4",
     "primaryCanonicalGroup": "AnteriorLateralLowerLegAndDorsalFoot",
-    "secondaryCanonicalGroups": [
-      "DeepAndIntersegmentalBack"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Gait retraining",
     "motionProfile": "HeelWalk",
     "mode": "Repetition",
@@ -5573,9 +5562,7 @@
     "retiredName": "Karate Backfist Strike (Uraken-Uchi)",
     "video": "exercise_videos/exercise_0211.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Wrist stretching",
     "motionProfile": "WristFlexionStretch",
     "mode": "Hold",
@@ -5677,9 +5664,7 @@
     "retiredName": "Karate Hammer-Fist Strike (Tetsui-Uchi)",
     "video": "exercise_videos/exercise_0213.mp4",
     "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Wrist stretching",
     "motionProfile": "WristExtensionStretch",
     "mode": "Hold",
@@ -5821,9 +5806,7 @@
     "retiredName": "Self-Resisted Wrist Ulnar-Deviation Pulses",
     "video": "exercise_videos/exercise_0216.mp4",
     "primaryCanonicalGroup": "ForearmFlexorsAndPronators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Standing hand and wrist stretching",
     "motionProfile": "WristAndFingerFlexorStretch",
     "mode": "Hold",
@@ -6007,7 +5990,6 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "ShoulderAdductorsAndExtensors",
       "ScapularGirdle",
       "RotatorCuff"
@@ -6169,9 +6151,7 @@
     "retiredName": "Karate Knife-Hand Block (Shuto-Uke)",
     "video": "exercise_videos/exercise_0225.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Wrist mobility",
     "motionProfile": "WristFlexionStretch",
     "mode": "Hold",
@@ -6349,7 +6329,7 @@
       "ShoulderAbductors",
       "ScapularGirdle",
       "RotatorCuff",
-      "IntrinsicHand"
+      "ElbowFlexors"
     ],
     "practice": "Karate conditioning",
     "motionProfile": "ReversePunch",
@@ -6433,9 +6413,7 @@
     "retiredName": "Karate Ridge-Hand Strike (Haito-Uchi)",
     "video": "exercise_videos/exercise_0233.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Standing hand and wrist stretching",
     "motionProfile": "WristFlexionStretch",
     "mode": "Hold",
@@ -6525,7 +6503,6 @@
     "video": "exercise_videos/exercise_0236.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
     "secondaryCanonicalGroups": [
-      "IntrinsicHand",
       "ForearmFlexorsAndPronators"
     ],
     "practice": "Wrist mobility",
@@ -6649,9 +6626,7 @@
     "retiredName": "Ninja Fireball Hand-Seal Sequence",
     "video": "exercise_videos/exercise_0239.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Standing hand and wrist stretching",
     "motionProfile": "ReversePrayerStretch",
     "mode": "Hold",
@@ -6735,7 +6710,6 @@
     "video": "exercise_videos/exercise_0241.mp4",
     "primaryCanonicalGroup": "Chest",
     "secondaryCanonicalGroups": [
-      "IntrinsicHand",
       "ForearmFlexorsAndPronators",
       "ShoulderAdductorsAndExtensors",
       "ScapularGirdle"
@@ -6825,10 +6799,10 @@
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand",
       "ElbowFlexors",
       "ElbowExtensors",
-      "ScapularGirdle"
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Boxing",
     "motionProfile": "ShovelHookCombo",
@@ -6920,7 +6894,6 @@
     "secondaryCanonicalGroups": [
       "ElbowExtensors",
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "ShoulderAbductors",
       "ScapularGirdle",
       "RotatorCuff"
@@ -7273,8 +7246,8 @@
       "ScapularGirdle",
       "ElbowExtensors",
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
-      "ElbowFlexors"
+      "ElbowFlexors",
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "DownwardBlock",
@@ -7707,7 +7680,6 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "AnteriorLateralLowerLegAndDorsalFoot"
@@ -7939,7 +7911,12 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "Chest",
-      "GlutealExtensors"
+      "GlutealExtensors",
+      "ShoulderAbductors",
+      "ShoulderAdductorsAndExtensors",
+      "ScapularGirdle",
+      "RotatorCuff",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Boxing",
     "motionProfile": "MartialHand",
@@ -8087,8 +8064,7 @@
     "primaryCanonicalGroup": "Chest",
     "secondaryCanonicalGroups": [
       "ShoulderAbductors",
-      "ScapularGirdle",
-      "IntrinsicHand"
+      "ScapularGirdle"
     ],
     "practice": "Standing mobility and movement practice",
     "motionProfile": "FingerMotion",
@@ -8329,11 +8305,9 @@
       "Chest",
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand",
       "ShoulderAbductors",
       "HipFlexors",
-      "HipAbductors",
-      "PelvicFloorAndPerineum"
+      "HipAbductors"
     ],
     "practice": "Low-impact boxing conditioning",
     "motionProfile": "SideStepKneeDriveSidePunch",
@@ -8382,9 +8356,9 @@
     "primaryCanonicalGroup": "ElbowExtensors",
     "secondaryCanonicalGroups": [
       "Chest",
-      "IntrinsicHand",
       "ForearmFlexorsAndPronators",
       "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
       "RotatorCuff",
       "ScapularGirdle"
     ],
@@ -8471,7 +8445,10 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand"
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "InsideBlock",
@@ -8528,9 +8505,9 @@
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand",
       "ScapularGirdle",
-      "RotatorCuff"
+      "RotatorCuff",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "OutsideBlock",
@@ -8736,7 +8713,6 @@
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "ElbowExtensors",
       "ShoulderAbductors",
       "ScapularGirdle"
@@ -8784,7 +8760,6 @@
       "RotatorCuff",
       "ScapularGirdle",
       "ElbowExtensors",
-      "IntrinsicHand",
       "ForearmFlexorsAndPronators"
     ],
     "practice": "Karate conditioning",
@@ -8943,7 +8918,6 @@
       "RotatorCuff",
       "ScapularGirdle",
       "ElbowExtensors",
-      "IntrinsicHand",
       "ForearmExtensorsAndSupinators"
     ],
     "practice": "Karate conditioning",
@@ -8981,8 +8955,7 @@
       "AnteriorLateralLowerLegAndDorsalFoot",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "GlutealExtensors",
-      "PelvicFloorAndPerineum"
+      "GlutealExtensors"
     ],
     "practice": "Standing bodyweight conditioning",
     "motionProfile": "SquatMarch",
@@ -9026,8 +8999,7 @@
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
       "HipFlexors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Standing bodyweight conditioning",
     "motionProfile": "SprinterMarch",
@@ -9673,7 +9645,7 @@
       "ShoulderAbductors",
       "ScapularGirdle",
       "RotatorCuff",
-      "IntrinsicHand"
+      "ElbowFlexors"
     ],
     "practice": "Boxing conditioning",
     "motionProfile": "RearHandStraightPunch",
@@ -9723,7 +9695,10 @@
     "secondaryCanonicalGroups": [
       "Chest",
       "RotatorCuff",
-      "ShoulderAdductorsAndExtensors"
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Muay Thai",
     "motionProfile": "MartialHand",
@@ -10152,8 +10127,7 @@
     "primaryCanonicalGroup": "ShoulderAbductors",
     "secondaryCanonicalGroups": [
       "ShoulderAdductorsAndExtensors",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Breath-led mobility",
     "motionProfile": "StepTouchArmArc",
@@ -10302,8 +10276,7 @@
       "DeepAndIntersegmentalBack",
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "DeepHipRotators",
-      "PelvicFloorAndPerineum"
+      "DeepHipRotators"
     ],
     "practice": "Standing bodyweight conditioning",
     "motionProfile": "DeadliftKneeDrive",
@@ -10751,8 +10724,7 @@
     "video": "exercise_videos/exercise_0403.mp4",
     "primaryCanonicalGroup": "Chest",
     "secondaryCanonicalGroups": [
-      "ScapularGirdle",
-      "DeepAndIntersegmentalBack"
+      "ScapularGirdle"
     ],
     "practice": "Qigong",
     "motionProfile": "ChestIsolation",
@@ -10795,8 +10767,7 @@
     "secondaryCanonicalGroups": [
       "ScapularGirdle",
       "ElbowExtensors",
-      "ForearmFlexorsAndPronators",
-      "IntrinsicHand"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Qigong",
     "motionProfile": "ChestPress",
@@ -10883,8 +10854,7 @@
     "secondaryCanonicalGroups": [
       "Chest",
       "ShoulderAbductors",
-      "SpinalExtensors",
-      "DeepAndIntersegmentalBack"
+      "SpinalExtensors"
     ],
     "practice": "Qigong",
     "motionProfile": "ChestCircle",
@@ -11222,8 +11192,7 @@
     "secondaryCanonicalGroups": [
       "CranialMuscles",
       "ShoulderAbductors",
-      "ScapularGirdle",
-      "PelvicFloorAndPerineum"
+      "ScapularGirdle"
     ],
     "practice": "Brain-calibration training",
     "motionProfile": "MarchingEyeShift",
@@ -11423,9 +11392,7 @@
       "SpinalExtensors",
       "DeepAndIntersegmentalBack",
       "ShoulderAbductors",
-      "ScapularGirdle",
-      "AnteriorLateralNeckAndHyoidMuscles",
-      "PosteriorNeckAndSuboccipitalMuscles"
+      "ScapularGirdle"
     ],
     "practice": "Standing mobility",
     "motionProfile": "NarrowStanceOverheadFloorReach",
@@ -11554,8 +11521,7 @@
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Cardio conditioning",
     "motionProfile": "JumpingJack",
@@ -11904,8 +11870,7 @@
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
       "ScapularGirdle",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "PogoJumpArmSwing",
@@ -12042,8 +12007,7 @@
       "LateralKneeExtensors",
       "GlutealExtensors",
       "PosteriorThighAndKneeFlexors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "JumpSquat",
@@ -12088,8 +12052,7 @@
       "LateralKneeExtensors",
       "GlutealExtensors",
       "HipAbductors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "RotationalJumpSquat",
@@ -12134,8 +12097,7 @@
       "LateralKneeExtensors",
       "PosteriorThighAndKneeFlexors",
       "HipFlexors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "JumpingLunge",
@@ -12180,8 +12142,7 @@
       "AnteriorLateralLowerLegAndDorsalFoot",
       "HipAbductors",
       "DeepHipRotators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "LateralLineHop",
@@ -12228,8 +12189,7 @@
       "ScapularGirdle",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Boxing cardio conditioning",
     "motionProfile": "RunningHighKneePunch",
@@ -12413,8 +12373,7 @@
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Vestibular and neck conditioning",
     "motionProfile": "PogoHeadTurn",
@@ -12459,8 +12418,7 @@
       "ScapularGirdle",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Boxing and plyometric conditioning",
     "motionProfile": "HookPunchTuckJump",
@@ -12505,8 +12463,7 @@
       "ScapularGirdle",
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Boxing and cardio conditioning",
     "motionProfile": "HookPunchRopelessJump",
@@ -12552,8 +12509,7 @@
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Vestibular and neck conditioning",
     "motionProfile": "PogoHeadNod",
@@ -12599,8 +12555,7 @@
       "CalfDeepPosteriorLegAndPlantarFoot",
       "ElbowExtensors",
       "Chest",
-      "ShoulderAbductors",
-      "PelvicFloorAndPerineum"
+      "ShoulderAbductors"
     ],
     "practice": "Boxing and plyometric conditioning",
     "motionProfile": "SquatJumpDoublePunch",
@@ -12646,8 +12601,7 @@
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
       "AnteriorLateralLowerLegAndDorsalFoot",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Vestibular and neck conditioning",
     "motionProfile": "PogoHeadTilt",
@@ -12691,8 +12645,7 @@
       "Soleus",
       "ForearmExtensorsAndSupinators",
       "ForearmFlexorsAndPronators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Rope-free cardio conditioning",
     "motionProfile": "ImaginaryJumpRopeChangingFeet",
@@ -12813,8 +12766,7 @@
       "PosteriorThighAndKneeFlexors",
       "HipFlexors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "Soleus",
-      "PelvicFloorAndPerineum"
+      "Soleus"
     ],
     "practice": "Plyometric landing mechanics",
     "motionProfile": "TuckJumpStickLanding",
@@ -12899,8 +12851,7 @@
       "LateralKneeExtensors",
       "GlutealExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "Soleus",
-      "PelvicFloorAndPerineum"
+      "Soleus"
     ],
     "practice": "Plyometric landing mechanics",
     "motionProfile": "VerticalJumpControlledLanding",
@@ -12991,8 +12942,7 @@
       "LateralKneeExtensors",
       "GlutealExtensors",
       "HipAbductors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Plyometric conditioning",
     "motionProfile": "QuarterTurnSquatJump",
@@ -13269,8 +13219,7 @@
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "Soleus",
-      "PelvicFloorAndPerineum"
+      "Soleus"
     ],
     "practice": "Plyometric balance conditioning",
     "motionProfile": "SingleLegRotationalHop",
@@ -13481,8 +13430,7 @@
       "Soleus",
       "ForearmExtensorsAndSupinators",
       "ForearmFlexorsAndPronators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Rope-free cardio conditioning",
     "motionProfile": "FakeJumpRope",
@@ -13527,8 +13475,7 @@
       "Soleus",
       "ForearmExtensorsAndSupinators",
       "ForearmFlexorsAndPronators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Rope-free cardio conditioning",
     "motionProfile": "FakeJumpRopeHighKnees",
@@ -13573,8 +13520,7 @@
       "AnteriorLateralLowerLegAndDorsalFoot",
       "ForearmExtensorsAndSupinators",
       "ForearmFlexorsAndPronators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Rope-free cardio conditioning",
     "motionProfile": "FakeJumpRopeHeelTaps",
@@ -13618,8 +13564,7 @@
       "Soleus",
       "ForearmExtensorsAndSupinators",
       "ForearmFlexorsAndPronators",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Rope-free cardio conditioning",
     "motionProfile": "SingleLegImaginaryJumpRope",
@@ -13799,8 +13744,7 @@
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Bodyweight cardio conditioning",
     "motionProfile": "ArmCircleJumpingJack",
@@ -13887,8 +13831,7 @@
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "Soleus",
-      "PelvicFloorAndPerineum"
+      "Soleus"
     ],
     "practice": "Plyometric landing mechanics",
     "motionProfile": "SingleLegQuarterTurnHopStickLanding",
@@ -13941,8 +13884,7 @@
       "DeepAndIntersegmentalBack",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "CalfDeepPosteriorLegAndPlantarFoot",
-      "PelvicFloorAndPerineum"
+      "CalfDeepPosteriorLegAndPlantarFoot"
     ],
     "practice": "Plyometric posterior-chain conditioning",
     "motionProfile": "HingeJump",
@@ -14074,8 +14016,7 @@
     "video": "exercise_videos/exercise_0475.mp4",
     "primaryCanonicalGroup": "AnteriorLateralNeckAndHyoidMuscles",
     "secondaryCanonicalGroups": [
-      "PosteriorNeckAndSuboccipitalMuscles",
-      "PelvicFloorAndPerineum"
+      "PosteriorNeckAndSuboccipitalMuscles"
     ],
     "practice": "Balance and neck mobility",
     "motionProfile": "HeadTurnMarch",
@@ -14122,8 +14063,7 @@
       "LateralKneeExtensors",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
-      "BreathingMuscles",
-      "PelvicFloorAndPerineum"
+      "BreathingMuscles"
     ],
     "practice": "Bodyweight cardio conditioning",
     "motionProfile": "SingleSideHighKneePullHop",
@@ -14663,8 +14603,7 @@
       "PosteriorThighAndKneeFlexors",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
-      "HipAbductors",
-      "PelvicFloorAndPerineum"
+      "HipAbductors"
     ],
     "practice": "Plyometric landing mechanics",
     "motionProfile": "SingleLegVerticalJumpStickLanding",
@@ -16142,8 +16081,7 @@
       "ElbowFlexors",
       "ElbowExtensors",
       "ForearmFlexorsAndPronators",
-      "ForearmExtensorsAndSupinators",
-      "IntrinsicHand"
+      "ForearmExtensorsAndSupinators"
     ],
     "practice": "Popping and waving",
     "motionProfile": "ArmWaveIsolation",
@@ -16190,7 +16128,6 @@
       "Chest",
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand",
       "AbdominalWall",
       "MedialAndDeepKneeExtensors",
       "LateralKneeExtensors",
@@ -16733,8 +16670,7 @@
       "DeepAndIntersegmentalBack",
       "HipAbductors",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "DeepHipRotators",
-      "PelvicFloorAndPerineum"
+      "DeepHipRotators"
     ],
     "practice": "Bodyweight conditioning",
     "motionProfile": "DeadliftKneeDrive",
@@ -16875,7 +16811,10 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand"
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "InsideBlock",
@@ -16945,7 +16884,6 @@
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "ShoulderAdductorsAndExtensors",
       "ScapularGirdle",
       "RotatorCuff"
@@ -17030,9 +16968,9 @@
     "secondaryCanonicalGroups": [
       "ForearmFlexorsAndPronators",
       "ForearmExtensorsAndSupinators",
-      "IntrinsicHand",
       "ScapularGirdle",
-      "RotatorCuff"
+      "RotatorCuff",
+      "ShoulderAbductors"
     ],
     "practice": "Karate",
     "motionProfile": "OutsideBlock",
@@ -17067,7 +17005,10 @@
     "secondaryCanonicalGroups": [
       "Chest",
       "RotatorCuff",
-      "ShoulderAdductorsAndExtensors"
+      "ShoulderAdductorsAndExtensors",
+      "ShoulderAbductors",
+      "ScapularGirdle",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Muay Thai",
     "motionProfile": "MartialHand",
@@ -17147,8 +17088,7 @@
       "AbdominalWall",
       "DeepAndIntersegmentalBack",
       "ShoulderAbductors",
-      "ShoulderAdductorsAndExtensors",
-      "PelvicFloorAndPerineum"
+      "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Coordination training",
     "motionProfile": "CrossBodyKneeTap",
@@ -17462,7 +17402,6 @@
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
     "secondaryCanonicalGroups": [
       "ElbowExtensors",
-      "IntrinsicHand",
       "ShoulderAbductors",
       "RotatorCuff",
       "ScapularGirdle"
@@ -17606,8 +17545,7 @@
       "LateralKneeExtensors",
       "AnteriorLateralNeckAndHyoidMuscles",
       "PosteriorNeckAndSuboccipitalMuscles",
-      "CranialMuscles",
-      "PelvicFloorAndPerineum"
+      "CranialMuscles"
     ],
     "practice": "Ballet",
     "motionProfile": "TiptoeRunningHeadSpot",
@@ -18181,9 +18119,7 @@
     "retiredName": "Tai Chi Single Whip",
     "video": "exercise_videos/exercise_0573.mp4",
     "primaryCanonicalGroup": "ForearmExtensorsAndSupinators",
-    "secondaryCanonicalGroups": [
-      "IntrinsicHand"
-    ],
+    "secondaryCanonicalGroups": [],
     "practice": "Wrist mobility",
     "motionProfile": "WristCurl",
     "mode": "Hold",
@@ -18278,8 +18214,7 @@
       "Chest",
       "ShoulderAdductorsAndExtensors",
       "ScapularGirdle",
-      "ForearmFlexorsAndPronators",
-      "PelvicFloorAndPerineum"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Boxing",
     "motionProfile": "BoxerBounceJabCross",
@@ -18425,8 +18360,7 @@
       "ScapularGirdle",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
-      "ForearmFlexorsAndPronators",
-      "PelvicFloorAndPerineum"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Boxing",
     "motionProfile": "BounceStepJab",
@@ -18631,8 +18565,7 @@
       "ScapularGirdle",
       "CalfDeepPosteriorLegAndPlantarFoot",
       "Soleus",
-      "ForearmFlexorsAndPronators",
-      "PelvicFloorAndPerineum"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Boxing",
     "motionProfile": "BounceStepCross",
@@ -19293,8 +19226,7 @@
     "secondaryCanonicalGroups": [
       "AnteriorLateralLowerLegAndDorsalFoot",
       "CalfDeepPosteriorLegAndPlantarFoot",
-      "ShoulderAbductors",
-      "PelvicFloorAndPerineum"
+      "ShoulderAbductors"
     ],
     "practice": "Balance training",
     "motionProfile": "BalanceMarch",
@@ -20219,7 +20151,9 @@
     "secondaryCanonicalGroups": [
       "ElbowFlexors",
       "ScapularGirdle",
-      "RotatorCuff"
+      "RotatorCuff",
+      "ShoulderAbductors",
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Muay Thai",
     "motionProfile": "MartialHand",
@@ -20364,8 +20298,7 @@
       "ForearmFlexorsAndPronators",
       "ShoulderAbductors",
       "ScapularGirdle",
-      "RotatorCuff",
-      "IntrinsicHand"
+      "RotatorCuff"
     ],
     "practice": "Karate",
     "motionProfile": "ReversePunch",
@@ -20689,7 +20622,6 @@
     "primaryCanonicalGroup": "Chest",
     "secondaryCanonicalGroups": [
       "ScapularGirdle",
-      "DeepAndIntersegmentalBack",
       "ShoulderAdductorsAndExtensors"
     ],
     "practice": "Standing mobility and stretching",
@@ -21032,8 +20964,7 @@
     "video": "exercise_videos/exercise_0745.mp4",
     "primaryCanonicalGroup": "ElbowFlexors",
     "secondaryCanonicalGroups": [
-      "ForearmFlexorsAndPronators",
-      "IntrinsicHand"
+      "ForearmFlexorsAndPronators"
     ],
     "practice": "Self-resistance",
     "motionProfile": "ArmCurl",
@@ -21534,7 +21465,6 @@
       "ShoulderAbductors",
       "ElbowFlexors",
       "ForearmFlexorsAndPronators",
-      "IntrinsicHand",
       "AbdominalWall",
       "GlutealExtensors",
       "MedialAndDeepKneeExtensors",
@@ -22680,6 +22610,87 @@
     "minimumMirrorCoverage": "UpperBody",
     "score": 0,
     "muscularDemand": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 918,
+    "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+    "retiredName": "Alternating Single-Leg Core Balance",
+    "video": "exercise_videos/exercise_0918.mp4",
+    "primaryCanonicalGroup": "PelvicFloorAndPerineum",
+    "secondaryCanonicalGroups": [],
+    "practice": "Pelvic-floor training",
+    "motionProfile": "PelvicFloorSlowContraction",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 918,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Incompatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
+  },
+  {
+    "id": 919,
+    "name": "March in Place with Fixed-Gaze Head Turns",
+    "retiredName": "Alternating Tandem-Stance Core Brace",
+    "video": "exercise_videos/exercise_0919.mp4",
+    "primaryCanonicalGroup": "CranialMuscles",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralNeckAndHyoidMuscles",
+      "PosteriorNeckAndSuboccipitalMuscles"
+    ],
+    "practice": "Vestibular and neck conditioning",
+    "motionProfile": "FixedGazeHeadTurnMarch",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 919,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
     "onlyFeetTouchGround": true,
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,

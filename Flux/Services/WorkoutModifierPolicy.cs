@@ -80,6 +80,34 @@ public static class WorkoutModifierPolicy
 
     private const int MaterialityResolutionMinutes = 30;
 
+    // Insect mode needs visible continuous whole-body movement. Pelvic-floor
+    // isolation cannot honestly meet that contract under Flux's feet-only
+    // rules. Intrinsic-hand work can meet it only when a wall is available.
+    // Keep these exceptions anatomical and exact instead of inventing
+    // secondary claims or artificial marching variants to make a quota pass.
+    private static readonly HashSet<CanonicalMuscleGroup>
+        InsectFineCoverageExceptions =
+    [
+        CanonicalMuscleGroup.PelvicFloorAndPerineum,
+    ];
+
+    private static readonly HashSet<CanonicalMuscleGroup>
+        WallFreeInsectFineCoverageExceptions =
+    [
+        CanonicalMuscleGroup.IntrinsicHand,
+    ];
+
+    // Isolated intrinsic-hand and pelvic-floor work is neutral to the floor:
+    // every honest standing version is HardFloor-compatible. Requiring a
+    // HardFloor-incompatible variant would manufacture unrelated footwork or
+    // a false secondary claim solely for validation.
+    private static readonly HashSet<CanonicalMuscleGroup>
+        HardFloorNeutralFineCoverageExceptions =
+    [
+        CanonicalMuscleGroup.PelvicFloorAndPerineum,
+        CanonicalMuscleGroup.IntrinsicHand,
+    ];
+
     private sealed record ModifierRule(
         WorkoutModifiers Flag,
         Func<Exercise, bool> IsReviewed,
@@ -412,6 +440,13 @@ public static class WorkoutModifierPolicy
                                     SecondEnabled = secondState !=
                                         WorkoutModifiers.None,
                                     MirrorEquipment = GetMirrorEquipment(profile),
+                                    RequiredCount =
+                                        IsWallFreeInsectFineCoverageException(
+                                            group,
+                                            profile)
+                                            ? 0
+                                            : GetMinimumExercisesPerPairStatePerGroup(
+                                                minutes),
                                     Count = exercises
                                         .Where(exercise =>
                                             Rules.All(rule =>
@@ -428,8 +463,7 @@ public static class WorkoutModifierPolicy
                                         .Count(),
                                 };
                             })))))
-            .Where(result => result.Count <
-                GetMinimumExercisesPerPairStatePerGroup(result.Minutes))
+            .Where(result => result.Count < result.RequiredCount)
             .Select(result => new WorkoutModifierPairCoverageDeficiency(
                 result.Minutes,
                 result.Group.Id,
@@ -440,7 +474,7 @@ public static class WorkoutModifierPolicy
                 result.SecondEnabled,
                 result.MirrorEquipment,
                 result.Count,
-                GetMinimumExercisesPerPairStatePerGroup(result.Minutes)))
+                result.RequiredCount))
             .ToArray();
     }
 
@@ -504,12 +538,55 @@ public static class WorkoutModifierPolicy
                                 partnerState.Modifier,
                                 partnerState.Enabled,
                                 matchingExerciseCount,
-                                GetMinimumExercisesPerPairStatePerGroup(minutes));
+                                IsWallFreeInsectFineCoverageException(
+                                    group,
+                                    profile) ||
+                                IsHardFloorCategoryFineCoverageException(
+                                    group,
+                                    category)
+                                    ? 0
+                                    : GetMinimumExercisesPerPairStatePerGroup(
+                                        minutes));
                         }))))
             .Where(deficiency =>
                 deficiency.MatchingExerciseCount <
                     deficiency.RequiredExerciseCount)
             .ToArray();
+    }
+
+    private static bool IsWallFreeInsectFineCoverageException(
+        WorkoutGroup group,
+        WorkoutModifiers profile)
+    {
+        if (!profile.HasFlag(WorkoutModifiers.Insect) ||
+            group.CanonicalGroups.Count == 0)
+        {
+            return false;
+        }
+
+        bool wallAvailable = profile.HasFlag(WorkoutModifiers.Wall);
+        return group.CanonicalGroups.All(canonicalGroup =>
+            InsectFineCoverageExceptions.Contains(canonicalGroup) ||
+            (!wallAvailable &&
+                WallFreeInsectFineCoverageExceptions.Contains(canonicalGroup)));
+    }
+
+    public static bool IsSelectionGroupAvailable(
+        WorkoutGroup group,
+        WorkoutModifiers profile)
+    {
+        ArgumentNullException.ThrowIfNull(group);
+        return !IsWallFreeInsectFineCoverageException(group, profile);
+    }
+
+    private static bool IsHardFloorCategoryFineCoverageException(
+        WorkoutGroup group,
+        ExerciseHardFloorCompatibility category)
+    {
+        return category == ExerciseHardFloorCompatibility.Incompatible &&
+            group.CanonicalGroups.Count > 0 &&
+            group.CanonicalGroups.All(
+                HardFloorNeutralFineCoverageExceptions.Contains);
     }
 
     public static IReadOnlyList<WorkoutMirrorCategoryDeficiency>
@@ -701,19 +778,25 @@ public static class WorkoutModifierPolicy
         return ExerciseSessionService.SupportedWorkoutMinutes
             .SelectMany(minutes =>
             {
-                IReadOnlyList<WorkoutGroup> groups = MassGroupingTaxonomy
+                IReadOnlyList<WorkoutGroup> resolutionGroups = MassGroupingTaxonomy
                     .GetResolution(minutes > 30 ? 30 : minutes)
                     .Groups;
-                return ValidationProfiles.Select(profile => new
+                return ValidationProfiles.Select(profile =>
                 {
-                    Minutes = minutes,
-                    Profile = profile,
-                    MaximumDistinctExerciseCount = GetMaximumDistinctLineupSize(
-                        exercises,
-                        groups,
-                        profile,
-                        minutes),
-                    RequiredDistinctExerciseCount = groups.Count,
+                    WorkoutGroup[] groups = resolutionGroups
+                        .Where(group => IsSelectionGroupAvailable(group, profile))
+                        .ToArray();
+                    return new
+                    {
+                        Minutes = minutes,
+                        Profile = profile,
+                        MaximumDistinctExerciseCount = GetMaximumDistinctLineupSize(
+                            exercises,
+                            groups,
+                            profile,
+                            minutes),
+                        RequiredDistinctExerciseCount = groups.Length,
+                    };
                 });
             })
             .Where(result =>
@@ -725,6 +808,14 @@ public static class WorkoutModifierPolicy
                 result.MaximumDistinctExerciseCount,
                 result.RequiredDistinctExerciseCount))
             .ToArray();
+    }
+
+    public static int GetRequiredDistinctLineupSize(
+        IReadOnlyList<WorkoutGroup> groups,
+        WorkoutModifiers profile)
+    {
+        ArgumentNullException.ThrowIfNull(groups);
+        return groups.Count(group => IsSelectionGroupAvailable(group, profile));
     }
 
     public static int GetMaximumDistinctLineupSize(

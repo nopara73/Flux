@@ -636,6 +636,36 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
+    public void InsectFineAvailabilityUsesWallOnlyWhereDirectWorkExists()
+    {
+        WorkoutGroup pelvicFloor = MassGroupingTaxonomy.GetGroup(
+            30,
+            CanonicalMuscleGroup.PelvicFloorAndPerineum);
+        WorkoutGroup intrinsicHand = MassGroupingTaxonomy.GetGroup(
+            30,
+            CanonicalMuscleGroup.IntrinsicHand);
+
+        Assert.False(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            pelvicFloor,
+            WorkoutModifiers.Insect));
+        Assert.False(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            intrinsicHand,
+            WorkoutModifiers.Insect));
+        Assert.False(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            pelvicFloor,
+            WorkoutModifiers.Insect | WorkoutModifiers.Wall));
+        Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            intrinsicHand,
+            WorkoutModifiers.Insect | WorkoutModifiers.Wall));
+        Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            pelvicFloor,
+            WorkoutModifiers.None));
+        Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(
+            intrinsicHand,
+            WorkoutModifiers.None));
+    }
+
+    [Fact]
     public void FinePairwiseBucketsMeasureAvailabilityWithoutForcingMirrorPreference()
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetResolution(30).Groups[0];

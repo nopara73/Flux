@@ -1,5 +1,6 @@
 @{
-    # Every retained direct source is reviewed footage of an actual person.
+    # Every retained direct source is reviewed footage of an actual person,
+    # except for the separately reviewed internally invisible training below.
     ReviewedExternal = @(
         15, 16, 17, 19, 20, 21, 31, 32, 37, 41, 47, 56, 58, 59, 60,
         92, 93, 94, 95, 96, 97, 98, 99, 100,
@@ -39,7 +40,7 @@
         636, 647, 648, 649, 654, 666, 677, 678, 681, 683, 684, 685,
         686, 687, 712, 733, 740, 741, 742, 743, 744, 745, 746, 747,
         748, 750, 751, 752, 784, 804, 816, 818, 825, 831,
-        834, 836, 843, 845, 884, 885, 886, 887, 905, 906, 910, 911, 913, 914, 915, 916, 917, 939,
+        834, 836, 843, 845, 884, 885, 886, 887, 905, 906, 910, 911, 913, 914, 915, 916, 917, 919, 939,
         943, 948, 954, 958, 960, 962, 969, 971, 973, 986, 987,
         790, 993,
         996, 997, 998, 999, 1000,
@@ -52,7 +53,15 @@
         801, 835
     )
 
-    # Synthetic, schematic, 3D, and anatomical demonstrations are excluded.
+    # Pelvic-floor contraction cannot be verified from an exterior body view.
+    # A medically authoritative anatomical animation is more exact than footage
+    # of a motionless demonstrator, so this narrow list is audited separately.
+    ReviewedInternalAnatomy = @(
+        918
+    )
+
+    # Unreviewed synthetic, schematic, 3D, and anatomical demonstrations are
+    # excluded; the sole narrow internal-anatomy exception is listed above.
     ReviewedPosecode = @()
     PurposeBuiltSvg = @()
 

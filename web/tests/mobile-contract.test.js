@@ -503,6 +503,8 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(workoutState, /WorkoutModifiers LastWorkoutModifiers/);
   assert.match(workoutState, /WorkoutModifiers ActiveWorkoutModifiers/);
+  assert.match(workoutState, /ActiveModifierRetainedSelectionGroupIds/);
+  assert.match(workoutModule, /activeModifierRetainedSelectionGroupIds/);
   assert.match(
     sessionService,
     /PrepareWorkout\([\s\S]*GetPersistentSetupModifiers\(modifiers\)[\s\S]*state\.ActiveWorkoutModifiers\s*=\s*modifiers;/,
@@ -513,7 +515,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     sessionService,
-    /ChooseBestDistinctLineup\([\s\S]*IsWorkoutSelectionCandidate\(state, exercise, group, modifiers\)/,
+    /ChooseBestDistinctLineup\([\s\S]*IsWorkoutSelectionCandidate\(\s*state,\s*exercise,\s*group,\s*modifiers,\s*groups\)/,
   );
   assert.match(exerciseModel, /int SessionMovementId/);
   assert.match(
@@ -759,7 +761,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible ||
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible));
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 428);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 430);
   assert.equal(catalog.filter((exercise) =>
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 84);
   assert.deepEqual(
@@ -1075,7 +1077,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*87/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*88/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,

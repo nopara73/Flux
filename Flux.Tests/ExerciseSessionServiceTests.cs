@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Flux.Models;
 using Flux.Services;
 
@@ -372,6 +373,103 @@ public sealed class ExerciseSessionServiceTests
         Assert.False(restoredService.GetSelectedExercise(
             restored,
             restoredService.GetNextGroup(restored)!).WallRequired);
+    }
+
+    [Fact]
+    public void InsectTransitionRemovesAnUnfinishedStructurallyUnavailableSlot()
+    {
+        Exercise[] exercises = ReviewedInsectCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+        WorkoutGroup[] initialRounds = service.GetActiveGroups(state).ToArray();
+        WorkoutGroup unavailableRound = initialRounds.First(round =>
+            !WorkoutModifierPolicy.IsSelectionGroupAvailable(
+                round,
+                WorkoutModifiers.Insect));
+        foreach (WorkoutGroup priorRound in initialRounds.TakeWhile(round =>
+                     round.Id != unavailableRound.Id))
+        {
+            service.RecordOutcome(state, priorRound, keep: false);
+        }
+        Assert.Equal(unavailableRound.Id, service.GetNextGroup(state)?.Id);
+        service.BeginMovement(
+            state,
+            unavailableRound,
+            millisecondsRemaining: 28_000,
+            endsAtUnixMilliseconds: 1_800_000_028_000);
+
+        service.ReconfigureActiveWorkout(
+            state,
+            WorkoutModifiers.Insect,
+            unavailableRound.Id);
+
+        WorkoutGroup[] replannedRounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(30, replannedRounds.Length);
+        Assert.DoesNotContain(replannedRounds, round =>
+            round.SelectionKey == unavailableRound.SelectionKey);
+        Assert.Null(state.PendingMovementGroupId);
+        Assert.All(replannedRounds.Where(round =>
+            !state.Outcomes.ContainsKey(round.Id)), round => Assert.Equal(
+                ExerciseInsectCompatibility.Compatible,
+                service.GetSelectedExercise(state, round).InsectCompatibility));
+    }
+
+    [Fact]
+    public void InsectTransitionRetainsCompletedUnavailableWorkAcrossRestart()
+    {
+        Exercise[] exercises = ReviewedInsectCatalog();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+        WorkoutGroup[] initialRounds = service.GetActiveGroups(state).ToArray();
+        WorkoutGroup unavailableRound = initialRounds
+            .Where(round => !WorkoutModifierPolicy.IsSelectionGroupAvailable(
+                round,
+                WorkoutModifiers.Insect))
+            .First(round => round.Order < initialRounds.Length);
+        foreach (WorkoutGroup round in initialRounds.TakeWhile(round =>
+                     round.Order <= unavailableRound.Order))
+        {
+            service.RecordOutcome(state, round, keep: false);
+        }
+        WorkoutGroup currentRound = Assert.IsType<WorkoutGroup>(
+            service.GetNextGroup(state));
+
+        service.ReconfigureActiveWorkout(
+            state,
+            WorkoutModifiers.Insect,
+            currentRound.Id);
+
+        Assert.Contains(
+            unavailableRound.SelectionKey,
+            state.ActiveModifierRetainedSelectionGroupIds);
+        WorkoutGroup retainedRound = service.GetActiveGroups(state).Single(round =>
+            round.SelectionKey == unavailableRound.SelectionKey);
+        int retainedExerciseId = service.GetSelectedExercise(
+            state,
+            retainedRound).Id;
+        var restored = JsonSerializer.Deserialize<WorkoutState>(
+            JsonSerializer.Serialize(state))!;
+        var restoredService = new ExerciseSessionService(
+            exercises,
+            new Random(1));
+
+        restoredService.Initialize(restored);
+
+        Assert.Contains(
+            unavailableRound.SelectionKey,
+            restored.ActiveModifierRetainedSelectionGroupIds);
+        Assert.Equal(30, restoredService.GetActiveGroups(restored).Count);
+        WorkoutGroup restoredRetainedRound = restoredService
+            .GetActiveGroups(restored)
+            .Single(round => round.SelectionKey ==
+                unavailableRound.SelectionKey);
+        Assert.Equal(
+            retainedExerciseId,
+            restoredService.GetSelectedExercise(
+                restored,
+                restoredRetainedRound).Id);
     }
 
     [Fact]
@@ -1013,7 +1111,13 @@ public sealed class ExerciseSessionServiceTests
                 .Where(entry => entry.Key.StartsWith("r30.", StringComparison.Ordinal))
                 .SelectMany(entry => entry.Value),
             rootId => rootId == keptExerciseId));
-        Assert.Equal(15, state.ActiveExtraSetSelectionGroupIds.Count);
+        int distinctSelectionCount = service.GetActiveGroups(state)
+            .Select(group => group.SelectionKey)
+            .Distinct(StringComparer.Ordinal)
+            .Count();
+        Assert.Equal(
+            45 - distinctSelectionCount,
+            state.ActiveExtraSetSelectionGroupIds.Count);
     }
 
     [Fact]

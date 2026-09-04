@@ -59,14 +59,6 @@ $gazeLedIds = [Collections.Generic.HashSet[int]]::new()
 foreach ($id in @(410, 411, 412, 413, 478)) {
     [void]$gazeLedIds.Add($id)
 }
-$pelvicEvidenceIds = [Collections.Generic.HashSet[int]]::new()
-foreach ($id in @(
-    32, 58, 92, 119, 167, 168, 169, 282, 295, 296, 390, 393,
-    413, 420, 428, 431, 432, 433, 434, 435, 439, 440, 441, 442, 443, 444, 445,
-    448, 450, 452, 458, 462, 463, 464, 465, 469, 471, 472, 475,
-    476, 488, 537, 548, 561, 575, 578, 583, 613)) {
-    [void]$pelvicEvidenceIds.Add($id)
-}
 
 function Convert-AuditValue {
     param([AllowNull()] $Value)
@@ -162,9 +154,6 @@ function Get-CorrectionReason {
     }
     if ($gazeLedIds.Contains($Id)) {
         return 'The squat, lunge, march, or pivot is the principal mechanical action; gaze/neck involvement remains secondary rather than displacing the movement primary.'
-    }
-    if ($pelvicEvidenceIds.Contains($Id)) {
-        return 'Associations were trimmed to meaningful visible mechanics; pelvic-floor involvement is retained only as evidence-supported secondary work for gait, single-leg support, or impact.'
     }
     if ('primaryCanonicalGroup' -in $ChangedFields) {
         return 'The primary and secondary anatomy now follow the movement that supplies the visible mechanical demand, with inherited or duplicative associations removed.'

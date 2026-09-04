@@ -99,6 +99,7 @@ $mediaKeys = @(
     'Url',
     'SourcePage',
     'Human',
+    'AuthoritativeAnatomicalVisualization',
     'Youtube',
     'Video',
     'StartSeconds',

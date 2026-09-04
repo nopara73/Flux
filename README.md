@@ -639,8 +639,13 @@ Regenerate the catalog and runtime media from reviewed sources:
 Verify assignments, media encoding, silence, duplicate renders, and hold targets:
 
 ```powershell
+.\tools\Test-ExerciseSecondaryTrainingClaimAudit.ps1
 .\tools\Test-ExerciseVideos.ps1
 ```
+
+The training-claim audit pins every secondary association to meaningful work,
+not incidental activation, and rejects a catalog that leaves any canonical
+muscle group without genuine direct primary work.
 
 Regenerate the human-media and muscle-group audit:
 

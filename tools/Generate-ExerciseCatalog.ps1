@@ -45,8 +45,8 @@ $canonicalGroupKeys = @(
     $canonicalGroups | ForEach-Object { [string]$_.StableKey })
 $rawExerciseCanonicalGroups = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
-$abdominalSecondaryTrainingReview = Import-PowerShellDataFile -LiteralPath (
-    Join-Path $PSScriptRoot 'ExerciseAbdominalSecondaryTraining.psd1') -SkipLimitCheck
+$secondaryTrainingClaimReview = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseSecondaryTrainingClaims.psd1') -SkipLimitCheck
 $holdExerciseFrames = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'HoldExerciseFrames.psd1') -SkipLimitCheck
 $stillExercisePresentations = Import-PowerShellDataFile -LiteralPath (
@@ -256,6 +256,7 @@ $verifiedExerciseDemos = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'VerifiedExerciseDemos.psd1') -SkipLimitCheck
 $retainedExerciseIds = @(
     $verifiedExerciseDemos.ReviewedExternal +
+        $verifiedExerciseDemos.ReviewedInternalAnatomy +
         $verifiedExerciseDemos.ReviewedPosecode +
         $verifiedExerciseDemos.PurposeBuiltSvg +
         $verifiedExerciseDemos.ReviewedExactCopies +
@@ -585,37 +586,60 @@ if ($invalidCanonicalAssignmentIds.Count -gt 0 -or
     throw 'The canonical exercise assignment map must cover every retained stable ID exactly once with one valid primary and unique valid secondaries.'
 }
 
-$requiredAbdominalSecondaryCategories = @(
-    'DynamicTrunkWork'
-    'HighTensionAntiMovement'
-    'IntentionalWholeBodyPosing'
+$expectedSecondaryTrainingClaimReviewKeys = @(
+    'ByCanonicalGroup'
+    'RubricVersion'
 )
-$actualAbdominalSecondaryCategories = @(
-    $abdominalSecondaryTrainingReview.Keys | Where-Object {
-        [string]$_ -ne 'RubricVersion'
+$reviewedSecondaryGroups = $secondaryTrainingClaimReview.ByCanonicalGroup
+$reviewedSecondaryClaimKeys = @(
+    foreach ($groupKey in $canonicalGroupKeys) {
+        foreach ($exerciseId in @(
+                $reviewedSecondaryGroups[$groupKey] |
+                    ForEach-Object { [int]$_ })) {
+            "${exerciseId}:$groupKey"
+        }
     })
-$reviewedAbdominalSecondaryExerciseIds = @(
-    foreach ($category in $requiredAbdominalSecondaryCategories) {
-        $abdominalSecondaryTrainingReview[$category] |
-            ForEach-Object { [int]$_ }
+$catalogSecondaryClaimKeys = @(
+    foreach ($entry in $exerciseCanonicalGroups.GetEnumerator()) {
+        foreach ($groupKey in @(
+                $entry.Value.Secondary | ForEach-Object { [string]$_ })) {
+            "$([int]$entry.Key):$groupKey"
+        }
     })
-$catalogAbdominalSecondaryExerciseIds = @(
-    $exerciseCanonicalGroups.GetEnumerator() | Where-Object {
-        'AbdominalWall' -in @($_.Value.Secondary)
-    } | ForEach-Object { [int]$_.Key })
-if ([int]$abdominalSecondaryTrainingReview.RubricVersion -ne 1 -or
+$invalidReviewedSecondaryClaimIds = @(
+    foreach ($groupKey in $canonicalGroupKeys) {
+        @($reviewedSecondaryGroups[$groupKey] |
+            ForEach-Object { [int]$_ } |
+            Where-Object { $_ -notin $retainedExerciseIds })
+    })
+if (@(Compare-Object `
+            @($expectedSecondaryTrainingClaimReviewKeys | Sort-Object) `
+            @($secondaryTrainingClaimReview.Keys | ForEach-Object { [string]$_ } |
+                Sort-Object)).Count -gt 0 -or
+    [int]$secondaryTrainingClaimReview.RubricVersion -ne 1 -or
+    $reviewedSecondaryGroups -isnot [System.Collections.IDictionary] -or
     @(Compare-Object `
-            $requiredAbdominalSecondaryCategories `
-            $actualAbdominalSecondaryCategories).Count -gt 0 -or
-    $reviewedAbdominalSecondaryExerciseIds.Count -ne
-        @($reviewedAbdominalSecondaryExerciseIds | Sort-Object -Unique).Count -or
-    @($reviewedAbdominalSecondaryExerciseIds | Where-Object {
-            $_ -notin $retainedExerciseIds
-        }).Count -gt 0 -or
+            @($canonicalGroupKeys | Sort-Object) `
+            @($reviewedSecondaryGroups.Keys | ForEach-Object { [string]$_ } |
+                Sort-Object)).Count -gt 0 -or
+    $reviewedSecondaryClaimKeys.Count -ne
+        @($reviewedSecondaryClaimKeys | Sort-Object -Unique).Count -or
+    $invalidReviewedSecondaryClaimIds.Count -gt 0 -or
     @(Compare-Object `
-            @($reviewedAbdominalSecondaryExerciseIds | Sort-Object) `
-            @($catalogAbdominalSecondaryExerciseIds | Sort-Object)).Count -gt 0) {
-    throw 'AbdominalWall secondaries must exactly match the reviewed material-training audit.'
+            @($reviewedSecondaryClaimKeys | Sort-Object) `
+            @($catalogSecondaryClaimKeys | Sort-Object)).Count -gt 0) {
+    throw 'Every secondary association must exactly match the catalog-wide material-training audit.'
+}
+
+$canonicalGroupsWithoutDirectPrimaryWork = @(
+    $canonicalGroupKeys | Where-Object {
+        $groupKey = $_
+        -not @($exerciseCanonicalGroups.GetEnumerator() | Where-Object {
+                [string]$_.Value.Primary -eq $groupKey
+            })
+    })
+if ($canonicalGroupsWithoutDirectPrimaryWork.Count -gt 0) {
+    throw "Every canonical muscle group needs genuine direct primary work; missing: $($canonicalGroupsWithoutDirectPrimaryWork -join ', ')."
 }
 
 $invalidSessionMovementFamilies = @(
@@ -698,6 +722,9 @@ if ($invalidExternalMedia.Count -gt 0) {
 
 $reviewedExternalIds = @(
     $verifiedExerciseDemos.ReviewedExternal | ForEach-Object { [int]$_ })
+$reviewedInternalAnatomyIds = @(
+    $verifiedExerciseDemos.ReviewedInternalAnatomy |
+        ForEach-Object { [int]$_ })
 $reviewedPosecodeIds = @(
     $verifiedExerciseDemos.ReviewedPosecode | ForEach-Object { [int]$_ })
 $reviewedSvgIds = @(
@@ -713,6 +740,18 @@ $invalidHumanSources = @($reviewedExternalIds | Where-Object {
     })
 if ($invalidHumanSources.Count -gt 0) {
     throw "Every retained external demonstration must show an actual person: $($invalidHumanSources -join ', ')."
+}
+$invalidInternalAnatomySources = @(
+    $reviewedInternalAnatomyIds | Where-Object {
+        -not $externalExerciseMedia.ContainsKey($_) -or
+        -not $externalExerciseMedia[$_].ContainsKey(
+            'AuthoritativeAnatomicalVisualization') -or
+        -not [bool]$externalExerciseMedia[$_].AuthoritativeAnatomicalVisualization -or
+        ($externalExerciseMedia[$_].ContainsKey('Human') -and
+            [bool]$externalExerciseMedia[$_].Human)
+    })
+if ($invalidInternalAnatomySources.Count -gt 0) {
+    throw "Internally invisible training needs an explicitly reviewed authoritative anatomical visualization: $($invalidInternalAnatomySources -join ', ')."
 }
 
 $validSideSequences = @(
@@ -939,17 +978,21 @@ $nonHumanDerivativeSources = @(
     @($exactExerciseMediaCopies.Values | ForEach-Object { [int]$_ }) +
         @($exactExerciseMediaTransforms.Values |
             ForEach-Object { [int]$_.Source }) |
-        Where-Object { $_ -notin $reviewedExternalIds } |
+        Where-Object {
+            $_ -notin $reviewedExternalIds -and
+            $_ -notin $reviewedInternalAnatomyIds
+        } |
         Sort-Object -Unique)
 $duplicateReviewedIds = @(
-    $reviewedExternalIds + $reviewedCopyIds + $reviewedTransformIds |
+    $reviewedExternalIds + $reviewedInternalAnatomyIds +
+        $reviewedCopyIds + $reviewedTransformIds |
         Group-Object |
         Where-Object Count -ne 1)
 if (-not $copyMappingMatches -or
     -not $transformMappingMatches -or
     $nonHumanDerivativeSources.Count -gt 0 -or
     $duplicateReviewedIds.Count -gt 0) {
-    throw 'The retained copy and transform inventory must derive only from reviewed human footage.'
+    throw 'The retained copy and transform inventory must derive only from reviewed direct demonstrations.'
 }
 
 $regionColors = @(
@@ -3765,7 +3808,8 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
-        if ($exerciseId -in $reviewedExternalIds) {
+        if ($exerciseId -in $reviewedExternalIds -or
+            $exerciseId -in $reviewedInternalAnatomyIds) {
             New-ExternalExerciseGif `
                 -ExerciseId $exerciseId `
                 -ExerciseName $exerciseName `
@@ -3788,7 +3832,7 @@ for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
             continue
         }
 
-        throw "No reviewed human demonstration is assigned to $exerciseName."
+        throw "No reviewed demonstration is assigned to $exerciseName."
     }
 }
 

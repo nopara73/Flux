@@ -95,6 +95,7 @@ import {
   isPrimaryMuscleRecovering,
   isSelectable,
   isSelectableForWorkoutProfile,
+  isSelectionGroupAvailable,
   isFinalSequenceRound,
   isSequenceContinuationRound,
   isSequenceRound,
@@ -775,9 +776,16 @@ test("alternating cross-body knee crunch metadata matches its demonstration", ()
   assert.equal(getSessionMovementId(exercise), 262);
 });
 
-test("abdominal associations describe material training rather than incidental bracing", () => {
+test("canonical training claims require direct primaries and material secondaries", () => {
+  const canonicalGroups = new Set(RESOLUTIONS.get(30).groups.flatMap((group) =>
+    group.canonicalGroups));
+  for (const canonicalGroup of canonicalGroups) {
+    assert.ok(catalog.some((item) =>
+      item.primaryCanonicalGroup === canonicalGroup));
+  }
+
   const reviewedSecondaryIds = new Set([
-    17, 59, 124, 125, 132, 174, 176, 177, 182, 183, 186, 219,
+    17, 21, 59, 124, 125, 132, 174, 176, 177, 182, 183, 186, 219,
     227, 292, 305, 394, 395, 408, 449, 470, 524, 525, 526, 527,
     542, 547, 548, 570, 577, 618, 625, 790, 801, 804, 825, 884,
     885, 905, 917, 973, 998,
@@ -808,6 +816,20 @@ test("abdominal associations describe material training rather than incidental b
     assert.equal(catalog.find((item) => item.id === exerciseId)
       .primaryCanonicalGroup, "AbdominalWall");
   }
+
+  assert.equal(catalog.some((item) =>
+    item.secondaryCanonicalGroups.includes("PelvicFloorAndPerineum")), false);
+  const pelvicFloorSlowSqueeze = catalog.find((item) => item.id === 918);
+  assert.equal(pelvicFloorSlowSqueeze.name,
+    "Standing Pelvic-Floor Slow Squeeze and Release");
+  assert.equal(pelvicFloorSlowSqueeze.primaryCanonicalGroup,
+    "PelvicFloorAndPerineum");
+  assert.deepEqual(pelvicFloorSlowSqueeze.secondaryCanonicalGroups, []);
+  assert.equal(pelvicFloorSlowSqueeze.muscularDemand, 1);
+  assert.equal(pelvicFloorSlowSqueeze.silent, true);
+  assert.equal(pelvicFloorSlowSqueeze.hardFloorCompatibility,
+    EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible);
+  assert.equal(pelvicFloorSlowSqueeze.sideSequence, "Continuous");
 
   const wallSidePlankKneeDrive = catalog.find((item) => item.id === 911);
   assert.equal(wallSidePlankKneeDrive.name,
@@ -868,7 +890,7 @@ test("muscular demand is fully reviewed and independent of user scores", () => {
   assert.deepEqual(
     [0, 1, 2].map((rating) =>
       catalog.filter((exercise) => exercise.muscularDemand === rating).length),
-    [121, 238, 153],
+    [121, 240, 153],
   );
   assert.ok(catalog.every(hasReviewedMuscularDemand));
   assert.ok(catalog.every((exercise) => exercise.score === 0));
@@ -1253,7 +1275,7 @@ test("shy mode filters only reviewed incompatible exercises while enabled", () =
 test("hard floor catalog verdicts include slippery-floor traction", () => {
   assert.equal(catalog.filter((exercise) =>
       exercise.hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 308);
+      EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible).length, 310);
   assert.equal(catalog.filter((exercise) =>
     exercise.hardFloorCompatibility ===
       EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible).length, 204);
@@ -2334,6 +2356,134 @@ test("incompatible modifier transition replaces current repeated set", () => {
   assert.equal(session.state.activeModifierProtectedSelectionGroupId, null);
 });
 
+test("insect transition removes an unfinished structurally unavailable slot", () => {
+  const exercises = reviewedInsectCatalog();
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+  const initialRounds = session.getActiveGroups();
+  const unavailableRound = initialRounds.find((round) =>
+    !isSelectionGroupAvailable(round, WORKOUT_MODIFIERS.Insect));
+  assert.ok(unavailableRound);
+  for (const priorRound of initialRounds) {
+    if (priorRound.id === unavailableRound.id) {
+      break;
+    }
+    session.recordOutcome(priorRound, false);
+  }
+  assert.equal(session.getNextGroup().id, unavailableRound.id);
+  session.beginMovement(unavailableRound, 28_000, now + 28_000);
+
+  session.reconfigureActiveWorkout(
+    WORKOUT_MODIFIERS.Insect,
+    unavailableRound.id,
+  );
+
+  const replannedRounds = session.getActiveGroups();
+  assert.equal(replannedRounds.length, 30);
+  assert.ok(replannedRounds.every((round) =>
+    getSelectionKey(round) !== getSelectionKey(unavailableRound)));
+  assert.equal(session.state.pendingMovementGroupId, null);
+  assert.ok(replannedRounds
+    .filter((round) => session.state.outcomes[round.id] === undefined)
+    .every((round) => session.getSelectedExercise(round).insectCompatibility ===
+      EXERCISE_INSECT_COMPATIBILITY.Compatible));
+});
+
+test("insect transition retains completed unavailable work across restart", () => {
+  const exercises = reviewedInsectCatalog();
+  const now = 1_800_000_000_000;
+  const session = new WorkoutSession(
+    exercises,
+    createDefaultState(),
+    () => 0,
+    () => now,
+  );
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+  const initialRounds = session.getActiveGroups();
+  const unavailableRound = initialRounds.find((round, index) =>
+    index < initialRounds.length - 1 &&
+    !isSelectionGroupAvailable(round, WORKOUT_MODIFIERS.Insect));
+  assert.ok(unavailableRound);
+  for (const round of initialRounds) {
+    session.recordOutcome(round, false);
+    if (round.id === unavailableRound.id) {
+      break;
+    }
+  }
+  const currentRound = session.getNextGroup();
+  assert.ok(currentRound);
+
+  session.reconfigureActiveWorkout(
+    WORKOUT_MODIFIERS.Insect,
+    currentRound.id,
+  );
+
+  assert.ok(session.state.activeModifierRetainedSelectionGroupIds.includes(
+    getSelectionKey(unavailableRound)));
+  const retainedRound = session.getActiveGroups().find((round) =>
+    getSelectionKey(round) === getSelectionKey(unavailableRound));
+  assert.ok(retainedRound);
+  const retainedExerciseId = session.getSelectedExercise(retainedRound).id;
+  const restored = new WorkoutSession(
+    exercises,
+    parseStoredState(JSON.stringify(session.state)),
+    () => 0,
+    () => now,
+  );
+
+  restored.initialize();
+
+  assert.ok(restored.state.activeModifierRetainedSelectionGroupIds.includes(
+    getSelectionKey(unavailableRound)));
+  assert.equal(restored.getActiveGroups().length, 30);
+  const restoredRetainedRound = restored.getActiveGroups().find((round) =>
+    getSelectionKey(round) === getSelectionKey(unavailableRound));
+  assert.ok(restoredRetainedRound);
+  assert.equal(
+    restored.getSelectedExercise(restoredRetainedRound).id,
+    retainedExerciseId,
+  );
+});
+
+test("insect fine availability uses a wall only where direct work exists", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const pelvicFloor = groups.find((group) =>
+    group.canonicalGroups.includes("PelvicFloorAndPerineum"));
+  const intrinsicHand = groups.find((group) =>
+    group.canonicalGroups.includes("IntrinsicHand"));
+
+  assert.equal(isSelectionGroupAvailable(
+    pelvicFloor,
+    WORKOUT_MODIFIERS.Insect,
+  ), false);
+  assert.equal(isSelectionGroupAvailable(
+    intrinsicHand,
+    WORKOUT_MODIFIERS.Insect,
+  ), false);
+  assert.equal(isSelectionGroupAvailable(
+    pelvicFloor,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Wall,
+  ), false);
+  assert.equal(isSelectionGroupAvailable(
+    intrinsicHand,
+    WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Wall,
+  ), true);
+  assert.equal(isSelectionGroupAvailable(
+    pelvicFloor,
+    WORKOUT_MODIFIERS.None,
+  ), true);
+  assert.equal(isSelectionGroupAvailable(
+    intrinsicHand,
+    WORKOUT_MODIFIERS.None,
+  ), true);
+});
+
 test("validation profiles remain pairwise with compact and tall mirror states", () => {
   assert.equal(WORKOUT_MODIFIER_VALIDATION_PROFILES.length, 28);
   assert.equal(
@@ -2577,7 +2727,14 @@ test("short-workout keeps carry into matching long-workout slots", () => {
   ).filter(([selectionGroupId]) => selectionGroupId.startsWith("r30."))
     .flatMap(([, rootIds]) => rootIds);
   assert.ok(keptExerciseIds.every((exerciseId) => longKeepIds.includes(exerciseId)));
-  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 15);
+  assert.equal(session.getActiveGroups().length, 45);
+  assert.equal(session.state.activeExtraSetSelectionGroupIds.length, 17);
+  assert.equal(
+    session.getSelectionGroups().some((group) =>
+      group.id === "r30.intrinsic-hand" ||
+      group.id === "r30.pelvic-floor-perineum"),
+    false,
+  );
 });
 
 test("a keep and downvote for one exercise remain independent across phases", () => {
@@ -2686,9 +2843,9 @@ test("reviewed production catalog satisfies the enforceable coverage hierarchy",
     .map((exercise) => exercise.id)), new Set([524, 525, 526, 527, 528, 790, 993]));
   assert.equal(catalog.filter((exercise) =>
     exercise.upperBodyClothingRequirement ===
-      EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic).length, 498);
+      EXERCISE_UPPER_BODY_CLOTHING_REQUIREMENT.Agnostic).length, 500);
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 428);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 430);
   assert.equal(catalog.filter((exercise) =>
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 84);
   assert.equal(catalog.find((exercise) => exercise.id === 413).shyCompatibility,
@@ -2699,7 +2856,7 @@ test("reviewed production catalog satisfies the enforceable coverage hierarchy",
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly).length, 83);
   assert.equal(catalog.filter((exercise) =>
-    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 417);
+    exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.Agnostic).length, 419);
   assert.equal(catalog.filter((exercise) =>
     exercise.mirrorRelationship ===
       EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly).length, 12);
@@ -5049,9 +5206,9 @@ test("mixed-demand sequence uses its highest demand and remains atomic", () => {
 });
 
 test("the reviewed catalog satisfies every roll-up and selects distinct exercises", () => {
-  assert.equal(catalog.length, 512);
-  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 512);
-  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 512);
+  assert.equal(catalog.length, 514);
+  assert.equal(new Set(catalog.map((exercise) => exercise.id)).size, 514);
+  assert.equal(new Set(catalog.map((exercise) => exercise.name)).size, 514);
   assert.equal(isSessionMovementMetadataValid(catalog), true);
   const actualSessionMovements = {};
   for (const exercise of catalog.filter((item) => item.sessionMovementId > 0)) {
@@ -5150,12 +5307,12 @@ test("the reviewed catalog satisfies every roll-up and selects distinct exercise
   assert.equal(narrowStanceReach.secondaryCanonicalGroups.includes(
     "CranialMuscles",
   ), false);
-  assert.ok(narrowStanceReach.secondaryCanonicalGroups.includes(
+  assert.equal(narrowStanceReach.secondaryCanonicalGroups.includes(
     "AnteriorLateralNeckAndHyoidMuscles",
-  ));
-  assert.ok(narrowStanceReach.secondaryCanonicalGroups.includes(
+  ), false);
+  assert.equal(narrowStanceReach.secondaryCanonicalGroups.includes(
     "PosteriorNeckAndSuboccipitalMuscles",
-  ));
+  ), false);
   const kneeRaiseHold = catalog.find((exercise) => exercise.id === 95);
   assert.equal(kneeRaiseHold.name, "Single-Leg Knee-Raise Hold");
   assert.equal(kneeRaiseHold.mode, "Hold");
@@ -6824,11 +6981,9 @@ test("reactivated replacement revision drops only changed progress and scores", 
   const groups = RESOLUTIONS.get(30).groups;
   const changedExercise = catalog.find((exercise) => exercise.id === changedIds[0]);
   const changedGroup = groups.find((group) => isSelectable(changedExercise, group));
+  const retainedExercise = catalog.find((exercise) => exercise.id === 270);
   const retainedGroup = groups.find((group) =>
-    group.id !== changedGroup.id && catalog.some((exercise) =>
-      !changedIdSet.has(exercise.id) && isSelectable(exercise, group)));
-  const retainedExercise = catalog.find((exercise) =>
-    !changedIdSet.has(exercise.id) && isSelectable(exercise, retainedGroup));
+    group.id !== changedGroup.id && isSelectable(retainedExercise, group));
   const retainedSequenceExerciseIds = [...new Set(
     retainedExercise.sequenceBlocks.map((block) => block.exerciseId),
   )];
@@ -7466,10 +7621,10 @@ test("hard-floor coverage revision resets only changed exercise progress and sco
     isSelectable(catalog.find((exercise) => exercise.id === 561), group));
   const retainedGroup = RESOLUTIONS.get(3).groups.find((group) =>
     group.id !== changedGroup.id &&
-    isSelectable(catalog.find((exercise) => exercise.id === 220), group));
+    isSelectable(catalog.find((exercise) => exercise.id === 292), group));
   state.catalogRevision = 50;
   state.selectedExerciseIds[changedGroup.id] = 561;
-  state.selectedExerciseIds[retainedGroup.id] = 220;
+  state.selectedExerciseIds[retainedGroup.id] = 292;
   state.outcomes[changedGroup.id] = "x";
   state.outcomes[retainedGroup.id] = "tick";
   state.pendingRestGroupId = changedGroup.id;
@@ -7477,7 +7632,7 @@ test("hard-floor coverage revision resets only changed exercise progress and sco
   state.pendingRestKept = true;
   state.keptExerciseRootIdsBySelectionGroupId = {
     [changedGroup.id]: [561],
-    [retainedGroup.id]: [220],
+    [retainedGroup.id]: [292],
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -7485,11 +7640,11 @@ test("hard-floor coverage revision resets only changed exercise progress and sco
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 220);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 292);
   assert.equal(restored.state.outcomes[retainedGroup.id], "tick");
   assert.equal(restored.state.pendingRestGroupId, null);
   assert.equal(restored.state.lastKeptExerciseIds.includes(561), true);
-  assert.equal(restored.state.lastKeptExerciseIds.includes(220), true);
+  assert.equal(restored.state.lastKeptExerciseIds.includes(292), true);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -7529,14 +7684,14 @@ test("demonstration-integrity revision rebuilds changed workout state without re
   state.selectedExerciseIds = {
     [changedStorageKey]: 417,
     [retiredStorageKey]: 267,
-    [retainedStorageKey]: 15,
+    [retainedStorageKey]: 101,
   };
   state.outcomes = {
     [changedGroup]: "x",
     [retiredGroup]: "x",
     [retainedGroup]: "tick",
   };
-  state.scores = { 417: -4, 267: -6, 15: -2 };
+  state.scores = { 417: -4, 267: -6, 101: -2 };
   const changedKeepGroup = [...RESOLUTIONS.values()]
     .flatMap((resolution) => resolution.groups)
     .find((group) => isSelectable(
@@ -7546,7 +7701,7 @@ test("demonstration-integrity revision rebuilds changed workout state without re
   const retainedKeepGroup = [...RESOLUTIONS.values()]
     .flatMap((resolution) => resolution.groups)
     .find((group) => isSelectable(
-      catalog.find((item) => item.id === 15),
+       catalog.find((item) => item.id === 101),
       group,
     ));
   assert.ok(changedKeepGroup);
@@ -7554,7 +7709,7 @@ test("demonstration-integrity revision rebuilds changed workout state without re
   state.keptExerciseRootIdsBySelectionGroupId = {};
   for (const [groupId, rootId] of [
     [changedKeepGroup.id, 417],
-    [retainedKeepGroup.id, 15],
+    [retainedKeepGroup.id, 101],
     [retiredGroup, 267],
   ]) {
     state.keptExerciseRootIdsBySelectionGroupId[groupId] = [
@@ -7562,7 +7717,7 @@ test("demonstration-integrity revision rebuilds changed workout state without re
       rootId,
     ];
   }
-  state.lastKeptExerciseIds = [417, 267, 15];
+  state.lastKeptExerciseIds = [417, 267, 101];
   state.pendingRestGroupId = changedGroup;
   state.pendingRestEndsAtUnixMilliseconds = Date.now() + 60_000;
   state.pendingRestKept = true;
@@ -7572,7 +7727,7 @@ test("demonstration-integrity revision rebuilds changed workout state without re
 
   assert.equal(restored.state.selectedExerciseIds[changedStorageKey], undefined);
   assert.equal(restored.state.selectedExerciseIds[retiredStorageKey], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedStorageKey], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedStorageKey], 101);
   assert.equal(restored.state.outcomes[changedGroup], undefined);
   assert.equal(restored.state.outcomes[retiredGroup], undefined);
   assert.equal(restored.state.outcomes[retainedGroup], "tick");
@@ -7581,12 +7736,12 @@ test("demonstration-integrity revision rebuilds changed workout state without re
   // pass that has the bundled inventory removes absent score IDs; deployment
   // migration coverage below verifies that cleanup separately.
   assert.equal(restored.state.scores["267"], -6);
-  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.scores["101"], -2);
   assert.equal(restored.state.pendingRestGroupId, null);
   // Slot-scoped Keeps for corrected exercises survive. A Keep whose exercise
   // was retired is removed because no valid sequence root remains.
   assert.deepEqual(restored.state.lastKeptExerciseIds.sort((a, b) => a - b),
-    [15, 417]);
+    [101, 417]);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -7690,7 +7845,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 68);
+  assert.equal(CURRENT_CATALOG_REVISION, 69);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -8045,13 +8200,13 @@ test("demand coverage expansion resets reused exercise identities", () => {
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 302;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "x";
   state.outcomes[retainedGroup.id] = "tick";
   state.scores["302"] = -4;
-  state.scores["15"] = -2;
+  state.scores["101"] = -2;
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 302: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 302: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8059,13 +8214,13 @@ test("demand coverage expansion resets reused exercise identities", () => {
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.equal(restored.state.scores["302"], undefined);
-  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.scores["101"], -2);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["302"], undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -8085,13 +8240,13 @@ test("coverage hierarchy revision rebuilds changed placements without resetting 
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 367;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "x";
   state.outcomes[retainedGroup.id] = "tick";
   state.scores["367"] = -4;
-  state.scores["15"] = -2;
+  state.scores["101"] = -2;
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 367: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 367: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8099,13 +8254,13 @@ test("coverage hierarchy revision rebuilds changed placements without resetting 
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.equal(restored.state.scores["367"], -4);
-  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.scores["101"], -2);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["367"], -4);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -8124,13 +8279,13 @@ test("pogo identity correction rebuilds placements without resetting feedback", 
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 444;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "tick";
   state.outcomes[retainedGroup.id] = "x";
   state.scores["444"] = -4;
-  state.scores["15"] = -2;
+  state.scores["101"] = -2;
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 444: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 444: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8138,13 +8293,13 @@ test("pogo identity correction rebuilds placements without resetting feedback", 
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.equal(restored.state.scores["444"], -4);
-  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.scores["101"], -2);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["444"], -4);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -8166,14 +8321,14 @@ test("independent variations replace coupled placements without resetting feedba
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 177;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "tick";
   state.outcomes[retainedGroup.id] = "x";
   state.scores["177"] = -4;
-  state.scores["15"] = -2;
+  state.scores["101"] = -2;
   state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id] = [177];
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 177: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 177: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8181,9 +8336,9 @@ test("independent variations replace coupled placements without resetting feedba
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.equal(restored.state.scores["177"], -4);
-  assert.equal(restored.state.scores["15"], -2);
+  assert.equal(restored.state.scores["101"], -2);
   assert.deepEqual(
     restored.state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id],
     [177],
@@ -8191,7 +8346,7 @@ test("independent variations replace coupled placements without resetting feedba
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["177"], -4);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -8212,13 +8367,13 @@ test("knee crunch metadata correction rebuilds placement and resets feedback", (
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 507;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "tick";
   state.outcomes[retainedGroup.id] = "x";
   state.pendingScoreExerciseId = 507;
   state.pendingScoreValue = -4;
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 507: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 507: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8226,13 +8381,13 @@ test("knee crunch metadata correction rebuilds placement and resets feedback", (
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.equal(restored.state.pendingScoreExerciseId, undefined);
   assert.equal(restored.state.pendingScoreValue, undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["507"], undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
@@ -8254,14 +8409,14 @@ test("bodybuilding posing revision replaces static work and resets feedback", ()
   const retainedGroup = RESOLUTIONS.get(30).groups.find((group) =>
     group.canonicalGroups.includes("MedialAndDeepKneeExtensors"));
   state.selectedExerciseIds[changedGroup.id] = 528;
-  state.selectedExerciseIds[retainedGroup.id] = 15;
+  state.selectedExerciseIds[retainedGroup.id] = 101;
   state.outcomes[changedGroup.id] = "tick";
   state.outcomes[retainedGroup.id] = "x";
   state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id] = [528];
   state.pendingScoreExerciseId = 528;
   state.pendingScoreValue = -4;
   state.exerciseScoreAdjustmentsByPhase = {
-    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 528: -4, 15: -2 },
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 528: -4, 101: -2 },
   };
 
   const restored = new WorkoutSession(catalog, state, () => 0);
@@ -8269,7 +8424,7 @@ test("bodybuilding posing revision replaces static work and resets feedback", ()
 
   assert.equal(restored.state.selectedExerciseIds[changedGroup.id], undefined);
   assert.equal(restored.state.outcomes[changedGroup.id], undefined);
-  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 15);
+  assert.equal(restored.state.selectedExerciseIds[retainedGroup.id], 101);
   assert.deepEqual(
     restored.state.keptExerciseRootIdsBySelectionGroupId[changedGroup.id],
     [528],
@@ -8279,13 +8434,13 @@ test("bodybuilding posing revision replaces static work and resets feedback", ()
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["528"], undefined);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
-    WORKOUT_EXERCISE_PHASE.PeakPerformance]["15"], -2);
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["101"], -2);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
 test("material-training revision removes only anatomically invalid slots and keeps", () => {
   const addedIds = [911, 913, 916, 917];
-  assert.equal(CURRENT_CATALOG_REVISION, 68);
+  assert.equal(CURRENT_CATALOG_REVISION, 69);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(67)],
     addedIds,
@@ -8294,8 +8449,14 @@ test("material-training revision removes only anatomically invalid slots and kee
     [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(67)],
     addedIds,
   );
-  assert.equal(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.has(68), false);
-  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(68), false);
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(69)],
+    [918, 919],
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(69)],
+    [918, 919],
+  );
 
   const invalidAbdominalSlot = "r30.abdominal-wall";
   const validChestSlot = "r30.chest";
@@ -8364,6 +8525,82 @@ test("material-training revision removes only anatomically invalid slots and kee
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["701"], -3);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["910"], -2);
+  assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
+});
+
+test("training-claim revision removes only newly invalid slot feedback", () => {
+  const addedIds = [918, 919];
+  assert.equal(CURRENT_CATALOG_REVISION, 69);
+  assert.deepEqual(
+    [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(69)],
+    addedIds,
+  );
+  assert.deepEqual(
+    [...SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(69)],
+    addedIds,
+  );
+
+  const invalidPelvicFloorSlot = "r30.pelvic-floor-perineum";
+  const validHipFlexorSlot = "r30.hip-flexors";
+  const invalidRound = `${invalidPelvicFloorSlot}.set1.block1`;
+  const state = createDefaultState();
+  state.catalogRevision = 68;
+  state.activeWorkoutMinutes = 30;
+  state.selectedExerciseIds = {
+    [invalidPelvicFloorSlot]: 613,
+    [validHipFlexorSlot]: 613,
+  };
+  state.outcomes = {
+    [invalidRound]: "tick",
+    [validHipFlexorSlot]: "x",
+  };
+  state.pendingMovementGroupId = invalidRound;
+  state.pendingMovementEndsAtUnixMilliseconds = 123456;
+  state.pendingMovementMillisecondsRemaining = 4000;
+  state.pendingMovementPausedByUser = true;
+  state.pendingScoreExerciseId = 613;
+  state.pendingScoreValue = -1;
+  state.keptExerciseRootIdsBySelectionGroupId = {
+    [invalidPelvicFloorSlot]: [613],
+    [validHipFlexorSlot]: [613],
+  };
+  state.lastKeptExerciseIds = [613];
+  state.exerciseScoreAdjustmentsBySelectionGroupId = {
+    [invalidPelvicFloorSlot]: { 613: -2 },
+    [validHipFlexorSlot]: { 613: -1 },
+  };
+  state.exerciseScoreAdjustmentsByPhase = {
+    [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { 613: -3 },
+  };
+  state.scores = { 613: -4, 918: -6, 919: -7 };
+
+  const restored = new WorkoutSession(catalog, state, () => 0);
+  restored.reconcileCatalog();
+
+  assert.equal(restored.state.selectedExerciseIds[invalidPelvicFloorSlot],
+    undefined);
+  assert.equal(restored.state.selectedExerciseIds[validHipFlexorSlot], 613);
+  assert.equal(restored.state.outcomes[invalidRound], undefined);
+  assert.equal(restored.state.outcomes[validHipFlexorSlot], "x");
+  assert.equal(restored.state.pendingMovementGroupId, null);
+  assert.equal(restored.state.keptExerciseRootIdsBySelectionGroupId[
+    invalidPelvicFloorSlot], undefined);
+  assert.deepEqual(restored.state.keptExerciseRootIdsBySelectionGroupId[
+    validHipFlexorSlot], [613]);
+  assert.equal(restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
+    invalidPelvicFloorSlot], undefined);
+  assert.equal(restored.state.exerciseScoreAdjustmentsBySelectionGroupId[
+    validHipFlexorSlot]["613"], -1);
+  assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
+    WORKOUT_EXERCISE_PHASE.PeakPerformance]["613"], -3);
+  assert.equal(restored.state.scores["613"], -4);
+  assert.equal(restored.state.scores["918"], undefined);
+  assert.equal(restored.state.scores["919"], undefined);
+  // Browser state no longer persists the obsolete pre-phase pending-score
+  // fields; the durable global and phase feedback above remain untouched.
+  assert.equal(restored.state.pendingScoreExerciseId, undefined);
+  assert.equal(restored.state.pendingScoreValue, undefined);
+  assert.deepEqual(restored.state.lastKeptExerciseIds, [613]);
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 

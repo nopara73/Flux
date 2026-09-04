@@ -7,31 +7,48 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    // Revision 68 adds exhaustive Shy compatibility metadata. Shy is a new,
-    // default-off profile bit, so existing selections and feedback stay valid.
-    public const int CurrentCatalogRevision = 68;
+    // Revision 68 adds exhaustive Shy compatibility metadata. Revision 69 adds
+    // the catalog-wide training-claim audit. Shy itself is a new, default-off
+    // profile bit, while the anatomy revision revalidates only impossible
+    // slot-specific feedback.
+    public const int CurrentCatalogRevision = 69;
     private const int HardFloorSlipperinessCatalogRevision = 53;
-    private const int MaterialTrainingAssociationsCatalogRevision = 67;
     private const int LastCumulativeWorkoutStateRevision = 3;
 
-    // Revision 67 removed AbdominalWall from these exercises because ordinary
-    // bracing is not material abdominal training. Revalidate only preferences
-    // that contain one of these identities; this is an anatomy migration, not
-    // a reason to reinterpret every unrelated historical slot.
-    private static readonly HashSet<int>
-        MaterialTrainingAssociationChangedExerciseIdSet =
-    [
-        31, 41, 56, 94, 95, 98, 99, 100, 113, 114, 115, 118, 119, 120, 126,
-        129, 133, 134, 135, 137, 143, 144, 146, 149, 151, 153, 154, 159, 166,
-        167, 168, 169, 172, 173, 175, 184, 192, 195, 196, 201, 212, 217, 218,
-        230, 231, 232, 237, 242, 245, 251, 256, 260, 263, 265, 266, 269, 271,
-        272, 274, 275, 276, 280, 282, 283, 287, 288, 291, 294, 296, 326, 327,
-        338, 367, 393, 396, 403, 406, 428, 429, 430, 431, 432, 433, 434, 435,
-        437, 440, 443, 448, 452, 457, 461, 472, 473, 484, 487, 508, 509, 529,
-        532, 537, 538, 546, 556, 560, 584, 591, 603, 608, 611, 613, 616, 617,
-        620, 632, 636, 647, 654, 681, 685, 701, 702, 703, 758, 816, 818, 831,
-        845, 886, 887, 915, 939, 943, 958, 969, 971, 986, 996, 997,
-    ];
+    // Anatomy migrations revalidate only saved slot preferences containing an
+    // exercise whose training claims changed. They never erase the exercise's
+    // global or phase score merely because a secondary association was fixed.
+    private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
+        TrainingClaimAssociationChangesByRevision =
+            new Dictionary<int, IReadOnlySet<int>>
+            {
+                [67] = new HashSet<int>
+                {
+                    31, 41, 56, 94, 95, 98, 99, 100, 113, 114, 115, 118, 119,
+                    120, 126, 129, 133, 134, 135, 137, 143, 144, 146, 149, 151,
+                    153, 154, 159, 166, 167, 168, 169, 172, 173, 175, 184, 192,
+                    195, 196, 201, 212, 217, 218, 230, 231, 232, 237, 242, 245,
+                    251, 256, 260, 263, 265, 266, 269, 271, 272, 274, 275, 276,
+                    280, 282, 283, 287, 288, 291, 294, 296, 326, 327, 338, 367,
+                    393, 396, 403, 406, 428, 429, 430, 431, 432, 433, 434, 435,
+                    437, 440, 443, 448, 452, 457, 461, 472, 473, 484, 487, 508,
+                    509, 529, 532, 537, 538, 546, 556, 560, 584, 591, 603, 608,
+                    611, 613, 616, 617, 620, 632, 636, 647, 654, 681, 685, 701,
+                    702, 703, 758, 816, 818, 831, 845, 886, 887, 915, 939, 943,
+                    958, 969, 971, 986, 996, 997,
+                },
+                [69] = new HashSet<int>
+                {
+                    15, 21, 32, 47, 58, 92, 119, 167, 168, 169, 194, 211, 213,
+                    216, 220, 225, 231, 233, 236, 239, 241, 245, 248, 258, 269,
+                    274, 277, 282, 283, 285, 286, 290, 291, 294, 295, 296, 326, 327, 390,
+                    393, 403, 404, 406, 413, 417, 420, 428, 431, 432, 433, 434,
+                    435, 439, 440, 441, 442, 443, 444, 445, 448, 450, 452, 458,
+                    462, 463, 464, 465, 469, 471, 472, 475, 476, 488, 523, 524,
+                    537, 541, 543, 545, 546, 548, 556, 561, 573, 575, 578, 583, 613,
+                    681, 685, 712, 745, 790,
+                },
+            };
 
     private sealed record PriorReviewedReplacementIdentity(
         string Name,
@@ -1077,7 +1094,7 @@ public static class CatalogMigrationRules
         608, 609, 610, 611, 612, 613, 614,
         615, 616, 618, 619, 625, 636, 647, 649, 654, 677, 678, 681, 683, 684, 685, 686,
         687, 712, 743, 745, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764,
-        790, 816, 834, 843, 845, 886, 887, 911, 913, 916, 917, 971, 986, 987, 993, 996, 997, 998, 999,
+        790, 816, 834, 843, 845, 886, 887, 911, 913, 916, 917, 918, 919, 971, 986, 987, 993, 996, 997, 998, 999,
     ];
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
@@ -1257,6 +1274,7 @@ public static class CatalogMigrationRules
                 [65] = new HashSet<int> { 507 },
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
                 [67] = new HashSet<int> { 911, 913, 916, 917 },
+                [69] = new HashSet<int> { 918, 919 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1363,6 +1381,7 @@ public static class CatalogMigrationRules
                 [65] = new HashSet<int> { 507 },
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
                 [67] = new HashSet<int> { 911, 913, 916, 917 },
+                [69] = new HashSet<int> { 918, 919 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -1717,19 +1736,25 @@ public static class CatalogMigrationRules
         state.ActiveDirectionPartnerExerciseIds ??= [];
         state.ActiveFullSideRoundIds ??= [];
         state.PendingScoreUpdates ??= [];
-        bool reconcileMaterialTrainingAssociations =
-            state.CatalogRevision < MaterialTrainingAssociationsCatalogRevision &&
-            exercisesById is not null;
+        IReadOnlySet<int> trainingClaimChangedExerciseIds =
+            exercisesById is null
+                ? new HashSet<int>()
+                : GetTrainingClaimChangedExerciseIds(state.CatalogRevision);
+        bool reconcileTrainingClaims =
+            exercisesById is not null &&
+            trainingClaimChangedExerciseIds.Count > 0;
         HashSet<string> semanticallyInvalidSelectionStorageKeys =
-            reconcileMaterialTrainingAssociations
+            reconcileTrainingClaims
                 ? state.SelectedExerciseIds
                     .Where(selection =>
                     {
                         (string selectionGroupId, _) =
                             ParseSelectionStorageKey(selection.Key);
-                        return IsMaterialTrainingAssociationAffectedRoot(
+                        return IsKnownSelectionGroupId(selectionGroupId) &&
+                            IsTrainingClaimAffectedRoot(
                                 selection.Value,
-                                exercisesById!) &&
+                                exercisesById!,
+                                trainingClaimChangedExerciseIds) &&
                             !IsValidPreferenceRoot(
                                 selectionGroupId,
                                 selection.Value,
@@ -1806,9 +1831,12 @@ public static class CatalogMigrationRules
             state.PendingMovementPausedByUser = false;
         }
 
-        if (reconcileMaterialTrainingAssociations)
+        if (reconcileTrainingClaims)
         {
-            ReconcileInvalidSlotKeeps(state, exercisesById!);
+            ReconcileInvalidSlotPreferences(
+                state,
+                exercisesById!,
+                trainingClaimChangedExerciseIds);
         }
 
         if (scoreInvalidatedExerciseIds.Contains(state.PendingScoreExerciseId))
@@ -1887,18 +1915,21 @@ public static class CatalogMigrationRules
                 scoreInvalidatedExerciseIds.Contains(block.ExerciseId));
     }
 
-    private static void ReconcileInvalidSlotKeeps(
+    private static void ReconcileInvalidSlotPreferences(
         WorkoutState state,
-        IReadOnlyDictionary<int, Exercise> exercisesById)
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        IReadOnlySet<int> trainingClaimChangedExerciseIds)
     {
         foreach (string selectionGroupId in
                  state.KeptExerciseRootIdsBySelectionGroupId.Keys.ToArray())
         {
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]
                 .RemoveWhere(rootId =>
-                    IsMaterialTrainingAssociationAffectedRoot(
+                    IsKnownSelectionGroupId(selectionGroupId) &&
+                    IsTrainingClaimAffectedRoot(
                         rootId,
-                        exercisesById) &&
+                        exercisesById,
+                        trainingClaimChangedExerciseIds) &&
                     !IsValidPreferenceRoot(
                         selectionGroupId,
                         rootId,
@@ -1907,6 +1938,33 @@ public static class CatalogMigrationRules
                     selectionGroupId].Count == 0)
             {
                 state.KeptExerciseRootIdsBySelectionGroupId.Remove(
+                    selectionGroupId);
+            }
+        }
+
+        foreach (string selectionGroupId in
+                 state.ExerciseScoreAdjustmentsBySelectionGroupId.Keys.ToArray())
+        {
+            Dictionary<int, int> adjustments =
+                state.ExerciseScoreAdjustmentsBySelectionGroupId[
+                    selectionGroupId];
+            foreach (int rootId in adjustments.Keys.Where(rootId =>
+                         IsKnownSelectionGroupId(selectionGroupId) &&
+                         IsTrainingClaimAffectedRoot(
+                             rootId,
+                             exercisesById,
+                             trainingClaimChangedExerciseIds) &&
+                         !IsValidPreferenceRoot(
+                             selectionGroupId,
+                             rootId,
+                             exercisesById)).ToArray())
+            {
+                adjustments.Remove(rootId);
+            }
+
+            if (adjustments.Count == 0)
+            {
+                state.ExerciseScoreAdjustmentsBySelectionGroupId.Remove(
                     selectionGroupId);
             }
         }
@@ -1923,6 +1981,13 @@ public static class CatalogMigrationRules
                 : [rootId])
             .Where(exercisesById.ContainsKey)
             .ToHashSet();
+    }
+
+    private static bool IsKnownSelectionGroupId(string selectionGroupId)
+    {
+        return MassGroupingTaxonomy.SupportedMinutes.Any(minutes =>
+            MassGroupingTaxonomy.GetResolution(minutes).Groups.Any(group =>
+                group.Id == selectionGroupId));
     }
 
     private static bool IsValidPreferenceRoot(
@@ -1958,19 +2023,35 @@ public static class CatalogMigrationRules
         return false;
     }
 
-    private static bool IsMaterialTrainingAssociationAffectedRoot(
-        int rootId,
-        IReadOnlyDictionary<int, Exercise> exercisesById)
+    private static IReadOnlySet<int> GetTrainingClaimChangedExerciseIds(
+        int priorCatalogRevision)
     {
-        if (MaterialTrainingAssociationChangedExerciseIdSet.Contains(rootId))
+        var exerciseIds = new HashSet<int>();
+        foreach ((int revision, IReadOnlySet<int> changedExerciseIds) in
+                 TrainingClaimAssociationChangesByRevision)
+        {
+            if (revision > priorCatalogRevision)
+            {
+                exerciseIds.UnionWith(changedExerciseIds);
+            }
+        }
+
+        return exerciseIds;
+    }
+
+    private static bool IsTrainingClaimAffectedRoot(
+        int rootId,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        IReadOnlySet<int> trainingClaimChangedExerciseIds)
+    {
+        if (trainingClaimChangedExerciseIds.Contains(rootId))
         {
             return true;
         }
 
         return exercisesById.TryGetValue(rootId, out Exercise? root) &&
             root.SequenceBlocks.Any(block =>
-                MaterialTrainingAssociationChangedExerciseIdSet.Contains(
-                    block.ExerciseId));
+                trainingClaimChangedExerciseIds.Contains(block.ExerciseId));
     }
 
     private static (string SelectionGroupId, WorkoutModifiers Modifiers)

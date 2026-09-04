@@ -42,6 +42,8 @@ $canonicalAssignmentSource = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseCanonicalGroups.psd1') -SkipLimitCheck
 
 $externalIds = @($review.ReviewedExternal | ForEach-Object { [int]$_ })
+$internalAnatomyIds = @(
+    $review.ReviewedInternalAnatomy | ForEach-Object { [int]$_ })
 $humanExternalIds = @(
     $externalIds | Where-Object {
         $externalMedia.ContainsKey($_) -and
@@ -54,11 +56,13 @@ $svgIds = @($review.PurposeBuiltSvg | ForEach-Object { [int]$_ })
 $copyIds = @($review.ReviewedExactCopies | ForEach-Object { [int]$_ })
 $transformIds = @($review.ReviewedExactTransforms | ForEach-Object { [int]$_ })
 $retainedIds = @(
-    $externalIds + $posecodeIds + $svgIds + $copyIds + $transformIds |
+    $externalIds + $internalAnatomyIds + $posecodeIds + $svgIds +
+        $copyIds + $transformIds |
         Sort-Object -Unique)
 
 $duplicateReviewedIds = @(
-    $externalIds + $posecodeIds + $svgIds + $copyIds + $transformIds |
+    $externalIds + $internalAnatomyIds + $posecodeIds + $svgIds +
+        $copyIds + $transformIds |
         Group-Object |
         Where-Object Count -ne 1)
 $catalogDifference = @(Compare-Object `
@@ -69,7 +73,8 @@ if ($duplicateReviewedIds.Count -gt 0 -or $catalogDifference.Count -gt 0) {
 }
 
 $missingDirectMappings = @(
-    @($externalIds | Where-Object { -not $externalMedia.ContainsKey($_) }) +
+    @(($externalIds + $internalAnatomyIds) |
+        Where-Object { -not $externalMedia.ContainsKey($_) }) +
         @($posecodeIds | Where-Object { -not $posecodeMedia.ContainsKey($_) }))
 $copyMappingsMatch =
     (@($copyIds | Sort-Object) -join ',') -eq
@@ -87,11 +92,16 @@ if ($missingDirectMappings.Count -gt 0 -or
     throw 'The retained inventory does not match its reviewed media mappings.'
 }
 
-if ($otherExternalCount -ne 0 -or $posecodeIds.Count -ne 0 -or $svgIds.Count -ne 0) {
-    throw 'Every retained direct demonstration must show an actual person.'
+if ($otherExternalCount -ne 0 -or $posecodeIds.Count -ne 0 -or
+    $svgIds.Count -ne 0 -or
+    @($internalAnatomyIds | Where-Object {
+            -not $externalMedia[$_].AuthoritativeAnatomicalVisualization
+        }).Count -ne 0) {
+    throw 'Every retained direct demonstration must be reviewed human footage or an explicitly approved internal-anatomy exception.'
 }
 
-$directSourceIds = @($externalIds + $posecodeIds + $svgIds)
+$directSourceIds = @(
+    $externalIds + $internalAnatomyIds + $posecodeIds + $svgIds)
 $unverifiedCopySources = @(
     $exactMediaCopies.Values |
         ForEach-Object { [int]$_ } |
