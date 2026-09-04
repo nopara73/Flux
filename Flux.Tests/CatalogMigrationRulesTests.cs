@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(373, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(376, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -2280,7 +2280,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2387,7 +2387,7 @@ public sealed class CatalogMigrationRulesTests
             104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
             256, 261, 626, 677, 845, 996, 997,
         ];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
@@ -2563,7 +2563,7 @@ public sealed class CatalogMigrationRulesTests
     public void MaterialTrainingRevisionRemovesOnlyAnatomicallyInvalidSlotsAndKeeps()
     {
         HashSet<int> addedIds = [911, 913, 916, 917];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[67]);
@@ -2667,7 +2667,7 @@ public sealed class CatalogMigrationRulesTests
     public void TrainingClaimRevisionRemovesOnlyNewlyInvalidSlotFeedback()
     {
         HashSet<int> addedIds = [918, 919];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[69]);
@@ -2757,6 +2757,150 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal([613], state.LastKeptExerciseIds);
         Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision,
             state.CatalogRevision);
+    }
+
+    [Fact]
+    public void ShyAuditRevisionRebuildsOnlyShyPlacementsAndPreservesFeedback()
+    {
+        HashSet<int> changedIds =
+        [
+            56, 59, 98, 108, 176, 185, 188, 190, 202, 203, 204, 205,
+            220, 224, 231, 258, 269, 283, 289, 290, 377, 379, 392,
+            398, 399, 400, 401, 402, 403, 404, 405, 410, 474, 481,
+            498, 543, 557, 608, 609, 678, 685, 687,
+        ];
+        Assert.Equal(
+            changedIds,
+            CatalogMigrationRules.WorkoutStateInvalidationsByRevision[70]);
+        Assert.Equal(
+            new HashSet<int> { 202, 204, 205 },
+            CatalogMigrationRules.ScoreInvalidationsByRevision[70]);
+
+        const string shyGroup = "shy-audit.changed";
+        const string nonShyGroup = "shy-audit.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 69,
+            ActiveWorkoutModifiers = WorkoutModifiers.Shy,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [$"p{(int)WorkoutModifiers.Shy}|{shyGroup}"] = 56,
+                [$"p{(int)WorkoutModifiers.None}|{nonShyGroup}"] = 56,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [shyGroup] = ExerciseOutcome.Tick,
+            },
+            PendingRestGroupId = shyGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 56,
+            PendingScoreValue = -4,
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [shyGroup] = [56],
+            },
+            LastKeptExerciseIds = [56],
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [56] = -3,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(
+            $"p{(int)WorkoutModifiers.Shy}|{shyGroup}",
+            state.SelectedExerciseIds);
+        Assert.Equal(
+            56,
+            state.SelectedExerciseIds[
+                $"p{(int)WorkoutModifiers.None}|{nonShyGroup}"]);
+        Assert.DoesNotContain(shyGroup, state.Outcomes);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.False(state.PendingRestKept);
+        Assert.Equal([56], state.KeptExerciseRootIdsBySelectionGroupId[shyGroup]);
+        Assert.Contains(56, state.LastKeptExerciseIds);
+        Assert.Equal(56, state.PendingScoreExerciseId);
+        Assert.Equal(-4, state.PendingScoreValue);
+        Assert.Equal(
+            -3,
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance][56]);
+        Assert.Equal(70, state.CatalogRevision);
+    }
+
+    [Fact]
+    public void ShyAuditRevisionFullyClearsReusedExerciseIdentities()
+    {
+        const string changedGroup = "shy-audit.reused";
+        const string retainedGroup = "shy-audit.retained";
+        var state = new WorkoutState
+        {
+            CatalogRevision = 69,
+            ActiveWorkoutModifiers = WorkoutModifiers.None,
+            SelectedExerciseIds = new Dictionary<string, int>
+            {
+                [changedGroup] = 202,
+                [retainedGroup] = 15,
+            },
+            Outcomes = new Dictionary<string, ExerciseOutcome>
+            {
+                [changedGroup] = ExerciseOutcome.Tick,
+                [retainedGroup] = ExerciseOutcome.X,
+            },
+            PendingRestGroupId = changedGroup,
+            PendingRestEndsAtUnixMilliseconds = 123456,
+            PendingRestKept = true,
+            PendingScoreExerciseId = 202,
+            PendingScoreValue = -4,
+            PendingScoreUpdates = new Dictionary<int, int>
+            {
+                [202] = -4,
+                [15] = -2,
+            },
+            KeptExerciseRootIdsBySelectionGroupId = new()
+            {
+                [changedGroup] = [202, 15],
+            },
+            LastKeptExerciseIds = [202, 15],
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.PeakPerformance] = new()
+                {
+                    [202] = -3,
+                    [15] = -2,
+                },
+            },
+        };
+
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
+
+        Assert.DoesNotContain(changedGroup, state.SelectedExerciseIds);
+        Assert.Equal(15, state.SelectedExerciseIds[retainedGroup]);
+        Assert.DoesNotContain(changedGroup, state.Outcomes);
+        Assert.Equal(ExerciseOutcome.X, state.Outcomes[retainedGroup]);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.False(state.PendingRestKept);
+        Assert.Equal([15], state.KeptExerciseRootIdsBySelectionGroupId[changedGroup]);
+        Assert.DoesNotContain(202, state.LastKeptExerciseIds);
+        Assert.Contains(15, state.LastKeptExerciseIds);
+        Assert.Equal(0, state.PendingScoreExerciseId);
+        Assert.Equal(0, state.PendingScoreValue);
+        Assert.DoesNotContain(202, state.PendingScoreUpdates);
+        Assert.Equal(-2, state.PendingScoreUpdates[15]);
+        Assert.DoesNotContain(
+            202,
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance]);
+        Assert.Equal(
+            -2,
+            state.ExerciseScoreAdjustmentsByPhase[
+                WorkoutExercisePhase.PeakPerformance][15]);
+        Assert.Equal(70, state.CatalogRevision);
     }
 
     [Fact]
@@ -3126,7 +3270,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -3185,7 +3329,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(69, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(70, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);
@@ -3352,6 +3496,79 @@ public sealed class CatalogMigrationRulesTests
         Assert.DoesNotContain(exerciseId, preserved);
         Assert.Equal(-7, stored[exerciseId].Score);
         Assert.Equal(0, replacement.Score);
+    }
+
+    [Theory]
+    [InlineData(202, "Hook Fist", "exercise_videos/exercise_0202.mp4")]
+    [InlineData(202, "Hook Fist", "exercise_gifs/exercise_0202.gif")]
+    [InlineData(202, "Finger Fan and Close — Four-Count Tempo", "exercise_gifs/exercise_0202.gif")]
+    [InlineData(204, "Full Fist", "exercise_videos/exercise_0204.mp4")]
+    [InlineData(204, "Full Fist", "exercise_gifs/exercise_0204.gif")]
+    [InlineData(204, "Finger Fan and Close — Half Range", "exercise_gifs/exercise_0204.gif")]
+    [InlineData(205, "Tabletop Fist", "exercise_videos/exercise_0205.mp4")]
+    [InlineData(205, "Tabletop Fist", "exercise_gifs/exercise_0205.gif")]
+    [InlineData(205, "Finger Fan and Close — Full Range", "exercise_gifs/exercise_0205.gif")]
+    public void ShyAuditReplacementsDiscardEveryPublishedIdentityAndScore(
+        int exerciseId,
+        string oldName,
+        string oldVideo)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(oldName, oldVideo, -7),
+        };
+
+        IReadOnlySet<int> preserved =
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored);
+
+        Assert.Contains(exerciseId, CatalogMigrationRules.ReplacedExerciseIds);
+        Assert.DoesNotContain(exerciseId, preserved);
+        Assert.Equal(-7, stored[exerciseId].Score);
+        Assert.Equal(0, replacement.Score);
+    }
+
+    [Theory]
+    [InlineData(202)]
+    [InlineData(204)]
+    [InlineData(205)]
+    public void ShyAuditReplacementRejectsUnknownHistoricalIdentity(int exerciseId)
+    {
+        string catalogPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "Assets",
+            "exercises.json");
+        Exercise[] bundled = JsonSerializer.Deserialize<Exercise[]>(
+                File.ReadAllText(catalogPath),
+                JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is empty.");
+        Exercise replacement = Assert.Single(
+            bundled,
+            exercise => exercise.Id == exerciseId);
+        var stored = new Dictionary<int, StoredExerciseSnapshot>
+        {
+            [exerciseId] = new(
+                "Unverified historical movement",
+                $"exercise_gifs/exercise_{exerciseId:D4}.gif",
+                -7),
+        };
+
+        Assert.Throws<InvalidOperationException>(() =>
+            CatalogMigrationRules.ValidatePreservedCatalog(
+                [replacement],
+                stored));
     }
 
     [Theory]

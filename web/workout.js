@@ -363,12 +363,13 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-// Revision 68 adds exhaustive Shy compatibility metadata. Revision 69 adds the
-// catalog-wide training-claim audit. Shy itself is a new, default-off profile
-// bit, while the anatomy revision revalidates only impossible slot-specific
-// feedback.
-export const CURRENT_CATALOG_REVISION = 69;
+// Revision 69 adds the catalog-wide training-claim audit. Revision 70 corrects
+// the Shy audit, replaces three retired hand drills with reviewed session
+// movements, and rebuilds only affected lineups.
+export const CURRENT_CATALOG_REVISION = 70;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
+const REUSED_SHY_AUDIT_CATALOG_REVISION = 70;
+const REUSED_SHY_AUDIT_EXERCISE_IDS = new Set([202, 204, 205]);
 // Anatomy migrations revalidate only saved slot preferences containing an
 // exercise whose training claims changed. They never erase the exercise's
 // global or phase score merely because a secondary association was fixed.
@@ -535,6 +536,12 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   [66, new Set([524, 525, 526, 527, 528, 790])],
   [67, new Set([911, 913, 916, 917])],
   [69, new Set([918, 919])],
+  [70, new Set([
+    56, 59, 98, 108, 176, 185, 188, 190, 202, 203, 204, 205,
+    220, 224, 231, 258, 269, 283, 289, 290, 377, 379, 392,
+    398, 399, 400, 401, 402, 403, 404, 405, 410, 474, 481,
+    498, 543, 557, 608, 609, 678, 685, 687,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -622,6 +629,7 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [66, new Set([524, 525, 526, 527, 528, 790])],
   [67, new Set([911, 913, 916, 917])],
   [69, new Set([918, 919])],
+  [70, new Set([202, 204, 205])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
@@ -7710,8 +7718,17 @@ export class WorkoutSession {
       this.state.catalogRevision,
       this.exercises,
       SCOPED_CATALOG_INVALIDATIONS_BY_REVISION,
-      new Set([HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION]),
+      new Set([
+        HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION,
+        REUSED_SHY_AUDIT_CATALOG_REVISION,
+      ]),
     );
+    const shyAuditInvalidatedExerciseIds =
+      this.state.catalogRevision < REUSED_SHY_AUDIT_CATALOG_REVISION
+        ? SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(
+          REUSED_SHY_AUDIT_CATALOG_REVISION,
+        ) ?? new Set()
+        : new Set();
     const scoreResetExerciseIds = catalogInvalidationIdsSince(
       this.state.catalogRevision,
       this.exercises,
@@ -7726,6 +7743,8 @@ export class WorkoutSession {
         }
       }
     }
+    const shouldDiscardReusedExerciseKeeps =
+      this.state.catalogRevision < REUSED_SHY_AUDIT_CATALOG_REVISION;
     const semanticallyInvalidSelectionStorageKeys =
       trainingClaimChangedExerciseIds.size > 0
         ? new Set(Object.entries(this.state.selectedExerciseIds)
@@ -7762,12 +7781,18 @@ export class WorkoutSession {
     }
 
     if (changedExerciseIds.size > 0 ||
+        shyAuditInvalidatedExerciseIds.size > 0 ||
+        shouldDiscardReusedExerciseKeeps ||
         hardFloorInvalidatedExerciseIds.size > 0 ||
         semanticallyInvalidSelectionStorageKeys.size > 0) {
       const affectedSelectionStorageKeys = Object.entries(this.state.selectedExerciseIds)
         .filter(([selectionStorageKey, exerciseId]) =>
           semanticallyInvalidSelectionStorageKeys.has(selectionStorageKey) ||
           changedExerciseIds.has(exerciseId) ||
+          REUSED_SHY_AUDIT_EXERCISE_IDS.has(exerciseId) ||
+          (shyAuditInvalidatedExerciseIds.has(exerciseId) &&
+            (this.parseSelectionStorageKey(selectionStorageKey).modifiers &
+              WORKOUT_MODIFIERS.Shy) !== 0) ||
           (hardFloorInvalidatedExerciseIds.has(exerciseId) &&
             (this.parseSelectionStorageKey(selectionStorageKey).modifiers &
               WORKOUT_MODIFIERS.HardFloor) !== 0))
@@ -7816,6 +7841,28 @@ export class WorkoutSession {
       for (const rootId of scoreResetPreferenceRoots) {
         delete adjustments[String(rootId)];
       }
+    }
+
+    if (shouldDiscardReusedExerciseKeeps) {
+      for (const [selectionGroupId, rootIds] of Object.entries(
+        this.state.keptExerciseRootIdsBySelectionGroupId,
+      )) {
+        const retainedRootIds = uniquePositiveIntegers(rootIds).filter((rootId) => {
+          const root = this.exercisesById.get(rootId);
+          return !REUSED_SHY_AUDIT_EXERCISE_IDS.has(rootId) &&
+            !root?.sequenceBlocks.some((block) =>
+              REUSED_SHY_AUDIT_EXERCISE_IDS.has(block.exerciseId));
+        });
+        if (retainedRootIds.length === 0) {
+          delete this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId];
+        } else {
+          this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId] =
+            retainedRootIds;
+        }
+      }
+      this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter(
+        (exerciseId) => !REUSED_SHY_AUDIT_EXERCISE_IDS.has(exerciseId),
+      );
     }
 
     this.normalizeSlotPreferences();

@@ -1111,6 +1111,31 @@
             MirrorForAlternation = $false
         }
     }
+    202 = @{
+        RetiredName = 'Hook Fist'
+        Name = 'Fixed-Gaze Head-Turn March'
+        Practice = 'Gaze stabilization and balance'
+        MotionProfile = 'FixedGazeHeadTurnMarch'
+        Primary = 'CranialMuscles'
+        Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles')
+        SideSequence = 'Continuous'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'vor-marching-on-the-spot.mp4'
+            Url = 'https://media.physitrack.com/exercises/238861ad-ad8b-4ca4-882f-e9b6e1d2eb2d/en/video_720p.mp4'
+            SourcePage = 'https://ca.physitrack.com/home-exercise-video/vor-marching-on-the-spot'
+            Human = $true
+            Video = $true
+            StartSeconds = 23.4
+            DurationSeconds = 9
+            FramesPerSecond = 10
+            Crop = 'crop=ih*3/4:ih:(iw-ih*3/4)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
     203 = @{
         RetiredName = 'Alternating Boxing Hook'
         Name = 'Shibashi Split-Stance Wing Open'
@@ -1132,6 +1157,66 @@
             StartSeconds = 500
             DurationSeconds = 8
             FramesPerSecond = 8
+            Crop = 'crop=ih:ih:(iw-ih)/2:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    204 = @{
+        RetiredName = 'Full Fist'
+        Name = 'Jab-Cross-Hook-Uppercut Combo'
+        Practice = 'Boxing'
+        MotionProfile = 'BoxingFourPunchCombo'
+        Primary = 'Chest'
+        Secondary = @('ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ElbowExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'RotatorCuff')
+        SideSequence = 'ScreenLeftLeadThenRightLead'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'jab-cross-hook-uppercut.mp4'
+            Url = 'https://www.youtube.com/watch?v=-mPIPwQ0hPw'
+            SourcePage = 'https://www.youtube.com/watch?v=-mPIPwQ0hPw'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 6.4
+            DurationSeconds = 2.9
+            FramesPerSecond = 12
+            Crop = 'crop=ih:ih:0:0'
+            PingPong = $false
+            MirrorForAlternation = $false
+        }
+    }
+    205 = @{
+        RetiredName = 'Tabletop Fist'
+        Name = 'Jab-Cross-Speed-Bag Combo'
+        Practice = 'Boxing'
+        MotionProfile = 'JabCrossSpeedBagCombo'
+        Primary = 'ShoulderAbductors'
+        Secondary = @(
+            'ScapularGirdle',
+            'Chest',
+            'ElbowExtensors',
+            'ElbowFlexors',
+            'RotatorCuff',
+            'ForearmFlexorsAndPronators',
+            'ForearmExtensorsAndSupinators'
+        )
+        SideSequence = 'ScreenLeftLeadThenRightLead'
+        Mode = 'Repetition'
+        Presentation = 'Motion'
+        HoldFramePercent = 0
+        Media = @{
+            File = 'nourish-move-love-jab-cross-speed-bag.mp4'
+            Url = 'https://www.youtube.com/watch?v=tEksVOR_aBE'
+            SourcePage = 'https://www.nourishmovelove.com/zero-30-no-equipment-arm-workout/'
+            Human = $true
+            Youtube = $true
+            Video = $true
+            StartSeconds = 363.75
+            DurationSeconds = 4.5
+            FramesPerSecond = 12
             Crop = 'crop=ih:ih:(iw-ih)/2:0'
             PingPong = $false
             MirrorForAlternation = $false

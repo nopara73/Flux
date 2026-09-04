@@ -126,6 +126,7 @@ $requiredMirrorBenefitsGreatlyCriteria = @(
     'DanceAndAlignmentSensitivePoses'
     'ComplexSingleLegAlignment'
     'LivePlaneOrSymmetryCorrection'
+    'GazeStabilityFeedback'
     'SubtlePelvicPositionFeedback'
 )
 $mirrorOnlyByCoverage = $mirrorRelationshipReview.MirrorOnlyByCoverage

@@ -32,12 +32,14 @@ bare-torso mirror practices, producing a 501-record catalog. The later reduced
 muscular-demand coverage pass admitted seven separately reviewed exercise
 records forming five session movements, producing a 508-record catalog. The
 later material-training correction added four directly reviewed movements,
-producing the current 512-record catalog: seven require clothing for torso/back
-contact, seven require a visible bare upper body or abdominal contour, and 498
-are agnostic.
+producing a 512-record catalog. The corrected Shy audit then reused three
+retired hand-drill slots for separately reviewed session movements, producing
+the current 515-record catalog: seven require clothing for torso/back contact,
+seven require a visible bare upper body or abdominal contour, and 501 are
+agnostic.
 Its exhaustive source and review rules are documented in
 [`../UPPER_BODY_CLOTHING_AUDIT.md`](../UPPER_BODY_CLOTHING_AUDIT.md).
-The separate 428/84 Shy-mode review is documented in
+The separate 399/116 Shy-mode review is documented in
 [`../SHY_MODE_AUDIT.md`](../SHY_MODE_AUDIT.md).
 
 [`demonstration_metadata_integrity_2026-08-29.csv`](demonstration_metadata_integrity_2026-08-29.csv)

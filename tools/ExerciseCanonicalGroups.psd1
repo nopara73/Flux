@@ -109,7 +109,10 @@
     199 = @{ Primary = 'AccessoryHipAdductors'; Secondary = @('MajorHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors', 'HipAbductors') }
     200 = @{ Primary = 'SpinalExtensors'; Secondary = @('DeepAndIntersegmentalBack', 'PosteriorThighAndKneeFlexors', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
     201 = @{ Primary = 'CalfDeepPosteriorLegAndPlantarFoot'; Secondary = @('Soleus', 'MajorHipAdductors', 'AccessoryHipAdductors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'GlutealExtensors') }
+    202 = @{ Primary = 'CranialMuscles'; Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles') }
     203 = @{ Primary = 'ShoulderAdductorsAndExtensors'; Secondary = @('ScapularGirdle', 'ShoulderAbductors', 'Chest', 'GlutealExtensors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors') }
+    204 = @{ Primary = 'Chest'; Secondary = @('ScapularGirdle', 'ShoulderAdductorsAndExtensors', 'ElbowExtensors', 'ShoulderAbductors', 'ElbowFlexors', 'RotatorCuff') }
+    205 = @{ Primary = 'ShoulderAbductors'; Secondary = @('ScapularGirdle', 'Chest', 'ElbowExtensors', 'ElbowFlexors', 'RotatorCuff', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     211 = @{ Primary = 'ForearmExtensorsAndSupinators'; Secondary = @() }
     212 = @{ Primary = 'LateralKneeExtensors'; Secondary = @('MedialAndDeepKneeExtensors', 'Soleus') }
     213 = @{ Primary = 'ForearmFlexorsAndPronators'; Secondary = @() }

@@ -7,13 +7,18 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    // Revision 68 adds exhaustive Shy compatibility metadata. Revision 69 adds
-    // the catalog-wide training-claim audit. Shy itself is a new, default-off
-    // profile bit, while the anatomy revision revalidates only impossible
-    // slot-specific feedback.
-    public const int CurrentCatalogRevision = 69;
+    // Revision 69 adds the catalog-wide training-claim audit. Revision 70
+    // corrects the Shy audit, replaces three retired hand drills with reviewed
+    // session movements, and rebuilds only affected lineups.
+    public const int CurrentCatalogRevision = 70;
     private const int HardFloorSlipperinessCatalogRevision = 53;
+    private const int ReusedShyAuditCatalogRevision = 70;
     private const int LastCumulativeWorkoutStateRevision = 3;
+
+    private static readonly HashSet<int> ReusedShyAuditExerciseIdSet =
+    [
+        202, 204, 205,
+    ];
 
     // Anatomy migrations revalidate only saved slot preferences containing an
     // exercise whose training claims changed. They never erase the exercise's
@@ -451,6 +456,42 @@ public static class CatalogMigrationRules
         DiscardedStoredExerciseIdentities =
             new Dictionary<int, IReadOnlySet<DiscardedStoredExerciseIdentity>>
             {
+                [202] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Hook Fist",
+                        "exercise_videos/exercise_0202.mp4"),
+                    new(
+                        "Hook Fist",
+                        "exercise_gifs/exercise_0202.gif"),
+                    new(
+                        "Finger Fan and Close — Four-Count Tempo",
+                        "exercise_gifs/exercise_0202.gif"),
+                },
+                [204] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Full Fist",
+                        "exercise_videos/exercise_0204.mp4"),
+                    new(
+                        "Full Fist",
+                        "exercise_gifs/exercise_0204.gif"),
+                    new(
+                        "Finger Fan and Close — Half Range",
+                        "exercise_gifs/exercise_0204.gif"),
+                },
+                [205] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new(
+                        "Tabletop Fist",
+                        "exercise_videos/exercise_0205.mp4"),
+                    new(
+                        "Tabletop Fist",
+                        "exercise_gifs/exercise_0205.gif"),
+                    new(
+                        "Finger Fan and Close — Full Range",
+                        "exercise_gifs/exercise_0205.gif"),
+                },
                 [218] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
@@ -1072,7 +1113,7 @@ public static class CatalogMigrationRules
         15, 16, 17, 19, 20, 31, 41, 47, 56, 59, 90, 94, 95, 97, 98, 99, 100, 102, 107, 115, 116,
         117, 120, 126, 133, 135, 146, 150, 159, 169, 176, 177, 179, 180, 182, 183, 184,
         185, 186, 187,
-        191, 192, 193, 194, 195, 196, 199, 201, 203, 211, 212, 213, 214, 215, 216, 217,
+        191, 192, 193, 194, 195, 196, 199, 201, 202, 203, 204, 205, 211, 212, 213, 214, 215, 216, 217,
         218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 231, 232, 233, 234, 236, 237, 239,
         240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 264, 265, 266, 267, 268, 269,
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
@@ -1275,6 +1316,13 @@ public static class CatalogMigrationRules
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
                 [67] = new HashSet<int> { 911, 913, 916, 917 },
                 [69] = new HashSet<int> { 918, 919 },
+                [70] = new HashSet<int>
+                {
+                    56, 59, 98, 108, 176, 185, 188, 190, 202, 203, 204, 205,
+                    220, 224, 231, 258, 269, 283, 289, 290, 377, 379, 392,
+                    398, 399, 400, 401, 402, 403, 404, 405, 410, 474, 481,
+                    498, 543, 557, 608, 609, 678, 685, 687,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1382,6 +1430,7 @@ public static class CatalogMigrationRules
                 [66] = new HashSet<int> { 524, 525, 526, 527, 528, 790 },
                 [67] = new HashSet<int> { 911, 913, 916, 917 },
                 [69] = new HashSet<int> { 918, 919 },
+                [70] = new HashSet<int> { 202, 204, 205 },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -1675,7 +1724,8 @@ public static class CatalogMigrationRules
 
     private static IReadOnlySet<int> GetWorkoutStateInvalidationExerciseIds(
         int priorCatalogRevision,
-        int excludedRevision = 0)
+        int excludedRevision = 0,
+        int secondExcludedRevision = 0)
     {
         var invalidatedExerciseIds = priorCatalogRevision <
             LastCumulativeWorkoutStateRevision
@@ -1685,7 +1735,9 @@ public static class CatalogMigrationRules
         foreach ((int revision, IReadOnlySet<int> exerciseIds) in
             ScopedWorkoutStateInvalidationsByRevision)
         {
-            if (revision > priorCatalogRevision && revision != excludedRevision)
+            if (revision > priorCatalogRevision &&
+                revision != excludedRevision &&
+                revision != secondExcludedRevision)
             {
                 invalidatedExerciseIds.UnionWith(exerciseIds);
             }
@@ -1766,14 +1818,25 @@ public static class CatalogMigrationRules
         IReadOnlySet<int> invalidatedExerciseIds =
             GetWorkoutStateInvalidationExerciseIds(
                 state.CatalogRevision,
-                HardFloorSlipperinessCatalogRevision);
+                HardFloorSlipperinessCatalogRevision,
+                ReusedShyAuditCatalogRevision);
         IReadOnlySet<int> hardFloorInvalidatedExerciseIds =
             state.CatalogRevision < HardFloorSlipperinessCatalogRevision
                 ? ScopedWorkoutStateInvalidationsByRevision[
                     HardFloorSlipperinessCatalogRevision]
                 : new HashSet<int>();
+        IReadOnlySet<int> shyAuditInvalidatedExerciseIds =
+            state.CatalogRevision < ReusedShyAuditCatalogRevision
+                ? ScopedWorkoutStateInvalidationsByRevision[
+                    ReusedShyAuditCatalogRevision]
+                : new HashSet<int>();
         IReadOnlySet<int> scoreInvalidatedExerciseIds =
             GetScoreInvalidationExerciseIds(state.CatalogRevision);
+
+        if (state.CatalogRevision < ReusedShyAuditCatalogRevision)
+        {
+            ReconcileReusedExerciseKeeps(state, exercisesById);
+        }
 
         var selectionsWithInvalidatedExercises = state.SelectedExerciseIds
             .Select(selection => new
@@ -1786,6 +1849,10 @@ public static class CatalogMigrationRules
                 semanticallyInvalidSelectionStorageKeys.Contains(
                     selection.StorageKey) ||
                 invalidatedExerciseIds.Contains(selection.ExerciseId) ||
+                ReusedShyAuditExerciseIdSet.Contains(selection.ExerciseId) ||
+                (shyAuditInvalidatedExerciseIds.Contains(selection.ExerciseId) &&
+                    (WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) &
+                        WorkoutModifiers.Shy) != 0) ||
                 (hardFloorInvalidatedExerciseIds.Contains(selection.ExerciseId) &&
                     (WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) &
                         WorkoutModifiers.HardFloor) != 0))
@@ -1897,6 +1964,51 @@ public static class CatalogMigrationRules
 
         state.CatalogRevision = CurrentCatalogRevision;
         return true;
+    }
+
+    private static void ReconcileReusedExerciseKeeps(
+        WorkoutState state,
+        IReadOnlyDictionary<int, Exercise>? exercisesById)
+    {
+        var removedRootIds = new HashSet<int>();
+        foreach (string selectionGroupId in
+                 state.KeptExerciseRootIdsBySelectionGroupId.Keys.ToArray())
+        {
+            HashSet<int> keptRootIds =
+                state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId];
+            foreach (int rootId in keptRootIds.Where(rootId =>
+                         IsScorePreferenceRootInvalidated(
+                             rootId,
+                             ReusedShyAuditExerciseIdSet,
+                             exercisesById)).ToArray())
+            {
+                keptRootIds.Remove(rootId);
+                removedRootIds.Add(rootId);
+            }
+
+            if (keptRootIds.Count == 0)
+            {
+                state.KeptExerciseRootIdsBySelectionGroupId.Remove(
+                    selectionGroupId);
+            }
+        }
+
+        var removedExerciseIds = new HashSet<int>(ReusedShyAuditExerciseIdSet);
+        if (exercisesById is not null)
+        {
+            foreach (int rootId in removedRootIds)
+            {
+                if (!exercisesById.TryGetValue(rootId, out Exercise? root))
+                {
+                    continue;
+                }
+
+                removedExerciseIds.UnionWith(
+                    root.SequenceBlocks.Select(block => block.ExerciseId));
+            }
+        }
+
+        state.LastKeptExerciseIds.RemoveWhere(removedExerciseIds.Contains);
     }
 
     private static bool IsScorePreferenceRootInvalidated(

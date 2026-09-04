@@ -21,7 +21,7 @@
         # The reflection continuously exposes guard, chamber, stance, strike
         # path, or defensive path in a technique-sensitive martial movement.
         TechnicalMartialArts = @(
-            92, 93, 97, 178, 180, 181, 182, 183, 220, 231, 245, 258,
+            92, 93, 97, 178, 180, 181, 182, 183, 204, 205, 220, 231, 245, 258,
             274, 276, 278, 279, 280, 283, 285, 286, 287, 291, 294, 326, 327, 404, 556, 591,
             534, 535, 536, 541, 543, 545, 546, 575, 578, 583, 681, 684, 685, 687,
             884, 885, 886, 887
@@ -44,7 +44,13 @@
         # The movement's main quality depends on seeing a plane, path, or
         # left-right symmetry error while it is happening.
         LivePlaneOrSymmetryCorrection = @(
-            246, 268, 329, 481, 531, 917
+            246, 265, 268, 329, 481, 531, 917
+        )
+
+        # The reflection supplies an eye-level fixation target while also
+        # making unintended trunk motion and the head-turn path visible.
+        GazeStabilityFeedback = @(
+            202
         )
 
         # The intended movement is a subtle pelvis/spine position change whose
@@ -59,7 +65,7 @@
     # substantial benefit above. It must exactly partition the criterion list.
     BenefitsGreatlyByCoverage = @{
         UpperBody = @(
-            220, 231, 245, 246, 258, 268, 274, 276, 278, 279, 280,
+            202, 204, 205, 220, 231, 245, 246, 258, 265, 268, 274, 276, 278, 279, 280,
             283, 285, 286, 287, 291, 294, 326, 327, 329, 481, 531,
             541, 543, 545, 546, 556, 591, 681, 884, 887, 917
         )
@@ -87,7 +93,7 @@
         196, 197, 198, 199, 200, 201, 203, 211, 212, 213, 214, 215,
         216, 218, 219, 223, 224, 225, 227, 228, 230, 233, 234, 236,
         237, 238, 239, 240, 241, 242, 248, 251, 252, 253, 254, 255,
-        256, 257, 261, 262, 263, 264, 265, 266, 269, 270, 271,
+        256, 257, 261, 262, 263, 264, 266, 269, 270, 271,
         272, 273, 275, 277, 281, 282, 284, 288, 289, 290,
         293, 295, 296, 301, 302, 303, 304, 305, 307, 308, 309, 310,
         311, 314, 315, 321, 338, 340,

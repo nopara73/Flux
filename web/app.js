@@ -507,7 +507,7 @@ function workoutModifierTiles() {
     {
       element: elements.shyModifier,
       flag: WORKOUT_MODIFIERS.Shy,
-      enabledLabel: "Shy mode: public-friendly exercises only",
+      enabledLabel: "Shy mode: less conspicuous exercises only",
       disabledLabel: "Shy mode: off; all exercises allowed",
     },
     {

@@ -28,7 +28,7 @@ public enum WorkoutModifiers
     // compatibility. It is not a quota axis; demand-zero availability is
     // audited independently across the existing modifier profiles.
     Light = 256,
-    // Restricts the session to movements reviewed as comfortable to perform
-    // around people who are not participating in the workout.
+    // Restricts the session to movements reviewed as less conspicuous in a
+    // shared space, including around other people who are exercising.
     Shy = 512,
 }

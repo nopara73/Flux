@@ -474,7 +474,7 @@
       element.setAttribute(
         "aria-label",
         enabled
-          ? "Shy mode: public-friendly exercises only"
+          ? "Shy mode: less conspicuous exercises only"
           : "Shy mode: off; all exercises allowed",
       );
     }

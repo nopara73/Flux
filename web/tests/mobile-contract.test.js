@@ -763,9 +763,9 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible ||
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible));
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 430);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 401);
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 84);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 116);
   assert.deepEqual(
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "ClothingRequired")
@@ -955,6 +955,9 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(strings, /<string name="noisy_exercises_disabled_feedback">noisy exercises DISABLED<\/string>/);
   assert.match(strings, /<string name="shy_mode_enabled_feedback">shy mode ON<\/string>/);
   assert.match(strings, /<string name="shy_mode_disabled_feedback">shy mode OFF<\/string>/);
+  assert.match(strings, /<string name="shy_modifier_on">Less conspicuous exercises only<\/string>/);
+  assert.match(webApp, /Shy mode: less conspicuous exercises only/);
+  assert.match(instantControls, /Shy mode: less conspicuous exercises only/);
   assert.match(strings, /<string name="light_workout_enabled_feedback">light mode ON<\/string>/);
   assert.match(strings, /<string name="light_workout_disabled_feedback">light mode OFF<\/string>/);
   assert.match(strings, /<string name="wall_equipment_enabled_feedback">equipment ON: wall · no feet on wall<\/string>/);
@@ -1079,7 +1082,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*88/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*89/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
@@ -2014,7 +2017,8 @@ test("backgrounding pauses movement and rest until playback is resumed", () => {
 
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    265, 274, 280, 473, 575, 578, 583, 591, 884, 885, 886, 887,
+    204, 205, 265, 274, 280, 473, 575, 578, 583, 591,
+    884, 885, 886, 887,
   ];
   assert.deepEqual(
     catalog
