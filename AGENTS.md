@@ -1,3 +1,9 @@
+# Default delivery
+
+- After completing and validating an implementation, commit, push, and deploy it whenever possible without waiting for another deployment request, unless the user explicitly asks to hold off. Deploy the public web app and install the validated Debug build on the connected phone using the safeguards below.
+- Never publish a shared change that has not passed the required Android/web validation. If the phone is unavailable, finish the verified web deployment and report Android as pending; never imply that an unavailable device was updated.
+- Coordinate concurrent work before publishing or installing so each deployment comes from one identified, validated commit and preserves unrelated changes.
+
 # Android and web parity
 
 - Treat the Android app in [`Flux/`](Flux/) as the canonical product contract and keep [`web/`](web/) synchronized with it at all times.
