@@ -14,6 +14,45 @@ public sealed class CatalogInvariantTests
     };
 
     [Fact]
+    public void CompletePoseDeterminesSidesIncludingSupportingArmsAndLeadStances()
+    {
+        Exercise[] exercises = JsonSerializer.Deserialize<Exercise[]>(
+            File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Assets", "exercises.json")),
+            JsonOptions)!;
+        Dictionary<int, ExerciseSideSequence> expectedSides = new()
+        {
+            [32] = ExerciseSideSequence.ScreenLeftThenRight,
+            [307] = ExerciseSideSequence.ScreenRightThenLeft,
+            [490] = ExerciseSideSequence.ScreenLeftThenRight,
+            [491] = ExerciseSideSequence.ScreenLeftThenRight,
+            [492] = ExerciseSideSequence.ScreenLeftThenRight,
+            [495] = ExerciseSideSequence.ScreenLeftThenRight,
+            [499] = ExerciseSideSequence.ScreenLeftThenRight,
+            [501] = ExerciseSideSequence.ScreenRightThenLeft,
+            [520] = ExerciseSideSequence.ScreenLeftThenRight,
+            [528] = ExerciseSideSequence.ScreenRightLeadThenLeftLead,
+            [958] = ExerciseSideSequence.ScreenLeftThenRight,
+        };
+        foreach ((int id, ExerciseSideSequence expected) in expectedSides)
+        {
+            Exercise member = exercises.Single(exercise => exercise.Id == id);
+            Assert.Equal(expected, member.SideSequence);
+            var blocks = exercises.SelectMany(exercise => exercise.SequenceBlocks)
+                .Where(block => block.ExerciseId == id).ToArray();
+            Assert.Equal(2, blocks.Length);
+            Assert.Equal(new[] { false, true }, blocks.Select(block => block.MirrorMedia));
+            Assert.NotEqual(blocks[0].SideCue, blocks[1].SideCue);
+            Assert.All(blocks, block => Assert.NotEqual(ExerciseSequenceSideCue.None, block.SideCue));
+        }
+
+        // Interlacing fingers does not make otherwise bilateral work unilateral.
+        // The self-hug and tutting clips already exchange upper/lower arm roles.
+        foreach (int id in new[] { 216, 237, 238, 255, 310, 398, 522, 562, 740 })
+            Assert.False(exercises.Single(exercise => exercise.Id == id).SideSequence.UsesTimedSides());
+        Assert.Equal("Standing Overhead Side Bend", exercises.Single(exercise => exercise.Id == 958).Name);
+    }
+
+    [Fact]
     public void BundledCatalogHasStableCanonicalAssignmentsAndRequiredCoverage()
     {
         string catalogPath = Path.Combine(
@@ -318,7 +357,7 @@ public sealed class CatalogInvariantTests
         Assert.Equal(Exercise.MinimumMuscularDemand, standingMarchTwist.MuscularDemand);
         Exercise neckFlexion = exercises.Single(exercise => exercise.Id == 307);
         Assert.Equal(
-            new[] { 307, 310 },
+            new[] { 307, 307, 310 },
             neckFlexion.SequenceBlocks.Select(block => block.ExerciseId));
         Assert.All(
             new[] { 307, 308, 309, 310 },
@@ -883,7 +922,7 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(163, timedSideExercises.Length);
+        Assert.Equal(173, timedSideExercises.Length);
         Dictionary<int, (string Name, ExerciseSideSequence SideSequence)>
             auditedMirroredSideSequences = new()
             {
@@ -925,7 +964,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(160, alternatingExercises.Length);
+        Assert.Equal(159, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -943,6 +982,7 @@ public sealed class CatalogInvariantTests
             [406] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [409] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [460] = ExerciseDirectionSequence.ForwardThenBackward,
+            [561] = ExerciseDirectionSequence.ClockwiseThenCounterclockwise,
             [588] = ExerciseDirectionSequence.BackwardThenForward,
             [608] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
             [611] = ExerciseDirectionSequence.CounterclockwiseThenClockwise,
@@ -1036,10 +1076,10 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 295,
-            [2] = 133,
-            [3] = 28,
-            [4] = 11,
+            [1] = 287,
+            [2] = 139,
+            [3] = 29,
+            [4] = 12,
         };
         Dictionary<int, int> actualSequenceBlockDistribution = exercises
             .Where(exercise => exercise.SequenceBlocks.Length > 0)
@@ -1236,7 +1276,7 @@ public sealed class CatalogInvariantTests
 
         int[] leadStanceExerciseIds =
         [
-            204, 205, 265, 274, 280, 473, 575, 578, 583, 591,
+            204, 205, 265, 274, 280, 473, 528, 575, 578, 583, 591,
             884, 885, 886, 887,
         ];
         Assert.Equal(

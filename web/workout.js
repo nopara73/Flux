@@ -366,10 +366,10 @@ export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP = 60;
 export const LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT = 180;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-// Revision 70 corrects the Shy audit and replaces three retired hand drills.
-// Revision 71 corrects three one-sided demonstrations to atomic mirrored
-// two-sided sequences and rebuilds only affected lineups.
-export const CURRENT_CATALOG_REVISION = 71;
+// Revisions 71-72 correct overlooked arm positions, lead stances, and one-way
+// demonstrations to complete atomic side/direction sequences. Rebuild affected
+// lineups without discarding saved feedback.
+export const CURRENT_CATALOG_REVISION = 72;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 const REUSED_SHY_AUDIT_CATALOG_REVISION = 70;
 const REUSED_SHY_AUDIT_EXERCISE_IDS = new Set([202, 204, 205]);
@@ -546,6 +546,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     498, 543, 557, 608, 609, 678, 685, 687,
   ])],
   [71, new Set([32, 483, 493])],
+  [72, new Set([307, 490, 491, 492, 495, 499, 501, 520, 528, 561, 958])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -673,6 +674,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [406, ["Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles"]],
   [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
   [493, ["Track Finger Upper-Right to Lower-Left", "Diagonal Finger Tracking"]],
+  [958, ["Standing Alternating Side Bend", "Standing Overhead Side Bend"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
   [396, ["Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold"]],
   [510, ["Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold"]],

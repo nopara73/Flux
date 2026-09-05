@@ -2996,7 +2996,7 @@
         MotionProfile = 'SelfResistedNeckFlexion'
         Primary = 'AnteriorLateralNeckAndHyoidMuscles'
         Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'ShoulderAbductors', 'ScapularGirdle', 'RotatorCuff', 'ElbowFlexors')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Hold'
         Presentation = 'Motion'
         HoldFramePercent = 55
@@ -5673,7 +5673,7 @@
         MotionProfile = 'EyeTracking'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5699,7 +5699,7 @@
         MotionProfile = 'GazeStabilityHeadNod'
         Primary = 'CranialMuscles'
         Secondary = @('PosteriorNeckAndSuboccipitalMuscles', 'AnteriorLateralNeckAndHyoidMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5725,7 +5725,7 @@
         MotionProfile = 'EyeTracking'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5803,7 +5803,7 @@
         MotionProfile = 'EyeTracking'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5854,7 +5854,7 @@
         MotionProfile = 'EyeTracking'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5906,7 +5906,7 @@
         MotionProfile = 'GazeStabilityHeadTurn'
         Primary = 'CranialMuscles'
         Secondary = @('AnteriorLateralNeckAndHyoidMuscles', 'PosteriorNeckAndSuboccipitalMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -7795,7 +7795,7 @@
         MotionProfile = 'MirrorFacialExpressionPractice'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -7997,7 +7997,7 @@
         MotionProfile = 'AbdominalsAndThighsPose'
         Primary = 'AbdominalWall'
         Secondary = @('HipFlexors', 'MedialAndDeepKneeExtensors', 'LateralKneeExtensors', 'Chest', 'ShoulderAbductors', 'ElbowFlexors', 'CalfDeepPosteriorLegAndPlantarFoot', 'Soleus')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightLeadThenLeftLead'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0

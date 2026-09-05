@@ -2049,7 +2049,7 @@ test("backgrounding pauses movement and rest until playback is resumed", () => {
 
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    204, 205, 265, 274, 280, 473, 575, 578, 583, 591,
+    204, 205, 265, 274, 280, 473, 528, 575, 578, 583, 591,
     884, 885, 886, 887,
   ];
   assert.deepEqual(
@@ -2226,7 +2226,7 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")
       .map((exercise) => exercise.id),
-    [264, 275, 406, 409, 460, 588, 608, 611, 743],
+    [264, 275, 406, 409, 460, 561, 588, 608, 611, 743],
   );
   assert.ok(catalog.every((exercise) =>
     !Object.hasOwn(exercise, "directionPartnerExerciseId")));

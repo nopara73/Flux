@@ -6,6 +6,7 @@
     406 = @{ Mode = 'HorizontalMirror' }
     409 = @{ Mode = 'TemporalReverse' }
     460 = @{ Mode = 'TemporalReverse' }
+    561 = @{ Mode = 'HorizontalMirror' }
     588 = @{ Mode = 'TemporalReverse' }
     608 = @{ Mode = 'TemporalReverse' }
     611 = @{ Mode = 'TemporalReverse' }

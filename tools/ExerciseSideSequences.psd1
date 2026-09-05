@@ -1,6 +1,8 @@
 # Explicitly reviewed screen-side order for movements that are not naturally
 # alternating. The source demonstration shows the first listed screen side;
 # Flux mirrors that same human demonstration for the second 45-second side.
+# Review the complete pose, including a fixed supporting arm, crossed-arm
+# order, held target, or lead stance; primary-limb alternation is not enough.
 @{
     15 = 'ScreenRightThenLeft'
     16 = 'ScreenRightThenLeft'
@@ -151,6 +153,7 @@
     939 = 'ScreenLeftThenRight'
     948 = 'ScreenRightThenLeft'
     949 = 'ScreenRightThenLeft'
+    958 = 'ScreenLeftThenRight'
     996 = 'ScreenRightThenLeft'
     997 = 'ScreenRightThenLeft'
     998 = 'ScreenRightThenLeft'

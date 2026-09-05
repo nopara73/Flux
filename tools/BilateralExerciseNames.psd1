@@ -569,7 +569,7 @@
     948 = 'Alternating Standing Wood Chop'
     949 = 'Alternating Standing Reverse Wood Chop'
     954 = 'Alternating Torso Rotation with Side Reach'
-    958 = 'Standing Alternating Side Bend'
+    958 = 'Standing Overhead Side Bend'
     959 = 'Two-Toe Touch'
     960 = 'Alternating Heel Tap with Opposite Hand'
     961 = 'Alternating Side-to-Side Toe Touch'

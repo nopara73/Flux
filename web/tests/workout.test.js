@@ -796,6 +796,29 @@ test("asymmetric demonstrations use atomic mirrored side sequences", () => {
   }
 });
 
+test("complete pose determines sides including supporting arms and lead stances", () => {
+  const expectedSides = new Map([
+    [32, "ScreenLeftThenRight"], [307, "ScreenRightThenLeft"],
+    [490, "ScreenLeftThenRight"], [491, "ScreenLeftThenRight"],
+    [492, "ScreenLeftThenRight"], [495, "ScreenLeftThenRight"],
+    [499, "ScreenLeftThenRight"], [501, "ScreenRightThenLeft"],
+    [520, "ScreenLeftThenRight"], [528, "ScreenRightLeadThenLeftLead"],
+    [958, "ScreenLeftThenRight"],
+  ]);
+  for (const [id, sideSequence] of expectedSides) {
+    assert.equal(catalog.find(e => e.id === id).sideSequence, sideSequence);
+    const blocks = catalog.flatMap(e => e.sequenceBlocks).filter(b => b.exerciseId === id);
+    assert.equal(blocks.length, 2, `complete sides for ${id}`);
+    assert.deepEqual(blocks.map(b => b.mirrorMedia), [false, true]);
+    assert.notEqual(blocks[0].sideCue, blocks[1].sideCue);
+    assert.ok(blocks.every(b => b.sideCue !== "None"));
+  }
+  for (const id of [216, 237, 238, 255, 310, 398, 522, 562, 740]) {
+    assert.ok(["Continuous", "Alternating"].includes(catalog.find(e => e.id === id).sideSequence));
+  }
+  assert.equal(catalog.find(e => e.id === 958).name, "Standing Overhead Side Bend");
+});
+
 test("alternating cross-body knee crunch metadata matches its demonstration", () => {
   const exercise = catalog.find((candidate) => candidate.id === 507);
   assert.equal(exercise.name,
@@ -1488,7 +1511,7 @@ test("reduced demand coverage adds only reviewed atomic movements", () => {
   assert.equal(twist.muscularDemand, 0);
 
   const flexion = catalog.find((exercise) => exercise.id === 307);
-  assert.deepEqual(flexion.sequenceBlocks.map((block) => block.exerciseId), [307, 310]);
+  assert.deepEqual(flexion.sequenceBlocks.map((block) => block.exerciseId), [307, 307, 310]);
   for (const exerciseId of [307, 308, 309, 310]) {
     const exercise = catalog.find((candidate) => candidate.id === exerciseId);
     assert.equal(exercise.practice, "Self-resistance");
@@ -8050,7 +8073,7 @@ test("slippery hard-floor revision rebuilds placements without erasing feedback"
 
 test("sole-wall revision rebuilds changed workout state and resets scores", () => {
   const changedIds = [563, 564, 567, 568, 574];
-  assert.equal(CURRENT_CATALOG_REVISION, 71);
+  assert.equal(CURRENT_CATALOG_REVISION, 72);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(54)],
     changedIds,
@@ -8645,7 +8668,7 @@ test("bodybuilding posing revision replaces static work and resets feedback", ()
 
 test("material-training revision removes only anatomically invalid slots and keeps", () => {
   const addedIds = [911, 913, 916, 917];
-  assert.equal(CURRENT_CATALOG_REVISION, 71);
+  assert.equal(CURRENT_CATALOG_REVISION, 72);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(67)],
     addedIds,
@@ -8735,7 +8758,7 @@ test("material-training revision removes only anatomically invalid slots and kee
 
 test("training-claim revision removes only newly invalid slot feedback", () => {
   const addedIds = [918, 919];
-  assert.equal(CURRENT_CATALOG_REVISION, 71);
+  assert.equal(CURRENT_CATALOG_REVISION, 72);
   assert.deepEqual(
     [...SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(69)],
     addedIds,
@@ -8809,9 +8832,38 @@ test("training-claim revision removes only newly invalid slot feedback", () => {
   assert.equal(restored.state.catalogRevision, CURRENT_CATALOG_REVISION);
 });
 
+test("complete-pose revision rebuilds affected placements without erasing feedback", () => {
+  const changedIds = [307, 490, 491, 492, 495, 499, 501, 520, 528, 561, 958];
+  assert.deepEqual(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(72), new Set(changedIds));
+  assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(72), false);
+  for (const id of changedIds.filter(id => id !== 501)) {
+    const exercise = catalog.find(e => e.id === id);
+    const group = RESOLUTIONS.get(30).groups.find(g => g.canonicalGroups.includes(exercise.primaryCanonicalGroup));
+    const state = createDefaultState();
+    state.catalogRevision = 71;
+    state.selectedExerciseIds = { [group.id]: id };
+    state.outcomes = { [group.id]: "tick" };
+    state.keptExerciseRootIdsBySelectionGroupId = { [group.id]: [id] };
+    state.scores = { [id]: -4 };
+    state.exerciseScoreAdjustmentsBySelectionGroupId = { [group.id]: { [id]: -1 } };
+    state.exerciseScoreAdjustmentsByPhase = {
+      [WORKOUT_EXERCISE_PHASE.PeakPerformance]: { [id]: -3 },
+    };
+    const restored = new WorkoutSession(catalog, state, () => 0);
+    restored.reconcileCatalog();
+    assert.equal(restored.state.selectedExerciseIds[group.id], undefined);
+    assert.equal(restored.state.outcomes[group.id], undefined);
+    assert.deepEqual(restored.state.keptExerciseRootIdsBySelectionGroupId[group.id], [id]);
+    assert.equal(restored.state.scores[id], -4);
+    assert.equal(restored.state.exerciseScoreAdjustmentsBySelectionGroupId[group.id][id], -1);
+    assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[WORKOUT_EXERCISE_PHASE.PeakPerformance][id], -3);
+    assert.equal(restored.state.catalogRevision, 72);
+  }
+});
+
 test("corrected two-sided revision rebuilds placements and preserves feedback", () => {
   const changedIds = new Set([32, 483, 493]);
-  assert.equal(CURRENT_CATALOG_REVISION, 71);
+  assert.equal(CURRENT_CATALOG_REVISION, 72);
   assert.deepEqual(SCOPED_CATALOG_INVALIDATIONS_BY_REVISION.get(71), changedIds);
   assert.equal(SCOPED_SCORE_INVALIDATIONS_BY_REVISION.has(71), false);
 
@@ -8865,7 +8917,7 @@ test("corrected two-sided revision rebuilds placements and preserves feedback", 
     changedGroup.id]["483"], -1);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance]["483"], -3);
-  assert.equal(restored.state.catalogRevision, 71);
+  assert.equal(restored.state.catalogRevision, 72);
 });
 
 test("Shy audit revision rebuilds only Shy placements and preserves feedback", () => {
@@ -8927,7 +8979,7 @@ test("Shy audit revision rebuilds only Shy placements and preserves feedback", (
   assert.equal(restored.state.scores[String(changed.id)], -4);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance][String(changed.id)], -3);
-  assert.equal(restored.state.catalogRevision, 71);
+  assert.equal(restored.state.catalogRevision, 72);
 });
 
 test("Shy audit revision fully clears reused exercise identities", () => {
@@ -8994,7 +9046,7 @@ test("Shy audit revision fully clears reused exercise identities", () => {
   assert.equal(restored.state.scores[String(retained.id)], -1);
   assert.equal(restored.state.exerciseScoreAdjustmentsByPhase[
     WORKOUT_EXERCISE_PHASE.PeakPerformance][String(retained.id)], -1);
-  assert.equal(restored.state.catalogRevision, 71);
+  assert.equal(restored.state.catalogRevision, 72);
 });
 
 test("unclear exercise replacement revision resets every changed score", () => {
@@ -9382,7 +9434,7 @@ test("runtime media maps to MP4s and reviewed hold frames, never GIFs", async ()
     }
   }
 
-  assert.deepEqual(directionIds, [264, 275, 406, 409, 460, 588, 608, 611, 743]);
+  assert.deepEqual(directionIds, [264, 275, 406, 409, 460, 561, 588, 608, 611, 743]);
   assert.ok(catalog.every((item) =>
     !Object.hasOwn(item, "directionPartnerExerciseId")));
   const multiExerciseSequenceRoots = catalog

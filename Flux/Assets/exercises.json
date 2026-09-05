@@ -9439,14 +9439,21 @@
     "mode": "Hold",
     "presentation": "Motion",
     "holdFramePercent": 55,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 307,
-        "sideCue": "None",
+        "sideCue": "ScreenRight",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 307,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       },
       {
@@ -14862,14 +14869,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 490,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 490,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -14904,21 +14918,35 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 491,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 491,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 501,
+        "sideCue": "ScreenRight",
         "directionCue": "None",
         "mirrorMedia": false,
         "mediaSegment": "Full"
       },
       {
         "exerciseId": 501,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
-        "mirrorMedia": false,
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -14950,14 +14978,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 492,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 492,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -15074,14 +15109,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 495,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 495,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -15232,14 +15274,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 499,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 499,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -15327,7 +15376,7 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
     "sequenceBlocks": [],
     "insectCompatibility": "Incompatible",
@@ -16125,14 +16174,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 520,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 520,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -16520,14 +16576,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenRightLeadThenLeftLead",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 528,
-        "sideCue": "None",
+        "sideCue": "ShownLeadStance",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 528,
+        "sideCue": "OppositeLeadStance",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -17723,14 +17786,21 @@
     "presentation": "Motion",
     "holdFramePercent": 0,
     "sideSequence": "Continuous",
-    "directionSequence": "None",
+    "directionSequence": "ClockwiseThenCounterclockwise",
     "sequenceBlocks": [
       {
         "exerciseId": 561,
         "sideCue": "None",
-        "directionCue": "None",
+        "directionCue": "Clockwise",
         "mirrorMedia": false,
-        "mediaSegment": "Full"
+        "mediaSegment": "FirstDirection"
+      },
+      {
+        "exerciseId": 561,
+        "sideCue": "None",
+        "directionCue": "Counterclockwise",
+        "mirrorMedia": false,
+        "mediaSegment": "SecondDirection"
       }
     ],
     "insectCompatibility": "Compatible",
@@ -23104,7 +23174,7 @@
   },
   {
     "id": 958,
-    "name": "Standing Alternating Side Bend",
+    "name": "Standing Overhead Side Bend",
     "retiredName": null,
     "video": "exercise_videos/exercise_0958.mp4",
     "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
@@ -23114,14 +23184,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Alternating",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 958,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 958,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],

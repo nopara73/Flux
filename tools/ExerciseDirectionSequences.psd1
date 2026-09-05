@@ -7,6 +7,7 @@
     406 = 'ClockwiseThenCounterclockwise'
     409 = 'ClockwiseThenCounterclockwise'
     460 = 'ForwardThenBackward'
+    561 = 'ClockwiseThenCounterclockwise'
     588 = 'BackwardThenForward'
     608 = 'CounterclockwiseThenClockwise'
     611 = 'CounterclockwiseThenClockwise'
