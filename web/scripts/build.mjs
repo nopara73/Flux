@@ -30,7 +30,15 @@ if (!outputRoot.startsWith(`${webRoot}${path.sep}`)) {
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 
-const workoutSource = await readFile(path.join(webRoot, "workout.js"), "utf8");
+const lightCadenceSource = await readFile(path.join(webRoot, "light-cadence.js"), "utf8");
+const lightCadenceOutputName = fingerprintedName("light-cadence", "js", lightCadenceSource);
+await writeFile(path.join(outputRoot, lightCadenceOutputName), lightCadenceSource, "utf8");
+const workoutSource = (await readFile(path.join(webRoot, "workout.js"), "utf8"))
+  .replace('./light-cadence.js', `./${lightCadenceOutputName}`);
+if (!workoutSource.includes(`./${lightCadenceOutputName}`) ||
+    workoutSource.includes('./light-cadence.js')) {
+  throw new Error("Could not content-address the shared Light cadence policy.");
+}
 const workoutOutputName = fingerprintedName("workout", "js", workoutSource);
 await writeFile(path.join(outputRoot, workoutOutputName), workoutSource, "utf8");
 const preparationWorkerSource = await readFile(
@@ -347,10 +355,14 @@ const instantControlsSource = await readFile(
   path.join(webRoot, "instant-controls.js"),
   "utf8",
 );
-if (instantControlsSource.includes("</script")) {
+if (instantControlsSource.includes("</script") || lightCadenceSource.includes("</script")) {
   throw new Error("The inline startup controls contain a closing script tag.");
 }
 const fingerprintedIndex = indexSource
+  .replace(
+    '<script src="./light-cadence.js"></script>',
+    `<script>\n${lightCadenceSource}\n</script>`,
+  )
   .replace('./styles.css', `./${stylesOutputName}`)
   .replace('./app.js', `./${appOutputName}`)
   .replace(
@@ -371,7 +383,9 @@ if (fingerprintedIndex === indexSource ||
     !fingerprintedIndex.includes(`exercises.json?v=${catalogVersion}`) ||
     !fingerprintedIndex.includes(
       `asset-versions.json?v=${assetVersionsVersion}`) ||
-    fingerprintedIndex.includes('./instant-controls.js')) {
+    fingerprintedIndex.includes('./instant-controls.js') ||
+    fingerprintedIndex.includes('./light-cadence.js') ||
+    !fingerprintedIndex.includes(lightCadenceSource)) {
   throw new Error("Could not fingerprint the web shell references.");
 }
 await writeFile(path.join(outputRoot, "index.html"), fingerprintedIndex, "utf8");

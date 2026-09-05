@@ -1,5 +1,7 @@
 import {
   DEFAULT_WORKOUT_MODIFIERS,
+  LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP,
+  LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT,
   MIRROR_EQUIPMENT,
   WALL_EQUIPMENT,
   REST_DURATION_MS,
@@ -126,6 +128,7 @@ let selectedMinutes = startupControls?.selectedMinutes ?? 10;
 let selectedModifiers = startupControls?.selectedModifiers ??
   DEFAULT_WORKOUT_MODIFIERS;
 let startupSelectionChanged = startupControls?.selectionChanged ?? false;
+let automaticLightModePresented = false;
 let startWorkoutWhenReady = false;
 let currentGroup = null;
 let currentExercise = null;
@@ -255,6 +258,9 @@ function bindEvents() {
         selectedModifiers = nextSelection.selectedModifiers;
         if (userInitiated && !session) {
           startupSelectionChanged = true;
+        }
+        if (userInitiated) {
+          renderWorkoutModifiers();
         }
         if (userInitiated &&
             (session?.state.activeWorkoutMinutes === 0 || activeWorkoutSetup)) {
@@ -474,6 +480,7 @@ function renderDuration(minutes, userInitiated) {
   elements.durationLabels.forEach((label, labelIndex) => {
     label.classList.toggle("selected", labelIndex === index);
   });
+  renderLightModeCountdown();
 
   if (userInitiated && previousMinutes !== minutes) {
     if (!session) {
@@ -520,7 +527,8 @@ function workoutModifierTiles() {
 }
 
 function toggleWorkoutModifier(flag) {
-  if (flag === WORKOUT_MODIFIERS.Light && isRecoveryLightModeActive()) {
+  if (flag === WORKOUT_MODIFIERS.Light &&
+      (isRecoveryLightModeActive() || isAutomaticLightModeLocked())) {
     return;
   }
   selectedModifiers ^= flag;
@@ -633,17 +641,27 @@ function showWorkoutModifierFeedback(message) {
 }
 
 function renderWorkoutModifiers() {
+  const automatic = isAutomaticLightModeLocked();
+  if (automatic) {
+    selectedModifiers |= WORKOUT_MODIFIERS.Light;
+  } else if (automaticLightModePresented && !activeWorkoutSetup) {
+    selectedModifiers &= ~WORKOUT_MODIFIERS.Light;
+  }
+  automaticLightModePresented = automatic;
   for (const { element, flag, enabledLabel, disabledLabel } of
     workoutModifierTiles()) {
     const explicitlyEnabled = (selectedModifiers & flag) !== 0;
     const recoveryLightMode = flag === WORKOUT_MODIFIERS.Light &&
       isRecoveryLightModeActive();
-    const enabled = explicitlyEnabled || recoveryLightMode;
+    const automaticLightMode = flag === WORKOUT_MODIFIERS.Light &&
+      isAutomaticLightModeLocked();
+    const enabled = explicitlyEnabled || recoveryLightMode ||
+      automaticLightMode;
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", workoutModifierFeedbackLabel(flag, enabled));
     if (flag === WORKOUT_MODIFIERS.Light) {
-      element.disabled = recoveryLightMode;
-      element.setAttribute("aria-disabled", String(recoveryLightMode));
+      element.disabled = recoveryLightMode || automaticLightMode;
+      element.setAttribute("aria-disabled", String(element.disabled));
     }
     if (flag === WORKOUT_MODIFIERS.HardFloor) {
       element.dataset.hardFloor = enabled ? "hard" : "soft";
@@ -700,21 +718,34 @@ function renderWorkoutModifiers() {
 
 function renderLightModeCountdown() {
   const recoveryLightMode = isRecoveryLightModeActive();
+  const automaticLightMode = isAutomaticLightModeLocked();
   const enabled = (selectedModifiers & WORKOUT_MODIFIERS.Light) !== 0 ||
-    recoveryLightMode;
-  const candidateDaysRemaining = session
-    ? session.getTrainingDaysUntilLightWorkout()
-    : startupControls?.lightDaysRemaining;
-  const daysRemaining = Number.isInteger(candidateDaysRemaining) &&
-      candidateDaysRemaining >= 0 && candidateDaysRemaining <= 3
-    ? candidateDaysRemaining
-    : 3;
-  if (startupControls?.lightDaysRemaining !== daysRemaining) {
-    startupControls?.setLightDaysRemaining?.(daysRemaining);
+    recoveryLightMode || automaticLightMode;
+  const candidateWorkoutsRemaining = session
+    ? session.getWorkoutsUntilLightWorkout(selectedMinutes)
+    : startupControls?.lightWorkoutsRemaining;
+  const maximumWorkoutCount = Math.ceil(
+    LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT / Math.min(...SUPPORTED_MINUTES));
+  const workoutsRemaining = Number.isInteger(candidateWorkoutsRemaining) &&
+      candidateWorkoutsRemaining >= 0 &&
+      candidateWorkoutsRemaining <= maximumWorkoutCount
+    ? candidateWorkoutsRemaining
+    : Math.ceil(LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT /
+      Math.min(selectedMinutes, LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP));
+  if (startupControls?.lightWorkoutsRemaining !== workoutsRemaining) {
+    startupControls?.setLightWorkoutsRemaining?.(workoutsRemaining);
   }
-  elements.lightCountdown.textContent = String(daysRemaining);
+  elements.lightCountdown.textContent = String(workoutsRemaining);
   elements.lightCountdown.hidden = enabled;
   startupControls?.setRecoveryLightMode?.(recoveryLightMode);
+  startupControls?.setAutomaticLightMode?.(automaticLightMode);
+  if (automaticLightMode) {
+    elements.lightModifier.setAttribute(
+      "aria-label",
+      "Workout intensity: automatic light mode is required today",
+    );
+    return;
+  }
   if (recoveryLightMode) {
     elements.lightModifier.setAttribute(
       "aria-label",
@@ -723,10 +754,10 @@ function renderLightModeCountdown() {
     return;
   }
   if (!enabled) {
-    const scheduleDescription = daysRemaining === 0
-      ? "Automatic light mode is due today."
-      : `${daysRemaining} training day${daysRemaining === 1 ? "" : "s"} ` +
-        "until automatic light mode.";
+    const scheduleDescription =
+      `Approximately ${workoutsRemaining} workout${workoutsRemaining === 1
+        ? ""
+        : "s"} at the selected duration until automatic light mode.`;
     elements.lightModifier.setAttribute(
       "aria-label",
       `Workout intensity: regular workout. ${scheduleDescription}`,
@@ -736,6 +767,12 @@ function renderLightModeCountdown() {
 
 function isRecoveryLightModeActive() {
   return session?.getRecoveryLightStatus(selectedModifiers).isActive === true;
+}
+
+function isAutomaticLightModeLocked() {
+  return session
+    ? session.isAutomaticLightDayDue()
+    : startupControls?.automaticLightMode === true;
 }
 
 function showScreen(screen) {

@@ -50,7 +50,9 @@
     (Number(elements.value.textContent) || 10);
   let selectedModifiers = persistedSetup?.selectedModifiers ??
     readInitialModifiers();
-  let lightDaysRemaining = persistedSetup?.lightDaysRemaining ?? 3;
+  let lightWorkoutsRemaining = persistedSetup?.lightWorkoutsRemaining ??
+    Math.ceil(180 / Math.min(selectedMinutes, 60));
+  let automaticLightMode = persistedSetup?.automaticLightMode ?? false;
   let recoveryLightMode = false;
   let selectionChanged = false;
   let startQueued = false;
@@ -89,8 +91,11 @@
     get selectionChanged() {
       return selectionChanged;
     },
-    get lightDaysRemaining() {
-      return lightDaysRemaining;
+    get lightWorkoutsRemaining() {
+      return lightWorkoutsRemaining;
+    },
+    get automaticLightMode() {
+      return automaticLightMode;
     },
     get startQueued() {
       return startQueued;
@@ -112,15 +117,24 @@
       renderModifiers();
       notifySelection(false);
     },
-    setLightDaysRemaining(daysRemaining) {
-      if (!Number.isInteger(daysRemaining) ||
-          daysRemaining < 0 || daysRemaining >= 4) {
+    setLightWorkoutsRemaining(workoutsRemaining) {
+      if (!Number.isInteger(workoutsRemaining) ||
+          workoutsRemaining < 0 || workoutsRemaining > 60) {
         return;
       }
-      if (lightDaysRemaining === daysRemaining) {
+      if (lightWorkoutsRemaining === workoutsRemaining) {
         return;
       }
-      lightDaysRemaining = daysRemaining;
+      lightWorkoutsRemaining = workoutsRemaining;
+      renderModifiers();
+    },
+    setAutomaticLightMode(enabled) {
+      if (enabled === true) {
+        selectedModifiers |= modifierFlags.light;
+      } else if (automaticLightMode && !activeWorkoutSetup) {
+        selectedModifiers &= ~modifierFlags.light;
+      }
+      automaticLightMode = enabled === true;
       renderModifiers();
     },
     setRecoveryLightMode(enabled) {
@@ -207,87 +221,27 @@
       const storedModifiers = Number.isInteger(raw.lastWorkoutModifiers)
         ? raw.lastWorkoutModifiers & ~modifierFlags.light
         : readInitialModifiers();
-      const lightDaysRemaining = getTrainingDaysUntilLightWorkout(raw);
+      const lightWorkoutsRemaining = globalThis.fluxLightCadence.workoutsRemaining(
+        raw.workoutHistory, selectedMinutes, Date.now(),
+        raw.legacyCompletedTrainingDayUnixMilliseconds,
+      );
+      const automaticLightMode = globalThis.fluxLightCadence.isDue(
+        raw.workoutHistory, Date.now(), raw.legacyCompletedTrainingDayUnixMilliseconds,
+      );
       return {
         selectedMinutes,
-        selectedModifiers: isLightWorkoutDue(raw)
+        selectedModifiers: automaticLightMode
           ? storedModifiers | modifierFlags.light
           : storedModifiers,
-        lightDaysRemaining,
+        lightWorkoutsRemaining,
+        automaticLightMode,
+        cadenceState: raw,
       };
     } catch {
       return null;
     }
   }
 
-  function isLightWorkoutDue(state) {
-    return getTrainingDaysUntilLightWorkout(state) === 0;
-  }
-
-  function getTrainingDaysUntilLightWorkout(state) {
-    const today = localCalendarDayNumber(Date.now());
-    const completedDays = new Map();
-    for (const session of Array.isArray(state.workoutHistory)
-      ? state.workoutHistory
-      : []) {
-      if (session?.status !== "Completed") {
-        continue;
-      }
-      const day = localCalendarDayNumber(
-        Number(session.startedAtUnixMilliseconds) > 0
-          ? session.startedAtUnixMilliseconds
-          : session.endedAtUnixMilliseconds,
-      );
-      if (day === null) {
-        continue;
-      }
-      const modifiers = Number.isInteger(session.modifiers)
-        ? session.modifiers
-        : 0;
-      const isLightDay = session.isLightDay === true ||
-        (modifiers & modifierFlags.light) !== 0;
-      completedDays.set(
-        day,
-        isLightDay || completedDays.get(day) === true,
-      );
-    }
-    for (const timestamp of Array.isArray(
-      state.legacyCompletedTrainingDayUnixMilliseconds,
-    ) ? state.legacyCompletedTrainingDayUnixMilliseconds : []) {
-      const day = localCalendarDayNumber(timestamp);
-      if (day !== null && !completedDays.has(day)) {
-        completedDays.set(day, false);
-      }
-    }
-    let day = completedDays.has(today) ? today : today - 1;
-    let consecutiveRegularDays = 0;
-    while (completedDays.has(day)) {
-      if (completedDays.get(day) === true) {
-        break;
-      }
-      consecutiveRegularDays += 1;
-      if (consecutiveRegularDays >= 3) {
-        return 0;
-      }
-      day -= 1;
-    }
-    return 3 - consecutiveRegularDays;
-  }
-
-  function localCalendarDayNumber(timestamp) {
-    if (!Number.isSafeInteger(timestamp) || timestamp <= 0) {
-      return null;
-    }
-    const localTime = new Date(timestamp);
-    if (Number.isNaN(localTime.getTime())) {
-      return null;
-    }
-    return Math.trunc(Date.UTC(
-      localTime.getFullYear(),
-      localTime.getMonth(),
-      localTime.getDate(),
-    ) / 86_400_000);
-  }
 
   function stepDuration(direction) {
     if (activeWorkoutSetup) {
@@ -310,6 +264,12 @@
     }
     selectedMinutes = minutes;
     selectionChanged = true;
+    const raw = persistedSetup?.cadenceState ?? {};
+    lightWorkoutsRemaining = globalThis.fluxLightCadence.workoutsRemaining(
+      raw.workoutHistory, selectedMinutes, Date.now(),
+      raw.legacyCompletedTrainingDayUnixMilliseconds,
+    );
+    renderModifiers();
     renderDuration(true);
     notifySelection(true);
   }
@@ -349,7 +309,7 @@
   }
 
   function toggleModifier(name) {
-    if (name === "light" && recoveryLightMode) {
+    if (name === "light" && (recoveryLightMode || automaticLightMode)) {
       return;
     }
     const flag = modifierFlags[name];
@@ -442,7 +402,7 @@
     const explicitlyEnabled =
       (selectedModifiers & modifierFlags[name]) !== 0;
     const enabled = explicitlyEnabled ||
-      (name === "light" && recoveryLightMode);
+      (name === "light" && (recoveryLightMode || automaticLightMode));
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", modifierFeedbackLabel(name));
     if (name === "hardFloor") {
@@ -479,18 +439,19 @@
       );
     }
     if (name === "light") {
-      element.disabled = recoveryLightMode;
+      element.disabled = recoveryLightMode || automaticLightMode;
       element.setAttribute("aria-disabled", String(element.disabled));
-      elements.lightCountdown.textContent = String(lightDaysRemaining);
+      elements.lightCountdown.textContent = String(lightWorkoutsRemaining);
       elements.lightCountdown.hidden = enabled;
-      const scheduleDescription = lightDaysRemaining === 0
-        ? "Automatic light mode is due today."
-        : `${lightDaysRemaining} training day${lightDaysRemaining === 1
+      const scheduleDescription =
+        `Approximately ${lightWorkoutsRemaining} workout${lightWorkoutsRemaining === 1
           ? ""
-          : "s"} until automatic light mode.`;
+          : "s"} at the selected duration until automatic light mode.`;
       element.setAttribute(
         "aria-label",
-        recoveryLightMode
+        automaticLightMode
+          ? "Workout intensity: automatic light mode is required today"
+          : recoveryLightMode
           ? "Workout intensity: effectively light while muscles recover"
           : enabled
           ? "Workout intensity: light workout"
@@ -511,7 +472,7 @@
       return `insect mode ${enabled ? "ON" : "OFF"}`;
     }
     if (name === "light") {
-      return `light mode ${enabled || recoveryLightMode ? "ON" : "OFF"}`;
+      return `light mode ${enabled || recoveryLightMode || automaticLightMode ? "ON" : "OFF"}`;
     }
     if (name === "shy") {
       return `shy mode ${enabled ? "ON" : "OFF"}`;

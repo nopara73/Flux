@@ -451,10 +451,11 @@ button.modifier-tile:not(:disabled):active {
   position: absolute;
   top: 2px;
   right: 2px;
-  width: 18px;
+  min-width: 18px;
+  padding-inline: 3px;
   height: 18px;
   border: 1px solid var(--graphite);
-  border-radius: 50%;
+  border-radius: 999px;
   display: grid;
   place-items: center;
   color: var(--graphite);

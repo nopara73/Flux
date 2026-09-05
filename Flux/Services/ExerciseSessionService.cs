@@ -108,16 +108,28 @@ public sealed class ExerciseSessionService
             state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
-    public int GetTrainingDaysUntilLightDay(
+    public int GetWorkoutsUntilLightDay(
+        WorkoutState state,
+        int prospectiveWorkoutMinutes,
+        long? nowUnixMilliseconds = null)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        return WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
+            state.WorkoutHistory,
+            prospectiveWorkoutMinutes,
+            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds(),
+            _localTimeZone,
+            state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
+
+    public bool IsAutomaticLightDayDue(
         WorkoutState state,
         long? nowUnixMilliseconds = null)
     {
         ArgumentNullException.ThrowIfNull(state);
-        return WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
-            state.WorkoutHistory,
-            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds(),
-            _localTimeZone,
-            state.LegacyCompletedTrainingDayUnixMilliseconds);
+        return IsLightDayDue(
+            state,
+            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds());
     }
 
     public WorkoutRecoveryLightStatus GetRecoveryLightStatus(
@@ -397,6 +409,10 @@ public sealed class ExerciseSessionService
             workoutStartedAtUnixMilliseconds);
         state.Version = CurrentStateVersion;
         modifiers = NormalizeWorkoutModifiers(modifiers);
+        if (IsLightDayDue(state, workoutStartedAtUnixMilliseconds))
+        {
+            modifiers |= WorkoutModifiers.Light;
+        }
         state.LastWorkoutMinutes = minutes;
         state.LastWorkoutModifiers = WorkoutModifierPolicy
             .GetPersistentSetupModifiers(modifiers);
@@ -443,6 +459,15 @@ public sealed class ExerciseSessionService
 
         long workoutStartedAtUnixMilliseconds =
             GetCurrentUnixTimeMilliseconds();
+        if (!state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light) &&
+            IsLightDayDue(state, workoutStartedAtUnixMilliseconds))
+        {
+            EnableLightModeForExistingActiveWorkout(state);
+            RepairActiveLineup(state, preserveCurrentSelections: false);
+            RebalanceNewExercisesByMuscleBalance(state);
+            SetActiveLongWorkoutAllocation(state);
+            ReconcileLineupWithScheduledPhases(state);
+        }
         int[] keptExerciseIdsAtStart = state.LastKeptExerciseIds
             .Order()
             .ToArray();
@@ -483,6 +508,12 @@ public sealed class ExerciseSessionService
         WorkoutModifiers lastModifiersBefore = state.LastWorkoutModifiers;
         bool previousIsLightDay = state.ActiveWorkoutIsLightDay;
         modifiers = NormalizeWorkoutModifiers(modifiers);
+        long reconfiguredAtUnixMilliseconds =
+            GetCurrentUnixTimeMilliseconds();
+        if (IsLightDayDue(state, reconfiguredAtUnixMilliseconds))
+        {
+            modifiers |= WorkoutModifiers.Light;
+        }
         bool targetIsLightDay = modifiers.HasFlag(WorkoutModifiers.Light);
         if (modifiers == previousModifiers)
         {

@@ -1,0 +1,221 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+import vm from "node:vm";
+
+import "../light-cadence.js";
+
+const cadence = globalThis.fluxLightCadence;
+const minute = 60_000;
+const light = 256;
+const atDay = (day, hour = 8, minutes = 0) =>
+  new Date(2026, 8, day, hour, minutes).getTime();
+
+function completed(start, minutes, isLight = false) {
+  return {
+    startedAtUnixMilliseconds: start,
+    endedAtUnixMilliseconds: start + minutes * minute,
+    workoutMinutes: minutes,
+    status: "Completed",
+    isLightDay: isLight,
+    modifiers: isLight ? light : 0,
+    blocks: Array.from({ length: minutes }, (_, index) => ({
+      completedAtUnixMilliseconds: start + (index + 1) * minute,
+    })),
+  };
+}
+
+for (const [duration, regularDays] of [
+  [3, 60], [5, 36], [7, 26], [10, 18], [15, 12],
+  [20, 9], [30, 6], [45, 4], [60, 3], [90, 3],
+]) {
+  test(`${duration} minutes daily reaches automatic Light after ${regularDays} regular days`, () => {
+    const history = [];
+    assert.equal(cadence.workoutsRemaining(history, duration, atDay(1)), regularDays);
+    for (let day = 1; day <= regularDays; day += 1) {
+      assert.equal(cadence.isDue(history, atDay(day)), false);
+      history.push(completed(atDay(day), duration));
+    }
+    assert.equal(cadence.isDue(history, atDay(regularDays + 1)), true);
+  });
+}
+
+test("ten 3-minute workouts daily accumulate in six days, including after reload", () => {
+  const history = [];
+  for (let day = 1; day <= 6; day += 1) {
+    assert.equal(cadence.isDue(history, atDay(day)), false);
+    for (let workout = 0; workout < 10; workout += 1) {
+      history.push(completed(atDay(day, 8, workout * 10), 3));
+    }
+  }
+  const restored = JSON.parse(JSON.stringify({
+    workoutHistory: history,
+    lastKeptExerciseIds: [507],
+    exerciseScoreAdjustmentsByPhase: { Warmup: { 507: -2 } },
+  }));
+  assert.equal(restored.workoutHistory.length, 60);
+  assert.equal(cadence.isDue(restored.workoutHistory, atDay(7)), true);
+  assert.deepEqual(restored.lastKeptExerciseIds, [507]);
+  assert.equal(restored.exerciseScoreAdjustmentsByPhase.Warmup[507], -2);
+});
+
+test("daily cap applies after summing all sessions, not separately to each", () => {
+  const history = Array.from({ length: 10 }, (_, index) =>
+    completed(atDay(1, 8, index * 10), 10));
+  assert.equal(cadence.workoutsRemaining(history, 60, atDay(1, 11)), 2);
+  assert.equal(cadence.workoutsRemaining(history, 3, atDay(1, 11)), 40);
+});
+
+test("interrupted work counts only completed blocks and all-skipped work counts zero", () => {
+  const partial = { ...completed(atDay(1), 10), workoutMinutes: 90, status: "Interrupted" };
+  const skipped = {
+    ...completed(atDay(2), 0), workoutMinutes: 90,
+    initialSelections: [{}], decisions: [{}],
+  };
+  assert.equal(cadence.workoutsRemaining([partial, skipped], 10, atDay(2, 10)), 17);
+  assert.equal(cadence.workoutsRemaining([skipped], 10, atDay(2, 10)), 18);
+});
+
+test("brief completed Light keeps the due day locked until the next local date", () => {
+  const history = [1, 2, 3].map((day) => completed(atDay(day), 60));
+  history.push(completed(atDay(4), 3, true));
+  assert.equal(cadence.isDue(history, atDay(4, 9)), true);
+  assert.equal(cadence.isDue(history, atDay(4, 23, 59)), true);
+  assert.equal(cadence.isDue(history, atDay(5)), false);
+  assert.equal(cadence.workoutsRemaining(history, 30, atDay(5)), 6);
+});
+
+test("Light after reaching the threshold today resets tomorrow, not immediately", () => {
+  const history = [1, 2, 3].map((day) => completed(atDay(day), 60));
+  history.push(completed(atDay(3, 10), 3, true));
+  assert.equal(cadence.isDue(history, atDay(3, 11)), true);
+  assert.equal(cadence.isDue(history, atDay(4)), false);
+});
+
+test("an overnight gap preserves accumulated work but a complete rest date resets it", () => {
+  const history = [1, 2, 3].map((day) => completed(atDay(day), 60));
+  assert.equal(cadence.isDue(history, atDay(4)), true);
+  assert.equal(cadence.isDue(history, atDay(5)), false);
+  assert.equal(cadence.workoutsRemaining(history, 3, atDay(5)), 60);
+});
+
+test("mode changes classify each completed block without rewriting earlier work", () => {
+  const session = {
+    ...completed(atDay(1), 30), status: "Interrupted",
+    modifierChanges: [{
+      changedAtUnixMilliseconds: atDay(1, 8, 10), newModifiers: light,
+    }],
+  };
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 9)), 171);
+});
+
+test("completed blocks crossing midnight count toward their own local date's cap", () => {
+  const session = completed(atDay(1, 23, 30), 90);
+  // 29 blocks before midnight, 61 after: 29 + capped 60 = 89 credited minutes.
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(2, 2)), 91);
+});
+
+test("legacy histories remain readable without double-counting inferred dates", () => {
+  const old = { ...completed(atDay(1), 30), blocks: [] };
+  assert.equal(cadence.workoutsRemaining([old], 30, atDay(2)), 5);
+  assert.equal(cadence.workoutsRemaining(
+    [completed(atDay(2), 60)], 60, atDay(3), [atDay(1)],
+  ), 1);
+  assert.equal(cadence.workoutsRemaining([old], 30, atDay(2), [atDay(1)]), 5);
+});
+
+const instantSource = await readFile(new URL("../instant-controls.js", import.meta.url), "utf8");
+const cadenceSource = await readFile(new URL("../light-cadence.js", import.meta.url), "utf8");
+
+// Exercise the real early-loading controls with a minimal DOM. This runs before
+// the catalog/module loads, when a stale or bypassable toggle would be visible.
+function startup(history = [], duration = 10, now = atDay(4)) {
+  const elements = new Map();
+  function element(id) {
+    if (elements.has(id)) return elements.get(id);
+    const attributes = new Map();
+    const listeners = new Map();
+    const node = {
+      textContent: id === "duration-value" ? "10" : "",
+      children: [], dataset: {}, hidden: false, disabled: false,
+      style: { setProperty() {} },
+      classList: { add() {}, remove() {}, toggle() {} },
+      setAttribute(name, value) { attributes.set(name, value); },
+      getAttribute(name) { return attributes.get(name); },
+      addEventListener(name, callback) { listeners.set(name, callback); },
+      fire(name) { listeners.get(name)?.(); },
+    };
+    elements.set(id, node);
+    return node;
+  }
+  class ClockDate extends Date { static now() { return now; } }
+  const context = vm.createContext({
+    Date: ClockDate,
+    document: { getElementById: element },
+    localStorage: { getItem: () => JSON.stringify({
+      workoutHistory: history, lastWorkoutMinutes: duration,
+      lastWorkoutModifiers: 0,
+    }) },
+    performance: { mark() {} },
+    requestAnimationFrame: (callback) => callback(),
+    setTimeout() {}, clearTimeout() {},
+  });
+  context.window = context;
+  vm.runInContext(cadenceSource, context);
+  vm.runInContext(instantSource, context);
+  return { controls: context.fluxStartupControls, element };
+}
+
+test("startup locks due Light before module loading and never shows a zero badge", () => {
+  const history = [1, 2, 3].map((day) => completed(atDay(day), 60));
+  const { controls, element } = startup(history);
+  assert.equal(controls.automaticLightMode, true);
+  assert.equal(controls.selectedModifiers & light, light);
+  assert.equal(element("light-workout-modifier").getAttribute("aria-pressed"), "true");
+  assert.equal(element("light-workout-modifier").disabled, true);
+  assert.equal(element("light-workout-countdown").hidden, true);
+  element("light-workout-modifier").fire("click");
+  assert.equal(controls.selectedModifiers & light, light);
+  controls.setActiveWorkoutSetup(true);
+  element("light-workout-modifier").fire("click");
+  assert.equal(controls.selectedModifiers & light, light);
+});
+
+test("startup countdown responds to duration and manual Light hides it", () => {
+  const { controls, element } = startup([], 10);
+  assert.equal(element("light-workout-countdown").textContent, "18");
+  element("duration-range").value = "0";
+  element("duration-range").fire("input");
+  assert.equal(controls.lightWorkoutsRemaining, 60);
+  assert.equal(element("light-workout-countdown").textContent, "60");
+  assert.equal(element("light-workout-countdown").hidden, false);
+  element("light-workout-modifier").fire("click");
+  assert.equal(element("light-workout-countdown").hidden, true);
+  assert.equal(element("light-workout-modifier").disabled, false);
+  element("light-workout-modifier").fire("click");
+  assert.equal(element("light-workout-countdown").hidden, false);
+});
+
+test("recovery presentation never sets real Light or consumes a cadence reset", () => {
+  const { controls, element } = startup();
+  controls.setRecoveryLightMode(true);
+  assert.equal(controls.selectedModifiers & light, 0);
+  assert.equal(element("light-workout-modifier").disabled, true);
+  assert.equal(element("light-workout-modifier").getAttribute("aria-pressed"), "true");
+  assert.equal(element("light-workout-countdown").hidden, true);
+  controls.setRecoveryLightMode(false);
+  assert.equal(controls.selectedModifiers & light, 0);
+  assert.equal(element("light-workout-modifier").disabled, false);
+  assert.equal(element("light-workout-countdown").hidden, false);
+});
+
+test("date rollover clears the expired automatic toggle without persisting it", () => {
+  const { controls, element } = startup(
+    [1, 2, 3].map((day) => completed(atDay(day), 60)),
+  );
+  controls.setAutomaticLightMode(false);
+  controls.setLightWorkoutsRemaining(18);
+  assert.equal(controls.selectedModifiers & light, 0);
+  assert.equal(element("light-workout-modifier").disabled, false);
+  assert.equal(element("light-workout-countdown").hidden, false);
+});

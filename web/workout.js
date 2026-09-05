@@ -1,3 +1,5 @@
+import "./light-cadence.js";
+
 export const SUPPORTED_MINUTES = Object.freeze([3, 5, 7, 10, 15, 20, 30, 45, 60, 90]);
 export const WORKOUT_MODIFIERS = Object.freeze({
   None: 0,
@@ -361,7 +363,8 @@ const SOURCE_STATE_VERSION = Symbol("sourceStateVersion");
 export const MOVEMENT_DURATION_MS = 45_000;
 export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
-export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
+export const LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP = 60;
+export const LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT = 180;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
 // Revision 70 corrects the Shy audit and replaces three retired hand drills.
 // Revision 71 corrects three one-sided demonstrations to atomic mirrored
@@ -3666,63 +3669,21 @@ export function isLightWorkoutDayDue(
   nowUnixMilliseconds,
   legacyCompletedTrainingDayUnixMilliseconds = [],
 ) {
-  return getTrainingDaysUntilLightWorkout(
-    workoutHistory,
-    nowUnixMilliseconds,
-    legacyCompletedTrainingDayUnixMilliseconds,
-  ) === 0;
+  return globalThis.fluxLightCadence.isDue(
+    workoutHistory, nowUnixMilliseconds, legacyCompletedTrainingDayUnixMilliseconds,
+  );
 }
 
-export function getTrainingDaysUntilLightWorkout(
+export function getWorkoutsUntilLightWorkout(
   workoutHistory,
+  prospectiveWorkoutMinutes,
   nowUnixMilliseconds,
   legacyCompletedTrainingDayUnixMilliseconds = [],
 ) {
-  const today = getLocalCalendarDayNumber(nowUnixMilliseconds);
-  if (today === null) {
-    throw new RangeError("Current workout time must be positive Unix milliseconds.");
-  }
-
-  const completedTrainingDays = new Map();
-  for (const session of Array.isArray(workoutHistory) ? workoutHistory : []) {
-    if (session?.status !== "Completed") {
-      continue;
-    }
-    const dayNumber = getLocalCalendarDayNumber(
-      positiveSafeIntegerOrZero(session.startedAtUnixMilliseconds) ||
-        positiveSafeIntegerOrZero(session.endedAtUnixMilliseconds),
-    );
-    if (dayNumber === null) {
-      continue;
-    }
-    const isLightDay = session.isLightDay === true ||
-      (integerOrZero(session.modifiers) & WORKOUT_MODIFIERS.Light) !== 0;
-    completedTrainingDays.set(
-      dayNumber,
-      isLightDay || completedTrainingDays.get(dayNumber) === true,
-    );
-  }
-  for (const dayNumber of uniquePositiveIntegers(
+  return globalThis.fluxLightCadence.workoutsRemaining(
+    workoutHistory, prospectiveWorkoutMinutes, nowUnixMilliseconds,
     legacyCompletedTrainingDayUnixMilliseconds,
-  ).map(getLocalCalendarDayNumber).filter((day) => day !== null)) {
-    if (!completedTrainingDays.has(dayNumber)) {
-      completedTrainingDays.set(dayNumber, false);
-    }
-  }
-
-  let day = completedTrainingDays.has(today) ? today : today - 1;
-  let consecutiveRegularDays = 0;
-  while (completedTrainingDays.has(day)) {
-    if (completedTrainingDays.get(day) === true) {
-      break;
-    }
-    consecutiveRegularDays += 1;
-    if (consecutiveRegularDays >= LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1) {
-      return 0;
-    }
-    day -= 1;
-  }
-  return LIGHT_DAY_TRAINING_DAYS_PER_CYCLE - 1 - consecutiveRegularDays;
+  );
 }
 
 export function getDefaultWorkoutModifiers(
@@ -3864,8 +3825,17 @@ export class WorkoutSession {
     );
   }
 
-  getTrainingDaysUntilLightWorkout() {
-    return getTrainingDaysUntilLightWorkout(
+  getWorkoutsUntilLightWorkout(prospectiveWorkoutMinutes) {
+    return getWorkoutsUntilLightWorkout(
+      this.state.workoutHistory,
+      prospectiveWorkoutMinutes,
+      this.getCurrentUnixTimeMilliseconds(),
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
+    );
+  }
+
+  isAutomaticLightDayDue() {
+    return isLightWorkoutDayDue(
       this.state.workoutHistory,
       this.getCurrentUnixTimeMilliseconds(),
       this.state.legacyCompletedTrainingDayUnixMilliseconds,
@@ -3995,6 +3965,13 @@ export class WorkoutSession {
     );
     this.state.version = CURRENT_WORKOUT_STATE_VERSION;
     modifiers = normalizeWorkoutModifiers(modifiers);
+    if (isLightWorkoutDayDue(
+      this.state.workoutHistory,
+      workoutStartedAtUnixMilliseconds,
+      this.state.legacyCompletedTrainingDayUnixMilliseconds,
+    )) {
+      modifiers |= WORKOUT_MODIFIERS.Light;
+    }
     this.state.lastWorkoutMinutes = minutes;
     this.state.lastWorkoutModifiers = getPersistentSetupModifiers(modifiers);
     this.state.activeWorkoutMinutes = minutes;
@@ -4034,6 +4011,14 @@ export class WorkoutSession {
       );
     }
     const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
+    if ((this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) === 0 &&
+        this.isAutomaticLightDayDue()) {
+      enableLightModeForExistingActiveWorkout(this.state);
+      this.repairActiveLineup(false);
+      this.rebalanceNewExercisesByMuscleBalance();
+      this.setActiveLongWorkoutAllocation();
+      this.reconcileLineupWithScheduledPhases();
+    }
     const keptExerciseIdsAtStart = [...this.state.lastKeptExerciseIds]
       .sort((left, right) => left - right);
     this.createActiveWorkoutSession(
@@ -4189,6 +4174,9 @@ export class WorkoutSession {
     const previousLastModifiers = this.state.lastWorkoutModifiers;
     const previousIsLightDay = this.state.activeWorkoutIsLightDay;
     modifiers = normalizeWorkoutModifiers(modifiers);
+    if (this.isAutomaticLightDayDue()) {
+      modifiers |= WORKOUT_MODIFIERS.Light;
+    }
     const targetIsLightDay =
       (modifiers & WORKOUT_MODIFIERS.Light) !== 0;
     if (modifiers === previousModifiers) {

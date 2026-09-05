@@ -23,7 +23,8 @@ import {
   HARD_MUSCULAR_DEMAND,
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
-  LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
+  LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP,
+  LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT,
   MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES,
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
@@ -81,7 +82,7 @@ import {
   getHardRotationStatus,
   getLastHardWorkUnixMilliseconds,
   getLastMeaningfulWorkUnixMilliseconds,
-  getTrainingDaysUntilLightWorkout,
+  getWorkoutsUntilLightWorkout,
   getMuscularDemandSchedulePriority,
   getMinimumExercisesPerModifierPairStatePerGroup,
   getSelectionKey,
@@ -3982,7 +3983,8 @@ test("a completed light workout starts the next four-day cadence", () => {
     status: "Interrupted",
   });
 
-  assert.equal(LIGHT_DAY_TRAINING_DAYS_PER_CYCLE, 4);
+  assert.equal(LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP, 60);
+  assert.equal(LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT, 180);
   assert.equal(isLightWorkoutDayDue(history, dayFour), true);
 
   history.push(completedWorkoutSession(4, dayFour, true));
@@ -4021,8 +4023,9 @@ test("a regular workout on a due day does not skip the light workout", () => {
     new Date(2026, 7, 30, 8).getTime(),
     true,
   ));
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 31, 8).getTime(),
   ), 3);
 });
@@ -4060,26 +4063,29 @@ test("version 21 recovers a contiguous legacy day for tomorrow's light workout",
   assert.equal(session.state.workoutHistory.length, 2);
 });
 
-test("light countdown shows training days remaining throughout the repeating cadence", () => {
+test("light countdown tracks hour-long workouts throughout the repeating cadence", () => {
   const dayOne = new Date(2026, 7, 26, 8).getTime();
   const history = [];
 
-  assert.equal(getTrainingDaysUntilLightWorkout(history, dayOne), 3);
+  assert.equal(getWorkoutsUntilLightWorkout(history, 60, dayOne), 3);
   history.push(completedWorkoutSession(1, dayOne));
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 26, 9).getTime(),
   ), 2);
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 27, 8).getTime(),
   ), 2);
   history.push(completedWorkoutSession(
     2,
     new Date(2026, 7, 27, 8).getTime(),
   ));
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 28, 8).getTime(),
   ), 1);
   history.push(completedWorkoutSession(
@@ -4087,20 +4093,23 @@ test("light countdown shows training days remaining throughout the repeating cad
     new Date(2026, 7, 28, 8).getTime(),
   ));
   const dayFour = new Date(2026, 7, 29, 8).getTime();
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 28, 9).getTime(),
   ), 0);
-  assert.equal(getTrainingDaysUntilLightWorkout(history, dayFour), 0);
+  assert.equal(getWorkoutsUntilLightWorkout(history, 60, dayFour), 0);
   assert.equal(isLightWorkoutDayDue(history, dayFour), true);
 
   history.push(completedWorkoutSession(4, dayFour, true));
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 29, 9).getTime(),
-  ), 3);
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  ), 0);
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     new Date(2026, 7, 30, 8).getTime(),
   ), 3);
 });
@@ -4115,15 +4124,17 @@ test("light countdown uses the latest light workout instead of legacy streak mod
   ));
   const legacyDay = new Date(2026, 7, 27, 7).getTime();
 
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     today,
     [legacyDay],
   ), 2);
 
   history.push(completedWorkoutSession(8, today));
-  assert.equal(getTrainingDaysUntilLightWorkout(
+  assert.equal(getWorkoutsUntilLightWorkout(
     history,
+    60,
     today + 60 * 60_000,
     [legacyDay],
   ), 1);
@@ -4151,7 +4162,7 @@ test("manual light mode is never remembered as the next session default", () => 
   assert.equal(session.getDefaultWorkoutModifiers(), WORKOUT_MODIFIERS.Silence);
 });
 
-test("recovery day defaults to light but explicit regular mode remains regular", () => {
+test("automatic Light cannot be bypassed with explicit regular modifiers", () => {
   const now = new Date(2026, 7, 29, 8).getTime();
   const groups = RESOLUTIONS.get(3).groups;
   const exercises = groups.map((group, index) => exercise(
@@ -4175,10 +4186,42 @@ test("recovery day defaults to light but explicit regular mode remains regular",
 
   session.startWorkout(3, WORKOUT_MODIFIERS.None);
 
-  assert.equal(session.state.activeWorkoutIsLightDay, false);
-  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Light);
   assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
-  assert.equal(session.state.activeWorkoutSession.isLightDay, false);
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
+  session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.None, session.getNextGroup().id);
+  assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Light);
+});
+
+test("automatic Light is rechecked when activating an earlier prepared workout", () => {
+  let now = new Date(2026, 8, 3, 8).getTime();
+  const groups = RESOLUTIONS.get(3).groups;
+  const exercises = groups.flatMap((group, index) => [
+    { ...exercise(index + 1, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0), muscularDemand: 2 },
+    { ...exercise(index + 101, group.canonicalGroups[0], group.canonicalGroups.slice(1), 0), muscularDemand: 0 },
+  ]);
+  const state = createDefaultState();
+  state.workoutHistory = [
+    completedWorkoutSession(1, new Date(2026, 8, 1, 8).getTime()),
+    completedWorkoutSession(2, new Date(2026, 8, 2, 8).getTime()),
+  ];
+  const session = new WorkoutSession(exercises, state, () => 0, () => now);
+  session.prepareWorkout(3, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.activeWorkoutIsLightDay, false);
+  assert.ok(session.getActiveGroups().some((group) =>
+    session.getSelectedExercise(group).muscularDemand === 2));
+
+  session.state.workoutHistory.push(completedWorkoutSession(3, now));
+  now += 2 * 60 * 60_000;
+  session.activatePreparedWorkout();
+
+  assert.equal(session.state.activeWorkoutIsLightDay, true);
+  assert.equal(session.state.activeWorkoutSession.isLightDay, true);
+  assert.ok(session.getActiveGroups().every((group) =>
+    session.getSelectedExercise(group).muscularDemand === 0));
+  assert.equal(session.state.lastWorkoutModifiers, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.workoutHistory.length, 3);
 });
 
 test("version 24 migrates an active light workout into its own profile", () => {
@@ -9401,8 +9444,8 @@ function completedWorkoutSession(
   return {
     sessionId,
     startedAtUnixMilliseconds,
-    endedAtUnixMilliseconds: startedAtUnixMilliseconds + 3 * 60_000,
-    workoutMinutes: 3,
+    endedAtUnixMilliseconds: startedAtUnixMilliseconds + 60 * 60_000,
+    workoutMinutes: 60,
     modifiers: isLightDay
       ? WORKOUT_MODIFIERS.Light
       : WORKOUT_MODIFIERS.None,

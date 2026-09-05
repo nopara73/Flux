@@ -21,7 +21,8 @@ import {
   HARD_RECOVERY_WINDOW_MS,
   HARD_ROTATION_STATUS,
   LAST_CUMULATIVE_CATALOG_REVISION,
-  LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
+  LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP,
+  LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT,
   MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES,
   MAXIMUM_MUSCULAR_DEMAND,
   MODERATE_MUSCULAR_DEMAND,
@@ -116,6 +117,7 @@ const [
   workoutSequencePolicy,
   workoutSchedulePolicy,
   lightWorkoutCountdownBadge,
+  lightCadenceModule,
 ] = await Promise.all([
   source("Flux", "Services", "ExerciseSessionService.cs"),
   source("Flux", "Models", "WorkoutState.cs"),
@@ -173,6 +175,7 @@ const [
   source("Flux", "Services", "WorkoutSequencePolicy.cs"),
   source("Flux", "Services", "WorkoutSchedulePolicy.cs"),
   source("Flux", "Resources", "drawable", "light_workout_countdown_badge.xml"),
+  source("web", "light-cadence.js"),
 ]);
 const catalog = JSON.parse(catalogJson);
 
@@ -224,9 +227,15 @@ test("web and mobile persist the same complete workout audit trail", () => {
   assert.match(workoutSessionLog, /WorkoutExercisePhase ExercisePhase/);
   assert.match(workoutModule, /exercisePhase/);
   assert.equal(
-    LIGHT_DAY_TRAINING_DAYS_PER_CYCLE,
-    integerConstant(lightDayPolicy, "TrainingDaysPerCycle"),
+    LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP,
+    integerConstant(lightDayPolicy, "DailyRegularMinutesCap"),
   );
+  assert.equal(
+    LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT,
+    integerConstant(lightDayPolicy, "RegularMinutesBeforeLightDay"),
+  );
+  assert.equal(globalThis.fluxLightCadence.dailyCap, LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP);
+  assert.equal(globalThis.fluxLightCadence.threshold, LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT);
   assert.equal(
     MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES,
     integerConstant(lightDayPolicy, "MinimumLegacyHardPrimaryMuscles"),
@@ -236,13 +245,13 @@ test("web and mobile persist the same complete workout audit trail", () => {
   assert.match(workoutModule, /inferLegacyCompletedTrainingDays/);
   assert.match(sessionService, /ActiveWorkoutIsLightDay/);
   assert.match(sessionService, /IsLightDayDue/);
-  assert.match(sessionService, /GetTrainingDaysUntilLightDay/);
+  assert.match(sessionService, /GetWorkoutsUntilLightDay/);
   assert.match(sessionService, /GetDefaultWorkoutModifiers/);
   assert.match(sessionService, /GetPersistentSetupModifiers/);
   assert.match(workoutModule, /getDefaultWorkoutModifiers/);
-  assert.match(workoutModule, /getTrainingDaysUntilLightWorkout/);
+  assert.match(workoutModule, /getWorkoutsUntilLightWorkout/);
   assert.match(workoutModule, /getPersistentSetupModifiers/);
-  assert.match(lightDayPolicy, /GetTrainingDaysUntilLightDay/);
+  assert.match(lightDayPolicy, /GetWorkoutsUntilLightDay/);
   assert.match(sessionService, /lightDayOpportunityWeight/);
   assert.match(sessionService, /DominantLightModeStateVersion\s*=\s*29/);
   assert.match(workoutModule, /DOMINANT_LIGHT_MODE_STATE_VERSION\s*=\s*26/);
@@ -252,6 +261,27 @@ test("web and mobile persist the same complete workout audit trail", () => {
     workoutModule,
     /activeWorkoutIsLightDay[\s\S]*isLightWorkoutDayDue[\s\S]*lightDayOpportunityWeight/,
   );
+});
+
+test("work-based automatic Light is locked in both services and both startup surfaces", () => {
+  assert.match(sessionService, /IsAutomaticLightDayDue/);
+  assert.match(workoutModule, /isAutomaticLightDayDue/);
+  for (const entry of ["PrepareWorkout", "ActivatePreparedWorkout", "ReconfigureActiveWorkout"]) {
+    assert.match(sessionService, new RegExp(`${entry}[\\s\\S]*IsLightDayDue`));
+  }
+  for (const entry of ["prepareWorkout", "activatePreparedWorkout", "reconfigureActiveWorkout"]) {
+    assert.match(workoutModule, new RegExp(`${entry}[\\s\\S]*is(?:LightWorkoutDayDue|AutomaticLightDayDue)`));
+  }
+  assert.match(mainActivity, /_lightModifierButton.Enabled = !recoveryLightMode &&\s*!automaticLightMode/);
+  assert.match(webApp, /element.disabled = recoveryLightMode \|\| automaticLightMode/);
+  assert.match(instantControls, /element.disabled = recoveryLightMode \|\| automaticLightMode/);
+  assert.match(workoutModule, /import "\.\/light-cadence.js"/);
+  assert.match(webIndex, /light-cadence.js[\s\S]*instant-controls.js/);
+  assert.match(lightCadenceModule, /day < today && activity.hasCompletedLightWorkout/);
+  assert.match(lightDayPolicy, /activity.HasCompletedLightWorkout && day < today/);
+  assert.match(lightCadenceModule, /completedAtUnixMilliseconds[\s\S]*isLightAt/);
+  assert.match(lightDayPolicy, /CompletedAtUnixMilliseconds[\s\S]*IsLightAt/);
+  assert.match(webBuild, /lightCadenceOutputName[\s\S]*workoutOutputName/);
 });
 
 test("web and mobile persist hard-first block-aware workout allocation", () => {
@@ -999,7 +1029,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   }
   assert.match(
     instantControls,
-    /return `light mode \$\{enabled \|\| recoveryLightMode \? "ON" : "OFF"\}`/,
+    /return `light mode \$\{enabled \|\| recoveryLightMode \|\| automaticLightMode \? "ON" : "OFF"\}`/,
   );
   assert.doesNotMatch(instantControls, /light workout \$\{enabled/);
   assert.match(mainActivity, /button\.TooltipText = GetString\([\s\S]*GetModifierFeedbackResourceId\(modifier, enabled\)/);
@@ -1022,15 +1052,15 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     instantControls,
-    /readPersistedSetup[\s\S]*getTrainingDaysUntilLightWorkout[\s\S]*completedDays = new Map[\s\S]*completedDays\.has\(today\) \? today : today - 1[\s\S]*return 3 - consecutiveRegularDays/,
+    /readPersistedSetup[\s\S]*fluxLightCadence\.workoutsRemaining[\s\S]*fluxLightCadence\.isDue/,
   );
   assert.match(
     lightDayPolicy,
-    /GetTrainingDaysUntilLightDay[\s\S]*ConsecutivePriorDaysRequired - consecutiveRegularDays[\s\S]*Dictionary<int, bool>[\s\S]*ContainsKey\(today\)/,
+    /GetWorkoutsUntilLightDay[\s\S]*RegularMinutesBeforeLightDay - accumulatedMinutes[\s\S]*Dictionary<int, TrainingDayActivity>[\s\S]*ContainsKey\(today\)/,
   );
   assert.match(
     mainActivity,
-    /UpdateLightModifierPresentation[\s\S]*GetTrainingDaysUntilLightMode[\s\S]*ViewStates\.Gone[\s\S]*ViewStates\.Visible/,
+    /UpdateLightModifierPresentation[\s\S]*GetWorkoutsUntilLightMode[\s\S]*ViewStates\.Gone[\s\S]*ViewStates\.Visible/,
   );
   assert.match(
     durationLayout,
@@ -1038,7 +1068,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     lightWorkoutCountdownBadge,
-    /android:shape="oval"[\s\S]*brand_chartreuse[\s\S]*brand_graphite/,
+    /android:shape="rectangle"[\s\S]*android:radius="9dp"[\s\S]*brand_chartreuse[\s\S]*brand_graphite/,
   );
   assert.match(
     webApp,
@@ -1046,11 +1076,11 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     instantControls,
-    /lightDaysRemaining[\s\S]*lightCountdown\.hidden = enabled/,
+    /lightWorkoutsRemaining[\s\S]*lightCountdown\.hidden = enabled/,
   );
   assert.match(
     webStyles,
-    /\.light-mode-countdown[\s\S]*position:\s*absolute[\s\S]*border-radius:\s*50%[\s\S]*\.light-mode-countdown\[hidden\]/,
+    /\.light-mode-countdown[\s\S]*position:\s*absolute[\s\S]*border-radius:\s*999px[\s\S]*\.light-mode-countdown\[hidden\]/,
   );
   assert.match(
     instantControls,

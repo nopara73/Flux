@@ -361,7 +361,9 @@
 
                             <TextView
                                 android:id="@+id/light_workout_countdown_badge"
-                                android:layout_width="18dp"
+                                android:layout_width="wrap_content"
+                                android:minWidth="18dp"
+                                android:paddingHorizontal="3dp"
                                 android:layout_height="18dp"
                                 android:layout_gravity="top|end"
                                 android:background="@drawable/light_workout_countdown_badge"
@@ -371,7 +373,7 @@
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
                                 android:importantForAccessibility="no"
-                                android:text="3"
+                                android:text="18"
                                 android:textColor="@color/brand_graphite"
                                 android:textSize="11sp" />
                         </FrameLayout>

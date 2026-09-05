@@ -3728,8 +3728,9 @@ public sealed class ExerciseSessionServiceTests
             timeZone));
 
         history.Add(CompletedSession(5, dayFour.AddDays(1), isLightDay: true));
-        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(3, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayFour.AddDays(2).ToUnixTimeMilliseconds(),
             timeZone));
     }
@@ -3794,7 +3795,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void LightDayCountdownTracksTrainingDaysAcrossTheRepeatingCadence()
+    public void LightCountdownTracksHourLongWorkoutsAcrossTheRepeatingCadence()
     {
         TimeZoneInfo timeZone = TimeZoneInfo.CreateCustomTimeZone(
             "Flux countdown UTC+07",
@@ -3811,41 +3812,49 @@ public sealed class ExerciseSessionServiceTests
             TimeSpan.FromHours(7));
         var history = new List<WorkoutSessionLog>();
 
-        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(3, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.ToUnixTimeMilliseconds(),
             timeZone));
         history.Add(CompletedSession(1, dayOne));
-        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(2, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddHours(1).ToUnixTimeMilliseconds(),
             timeZone));
-        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(2, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(1).ToUnixTimeMilliseconds(),
             timeZone));
         history.Add(CompletedSession(2, dayOne.AddDays(1)));
-        Assert.Equal(1, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(1, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(2).ToUnixTimeMilliseconds(),
             timeZone));
         history.Add(CompletedSession(3, dayOne.AddDays(2)));
-        Assert.Equal(0, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(0, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(2).AddHours(1).ToUnixTimeMilliseconds(),
             timeZone));
-        Assert.Equal(0, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(0, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(3).ToUnixTimeMilliseconds(),
             timeZone));
 
         history.Add(CompletedSession(4, dayOne.AddDays(3), isLightDay: true));
-        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(0, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(3).AddHours(1).ToUnixTimeMilliseconds(),
             timeZone));
-        Assert.Equal(3, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(3, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             dayOne.AddDays(4).ToUnixTimeMilliseconds(),
             timeZone));
     }
@@ -3882,15 +3891,17 @@ public sealed class ExerciseSessionServiceTests
             .ToList();
         long legacyDay = firstLoggedDay.AddDays(-1).ToUnixTimeMilliseconds();
 
-        Assert.Equal(2, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(2, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             today.ToUnixTimeMilliseconds(),
             timeZone,
             [legacyDay]));
 
         history.Add(CompletedSession(8, today));
-        Assert.Equal(1, WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+        Assert.Equal(1, WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
             history,
+            60,
             today.AddHours(1).ToUnixTimeMilliseconds(),
             timeZone,
             [legacyDay]));
@@ -3924,7 +3935,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void RecoveryDayDefaultsToLightButAnExplicitRegularWorkoutStaysRegular()
+    public void AutomaticLightDayCannotBeBypassedByExplicitRegularModifiers()
     {
         DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -3953,10 +3964,47 @@ public sealed class ExerciseSessionServiceTests
 
         service.StartWorkout(state, 3, WorkoutModifiers.None);
 
-        Assert.False(state.ActiveWorkoutIsLightDay);
-        Assert.Equal(WorkoutModifiers.None, state.ActiveWorkoutModifiers);
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.Equal(WorkoutModifiers.Light, state.ActiveWorkoutModifiers);
         Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
-        Assert.False(state.ActiveWorkoutSession!.IsLightDay);
+        Assert.True(state.ActiveWorkoutSession!.IsLightDay);
+        service.ReconfigureActiveWorkout(state, WorkoutModifiers.None,
+            service.GetNextGroup(state)!.Id);
+        Assert.Equal(WorkoutModifiers.Light, state.ActiveWorkoutModifiers);
+    }
+
+    [Fact]
+    public void AutomaticLightIsRecheckedWhenActivatingAnEarlierPreparedWorkout()
+    {
+        DateTimeOffset now = new(2026, 9, 3, 8, 0, 0, TimeSpan.Zero);
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
+        Exercise[] exercises = groups.SelectMany((group, index) => new[]
+        {
+            CloneWithMuscularDemand(QualifiedForGroup(index + 1, group), 2),
+            CloneWithMuscularDemand(QualifiedForGroup(index + 101, group), 0),
+        }).ToArray();
+        var service = new ExerciseSessionService(exercises,
+            new AlwaysZeroRandom(), () => now, TimeZoneInfo.Utc);
+        var state = new WorkoutState
+        {
+            WorkoutHistory = [CompletedSession(1, now.AddDays(-2)),
+                CompletedSession(2, now.AddDays(-1))],
+        };
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
+        Assert.False(state.ActiveWorkoutIsLightDay);
+        Assert.Contains(service.GetActiveGroups(state), group =>
+            service.GetSelectedExercise(state, group).MuscularDemand == 2);
+
+        state.WorkoutHistory.Add(CompletedSession(3, now));
+        now = now.AddHours(2);
+        service.ActivatePreparedWorkout(state);
+
+        Assert.True(state.ActiveWorkoutIsLightDay);
+        Assert.True(state.ActiveWorkoutSession!.IsLightDay);
+        Assert.All(service.GetActiveGroups(state), group =>
+            Assert.Equal(0, service.GetSelectedExercise(state, group).MuscularDemand));
+        Assert.Equal(WorkoutModifiers.None, state.LastWorkoutModifiers);
+        Assert.Equal(3, state.WorkoutHistory.Count);
     }
 
     [Fact]
@@ -5657,9 +5705,9 @@ public sealed class ExerciseSessionServiceTests
         {
             SessionId = sessionId,
             StartedAtUnixMilliseconds = startedAt.ToUnixTimeMilliseconds(),
-            EndedAtUnixMilliseconds = startedAt.AddMinutes(3)
+            EndedAtUnixMilliseconds = startedAt.AddMinutes(60)
                 .ToUnixTimeMilliseconds(),
-            WorkoutMinutes = 3,
+            WorkoutMinutes = 60,
             Modifiers = isLightDay
                 ? WorkoutModifiers.Light
                 : WorkoutModifiers.None,

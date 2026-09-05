@@ -73,25 +73,72 @@ preferred. Available-equipment relevance for Wall and Mirror is a lower-order
 tie-break, and a rejected
 lower-score exercise is never pulled upward by recovery rotation.
 
-Three consecutive local-calendar days with completed regular workouts make
-Light due for the next workout. A completed Light workout resets the countdown
-to `3`, producing the normal day-4/8/12 cadence; a regular workout completed
-while Light is due leaves the countdown at `0` rather than silently skipping
-recovery. The feather control can still be enabled on an ordinary day or
-disabled on an automatic light day, before or during the workout. Flux first
+Automatic Light uses accumulated completed regular work, not a fixed three-day
+or three-session rule. One fully completed 45-second exercise block contributes
+one nominal workout minute (Flux's existing block-plus-rest approximation).
+Skipped blocks, merely selected duration, and uncompleted timer time do not
+contribute. Completed blocks in interrupted sessions do contribute. Classify
+each block using the Light setting at its completion, including recorded
+mid-workout modifier changes. Recovery-derived Light presentation does not
+change that classification.
+
+Sum those minutes across all sessions on each block's local calendar date,
+then cap that date at **60 minutes**. Accumulate the daily credits across
+consecutive training dates. At **180 minutes**, the next workout must use Light.
+An overnight gap is not a rest day; a complete date without training resets
+the accumulation. A completed Light workout also resets it, but only on the
+following local date. Completing a three-minute Light workout cannot unlock
+regular workouts again that same day. When an existing older history contains
+regular workouts beyond the threshold, Light remains due rather than wrapping
+the total around and silently skipping recovery.
+
+Examples, assuming uninterrupted daily training:
+
+| Regular training per day | Regular days before Light |
+|---|---:|
+| One 60- or 90-minute workout | 3 |
+| One 30-minute workout | 6 |
+| Ten 3-minute workouts | 6 |
+| One 3-minute workout | 60 |
+
+These are transparent scheduling heuristics, not a clinically measured fatigue
+model. The 60-minute daily cap preserves the agreed cadence for longer workouts;
+it does not claim that 60 and 90 minutes cause identical physiological fatigue.
+Existing demand-specific 18/36-hour muscle recovery remains independent. No
+additional hardness points or weights are introduced.
+
+Due automatic Light is shown ON and cannot be disabled before or during a
+workout; enforce this in the session service as well as the controls and check
+again when activating a prepared workout. Manual Light can still be toggled
+on ordinary days. Flux first
 maximizes sequences whose every distinct member is demand `0`. Saved score,
 Keep, recovery, and equipment preferences then arbitrate among those light
 choices. A harder sequence fills a slot only when the compatible catalog cannot
 cover it with demand-`0` work; displaced Keeps and user scores remain persisted
 unchanged.
 
-Completed session history supplies the cadence; interrupted sessions do not
-advance it. Multiple completions on one local date count once, and any completed
-Light workout on that date resets the cadence. Light itself is session-scoped
-and is not copied into the next session's remembered physical setup. When Light
-is OFF, its tile reports the remaining consecutive regular training days (`3`,
-`2`, `1`, or `0`) and updates immediately after today's completion. The badge is
-hidden whenever Light is ON.
+Persisted session history supplies this calculation without adding a mutable
+counter or rewriting history. For old completed records without block history,
+use the recorded duration only if the record predates logging or contains no
+selection/decision audit trail. Modern all-skipped sessions contribute zero.
+An already-inferred legacy training date contributes 60 minutes only when no
+reconstructable activity exists for that date; never add it to logged work.
+No score, Keep, session ID, or completed progress is migrated by this change.
+
+Light itself is session-scoped and is not copied into the next session's
+remembered physical setup. When OFF, its tile estimates the remaining workouts
+at the selected duration as `ceil((180 - creditedMinutes) / min(duration, 60))`.
+This is not a claim that all those workouts can be done on one date: the daily
+cap still applies. The badge updates after recorded work and duration changes;
+it can range from `1` to `60` and is hidden whenever Light is ON. Due Light is
+locked ON, so an exposed `0` is no longer a valid visible state. A two-digit
+badge must fit without overlapping or shrinking the modifier icon.
+
+The compact `web/light-cadence.js` policy is shared by the instant startup
+controls, main workout module, and preparation worker. Do not copy a divergent
+early-loading cadence into the controls. Android and web regression tests cover
+short-session aggregation, daily caps, completed versus skipped work, midnight,
+legacy data, due-day locking, Light completion, and rest-day reset.
 
 The separate within-session muscle rebalancer uses the same reviewed rating
 without changing it:

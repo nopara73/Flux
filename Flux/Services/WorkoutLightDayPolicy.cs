@@ -4,8 +4,8 @@ namespace Flux.Services;
 
 public static class WorkoutLightDayPolicy
 {
-    public const int TrainingDaysPerCycle = 4;
-    public const int ConsecutivePriorDaysRequired = TrainingDaysPerCycle - 1;
+    public const int DailyRegularMinutesCap = 60;
+    public const int RegularMinutesBeforeLightDay = 180;
     public const int MinimumLegacyHardPrimaryMuscles = 3;
 
     public static WorkoutModifiers GetDefaultWorkoutModifiers(
@@ -32,33 +32,48 @@ public static class WorkoutLightDayPolicy
         TimeZoneInfo? localTimeZone = null,
         IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
     {
-        return GetTrainingDaysUntilLightDay(
+        return GetAccumulatedRegularMinutes(
             workoutHistory,
             nowUnixMilliseconds,
             localTimeZone,
-            legacyCompletedTrainingDayUnixMilliseconds) == 0;
+            legacyCompletedTrainingDayUnixMilliseconds) >=
+            RegularMinutesBeforeLightDay;
     }
 
-    public static int GetTrainingDaysUntilLightDay(
+    public static int GetWorkoutsUntilLightDay(
         IEnumerable<WorkoutSessionLog> workoutHistory,
+        int prospectiveWorkoutMinutes,
         long nowUnixMilliseconds,
         TimeZoneInfo? localTimeZone = null,
         IEnumerable<long>? legacyCompletedTrainingDayUnixMilliseconds = null)
     {
-        int consecutiveRegularDays = GetConsecutiveRegularTrainingDays(
+        if (prospectiveWorkoutMinutes <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(prospectiveWorkoutMinutes));
+        }
+
+        int accumulatedMinutes = GetAccumulatedRegularMinutes(
             workoutHistory,
             nowUnixMilliseconds,
             localTimeZone,
             legacyCompletedTrainingDayUnixMilliseconds);
+        int remainingMinutes = Math.Max(
+            0,
+            RegularMinutesBeforeLightDay - accumulatedMinutes);
+        if (remainingMinutes == 0)
+        {
+            return 0;
+        }
 
-        // The badge describes the next workout. A completed regular workout
-        // today therefore advances it immediately, while a completed Light
-        // workout starts a fresh three-regular-day cycle. Once Light is due,
-        // regular workouts do not silently skip the recovery opportunity.
-        return ConsecutivePriorDaysRequired - consecutiveRegularDays;
+        int prospectiveContribution = Math.Min(
+            prospectiveWorkoutMinutes,
+            DailyRegularMinutesCap);
+        return (remainingMinutes + prospectiveContribution - 1) /
+            prospectiveContribution;
     }
 
-    private static int GetConsecutiveRegularTrainingDays(
+    private static int GetAccumulatedRegularMinutes(
         IEnumerable<WorkoutSessionLog> workoutHistory,
         long nowUnixMilliseconds,
         TimeZoneInfo? localTimeZone,
@@ -72,10 +87,9 @@ public static class WorkoutLightDayPolicy
 
         TimeZoneInfo timeZone = localTimeZone ?? TimeZoneInfo.Local;
         int today = GetLocalDayNumber(nowUnixMilliseconds, timeZone);
-        var completedTrainingDays = new Dictionary<int, bool>();
+        var activityByDay = new Dictionary<int, TrainingDayActivity>();
         foreach (WorkoutSessionLog session in workoutHistory.Where(session =>
-                     session is not null &&
-                     session.Status == WorkoutSessionStatus.Completed))
+                     session is not null))
         {
             long timestamp = session.StartedAtUnixMilliseconds > 0
                 ? session.StartedAtUnixMilliseconds
@@ -88,39 +102,114 @@ public static class WorkoutLightDayPolicy
                 continue;
             }
 
-            bool isLightDay = session.IsLightDay ||
-                (session.Modifiers & WorkoutModifiers.Light) != 0;
-            completedTrainingDays[dayNumber.Value] = isLightDay ||
-                completedTrainingDays.GetValueOrDefault(dayNumber.Value);
+            WorkoutModifierChangeLog[] changes = (session.ModifierChanges ?? [])
+                .OfType<WorkoutModifierChangeLog>()
+                .Where(change => change.ChangedAtUnixMilliseconds > 0)
+                .OrderBy(change => change.ChangedAtUnixMilliseconds)
+                .ToArray();
+            bool IsLightAt(long at)
+            {
+                WorkoutModifiers modifiers = session.Modifiers;
+                bool light = session.IsLightDay ||
+                    modifiers.HasFlag(WorkoutModifiers.Light);
+                foreach (WorkoutModifierChangeLog change in changes)
+                {
+                    if (change.ChangedAtUnixMilliseconds > at)
+                    {
+                        break;
+                    }
+                    light = change.NewModifiers.HasFlag(WorkoutModifiers.Light);
+                }
+                return light;
+            }
+
+            void AddActivity(long at, int minutes, bool completedLight = false)
+            {
+                int? activityDay = at > 0 && at <= nowUnixMilliseconds
+                    ? TryGetLocalDayNumber(at, timeZone)
+                    : null;
+                if (!activityDay.HasValue)
+                {
+                    return;
+                }
+                TrainingDayActivity activity = activityByDay.GetValueOrDefault(
+                    activityDay.Value);
+                activityByDay[activityDay.Value] = activity with
+                {
+                    RegularMinutes = Math.Min(DailyRegularMinutesCap,
+                        activity.RegularMinutes + minutes),
+                    HasCompletedLightWorkout =
+                        activity.HasCompletedLightWorkout || completedLight,
+                };
+            }
+
+            WorkoutBlockLog[] blocks = (session.Blocks ?? [])
+                .OfType<WorkoutBlockLog>().ToArray();
+            foreach (WorkoutBlockLog block in blocks)
+            {
+                long at = block.CompletedAtUnixMilliseconds > 0
+                    ? block.CompletedAtUnixMilliseconds : timestamp;
+                AddActivity(at, IsLightAt(at) ? 0 : 1);
+            }
+
+            long endedAt = session.EndedAtUnixMilliseconds > 0
+                ? session.EndedAtUnixMilliseconds : timestamp;
+            if (session.Status == WorkoutSessionStatus.Completed)
+            {
+                if (IsLightAt(endedAt))
+                {
+                    AddActivity(endedAt, 0, completedLight: true);
+                }
+                else if (blocks.Length == 0 &&
+                    (session.StartedBeforeLogging ||
+                     ((session.InitialSelections?.Count ?? 0) == 0 &&
+                      (session.Decisions?.Count ?? 0) == 0)))
+                {
+                    // Only pre-block-history completions may use the old
+                    // duration. A modern all-skipped workout contributes zero.
+                    AddActivity(endedAt, Math.Clamp(session.WorkoutMinutes,
+                        0, DailyRegularMinutesCap));
+                }
+            }
         }
         foreach (int dayNumber in (legacyCompletedTrainingDayUnixMilliseconds ?? [])
-                     .Where(timestamp => timestamp > 0)
+                     .Where(timestamp => timestamp > 0 && timestamp <= nowUnixMilliseconds)
                      .Select(timestamp => TryGetLocalDayNumber(timestamp, timeZone))
                      .Where(dayNumber => dayNumber.HasValue)
                      .Select(dayNumber => dayNumber!.Value))
         {
-            completedTrainingDays.TryAdd(dayNumber, false);
+            // A legacy timestamp proves only that the old cadence counted a
+            // full training day. Never add it on top of a reconstructable log.
+            activityByDay.TryAdd(
+                dayNumber,
+                new TrainingDayActivity(DailyRegularMinutesCap, false));
         }
 
-        int day = completedTrainingDays.ContainsKey(today)
+        int day = activityByDay.ContainsKey(today)
             ? today
             : today - 1;
-        int consecutiveRegularDays = 0;
-        while (completedTrainingDays.TryGetValue(day, out bool isLightDay))
+        int accumulatedMinutes = 0;
+        while (activityByDay.TryGetValue(day, out TrainingDayActivity activity))
         {
-            if (isLightDay)
+            if (activity.HasCompletedLightWorkout && day < today)
             {
                 break;
             }
 
-            consecutiveRegularDays++;
-            if (consecutiveRegularDays >= ConsecutivePriorDaysRequired)
+            accumulatedMinutes += Math.Min(
+                DailyRegularMinutesCap,
+                activity.RegularMinutes);
+            if (accumulatedMinutes >= RegularMinutesBeforeLightDay)
             {
-                return ConsecutivePriorDaysRequired;
+                return RegularMinutesBeforeLightDay;
             }
+
+            // A Light workout completed today keeps an already-due Light day
+            // locked until tomorrow. It becomes the cadence reset only after
+            // the local date changes.
             day--;
         }
-        return consecutiveRegularDays;
+        return accumulatedMinutes;
     }
 
     public static IReadOnlyList<long> InferLegacyCompletedTrainingDays(
@@ -223,4 +312,8 @@ public static class WorkoutLightDayPolicy
             return null;
         }
     }
+
+    private readonly record struct TrainingDayActivity(
+        int RegularMinutes,
+        bool HasCompletedLightWorkout);
 }

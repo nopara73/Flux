@@ -83,6 +83,7 @@ public class MainActivity : Activity
     private CheckBox _shyModifierButton = null!;
     private FrameLayout _lightModifierContainer = null!;
     private CheckBox _lightModifierButton = null!;
+    private bool _automaticLightModePresented;
     private TextView _lightModifierCountdownBadge = null!;
     private CheckBox _wallModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
@@ -2055,18 +2056,35 @@ public class MainActivity : Activity
                 _state.LegacyCompletedTrainingDayUnixMilliseconds);
     }
 
-    private int GetTrainingDaysUntilLightMode()
+    private int GetWorkoutsUntilLightMode()
     {
         long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         return _sessionService is not null
-            ? _sessionService.GetTrainingDaysUntilLightDay(
+            ? _sessionService.GetWorkoutsUntilLightDay(
+                _state,
+                _selectedWorkoutMinutes,
+                nowUnixMilliseconds)
+            : WorkoutLightDayPolicy.GetWorkoutsUntilLightDay(
+                _state.WorkoutHistory,
+                _selectedWorkoutMinutes,
+                nowUnixMilliseconds,
+                TimeZoneInfo.Local,
+                _state.LegacyCompletedTrainingDayUnixMilliseconds);
+    }
+
+    private bool IsAutomaticLightModeLocked()
+    {
+        long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        bool lightDayDue = _sessionService is not null
+            ? _sessionService.IsAutomaticLightDayDue(
                 _state,
                 nowUnixMilliseconds)
-            : WorkoutLightDayPolicy.GetTrainingDaysUntilLightDay(
+            : WorkoutLightDayPolicy.IsLightDayDue(
                 _state.WorkoutHistory,
                 nowUnixMilliseconds,
                 TimeZoneInfo.Local,
                 _state.LegacyCompletedTrainingDayUnixMilliseconds);
+        return lightDayDue;
     }
 
     private void UpdateLightModifierPresentation(bool enabled)
@@ -2075,26 +2093,40 @@ public class MainActivity : Activity
             _sessionService.GetRecoveryLightStatus(
                 _state,
                 _selectedWorkoutModifiers).IsActive;
-        bool effectivelyEnabled = enabled || recoveryLightMode;
+        bool automaticLightMode = IsAutomaticLightModeLocked();
+        if (automaticLightMode)
+        {
+            _selectedWorkoutModifiers |= WorkoutModifiers.Light;
+            enabled = true;
+        }
+        else if (_automaticLightModePresented && !_editingActiveWorkoutSetup)
+        {
+            _selectedWorkoutModifiers &= ~WorkoutModifiers.Light;
+            enabled = false;
+        }
+        _automaticLightModePresented = automaticLightMode;
+        bool effectivelyEnabled = enabled || recoveryLightMode ||
+            automaticLightMode;
         _lightModifierButton.Checked = effectivelyEnabled;
-        _lightModifierButton.Enabled = !recoveryLightMode;
-        int trainingDaysRemaining = GetTrainingDaysUntilLightMode();
-        _lightModifierCountdownBadge.Text = trainingDaysRemaining.ToString();
+        _lightModifierButton.Enabled = !recoveryLightMode &&
+            !automaticLightMode;
+        int workoutsRemaining = GetWorkoutsUntilLightMode();
+        _lightModifierCountdownBadge.Text = workoutsRemaining.ToString();
         _lightModifierCountdownBadge.Visibility = effectivelyEnabled
             ? ViewStates.Gone
             : ViewStates.Visible;
 
         string description = GetString(
             Resource.String.light_workout_modifier_description);
-        _lightModifierButton.ContentDescription = recoveryLightMode
-            ? $"{description}: effectively light while muscles recover"
+        _lightModifierButton.ContentDescription = automaticLightMode
+            ? $"{description}: automatic light mode is required today"
+            : recoveryLightMode
+                ? $"{description}: effectively light while muscles recover"
             : enabled
-            ? $"{description}: light mode on"
-            : trainingDaysRemaining == 0
-                ? $"{description}: automatic light mode is due today"
-                : $"{description}: {trainingDaysRemaining} training " +
-                    $"day{(trainingDaysRemaining == 1 ? string.Empty : "s")} " +
-                    "until automatic light mode";
+                ? $"{description}: light mode on"
+                : $"{description}: approximately {workoutsRemaining} " +
+                    $"workout{(workoutsRemaining == 1 ? string.Empty : "s")} " +
+                    "at the selected duration until automatic light mode";
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
             _lightModifierButton.TooltipText = GetString(effectivelyEnabled
@@ -2198,6 +2230,10 @@ public class MainActivity : Activity
         int disabledStateResourceId,
         bool userInitiated = false)
     {
+        if (modifier == WorkoutModifiers.Light && IsAutomaticLightModeLocked())
+        {
+            enabled = true;
+        }
         _selectedWorkoutModifiers = enabled
             ? _selectedWorkoutModifiers | modifier
             : _selectedWorkoutModifiers & ~modifier;
@@ -2463,6 +2499,9 @@ public class MainActivity : Activity
             "Options: 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes";
         _durationOptionSegments.ContentDescription =
             $"{normalizedMinutes} minute workout selected";
+
+        UpdateLightModifierPresentation(
+            (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
 
         _durationDecreaseButton.Enabled = optionIndex > 0;
         _durationIncreaseButton.Enabled =

@@ -123,28 +123,29 @@ truthful phase provenance. Version-22 slot-scoped downvotes are migrated from
 their workout logs when possible and otherwise projected into the phase where
 that slot would have executed.
 
-A completed regular workout on each of three consecutive local calendar days
-makes the next workout default to Light. Completing a Light workout resets the
-countdown to `3`; under the normal automatic cadence, days 4, 8, 12, and so on
-are therefore Light. Completing a regular workout after Light is already due
-does not skip the recovery opportunity: the countdown remains `0` until a Light
-workout is completed. Interrupted or merely prepared workouts do not count,
-and multiple completions on one date count as one training day; if any of them
-is Light, that date resets the cadence. A break between training dates also
-starts a new count. A dedicated feather control exposes this intensity choice
-before the workout and in the same setup screen used to change conditions
-mid-workout. The automatic default can be turned off, and Light can also be
-turned on for any ordinary day. It is session-scoped: the last physical
-conditions and equipment remain remembered, while yesterday's manual Light
-choice does not silently make the next workout light. While Light is OFF, the
-corner badge shows the number of additional consecutive regular training days
-until Light is due (`3`, `2`, `1`, then `0`), updating immediately after a
-workout is completed. Light hides the badge whenever it is ON.
+Automatic Light follows accumulated completed regular work: one nominal minute
+per completed block, summed across all sessions on each local date and capped
+at 60 minutes per date. At 180 credited minutes across consecutive training
+dates, the next workout requires Light. Thus 60-90 minutes daily means three
+regular days; 30 minutes daily, including ten 3-minute sessions, means six.
+Completed blocks in interrupted sessions count; skipped blocks and unstarted
+plans do not. A completed Light workout resets the accumulation the following
+local date, not immediately; a full no-training date also resets it. Required
+Light is locked ON before and during the workout. On other days it remains
+manually selectable. This is a scheduling heuristic, separate from the existing
+18/36-hour muscle recovery, not a physiological fatigue measurement.
 
-Light is a selection priority, not a filter: an all-demand-`0` sequence wins
-only when it already belongs to the slot's highest saved-score bucket. If that
-bucket has no such sequence, the normal Keep, hard-rotation, recovery, Mirror,
-and anatomical priorities apply. A selected light alternative does not erase a
+Light is session-scoped: physical conditions and equipment remain remembered,
+while yesterday's manual Light setting does not silently carry into the next
+session. While OFF, the corner badge estimates remaining workouts at the
+selected duration, updating after recorded work or duration changes. The badge
+is hidden whenever Light is ON. Existing histories are reused without changing
+scores, Keeps, or progress. See [the full cadence and legacy-data contract](docs/MUSCULAR_DEMAND_AUDIT.md).
+
+Light is a selection priority, not a filter: it first maximizes all-demand-`0`
+atomic sequences, then saved score, Keep, recovery, and equipment preference
+arbitrate among those light choices. Harder work fills a slot only when the
+compatible catalog cannot cover it with demand-`0` work. A selected light alternative does not erase a
 saved non-demand-`0` Keep. Changing Light during a workout follows the same
 atomic replanning contract as every other modifier: completed work stays fixed,
 the unfinished current selection is reconsidered immediately, and turning
@@ -239,15 +240,14 @@ choices. In UI order:
 - **Shy**, disabled by default, removes movements reviewed as specifically
   awkward around uninvolved observers while retaining ordinary recognizable
   strength, cardio, mobility, stretching, balance, and compact boxing work;
-- **Light workout**, shown alone as the intensity group, is automatically ON
-  after three consecutive regular training days and otherwise OFF by default.
-  A completed Light workout resets that cadence, while overriding a due Light
-  day with regular work leaves Light due. It can be changed manually before or
-  during a workout. It does not
-  change catalog eligibility or user scores; within each slot's highest
-  preference bucket it places all-demand-`0` sequences ahead of Keeps and hard
-  opportunities. If that bucket contains no all-demand-`0` choice, it changes
-  nothing;
+- **Light mode**, shown alone as the intensity group, is automatically locked
+  ON after 180 completed regular workout minutes, with at most 60 credited per
+  local date. A completed Light workout resets the cadence on the next date;
+  so does a full rest date. It is otherwise OFF by default and can be changed
+  manually before or during a workout. It does not change catalog eligibility,
+  scores, or saved Keeps: it prioritizes all-demand-`0` sequences, then applies
+  normal preferences among those choices. Its corner badge estimates remaining
+  workouts at the selected duration and is hidden while ON;
 - **Wall**, disabled by default, cycles through no wall, wall available with
   sole contact allowed, and wall available with soles kept off. It admits
   established exercises that genuinely require the selected wall access and
