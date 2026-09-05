@@ -3934,8 +3934,11 @@ public sealed class ExerciseSessionServiceTests
             service.GetDefaultWorkoutModifiers(state));
     }
 
-    [Fact]
-    public void AutomaticLightDayCannotBeBypassedByExplicitRegularModifiers()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AutomaticLightDayCannotBeBypassedByExplicitRegularModifiers(
+        bool nearlyCompleted)
     {
         DateTimeOffset now = new(2026, 8, 29, 8, 0, 0, TimeSpan.Zero);
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
@@ -3952,9 +3955,22 @@ public sealed class ExerciseSessionServiceTests
             LastWorkoutModifiers = WorkoutModifiers.Insect |
                 WorkoutModifiers.Light,
             WorkoutHistory = Enumerable.Range(1, 3)
-                .Select(index => CompletedSession(
-                    index,
-                    now.AddDays(index - 4)))
+                .Select(index =>
+                {
+                    WorkoutSessionLog session = CompletedSession(
+                        index, now.AddDays(index - 4));
+                    if (nearlyCompleted)
+                    {
+                        int count = new[] { 53, 56, 55 }[index - 1];
+                        session.Blocks = Enumerable.Range(1, count)
+                            .Select(block => new WorkoutBlockLog
+                            {
+                                CompletedAtUnixMilliseconds =
+                                    session.StartedAtUnixMilliseconds + block * 60_000L,
+                            }).ToList();
+                    }
+                    return session;
+                })
                 .ToList(),
         };
 

@@ -4185,7 +4185,8 @@ test("manual light mode is never remembered as the next session default", () => 
   assert.equal(session.getDefaultWorkoutModifiers(), WORKOUT_MODIFIERS.Silence);
 });
 
-test("automatic Light cannot be bypassed with explicit regular modifiers", () => {
+for (const nearlyCompleted of [false, true]) {
+test(`automatic Light cannot be bypassed with explicit regular modifiers (nearly completed: ${nearlyCompleted})`, () => {
   const now = new Date(2026, 7, 29, 8).getTime();
   const groups = RESOLUTIONS.get(3).groups;
   const exercises = groups.map((group, index) => exercise(
@@ -4196,10 +4197,17 @@ test("automatic Light cannot be bypassed with explicit regular modifiers", () =>
   const state = createDefaultState();
   state.lastWorkoutModifiers = WORKOUT_MODIFIERS.Insect |
     WORKOUT_MODIFIERS.Light;
-  state.workoutHistory = [1, 2, 3].map((sessionId) => completedWorkoutSession(
-    sessionId,
-    new Date(2026, 7, 25 + sessionId, 8).getTime(),
-  ));
+  state.workoutHistory = [1, 2, 3].map((sessionId) => {
+    const record = completedWorkoutSession(
+      sessionId, new Date(2026, 7, 25 + sessionId, 8).getTime(),
+    );
+    if (nearlyCompleted) {
+      record.blocks = Array.from({ length: [53, 56, 55][sessionId - 1] }, (_, block) => ({
+        completedAtUnixMilliseconds: record.startedAtUnixMilliseconds + (block + 1) * 60_000,
+      }));
+    }
+    return record;
+  });
   const session = new WorkoutSession(exercises, state, () => 0, () => now);
 
   assert.equal(
@@ -4216,6 +4224,7 @@ test("automatic Light cannot be bypassed with explicit regular modifiers", () =>
   session.reconfigureActiveWorkout(WORKOUT_MODIFIERS.None, session.getNextGroup().id);
   assert.equal(session.state.activeWorkoutModifiers, WORKOUT_MODIFIERS.Light);
 });
+}
 
 test("automatic Light is rechecked when activating an earlier prepared workout", () => {
   let now = new Date(2026, 8, 3, 8).getTime();

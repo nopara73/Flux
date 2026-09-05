@@ -3,6 +3,7 @@
 (() => {
   const dailyCap = 60;
   const threshold = 180;
+  const fullCreditCompletionPercent = 85;
   const lightFlag = 256;
   const positive = (value) => Number.isSafeInteger(value) && value > 0;
   const objects = (value) => Array.isArray(value)
@@ -54,13 +55,18 @@
         return light;
       }
       const blocks = objects(session.blocks);
+      const endedAt = positive(session.endedAtUnixMilliseconds)
+        ? session.endedAtUnixMilliseconds : startedAt;
+      let completedRegularBlocks = 0;
       for (const block of blocks) {
         const at = positive(block.completedAtUnixMilliseconds)
           ? block.completedAtUnixMilliseconds : startedAt;
-        addActivity(at, isLightAt(at) ? 0 : 1);
+        const light = isLightAt(at);
+        addActivity(at, light ? 0 : 1);
+        if (!light && positive(at) && at <= endedAt && at <= now) {
+          completedRegularBlocks += 1;
+        }
       }
-      const endedAt = positive(session.endedAtUnixMilliseconds)
-        ? session.endedAtUnixMilliseconds : startedAt;
       if (session.status === "Completed") {
         if (isLightAt(endedAt)) {
           addActivity(endedAt, 0, true);
@@ -69,6 +75,18 @@
              objects(session.decisions).length === 0))) {
           addActivity(endedAt, positive(session.workoutMinutes)
             ? Math.min(session.workoutMinutes, dailyCap) : 0);
+        } else if (positive(session.workoutMinutes) &&
+            completedRegularBlocks < session.workoutMinutes &&
+            completedRegularBlocks * 100 >=
+              session.workoutMinutes * fullCreditCompletionPercent &&
+            session.isLightDay !== true &&
+            (session.modifiers & lightFlag) === 0 &&
+            !changes.some((change) => change.changedAtUnixMilliseconds <= endedAt &&
+              (change.newModifiers & lightFlag) !== 0)) {
+          // Cadence credit only: logs and muscle recovery still reflect actual
+          // work. Keep block dates; add only the top-up on the completion date.
+          addActivity(endedAt, Math.min(dailyCap,
+            session.workoutMinutes - completedRegularBlocks));
         }
       }
     }
@@ -107,6 +125,6 @@
   }
 
   globalThis.fluxLightCadence = Object.freeze({
-    dailyCap, threshold, isDue, workoutsRemaining,
+    dailyCap, threshold, fullCreditCompletionPercent, isDue, workoutsRemaining,
   });
 })();

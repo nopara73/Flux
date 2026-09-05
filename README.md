@@ -128,8 +128,14 @@ per completed block, summed across all sessions on each local date and capped
 at 60 minutes per date. At 180 credited minutes across consecutive training
 dates, the next workout requires Light. Thus 60-90 minutes daily means three
 regular days; 30 minutes daily, including ten 3-minute sessions, means six.
-Completed blocks in interrupted sessions count; skipped blocks and unstarted
-plans do not. A completed Light workout resets the accumulation the following
+Completed regular sessions with at least 85% of their planned blocks completed
+receive their full planned duration as cadence credit. This applies retroactively:
+53/60, 56/60, and 55/60 completed blocks count as three full hours, making Light
+due. Below that threshold, and in interrupted or mixed-Light sessions, only
+actual completed regular blocks count. Unstarted plans and all-skipped sessions
+receive no credit. The daily 60-minute cap still applies. This tolerance changes
+only cadence accounting, never the recorded work or muscle-recovery timestamps.
+A completed Light workout resets the accumulation the following
 local date, not immediately; a full no-training date also resets it. Required
 Light is locked ON before and during the workout. On other days it remains
 manually selectable. This is a scheduling heuristic, separate from the existing

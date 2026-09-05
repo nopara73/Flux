@@ -6,6 +6,7 @@ public static class WorkoutLightDayPolicy
 {
     public const int DailyRegularMinutesCap = 60;
     public const int RegularMinutesBeforeLightDay = 180;
+    public const int MinimumRegularCompletionPercentForFullCredit = 85;
     public const int MinimumLegacyHardPrimaryMuscles = 3;
 
     public static WorkoutModifiers GetDefaultWorkoutModifiers(
@@ -145,15 +146,21 @@ public static class WorkoutLightDayPolicy
 
             WorkoutBlockLog[] blocks = (session.Blocks ?? [])
                 .OfType<WorkoutBlockLog>().ToArray();
+            long endedAt = session.EndedAtUnixMilliseconds > 0
+                ? session.EndedAtUnixMilliseconds : timestamp;
+            int completedRegularBlocks = 0;
             foreach (WorkoutBlockLog block in blocks)
             {
                 long at = block.CompletedAtUnixMilliseconds > 0
                     ? block.CompletedAtUnixMilliseconds : timestamp;
-                AddActivity(at, IsLightAt(at) ? 0 : 1);
+                bool light = IsLightAt(at);
+                AddActivity(at, light ? 0 : 1);
+                if (!light && at > 0 && at <= endedAt && at <= nowUnixMilliseconds)
+                {
+                    completedRegularBlocks++;
+                }
             }
 
-            long endedAt = session.EndedAtUnixMilliseconds > 0
-                ? session.EndedAtUnixMilliseconds : timestamp;
             if (session.Status == WorkoutSessionStatus.Completed)
             {
                 if (IsLightAt(endedAt))
@@ -169,6 +176,23 @@ public static class WorkoutLightDayPolicy
                     // duration. A modern all-skipped workout contributes zero.
                     AddActivity(endedAt, Math.Clamp(session.WorkoutMinutes,
                         0, DailyRegularMinutesCap));
+                }
+                else if (session.WorkoutMinutes > 0 &&
+                    completedRegularBlocks < session.WorkoutMinutes &&
+                    completedRegularBlocks * 100L >=
+                        session.WorkoutMinutes *
+                            (long)MinimumRegularCompletionPercentForFullCredit &&
+                    !session.IsLightDay &&
+                    !session.Modifiers.HasFlag(WorkoutModifiers.Light) &&
+                    !changes.Any(change =>
+                        change.ChangedAtUnixMilliseconds <= endedAt &&
+                        change.NewModifiers.HasFlag(WorkoutModifiers.Light)))
+                {
+                    // Cadence-only completion tolerance, never invented work
+                    // in the log or muscle recovery history. Actual blocks
+                    // keep their dates; only the top-up belongs to completion.
+                    AddActivity(endedAt, Math.Min(DailyRegularMinutesCap,
+                        session.WorkoutMinutes - completedRegularBlocks));
                 }
             }
         }

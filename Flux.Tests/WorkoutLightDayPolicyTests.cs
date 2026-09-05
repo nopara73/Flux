@@ -101,6 +101,122 @@ public sealed class WorkoutLightDayPolicyTests
         Assert.Equal(6, Remaining(history, 30, dueDay.AddDays(1)));
     }
 
+    [Theory]
+    [InlineData(3, 2, 2)]
+    [InlineData(5, 4, 4)]
+    [InlineData(7, 6, 7)]
+    [InlineData(10, 8, 8)]
+    [InlineData(10, 9, 10)]
+    [InlineData(20, 16, 16)]
+    [InlineData(20, 17, 20)]
+    [InlineData(60, 50, 50)]
+    [InlineData(60, 51, 60)]
+    [InlineData(60, 53, 60)]
+    [InlineData(60, 55, 60)]
+    [InlineData(60, 56, 60)]
+    [InlineData(90, 59, 59)]
+    [InlineData(90, 77, 60)]
+    public void NearlyCompletedRegularWorkoutGetsFullCadenceCreditOnlyAboveThreshold(
+        int plannedMinutes, int completedBlocks, int creditedMinutes)
+    {
+        WorkoutSessionLog session = Session(DayOne, completedBlocks);
+        session.WorkoutMinutes = plannedMinutes;
+        Assert.Equal(180 - creditedMinutes,
+            Remaining([session], 1, DayOne.AddHours(2)));
+    }
+
+    [Fact]
+    public void ThreeNearlyCompletedHoursAreDueAfterReloadWithoutRewritingHistory()
+    {
+        var state = new WorkoutState
+        {
+            WorkoutHistory = new[] { 53, 56, 55 }.Select((count, day) =>
+            {
+                WorkoutSessionLog session = Session(DayOne.AddDays(day), count);
+                session.WorkoutMinutes = 60;
+                return session;
+            }).ToList(),
+            LastKeptExerciseIds = [507],
+            ExerciseScoreAdjustmentsByPhase = new()
+            {
+                [WorkoutExercisePhase.Warmup] = new() { [507] = -2 },
+            },
+            LastHardWorkUnixMillisecondsByPrimaryMuscle = new()
+            {
+                [CanonicalMuscleGroup.AbdominalWall.ToString()] =
+                    DayOne.ToUnixTimeMilliseconds(),
+            },
+        };
+        string saved = JsonSerializer.Serialize(state);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(saved)!;
+        DateTimeOffset now = DayOne.AddDays(2).AddHours(2);
+        Assert.True(Due(restored.WorkoutHistory, now));
+        Assert.Equal(0, Remaining(restored.WorkoutHistory, 60, now));
+        Assert.Equal(WorkoutModifiers.Silence | WorkoutModifiers.Light,
+            WorkoutLightDayPolicy.GetDefaultWorkoutModifiers(
+                WorkoutModifiers.Silence, restored.WorkoutHistory,
+                now.ToUnixTimeMilliseconds(), TimeZoneInfo.Utc));
+        Assert.Equal(saved, JsonSerializer.Serialize(restored));
+    }
+
+    [Theory]
+    [InlineData(WorkoutSessionStatus.Interrupted)]
+    [InlineData(WorkoutSessionStatus.InProgress)]
+    public void UnfinishedNearlyCompleteWorkoutStillReceivesOnlyActualWork(
+        WorkoutSessionStatus status)
+    {
+        WorkoutSessionLog session = Session(DayOne, 55);
+        session.WorkoutMinutes = 60;
+        session.Status = status;
+        Assert.Equal(125, Remaining([session], 1, DayOne.AddHours(2)));
+    }
+
+    [Fact]
+    public void MixedLightSessionDoesNotRoundUpButPhysicalModifierChangesCan()
+    {
+        WorkoutSessionLog session = Session(DayOne, 55);
+        session.WorkoutMinutes = 60;
+        session.ModifierChanges =
+        [
+            new() { ChangedAtUnixMilliseconds = DayOne.AddMinutes(5).ToUnixTimeMilliseconds(),
+                NewModifiers = WorkoutModifiers.Light },
+            new() { ChangedAtUnixMilliseconds = DayOne.AddMinutes(6).ToUnixTimeMilliseconds(),
+                NewModifiers = WorkoutModifiers.Wall },
+        ];
+        // Only the fifth block is Light; the other 54 are not rounded to 60.
+        Assert.Equal(126, Remaining([session], 1, DayOne.AddHours(2)));
+        session.ModifierChanges[0].NewModifiers = WorkoutModifiers.Wall;
+        Assert.Equal(120, Remaining([session], 1, DayOne.AddHours(2)));
+        session.IsLightDay = true;
+        session.ModifierChanges[0].ChangedAtUnixMilliseconds =
+            DayOne.ToUnixTimeMilliseconds();
+        Assert.Equal(125, Remaining([session], 1, DayOne.AddHours(2)));
+    }
+
+    [Fact]
+    public void CompletionCreditKeepsDailyCapAndWaitsForTheRecordedEnd()
+    {
+        WorkoutSessionLog session = Session(DayOne, 55);
+        session.WorkoutMinutes = 60;
+        session.EndedAtUnixMilliseconds = DayOne.AddHours(1).ToUnixTimeMilliseconds();
+        Assert.Equal(125, Remaining([session], 1, DayOne.AddMinutes(56)));
+        Assert.Equal(120, Remaining([session], 1, DayOne.AddHours(1)));
+        WorkoutSessionLog another = Session(DayOne.AddHours(2), 55);
+        another.WorkoutMinutes = 60;
+        Assert.Equal(120, Remaining([session, another], 1, DayOne.AddHours(4)));
+    }
+
+    [Fact]
+    public void MidnightCompletionTopUpDoesNotMoveActualBlocksBetweenDates()
+    {
+        DateTimeOffset start = new(2026, 9, 1, 23, 30, 0, TimeSpan.Zero);
+        WorkoutSessionLog session = Session(start, 53);
+        session.WorkoutMinutes = 60;
+        WorkoutSessionLog earlier = Session(DayOne, 60);
+        // September 1 is already capped. September 2 gets 24 actual + 7 credit.
+        Assert.Equal(89, Remaining([earlier, session], 1, start.AddHours(2)));
+    }
+
     [Fact]
     public void LightAfterThresholdReachedTodayResetsOnlyTomorrow()
     {

@@ -76,11 +76,30 @@ lower-score exercise is never pulled upward by recovery rotation.
 Automatic Light uses accumulated completed regular work, not a fixed three-day
 or three-session rule. One fully completed 45-second exercise block contributes
 one nominal workout minute (Flux's existing block-plus-rest approximation).
-Skipped blocks, merely selected duration, and uncompleted timer time do not
-contribute. Completed blocks in interrupted sessions do contribute. Classify
+Merely selected duration and uncompleted timer time do not contribute.
+Completed blocks in interrupted sessions do contribute. Classify
 each block using the Light setting at its completion, including recorded
 mid-workout modifier changes. Recovery-derived Light presentation does not
 change that classification.
+
+For cadence only, a **completed, wholly regular session with at least 85% of
+its planned blocks actually completed** receives its full planned duration.
+This is a completion tolerance, not a physiological measurement or a new
+hardness score. It prevents a few skipped blocks from postponing Light after
+otherwise complete workouts: 53/60, 56/60, and 55/60 each credit 60 minutes.
+The exact 60-minute boundary is 51 completed blocks; 50 still credits only 50.
+Apply the same percentage to other durations; for example 6/7 credits 7,
+whereas 2/3 credits only 2. Short sessions still aggregate across each date.
+
+Do not round up an interrupted, in-progress, all-skipped, or mixed-Light
+session. A session that enabled Light at any point before completion is mixed
+even if it ends in regular mode; physical-only modifier changes do not prevent
+credit. Never grant a top-up before the recorded completion time. Actual
+blocks retain their own local dates, with only the missing cadence credit
+added on the completion date, before applying the shared daily cap. Do not
+rewrite logs, add fake blocks, or modify scores, Keeps, or either muscle-recovery
+timestamp map. Recalculate from existing logs so the correction works on
+already-installed devices without changing persisted data.
 
 Sum those minutes across all sessions on each block's local calendar date,
 then cap that date at **60 minutes**. Accumulate the daily credits across

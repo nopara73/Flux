@@ -236,6 +236,8 @@ test("web and mobile persist the same complete workout audit trail", () => {
   );
   assert.equal(globalThis.fluxLightCadence.dailyCap, LIGHT_DAY_DAILY_REGULAR_MINUTES_CAP);
   assert.equal(globalThis.fluxLightCadence.threshold, LIGHT_DAY_REGULAR_MINUTES_BEFORE_LIGHT);
+  assert.equal(globalThis.fluxLightCadence.fullCreditCompletionPercent,
+    integerConstant(lightDayPolicy, "MinimumRegularCompletionPercentForFullCredit"));
   assert.equal(
     MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES,
     integerConstant(lightDayPolicy, "MinimumLegacyHardPrimaryMuscles"),

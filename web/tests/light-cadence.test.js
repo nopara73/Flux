@@ -85,6 +85,75 @@ test("brief completed Light keeps the due day locked until the next local date",
   assert.equal(cadence.workoutsRemaining(history, 30, atDay(5)), 6);
 });
 
+for (const [planned, done, credited] of [
+  [3, 2, 2], [5, 4, 4], [7, 6, 7], [10, 8, 8], [10, 9, 10],
+  [20, 16, 16], [20, 17, 20], [60, 50, 50], [60, 51, 60],
+  [60, 53, 60], [60, 55, 60], [60, 56, 60], [90, 59, 59], [90, 77, 60],
+]) {
+  test(`${done}/${planned} completed regular blocks receive ${credited} cadence minutes`, () => {
+    const session = { ...completed(atDay(1), done), workoutMinutes: planned };
+    assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 10)), 180 - credited);
+  });
+}
+
+function nearlyCompletedHourHistory() {
+  return [53, 56, 55].map((count, index) => ({
+    ...completed(atDay(index + 1), count), workoutMinutes: 60,
+  }));
+}
+
+test("three nearly completed hours become due from existing history without rewriting data", () => {
+  const saved = JSON.stringify({
+    workoutHistory: nearlyCompletedHourHistory(),
+    lastKeptExerciseIds: [507],
+    exerciseScoreAdjustmentsByPhase: { Warmup: { 507: -2 } },
+    lastHardWorkUnixMillisecondsByPrimaryMuscle: { AbdominalWall: atDay(1) },
+  });
+  const restored = JSON.parse(saved);
+  assert.equal(cadence.isDue(restored.workoutHistory, atDay(3, 10)), true);
+  assert.equal(cadence.workoutsRemaining(restored.workoutHistory, 60, atDay(3, 10)), 0);
+  assert.equal(JSON.stringify(restored), saved);
+});
+
+test("interrupted and in-progress nearly completed sessions keep only actual credit", () => {
+  for (const status of ["Interrupted", "InProgress"]) {
+    const session = { ...completed(atDay(1), 55), workoutMinutes: 60, status };
+    assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 10)), 125);
+  }
+});
+
+test("mixed-Light work never rounds up while physical modifier changes can", () => {
+  const session = {
+    ...completed(atDay(1), 55), workoutMinutes: 60,
+    modifierChanges: [
+      { changedAtUnixMilliseconds: atDay(1, 8, 5), newModifiers: light },
+      { changedAtUnixMilliseconds: atDay(1, 8, 6), newModifiers: 32 },
+    ],
+  };
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 10)), 126);
+  session.modifierChanges[0].newModifiers = 32;
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 10)), 120);
+  session.isLightDay = true;
+  session.modifierChanges[0].changedAtUnixMilliseconds = atDay(1);
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 10)), 125);
+});
+
+test("completion credit waits for the recorded end and remains within the daily cap", () => {
+  const session = {
+    ...completed(atDay(1), 55), workoutMinutes: 60, endedAtUnixMilliseconds: atDay(1, 9),
+  };
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 8, 56)), 125);
+  assert.equal(cadence.workoutsRemaining([session], 1, atDay(1, 9)), 120);
+  const another = { ...completed(atDay(1, 10), 55), workoutMinutes: 60 };
+  assert.equal(cadence.workoutsRemaining([session, another], 1, atDay(1, 12)), 120);
+});
+
+test("midnight top-up does not move actual work into the completion date", () => {
+  const earlier = completed(atDay(1), 60);
+  const session = { ...completed(atDay(1, 23, 30), 53), workoutMinutes: 60 };
+  assert.equal(cadence.workoutsRemaining([earlier, session], 1, atDay(2, 2)), 89);
+});
+
 test("Light after reaching the threshold today resets tomorrow, not immediately", () => {
   const history = [1, 2, 3].map((day) => completed(atDay(day), 60));
   history.push(completed(atDay(3, 10), 3, true));
@@ -172,6 +241,18 @@ test("startup locks due Light before module loading and never shows a zero badge
   assert.equal(controls.automaticLightMode, true);
   assert.equal(controls.selectedModifiers & light, light);
   assert.equal(element("light-workout-modifier").getAttribute("aria-pressed"), "true");
+  assert.equal(element("light-workout-modifier").disabled, true);
+  assert.equal(element("light-workout-countdown").hidden, true);
+  element("light-workout-modifier").fire("click");
+  assert.equal(controls.selectedModifiers & light, light);
+  controls.setActiveWorkoutSetup(true);
+  element("light-workout-modifier").fire("click");
+  assert.equal(controls.selectedModifiers & light, light);
+});
+
+test("startup locks Light for the existing nearly completed hour history", () => {
+  const { controls, element } = startup(nearlyCompletedHourHistory(), 60, atDay(3, 10));
+  assert.equal(controls.automaticLightMode, true);
   assert.equal(element("light-workout-modifier").disabled, true);
   assert.equal(element("light-workout-countdown").hidden, true);
   element("light-workout-modifier").fire("click");
