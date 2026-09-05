@@ -265,6 +265,19 @@ test("web and mobile persist the same complete workout audit trail", () => {
   );
 });
 
+test("locked Light explains taps without changing the workout on either platform", () => {
+  assert.match(strings, /<string name="light_workout_locked_feedback">rest, you must<\/string>/);
+  assert.match(webApp, /lightLocked: "rest, you must"/);
+  assert.match(instantControls, /showFeedback\("rest, you must"\)/);
+  const androidClick = mainActivity.slice(
+    mainActivity.indexOf("_lightModifierButton.Click +="),
+    mainActivity.indexOf("_wallModifierButton.Click +="),
+  );
+  assert.match(androidClick, /UpdateLightModifierPresentation[\s\S]*if \(_lightModifierLocked\)[\s\S]*ShowModifierFeedback\(Resource.String.light_workout_locked_feedback\);\s*return;\s*}\s*SetSelectedWorkoutModifier/);
+  assert.match(mainActivity, /_lightModifierButton.Checked = effectivelyEnabled/);
+  assert.match(mainActivity, /TooltipText = GetString\(_lightModifierLocked\s*\? Resource.String.light_workout_locked_feedback/);
+});
+
 test("work-based automatic Light is locked in both services and both startup surfaces", () => {
   assert.match(sessionService, /IsAutomaticLightDayDue/);
   assert.match(workoutModule, /isAutomaticLightDayDue/);
@@ -274,9 +287,12 @@ test("work-based automatic Light is locked in both services and both startup sur
   for (const entry of ["prepareWorkout", "activatePreparedWorkout", "reconfigureActiveWorkout"]) {
     assert.match(workoutModule, new RegExp(`${entry}[\\s\\S]*is(?:LightWorkoutDayDue|AutomaticLightDayDue)`));
   }
-  assert.match(mainActivity, /_lightModifierButton.Enabled = !recoveryLightMode &&\s*!automaticLightMode/);
-  assert.match(webApp, /element.disabled = recoveryLightMode \|\| automaticLightMode/);
-  assert.match(instantControls, /element.disabled = recoveryLightMode \|\| automaticLightMode/);
+  assert.match(mainActivity, /_lightModifierLocked = recoveryLightMode \|\| automaticLightMode/);
+  assert.match(mainActivity, /_lightModifierButton.Enabled = true/);
+  for (const source of [webApp, instantControls]) {
+    assert.match(source, /const locked = recoveryLightMode \|\| automaticLightMode/);
+    assert.match(source, /element.disabled = false;\s*element.setAttribute\("aria-disabled", String\(locked\)\)/);
+  }
   assert.match(workoutModule, /import "\.\/light-cadence.js"/);
   assert.match(webIndex, /light-cadence.js[\s\S]*instant-controls.js/);
   assert.match(lightCadenceModule, /day < today && activity.hasCompletedLightWorkout/);
@@ -1306,8 +1322,8 @@ test("web and mobile apply rolling muscular recovery by primary muscle", () => {
     workoutModule,
     /evaluateRecoveryLightMode[\s\S]*modifiers & ~WORKOUT_MODIFIERS\.Light[\s\S]*isCompatibleWithWorkoutModifiers/,
   );
-  assert.match(mainActivity, /_lightModifierButton\.Enabled = !recoveryLightMode/);
-  assert.match(webApp, /element\.disabled = recoveryLightMode/);
+  assert.match(mainActivity, /_lightModifierLocked = recoveryLightMode \|\| automaticLightMode/);
+  assert.match(webApp, /element\.setAttribute\("aria-disabled", String\(locked\)\)/);
 });
 
 test("runtime media and the deployable web shell are content-addressed", () => {

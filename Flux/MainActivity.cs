@@ -84,6 +84,7 @@ public class MainActivity : Activity
     private FrameLayout _lightModifierContainer = null!;
     private CheckBox _lightModifierButton = null!;
     private bool _automaticLightModePresented;
+    private bool _lightModifierLocked;
     private TextView _lightModifierCountdownBadge = null!;
     private CheckBox _wallModifierButton = null!;
     private CheckBox _mirrorModifierButton = null!;
@@ -815,6 +816,16 @@ public class MainActivity : Activity
         _lightModifierButton.Click += (_, _) =>
         {
             bool enabled = _lightModifierButton.Checked;
+            // CheckBox toggles before Click. Restore the effective state before
+            // giving feedback, without changing modifiers or preparing a lineup.
+            UpdateLightModifierPresentation(
+                (_selectedWorkoutModifiers & WorkoutModifiers.Light) != 0);
+            if (_lightModifierLocked)
+            {
+                AnimateModifierTile(_lightModifierContainer);
+                ShowModifierFeedback(Resource.String.light_workout_locked_feedback);
+                return;
+            }
             SetSelectedWorkoutModifier(
                 WorkoutModifiers.Light,
                 enabled,
@@ -2108,8 +2119,9 @@ public class MainActivity : Activity
         bool effectivelyEnabled = enabled || recoveryLightMode ||
             automaticLightMode;
         _lightModifierButton.Checked = effectivelyEnabled;
-        _lightModifierButton.Enabled = !recoveryLightMode &&
-            !automaticLightMode;
+        _lightModifierLocked = recoveryLightMode || automaticLightMode;
+        // Keep the tile tappable so a locked attempt can explain itself.
+        _lightModifierButton.Enabled = true;
         int workoutsRemaining = GetWorkoutsUntilLightMode();
         _lightModifierCountdownBadge.Text = workoutsRemaining.ToString();
         _lightModifierCountdownBadge.Visibility = effectivelyEnabled
@@ -2129,9 +2141,11 @@ public class MainActivity : Activity
                     "at the selected duration until automatic light mode";
         if (OperatingSystem.IsAndroidVersionAtLeast(26))
         {
-            _lightModifierButton.TooltipText = GetString(effectivelyEnabled
-                ? Resource.String.light_workout_enabled_feedback
-                : Resource.String.light_workout_disabled_feedback);
+            _lightModifierButton.TooltipText = GetString(_lightModifierLocked
+                ? Resource.String.light_workout_locked_feedback
+                : effectivelyEnabled
+                    ? Resource.String.light_workout_enabled_feedback
+                    : Resource.String.light_workout_disabled_feedback);
         }
         if (OperatingSystem.IsAndroidVersionAtLeast(30))
         {

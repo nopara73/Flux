@@ -48,6 +48,7 @@ const MODIFIER_FEEDBACK_LABELS = Object.freeze({
   shyDisabled: "shy mode OFF",
   lightEnabled: "light mode ON",
   lightDisabled: "light mode OFF",
+  lightLocked: "rest, you must",
   wallSolesStayOff: "equipment ON: wall · no feet on wall",
   wallSolesMayTouch: "equipment ON: wall",
   wallDisabled: "equipment OFF: wall",
@@ -529,6 +530,8 @@ function workoutModifierTiles() {
 function toggleWorkoutModifier(flag) {
   if (flag === WORKOUT_MODIFIERS.Light &&
       (isRecoveryLightModeActive() || isAutomaticLightModeLocked())) {
+    renderWorkoutModifiers();
+    showWorkoutModifierFeedback(MODIFIER_FEEDBACK_LABELS.lightLocked);
     return;
   }
   selectedModifiers ^= flag;
@@ -660,8 +663,12 @@ function renderWorkoutModifiers() {
     element.setAttribute("aria-pressed", String(enabled));
     element.setAttribute("title", workoutModifierFeedbackLabel(flag, enabled));
     if (flag === WORKOUT_MODIFIERS.Light) {
-      element.disabled = recoveryLightMode || automaticLightMode;
-      element.setAttribute("aria-disabled", String(element.disabled));
+      const locked = recoveryLightMode || automaticLightMode;
+      // aria-disabled describes the unavailable toggle, while taps/keyboard
+      // activation can still explain why it is locked.
+      element.disabled = false;
+      element.setAttribute("aria-disabled", String(locked));
+      if (locked) element.setAttribute("title", MODIFIER_FEEDBACK_LABELS.lightLocked);
     }
     if (flag === WORKOUT_MODIFIERS.HardFloor) {
       element.dataset.hardFloor = enabled ? "hard" : "soft";

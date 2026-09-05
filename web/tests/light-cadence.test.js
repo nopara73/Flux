@@ -200,15 +200,22 @@ const cadenceSource = await readFile(new URL("../light-cadence.js", import.meta.
 // the catalog/module loads, when a stale or bypassable toggle would be visible.
 function startup(history = [], duration = 10, now = atDay(4)) {
   const elements = new Map();
+  const timers = new Map();
+  let timerId = 0;
   function element(id) {
     if (elements.has(id)) return elements.get(id);
     const attributes = new Map();
     const listeners = new Map();
+    const classes = new Set();
     const node = {
       textContent: id === "duration-value" ? "10" : "",
       children: [], dataset: {}, hidden: false, disabled: false,
       style: { setProperty() {} },
-      classList: { add() {}, remove() {}, toggle() {} },
+      classList: {
+        add(name) { classes.add(name); },
+        remove(name) { classes.delete(name); },
+        toggle() {}, contains(name) { return classes.has(name); },
+      },
       setAttribute(name, value) { attributes.set(name, value); },
       getAttribute(name) { return attributes.get(name); },
       addEventListener(name, callback) { listeners.set(name, callback); },
@@ -227,12 +234,22 @@ function startup(history = [], duration = 10, now = atDay(4)) {
     }) },
     performance: { mark() {} },
     requestAnimationFrame: (callback) => callback(),
-    setTimeout() {}, clearTimeout() {},
+    setTimeout(callback) { timers.set(++timerId, callback); return timerId; },
+    clearTimeout(id) { timers.delete(id); },
   });
   context.window = context;
   vm.runInContext(cadenceSource, context);
   vm.runInContext(instantSource, context);
-  return { controls: context.fluxStartupControls, element };
+  return { controls: context.fluxStartupControls, element, timers };
+}
+
+function assertLockedTile(element) {
+  const tile = element("light-workout-modifier");
+  assert.equal(tile.disabled, false, "locked tiles must still receive activation");
+  assert.equal(tile.getAttribute("aria-disabled"), "true");
+  assert.equal(tile.getAttribute("aria-pressed"), "true");
+  assert.equal(tile.getAttribute("title"), "rest, you must");
+  assert.equal(element("light-workout-countdown").hidden, true);
 }
 
 test("startup locks due Light before module loading and never shows a zero badge", () => {
@@ -241,7 +258,7 @@ test("startup locks due Light before module loading and never shows a zero badge
   assert.equal(controls.automaticLightMode, true);
   assert.equal(controls.selectedModifiers & light, light);
   assert.equal(element("light-workout-modifier").getAttribute("aria-pressed"), "true");
-  assert.equal(element("light-workout-modifier").disabled, true);
+  assertLockedTile(element);
   assert.equal(element("light-workout-countdown").hidden, true);
   element("light-workout-modifier").fire("click");
   assert.equal(controls.selectedModifiers & light, light);
@@ -253,7 +270,7 @@ test("startup locks due Light before module loading and never shows a zero badge
 test("startup locks Light for the existing nearly completed hour history", () => {
   const { controls, element } = startup(nearlyCompletedHourHistory(), 60, atDay(3, 10));
   assert.equal(controls.automaticLightMode, true);
-  assert.equal(element("light-workout-modifier").disabled, true);
+  assertLockedTile(element);
   assert.equal(element("light-workout-countdown").hidden, true);
   element("light-workout-modifier").fire("click");
   assert.equal(controls.selectedModifiers & light, light);
@@ -281,7 +298,7 @@ test("recovery presentation never sets real Light or consumes a cadence reset", 
   const { controls, element } = startup();
   controls.setRecoveryLightMode(true);
   assert.equal(controls.selectedModifiers & light, 0);
-  assert.equal(element("light-workout-modifier").disabled, true);
+  assertLockedTile(element);
   assert.equal(element("light-workout-modifier").getAttribute("aria-pressed"), "true");
   assert.equal(element("light-workout-countdown").hidden, true);
   controls.setRecoveryLightMode(false);
@@ -300,3 +317,85 @@ test("date rollover clears the expired automatic toggle without persisting it", 
   assert.equal(element("light-workout-modifier").disabled, false);
   assert.equal(element("light-workout-countdown").hidden, false);
 });
+
+for (const reason of ["cadence", "recovery", "both"]) {
+  for (const editing of [false, true]) {
+    test(`${reason}-locked Light explains repeated taps during ${editing ? "workout setup" : "startup"} without changing state`, () => {
+      const { controls, element, timers } = startup(
+        reason === "recovery" ? [] : nearlyCompletedHourHistory(),
+      );
+      controls.setRecoveryLightMode(reason !== "cadence");
+      controls.setActiveWorkoutSetup(editing);
+      const selections = [];
+      controls.connect({ selectionChanged: (...args) => selections.push(args) });
+      const before = controls.selectedModifiers;
+      const notificationsBefore = selections.length;
+      for (let tap = 0; tap < 3; tap += 1) {
+        assertLockedTile(element);
+        element("light-workout-modifier").fire("click");
+        assert.equal(controls.selectedModifiers, before);
+        assert.equal(controls.selectionChanged, false);
+        assert.equal(selections.length, notificationsBefore);
+        assert.equal(controls.startQueued, false);
+        assert.equal(element("modifier-feedback").textContent, "rest, you must");
+        assert.equal(element("modifier-feedback").hidden, false);
+        assert.equal(element("modifier-feedback").classList.contains("show"), true);
+        assert.equal(timers.size, 1, "repeat taps restart, not stack, the animation");
+      }
+      timers.values().next().value();
+      assert.equal(element("modifier-feedback").hidden, true);
+      assert.equal(element("modifier-feedback").classList.contains("show"), false);
+      assertLockedTile(element);
+    });
+  }
+}
+
+test("manual Light still toggles with ordinary ON/OFF feedback after recovery ends", () => {
+  const { controls, element } = startup();
+  controls.setRecoveryLightMode(true);
+  element("light-workout-modifier").fire("click");
+  controls.setRecoveryLightMode(false);
+  assert.equal(element("light-workout-modifier").getAttribute("aria-disabled"), "false");
+  element("light-workout-modifier").fire("click");
+  assert.equal(element("modifier-feedback").textContent, "light mode ON");
+  assert.equal(controls.selectedModifiers & light, light);
+  element("light-workout-modifier").fire("click");
+  assert.equal(element("modifier-feedback").textContent, "light mode OFF");
+  assert.equal(controls.selectedModifiers & light, 0);
+});
+
+const appSource = await readFile(new URL("../app.js", import.meta.url), "utf8");
+const toggleSource = appSource.slice(
+  appSource.indexOf("function toggleWorkoutModifier("),
+  appSource.indexOf("function workoutModifierFeedbackLabel("),
+);
+for (const [automatic, recovery] of [[true, false], [false, true], [true, true], [false, false]]) {
+  test(`loaded module Light activation honors cadence=${automatic}, recovery=${recovery}`, () => {
+    const messages = [];
+    let preparations = 0;
+    const context = vm.createContext({
+      WORKOUT_MODIFIERS: { Light: light },
+      MODIFIER_FEEDBACK_LABELS: { lightLocked: "rest, you must" },
+      selectedModifiers: automatic ? light : 0,
+      session: {},
+      isRecoveryLightModeActive: () => recovery,
+      isAutomaticLightModeLocked: () => automatic,
+      renderWorkoutModifiers() {},
+      showWorkoutModifierFeedback: (message) => messages.push(message),
+      workoutModifierFeedbackLabel: (_, enabled) => `light mode ${enabled ? "ON" : "OFF"}`,
+      queueWorkoutPreparation: () => preparations += 1,
+    });
+    vm.runInContext(toggleSource, context);
+    const before = context.selectedModifiers;
+    vm.runInContext("toggleWorkoutModifier(WORKOUT_MODIFIERS.Light)", context);
+    if (automatic || recovery) {
+      assert.equal(context.selectedModifiers, before);
+      assert.equal(preparations, 0);
+      assert.deepEqual(messages, ["rest, you must"]);
+    } else {
+      assert.equal(context.selectedModifiers & light, light);
+      assert.equal(preparations, 1);
+      assert.deepEqual(messages, ["light mode ON"]);
+    }
+  });
+}

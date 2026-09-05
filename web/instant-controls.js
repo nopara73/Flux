@@ -310,6 +310,7 @@
 
   function toggleModifier(name) {
     if (name === "light" && (recoveryLightMode || automaticLightMode)) {
+      showFeedback("rest, you must");
       return;
     }
     const flag = modifierFlags[name];
@@ -439,8 +440,11 @@
       );
     }
     if (name === "light") {
-      element.disabled = recoveryLightMode || automaticLightMode;
-      element.setAttribute("aria-disabled", String(element.disabled));
+      const locked = recoveryLightMode || automaticLightMode;
+      // Retain activation for the explanation, never for changing locked Light.
+      element.disabled = false;
+      element.setAttribute("aria-disabled", String(locked));
+      if (locked) element.setAttribute("title", "rest, you must");
       elements.lightCountdown.textContent = String(lightWorkoutsRemaining);
       elements.lightCountdown.hidden = enabled;
       const scheduleDescription =

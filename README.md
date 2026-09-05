@@ -141,6 +141,10 @@ Light is locked ON before and during the workout. On other days it remains
 manually selectable. This is a scheduling heuristic, separate from the existing
 18/36-hour muscle recovery, not a physiological fatigue measurement.
 
+Tapping locked Light shows the animated message `rest, you must` without
+changing the workout. This applies to both cadence and recovery-derived locks;
+ordinary manual Light still toggles normally when neither lock applies.
+
 Light is session-scoped: physical conditions and equipment remain remembered,
 while yesterday's manual Light setting does not silently carry into the next
 session. While OFF, the corner badge estimates remaining workouts at the
