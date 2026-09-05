@@ -865,8 +865,10 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.match(durationLayout, /@drawable\/ic_light_workout/);
   assert.match(upperBodyClothingIcon, /<vector[\s\S]*pathData=/);
   assert.match(shyIcon, /<vector[\s\S]*pathData=/);
-  assert.match(shyIcon, /M2\.27,3L3\.54,4\.27/);
-  assert.match(webIndex, /M2\.27 3 3\.54 4\.27/);
+  assert.match(shyIcon, /viewportWidth="32"[\s\S]*M16,0\.9C11\.43,0\.9/);
+  assert.match(shyIcon, /android:scaleX="-1"[\s\S]*android:translateX="32"/);
+  assert.match(webIndex, /viewBox="0 0 32 32"[\s\S]*M16 \.9C11\.43\.9/);
+  assert.match(webIndex, /id="shy-hand"[\s\S]*translate\(32 0\) scale\(-1 1\)/);
   assert.deepEqual(
     [...lightWorkoutIcon.subarray(0, 8)],
     [137, 80, 78, 71, 13, 10, 26, 10],
