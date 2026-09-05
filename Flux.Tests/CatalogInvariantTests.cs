@@ -883,7 +883,39 @@ public sealed class CatalogInvariantTests
         Exercise[] timedSideExercises = exercises
             .Where(exercise => exercise.SideSequence.UsesTimedSides())
             .ToArray();
-        Assert.Equal(160, timedSideExercises.Length);
+        Assert.Equal(163, timedSideExercises.Length);
+        Dictionary<int, (string Name, ExerciseSideSequence SideSequence)>
+            auditedMirroredSideSequences = new()
+            {
+                [32] = ("Tandem Walk", ExerciseSideSequence.ScreenLeftThenRight),
+                [483] = ("Standing Diagonal Head Turns",
+                    ExerciseSideSequence.ScreenRightThenLeft),
+                [493] = ("Diagonal Finger Tracking",
+                    ExerciseSideSequence.ScreenLeftThenRight),
+                [587] = ("Isometric Shoulder External Rotation Against Wall",
+                    ExerciseSideSequence.ScreenRightThenLeft),
+            };
+        Assert.All(auditedMirroredSideSequences, expected =>
+        {
+            Exercise exercise = exercises.Single(candidate => candidate.Id == expected.Key);
+            Assert.Equal(expected.Value.Name, exercise.Name);
+            Assert.Equal(expected.Value.SideSequence, exercise.SideSequence);
+            Assert.Equal(2, exercise.SequenceBlocks.Length);
+            Assert.All(exercise.SequenceBlocks, block =>
+                Assert.Equal(exercise.Id, block.ExerciseId));
+            ExerciseSequenceSideCue expectedFirstCue =
+                expected.Value.SideSequence == ExerciseSideSequence.ScreenLeftThenRight
+                    ? ExerciseSequenceSideCue.ScreenLeft
+                    : ExerciseSequenceSideCue.ScreenRight;
+            ExerciseSequenceSideCue expectedSecondCue =
+                expectedFirstCue == ExerciseSequenceSideCue.ScreenLeft
+                    ? ExerciseSequenceSideCue.ScreenRight
+                    : ExerciseSequenceSideCue.ScreenLeft;
+            Assert.Equal(expectedFirstCue, exercise.SequenceBlocks[0].SideCue);
+            Assert.Equal(expectedSecondCue, exercise.SequenceBlocks[1].SideCue);
+            Assert.False(exercise.SequenceBlocks[0].MirrorMedia);
+            Assert.True(exercise.SequenceBlocks[1].MirrorMedia);
+        });
         Assert.DoesNotContain(
             timedSideExercises.Where(exercise =>
                 !exercise.SideSequence.UsesTimedLeadStances()),
@@ -893,7 +925,7 @@ public sealed class CatalogInvariantTests
             .Where(exercise =>
                 exercise.SideSequence == ExerciseSideSequence.Alternating)
             .ToArray();
-        Assert.Equal(161, alternatingExercises.Length);
+        Assert.Equal(160, alternatingExercises.Length);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 219);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 15);
         Assert.Contains(alternatingExercises, exercise => exercise.Id == 429);
@@ -1004,8 +1036,8 @@ public sealed class CatalogInvariantTests
         });
         Dictionary<int, int> expectedSequenceBlockDistribution = new()
         {
-            [1] = 298,
-            [2] = 130,
+            [1] = 295,
+            [2] = 133,
             [3] = 28,
             [4] = 11,
         };
@@ -1156,7 +1188,7 @@ public sealed class CatalogInvariantTests
             [468] = ExerciseSideSequence.Alternating,
             [473] = ExerciseSideSequence.ScreenLeftLeadThenRightLead,
             [482] = ExerciseSideSequence.Continuous,
-            [483] = ExerciseSideSequence.Continuous,
+            [483] = ExerciseSideSequence.ScreenRightThenLeft,
             [507] = ExerciseSideSequence.Alternating,
             [508] = ExerciseSideSequence.Alternating,
             [512] = ExerciseSideSequence.ScreenRightThenLeft,

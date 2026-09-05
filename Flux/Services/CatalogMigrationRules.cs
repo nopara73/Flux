@@ -7,10 +7,10 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    // Revision 69 adds the catalog-wide training-claim audit. Revision 70
-    // corrects the Shy audit, replaces three retired hand drills with reviewed
-    // session movements, and rebuilds only affected lineups.
-    public const int CurrentCatalogRevision = 70;
+    // Revision 70 corrects the Shy audit and replaces three retired hand
+    // drills. Revision 71 corrects three one-sided demonstrations to atomic
+    // mirrored two-sided sequences and rebuilds only affected lineups.
+    public const int CurrentCatalogRevision = 71;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int ReusedShyAuditCatalogRevision = 70;
     private const int LastCumulativeWorkoutStateRevision = 3;
@@ -177,6 +177,9 @@ public static class CatalogMigrationRules
                 [409] = new(
                     "Neck Controlled Articular Rotation",
                     "Full Neck Circles"),
+                [493] = new(
+                    "Track Finger Upper-Right to Lower-Left",
+                    "Diagonal Finger Tracking"),
                 [425] = new(
                     "Chin-Tuck Isometric",
                     "Chin-Tuck Hold"),
@@ -1323,6 +1326,7 @@ public static class CatalogMigrationRules
                     398, 399, 400, 401, 402, 403, 404, 405, 410, 474, 481,
                     498, 543, 557, 608, 609, 678, 685, 687,
                 },
+                [71] = new HashSet<int> { 32, 483, 493 },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>

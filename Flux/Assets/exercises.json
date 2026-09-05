@@ -343,14 +343,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Alternating",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 32,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 32,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -14530,14 +14537,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenRightThenLeft",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 483,
-        "sideCue": "None",
+        "sideCue": "ScreenRight",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 483,
+        "sideCue": "ScreenLeft",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],
@@ -14965,7 +14979,7 @@
   },
   {
     "id": 493,
-    "name": "Track Finger Upper-Right to Lower-Left",
+    "name": "Diagonal Finger Tracking",
     "retiredName": "Alternating Bharatanatyam Paravritta Shiro",
     "video": "exercise_videos/exercise_0493.mp4",
     "primaryCanonicalGroup": "CranialMuscles",
@@ -14975,14 +14989,21 @@
     "mode": "Repetition",
     "presentation": "Motion",
     "holdFramePercent": 0,
-    "sideSequence": "Continuous",
+    "sideSequence": "ScreenLeftThenRight",
     "directionSequence": "None",
     "sequenceBlocks": [
       {
         "exerciseId": 493,
-        "sideCue": "None",
+        "sideCue": "ScreenLeft",
         "directionCue": "None",
         "mirrorMedia": false,
+        "mediaSegment": "Full"
+      },
+      {
+        "exerciseId": 493,
+        "sideCue": "ScreenRight",
+        "directionCue": "None",
+        "mirrorMedia": true,
         "mediaSegment": "Full"
       }
     ],

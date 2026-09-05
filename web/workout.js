@@ -363,10 +363,10 @@ export const PREPARATION_DURATION_MS = 5_000;
 export const REST_DURATION_MS = 15_000;
 export const LIGHT_DAY_TRAINING_DAYS_PER_CYCLE = 4;
 export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
-// Revision 69 adds the catalog-wide training-claim audit. Revision 70 corrects
-// the Shy audit, replaces three retired hand drills with reviewed session
-// movements, and rebuilds only affected lineups.
-export const CURRENT_CATALOG_REVISION = 70;
+// Revision 70 corrects the Shy audit and replaces three retired hand drills.
+// Revision 71 corrects three one-sided demonstrations to atomic mirrored
+// two-sided sequences and rebuilds only affected lineups.
+export const CURRENT_CATALOG_REVISION = 71;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 const REUSED_SHY_AUDIT_CATALOG_REVISION = 70;
 const REUSED_SHY_AUDIT_EXERCISE_IDS = new Set([202, 204, 205]);
@@ -542,6 +542,7 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
     398, 399, 400, 401, 402, 403, 404, 405, 410, 474, 481,
     498, 543, 557, 608, 609, 678, 685, 687,
   ])],
+  [71, new Set([32, 483, 493])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -668,6 +669,7 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [405, ["Shibashi Flying-Wild-Goose Breathing", "Shallow Squat with Wing Arm Raise"]],
   [406, ["Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles"]],
   [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
+  [493, ["Track Finger Upper-Right to Lower-Left", "Diagonal Finger Tracking"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
   [396, ["Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold"]],
   [510, ["Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold"]],

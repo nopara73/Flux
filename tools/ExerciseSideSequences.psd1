@@ -1,6 +1,6 @@
 # Explicitly reviewed screen-side order for movements that are not naturally
 # alternating. The source demonstration shows the first listed screen side;
-# Flux mirrors that same human demonstration for the second 20-second side.
+# Flux mirrors that same human demonstration for the second 45-second side.
 @{
     15 = 'ScreenRightThenLeft'
     16 = 'ScreenRightThenLeft'
@@ -8,6 +8,7 @@
     19 = 'ScreenRightThenLeft'
     20 = 'ScreenRightThenLeft'
     21 = 'ScreenLeftThenRight'
+    32 = 'ScreenLeftThenRight'
     58 = 'ScreenLeftThenRight'
     95 = 'ScreenLeftThenRight'
     96 = 'ScreenLeftThenRight'

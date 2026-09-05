@@ -5491,7 +5491,7 @@
         MotionProfile = 'DiagonalHeadTurn'
         Primary = 'PosteriorNeckAndSuboccipitalMuscles'
         Secondary = @('AnteriorLateralNeckAndHyoidMuscles')
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenRightThenLeft'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
@@ -5746,12 +5746,12 @@
     }
     493 = @{
         RetiredName = 'Alternating Bharatanatyam Paravritta Shiro'
-        Name = 'Track Finger Upper-Right to Lower-Left'
+        Name = 'Diagonal Finger Tracking'
         Practice = 'Oculomotor rehabilitation'
         MotionProfile = 'EyeTracking'
         Primary = 'CranialMuscles'
         Secondary = @()
-        SideSequence = 'Continuous'
+        SideSequence = 'ScreenLeftThenRight'
         Mode = 'Repetition'
         Presentation = 'Motion'
         HoldFramePercent = 0
