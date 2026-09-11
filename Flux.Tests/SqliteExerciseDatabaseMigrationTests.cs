@@ -163,8 +163,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion67);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(430, storedVersion67.Count);
-        Assert.Equal(428, preserved.Count);
+        Assert.Equal(429, storedVersion67.Count);
+        Assert.Equal(427, preserved.Count);
         Assert.DoesNotContain(520, preserved);
         Assert.DoesNotContain(521, preserved);
         Assert.Equal(
@@ -219,7 +219,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion69);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(449, storedVersion69.Count);
+        Assert.Equal(448, storedVersion69.Count);
         Assert.Equal(storedVersion69.Keys.Order(), preserved.Order());
         Assert.All(storedVersion69, entry =>
             Assert.Equal(entry.Key % 19 - 9, entry.Value.Score));
@@ -285,8 +285,8 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion68);
 
-        Assert.Equal(447, storedVersion68.Count);
-        Assert.Equal(446, preserved.Count);
+        Assert.Equal(446, storedVersion68.Count);
+        Assert.Equal(445, preserved.Count);
         Assert.Equal(
             storedVersion68.Keys
                 .Except([478])
@@ -326,7 +326,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion75);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(499, storedVersion75.Count);
+        Assert.Equal(498, storedVersion75.Count);
         Assert.Equal(storedVersion75.Keys.Order(), preserved.Order());
         Assert.All(storedVersion75, entry =>
             Assert.Equal(entry.Key % 29 - 14, entry.Value.Score));
@@ -378,7 +378,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion81);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(501, storedVersion81.Count);
+        Assert.Equal(500, storedVersion81.Count);
         Assert.Equal(storedVersion81.Keys.Order(), preserved.Order());
         Assert.All(storedVersion81, entry =>
             Assert.Equal(entry.Key % 31 - 15, entry.Value.Score));
@@ -420,7 +420,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion85);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(508, storedVersion85.Count);
+        Assert.Equal(507, storedVersion85.Count);
         Assert.Equal(storedVersion85.Keys.Order(), preserved.Order());
         Assert.All(storedVersion85, entry =>
             Assert.Equal(entry.Key % 37 - 18, entry.Value.Score));
@@ -468,7 +468,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             storedVersion87);
 
         Assert.Equal(539, catalog.Length);
-        Assert.Equal(512, storedVersion87.Count);
+        Assert.Equal(511, storedVersion87.Count);
         Assert.Equal(storedVersion87.Keys.Order(), preserved.Order());
         Assert.All(storedVersion87, entry =>
             Assert.Equal(entry.Key % 41 - 20, entry.Value.Score));

@@ -828,9 +828,9 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible ||
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible));
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 416);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 422);
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 118);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 117);
   assert.deepEqual(
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "ClothingRequired")
@@ -2091,7 +2091,7 @@ test("backgrounding pauses movement and rest until playback is resumed", () => {
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
     204, 205, 245, 265, 279, 473, 528, 538, 575, 578, 583, 591,
-    884, 885, 886, 887,
+    884, 885, 886, 887, 1024,
   ];
   assert.deepEqual(
     catalog
