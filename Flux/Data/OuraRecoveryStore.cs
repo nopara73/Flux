@@ -4,9 +4,9 @@ using Flux.Models;
 
 namespace Flux.Data;
 
-internal sealed class OuraConnection
+internal sealed class OuraRecoveryCache
 {
-    public bool Enabled { get; set; }
+    public bool PermissionRequestAttempted { get; set; }
     public OuraRecoverySnapshot? Snapshot { get; set; }
     public List<OuraDecisionAudit> Decisions { get; set; } = [];
 }
@@ -16,22 +16,22 @@ internal sealed record OuraDecisionAudit(long EvaluatedAtUnixMilliseconds,
 
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     UseStringEnumConverter = true)]
-[JsonSerializable(typeof(OuraConnection))]
+[JsonSerializable(typeof(OuraRecoveryCache))]
 [JsonSerializable(typeof(OuraRecoverySnapshot))]
 internal partial class OuraJsonContext : JsonSerializerContext;
 
 internal sealed class OuraRecoveryStore
 {
     private readonly string _path;
-    internal OuraRecoveryStore(Android.Content.Context context) =>
-        _path = Path.Combine(context.NoBackupFilesDir!.AbsolutePath, "oura-recovery.json");
+    internal OuraRecoveryStore(string privateDirectory) =>
+        _path = Path.Combine(privateDirectory, "oura-recovery.json");
 
-    internal OuraConnection Load()
+    internal OuraRecoveryCache Load()
     {
         try
         {
-            OuraConnection result = File.Exists(_path) && new FileInfo(_path).Length <= 1_000_000
-                ? JsonSerializer.Deserialize(File.ReadAllText(_path), OuraJsonContext.Default.OuraConnection) ?? new()
+            OuraRecoveryCache result = File.Exists(_path) && new FileInfo(_path).Length <= 1_000_000
+                ? JsonSerializer.Deserialize(File.ReadAllText(_path), OuraJsonContext.Default.OuraRecoveryCache) ?? new()
                 : new();
             result.Decisions ??= [];
             return result;
@@ -39,18 +39,11 @@ internal sealed class OuraRecoveryStore
         catch (Exception e) when (e is IOException or JsonException or UnauthorizedAccessException) { return new(); }
     }
 
-    internal void Save(OuraConnection connection)
+    internal void Save(OuraRecoveryCache cache)
     {
-        connection.Decisions = connection.Decisions.TakeLast(120).ToList();
+        cache.Decisions = cache.Decisions.TakeLast(120).ToList();
         string temporary = _path + ".tmp";
-        File.WriteAllText(temporary, JsonSerializer.Serialize(connection, OuraJsonContext.Default.OuraConnection));
+        File.WriteAllText(temporary, JsonSerializer.Serialize(cache, OuraJsonContext.Default.OuraRecoveryCache));
         File.Move(temporary, _path, true);
-    }
-
-    internal void Disconnect()
-    {
-        // Both targets are this store's exact private files, never workout data.
-        File.Delete(_path);
-        File.Delete(_path + ".tmp");
     }
 }

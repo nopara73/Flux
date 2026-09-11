@@ -6,7 +6,7 @@
 
 # Android and web parity
 
-- Explicit owner exception: Oura recovery integration is Android-only, using the phone's Health Connect data. Do not port it to web, add web imports/OAuth, or send health data to a server. Follow `docs/OURA_RECOVERY.md`: the agreed three-way evidence gate replaces only cadence-derived automatic Light, never manual Light or muscle recovery, and insufficient evidence falls back to cadence. Keep native permission, privacy, lifecycle and active-session protections tested; continue validating the unchanged web product and its parity lock.
+- Explicit owner exception: Oura recovery integration is Android-only, using the phone's Health Connect data automatically, not an optional Flux feature. Do not add a connection tile, status dialog, opt-in, refresh or disconnect control; Android owns health-data consent. Do not port it to web, add web imports/OAuth, or send health data to a server. Follow `docs/OURA_RECOVERY.md`: the agreed three-way evidence gate replaces only cadence-derived automatic Light, never manual Light or muscle recovery, and insufficient evidence falls back to cadence. Keep native permission, privacy, lifecycle and active-session protections tested; continue validating the unchanged web product and its parity lock.
 
 - Treat the Android app in [`Flux/`](Flux/) as the canonical product contract and keep [`web/`](web/) synchronized with it at all times.
 - Update both platforms in the same change whenever workout flow, wording, controls, durations, exercise selection, taxonomy, catalog migration, persistence, sounds, colors, or runtime media changes.

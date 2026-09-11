@@ -335,6 +335,7 @@ public partial class MainActivity : Activity
                 StartSelectedWorkout();
             }
         }
+        _ = RefreshOuraRecoveryAsync();
     }
 
     private void CancelQueuedWorkoutStart()
@@ -1949,6 +1950,7 @@ public partial class MainActivity : Activity
                 defaultModifiers));
         ConfigureDurationScreenForActiveWorkout(editing: false);
         QueueWorkoutPreparation();
+        _ = RefreshOuraRecoveryAsync();
     }
 
     private void ShowActiveWorkoutSetup()
@@ -2151,7 +2153,7 @@ public partial class MainActivity : Activity
             : enabled
                 ? $"{description}: light mode on"
                 : ouraDecides
-                    ? $"{description}: Oura recovery permits regular training; muscle recovery still applies"
+                    ? $"{description}: light mode off"
                 : $"{description}: approximately {workoutsRemaining} " +
                     $"workout{(workoutsRemaining == 1 ? string.Empty : "s")} " +
                     "at the selected duration until automatic light mode";

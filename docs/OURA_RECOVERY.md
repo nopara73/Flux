@@ -14,12 +14,19 @@ samples and RMSSD HRV. Readiness, Sleep and Activity scores are not used. There
 are exactly three read permissions, no write/background/history permission.
 The native integration requires Android 14+; older devices use the countdown.
 
-The link beside Light opens connection/status controls, not another modifier.
-Consent is granted through Android's Health Connect permission screen. Missing,
+Use available Oura data automatically. There is no Flux opt-in, connection tile,
+status dialog, refresh button or disconnect control. Do not add any of these.
+On Android 14+ with Oura installed, request the three permissions once from
+Android's Health Connect screen after normal setup has loaded. Never interrupt
+a restored or running workout with a permission request. Denial does not cause
+repeated prompts; Android settings remain the authority for granting/revoking
+access. Already granted access is used immediately, including after an upgrade
+from the short-lived opt-in implementation; its old `enabled` flag is ignored.
+Missing,
 denied or revoked access, unavailable service, failed/partial reads, bad data and
 stale measurements all leave the existing cadence in charge. A successful read
 replaces the snapshot, including deletions. Foreground refresh is asynchronous,
-normally at most once every five minutes; Refresh forces another read. Start
+normally at most once every five minutes; granting permission triggers a read. Start
 does not wait for network, sensor or Health Connect I/O.
 
 ## Evidence and algorithm
@@ -80,9 +87,12 @@ usual counter. Locked Light still responds with exactly `rest, you must`.
 Raw Health Connect records are not retained. Nightly summaries and at most 120
 decision audit entries live in `NoBackupFilesDir/oura-recovery.json`; they are
 not included in the backed-up workout state or logcat. The live context is
-`JsonIgnore` and explicitly copied to background lineup preparation. Disconnect
-erases this private file without clearing workouts. Android permission revocation
-is checked on every foreground return and before consuming a snapshot.
+`JsonIgnore` and explicitly copied to background lineup preparation. Android
+permission revocation is checked on every foreground return and before consuming
+a snapshot; it removes the cached summaries and decision log without clearing
+workouts. Only the permission-request-attempt marker remains, avoiding repeated
+prompts. The platform's required health-data privacy page is not a Flux feature
+screen and offers no application-specific opt-out.
 
 ## Tests and future changes
 

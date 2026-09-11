@@ -24,6 +24,7 @@
   -->
   <ItemGroup>
     <Compile Include="..\Flux\Data\IExerciseDatabase.cs" Link="Production\Data\IExerciseDatabase.cs" />
+    <Compile Include="..\Flux\Data\OuraRecoveryStore.cs" Link="Production\Data\OuraRecoveryStore.cs" />
     <Compile Include="..\Flux\Models\OuraRecoverySnapshot.cs" Link="Production\Models\OuraRecoverySnapshot.cs" />
     <Compile Include="..\Flux\Services\OuraRecoveryPolicy.cs" Link="Production\Services\OuraRecoveryPolicy.cs" />
     <Compile Include="..\Flux\Services\OuraNightBuilder.cs" Link="Production\Services\OuraNightBuilder.cs" />

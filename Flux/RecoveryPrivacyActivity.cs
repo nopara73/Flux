@@ -16,7 +16,7 @@ public sealed class RecoveryPrivacyActivity : Activity
         var text = new TextView(this)
         {
             TextSize = 18,
-            Text = "Oura recovery privacy\n\nFlux reads only Oura sleep, heart rate and HRV from Health Connect, with your permission. It does not write health records or use Oura composite scores.\n\nReadings are processed on this device. Only nightly summaries and a bounded recovery-decision log are retained in private, non-backed-up app storage. Nothing is uploaded. Workout history still records whether Light was required, without storing health readings.\n\nYou can disconnect and erase recovery data from the link beside Light, or revoke access in Health Connect.\n\nMissing, stale or unclear data leaves Flux’s existing countdown in charge. This is an experimental training heuristic, not a medical assessment.",
+            Text = "Health data in Flux\n\nFlux automatically uses available Oura sleep, heart rate and HRV from Health Connect to guide Light mode. Android controls access. Flux does not write health records or use Oura composite scores.\n\nReadings stay on this device. Only nightly summaries and a limited decision log are saved in private storage, excluded from backups. Nothing is uploaded. Workout history records whether Light was required, without health readings.\n\nYou can revoke access in Health Connect. On its next foreground return, Flux removes its cached health data without changing your workouts.\n\nMissing, stale or unclear data leaves the existing workout countdown in charge. These training rules are not a medical assessment.",
         };
         content.AddView(text);
         var close = new Button(this) { Text = "Close" };

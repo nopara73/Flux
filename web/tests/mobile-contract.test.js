@@ -12,8 +12,18 @@ test("Oura is an explicit Android-only capability with a read-only private bridg
   const lock = await readFile(new URL("web/scripts/check-mobile-parity.mjs", root), "utf8");
   for (const file of ["Flux/MainActivity.Recovery.cs", "Flux/AndroidManifest.xml", "Flux/RecoveryPrivacyActivity.cs"])
     assert.ok(lock.includes(file));
+  const native = await readFile(new URL("Flux/MainActivity.Recovery.cs", root), "utf8");
+  assert.match(native, /NoBackupFilesDir/);
+  assert.match(native, /HasOuraPermission \? _ouraCache\.Snapshot : null/);
+  assert.match(manifest, /<package android:name="com\.ouraring\.oura"/);
+  assert.match(native, /!_ouraCache\.PermissionRequestAttempted && _applicationStartupCompleted/);
+  assert.match(native, /_appScreen == AppScreen\.Duration && _state\.ActiveWorkoutSession is null/);
+  assert.match(native, /RequestPermissions\(OuraHealthConnectReader\.Permissions, OuraPermissionRequest\)/);
+  assert.doesNotMatch(native, /AlertDialog|Toast|Disconnect|\.Enabled|oura_recovery_button/);
+  const layout = await readFile(new URL("Flux/Resources/layout/screen_duration.xml", root), "utf8");
+  assert.doesNotMatch(layout, /oura_recovery_button|ic_recovery_link/);
   const store = await readFile(new URL("Flux/Data/OuraRecoveryStore.cs", root), "utf8");
-  assert.match(store, /NoBackupFilesDir/);
+  assert.doesNotMatch(store, /bool Enabled|Disconnect/);
   const page = await readFile(new URL("web/index.html", root), "utf8");
   assert.doesNotMatch(page, /oura-recovery|oura-import|Connect Oura/);
 });
