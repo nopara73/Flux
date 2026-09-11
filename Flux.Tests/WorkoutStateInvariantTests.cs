@@ -258,7 +258,7 @@ public sealed class WorkoutStateInvariantTests
             -1,
             state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 rejected.Id]);
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(target.Id));
         Assert.Equal(untouchedCurrentExerciseId, state.SelectedExerciseIds[untouched.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
         Assert.Empty(state.Outcomes);
@@ -313,7 +313,7 @@ public sealed class WorkoutStateInvariantTests
         }
         service.FinishInterruptedWorkout(state);
 
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(target.Id));
         Assert.False(state.SelectedExerciseIds.ContainsKey(insectTargetKey));
         Assert.Equal(unrelated.Id, state.SelectedExerciseIds[unrelatedGroupId]);
         Assert.All(

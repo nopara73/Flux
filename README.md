@@ -231,6 +231,14 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
+Closing a completed or interrupted workout settles its outcomes and returns to
+setup without selecting a future lineup. Rejected cached slot selections are
+removed, but recorded phase downvotes, saved Keeps and the completed history
+remain intact. A downvote is never a next-session compatibility ban: even a
+slot with only one eligible movement must remain usable. The next preparation
+performs normal global assignment using its chosen duration, modifiers, current
+recovery and phase scores; no stale closing-time lineup overrides those choices.
+
 Flux currently provides eight composable controls in three visually separate
 groups: five workout conditions, one intensity choice, and two equipment
 choices. In UI order:

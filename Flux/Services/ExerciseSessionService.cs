@@ -355,7 +355,7 @@ public sealed class ExerciseSessionService
 
         if (state.WorkoutCompleted && state.CompletionAcknowledged)
         {
-            PrepareNextSession(state);
+            FinalizeCurrentWorkout(state);
         }
     }
 
@@ -1365,7 +1365,7 @@ public sealed class ExerciseSessionService
         }
 
         state.CompletionAcknowledged = true;
-        PrepareNextSession(state);
+        FinalizeCurrentWorkout(state);
     }
 
     public Exercise? FinishInterruptedWorkout(WorkoutState state) =>
@@ -1422,7 +1422,7 @@ public sealed class ExerciseSessionService
             ClearPendingRest(state);
         }
 
-        PrepareNextSession(state);
+        FinalizeCurrentWorkout(state);
         return scoreUpdates;
     }
 
@@ -1454,15 +1454,14 @@ public sealed class ExerciseSessionService
         state.PendingRestKept = false;
     }
 
-    private void PrepareNextSession(WorkoutState state)
+    private void FinalizeCurrentWorkout(WorkoutState state)
     {
-        // This method chooses cached candidates for a future workout. The
-        // just-finished workout's light-day mode must not leak into that cache;
-        // the next actual preparation recalculates the calendar cadence.
-        state.ActiveWorkoutIsLightDay = false;
+        // Closing a workout must not depend on finding a future lineup. Settle
+        // its saved preferences only; PrepareWorkout arbitrates the next one
+        // using that workout's duration, modifiers, phase scores and recovery.
         WorkoutGroup[] activeRounds = GetActiveGroups(state).ToArray();
         WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
-        var rejectedSelectionKeys = new HashSet<string>(StringComparer.Ordinal);
+        var rejectedSelections = new List<(string GroupId, int RootId)>();
         foreach (WorkoutGroup selectionGroup in selectionGroups)
         {
             WorkoutGroup? decisionRound = activeRounds
@@ -1492,56 +1491,20 @@ public sealed class ExerciseSessionService
             }
             else if (outcome == ExerciseOutcome.X)
             {
-                rejectedSelectionKeys.Add(selectionGroup.Id);
+                rejectedSelections.Add((selectionGroup.Id, root.Id));
             }
         }
         state.NextWorkoutExcludedExerciseIds.Clear();
         SyncLegacyKeptExerciseIds(state);
-        var currentExerciseIds = selectionGroups
-            .Where(group => !rejectedSelectionKeys.Contains(group.Id))
-            .Select(group => new
-            {
-                group.Id,
-                ExerciseId = state.SelectedExerciseIds.GetValueOrDefault(
-                    GetSelectionStorageKey(
-                        group.Id,
-                        state.ActiveWorkoutModifiers)),
-            })
-            .Where(entry => entry.ExerciseId != 0)
-            .ToDictionary(
-                entry => entry.Id,
-                entry => entry.ExerciseId,
-                StringComparer.Ordinal);
-        var excludedExerciseIdsByGroup = new Dictionary<string, IReadOnlySet<int>>(
-            StringComparer.Ordinal);
-        foreach (WorkoutGroup group in selectionGroups.Where(group =>
-                     rejectedSelectionKeys.Contains(group.Id)))
+        foreach ((string groupId, int rootId) in rejectedSelections)
         {
-            string selectionStorageKey = GetSelectionStorageKey(
-                group.Id,
-                state.ActiveWorkoutModifiers);
-            int currentExerciseId = state.SelectedExerciseIds[selectionStorageKey];
-            excludedExerciseIdsByGroup[group.Id] = new HashSet<int>
-            {
-                currentExerciseId,
-            };
+            // Rejection is already a persisted phase-local downvote, not a
+            // compatibility ban. Clear its cached slot without deleting Keeps.
             RemoveSavedSequenceCopiesForSlot(
                 state,
-                group.Id,
-                currentExerciseId);
+                groupId,
+                rootId);
         }
-
-        IReadOnlyDictionary<string, int> nextLineup = ChooseBestDistinctLineup(
-            state,
-            selectionGroups,
-            state.ActiveWorkoutModifiers,
-            currentExerciseIds: currentExerciseIds,
-            excludedExerciseIdsByGroup: excludedExerciseIdsByGroup);
-        ApplyDistinctLineup(
-            state,
-            selectionGroups,
-            nextLineup,
-            clearChangedProgress: false);
         FinalizeActiveWorkoutSession(
             state,
             state.WorkoutCompleted
@@ -1723,7 +1686,6 @@ public sealed class ExerciseSessionService
         IReadOnlyList<WorkoutGroup> groups,
         WorkoutModifiers modifiers,
         IReadOnlyDictionary<string, int>? currentExerciseIds = null,
-        IReadOnlyDictionary<string, IReadOnlySet<int>>? excludedExerciseIdsByGroup = null,
         bool allowSavedSelectionException = false,
         IReadOnlyDictionary<string, HashSet<int>>?
             carriedKeepRootIdsBySelectionGroupId = null,
@@ -1737,8 +1699,6 @@ public sealed class ExerciseSessionService
         }
 
         currentExerciseIds ??= new Dictionary<string, int>(StringComparer.Ordinal);
-        excludedExerciseIdsByGroup ??=
-            new Dictionary<string, IReadOnlySet<int>>(StringComparer.Ordinal);
         carriedKeepRootIdsBySelectionGroupId ??=
             new Dictionary<string, HashSet<int>>(StringComparer.Ordinal);
         modifierTransitionProtectedGroupIds ??=
@@ -1746,16 +1706,6 @@ public sealed class ExerciseSessionService
 
         bool CalculateIsAllowed(Exercise exercise, WorkoutGroup group)
         {
-            Exercise[] sequenceExercises = GetSequenceExercises(exercise);
-            if (excludedExerciseIdsByGroup.TryGetValue(
-                    group.Id,
-                    out IReadOnlySet<int>? excludedExerciseIds) &&
-                sequenceExercises.Any(sequenceExercise =>
-                    excludedExerciseIds.Contains(sequenceExercise.Id)))
-            {
-                return false;
-            }
-
             if (IsWorkoutSelectionCandidate(
                     state,
                     exercise,

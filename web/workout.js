@@ -3939,7 +3939,7 @@ export class WorkoutSession {
       this.ensureActiveWorkoutSession(true);
     }
     if (this.state.workoutCompleted && this.state.completionAcknowledged) {
-      this.prepareNextSession();
+      this.finalizeCurrentWorkout();
     }
   }
 
@@ -5109,7 +5109,7 @@ export class WorkoutSession {
       throw new Error("Workout is not complete.");
     }
     this.state.completionAcknowledged = true;
-    this.prepareNextSession();
+    this.finalizeCurrentWorkout();
   }
 
   finishInterruptedWorkout() {
@@ -5132,16 +5132,15 @@ export class WorkoutSession {
       }
       this.clearPendingRest();
     }
-    this.prepareNextSession();
+    this.finalizeCurrentWorkout();
   }
 
-  prepareNextSession() {
-    // Candidate caching here targets a future workout. Recalculate its day
-    // mode only when that workout is actually prepared.
-    this.state.activeWorkoutIsLightDay = false;
+  finalizeCurrentWorkout() {
+    // Closing a workout must not depend on finding a future lineup. The next
+    // preparation uses its own duration, modifiers, phase scores and recovery.
     const activeGroups = this.getActiveGroups();
     const selectionGroups = this.getSelectionGroups();
-    const rejectedSelectionKeys = new Set();
+    const rejectedSelections = new Map();
     for (const selectionGroup of selectionGroups) {
       const decisionRound = activeGroups
         .filter((round) => getSelectionKey(round) === selectionGroup.id)
@@ -5165,45 +5164,16 @@ export class WorkoutSession {
       if (outcome === "tick") {
         this.keepSequenceInSlot(selectionGroup.id, root);
       } else {
-        rejectedSelectionKeys.add(selectionGroup.id);
+        rejectedSelections.set(selectionGroup.id, root.id);
       }
     }
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.syncLegacyKeptExerciseIds();
-    const currentExerciseIds = new Map(
-      selectionGroups
-        .filter((group) => !rejectedSelectionKeys.has(group.id))
-        .map((group) => [
-          group.id,
-          this.state.selectedExerciseIds[this.getSelectionStorageKey(
-            group.id,
-            this.state.activeWorkoutModifiers,
-          )],
-        ])
-        .filter(([, exerciseId]) => exerciseId),
-    );
-    const excludedExerciseIdsByGroup = new Map();
-
-    for (const group of selectionGroups.filter((candidate) =>
-      rejectedSelectionKeys.has(candidate.id))) {
-      const selectionStorageKey = this.getSelectionStorageKey(
-        group.id,
-        this.state.activeWorkoutModifiers,
-      );
-      const rejectedExerciseId = this.state.selectedExerciseIds[selectionStorageKey];
-      excludedExerciseIdsByGroup.set(group.id, new Set([rejectedExerciseId]));
-      this.removeSavedSequenceCopiesForSlot(group.id, rejectedExerciseId);
+    for (const [groupId, rootId] of rejectedSelections) {
+      // Rejection is a phase-local downvote, not a compatibility ban. Clear
+      // cached slot selections, but preserve Keeps and already-recorded scores.
+      this.removeSavedSequenceCopiesForSlot(groupId, rootId);
     }
-
-    const nextLineup = this.chooseBestDistinctLineup(
-      selectionGroups,
-      this.state.activeWorkoutModifiers,
-      {
-        currentExerciseIds,
-        excludedExerciseIdsByGroup,
-      },
-    );
-    this.applyDistinctLineup(selectionGroups, nextLineup, false);
 
     this.finalizeActiveWorkoutSession(
       this.state.workoutCompleted ? "Completed" : "Interrupted",
@@ -5399,7 +5369,6 @@ export class WorkoutSession {
     modifiers = this.state.activeWorkoutModifiers,
     {
       currentExerciseIds = new Map(),
-      excludedExerciseIdsByGroup = new Map(),
       allowSavedSelectionException = false,
       carriedKeepRootIdsBySelectionGroupId = new Map(),
       modifierTransitionProtectedGroupIds = new Set(),
@@ -5411,11 +5380,6 @@ export class WorkoutSession {
     }
 
     const calculateIsAllowed = (exercise, group) => {
-      const sequenceExercises = this.getSequenceExercises(exercise);
-      if (sequenceExercises.some((member) =>
-        excludedExerciseIdsByGroup.get(group.id)?.has(member.id))) {
-        return false;
-      }
       if (this.isWorkoutSelectionCandidate(
         exercise,
         group,
