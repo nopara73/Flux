@@ -6168,4 +6168,22 @@
         PingPong = $false
         MirrorForAlternation = $false
     }
+    1030 = @{
+        LocalSourceFile = 'reverse-row-aileen-17.4-3.1.mp4'
+        LocalSourceSha256 = '68c616f56576e8d262bb2c056bfc676f84d6b8c23aae02e91d0b41866f3b97e1'
+        File = 'qigong-row-aileen.mp4'
+        Url = 'https://www.youtube.com/watch?v=yZ81nzodSHA'
+        SourcePage = 'https://www.youtube.com/watch?v=yZ81nzodSHA'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 3.1
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:0:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
 }

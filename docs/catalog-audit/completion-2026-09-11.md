@@ -230,3 +230,54 @@ remaining catalog-availability invariant. Full web validation passes 363 of
 profile shards. The production web build rejects exactly modifier-pair
 availability, Hard Floor availability and distinct lineups. The Debug Android
 3.13/127 build succeeds with zero warnings and errors.
+
+## Reverse rowing
+
+1030 Reverse Rowing with Knee Bends uses the complete 17.4-20.5-second
+reverse-row cycle in [Aileen C. Jong's demonstration](https://www.youtube.com/watch?v=yZ81nzodSHA).
+The preserved native-geometry source has SHA-256
+`68c616f56576e8d262bb2c056bfc676f84d6b8c23aae02e91d0b41866f3b97e1`.
+All 62 final frames were inspected. The 720-pixel square crop at x=0 retains
+the whole person and the complete source attribution. The final runtime hash is
+`e3f3c03ffadd6e5b3ed1e6ff92506cf75298d5b9275ad105b4c5a242b47870fe`.
+
+The repeated upward forearm curl makes ElbowFlexors the primary mobility
+target. Demand 0 describes the unloaded coordination; no secondary, breathing
+or resisted-strength claim is added. The parallel feet remain planted while
+the knees, torso and arms repeat the complete cycle. Insect, Hard Floor,
+Silence and Shy are compatible; no equipment is used. One unsided block
+preserves the exact discrete reverse-rowing pattern. Existing 402 uses large
+straight-arm overhead circles, and 485 uses horizontal reaches and alternating
+back taps, so neither is a duplicate of this upward-curl pattern.
+
+The final crop passed a fresh actual-workout review: paused and resumed
+preparation, early/middle/late work, rest and the next movement. Its complete
+45-second work and 15-second rest ran naturally, at video rate 1, with no media
+or console error. The fixture uses the real 30-minute planner and synthetic
+preceding rounds to reach the elbow slot; it does not claim a complete real
+30-minute workout. Only `1030-final-*` and `final-playback.json` in
+[`evidence/2026-09-11/reverse-row`](evidence/2026-09-11/reverse-row) establish
+the final approval; other files there are clearly identified draft evidence.
+
+The paired completion suite now passes 21 tests per platform. The new cases
+prove complete distinct 30-minute Insect lineups with Light on and off and
+three selection seeds. They also pin the narrow elbow eligibility, Hard Floor
+compatibility, empty secondary list and exclusion from broad upper-body work.
+All 542 previous catalog records remain byte-equivalent after JSON parsing.
+Catalog revision 77, database 93 and app 3.14/128 add the new identity without
+changing state schemas, ranking, feedback, recovery, Oura or UI flows.
+
+All 543 retained entries have current passing explicit review hashes; the
+integrity CSV still preserves its original 517-entry baseline and retirement.
+The 1,045 exact secondary claims and direct primary work for all 30 canonical
+muscles pass their audit. The reviewed parity lock covers 132 source files,
+SHA-256 `7cc65089365536da1b85fdf3e872682a48b30315ffd4c56c511e9ccd9ce42b30`.
+
+This addition resolves one pairwise, one overlapping Hard Floor and 16
+complete-lineup failures. The remaining 23 pairwise, 11 Hard Floor and 20
+lineup failures still block release. Full Android tests pass 816/817, with
+only the availability invariant failing. Web tests pass 365/371, with only
+the availability invariant and five affected production-profile shards
+failing. The production web build rejects the same three real coverage gates.
+The Debug build succeeds with zero warnings and errors in 3m01s. This remains
+an unpublished catalog checkpoint.

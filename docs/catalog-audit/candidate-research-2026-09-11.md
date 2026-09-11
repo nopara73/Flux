@@ -55,3 +55,34 @@ Clinical [isometric adduction research](https://pubmed.ncbi.nlm.nih.gov/22814446
 measures gracilis and pectineus alongside the major adductors in resisted holds.
 That supports assessing the direct squeeze; it does not prove the stimulus of
 every chair pose or justify incidental-muscle claims.
+
+## Reverse rowing and other inspected movement sources
+
+Aileen C. Jong `yZ81nzodSHA` demonstrates forward and reverse rowing as distinct
+Qigong patterns. The 17.4-20.5-second reverse-row cycle was admitted as 1030
+after every final frame and the complete natural workout target round were
+reviewed. The upward forearm curl supports a demand-0 elbow-mobility primary;
+there are no secondary claims. The admission makes no breathing-training claim.
+The final crop retains the full instructor credit as well as the whole body.
+See the completion record for hashes and precise evidence scope.
+
+- Tai Chi Otherists `IrOWu9Svo5c` and Tim Kellam `hxNNwRr4LnU`: inspected full-source sheets. Their chest-opening demonstrations leave the legs and torso upright for extended arm-only phases; neither resolves the continuous whole-body gap.
+- Master Wing Cheung `JHQmY2sLhbI`: inspected the first ten minutes. Grass partly hides foot contact, and the early arm-dominant patterns do not establish a new qualified admission.
+- Yoga Transforms `kei52AXOCGk`: rowing demonstration is framed above the feet; reject this media.
+- CloudWalker `sdPu0XH2qiM`: dark clothing and a shaded subject reduce clarity; overhead rowing does not establish the needed elbow-target action.
+- myBwmc `Br_t4hHoJFg`: rowing/stirring uses a staggered traction-loaded stance; it does not solve Hard Floor.
+- StreetGymElites `gWLFwbSIxVk`, despite its office breaststroke title, demonstrates work supported between two chairs; reject for equipment.
+- Western Sydney University `7AjO8_QDWEk`: the standing cat/cow footage clips the outstretched hand/arm; reject this media.
+
+The [Shibashi protocol](https://www.taichi18.com/pdf/shibashi.pdf) describes
+coordinated diaphragmatic breathing. Ordinary inhale/exhale coordination alone
+has not been accepted as a breathing-muscle claim. The owner was asked through
+the coordinator whether the category includes deliberate breath-control
+practice; that definition remains pending at this checkpoint.
+
+Further adductor leads were also inspected. Howcast `SpY4UFrUkf4` has generic
+narrow-squat/inner-thigh cues but no explicit sustained bilateral pressure.
+Megan Anne `EMB65BDZxac` uses wide/lateral work and floor exercises. Rosalie Brown
+`oo8mwUdMbnc` describes seated/pillow work; its inaccessible video was not
+bypassed. UNC Cancer Rehab `10sqHBv0zL4` is a supine crisscross-kick demonstration.
+None supplies a new feet-only, Hard Floor/Insect-compatible thigh squeeze.

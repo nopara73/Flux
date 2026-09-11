@@ -24122,5 +24122,44 @@
     "maxSpaceMeters": 2,
     "equipment": "None",
     "silent": true
+  },
+  {
+    "id": 1030,
+    "name": "Reverse Rowing with Knee Bends",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1030.mp4",
+    "primaryCanonicalGroup": "ElbowFlexors",
+    "secondaryCanonicalGroups": [],
+    "practice": "Qigong elbow mobility",
+    "motionProfile": "ReverseRowingKneeBend",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1030,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
   }
 ]

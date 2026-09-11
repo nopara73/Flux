@@ -31583,6 +31583,64 @@
           "reason": "Inspected the actual name-specific workout preparation, work, rest and next movement. Target rounds elapsed without clock acceleration. Captures cover every phase; the chair was run twice to obtain its work capture. Static and moving media behaved correctly with no console or asset error. The fixture advances prior rounds; this is target playback review, not a claimed complete real 10- or 20-minute workout."
         }
       }
+    },
+    {
+      "id": 1030,
+      "metadataSha256": "cb5505130ea6803760ad6d9fead21ca95b5f9f50e4199cf34f0f3f1bda698795",
+      "assets": {
+        "exercise_videos/exercise_1030.mp4": "e3f3c03ffadd6e5b3ed1e6ff92506cf75298d5b9275ad105b4c5a242b47870fe"
+      },
+      "reviewedAt": "2026-09-11T22:48:16.8293714+08:00",
+      "method": "Explicit full-source, every packaged frame, anatomy, constraint and natural-timer actual-workout review. Final credit-preserving crop reviewed afresh.",
+      "observedAction": "Repeatedly curl the forearms upward, draw the bent elbows back with a small torso inclination, then lower the hands while bending the knees and return.",
+      "evidence": [
+        "docs/catalog-audit/evidence/2026-09-11/reverse-row/1030-final-all-62-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/reverse-row/final-playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/reverse-row/1030-final-console.json",
+        "tools/ReviewedSourceMedia/reverse-row-aileen-17.4-3.1.mp4"
+      ],
+      "checks": {
+        "Metadata": {
+          "status": "PASS",
+          "reason": "The visible repeated upward forearm curl and return support ElbowFlexors as the primary mobility target. Demand 0 describes unloaded coordination, not a resisted strength claim. No forearm, lat, breathing, balance or bracing secondaries are inferred. One continuous bilateral repetition block. The repeated knee bends, torso inclination and arm cycle qualify for Insect without a fully held phase. The parallel planted feet have no impact, lateral drive or pivot, supporting Hard Floor. Quiet ordinary calisthenic movement is Shy compatible, clothing and mirror agnostic. This is distinct from 402 overhead straight-arm rowing circles and 485 horizontal reach with alternating back taps. Its isolated anatomy does not qualify for broad upper-body work."
+        },
+        "FullLoop": {
+          "status": "PASS",
+          "reason": "Inspected every one of the 62 final frames. The 3.1-second side-view excerpt contains the complete upward curl, backward elbow draw, arm return and knee-bend cycle. The instructor remains in the same position throughout; the earlier source turn is excluded."
+        },
+        "Crop": {
+          "status": "PASS",
+          "reason": "The final 720-pixel square crop at x=0 preserves the entire head, hands, torso, knees and feet and the complete instructor attribution. All 62 final frames and the actual workout were inspected. Earlier crops with a clipped attribution were drafts and are not approved."
+        },
+        "LoopSeam": {
+          "status": "PASS",
+          "reason": "The last frame returns to the same low-hand bent-knee phase as the first. The natural loop was inspected over the complete 45-second work interval with no freeze, temporal reversal, compositing or artificial return."
+        },
+        "PlaybackSpeed": {
+          "status": "PASS",
+          "reason": "The source is retained at normal speed, sampled to 20 fps. The 3.1-second runtime MP4 played at rate 1 throughout the natural 45-second interval, with ordinary five-second preparation and 15-second rest."
+        },
+        "Mirroring": {
+          "status": "PASS",
+          "reason": "The unsided bilateral movement keeps the source orientation. No mirrored side, reversed direction or manufactured alternation is added."
+        },
+        "Travel": {
+          "status": "PASS",
+          "reason": "The complete demonstrated action is planted within one small standing area, comfortably below 2 m by 2 m."
+        },
+        "HoldFrame": {
+          "status": "NOT_APPLICABLE",
+          "reason": "A moving repetition uses video; no hold frame is displayed."
+        },
+        "Equipment": {
+          "status": "PASS",
+          "reason": "Only the feet touch the floor. Shoes, hands and the complete unsupported body are visible. No wall, mirror, furniture, floor support or other equipment is used."
+        },
+        "Workout": {
+          "status": "PASS",
+          "reason": "Inspected final-media paused preparation, resumed five-second preparation, early/middle/late work, rest and next movement in the actual web workout player. The entire 45-second target work and 15-second rest elapsed without acceleration; rate 1, no media error and no console warnings/errors. The isolated 30-minute fixture uses the real planner and advances previous rounds synthetically; this is exact target-round review, not a claimed full real 30-minute workout."
+        }
+      }
     }
   ]
 }

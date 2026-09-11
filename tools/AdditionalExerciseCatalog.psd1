@@ -157,4 +157,10 @@
         Practice = 'Standing aerobic warm-up'
         MotionProfile = 'AlternatingToeUpHeelTaps'
     }
+    1030 = @{
+        Name = 'Reverse Rowing with Knee Bends'
+        Region = 'ARMS'
+        Practice = 'Qigong elbow mobility'
+        MotionProfile = 'ReverseRowingKneeBend'
+    }
 }

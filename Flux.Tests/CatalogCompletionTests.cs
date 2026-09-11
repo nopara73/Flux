@@ -55,6 +55,49 @@ public sealed class CatalogCompletionTests
         }
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReverseRowingClosesTheDistinctElbowSlotInAnInsectWorkout(bool light)
+    {
+        foreach (int seed in new[] { 1, 2, 4 })
+        {
+            Exercise[] catalog = LoadCatalog();
+            Exercise row = catalog.Single(exercise => exercise.Id == 1030);
+            Assert.Equal(CanonicalMuscleGroup.ElbowFlexors, row.PrimaryCanonicalGroup);
+            Assert.Empty(row.SecondaryCanonicalGroups);
+            Assert.Equal(0, row.MuscularDemand);
+            Assert.Single(row.SequenceBlocks);
+            Assert.True(WorkoutModifierPolicy.IsCompatible(row, WorkoutModifiers.Insect |
+                WorkoutModifiers.HardFloor | WorkoutModifiers.Silence | WorkoutModifiers.Shy));
+            Assert.True(WorkoutCoveragePolicy.IsSelectable(row,
+                MassGroupingTaxonomy.GetGroup(30, "r30.elbow-flexors")));
+            Assert.False(WorkoutCoveragePolicy.IsSelectable(row,
+                MassGroupingTaxonomy.GetGroup(3, "r3.head-neck-upper-limbs")));
+            var state = new WorkoutState();
+            var service = new ExerciseSessionService(catalog, new Random(seed));
+            WorkoutModifiers profile = WorkoutModifiers.Insect |
+                (light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+            service.StartWorkout(state, 30, profile);
+            WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+            Assert.Equal(1030, service.GetSelectedExercise(state,
+                rounds.Single(round => round.SelectionKey == "r30.elbow-flexors")).Id);
+            WorkoutGroup[] roots = rounds.Where(round => round.SequenceBlockIndex == 0).ToArray();
+            Assert.Equal(roots.Length, roots.Select(round => WorkoutModifierPolicy.GetSessionMovementId(
+                service.GetSelectedExercise(state, round))).Distinct().Count());
+            Assert.All(rounds, round => Assert.True(WorkoutModifierPolicy.IsCompatible(
+                service.GetSelectedExercise(state, round), profile)));
+            foreach (WorkoutGroup round in rounds)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+            Assert.True(state.WorkoutCompleted);
+        }
+    }
+
     [Fact]
     public void NewDirectMovementsPreserveExistingAnatomySequenceAndFeedback()
     {

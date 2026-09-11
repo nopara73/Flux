@@ -75,16 +75,17 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(89)]
     [InlineData(90)]
     [InlineData(91)]
+    [InlineData(92)]
     public void EverySupportedDatabaseCanUpgradeToTheCurrentCatalog(int oldVersion)
     {
-        Assert.Equal(92, ExerciseDatabaseVersionPolicy.CurrentVersion);
+        Assert.Equal(93, ExerciseDatabaseVersionPolicy.CurrentVersion);
         Assert.True(ExerciseDatabaseVersionPolicy.IsSupportedNonDestructiveUpgrade(
             oldVersion,
             ExerciseDatabaseVersionPolicy.CurrentVersion));
     }
 
     [Theory]
-    [InlineData(13, 92)]
+    [InlineData(13, 93)]
     [InlineData(68, 68)]
     [InlineData(69, 69)]
     [InlineData(70, 70)]
@@ -110,6 +111,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
     [InlineData(90, 90)]
     [InlineData(91, 91)]
     [InlineData(92, 92)]
+    [InlineData(93, 93)]
     public void UnsupportedDatabaseTransitionsRemainRejected(
         int oldVersion,
         int newVersion)
@@ -168,7 +170,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion67);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(429, storedVersion67.Count);
         Assert.Equal(427, preserved.Count);
         Assert.DoesNotContain(520, preserved);
@@ -224,7 +226,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion69);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(448, storedVersion69.Count);
         Assert.Equal(storedVersion69.Keys.Order(), preserved.Order());
         Assert.All(storedVersion69, entry =>
@@ -331,7 +333,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion75);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(498, storedVersion75.Count);
         Assert.Equal(storedVersion75.Keys.Order(), preserved.Order());
         Assert.All(storedVersion75, entry =>
@@ -383,7 +385,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion81);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(500, storedVersion81.Count);
         Assert.Equal(storedVersion81.Keys.Order(), preserved.Order());
         Assert.All(storedVersion81, entry =>
@@ -425,7 +427,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion85);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(507, storedVersion85.Count);
         Assert.Equal(storedVersion85.Keys.Order(), preserved.Order());
         Assert.All(storedVersion85, entry =>
@@ -473,7 +475,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion87);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(511, storedVersion87.Count);
         Assert.Equal(storedVersion87.Keys.Order(), preserved.Order());
         Assert.All(storedVersion87, entry =>
@@ -532,7 +534,7 @@ public sealed class SqliteExerciseDatabaseMigrationTests
             catalog,
             storedVersion88);
 
-        Assert.Equal(542, catalog.Length);
+        Assert.Equal(543, catalog.Length);
         Assert.Equal(
             storedVersion88.Keys
                 .Except(ShyAuditReusedExerciseIds)

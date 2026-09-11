@@ -2,6 +2,7 @@
     # Every retained direct source is reviewed footage of an actual person,
     # except for the separately reviewed internally invisible training below.
     ReviewedExternal = @(
+        1030,
         1028, 1029,
         1027,
         1026,

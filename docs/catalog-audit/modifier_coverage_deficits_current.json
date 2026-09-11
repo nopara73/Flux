@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 76,
-  "catalogRecordCount": 542,
-  "catalogSha256": "23d7e4e0ef97a1d2489c2ea569b26ed16722b0515d540ff96eb7a645bef885f4",
+  "catalogRevision": 77,
+  "catalogRecordCount": 543,
+  "catalogSha256": "12c143d4f5f85d3a6e6d43d98f1cb01de03cfc692fc9615a1697b97fc21704c5",
   "policy": {
     "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
     "diagnosticOnly": [
@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 24,
-    "pairwiseAffectedGroupCount": 13,
-    "hardFloorCategoryDeficiencyCount": 12,
-    "hardFloorCategoryAffectedGroupCount": 12,
+    "pairwiseDeficiencyCount": 23,
+    "pairwiseAffectedGroupCount": 12,
+    "hardFloorCategoryDeficiencyCount": 11,
+    "hardFloorCategoryAffectedGroupCount": 11,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -25,7 +25,7 @@
     "demandTwoDeficiencyCount": 8,
     "demandTwoAffectedGroupCount": 2,
     "materialityDeficiencyCount": 1,
-    "distinctLineupDeficiencyCount": 36
+    "distinctLineupDeficiencyCount": 20
   },
   "pairwise": [
     {
@@ -282,18 +282,6 @@
     },
     {
       "minutes": 30,
-      "groupId": "r30.elbow-flexors",
-      "groupName": "Elbow flexors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
       "groupId": "r30.forearm-flexors-pronators",
       "groupName": "Forearm flexors and pronators",
       "firstModifier": 16,
@@ -410,16 +398,6 @@
     },
     {
       "minutes": 30,
-      "groupId": "r30.elbow-flexors",
-      "groupName": "Elbow flexors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
       "groupId": "r30.forearm-flexors-pronators",
       "groupName": "Forearm flexors and pronators",
       "hardFloorCompatibility": "Compatible",
@@ -518,8 +496,8 @@
       "baseProfile": 16,
       "enabledModifier": 2,
       "modifiedProfile": 18,
-      "baselineExerciseCount": 266,
-      "modifiedExerciseCount": 253,
+      "baselineExerciseCount": 267,
+      "modifiedExerciseCount": 254,
       "materialExerciseCount": 13,
       "requiredMaterialExerciseCount": 14,
       "affectedGroupCount": 7,
@@ -577,170 +555,74 @@
     },
     {
       "minutes": 30,
-      "profile": 1,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 129,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
       "profile": 17,
-      "maximumDistinctExerciseCount": 22,
+      "maximumDistinctExerciseCount": 23,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 30,
       "profile": 3,
-      "maximumDistinctExerciseCount": 26,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 513,
-      "maximumDistinctExerciseCount": 24,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 5,
       "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 30,
-      "profile": 13,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 1,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 129,
-      "maximumDistinctExerciseCount": 27,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 17,
-      "maximumDistinctExerciseCount": 22,
+      "maximumDistinctExerciseCount": 23,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 3,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 513,
-      "maximumDistinctExerciseCount": 24,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 5,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 13,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 1,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 129,
-      "maximumDistinctExerciseCount": 27,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 17,
-      "maximumDistinctExerciseCount": 22,
+      "maximumDistinctExerciseCount": 23,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 3,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 513,
-      "maximumDistinctExerciseCount": 24,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 5,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 13,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 1,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 129,
-      "maximumDistinctExerciseCount": 27,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 17,
-      "maximumDistinctExerciseCount": 22,
+      "maximumDistinctExerciseCount": 23,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 3,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 513,
-      "maximumDistinctExerciseCount": 24,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 5,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 13,
-      "maximumDistinctExerciseCount": 27,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     }
   ]
