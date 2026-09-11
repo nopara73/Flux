@@ -62,8 +62,13 @@ public sealed record WorkoutModifierMaterialityDeficiency(
 public static class WorkoutModifierPolicy
 {
     public const int BroadCoverageResolutionMinutes = 3;
-    public const int MinimumExercisesPerBroadPairStatePerGroup = 5;
+    // Availability means a real choice exists. Complete-lineup validation
+    // separately enforces breadth, distinct movements and the block budget.
+    public const int MinimumExercisesPerBroadPairStatePerGroup = 1;
     public const int MinimumExercisesPerFinePairStatePerGroup = 1;
+    // Historical demand and materiality targets are diagnostic inventories,
+    // not admission requirements or release gates. Never fill them with
+    // altered anatomy, demand ratings or invented variations.
     public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 1;
     public const int MinimumWallRequiredSessionMovements = 20;
     public const int MinimumSoleWallContactRequiredSessionMovements = 5;
@@ -403,7 +408,7 @@ public static class WorkoutModifierPolicy
                                 WorkoutModifiers profile = Normalize(
                                     firstState | secondState);
                                 // Availability includes every selectable mirror relationship.
-                                // Mirror benefit is enforced separately by materiality.
+                                // Mirror benefit populations are reported separately as diagnostics.
                                 return new
                                 {
                                     Minutes = minutes,

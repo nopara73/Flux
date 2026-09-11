@@ -23,6 +23,11 @@ and forearm secondary claims. Demand remains 0. No torso or lower-body training
 claims were added. The unchanged 50% breadth rule counts six trained upper-body
 groups, making this eligible for the broad upper-body round.
 
+The alternating and simultaneous teacup demonstrations share SessionMovementId
+1026. They cannot fill two base slots or multiply distinct catalog coverage.
+Both final-frame and workout evidence sets were reinspected for this identity
+decision; the packaged videos are unchanged.
+
 All 180 packaged frames and all actual-workout phases were inspected. The
 workout ran through its ordinary five-second preparation, 45-second work and
 15-second rest to the next exercise, with playback rate 1 and no playback or
@@ -41,3 +46,27 @@ five paired web completion/migration tests, 40 web/native contract tests and
 19 web metadata tests. The exact secondary-claim audit passes 1,040 claims and
 retains direct primary work for all 30 canonical muscle groups. Full release
 validation and deployment are pending.
+
+## Availability and quota separation
+
+The owner rejected filling arbitrary category populations and percentages.
+The broad per-profile minimum is now nonempty availability, as already required
+for fine groups. The 50% trained-muscle breadth predicate and complete atomic
+lineup check are unchanged. Demand-category and materiality results remain in
+the ledger and must match the current catalog, but do not block release.
+
+This retires 100 overlapping broad pairwise count failures, 10 broad Hard Floor
+count failures, eight demand-category failures and one percentage-materiality
+failure. These are **policy retirements, not exercise-earned gap closures**.
+There remain 44 pairwise zero-choice failures, 21 overlapping Hard Floor
+zero-choice failures and 55 complete-lineup failures. All 120 actual availability
+and lineup failures still block release. The global wall inventories already
+pass and were not changed.
+
+The combined policy/family checkpoint passes 402 focused Android tests; the
+remaining test fails on the recorded zero-choice catalog gaps. Seventeen web
+policy/metadata checks and the 132-source parity lock pass. The Debug Android
+3.11/125 build succeeds with zero warnings and errors, and all 540 retained
+entries still have current passing metadata and runtime-media review hashes.
+These checks validate the checkpoint; the remaining coverage failures still
+prevent release.

@@ -79,15 +79,14 @@ IDs.
 
 The counts above are audit results. Wall remains outside pairwise quotas;
 equipment gating excludes WallRequired exercises when no wall is available.
-Physical floor classifications and modifier materiality are unchanged.
+Physical floor classifications remain unchanged.
 
-Under the user-authorized 2026-09-10 policy, the separate category audit requires
-five `Compatible` session movements in each broad 3-minute region and one in
-each finer 5- through 30-minute bucket, across the existing Insect/Silence
-profiles. There is no minimum for an `Incompatible` region or fine bucket.
-Hard Floor off still admits both truthful categories at runtime. Ordinary
-pairwise availability, equipment restrictions, materiality, and the two exact
-Insect structural exceptions remain in force.
+The 2026-09-11 completion policy requires nonempty Compatible availability in
+every applicable broad and fine bucket, together with complete atomic lineups.
+It retires the five-choice broad population target. No Incompatible counterpart
+is required. Hard Floor off still admits both truthful categories. Keep the
+established breadth rule, physical predicates and exact Insect exceptions.
+Percentage materiality remains diagnostic.
 
 Two mixed-floor mandatory sequences were separated during the current audit:
 327/546 (pivoting and planted elbow strikes) and 414/418 (tiptoe and flat-footed
@@ -96,7 +95,6 @@ All four revised placements passed actual-workout review. Revision 73 discards
 obsolete cached rounds for those IDs while preserving scores and valid Keeps
 on Android and web. The two elbow variants retain one session-movement identity.
 
-The current category audit reports **49 Compatible coverage deficits**.
 The [current deficit ledger](catalog-audit/modifier_coverage_deficits_current.json)
 records every failing profile and group. CI must reject every live deficit;
 refreshing this diagnostic ledger never waives the rule. Validation remains

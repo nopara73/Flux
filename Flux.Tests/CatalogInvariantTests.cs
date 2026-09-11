@@ -79,7 +79,7 @@ public sealed class CatalogInvariantTests
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).ToArray();
         Assert.Empty(pairwiseDeficiencies);
         Assert.Equal(
-            5,
+            1,
             WorkoutModifierPolicy.GetMinimumExercisesPerPairStatePerGroup(3));
         Assert.Equal(
             1,
@@ -89,14 +89,8 @@ public sealed class CatalogInvariantTests
                 .FindHardFloorCategoryCoverageDeficiencies(exercises)
                 .ToArray();
         Assert.Empty(hardFloorCategoryDeficiencies);
-        WorkoutMuscularDemandCoverageDeficiency[] muscularDemandDeficiencies =
-            WorkoutModifierPolicy
-                .FindMuscularDemandCoverageDeficiencies(exercises)
-                .ToArray();
-        Assert.Empty(muscularDemandDeficiencies);
-        WorkoutModifierMaterialityDeficiency[] materialityDeficiencies =
-            WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).ToArray();
-        Assert.Empty(materialityDeficiencies);
+        // Demand-category counts and percentage materiality remain in the
+        // diagnostic ledger. They do not define whether a workout is playable.
         WorkoutProfileLineupDeficiency[] lineupDeficiencies =
             WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
         Assert.Empty(lineupDeficiencies);
@@ -504,6 +498,7 @@ public sealed class CatalogInvariantTests
             [625] = [625, 1021],
             [712] = [712, 1012],
             [1010] = [1010, 1018],
+            [1026] = [1026, 1027],
             [948] = [948, 949],
         };
         Dictionary<int, int[]> actualSessionMovements = exercises

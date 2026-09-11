@@ -253,14 +253,14 @@ const integrityDebtMatches =
   exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
   exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies);
 
+// Demand-category and percentage materiality results above are diagnostic.
+// Availability and complete atomic lineups remain release requirements.
 const catalogInvariantChecks = [
   ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
   ["session movement metadata", isSessionMovementMetadataValid(catalog)],
   ["hierarchical modifier-pair coverage", pairwiseDeficiencies.length === 0],
   ["hierarchical hard-floor category coverage",
     hardFloorCategoryDeficiencies.length === 0],
-  ["broad muscular-demand coverage", muscularDemandDeficiencies.length === 0],
-  ["modifier materiality", materialityDeficiencies.length === 0],
   ["distinct workout lineups", distinctLineupDeficiencies.length === 0],
   ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
   ["sole-wall session-movement floor", soleWallCatalogDeficiencies.length === 0],

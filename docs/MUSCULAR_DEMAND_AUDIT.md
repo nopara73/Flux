@@ -37,24 +37,21 @@ The generated rating for each named exercise is shipped as `muscularDemand` in
 fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
-Catalog availability now has a separate one-per-category floor for demand 0
-and demand 2 across each of the 21 deduplicated single/pair modifier profiles.
-The audit uses the three broad 3-minute body regions; applying demand quotas to
-every fine anatomical leaf would require artificial variations rather than
-protect useful light and hard choices. An all-light sequence counts only when
-every distinct member is demand 0 and one member's primary canonical muscle
-belongs to the region. A hard sequence counts only when one of its demand-2
-members owns the region through its primary canonical muscle. The audit
-deduplicates `SessionMovementId`; sides, directions, blocks, repeated sets,
-aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota, and
-Light itself is not added as a modifier dimension.
+The 2026-09-11 owner-directed completion policy treats demand-category
+populations as diagnostics, not admission quotas or release gates. The audit
+still reports demand 0 and demand 2 across the deduplicated single/pair modifier
+profiles and three broad regions. An all-light sequence counts only when every
+distinct member is demand 0 and a member's primary muscle belongs to the region.
+A hard sequence counts only when a demand-2 member has its primary muscle in the
+region. Deduplicate SessionMovementId; never inflate counts with sides, sets,
+names or blocks. Light remains outside the modifier axes.
 
-The former all-resolution one-per-category rule exposed 207 demand-0 and 474
-demand-2 deficiencies despite a usable catalog, because it treated every fine
-leaf as a separate intensity inventory. Under the broad-region contract, the
-current catalog has zero demand-category deficits. Android tests and the web
-production build fail on any regression. The floor never justifies inventing
-an exercise, altering truthful anatomy, or changing a truthful demand rating.
+The current inventory results remain visible in the
+[diagnostic ledger](catalog-audit/modifier_coverage_deficits_current.json).
+Actual selectable availability, the established trained-muscle breadth rule
+and complete atomic workout lineups remain release requirements. A category
+shortfall never justifies invented movements or altered anatomy/demand ratings.
+Light remains the established session ranking preference.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
 `score`; it never creates hardness points or rewrites votes. Completing a

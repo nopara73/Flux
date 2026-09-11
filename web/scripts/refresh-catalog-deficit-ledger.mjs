@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -48,7 +48,8 @@ const report = {
     .update(catalogSource.replaceAll("\r\n", "\n"))
     .digest("hex"),
   policy: {
-    treatment: "Every enforceable coverage category must have zero deficits; the ledger is diagnostic and cannot authorize catalog debt.",
+    treatment: "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
+    diagnosticOnly: ["muscularDemand", "materiality"],
     broadCoverageResolutionMinutes: BROAD_COVERAGE_RESOLUTION_MINUTES,
     broadModifierPairMinimumPerStatePerGroup:
       MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
@@ -85,7 +86,16 @@ const report = {
   distinctLineup,
 };
 
-await writeFile(outputPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+// Publish a complete ledger even while an editor or preview is reading it.
+// In-place writes can fail on Windows or expose a partially written report.
+const temporaryPath = `${outputPath}.${process.pid}.tmp`;
+try {
+  await writeFile(temporaryPath, `${JSON.stringify(report, null, 2)}\n`,
+    { encoding: "utf8", flag: "wx" });
+  await rename(temporaryPath, outputPath);
+} finally {
+  await rm(temporaryPath, { force: true });
+}
 console.log(`Catalog deficit ledger: ${outputPath}`);
 
 function affectedGroupCount(deficiencies) {

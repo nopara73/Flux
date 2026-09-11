@@ -663,13 +663,13 @@ public sealed class WorkoutModifierPolicyTests
 
         Assert.Empty(deficiencies);
         var shortage = WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                catalog.Take(8).ToArray())
+                Array.Empty<Exercise>())
             .Where(result => result.Minutes == 3 && result.GroupId == group.Id &&
                 result.FirstModifier == WorkoutModifiers.Insect &&
                 result.SecondModifier == WorkoutModifiers.Mirror &&
                 result.SecondModifierEnabled).ToArray();
         Assert.Equal(4, shortage.Length);
-        Assert.All(shortage, result => Assert.Equal(4, result.MatchingExerciseCount));
+        Assert.All(shortage, result => Assert.Equal(0, result.MatchingExerciseCount));
         Assert.Contains(WorkoutModifierPolicy.FindMaterialityDeficiencies(catalog),
             result => result.Modifier == WorkoutModifiers.Mirror &&
                 result.ContextProfile == WorkoutModifiers.None);
@@ -783,9 +783,9 @@ public sealed class WorkoutModifierPolicyTests
 
         Assert.Empty(deficiencies);
 
-        WorkoutModifierPairCoverageDeficiency[] fourExerciseDeficiencies =
+        WorkoutModifierPairCoverageDeficiency[] emptyCatalogDeficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                    exercises.Take(4).ToArray())
+                    Array.Empty<Exercise>())
                 .Where(result =>
                     result.Minutes ==
                         WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
@@ -794,12 +794,12 @@ public sealed class WorkoutModifierPolicyTests
                     result.SecondModifier == WorkoutModifiers.Silence)
                 .ToArray();
 
-        Assert.Equal(4, fourExerciseDeficiencies.Length);
-        Assert.All(fourExerciseDeficiencies, deficiency =>
-            Assert.Equal(4, deficiency.MatchingExerciseCount));
+        Assert.Equal(4, emptyCatalogDeficiencies.Length);
+        Assert.All(emptyCatalogDeficiencies, deficiency =>
+            Assert.Equal(0, deficiency.MatchingExerciseCount));
         Assert.Equal(
             4,
-            fourExerciseDeficiencies
+            emptyCatalogDeficiencies
                 .Select(deficiency => (
                     deficiency.FirstModifierEnabled,
                     deficiency.SecondModifierEnabled))
@@ -837,13 +837,13 @@ public sealed class WorkoutModifierPolicyTests
             WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(compatible),
             result => result.Minutes == 3 && result.GroupId == group.Id);
         var deficiencies = WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
-                [.. compatible.Take(4), .. incompatible])
+                incompatible)
             .Where(result => result.Minutes == 3 && result.GroupId == group.Id).ToArray();
         Assert.Equal(5, deficiencies.Length);
         Assert.All(deficiencies, result =>
         {
             Assert.Equal(ExerciseHardFloorCompatibility.Compatible, result.HardFloorCompatibility);
-            Assert.Equal(4, result.MatchingExerciseCount);
+            Assert.Equal(0, result.MatchingExerciseCount);
         });
         WorkoutGroup fine = MassGroupingTaxonomy.GetGroup(30, canonicalGroups[0]);
         Assert.DoesNotContain(
@@ -1018,10 +1018,15 @@ public sealed class WorkoutModifierPolicyTests
                         result.SecondModifierEnabled),
                     result => result.MatchingExerciseCount);
 
-        Assert.Equal(4, counts[(false, false)]);
-        Assert.Equal(2, counts[(true, false)]);
-        Assert.Equal(2, counts[(false, true)]);
-        Assert.Equal(1, counts[(true, true)]);
+        Assert.Empty(counts);
+        WorkoutModifierPairCoverageDeficiency missingIntersection = Assert.Single(
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises.Take(3).ToArray()),
+            result => result.Minutes == 3 && result.GroupId == group.Id &&
+                result.FirstModifier == WorkoutModifiers.Insect &&
+                result.SecondModifier == WorkoutModifiers.Silence);
+        Assert.True(missingIntersection.FirstModifierEnabled);
+        Assert.True(missingIntersection.SecondModifierEnabled);
+        Assert.Equal(0, missingIntersection.MatchingExerciseCount);
     }
 
     [Fact]
@@ -1031,20 +1036,12 @@ public sealed class WorkoutModifierPolicyTests
             .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
             .Groups[1];
         CanonicalMuscleGroup[] canonicalGroups = group.CanonicalGroups.ToArray();
-        Exercise[] exercises = Enumerable.Range(1, 4)
-            .Select(id => Exercise(
-                id,
-                canonicalGroups[0],
-                canonicalGroups[1],
-                canonicalGroups[2],
-                insectCompatibility: ExerciseInsectCompatibility.Compatible))
-            .Append(Exercise(
+        Exercise[] exercises = [Exercise(
                 5,
                 canonicalGroups[0],
                 canonicalGroups[1],
                 canonicalGroups[2],
-                insectCompatibility: ExerciseInsectCompatibility.Unreviewed))
-            .ToArray();
+                insectCompatibility: ExerciseInsectCompatibility.Unreviewed)];
 
         WorkoutModifierPairCoverageDeficiency[] deficiencies =
             WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises)
@@ -1057,7 +1054,7 @@ public sealed class WorkoutModifierPolicyTests
 
         Assert.Equal(4, deficiencies.Length);
         Assert.All(deficiencies, deficiency =>
-            Assert.Equal(4, deficiency.MatchingExerciseCount));
+            Assert.Equal(0, deficiency.MatchingExerciseCount));
     }
 
     [Fact]

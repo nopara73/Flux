@@ -43,23 +43,18 @@ remain mandatory even when their lists are empty.
 
 ## Availability and materiality
 
-Under the user-authorized 2026-09-10 policy, pairwise coverage counts every
-actually selectable session movement, including Agnostic movements while
-Mirror is available. Each broad 3-minute region requires five distinct
-movements; each finer 5- through 30-minute bucket requires one. Compact/tall
-equipment restrictions and all other profile predicates still apply.
+The 2026-09-11 completion policy requires a real selectable movement in each
+applicable broad or fine group, plus complete atomic workout lineups. Agnostic
+movements count while Mirror is available. Compact/tall equipment restrictions,
+the established trained-muscle breadth rule and all physical predicates apply.
 
-Materiality is independent and unchanged. Compact must actually prefer a
-meaningful, anatomically broad upper-body set; full-body BenefitsGreatly
-exercises receive no preference credit there. Tall includes the compatible
-upper- and full-body set. These checks also run when the other modifier in a
-pair is already enabled. The current catalog has zero materiality deficits.
-
-The validation remains quadratic in the quota-bearing logical modifiers.
-Wall has its separate global inventory floor and is outside pairwise quotas.
-All enforceable coverage and distinct-lineup deficits must be zero before
-release; the current unresolved counts are in the
-[current deficit ledger](catalog-audit/modifier_coverage_deficits_current.json).
+Percentage-based materiality remains a diagnostic inventory, not a release
+gate. No extra mirror-relevant exercise is required simply to reach a count or
+percentage. Compact still prefers genuinely useful upper-body mirror work;
+tall includes eligible upper- and full-body work. Membership and preference
+behavior remain truthful. The audit remains quadratic in logical modifiers,
+and its results are visible in the
+[current ledger](catalog-audit/modifier_coverage_deficits_current.json).
 
 Mirror equipment never transforms media. Timed side mirroring and explicitly
 reviewed direction assets follow the exercise's actual sequence independently.
