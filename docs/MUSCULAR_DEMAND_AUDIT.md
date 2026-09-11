@@ -1,15 +1,15 @@
 # Muscular-demand audit
 
-The 539 catalog records were individually reviewed against one frozen,
+The 508 catalog records were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 116 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 288 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 135 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 122 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 234 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 152 |
 
 Ratings were assigned exercise by exercise. There is no desired overall
 distribution or balancing target. Stretching and mobility are not promoted merely
@@ -37,16 +37,24 @@ The generated rating for each named exercise is shipped as `muscularDemand` in
 fails if a retained exercise is missing, duplicated across ratings, or assigned
 outside `0..2`; linked opposite-direction exercises must agree.
 
-Demand ratings are descriptive. There is no per-context demand-category floor,
-materiality percentage, or exercise-count quota. Current setup availability is
-reported in [workout_availability_current.json](catalog-audit/workout_availability_current.json).
-The [workout availability contract](WORKOUT_AVAILABILITY.md) replaces historical
-coverage quotas. No limitation permits invented movements, changed ratings,
-approximate media, or relaxed physical constraints.
+Catalog availability now has a separate one-per-category floor for demand 0
+and demand 2 across each of the 21 deduplicated single/pair modifier profiles.
+The audit uses the three broad 3-minute body regions; applying demand quotas to
+every fine anatomical leaf would require artificial variations rather than
+protect useful light and hard choices. An all-light sequence counts only when
+every distinct member is demand 0 and one member's primary canonical muscle
+belongs to the region. A hard sequence counts only when one of its demand-2
+members owns the region through its primary canonical muscle. The audit
+deduplicates `SessionMovementId`; sides, directions, blocks, repeated sets,
+aliases, and renamed duplicates cannot inflate it. Demand 1 has no quota, and
+Light itself is not added as a modifier dimension.
 
-Light admits only complete sequences whose every distinct member is demand 0.
-Demanding work is never a fallback for an unavailable Light target. The planner
-shows limited coverage for acceptance or blocks an impossible duration.
+The former all-resolution one-per-category rule exposed 207 demand-0 and 474
+demand-2 deficiencies despite a usable catalog, because it treated every fine
+leaf as a separate intensity inventory. Under the broad-region contract, the
+current catalog has zero demand-category deficits. Android tests and the web
+production build fail on any regression. The floor never justifies inventing
+an exercise, altering truthful anatomy, or changing a truthful demand rating.
 
 `muscularDemand` is intentionally independent of the mutable user-preference
 `score`; it never creates hardness points or rewrites votes. Completing a
@@ -121,10 +129,12 @@ additional hardness points or weights are introduced.
 Due automatic Light is shown ON and cannot be disabled before or during a
 workout; enforce this in the session service as well as the controls and check
 again when activating a prepared workout. Manual Light can still be toggled
-on ordinary days. Flux admits only sequences whose every distinct member is
-demand `0`. Saved score, Keep, recovery, and equipment preferences arbitrate
-among these choices. A shortage requires limited-scope acceptance or a blocked
-start. Displaced Keeps and user scores remain persisted unchanged.
+on ordinary days. Flux first
+maximizes sequences whose every distinct member is demand `0`. Saved score,
+Keep, recovery, and equipment preferences then arbitrate among those light
+choices. A harder sequence fills a slot only when the compatible catalog cannot
+cover it with demand-`0` work; displaced Keeps and user scores remain persisted
+unchanged.
 
 Persisted session history supplies this calculation without adding a mutable
 counter or rewriting history. For old completed records without block history,

@@ -933,7 +933,13 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool violatesAdmission = WorkoutAvailabilityPolicy.FindCatalogViolations(exercises.ToArray()).Count > 0;
+        bool hasUndersizedWallCatalog =
+            WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises)
+                .Count > 0;
+        bool hasUndersizedSoleWallCatalog =
+            WorkoutModifierPolicy
+                .FindSoleWallContactRequiredCatalogDeficiencies(exercises)
+                .Count > 0;
         bool violatesRequirements = exercises.Any(exercise =>
             !Enum.IsDefined(exercise.PrimaryCanonicalGroup) ||
             exercise.SecondaryCanonicalGroups.Distinct().Count() !=
@@ -1061,8 +1067,8 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                             StringComparison.Ordinal)));
         }
 
-        if (violatesAdmission ||
-
+        if (hasUndersizedWallCatalog ||
+            hasUndersizedSoleWallCatalog ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||
             exercises.Select(exercise => exercise.Name).Distinct().Count() != exercises.Count ||

@@ -153,7 +153,7 @@ public sealed class CatalogIntegrityMigrationTests
             foreach (CanonicalMuscleGroup muscle in previous.Union(current))
             {
                 string slot = slotByMuscle[muscle];
-                bool stillTrained = exercise.PrimaryCanonicalGroup == muscle;
+                bool stillTrained = current.Contains(muscle);
                 Assert.True(stillTrained ==
                     state.KeptExerciseRootIdsBySelectionGroupId.ContainsKey(slot),
                     $"Keep changed incorrectly for exercise {id}, slot {slot}.");

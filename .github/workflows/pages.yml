@@ -13,9 +13,6 @@ on:
       - "Flux/Resources/raw/**"
       - "Flux/Flux.csproj"
       - "Flux/MainActivity.cs"
-      - "Flux/MainActivity.Availability.cs"
-      - "Flux.Tests/Fixtures/**"
-      - "docs/catalog-audit/workout_availability_current.json"
       - "Flux/MainActivity.Recovery.cs"
       - "Flux/RecoveryPrivacyActivity.cs"
       - "Flux/AndroidManifest.xml"
@@ -76,9 +73,6 @@ jobs:
             /Flux.Tests/CatalogInvariantTests.cs
             /Flux/Flux.csproj
             /Flux/MainActivity.cs
-            /Flux/MainActivity.Availability.cs
-            /Flux.Tests/Fixtures/**
-            /docs/catalog-audit/workout_availability_current.json
             /Flux/MainActivity.Recovery.cs
             /Flux/RecoveryPrivacyActivity.cs
             /Flux/AndroidManifest.xml

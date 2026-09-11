@@ -121,7 +121,7 @@ test("every changed standalone claim removes only impossible fine-slot selection
     restored.reconcileCatalog();
     for (const muscle of muscles) {
       const slot = slotByMuscle.get(muscle);
-      const trained = e.primaryCanonicalGroup === muscle;
+      const trained = current.has(muscle);
       const context = `${e.id} ${slot}`;
       assert.equal(restored.state.keptExerciseRootIdsBySelectionGroupId[slot] !== undefined, trained, `Keep ${context}`);
       assert.equal(restored.state.exerciseScoreAdjustmentsBySelectionGroupId[slot] !== undefined, trained, `slot score ${context}`);

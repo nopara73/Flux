@@ -303,13 +303,7 @@ public partial class MainActivity : Activity
         _sessionService = startup.SessionService;
         _applicationStartupCompleted = true;
 
-        if (_state.WorkoutSetupReviewRequired)
-        {
-            CancelQueuedWorkoutStart();
-            ShowDurationSelection();
-            _ = ReviewUpdatedWorkoutAsync();
-        }
-        else if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
+        if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
             CancelQueuedWorkoutStart();
             ShowCongratulations();
@@ -569,7 +563,6 @@ public partial class MainActivity : Activity
 
     protected override void OnDestroy()
     {
-        _workoutScopeDialog?.Dismiss();
         _activityDestroyed = true;
         _ouraReadCancellation?.Cancel();
         _workoutPreparationCancellation?.Cancel();
@@ -2691,19 +2684,6 @@ public partial class MainActivity : Activity
             int minutes = _selectedWorkoutMinutes;
             WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
                 _selectedWorkoutModifiers);
-            WorkoutAvailability availability = _sessionService.GetWorkoutAvailability(_state, minutes, modifiers);
-            bool acceptedLimitedCoverage = false;
-            if (!availability.CanStart || availability.RequiresAcceptance)
-            {
-                acceptedLimitedCoverage = await ReviewWorkoutScopeAsync(availability);
-                if (_activityDestroyed) return;
-                if (!acceptedLimitedCoverage)
-                {
-                    _beginWorkoutButton.Enabled = true;
-                    _beginWorkoutButton.Alpha = 1f;
-                    return;
-                }
-            }
             QueueWorkoutPreparation();
             PreparedWorkout? prepared = _preparedWorkout is
                 { Minutes: var preparedMinutes, Modifiers: var preparedModifiers }
@@ -2741,25 +2721,16 @@ public partial class MainActivity : Activity
             _workoutPreparationCancellation = null;
             _workoutPreparationTask = null;
             _preparedWorkout = null;
-            WorkoutState preparedState = prepared.State;
-            preparedState.OuraRecovery = GetAvailableOuraSnapshot();
+            _state = prepared.State;
+            _state.OuraRecovery = GetAvailableOuraSnapshot();
             if (prepared.IsReconfiguration)
             {
-                _state = preparedState;
                 _stateStore.Save(_state);
                 RestoreWorkoutAfterSetup();
                 return;
             }
 
-            WorkoutAvailability finalScope = _sessionService.GetWorkoutAvailability(preparedState, minutes, preparedState.ActiveWorkoutModifiers);
-            if (finalScope.RequiresAcceptance && !finalScope.Groups.Select(group => group.Id).SequenceEqual(availability.Groups.Select(group => group.Id)))
-            {
-                acceptedLimitedCoverage = await ReviewWorkoutScopeAsync(finalScope);
-                if (_activityDestroyed) return;
-                if (!acceptedLimitedCoverage) { _beginWorkoutButton.Enabled = true; _beginWorkoutButton.Alpha = 1f; return; }
-            }
-            _sessionService.ActivatePreparedWorkout(preparedState, acceptedLimitedCoverage);
-            _state = preparedState;
+            _sessionService.ActivatePreparedWorkout(_state);
             LogOuraDecision(workoutStarted: true);
             _stateStore.Save(_state);
             ShowNextExercise();
@@ -2774,14 +2745,6 @@ public partial class MainActivity : Activity
             _beginWorkoutButton.Enabled = true;
             _beginWorkoutButton.Alpha = 1f;
             Android.Util.Log.Error("Flux", $"Unable to start workout: {error}");
-            if (!_activityDestroyed)
-            {
-                WorkoutAvailability unavailable = error is WorkoutUnavailableException known
-                    ? known.Availability
-                    : _sessionService.GetWorkoutAvailability(_state, _selectedWorkoutMinutes, _selectedWorkoutModifiers)
-                        with { Groups = [] };
-                await ReviewWorkoutScopeAsync(unavailable);
-            }
         }
     }
 

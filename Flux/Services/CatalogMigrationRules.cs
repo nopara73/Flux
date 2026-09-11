@@ -2473,6 +2473,10 @@ public static class CatalogMigrationRules
                         (string selectionGroupId, _) =
                             ParseSelectionStorageKey(selection.Key);
                         return IsKnownSelectionGroupId(selectionGroupId) &&
+                            IsTrainingClaimAffectedRoot(
+                                selection.Value,
+                                exercisesById!,
+                                trainingClaimChangedExerciseIds) &&
                             !IsValidPreferenceRoot(
                                 selectionGroupId,
                                 selection.Value,
@@ -2710,6 +2714,10 @@ public static class CatalogMigrationRules
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]
                 .RemoveWhere(rootId =>
                     IsKnownSelectionGroupId(selectionGroupId) &&
+                    IsTrainingClaimAffectedRoot(
+                        rootId,
+                        exercisesById,
+                        trainingClaimChangedExerciseIds) &&
                     !IsValidPreferenceRoot(
                         selectionGroupId,
                         rootId,
@@ -2730,6 +2738,10 @@ public static class CatalogMigrationRules
                     selectionGroupId];
             foreach (int rootId in adjustments.Keys.Where(rootId =>
                          IsKnownSelectionGroupId(selectionGroupId) &&
+                         IsTrainingClaimAffectedRoot(
+                             rootId,
+                             exercisesById,
+                             trainingClaimChangedExerciseIds) &&
                          !IsValidPreferenceRoot(
                              selectionGroupId,
                              rootId,

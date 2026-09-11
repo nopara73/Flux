@@ -5,15 +5,7 @@ support, equipment, or spoken instruction except where a stable wall or
 physical mirror is explicitly declared. The final packaged silent human demonstration is authoritative for
 the action, name, muscular demand, anatomy, structure, and presentation.
 
-## Current planner contract — 2026-09-11
-
-The integrated product uses [workout availability](../WORKOUT_AVAILABILITY.md).
-The quota-era 254 deficit result below is frozen historical evidence, not a
-current release gate. [workout_availability_current.json](workout_availability_current.json)
-reports current full, limited, and blocked contexts. Admission, exact media,
-truthful anatomy, primary coverage, migration, and platform tests remain gates.
-
-## Catalog handoff checkpoint — 2026-09-11
+## Current audit status — 2026-09-11
 
 ### Stable handoff checkpoint
 
@@ -29,7 +21,7 @@ nothing has been committed, pushed, published or installed. Integration task
 and owns the separately authorized eligibility-architecture replacement and
 release integration. Preserve the owner's explicit Heel Walks exclusion.
 Focused final Android metadata/sequence validation passes. Full release validation
-is still required after integration; the quota-era checkpoint recorded 254 eligibility failures.
+is still required after integration; the current 254 eligibility failures prevent release.
 
 
 The catalog has **539 exercises** after withdrawing exercise 412 for cropped shoes.

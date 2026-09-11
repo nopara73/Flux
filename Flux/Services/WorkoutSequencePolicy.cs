@@ -79,8 +79,8 @@ public static class WorkoutSequencePolicy
     {
         ArgumentNullException.ThrowIfNull(group);
         Exercise[] members = GetMembers(root, exercisesById);
-        return members.Select(member => member.PrimaryCanonicalGroup)
-            .Distinct().Count(group.CanonicalGroups.Contains);
+        return group.CanonicalGroups.Count(canonicalGroup =>
+            members.Any(member => member.Trains(canonicalGroup)));
     }
 
     public static WorkoutGroup[][] GetPlacementOptions(
@@ -96,12 +96,28 @@ public static class WorkoutSequencePolicy
             return [];
         }
 
+        WorkoutGroup[] eligibleAnchors = groups
+            .Where(group => GetCanonicalCoverage(root, exercisesById, group) >=
+                WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group))
+            .ToArray();
         WorkoutGroup[] primaryGroups = GetPrimaryCoverageGroups(
             root,
             exercisesById,
             groups);
-        // One atomic sequence owns exactly the slots trained by its members'
-        // primaries. Secondary claims never create an alternative identity or slot.
-        return primaryGroups.Length > 0 ? [primaryGroups] : [];
+        bool canClaimMultiplePrimarySlots = primaryGroups.Length > 1 &&
+            primaryGroups.All(primaryGroup => eligibleAnchors.Any(anchor =>
+                anchor.Id == primaryGroup.Id));
+
+        return eligibleAnchors
+            .Select(anchor => canClaimMultiplePrimarySlots &&
+                    primaryGroups.Any(primaryGroup =>
+                        primaryGroup.Id == anchor.Id)
+                ? primaryGroups
+                : [anchor])
+            .DistinctBy(option => string.Join(
+                '|',
+                option.OrderBy(group => group.Order).Select(group => group.Id)))
+            .Select(option => option.OrderBy(group => group.Order).ToArray())
+            .ToArray();
     }
 }

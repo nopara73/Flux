@@ -4,6 +4,8 @@ namespace Flux.Services;
 
 public static class WorkoutCoveragePolicy
 {
+    public const int MinimumCoveragePercent = 50;
+
     public static int GetCanonicalCoverage(
         Exercise exercise,
         WorkoutGroup group)
@@ -11,7 +13,7 @@ public static class WorkoutCoveragePolicy
         ArgumentNullException.ThrowIfNull(exercise);
         ArgumentNullException.ThrowIfNull(group);
 
-        return IsPrimaryForGroup(exercise, group) ? 1 : 0;
+        return group.CanonicalGroups.Count(exercise.Trains);
     }
 
     public static int GetRequiredCanonicalCoverage(WorkoutGroup group)
@@ -25,7 +27,7 @@ public static class WorkoutCoveragePolicy
                 nameof(group));
         }
 
-        return 1;
+        return (group.CanonicalGroups.Count * MinimumCoveragePercent + 99) / 100;
     }
 
     public static bool IsSelectable(Exercise exercise, WorkoutGroup group)
@@ -33,7 +35,8 @@ public static class WorkoutCoveragePolicy
         ArgumentNullException.ThrowIfNull(exercise);
         ArgumentNullException.ThrowIfNull(group);
 
-        return IsPrimaryForGroup(exercise, group);
+        return GetCanonicalCoverage(exercise, group) >=
+            GetRequiredCanonicalCoverage(group);
     }
 
     public static bool IsPrimaryForGroup(Exercise exercise, WorkoutGroup group)

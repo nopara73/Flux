@@ -75,7 +75,31 @@ public sealed class CatalogInvariantTests
         Exercise[] exercises = JsonSerializer.Deserialize<Exercise[]>(
             File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Assets", "exercises.json")),
             JsonOptions)!;
-        Assert.Empty(WorkoutAvailabilityPolicy.FindCatalogViolations(exercises));
+        WorkoutModifierPairCoverageDeficiency[] pairwiseDeficiencies =
+            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(exercises).ToArray();
+        Assert.Empty(pairwiseDeficiencies);
+        Assert.Equal(
+            5,
+            WorkoutModifierPolicy.GetMinimumExercisesPerPairStatePerGroup(3));
+        Assert.Equal(
+            1,
+            WorkoutModifierPolicy.GetMinimumExercisesPerPairStatePerGroup(30));
+        WorkoutHardFloorCategoryCoverageDeficiency[] hardFloorCategoryDeficiencies =
+            WorkoutModifierPolicy
+                .FindHardFloorCategoryCoverageDeficiencies(exercises)
+                .ToArray();
+        Assert.Empty(hardFloorCategoryDeficiencies);
+        WorkoutMuscularDemandCoverageDeficiency[] muscularDemandDeficiencies =
+            WorkoutModifierPolicy
+                .FindMuscularDemandCoverageDeficiencies(exercises)
+                .ToArray();
+        Assert.Empty(muscularDemandDeficiencies);
+        WorkoutModifierMaterialityDeficiency[] materialityDeficiencies =
+            WorkoutModifierPolicy.FindMaterialityDeficiencies(exercises).ToArray();
+        Assert.Empty(materialityDeficiencies);
+        WorkoutProfileLineupDeficiency[] lineupDeficiencies =
+            WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
+        Assert.Empty(lineupDeficiencies);
         IReadOnlyDictionary<int, Exercise> exercisesById = exercises
             .ToDictionary(exercise => exercise.Id);
         IReadOnlyDictionary<int, Exercise> sequenceRootByExerciseId = exercises
@@ -88,7 +112,7 @@ public sealed class CatalogInvariantTests
             WorkoutModifierPolicy.ValidationProfiles,
             new ParallelOptions
             {
-                MaxDegreeOfParallelism = 2,
+                MaxDegreeOfParallelism = Math.Max(1, Environment.ProcessorCount),
             },
             profile =>
             {
@@ -103,7 +127,7 @@ public sealed class CatalogInvariantTests
                     var profileState = new WorkoutState();
                     try
                     {
-                        profileService.StartWorkout(profileState, minutes, profile, acceptLimitedCoverage: true);
+                        profileService.StartWorkout(profileState, minutes, profile);
                     }
                     catch (Exception exception)
                     {
@@ -132,7 +156,8 @@ public sealed class CatalogInvariantTests
                             profileService.GetSelectedExercise(profileState, group),
                             profile)));
                     IReadOnlyList<WorkoutGroup> resolutionGroups =
-                        profileService.GetWorkoutAvailability(profileState, minutes, profileState.ActiveWorkoutModifiers).Groups;
+                        MassGroupingTaxonomy.GetResolution(
+                            minutes > 30 ? 30 : minutes).Groups;
                     Assert.All(
                         activeGroups.GroupBy(
                             group => group.SelectionKey,
@@ -163,7 +188,7 @@ public sealed class CatalogInvariantTests
         foreach (int minutes in ExerciseSessionService.SupportedWorkoutMinutes)
         {
             var profileState = new WorkoutState();
-            profileService.StartWorkout(profileState, minutes, allModifiers, acceptLimitedCoverage: true);
+            profileService.StartWorkout(profileState, minutes, allModifiers);
             Assert.Equal(allModifiers, profileState.ActiveWorkoutModifiers);
             WorkoutGroup[] activeGroups = profileService
                 .GetActiveGroups(profileState)
@@ -173,7 +198,8 @@ public sealed class CatalogInvariantTests
                     profileService.GetSelectedExercise(profileState, group),
                     allModifiers)));
             IReadOnlyList<WorkoutGroup> resolutionGroups =
-                profileService.GetWorkoutAvailability(profileState, minutes, profileState.ActiveWorkoutModifiers).Groups;
+                MassGroupingTaxonomy.GetResolution(
+                    minutes > 30 ? 30 : minutes).Groups;
             Assert.All(
                 activeGroups.GroupBy(group => group.SelectionKey, StringComparer.Ordinal),
                 rounds =>
@@ -845,6 +871,10 @@ public sealed class CatalogInvariantTests
                 .Select(WorkoutModifierPolicy.GetSessionMovementId)
                 .Distinct()
                 .Count());
+        Assert.Empty(
+            WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises));
+        Assert.Empty(WorkoutModifierPolicy
+            .FindSoleWallContactRequiredCatalogDeficiencies(exercises));
         Assert.All(wallRequired, exercise =>
         {
             Assert.False(WorkoutModifierPolicy.IsCompatible(

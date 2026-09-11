@@ -14,8 +14,8 @@ public sealed class ExerciseSessionService
         WorkoutModifiers.HardFloor |
         WorkoutModifiers.Silence;
 
-    private const int CurrentStateVersion = 30;
-    private const int DominantLightModeStateVersion = 30;
+    private const int CurrentStateVersion = 29;
+    private const int DominantLightModeStateVersion = 29;
     private const int ExplicitLightModeStateVersion = 28;
     private const int ImplicitUpperBodyClothingStateVersion = 27;
     private const int LegacyTrainingDayInferenceStateVersion = 25;
@@ -43,8 +43,6 @@ public sealed class ExerciseSessionService
     private readonly Dictionary<string, WorkoutGroup[][]>
         _sequencePlacementOptionsCache = new(StringComparer.Ordinal);
     private readonly Random _random;
-    private readonly Dictionary<(int Minutes, WorkoutModifiers Modifiers), WorkoutAvailability>
-        _availabilityCache = [];
     private readonly Func<DateTimeOffset> _utcNowProvider;
     private readonly TimeZoneInfo _localTimeZone;
 
@@ -96,26 +94,6 @@ public sealed class ExerciseSessionService
 
     public static IReadOnlyList<int> SupportedWorkoutMinutes =>
         WorkoutMinutes;
-
-    public WorkoutAvailability GetWorkoutAvailability(WorkoutState state, int minutes, WorkoutModifiers modifiers)
-    {
-        if (IsLightDayDue(state, GetCurrentUnixTimeMilliseconds()))
-        {
-            modifiers |= WorkoutModifiers.Light;
-        }
-        return GetAvailability(minutes, modifiers);
-    }
-
-    private WorkoutAvailability GetAvailability(int minutes, WorkoutModifiers modifiers)
-    {
-        var key = (minutes, WorkoutModifierPolicy.Normalize(modifiers));
-        if (!_availabilityCache.TryGetValue(key, out WorkoutAvailability? availability))
-        {
-            availability = WorkoutAvailabilityPolicy.Evaluate(_exercises, minutes, key.Item2);
-            _availabilityCache[key] = availability;
-        }
-        return availability;
-    }
 
     public WorkoutModifiers GetDefaultWorkoutModifiers(
         WorkoutState state,
@@ -174,63 +152,13 @@ public sealed class ExerciseSessionService
             nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds());
     }
 
-    // The upgrade reader may inspect an old Light plan, but is never used to
-    // execute or select its unfinished demanding movements.
-    private bool _readingLegacyLightPlan;
-
     public void Initialize(WorkoutState state)
-    {
-        ArgumentNullException.ThrowIfNull(state);
-        NormalizeCollections(state);
-        NormalizeWorkoutHistory(state);
-        bool upgradingActivePlan = state.Version < CurrentStateVersion && state.ActiveWorkoutSession is not null && !state.WorkoutCompleted;
-        _readingLegacyLightPlan = state.Version < DominantLightModeStateVersion &&
-            state.ActiveWorkoutMinutes > 0 && state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light);
-        try
-        {
-            if (upgradingActivePlan && !CanRetainPrimaryPlan(state))
-                PreserveHistoryForSetupReview(state);
-            InitializeCore(state);
-        }
-        catch (InvalidOperationException) when (upgradingActivePlan && state.ActiveWorkoutSession is not null)
-        {
-            // A legacy atomic plan that cannot retain its completed placements
-            // returns to explicit setup review; never substitute a different
-            // movement beneath an already completed round ID.
-            PreserveHistoryForSetupReview(state);
-            InitializeCore(state);
-        }
-        finally { _readingLegacyLightPlan = false; }
-    }
-
-    private bool CanRetainPrimaryPlan(WorkoutState state)
-    {
-        if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes)) return false;
-        WorkoutResolution resolution = GetBaseResolution(state.ActiveWorkoutMinutes);
-        if (GetAvailability(state.ActiveWorkoutMinutes, state.ActiveWorkoutModifiers).ResolutionMinutes != resolution.Minutes)
-            return false;
-        return resolution.Groups.All(group =>
-        {
-            if (!state.SelectedExerciseIds.TryGetValue(GetSelectionStorageKey(group.Id, state.ActiveWorkoutModifiers), out int rootId))
-                return true; // Existing migrations handle omitted structural slots.
-            return _exercisesById.TryGetValue(rootId, out Exercise? root) &&
-                GetSequencePlacementOptions(root, resolution.Groups).Any(option => option.Any(owned => owned.Id == group.Id));
-        });
-    }
-
-    private void PreserveHistoryForSetupReview(WorkoutState state)
-    {
-        FinalizeActiveWorkoutSession(state, WorkoutSessionStatus.Interrupted);
-        ResetToDurationSelection(state);
-        state.WorkoutSetupReviewRequired = true;
-        _readingLegacyLightPlan = false;
-    }
-
-    private void InitializeCore(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
 
         int loadedStateVersion = state.Version;
+        NormalizeCollections(state);
+        NormalizeWorkoutHistory(state);
         long currentUnixTimeMilliseconds = GetCurrentUnixTimeMilliseconds();
         if (loadedStateVersion < LegacyTrainingDayInferenceStateVersion)
         {
@@ -390,7 +318,6 @@ public sealed class ExerciseSessionService
         }
         else
         {
-            _readingLegacyLightPlan = false;
             RepairActiveLineup(
                 state,
                 preserveCurrentSelections:
@@ -435,16 +362,10 @@ public sealed class ExerciseSessionService
     public void StartWorkout(
         WorkoutState state,
         int minutes,
-        WorkoutModifiers modifiers = DefaultWorkoutModifiers,
-        bool acceptLimitedCoverage = false)
+        WorkoutModifiers modifiers = DefaultWorkoutModifiers)
     {
-        WorkoutAvailability availability = GetWorkoutAvailability(state, minutes, modifiers);
-        if (!availability.CanStart || availability.RequiresAcceptance && !acceptLimitedCoverage)
-        {
-            throw new WorkoutUnavailableException(availability);
-        }
         PrepareWorkout(state, minutes, modifiers);
-        ActivatePreparedWorkout(state, acceptLimitedCoverage);
+        ActivatePreparedWorkout(state);
     }
 
     public void PrepareWorkout(
@@ -465,12 +386,6 @@ public sealed class ExerciseSessionService
         if (state.ActiveWorkoutMinutes != 0)
         {
             throw new InvalidOperationException("A workout is already active.");
-        }
-
-        WorkoutAvailability availability = GetWorkoutAvailability(state, minutes, modifiers);
-        if (!availability.CanStart)
-        {
-            throw new WorkoutUnavailableException(availability);
         }
 
         int loadedStateVersion = state.Version;
@@ -517,20 +432,16 @@ public sealed class ExerciseSessionService
         CarrySlotPreferencesForward(state);
         RepairActiveLineup(
             state,
-            preserveCurrentSelections: false);
+            preserveCurrentSelections: !modifiers.HasFlag(
+                WorkoutModifiers.Light));
         RebalanceNewExercisesByMuscleBalance(state);
         SetActiveLongWorkoutAllocation(state);
         ReconcileLineupWithScheduledPhases(state);
     }
 
-    public void ActivatePreparedWorkout(WorkoutState state, bool acceptLimitedCoverage = false)
+    public void ActivatePreparedWorkout(WorkoutState state)
     {
         ArgumentNullException.ThrowIfNull(state);
-        WorkoutAvailability availability = GetWorkoutAvailability(state, state.ActiveWorkoutMinutes, state.ActiveWorkoutModifiers);
-        if (!availability.CanStart || availability.RequiresAcceptance && !acceptLimitedCoverage)
-        {
-            throw new WorkoutUnavailableException(availability);
-        }
         if (!IsValidWorkoutMinutes(state.ActiveWorkoutMinutes) ||
             state.ActiveWorkoutSession is not null ||
             state.Outcomes.Count != 0 ||
@@ -658,7 +569,9 @@ public sealed class ExerciseSessionService
                 protectedBaseGroupIds)
             .ToArray();
         HashSet<string> retainedUnavailableSelectionGroupIds = selectionGroups
-            .Where(group => !GetAvailability(state.ActiveWorkoutMinutes, modifiers).Groups.Any(available => available.Id == group.Id))
+            .Where(group => !WorkoutModifierPolicy.IsSelectionGroupAvailable(
+                group,
+                modifiers))
             .Select(group => group.Id)
             .ToHashSet(StringComparer.Ordinal);
         bool currentSelectionGroupAvailable = selectionGroups.Any(group =>
@@ -730,11 +643,6 @@ public sealed class ExerciseSessionService
                     lockedSelectionGroupIds));
 
             WorkoutGroup[] replannedRounds = GetActiveGroups(state).ToArray();
-        if (replannedRounds.Any(round =>
-            !state.Outcomes.ContainsKey(round.Id) &&
-            !(preserveCompletedCurrentSelection && round.Id == currentRound.Id) &&
-            !WorkoutModifierPolicy.IsCompatible(GetSelectedExercise(state, round), state.ActiveWorkoutModifiers)))
-            throw new WorkoutUnavailableException(GetAvailability(state.ActiveWorkoutMinutes, state.ActiveWorkoutModifiers) with { Groups = [] });
             SelectedSequencePlacement? replannedCurrentPlacement =
                 GetSelectedSequencePlacements(state).SingleOrDefault(placement =>
                     placement.CoveredGroups.Any(group =>
@@ -1949,12 +1857,6 @@ public sealed class ExerciseSessionService
             .OrderDescending()
             .Select((timestamp, rank) => (timestamp, rank))
             .ToDictionary(entry => entry.timestamp, entry => entry.rank);
-        // Only completed primary work establishes target recency, including demand 0.
-        Dictionary<CanonicalMuscleGroup, long> lastTargetWork = GetPrimaryTargetRecency(state, selectionTimeUnixMilliseconds);
-        Dictionary<long, int> targetAgeRanks = _exercises
-            .Select(exercise => lastTargetWork.GetValueOrDefault(exercise.PrimaryCanonicalGroup))
-            .Distinct().OrderDescending().Select((time, rank) => (time, rank))
-            .ToDictionary(entry => entry.time, entry => entry.rank);
         int maximumCoverage = groups.Max(group => group.CanonicalGroups.Count);
         // These are exact lexicographic assignment dimensions, not hardness
         // points. BigInteger keeps the ordering lossless for arbitrary saved
@@ -1972,7 +1874,6 @@ public sealed class ExerciseSessionService
         BigInteger primaryWeight = AddPriorityDimension(1L);
         BigInteger equipmentPreferenceWeight = AddPriorityDimension(2L);
         BigInteger currentSelectionWeight = AddPriorityDimension(1L);
-        BigInteger targetAgeWeight = AddPriorityDimension(Math.Max(0, targetAgeRanks.Count - 1));
         BigInteger hardMuscleAgeWeight = AddPriorityDimension(
             Math.Max(0, freshHardMuscleRanks.Count - 1));
         BigInteger moderateRecoveryAvoidanceWeight = AddPriorityDimension(1L);
@@ -2047,10 +1948,6 @@ public sealed class ExerciseSessionService
             bool isCurrentSelection = includeSlotPreference &&
                 currentExerciseIds.GetValueOrDefault(evaluationGroup.Id) ==
                     exercise.Id;
-            long lastTargetTime = GetSequenceExercises(exercise)
-                .Where(member => evaluationGroup.CanonicalGroups.Contains(member.PrimaryCanonicalGroup))
-                .Select(member => lastTargetWork.GetValueOrDefault(member.PrimaryCanonicalGroup))
-                .DefaultIfEmpty(0).Max();
             return
                 (allowSavedSelectionException && isCurrentSelection
                     ? preservedActiveSelectionWeight
@@ -2079,7 +1976,6 @@ public sealed class ExerciseSessionService
                     ? freshHardWeight
                     : BigInteger.Zero) +
                 hardMuscleAgeRank * hardMuscleAgeWeight +
-                targetAgeRanks.GetValueOrDefault(lastTargetTime) * targetAgeWeight +
                 (isCurrentSelection
                     ? currentSelectionWeight
                     : BigInteger.Zero) +
@@ -2337,7 +2233,9 @@ public sealed class ExerciseSessionService
         string? protectedSelectionGroupId =
             state.ActiveModifierProtectedSelectionGroupId;
 
-        HashSet<string> validGroupIds = KnownWorkoutGroups.Values
+        HashSet<string> validGroupIds = GetBaseResolution(
+                state.ActiveWorkoutMinutes)
+            .Groups
             .Select(group => group.Id)
             .ToHashSet(StringComparer.Ordinal);
         state.ActiveModifierRetainedSelectionGroupIds.RemoveWhere(groupId =>
@@ -2527,7 +2425,8 @@ public sealed class ExerciseSessionService
         return new InvalidOperationException(
             $"No distinct exercise lineup exists for the active workout profile " +
             $"across {groups.Count} groups and {movementCount} eligible session " +
-            $"movements that fit the duration and selected constraints.");
+            $"movements " +
+            $"with at least {WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage.");
     }
 
     private void Shuffle<T>(IList<T> items)
@@ -2858,7 +2757,7 @@ public sealed class ExerciseSessionService
         Exercise exercise,
         WorkoutModifiers modifiers)
     {
-        return WorkoutModifierPolicy.IsCompatible(exercise, _readingLegacyLightPlan ? modifiers & ~WorkoutModifiers.Light : modifiers);
+        return WorkoutModifierPolicy.IsCompatible(exercise, modifiers);
     }
 
     private bool PendingRestMatchesSelectionGroup(
@@ -4270,7 +4169,6 @@ public sealed class ExerciseSessionService
         WorkoutGroup? currentRound = GetNextGroup(state);
         if (currentRound is null)
         {
-            _readingLegacyLightPlan = false;
             RepairActiveLineup(state);
             NormalizeActiveLongWorkoutAllocation(state);
             return;
@@ -4322,7 +4220,6 @@ public sealed class ExerciseSessionService
                 StringComparer.Ordinal);
         HashSet<string> protectedBaseGroupIds =
             lockedExerciseIdsByGroup.Keys.ToHashSet(StringComparer.Ordinal);
-        _readingLegacyLightPlan = false;
         WorkoutGroup[] selectionGroups = GetSelectionGroups(state).ToArray();
 
         IReadOnlyDictionary<string, int> replannedLineup =
@@ -4368,11 +4265,6 @@ public sealed class ExerciseSessionService
                 lockedSelectionGroupIds));
 
         WorkoutGroup[] replannedRounds = GetActiveGroups(state).ToArray();
-        if (replannedRounds.Any(round =>
-            !state.Outcomes.ContainsKey(round.Id) &&
-            !(preserveCompletedCurrentSelection && round.Id == currentRound.Id) &&
-            !WorkoutModifierPolicy.IsCompatible(GetSelectedExercise(state, round), state.ActiveWorkoutModifiers)))
-            throw new WorkoutUnavailableException(GetAvailability(state.ActiveWorkoutMinutes, state.ActiveWorkoutModifiers) with { Groups = [] });
         bool changedLockedSelection = lockedExerciseIdsByGroup.Any(entry =>
             state.SelectedExerciseIds.GetValueOrDefault(
                 GetSelectionStorageKey(
@@ -5160,7 +5052,7 @@ public sealed class ExerciseSessionService
         return selectionGroupId.Length > 0;
     }
 
-    private IReadOnlyList<WorkoutGroup> GetSelectionGroups(
+    private static IReadOnlyList<WorkoutGroup> GetSelectionGroups(
         WorkoutState state)
     {
         return GetSelectionGroups(
@@ -5169,20 +5061,21 @@ public sealed class ExerciseSessionService
             state.ActiveModifierRetainedSelectionGroupIds);
     }
 
-    private IReadOnlyList<WorkoutGroup> GetSelectionGroups(
+    private static IReadOnlyList<WorkoutGroup> GetSelectionGroups(
         int workoutMinutes,
         WorkoutModifiers modifiers,
         IReadOnlySet<string>? retainedSelectionGroupIds = null)
     {
-        if (_readingLegacyLightPlan && IsValidWorkoutMinutes(workoutMinutes))
-            return GetBaseResolution(workoutMinutes).Groups.Where(group =>
-                WorkoutModifierPolicy.IsSelectionGroupAvailable(group, modifiers)).ToArray();
         retainedSelectionGroupIds ??=
             new HashSet<string>(StringComparer.Ordinal);
         return IsValidWorkoutMinutes(workoutMinutes)
-            ? GetAvailability(workoutMinutes, modifiers).Groups
-                .Concat(KnownWorkoutGroups.Values.Where(group => retainedSelectionGroupIds.Contains(group.Id)))
-                .DistinctBy(group => group.Id).OrderBy(group => group.Order).ToArray()
+            ? GetBaseResolution(workoutMinutes).Groups
+                .Where(group =>
+                    WorkoutModifierPolicy.IsSelectionGroupAvailable(
+                        group,
+                        modifiers) ||
+                    retainedSelectionGroupIds.Contains(group.Id))
+                .ToArray()
             : [];
     }
 
@@ -5506,10 +5399,6 @@ public sealed class ExerciseSessionService
             return;
         }
         long selectionTimeUnixMilliseconds = GetCurrentUnixTimeMilliseconds();
-        Dictionary<CanonicalMuscleGroup, long> lastTargetWork = GetPrimaryTargetRecency(state, selectionTimeUnixMilliseconds);
-        long TargetTime(Exercise root, WorkoutGroup group) => GetSequenceExercises(root)
-            .Where(member => group.CanonicalGroups.Contains(member.PrimaryCanonicalGroup))
-            .Select(member => lastTargetWork.GetValueOrDefault(member.PrimaryCanonicalGroup)).DefaultIfEmpty(0).Max();
         var allocationCache = new Dictionary<string, LongWorkoutAllocation?>(
             StringComparer.Ordinal);
 
@@ -5731,13 +5620,6 @@ public sealed class ExerciseSessionService
                     {
                         continue;
                     }
-                    // A same-workout balance pass must not undo rotation toward
-                    // targets that have waited longer across previous workouts.
-                    if (option.Any(group => TargetTime(candidate, group) >
-                            TargetTime(placementByGroupId[group.Id].Root, group)))
-                    {
-                        continue;
-                    }
 
                     MuscleBalanceEvaluation candidateBalance;
                     int removedBlockCount = removedPlacements.Sum(placement =>
@@ -5917,13 +5799,6 @@ public sealed class ExerciseSessionService
             }
         }
     }
-
-    private static Dictionary<CanonicalMuscleGroup, long> GetPrimaryTargetRecency(WorkoutState state, long now) =>
-        state.WorkoutHistory.Concat(state.ActiveWorkoutSession is { } active ? [active] : [])
-            .SelectMany(session => session.Blocks)
-            .Where(block => block.CompletedAtUnixMilliseconds > 0 && block.CompletedAtUnixMilliseconds <= now)
-            .GroupBy(block => block.PrimaryCanonicalGroup)
-            .ToDictionary(group => group.Key, group => group.Max(block => block.CompletedAtUnixMilliseconds));
 
     private bool IsStoredLineupSelectionValid(
         WorkoutState state,

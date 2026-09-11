@@ -210,7 +210,16 @@ export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
 );
 const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
+const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const BROAD_COVERAGE_RESOLUTION_MINUTES = 3;
+export const MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP = 5;
+export const MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP = 1;
+export const MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP = 1;
+export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
+export const MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS = 5;
+export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
+export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
+export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
 export const MINIMUM_MUSCULAR_DEMAND = 0;
 export const MODERATE_MUSCULAR_DEMAND = 1;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
@@ -251,7 +260,11 @@ export function isSelectionGroupAvailable(group, profile) {
 }
 
 
-
+export function getMinimumExercisesPerModifierPairStatePerGroup(minutes) {
+  return minutes === BROAD_COVERAGE_RESOLUTION_MINUTES
+    ? MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP
+    : MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP;
+}
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
 
 export function getMuscularDemandSchedulePriority(muscularDemand) {
@@ -313,8 +326,8 @@ export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.UpperBodyClothing |
   WORKOUT_MODIFIERS.HardFloor |
   WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 27;
-const DOMINANT_LIGHT_MODE_STATE_VERSION = 27;
+export const CURRENT_WORKOUT_STATE_VERSION = 26;
+const DOMINANT_LIGHT_MODE_STATE_VERSION = 26;
 const EXPLICIT_LIGHT_MODE_STATE_VERSION = 25;
 const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
 const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
@@ -1576,16 +1589,19 @@ export function normalizeMinutes(minutes) {
 }
 
 export function getCanonicalCoverage(exercise, group) {
-  return isPrimaryForGroup(exercise, group) ? 1 : 0;
+  const trained = new Set([
+    exercise.primaryCanonicalGroup,
+    ...(exercise.secondaryCanonicalGroups ?? []),
+  ]);
+  return group.canonicalGroups.filter((canonicalGroup) => trained.has(canonicalGroup)).length;
 }
 
 export function getRequiredCanonicalCoverage(group) {
-  if (!group.canonicalGroups.length) throw new RangeError("A workout group needs a primary target.");
-  return 1;
+  return Math.ceil(group.canonicalGroups.length / 2);
 }
 
 export function isSelectable(exercise, group) {
-  return isPrimaryForGroup(exercise, group);
+  return getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group);
 }
 
 function getSequenceMembers(root, exercisesById) {
@@ -1605,7 +1621,10 @@ function getSequenceMembers(root, exercisesById) {
 
 function getSequenceCanonicalCoverage(root, exercisesById, group) {
   const trained = new Set(getSequenceMembers(root, exercisesById)
-    .map((member) => member.primaryCanonicalGroup));
+    .flatMap((member) => [
+      member.primaryCanonicalGroup,
+      ...(member.secondaryCanonicalGroups ?? []),
+    ]));
   return group.canonicalGroups.filter((canonicalGroup) =>
     trained.has(canonicalGroup)).length;
 }
@@ -1628,8 +1647,22 @@ function getSequencePlacementOptions(root, exercisesById, groups) {
   if (!Array.isArray(root?.sequenceBlocks) || root.sequenceBlocks.length === 0) {
     return [];
   }
+  const eligibleAnchors = groups.filter((group) =>
+    getSequenceCanonicalCoverage(root, exercisesById, group) >=
+      getRequiredCanonicalCoverage(group));
   const primaryGroups = getSequencePrimaryGroups(root, exercisesById, groups);
-  return primaryGroups.length > 0 ? [primaryGroups] : [];
+  const canClaimMultiplePrimarySlots = primaryGroups.length > 1 &&
+    primaryGroups.every((primaryGroup) => eligibleAnchors.some((anchor) =>
+      anchor.id === primaryGroup.id));
+  const options = eligibleAnchors.map((anchor) =>
+    canClaimMultiplePrimarySlots && primaryGroups.some((primaryGroup) =>
+      primaryGroup.id === anchor.id)
+      ? primaryGroups
+      : [anchor]);
+  return [...new Map(options.map((option) => [
+    option.map((group) => group.id).sort().join("|"),
+    [...option].sort((left, right) => left.order - right.order),
+  ])).values()];
 }
 
 function getSelectedSequencePlacements(
@@ -2035,14 +2068,10 @@ export function isCompatibleWithWorkoutModifiers(exercise, modifiers) {
   const wallEquipment = getWallEquipment(normalized);
   return (exercise.wallRequired !== true ||
       wallEquipment !== WALL_EQUIPMENT.None) &&
-    ((normalized & WORKOUT_MODIFIERS.Insect) === 0 ||
-      exercise.primaryCanonicalGroup !== "PelvicFloorAndPerineum" &&
-      (exercise.primaryCanonicalGroup !== "IntrinsicHand" || wallEquipment !== WALL_EQUIPMENT.None)) &&
     (exercise.soleWallContactRequired !== true ||
       wallEquipment === WALL_EQUIPMENT.SolesMayTouch) &&
-    ((normalized & WORKOUT_MODIFIERS.Light) === 0 || exercise.muscularDemand === 0) &&
     MODIFIER_RULES.every((rule) =>
-      rule.isReviewed(exercise) && rule.isCompatibleForProfile(exercise, normalized));
+    rule.isCompatibleForProfile(exercise, normalized));
 }
 
 export function isWallPreferred(exercise, modifiers) {
@@ -2055,9 +2084,34 @@ export function getEquipmentPreferenceCount(exercise, modifiers) {
     Number(isMirrorPreferred(exercise, modifiers));
 }
 
+export function findWallRequiredCatalogDeficiencies(exercises) {
+  const movementCount = new Set(exercises
+    .filter((exercise) =>
+      exercise.wallRequired === true &&
+      exercise.soleWallContactRequired !== true)
+    .map(getSessionMovementId)).size;
+  return movementCount >= MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS
+    ? []
+    : [{
+        matchingSessionMovementCount: movementCount,
+        requiredSessionMovementCount:
+          MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
+      }];
+}
 
-
-
+export function findSoleWallContactRequiredCatalogDeficiencies(exercises) {
+  const movementCount = new Set(exercises
+    .filter((exercise) => exercise.soleWallContactRequired === true)
+    .map(getSessionMovementId)).size;
+  return movementCount >=
+      MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS
+    ? []
+    : [{
+        matchingSessionMovementCount: movementCount,
+        requiredSessionMovementCount:
+          MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
+      }];
+}
 
 export function isMirrorRelevant(exercise) {
   return exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly ||
@@ -2084,7 +2138,21 @@ export function isSelectableForWorkoutProfile(exercise, group, modifiers) {
     isCompatibleWithWorkoutModifiers(exercise, modifiers);
 }
 
+function isSequenceUnitEligible(
+  exercise,
+  exercisesById,
+  group,
+  modifiers,
+) {
+  if (!Array.isArray(exercise?.sequenceBlocks) ||
+      exercise.sequenceBlocks.length === 0 ||
+      getSequenceCanonicalCoverage(exercise, exercisesById, group) <
+      getRequiredCanonicalCoverage(group)) {
+    return false;
+  }
 
+  return isSequenceCompatible(exercise, exercisesById, modifiers);
+}
 
 function isSequenceCompatible(exercise, exercisesById, modifiers) {
   if (!Array.isArray(exercise?.sequenceBlocks) ||
@@ -2101,21 +2169,459 @@ function isSequenceCompatible(exercise, exercisesById, modifiers) {
   });
 }
 
+export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
+    MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
+      ({ firstRule, secondRule })));
+  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
+    resolution.groups.flatMap((group) =>
+      rulePairs.flatMap(({ firstRule, secondRule }) =>
+        getModifierRuleStateProfiles(firstRule).flatMap((firstState) =>
+          getModifierRuleStateProfiles(secondRule).map((secondState) => {
+            const profile = normalizeWorkoutModifiers(firstState | secondState);
+            const mirrorEquipment = getMirrorEquipment(profile);
+            // Every selectable relationship counts; materiality separately
+            // verifies that mirror-relevant movements provide a real benefit.
+            return {
+              minutes,
+              groupId: group.id,
+              groupName: group.displayName,
+              firstModifier: firstRule.flag,
+              firstModifierEnabled: firstState !== WORKOUT_MODIFIERS.None,
+              secondModifier: secondRule.flag,
+              secondModifierEnabled: secondState !== WORKOUT_MODIFIERS.None,
+              mirrorEquipment,
+              requiredExerciseCount:
+                isWallFreeInsectFineCoverageException(group, profile)
+                  ? 0
+                  : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
+              matchingExerciseCount: new Set(exercises
+                .filter((exercise) =>
+                  MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
+                  isSequenceUnitEligible(
+                    exercise,
+                    exercisesById,
+                    group,
+                    profile,
+                  ))
+                .map(getSessionMovementId)).size,
+            };
+          })))
+        .filter((result) =>
+          result.matchingExerciseCount < result.requiredExerciseCount)));
+}
 
+export function findHardFloorCategoryCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const requiredCategories = [
+    EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
+  ];
+  const partnerStates = [
+    [WORKOUT_MODIFIERS.Insect, false],
+    [WORKOUT_MODIFIERS.Insect, true],
+    [WORKOUT_MODIFIERS.Silence, false],
+    [WORKOUT_MODIFIERS.Silence, true],
+    [WORKOUT_MODIFIERS.Mirror, false],
+  ];
 
+  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
+    resolution.groups.flatMap((group) =>
+      requiredCategories.flatMap((hardFloorCompatibility) =>
+        partnerStates.map(([partnerModifier, partnerModifierEnabled]) => {
+          let profile = WORKOUT_MODIFIERS.HardFloor;
+          if (partnerModifierEnabled) {
+            profile |= partnerModifier;
+          }
+          profile = normalizeWorkoutModifiers(profile);
 
+          const matchingExerciseCount = new Set(exercises
+            .filter((exercise) =>
+              exercise.hardFloorCompatibility === hardFloorCompatibility &&
+              isSequenceHardFloorCategory(
+                exercise,
+                exercisesById,
+                hardFloorCompatibility,
+              ) &&
+              isSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                profile,
+              ))
+            .map(getSessionMovementId)).size;
+          return {
+            minutes,
+            groupId: group.id,
+            groupName: group.displayName,
+            hardFloorCompatibility,
+            partnerModifier,
+            partnerModifierEnabled,
+            matchingExerciseCount,
+            requiredExerciseCount:
+              isWallFreeInsectFineCoverageException(group, profile)
+                ? 0
+                : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
+          };
+        }))
+      .filter((result) =>
+        result.matchingExerciseCount < result.requiredExerciseCount)));
+}
 
+export function findMuscularDemandCoverageDeficiencies(exercises) {
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const requiredCategories = [
+    MINIMUM_MUSCULAR_DEMAND,
+    MAXIMUM_MUSCULAR_DEMAND,
+  ];
 
+  const minutes = BROAD_COVERAGE_RESOLUTION_MINUTES;
+  const resolution = RESOLUTIONS.get(minutes);
+  return resolution.groups.flatMap((group) =>
+      requiredCategories.flatMap((muscularDemand) =>
+        WORKOUT_MODIFIER_VALIDATION_PROFILES.map((profile) => {
+          const matchingExerciseCount = new Set(exercises
+            .filter((exercise) =>
+              isSequenceCompatible(
+                exercise,
+                exercisesById,
+                profile,
+              ) && isSequenceMuscularDemandCategoryForGroup(
+                exercise,
+                exercisesById,
+                group,
+                muscularDemand,
+              ))
+            .map(getSessionMovementId)).size;
+          return {
+            minutes,
+            groupId: group.id,
+            groupName: group.displayName,
+            muscularDemand,
+            profile,
+            matchingExerciseCount,
+            requiredExerciseCount:
+              MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
+          };
+        })))
+    .filter((result) =>
+      result.matchingExerciseCount < result.requiredExerciseCount);
+}
 
+function isSequenceHardFloorCategory(
+  exercise,
+  exercisesById,
+  hardFloorCompatibility,
+) {
+  return Array.isArray(exercise?.sequenceBlocks) &&
+    exercise.sequenceBlocks.length > 0 &&
+    [...new Set(exercise.sequenceBlocks.map((block) => block.exerciseId))]
+      .every((exerciseId) =>
+        exercisesById.get(exerciseId)?.hardFloorCompatibility ===
+          hardFloorCompatibility);
+}
 
+function isSequenceMuscularDemandCategoryForGroup(
+  exercise,
+  exercisesById,
+  group,
+  muscularDemand,
+) {
+  const members = [...new Set(exercise?.sequenceBlocks?.map((block) =>
+    block.exerciseId) ?? [])]
+    .map((exerciseId) => exercisesById.get(exerciseId))
+    .filter(Boolean);
+  if (members.length === 0) {
+    return false;
+  }
 
+  if (muscularDemand === MINIMUM_MUSCULAR_DEMAND) {
+    return members.every((member) =>
+      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND) &&
+      members.some((member) =>
+        group.canonicalGroups.includes(member.primaryCanonicalGroup));
+  }
+  if (muscularDemand === MAXIMUM_MUSCULAR_DEMAND) {
+    return members.some((member) =>
+      member.muscularDemand === MAXIMUM_MUSCULAR_DEMAND &&
+      group.canonicalGroups.includes(member.primaryCanonicalGroup));
+  }
+  return false;
+}
 
+export function findWorkoutModifierMaterialityDeficiencies(exercises) {
+  const canonicalGroups = RESOLUTIONS.get(30).groups;
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const reviewedExercises = exercises.filter((exercise) =>
+    MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
+  const materialityRules = MODIFIER_RULES.filter((rule) =>
+    rule.flag !== WORKOUT_MODIFIERS.UpperBodyClothing);
+  const rulePairs = materialityRules.flatMap((firstRule, firstIndex) =>
+    materialityRules.slice(firstIndex + 1).map((secondRule) =>
+      ({ firstRule, secondRule })));
+  const enabledStates = (rule) =>
+    getModifierRuleStateProfiles(rule).filter((state) =>
+      state !== WORKOUT_MODIFIERS.None);
+  const edges = materialityRules.flatMap((rule) =>
+    enabledStates(rule).map((enabledStateProfile) => ({
+      rule,
+      baseProfile: WORKOUT_MODIFIERS.None,
+      enabledStateProfile,
+    })));
+  for (const { firstRule, secondRule } of rulePairs) {
+    for (const firstState of enabledStates(firstRule)) {
+      for (const secondState of enabledStates(secondRule)) {
+        edges.push({
+          rule: firstRule,
+          baseProfile: secondState,
+          enabledStateProfile: firstState,
+        });
+        edges.push({
+          rule: secondRule,
+          baseProfile: firstState,
+          enabledStateProfile: secondState,
+        });
+      }
+    }
+  }
 
+  return edges.map(({ rule, baseProfile, enabledStateProfile }) => {
+    const enabledModifier = rule.flag;
+    const enabledProfile = normalizeWorkoutModifiers(
+      baseProfile | enabledStateProfile,
+    );
+    const beforeExerciseIds = new Set(reviewedExercises
+      .filter((exercise) => canonicalGroups.some((group) =>
+        isSequenceUnitEligible(
+          exercise,
+          exercisesById,
+          group,
+          baseProfile,
+        )))
+      .map(getSessionMovementId));
+    const afterExerciseIds = new Set(reviewedExercises
+      .filter((exercise) => canonicalGroups.some((group) =>
+        isSequenceUnitEligible(
+          exercise,
+          exercisesById,
+          group,
+          enabledProfile,
+        )))
+      .map(getSessionMovementId));
+    const isMirror = enabledModifier === WORKOUT_MODIFIERS.Mirror;
+    const materialExerciseIds = isMirror
+      ? new Set(reviewedExercises
+          .filter((exercise) =>
+            isMirrorPreferred(exercise, enabledProfile) &&
+              canonicalGroups.some((group) =>
+              isSequenceUnitEligible(
+                exercise,
+                exercisesById,
+                group,
+                enabledProfile,
+              )))
+          .map(getSessionMovementId))
+      : new Set([...beforeExerciseIds].filter((exerciseId) =>
+          !afterExerciseIds.has(exerciseId)));
+    const requiredMaterialExerciseCount = Math.max(
+      MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
+      Math.ceil(
+        (isMirror ? afterExerciseIds.size : beforeExerciseIds.size) *
+          MINIMUM_MODIFIER_MATERIALITY_PERCENT / 100,
+      ),
+    );
+    const affectedGroupCount = canonicalGroups.filter((group) => {
+      if (isMirror) {
+        return reviewedExercises.some((exercise) =>
+          isMirrorPreferred(exercise, enabledProfile) &&
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            enabledProfile,
+          ));
+      }
+      const baselineMovementIds = new Set(reviewedExercises
+        .filter((exercise) =>
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            baseProfile,
+          ))
+        .map(getSessionMovementId));
+      const modifiedMovementIds = new Set(reviewedExercises
+        .filter((exercise) =>
+          isSequenceUnitEligible(
+            exercise,
+            exercisesById,
+            group,
+            enabledProfile,
+          ))
+        .map(getSessionMovementId));
+      return [...baselineMovementIds].some((movementId) =>
+        !modifiedMovementIds.has(movementId));
+    }).length;
+    const requiredAffectedGroupCount = Math.ceil(
+      canonicalGroups.length * MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT / 100,
+    );
 
+    return {
+      baseProfile,
+      enabledModifier,
+      modifiedProfile: enabledProfile,
+      baselineExerciseCount: beforeExerciseIds.size,
+      modifiedExerciseCount: afterExerciseIds.size,
+      materialExerciseCount: materialExerciseIds.size,
+      requiredMaterialExerciseCount,
+      affectedGroupCount,
+      requiredAffectedGroupCount,
+    };
+  }).filter((result) =>
+    result.materialExerciseCount < result.requiredMaterialExerciseCount ||
+    result.affectedGroupCount < result.requiredAffectedGroupCount);
+}
 
+export function getMaximumDistinctLineupSize(
+  exercises,
+  groups,
+  modifiers,
+  workoutMinutes = groups.length,
+) {
+  if (!Number.isInteger(workoutMinutes) || workoutMinutes < groups.length) {
+    throw new RangeError("Workout minutes must fit every workout group.");
+  }
+  const exercisesById = new Map(exercises.map((exercise) =>
+    [exercise.id, exercise]));
+  const candidateOneBlockMovementsByGroupId = new Map(groups.map((group) =>
+    [group.id, new Set()]));
+  for (const exercise of exercises) {
+    if (exercise.sequenceBlocks?.length !== 1 ||
+        !isSequenceCompatible(exercise, exercisesById, modifiers)) {
+      continue;
+    }
+    const movementId = getSessionMovementId(exercise);
+    for (const option of getSequencePlacementOptions(
+      exercise,
+      exercisesById,
+      groups,
+    )) {
+      if (option.length === 1) {
+        candidateOneBlockMovementsByGroupId.get(option[0].id)?.add(movementId);
+      }
+    }
+  }
+  const candidateOneBlockMovementsByGroup = groups
+    .map((group) => [...candidateOneBlockMovementsByGroupId.get(group.id)])
+    .sort((left, right) => left.length - right.length);
+  const assignedOneBlockGroupByMovement = new Map();
+  const tryAssignOneBlockMovement = (groupIndex, visitedMovementIds) => {
+    for (const movementId of candidateOneBlockMovementsByGroup[groupIndex]) {
+      if (visitedMovementIds.has(movementId)) {
+        continue;
+      }
+      visitedMovementIds.add(movementId);
+      const assignedGroupIndex = assignedOneBlockGroupByMovement.get(movementId);
+      if (assignedGroupIndex === undefined ||
+          tryAssignOneBlockMovement(assignedGroupIndex, visitedMovementIds)) {
+        assignedOneBlockGroupByMovement.set(movementId, groupIndex);
+        return true;
+      }
+    }
+    return false;
+  };
+  let oneBlockLineupSize = 0;
+  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+    if (tryAssignOneBlockMovement(groupIndex, new Set())) {
+      oneBlockLineupSize += 1;
+    }
+  }
+  if (oneBlockLineupSize === groups.length) {
+    return groups.length;
+  }
 
+  const groupIndexes = new Map(groups.map((group, index) => [group.id, index]));
+  const candidates = [];
+  for (const exercise of exercises.filter((candidate) =>
+    isSequenceCompatible(candidate, exercisesById, modifiers))) {
+    for (const placement of getSequencePlacementOptions(
+      exercise,
+      exercisesById,
+      groups,
+    )) {
+      if (exercise.sequenceBlocks.length + groups.length - placement.length >
+          workoutMinutes) {
+        continue;
+      }
+      let coverageMask = 0n;
+      const utilitiesByGroup = Array(groups.length).fill(0n);
+      for (const group of placement) {
+        const groupIndex = groupIndexes.get(group.id);
+        coverageMask |= 1n << BigInt(groupIndex);
+        utilitiesByGroup[groupIndex] = 1n;
+      }
+      candidates.push({
+        exerciseId: exercise.id,
+        movementId: getSessionMovementId(exercise),
+        coverageMask,
+        blockCount: exercise.sequenceBlocks.length,
+        utilitiesByGroup,
+        tieOrder: exercise.id,
+      });
+    }
+  }
 
+  // One empty one-block placement per group makes this an exact maximum-
+  // coverage audit while still using the production atomic-capacity solver.
+  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+    candidates.push({
+      exerciseId: -groupIndex - 1,
+      movementId: -groupIndex - 1,
+      coverageMask: 1n << BigInt(groupIndex),
+      blockCount: 1,
+      utilitiesByGroup: Array(groups.length).fill(0n),
+      tieOrder: Number.MAX_SAFE_INTEGER - groupIndex,
+    });
+  }
 
+  const solution = solveAtomicSequenceLineup(
+    groups.length,
+    workoutMinutes,
+    candidates,
+  );
+  if (!solution) {
+    throw new Error("Atomic lineup validation could not place empty muscle slots.");
+  }
+  return [...solution.exerciseIdByGroupIndex.values()]
+    .filter((exerciseId) => exerciseId > 0).length;
+}
+
+export function findWorkoutProfileLineupDeficiencies(exercises) {
+  return SUPPORTED_MINUTES.flatMap((minutes) => {
+    return WORKOUT_MODIFIER_VALIDATION_PROFILES
+      .map((profile) => {
+        const groups = getResolution(minutes > 30 ? 30 : minutes).groups
+          .filter((group) => isSelectionGroupAvailable(group, profile));
+        return {
+          minutes,
+          profile,
+          maximumDistinctExerciseCount: getMaximumDistinctLineupSize(
+            exercises,
+            groups,
+            profile,
+            minutes,
+          ),
+          requiredDistinctExerciseCount: groups.length,
+        };
+      })
+      .filter((result) =>
+        result.maximumDistinctExerciseCount < result.requiredDistinctExerciseCount);
+  });
+}
 
 export function evaluateRecoveryLightMode(
   exercises,
@@ -2196,7 +2702,10 @@ function isPrimaryMuscleWithinModerateRecovery(
   );
 }
 
-
+export function getRequiredDistinctLineupSize(groups, modifiers) {
+  return groups.filter((group) =>
+    isSelectionGroupAvailable(group, modifiers)).length;
+}
 
 function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
   const groupCount = utilities.length;
@@ -2691,7 +3200,6 @@ export function createDefaultState() {
     pendingRestKept: false,
     lastWorkoutMinutes: 10,
     lastWorkoutModifiers: DEFAULT_WORKOUT_MODIFIERS,
-    workoutSetupReviewRequired: false,
     activeWorkoutMinutes: 0,
     activeWorkoutModifiers: WORKOUT_MODIFIERS.None,
     activeWorkoutIsLightDay: false,
@@ -2736,7 +3244,6 @@ function normalizeStateShape(raw) {
   state.activeWorkoutModifiers = raw.activeWorkoutModifiers === undefined
     ? state.activeWorkoutModifiers
     : normalizeWorkoutModifiers(raw.activeWorkoutModifiers);
-  state.workoutSetupReviewRequired = raw.workoutSetupReviewRequired === true;
   state.activeWorkoutIsLightDay = raw.activeWorkoutIsLightDay === true;
   state.workoutCompleted = raw.workoutCompleted === true;
   state.completionAcknowledged = raw.completionAcknowledged === true;
@@ -3428,103 +3935,6 @@ export function inferLegacyCompletedTrainingDays(
   return inferred;
 }
 
-function getPrimaryTargetRecency(state, now) {
-  const lastWork = new Map();
-  for (const block of [...state.workoutHistory, state.activeWorkoutSession]
-    .filter(Boolean).flatMap((entry) => entry.blocks ?? [])) {
-    if (block.completedAtUnixMilliseconds > 0 && block.completedAtUnixMilliseconds <= now)
-      lastWork.set(block.primaryCanonicalGroup, Math.max(lastWork.get(block.primaryCanonicalGroup) ?? 0,
-        block.completedAtUnixMilliseconds));
-  }
-  return lastWork;
-}
-
-export class WorkoutUnavailableError extends Error {
-  constructor(availability) {
-    super(availability.canStart ? "Limited workout scope needs confirmation." :
-      "No complete workout fits this setup and duration.");
-    this.availability = availability;
-  }
-}
-
-export function findCatalogContractViolations(exercises) {
-  const violations = [];
-  if (!isModifierMetadataComplete(exercises)) violations.push("Unreviewed modifier metadata");
-  if (!isSessionMovementMetadataValid(exercises)) violations.push("Invalid session movement metadata");
-  for (const primary of getResolution(30).groups.flatMap((group) => group.canonicalGroups)) {
-    if (!exercises.some((exercise) => exercise.primaryCanonicalGroup === primary))
-      violations.push(`No primary movement for ${primary}`);
-  }
-  for (const exercise of exercises) {
-    if (!exercise.onlyFeetTouchGround || !exercise.shoeAgnostic || exercise.maxSpaceMeters > 2 ||
-        !["None", "Mirror"].includes(exercise.equipment))
-      violations.push(`Exercise ${exercise.id} violates the physical admission contract`);
-  }
-  return violations;
-}
-
-export function getWorkoutAvailability(exercises, minutes, modifiers) {
-  if (!SUPPORTED_MINUTES.includes(minutes)) throw new RangeError("Unsupported workout duration.");
-  const byId = new Map(exercises.map((exercise) => [exercise.id, exercise]));
-  const roots = exercises.filter((root) => root.sequenceBlocks?.length > 0 &&
-    root.sequenceBlocks.length <= minutes && isSequenceCompatible(root, byId, modifiers));
-  const primaries = new Set(roots.flatMap((root) => getSequenceMembers(root, byId))
-    .map((member) => member.primaryCanonicalGroup));
-  const broadGroups = getResolution(3).groups;
-  const regions = broadGroups.map((group) => ({
-    name: group.displayName,
-    availableTargets: group.canonicalGroups.filter((primary) => primaries.has(primary)).length,
-    totalTargets: group.canonicalGroups.length,
-  }));
-  const requestedResolution = Math.min(minutes, 30);
-  const canFill = (groups) => {
-    const candidates = roots.flatMap((root) => getSequencePlacementOptions(root, byId, groups)
-      .map((option) => {
-        let coverageMask = 0n;
-        const utilitiesByGroup = Array(groups.length).fill(0n);
-        for (const group of option) {
-          const index = groups.indexOf(group);
-          coverageMask |= 1n << BigInt(index);
-          utilitiesByGroup[index] = 1n;
-        }
-        return { exerciseId: root.id, movementId: getSessionMovementId(root), coverageMask,
-          blockCount: root.sequenceBlocks.length, utilitiesByGroup, tieOrder: root.id };
-      }));
-    return candidates.length > 0 && solveAtomicSequenceLineup(groups.length, minutes, candidates) !== null;
-  };
-  const result = (resolutionMinutes, groups, missingGroups, requiresAcceptance) => ({
-    minutes, resolutionMinutes, groups,
-    missingGroups: getResolution(30).groups.filter((group) =>
-      !group.canonicalGroups.some((primary) => primaries.has(primary)) ||
-      !groups.some((included) => included.canonicalGroups.some((primary) => group.canonicalGroups.includes(primary))))
-      .map((group) => group.displayName),
-    regions: regions.map((region, index) => ({...region,
-      included: groups.some((group) => group.canonicalGroups.some((primary) =>
-        broadGroups[index].canonicalGroups.includes(primary))),
-    })), requiresAcceptance,
-    canStart: groups.length > 0,
-  });
-  for (const resolution of [...RESOLUTIONS.keys()].filter((value) => value <= requestedResolution)
-    .sort((left, right) => right - left)) {
-    const requested = getResolution(resolution).groups;
-    const available = requested.filter((group) => roots.some((root) =>
-      getSequencePlacementOptions(root, byId, requested).some((option) => option.includes(group))));
-    if (available.length > 0 && canFill(available)) {
-      return result(resolution, available, requested.filter((group) => !available.includes(group))
-        .map((group) => group.displayName),
-      resolution !== requestedResolution || available.length !== requested.length);
-    }
-  }
-  // At most seven body-region subsets, independent of the number of modifiers.
-  for (const mask of [1, 2, 3, 4, 5, 6, 7].sort((a, b) =>
-    countMaskBits(BigInt(b)) - countMaskBits(BigInt(a)))) {
-    const groups = broadGroups.filter((_, index) => (mask & (1 << index)) !== 0);
-    if (canFill(groups)) return result(3, groups,
-      broadGroups.filter((group) => !groups.includes(group)).map((group) => group.displayName), true);
-  }
-  return result(requestedResolution, [], broadGroups.map((group) => group.displayName), true);
-}
-
 export class WorkoutSession {
   constructor(
     exercises,
@@ -3536,7 +3946,6 @@ export class WorkoutSession {
       throw new TypeError("Exercise catalog must be an array.");
     }
     this.exercises = exercises;
-    this.availabilityCache = new Map();
     this.exercisesById = new Map(exercises.map((exercise) => [exercise.id, exercise]));
     if (this.exercisesById.size !== exercises.length) {
       throw new Error("Exercise catalog contains duplicate IDs.");
@@ -3615,41 +4024,6 @@ export class WorkoutSession {
   }
 
   initialize() {
-    const upgradingActivePlan = this.loadedStateVersion < CURRENT_WORKOUT_STATE_VERSION &&
-      this.state.activeWorkoutSession && !this.state.workoutCompleted;
-    this.readingLegacyLightPlan = this.loadedStateVersion < DOMINANT_LIGHT_MODE_STATE_VERSION &&
-      this.state.activeWorkoutMinutes > 0 && (this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0;
-    try {
-      if (upgradingActivePlan && !this.canRetainPrimaryPlan()) this.preserveHistoryForSetupReview();
-      this.initializeCore();
-    } catch (error) {
-      if (!upgradingActivePlan || !this.state.activeWorkoutSession) throw error;
-      this.preserveHistoryForSetupReview();
-      this.initializeCore();
-    } finally { this.readingLegacyLightPlan = false; }
-  }
-
-  canRetainPrimaryPlan() {
-    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) return false;
-    const resolution = RESOLUTIONS.get(Math.min(this.state.activeWorkoutMinutes, 30));
-    if (this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers).resolutionMinutes !== resolution.minutes)
-      return false;
-    return resolution.groups.every((group) => {
-      const id = this.state.selectedExerciseIds[this.getSelectionStorageKey(group.id)];
-      if (!id) return true;
-      const root = this.exercisesById.get(id);
-      return root && this.getSequencePlacementOptions(root, resolution.groups).some((option) => option.some((owned) => owned.id === group.id));
-    });
-  }
-
-  preserveHistoryForSetupReview() {
-    this.finalizeActiveWorkoutSession("Interrupted");
-    this.resetTransientState();
-    this.state.workoutSetupReviewRequired = true;
-    this.readingLegacyLightPlan = false;
-  }
-
-  initializeCore() {
     const currentUnixTimeMilliseconds = this.getCurrentUnixTimeMilliseconds();
     if (this.loadedStateVersion < LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION) {
       this.migrateLegacyCompletedTrainingDays(currentUnixTimeMilliseconds);
@@ -3718,7 +4092,6 @@ export class WorkoutSession {
     if (shouldMigrateActiveLightLineup) {
       this.migrateActiveLightLineup();
     } else {
-      this.readingLegacyLightPlan = false;
       this.repairActiveLineup(
         !shouldMigratePreparedLightDay &&
           !shouldMigratePreparedDominantLightLineup,
@@ -3749,26 +4122,9 @@ export class WorkoutSession {
     }
   }
 
-  getAvailability(minutes, modifiers) {
-    const key = `${minutes}:${normalizeWorkoutModifiers(modifiers)}`;
-    if (!this.availabilityCache.has(key)) {
-      this.availabilityCache.set(key, getWorkoutAvailability(this.exercises, minutes, modifiers));
-    }
-    return this.availabilityCache.get(key);
-  }
-
-  getWorkoutAvailability(minutes, modifiers) {
-    if (this.isAutomaticLightDayDue()) modifiers |= WORKOUT_MODIFIERS.Light;
-    return this.getAvailability(minutes, modifiers);
-  }
-
-  startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS, acceptLimitedCoverage = false) {
-    const availability = this.getWorkoutAvailability(minutes, modifiers);
-    if (!availability.canStart || availability.requiresAcceptance && !acceptLimitedCoverage) {
-      throw new WorkoutUnavailableError(availability);
-    }
+  startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
     this.prepareWorkout(minutes, modifiers);
-    this.activatePreparedWorkout(acceptLimitedCoverage);
+    this.activatePreparedWorkout();
   }
 
   prepareWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
@@ -3778,9 +4134,6 @@ export class WorkoutSession {
     if (this.state.activeWorkoutMinutes !== 0) {
       throw new Error("A workout is already active.");
     }
-
-    const availability = this.getWorkoutAvailability(minutes, modifiers);
-    if (!availability.canStart) throw new WorkoutUnavailableError(availability);
 
     this.normalizeSlotPreferences();
     const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
@@ -3818,17 +4171,15 @@ export class WorkoutSession {
     // rejection feedback is stored by workout phase.
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.carrySlotPreferencesForward();
-    this.repairActiveLineup(false);
+    this.repairActiveLineup(
+      (modifiers & WORKOUT_MODIFIERS.Light) === 0,
+    );
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
     this.reconcileLineupWithScheduledPhases();
   }
 
-  activatePreparedWorkout(acceptLimitedCoverage = false) {
-    const availability = this.getWorkoutAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers);
-    if (!availability.canStart || availability.requiresAcceptance && !acceptLimitedCoverage) {
-      throw new WorkoutUnavailableError(availability);
-    }
+  activatePreparedWorkout() {
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes) ||
         this.state.activeWorkoutSession ||
         Object.keys(this.state.outcomes).length !== 0 ||
@@ -3866,7 +4217,6 @@ export class WorkoutSession {
     const priorRounds = this.getActiveGroups();
     const currentRound = this.getNextGroup();
     if (!currentRound) {
-      this.readingLegacyLightPlan = false;
       this.repairActiveLineup();
       this.normalizeActiveLongWorkoutAllocation();
       return;
@@ -3902,7 +4252,6 @@ export class WorkoutSession {
       ],
     ));
     const protectedBaseGroupIds = new Set(lockedExerciseIdsByGroup.keys());
-    this.readingLegacyLightPlan = false;
     const selectionGroups = this.getSelectionGroups();
     const replannedLineup = this.chooseBestDistinctLineup(
       selectionGroups,
@@ -3933,10 +4282,6 @@ export class WorkoutSession {
     ));
 
     const replannedRounds = this.getActiveGroups();
-    if (replannedRounds.some((round) => !Object.hasOwn(this.state.outcomes, round.id) &&
-        !(preserveCompletedCurrentSelection && round.id === currentRound.id) &&
-        !isCompatibleWithWorkoutModifiers(this.getSelectedExercise(round), this.state.activeWorkoutModifiers)))
-      throw new WorkoutUnavailableError({...this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers), groups: [], canStart: false});
     const changedLockedSelection = [...lockedExerciseIdsByGroup].some(
       ([groupId, exerciseId]) => this.state.selectedExerciseIds[
         this.getSelectionStorageKey(
@@ -4061,7 +4406,7 @@ export class WorkoutSession {
       protectedBaseGroupIds,
     );
     const retainedUnavailableSelectionGroupIds = selectionGroups
-      .filter((group) => !this.getAvailability(this.state.activeWorkoutMinutes, modifiers).groups.some((available) => available.id === group.id))
+      .filter((group) => !isSelectionGroupAvailable(group, modifiers))
       .map((group) => group.id);
     const currentSelectionGroupAvailable = selectionGroups.some((group) =>
       group.id === getSelectionKey(currentRound));
@@ -4113,10 +4458,6 @@ export class WorkoutSession {
       ));
 
       const replannedRounds = this.getActiveGroups();
-    if (replannedRounds.some((round) => !Object.hasOwn(this.state.outcomes, round.id) &&
-        !(preserveCompletedCurrentSelection && round.id === currentRound.id) &&
-        !isCompatibleWithWorkoutModifiers(this.getSelectedExercise(round), this.state.activeWorkoutModifiers)))
-      throw new WorkoutUnavailableError({...this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers), groups: [], canStart: false});
       const replannedCurrentPlacement = this.getSelectedSequencePlacements()
         .find((placement) => placement.coveredGroups.some((group) =>
           group.id === getSelectionKey(currentRound)));
@@ -4303,16 +4644,14 @@ export class WorkoutSession {
     modifiers = this.state.activeWorkoutModifiers,
     retainedSelectionGroupIds = this.state.activeModifierRetainedSelectionGroupIds,
   ) {
-    if (this.readingLegacyLightPlan && SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes))
-      return RESOLUTIONS.get(Math.min(this.state.activeWorkoutMinutes, 30)).groups.filter((group) =>
-        isSelectionGroupAvailable(group, modifiers));
     const retained = new Set(retainedSelectionGroupIds ?? []);
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? [...new Map([
-          ...this.getAvailability(this.state.activeWorkoutMinutes, modifiers).groups,
-          ...[...RESOLUTIONS.values()].flatMap((resolution) => resolution.groups)
-            .filter((group) => retained.has(group.id)),
-        ].map((group) => [group.id, group])).values()].sort((a, b) => a.order - b.order)
+      ? getResolution(
+          this.state.activeWorkoutMinutes > 30 ? 30 : this.state.activeWorkoutMinutes,
+        ).groups.filter((group) => isSelectionGroupAvailable(
+          group,
+          modifiers,
+        ) || retained.has(group.id))
       : [];
   }
 
@@ -5121,7 +5460,11 @@ export class WorkoutSession {
     );
     const protectedSelectionGroupId =
       this.state.activeModifierProtectedSelectionGroupId;
-    const validGroupIds = new Set(ALL_GROUPS.keys());
+    const validGroupIds = new Set(getResolution(
+      this.state.activeWorkoutMinutes > 30
+        ? 30
+        : this.state.activeWorkoutMinutes,
+    ).groups.map((group) => group.id));
     this.state.activeModifierRetainedSelectionGroupIds =
       this.state.activeModifierRetainedSelectionGroupIds.filter((groupId) => {
         const selectedRootId = this.state.selectedExerciseIds[
@@ -5331,10 +5674,6 @@ export class WorkoutSession {
     const freshHardMuscleRanks = new Map(
       freshHardMuscleTimestamps.map((timestamp, rank) => [timestamp, rank]),
     );
-    const lastTargetWork = getPrimaryTargetRecency(this.state, selectionTimeUnixMilliseconds);
-    const targetAgeRanks = new Map([...new Set(this.exercises.map((exercise) =>
-      lastTargetWork.get(exercise.primaryCanonicalGroup) ?? 0))]
-      .sort((a, b) => b - a).map((time, rank) => [time, rank]));
     const maximumCoverage = Math.max(...groups.map((group) => group.canonicalGroups.length));
     // These are exact lexicographic assignment dimensions, not hardness
     // points. BigInt keeps arbitrary saved-score histories lossless without
@@ -5349,7 +5688,6 @@ export class WorkoutSession {
     const primaryWeight = addPriorityDimension(1);
     const equipmentPreferenceWeight = addPriorityDimension(2);
     const currentSelectionWeight = addPriorityDimension(1);
-    const targetAgeWeight = addPriorityDimension(Math.max(0, targetAgeRanks.size - 1));
     const hardMuscleAgeWeight = addPriorityDimension(
       Math.max(0, freshHardMuscleRanks.size - 1),
     );
@@ -5411,9 +5749,6 @@ export class WorkoutSession {
         !isRecoveringModerate;
       const isCurrentSelection = includeSlotPreference &&
         currentExerciseIds.get(evaluationGroup.id) === exercise.id;
-      const lastTargetTime = Math.max(0, ...this.getSequenceExercises(exercise)
-        .filter((member) => evaluationGroup.canonicalGroups.includes(member.primaryCanonicalGroup))
-        .map((member) => lastTargetWork.get(member.primaryCanonicalGroup) ?? 0));
       return (allowSavedSelectionException && isCurrentSelection
         ? preservedActiveSelectionWeight
         : 0n) +
@@ -5433,7 +5768,6 @@ export class WorkoutSession {
           ? freshHardWeight
           : 0n) +
         BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
-        BigInt(targetAgeRanks.get(lastTargetTime) ?? 0) * targetAgeWeight +
         (isCurrentSelection ? currentSelectionWeight : 0n) +
         BigInt(getEquipmentPreferenceCount(selectionExercise, modifiers)) *
           equipmentPreferenceWeight +
@@ -5663,8 +5997,8 @@ export class WorkoutSession {
   createDistinctLineupError(groups, movementCount) {
     return new Error(
       `No distinct exercise lineup exists for the active workout profile across ` +
-      `${groups.length} groups and ${movementCount} eligible session movements ` +
-      `that fit the duration and selected constraints.`,
+      `${groups.length} groups and ${movementCount} eligible session movements with at least ` +
+      `${MINIMUM_CANONICAL_COVERAGE_PERCENT}% coverage.`,
     );
   }
 
@@ -5679,7 +6013,7 @@ export class WorkoutSession {
   }
 
   isCompatibleWithModifiers(exercise, modifiers) {
-    return isCompatibleWithWorkoutModifiers(exercise, this.readingLegacyLightPlan ? modifiers & ~WORKOUT_MODIFIERS.Light : modifiers);
+    return isCompatibleWithWorkoutModifiers(exercise, modifiers);
   }
 
   getSequenceRoot(exercise) {
@@ -6484,10 +6818,6 @@ export class WorkoutSession {
     }
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     const allocationCache = new Map();
-    const lastTargetWork = getPrimaryTargetRecency(this.state, selectionTimeUnixMilliseconds);
-    const targetTime = (root, group) => Math.max(0, ...this.getSequenceExercises(root)
-      .filter((member) => group.canonicalGroups.includes(member.primaryCanonicalGroup))
-      .map((member) => lastTargetWork.get(member.primaryCanonicalGroup) ?? 0));
     const rebalanceRoots = this.exercises.filter((exercise) =>
       exercise.sequenceBlocks.length > 0 &&
       this.getSequenceRoot(exercise).id === exercise.id &&
@@ -6647,8 +6977,6 @@ export class WorkoutSession {
           if (!preservesScores) {
             continue;
           }
-          if (option.some((group) => targetTime(candidate, group) >
-              targetTime(placementByGroupId.get(group.id).root, group))) continue;
           let candidateBalance;
           const removedBlockCount = removedPlacements.reduce(
             (total, placement) =>
@@ -7597,7 +7925,10 @@ export class WorkoutSession {
             const { selectionGroupId } =
               this.parseSelectionStorageKey(selectionStorageKey);
             return ALL_GROUPS.has(selectionGroupId) &&
-              !this.isValidPreferenceRoot(
+              this.isTrainingClaimAffectedRoot(
+              rootExerciseId,
+              trainingClaimChangedExerciseIds,
+            ) && !this.isValidPreferenceRoot(
               selectionGroupId,
               rootExerciseId,
             );

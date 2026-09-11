@@ -1,13 +1,13 @@
 # Flux
 
-**A standing workout for exactly the time you have.**
+**A whole-body workout for exactly the time you have.**
 
 Flux is a zero-admin workout app. Choose a duration, receive one standing
 exercise at a time, then keep or discard each movement. Exercises require no
 equipment by default; an ordinary wall and a compact or tall mirror can be
 declared available as optional modifiers. Flux
 uses those decisions to shape later sessions without allowing preference,
-randomness, or preferences to weaken your physical constraints.
+randomness, or filters to destroy anatomical coverage.
 
 Try the web app: [nopara73.github.io/Flux](https://nopara73.github.io/Flux/)
 
@@ -25,25 +25,26 @@ up into seven complete anatomical partitions containing 3, 5, 7, 10, 15, 20,
 or 30 workout groups. Every canonical leaf belongs to exactly one group at each
 resolution.
 
-Choosing a shorter session coarsens the body map. The planner tries the duration's
-anatomical resolution, then uses a coarser map or fewer available targets when
-complete compatible sequences cannot fit. It presents limited coverage before
-starting, with **Adjust setup** and **Start limited** choices. If no whole-sequence
-plan fills the chosen duration, it blocks Start.
+Choosing a shorter session therefore coarsens the body map instead of cutting
+the end off a longer routine. A 5-minute workout has five broad targets; a
+30-minute workout addresses all 30 leaves individually. Selected exercise
+sequences are scheduled first by muscular demand: demand `0`, then demand `2`,
+then demand `1`. Within each demand tier, groups retain their existing order
+from smaller to larger estimated bilateral skeletal-muscle mass.
 
-The supported durations are 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes.
-Every accepted plan has exactly that many 45-second exercise blocks plus rests.
-Sequences are ordered by demand 0, then 2, then 1, retaining muscle order within
-each tier. Longer sessions repeat complete sequences.
+The supported workout durations are 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90
+minutes. Durations above 30 begin with the 30-group resolution and spend the
+remaining time according to the expansion rules below.
 
-### A primary target establishes anatomical ownership
+### An exercise must meaningfully cover its target
 
-An exercise belongs to the region containing its primary muscle. Secondary
-associations record meaningful training stimulus and contribute to balance;
-they never establish a slot or have to cover half a region. Repeated workouts
-rotate toward less recently trained primaries while honoring recovery, scores,
-and anatomically valid Keeps. Available-target meters describe choices in the
-current setup, not a promise that every muscle is trained in one short session.
+Each exercise has one primary canonical group and every secondary group it
+meaningfully trains. An exercise may represent a rolled-up workout group only
+when it trains at least half of that group's canonical leaves. Primary ownership
+is preferred, but a truthful secondary association remains valid.
+
+This prevents a broad target such as a body region from being satisfied by a
+movement with only a token association to one small part of it.
 
 ### The lineup is solved as one constrained assignment
 
@@ -51,7 +52,7 @@ Flux does not select each round independently. It solves the complete lineup as
 a maximum-weight atomic assignment between workout groups and eligible exercise
 sequences. Most sequences occupy one base group. A sequence whose consecutive
 blocks genuinely have primary muscles in different workout groups may occupy all
-of those groups together, provided each member has primary ownership in
+of those groups together, provided its complete sequence meaningfully covers
 each claimed group and fits the exact workout duration.
 Catalog records that are merely repetition, hold, or naming variants of the
 same demonstrated movement share an explicit `sessionMovementId`; only one of
@@ -286,25 +287,92 @@ behavior is coverage-aware:
   mirror but receive mirror preference only with a tall mirror;
 - `Agnostic` exercises are unaffected.
 
-Workout selection follows [the scope contract](docs/WORKOUT_AVAILABILITY.md).
-Primary targets determine placement. Every selected constraint applies to every
-sequence member, and Light allows only demand-0 sequences. A short workout samples
-one target per available region; longer workouts use finer groupings and repeat
-complete sequences. Targets rotate across logged workouts while preserving valid
-Keeps, feedback and recovery.
+Light is deliberately outside catalog pairwise and materiality checks as a
+modifier axis because it changes ranking without excluding or admitting an
+exercise. Demand-0 availability is audited independently below.
+Wall is also outside the pairwise, per-muscle, and duration quota system. It
+instead has two direct catalog invariants: at least 20 distinct
+wall-required session movements that do not require sole contact, plus at least
+five distinct sole-contact wall movements. Sides, directions, sequence blocks,
+repeated sets, aliases, and names cannot multiply either count. The current
+audited inventory contains 25 base-wall movements and five sole-wall movements.
 
-Restricted settings can leave targets unavailable. Before starting a narrower
-plan, Flux shows its scope and offers **Adjust setup** or **Start limited**.
-If complete sequences cannot fill the duration, start is blocked. The
-[availability report](docs/catalog-audit/workout_availability_current.json) records
-these limitations. Catalog admission, global primary coverage and functional
-modifier checks replace the historical population and percentage quotas.
+For every existing non-Wall modifier pair and real UI state, the catalog uses a
+hierarchical availability contract. Each of the three broad 3-minute body
+regions must retain at least five selectable session movements. Finer 5- through
+30-minute anatomical buckets must retain at least one. Two binary modifiers
+have four states; a pair involving Mirror has six because Mirror has off,
+compact, and tall states. In a mirror-equipped broad state, only `MirrorOnly`
+and `BenefitsGreatly` count toward the five-movement relevance floor, after
+actual equipment compatibility is applied. Fine buckets measure real
+availability, so selectable `Agnostic` movements count there. Separately, each
+of the five global mirror
+classification cells—`MirrorOnly` upper/full body, `BenefitsGreatly`
+upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
+Relationship labels are never promoted to hide a genuine gap. Every supported
+duration and profile must also admit a capacity-exact atomic lineup without
+reusing a session movement.
 
+Muscular-demand coverage is a fixed two-category audit over those same 28
+deduplicated single/pair profiles; demand is not another modifier axis. Each of
+the three broad 3-minute body regions must have at least one genuine demand-0
+and one genuine demand-2 session movement. Demand 0 counts only when every
+distinct sequence member is demand 0 and a member's primary canonical muscle
+belongs to that region. Demand 2 uses the same primary ownership rule for its
+hard member. `SessionMovementId` deduplicates aliases, and sides, directions,
+blocks, sets, and names never multiply either floor. Demand 1 has no catalog
+quota.
 
-Historical quota diagnostics are retained in `docs/catalog-audit` as evidence of
-the former policy's limitations. They are not refreshed or used as release gates.
-Current availability is recorded across the existing quadratic setup profiles,
-actual default and restrictive setups, each duration, and strict Light.
+Hard Floor also has an explicit category-preservation check. With Insect
+off/on, Silence off/on, and Mirror off, each broad region must retain at least
+five combined hard-and-slippery-compatible and five incompatible session
+movements; each finer bucket must retain at least one of each. This prevents the
+relaxed soft-floor state from passing merely because one floor category is
+effectively absent. The check uses the same hierarchical pairwise state model;
+it does not enumerate three- or four-modifier combinations.
+
+A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
+Silence, and Shy must remove at least five exercises or 5% of the previous
+candidate pool, whichever is larger. Mirror must actually prefer at least that many
+compatible exercises for compact and tall equipment independently. Each
+materiality-audited modifier must affect at least 10% of the canonical buckets,
+both alone and with its paired modifier enabled. The current 83
+`BenefitsGreatly` assignments are
+an audited result, not a target or ceiling. Ordinary form checking never
+qualifies, and relationship labels cannot be promoted to satisfy coverage or
+materiality checks. Upper-body clothing is deliberately excluded from this
+one-direction restrictive-materiality test because each state can exclude the
+opposite requirement; it remains fully reviewed and participates in the normal
+pairwise catalog audit. Its exact catalog partition is recorded in
+[`docs/UPPER_BODY_CLOTHING_AUDIT.md`](docs/UPPER_BODY_CLOTHING_AUDIT.md).
+Shy's ordinary-observer review boundary and exhaustive catalog partition are
+recorded in [`docs/SHY_MODE_AUDIT.md`](docs/SHY_MODE_AUDIT.md).
+Hard-floor classifications and their review criteria are
+recorded in [`docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md`](docs/HARD_FLOOR_COMPATIBILITY_AUDIT.md).
+Wall's three-state contract, separate direct floors, and reviewed 30-movement
+inventory are recorded in
+[`docs/WALL_EQUIPMENT_AUDIT.md`](docs/WALL_EQUIPMENT_AUDIT.md).
+
+The 2026-08-29 full-loop integrity audit exposed real gaps after false inherited
+anatomy was removed: 178 pairwise deficiencies, 112 hard-floor category
+deficiencies, and one Silence materiality deficiency. That frozen baseline and
+its exact historical deficits are retained in
+[`docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json`](docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json);
+no relationship or muscle assignment may be inflated to hide a gap. The
+hierarchical policy makes the live contract both meaningful and achievable:
+broad regions protect real variety, fine buckets protect reachability, and
+demand checks protect broad light/hard availability. The current catalog has
+zero pairwise, floor-category, demand-category, materiality, mirror-category,
+or distinct-lineup deficits. The reproducible current ledger is
+[`docs/catalog-audit/modifier_coverage_deficits_current.json`](docs/catalog-audit/modifier_coverage_deficits_current.json).
+Production builds and Android tests fail on any nonzero live deficit; updating
+the ledger cannot bless a regression.
+
+The pairwise guarantees grow quadratically with the number of quota-bearing
+modifiers. The two demand categories multiply the broad profile audit by a
+fixed factor of two; they do not create new modifier combinations. Wall's two
+direct floors remain constant-size and do not create new pairwise edges or
+arbitrary all-modifier intersections.
 
 ### Atomic exercise sequences
 
