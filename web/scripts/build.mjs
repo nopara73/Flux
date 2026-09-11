@@ -13,6 +13,7 @@ import {
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
+  findCompleteWorkoutProfileLineupDeficiencies,
   isModifierMetadataComplete,
   isSessionMovementMetadataValid,
 } from "../workout.js";
@@ -199,6 +200,8 @@ const soleWallCatalogDeficiencies =
   findSoleWallContactRequiredCatalogDeficiencies(catalog);
 const distinctLineupDeficiencies =
   findWorkoutProfileLineupDeficiencies(catalog);
+const completeLineupDeficiencies =
+  findCompleteWorkoutProfileLineupDeficiencies(catalog);
 const integrityDeficitReport = JSON.parse(await readFile(
   path.join(
     repositoryRoot,
@@ -232,6 +235,7 @@ const expectedIntegritySummary = {
   ),
   materialityDeficiencyCount: materialityDeficiencies.length,
   distinctLineupDeficiencyCount: distinctLineupDeficiencies.length,
+  completeLineupDeficiencyCount: completeLineupDeficiencies.length,
 };
 const integrityDebtMatches =
   integrityDeficitReport.catalogRevision === CURRENT_CATALOG_REVISION &&
@@ -251,7 +255,8 @@ const integrityDebtMatches =
     muscularDemandDeficiencies,
   ) &&
   exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
-  exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies);
+  exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies) &&
+  exactlyEqual(integrityDeficitReport.completeLineup, completeLineupDeficiencies);
 
 // Demand-category and percentage materiality results above are diagnostic.
 // Availability and complete atomic lineups remain release requirements.
@@ -261,7 +266,7 @@ const catalogInvariantChecks = [
   ["hierarchical modifier-pair coverage", pairwiseDeficiencies.length === 0],
   ["hierarchical hard-floor category coverage",
     hardFloorCategoryDeficiencies.length === 0],
-  ["distinct workout lineups", distinctLineupDeficiencies.length === 0],
+  ["complete workout lineups", completeLineupDeficiencies.length === 0],
   ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
   ["sole-wall session-movement floor", soleWallCatalogDeficiencies.length === 0],
   ["explicit catalog-integrity deficit ledger", integrityDebtMatches],

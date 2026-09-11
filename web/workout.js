@@ -1732,35 +1732,27 @@ function getSelectedSequencePlacements(
     selectedGroupsByRootId.set(root.id, selected);
   }
 
-  const movementIds = new Set();
   const placements = [];
   for (const { root, groups: selectedGroups } of selectedGroupsByRootId.values()) {
-    const selectedGroupIds = new Set(selectedGroups.map((group) => group.id));
-    let coveredGroups = getSequencePlacementOptions(root, exercisesById, groups)
-      .find((option) => sameStringSet(
-        option.map((group) => group.id),
-        selectedGroupIds,
-      ));
-    if (!coveredGroups && selectedGroups.length === 1 &&
-        typeof isRelaxedSingletonValid === "function" &&
-        isRelaxedSingletonValid(root, selectedGroups[0])) {
-      coveredGroups = selectedGroups;
+    const remainingGroupIds = new Set(selectedGroups.map((group) => group.id));
+    // Keep complete cross-primary placements together; repeated roots in other
+    // eligible slots have separate round IDs, feedback and Keep.
+    for (const option of getSequencePlacementOptions(root, exercisesById, groups)) {
+      if (!option.every((group) => remainingGroupIds.has(group.id))) continue;
+      const coveredGroups = [...option].sort((left, right) => left.order - right.order);
+      placements.push({ root, anchor: coveredGroups[0], coveredGroups });
+      for (const group of option) remainingGroupIds.delete(group.id);
     }
-    const movementId = getSessionMovementId(root);
-    if (!coveredGroups || movementIds.has(movementId)) {
-      throw new Error(
-        "The selected atomic sequence placements do not match their " +
-        "primary-muscle workout slots.",
-      );
+    for (const group of selectedGroups.filter((item) => remainingGroupIds.has(item.id))) {
+      if (typeof isRelaxedSingletonValid !== "function" ||
+          !isRelaxedSingletonValid(root, group)) {
+        throw new Error(
+          "The selected atomic sequence placements do not match their " +
+          "primary-muscle workout slots.",
+        );
+      }
+      placements.push({ root, anchor: group, coveredGroups: [group] });
     }
-    movementIds.add(movementId);
-    const orderedCoveredGroups = [...coveredGroups]
-      .sort((left, right) => left.order - right.order);
-    placements.push({
-      root,
-      anchor: orderedCoveredGroups[0],
-      coveredGroups: orderedCoveredGroups,
-    });
   }
   return placements.sort((left, right) => left.anchor.order - right.anchor.order);
 }
@@ -2529,12 +2521,15 @@ export function findWorkoutModifierMaterialityDeficiencies(exercises) {
     result.affectedGroupCount < result.requiredAffectedGroupCount);
 }
 
-export function getMaximumDistinctLineupSize(
-  exercises,
-  groups,
-  modifiers,
-  workoutMinutes = groups.length,
-) {
+export function getMaximumDistinctLineupSize(exercises, groups, modifiers, workoutMinutes = groups.length) {
+  return getMaximumLineupSize(exercises, groups, modifiers, workoutMinutes, false);
+}
+
+export function getMaximumCompleteLineupSize(exercises, groups, modifiers, workoutMinutes = groups.length) {
+  return getMaximumLineupSize(exercises, groups, modifiers, workoutMinutes, true);
+}
+
+function getMaximumLineupSize(exercises, groups, modifiers, workoutMinutes, allowRepeatedMovements) {
   if (!Number.isInteger(workoutMinutes) || workoutMinutes < groups.length) {
     throw new RangeError("Workout minutes must fit every workout group.");
   }
@@ -2582,6 +2577,9 @@ export function getMaximumDistinctLineupSize(
     if (tryAssignOneBlockMovement(groupIndex, new Set())) {
       oneBlockLineupSize += 1;
     }
+  }
+  if (allowRepeatedMovements) {
+    oneBlockLineupSize = candidateOneBlockMovementsByGroup.filter((ids) => ids.length > 0).length;
   }
   if (oneBlockLineupSize === groups.length) {
     return groups.length;
@@ -2631,7 +2629,9 @@ export function getMaximumDistinctLineupSize(
     });
   }
 
-  const solution = solveAtomicSequenceLineup(
+  const solve = allowRepeatedMovements
+    ? solveAtomicSequenceLineupAllowingRepeatedMovements : solveAtomicSequenceLineup;
+  const solution = solve(
     groups.length,
     workoutMinutes,
     candidates,
@@ -2664,6 +2664,19 @@ export function findWorkoutProfileLineupDeficiencies(exercises) {
       .filter((result) =>
         result.maximumDistinctExerciseCount < result.requiredDistinctExerciseCount);
   });
+}
+
+export function findCompleteWorkoutProfileLineupDeficiencies(exercises) {
+  return SUPPORTED_MINUTES.flatMap((minutes) =>
+    WORKOUT_MODIFIER_VALIDATION_PROFILES.map((profile) => {
+      const groups = getResolution(Math.min(minutes, 30)).groups
+        .filter((group) => isSelectionGroupAvailable(group, profile));
+      return {
+        minutes, profile,
+        maximumCoveredGroupCount: getMaximumCompleteLineupSize(exercises, groups, profile, minutes),
+        requiredGroupCount: groups.length,
+      };
+    }).filter((result) => result.maximumCoveredGroupCount < result.requiredGroupCount));
 }
 
 export function evaluateRecoveryLightMode(
@@ -2838,6 +2851,20 @@ function countMaskBits(mask) {
     count += 1;
   }
   return count;
+}
+
+function solveAtomicSequenceLineupAllowingRepeatedMovements(
+  groupCount, workoutMinutes, sourceCandidates,
+) {
+  // Occupancy keys belong only to the solver. Real identities, utilities and
+  // complete blocks remain unchanged; aliases still share each placement key.
+  const occupancyKeys = new Map();
+  const repeatableCandidates = sourceCandidates.map((candidate) => {
+    const key = `${candidate.movementId}:${candidate.coverageMask}`;
+    if (!occupancyKeys.has(key)) occupancyKeys.set(key, occupancyKeys.size);
+    return { ...candidate, movementId: occupancyKeys.get(key) };
+  });
+  return solveAtomicSequenceLineup(groupCount, workoutMinutes, repeatableCandidates);
 }
 
 function solveAtomicSequenceLineup(
@@ -5919,7 +5946,18 @@ export class WorkoutSession {
       groups.length,
       this.state.activeWorkoutMinutes,
       atomicCandidates,
+    ) ?? solveAtomicSequenceLineupAllowingRepeatedMovements(
+      groups.length, this.state.activeWorkoutMinutes, atomicCandidates,
     );
+    if (!solution && excludedExerciseIdsByGroup.size > 0) {
+      // Preserve the downvote while allowing the only real choice when no
+      // complete replacement lineup exists.
+      return this.chooseBestDistinctLineup(groups, modifiers, {
+        currentExerciseIds, allowSavedSelectionException,
+        carriedKeepRootIdsBySelectionGroupId, modifierTransitionProtectedGroupIds,
+        scheduledPhaseByGroupId,
+      });
+    }
     if (!solution) {
       const movementCount = new Set(atomicCandidates.map((candidate) =>
         candidate.movementId)).size;
@@ -6039,7 +6077,7 @@ export class WorkoutSession {
 
   createDistinctLineupError(groups, movementCount) {
     return new Error(
-      `No distinct exercise lineup exists for the active workout profile across ` +
+      `No complete exercise lineup exists for the active workout profile across ` +
       `${groups.length} groups and ${movementCount} eligible session movements with at least ` +
       `${MINIMUM_CANONICAL_COVERAGE_PERCENT}% coverage.`,
     );

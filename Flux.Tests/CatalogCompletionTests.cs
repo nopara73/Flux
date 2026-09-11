@@ -15,6 +15,19 @@ public sealed class CatalogCompletionTests
             Converters = { new JsonStringEnumConverter() },
         })!;
 
+    [Fact]
+    public void RepeatedSpinalWaveFillsTwoForearmSlotsWithoutInventingRotatorCoverage()
+    {
+        Exercise[] wave = [LoadCatalog().Single(exercise => exercise.Id == 1032)];
+        WorkoutGroup[] groups = new[] { "r30.forearm-flexors-pronators",
+            "r30.forearm-extensors-supinators", "r30.rotator-cuff" }
+            .Select(key => MassGroupingTaxonomy.GetGroup(30, key)).ToArray();
+        const WorkoutModifiers profile = WorkoutModifiers.Insect | WorkoutModifiers.HardFloor;
+        Assert.Equal(1, WorkoutModifierPolicy.GetMaximumDistinctLineupSize(wave, groups, profile, 3));
+        Assert.Equal(2, WorkoutModifierPolicy.GetMaximumCompleteLineupSize(wave, groups, profile, 3));
+        Assert.False(WorkoutCoveragePolicy.IsSelectable(wave[0], groups[2]));
+    }
+
     [Theory]
     [InlineData(10, true, false, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot")]
     [InlineData(10, true, true, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot")]

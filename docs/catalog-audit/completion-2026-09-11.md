@@ -414,3 +414,46 @@ The coordinator subsequently relayed the owner's instruction that separate
 slots need not require different movements. The runtime uniqueness policy and
 its associated release gate are being reviewed separately; the 17 actual
 availability deficits above are unaffected by that distinction.
+
+## Complete repeated rounds — 12 September
+
+The coordinator relayed the owner's instruction that different muscle slots
+need not require different movements. The prior distinct-family validator
+conflated an empty slot with a shared movement that can legitimately fill two
+separate rounds. This was also a runtime restriction: the solver rejected
+family reuse, and saved selections sharing a root were interpreted as one
+atomic placement.
+
+Android and web now retain the original distinct planner first. When that
+planner cannot fill the workout, the same atomic solver permits the movement
+in separate eligible placements. Each placement retains its complete blocks,
+round IDs, slot Keep and decision history. A genuine cross-primary sequence
+still claims its complete primary placement. Real exercise identities and
+metadata do not change. The ordinary UI, ranking utility, recovery and Oura
+integration remain unchanged.
+
+Preparing a new workout after rejecting the only available choice also needed
+a correction. The downvote remains in its existing phase-specific score. The
+rejected-choice exclusion is relaxed only when a complete replacement workout
+cannot otherwise be formed, so a valid one-choice catalog does not dead-end.
+
+The release gate now measures complete atomic lineups, allowing repeats;
+distinct-lineup shortages remain visible as diagnostics. Actual unavailability
+and atomic timing failures still block publication. The catalog is unchanged
+at 545 records/revision 79/database 95; app version is 3.17/131 and state
+schemas remain 29/26. There are still 17 pairwise availability gaps, five
+overlapping Hard Floor gaps and 20 incomplete duration/profile combinations.
+For 30 minutes/profile 17, repeating 1032 increases coverage from 25 to 26 of
+28 applicable slots; rotator cuff and shoulder adduction/extension remain
+empty. No additional exercise is needed merely to give the two forearm slots
+different family IDs.
+
+Validation: full native tests pass 830/831; full web tests pass 375/381. Only
+the existing coverage invariant and five affected web profile shards fail.
+After extending paused-resume and modifier-change assertions, focused tests
+pass 18 native and six web cases. The Debug build succeeds with zero warnings
+and errors in 3m42s. The production web build still stops at the expected three
+actual availability/complete-lineup gates. Browser evidence in
+`evidence/2026-09-12/repeated-lineup` uses an isolated subset of unchanged real
+catalog records and verifies the same final 1032 media in separate forearm
+rounds. No public deployment or phone installation is claimed.

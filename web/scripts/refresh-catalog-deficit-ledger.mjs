@@ -14,6 +14,7 @@ import {
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
+  findCompleteWorkoutProfileLineupDeficiencies,
 } from "../workout.js";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -40,6 +41,7 @@ const hardFloorCategory =
 const muscularDemand = findMuscularDemandCoverageDeficiencies(catalog);
 const materiality = findWorkoutModifierMaterialityDeficiencies(catalog);
 const distinctLineup = findWorkoutProfileLineupDeficiencies(catalog);
+const completeLineup = findCompleteWorkoutProfileLineupDeficiencies(catalog);
 
 const report = {
   catalogRevision: CURRENT_CATALOG_REVISION,
@@ -48,8 +50,8 @@ const report = {
     .update(catalogSource.replaceAll("\r\n", "\n"))
     .digest("hex"),
   policy: {
-    treatment: "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
-    diagnosticOnly: ["muscularDemand", "materiality"],
+    treatment: "Availability and complete atomic lineups must have zero deficits. Repeated complete movements are allowed. Distinct-lineup, demand-category and percentage materiality arrays are diagnostics, not release gates.",
+    diagnosticOnly: ["muscularDemand", "materiality", "distinctLineup"],
     broadCoverageResolutionMinutes: BROAD_COVERAGE_RESOLUTION_MINUTES,
     broadModifierPairMinimumPerStatePerGroup:
       MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
@@ -78,12 +80,14 @@ const report = {
     ),
     materialityDeficiencyCount: materiality.length,
     distinctLineupDeficiencyCount: distinctLineup.length,
+    completeLineupDeficiencyCount: completeLineup.length,
   },
   pairwise,
   hardFloorCategory,
   muscularDemand,
   materiality,
   distinctLineup,
+  completeLineup,
 };
 
 // Publish a complete ledger even while an editor or preview is reading it.

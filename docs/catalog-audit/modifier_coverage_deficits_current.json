@@ -3,10 +3,11 @@
   "catalogRecordCount": 545,
   "catalogSha256": "aa22b43af06c145760dbd79f40e1223947b8788c0d9f8d538f58ff92c8965ad9",
   "policy": {
-    "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
+    "treatment": "Availability and complete atomic lineups must have zero deficits. Repeated complete movements are allowed. Distinct-lineup, demand-category and percentage materiality arrays are diagnostics, not release gates.",
     "diagnosticOnly": [
       "muscularDemand",
-      "materiality"
+      "materiality",
+      "distinctLineup"
     ],
     "broadCoverageResolutionMinutes": 3,
     "broadModifierPairMinimumPerStatePerGroup": 1,
@@ -25,7 +26,8 @@
     "demandTwoDeficiencyCount": 8,
     "demandTwoAffectedGroupCount": 2,
     "materialityDeficiencyCount": 1,
-    "distinctLineupDeficiencyCount": 20
+    "distinctLineupDeficiencyCount": 20,
+    "completeLineupDeficiencyCount": 20
   },
   "pairwise": [
     {
@@ -492,6 +494,128 @@
       "profile": 513,
       "maximumDistinctExerciseCount": 26,
       "requiredDistinctExerciseCount": 28
+    }
+  ],
+  "completeLineup": [
+    {
+      "minutes": 15,
+      "profile": 1,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 129,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 17,
+      "maximumCoveredGroupCount": 13,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 3,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 513,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 5,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 13,
+      "maximumCoveredGroupCount": 14,
+      "requiredGroupCount": 15
+    },
+    {
+      "minutes": 20,
+      "profile": 17,
+      "maximumCoveredGroupCount": 19,
+      "requiredGroupCount": 20
+    },
+    {
+      "minutes": 30,
+      "profile": 17,
+      "maximumCoveredGroupCount": 26,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 3,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 513,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 17,
+      "maximumCoveredGroupCount": 26,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 3,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 513,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 17,
+      "maximumCoveredGroupCount": 26,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 3,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 513,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 17,
+      "maximumCoveredGroupCount": 26,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 3,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 513,
+      "maximumCoveredGroupCount": 27,
+      "requiredGroupCount": 28
     }
   ]
 }

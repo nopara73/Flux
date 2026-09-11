@@ -65,9 +65,10 @@ import {
   findMuscularDemandCoverageDeficiencies,
   findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
-  findWorkoutProfileLineupDeficiencies,
+  findCompleteWorkoutProfileLineupDeficiencies,
   getCanonicalCoverage,
   getMaximumDistinctLineupSize,
+  getMaximumCompleteLineupSize,
   getMirrorEquipment,
   getWallEquipment,
   getEquipmentPreferenceCount,
@@ -1306,7 +1307,7 @@ test("unreviewed catalog cannot silently treat an enabled modifier as off", () =
   assert.equal(isModifierMetadataComplete(exercises), false);
   assert.throws(
     () => session.startWorkout(3, WORKOUT_MODIFIERS.Insect),
-    /No distinct exercise lineup/,
+    /No complete exercise lineup/,
   );
 });
 
@@ -3084,7 +3085,7 @@ test("reviewed production catalog satisfies the enforceable coverage hierarchy",
 
   // Demand and materiality inventories are recorded in the diagnostic ledger;
   // playable-workout availability and complete atomic lineups still gate release.
-  assert.deepEqual(findWorkoutProfileLineupDeficiencies(catalog), []);
+  assert.deepEqual(findCompleteWorkoutProfileLineupDeficiencies(catalog), []);
   const allModifiers = WORKOUT_MODIFIERS.Insect |
     WORKOUT_MODIFIERS.Silence |
     WORKOUT_MODIFIERS.Mirror;
@@ -9534,6 +9535,88 @@ test("browser shell pauses for buffering and keeps desktop layouts bounded", asy
   assert.match(stylesheet, /grid-column: 2;\s*grid-row: 1 \/ span 2;/);
   assert.match(stylesheet, /width: min\(100%, 78dvh, 900px\);/);
   assert.match(stylesheet, new RegExp(`grid-template-columns: repeat\\(${SUPPORTED_MINUTES.length}, 1fr\\)`));
+});
+
+for (const light of [false, true]) {
+  test(`repeated movement rounds preserve separate progress, Keeps and history, Light=${light}`, () => {
+    const muscles = RESOLUTIONS.get(30).groups.flatMap((group) => group.canonicalGroups);
+    const exercises = [exercise(1, muscles[0], muscles.slice(1), 0)];
+    let session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+    session.startWorkout(3, light ? WORKOUT_MODIFIERS.Light : 0);
+    const rounds = session.getActiveGroups();
+    assert.equal(rounds.length, 3);
+    assert.equal(new Set(rounds.map((round) => round.id)).size, 3);
+    assert.ok(rounds.every((round) => session.getSelectedExercise(round).id === 1));
+    assert.equal(session.state.activeWorkoutSession.initialSelections.length, 3);
+    session.beginRest(rounds[0], Date.now() + 15_000);
+    assert.equal(session.keepPendingRest(), true);
+    session.recordOutcome(rounds[0], true);
+    session.clearPendingRest();
+    session.pauseMovement(rounds[1], 27_000, true);
+    session = new WorkoutSession(exercises, parseStoredState(JSON.stringify(session.state)), () => 0.5);
+    session.initialize();
+    assert.equal(session.getNextGroup().id, rounds[1].id);
+    assert.equal(session.state.activeWorkoutSession.blocks.length, 1);
+    assert.equal(session.getPendingMovementMillisecondsRemaining(Date.now()), 27_000);
+    session.reconfigureActiveWorkout(session.state.activeWorkoutModifiers | WORKOUT_MODIFIERS.Silence, rounds[1].id);
+    assert.equal(session.getNextGroup().id, rounds[1].id);
+    assert.equal(Object.keys(session.state.outcomes).length, 1);
+    assert.ok(session.state.activeWorkoutSession.decisions.some((decision) =>
+      decision.selectionGroupId === getSelectionKey(rounds[0]) && decision.outcome === "tick"));
+    for (const round of rounds.slice(1)) {
+      session.beginRest(round, Date.now() + 15_000);
+      session.recordOutcome(round, round.id === rounds[2].id);
+      session.clearPendingRest();
+    }
+    assert.equal(session.state.workoutCompleted, true);
+    const log = session.state.workoutHistory[0];
+    assert.equal(log.blocks.length, 3);
+    assert.equal(log.decisions.length, 3);
+    assert.equal(new Set(log.blocks.map((block) => block.workoutGroupId)).size, 3);
+    assert.equal(new Set(log.decisions.map((decision) => decision.selectionGroupId)).size, 3);
+    session.acknowledgeCompletion();
+    assert.deepEqual(session.state.keptExerciseRootIdsBySelectionGroupId[getSelectionKey(rounds[0])], [1]);
+    assert.equal(session.state.keptExerciseRootIdsBySelectionGroupId[getSelectionKey(rounds[1])], undefined);
+    assert.ok(log.blocks.every((block) => block.rootExerciseId === 1));
+  });
+}
+
+for (const crossPrimary of [false, true]) {
+  test(`repeated atomic sequences keep every block and cross-primary placement, cross=${crossPrimary}`, () => {
+    const exercises = directionPairCatalog().slice(0, 2);
+    if (crossPrimary) {
+      exercises[1].primaryCanonicalGroup = "ForearmFlexorsAndPronators";
+      exercises[1].secondaryCanonicalGroups = RESOLUTIONS.get(30).groups
+        .flatMap((group) => group.canonicalGroups).filter((muscle) => muscle !== exercises[1].primaryCanonicalGroup);
+    }
+    const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+    session.startWorkout(60, 0);
+    const rounds = session.getActiveGroups();
+    const placementCount = crossPrimary ? 29 : 30;
+    assert.equal(rounds.length, 60);
+    assert.equal(session.state.activeWorkoutSession.initialSelections.length, placementCount);
+    assert.equal(new Set(rounds.map((round) => round.id)).size, 60);
+    for (let i = 0; i < rounds.length; i += 2) {
+      assert.equal(getSelectionKey(rounds[i]), getSelectionKey(rounds[i + 1]));
+      assert.deepEqual(rounds.slice(i, i + 2).map((round) => session.getSelectedExercise(round).id), [1, 2]);
+      for (const round of rounds.slice(i, i + 2)) {
+        session.beginRest(round, Date.now() + 15_000);
+        if (session.isIntermediateSequenceBlock(round)) session.advanceSequence(round);
+        else session.recordOutcome(round, true);
+        session.clearPendingRest();
+      }
+    }
+    assert.equal(session.state.workoutCompleted, true);
+    assert.equal(session.state.workoutHistory[0].blocks.length, 60);
+    assert.equal(session.state.workoutHistory[0].decisions.length, placementCount);
+  });
+}
+
+test("repeated movements cannot truncate an atomic sequence to fit the duration", () => {
+  const exercises = directionPairCatalog().slice(0, 2);
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  assert.throws(() => session.startWorkout(3, 0), /No complete exercise lineup/);
+  assert.equal(getMaximumCompleteLineupSize(exercises, RESOLUTIONS.get(3).groups, 0, 3), 0);
 });
 
 function completedWorkoutSession(

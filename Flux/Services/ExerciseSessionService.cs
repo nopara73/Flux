@@ -2125,7 +2125,20 @@ public sealed class ExerciseSessionService
         AtomicSequenceLineup? solution = AtomicSequenceLineupSolver.Solve(
             groups.Count,
             state.ActiveWorkoutMinutes,
-            atomicCandidates);
+            atomicCandidates) ?? AtomicSequenceLineupSolver.SolveAllowingRepeatedMovements(
+                groups.Count,
+                state.ActiveWorkoutMinutes,
+                atomicCandidates);
+        if (solution is null && excludedExerciseIdsByGroup.Count > 0)
+        {
+            // A downvote still affects ranking, but the only real choice must
+            // remain usable when no complete replacement workout exists.
+            return ChooseBestDistinctLineup(state, groups, modifiers, currentExerciseIds,
+                allowSavedSelectionException: allowSavedSelectionException,
+                carriedKeepRootIdsBySelectionGroupId: carriedKeepRootIdsBySelectionGroupId,
+                modifierTransitionProtectedGroupIds: modifierTransitionProtectedGroupIds,
+                scheduledPhaseByGroupId: scheduledPhaseByGroupId);
+        }
         if (solution is null)
         {
             int movementCount = atomicCandidates
@@ -2423,7 +2436,7 @@ public sealed class ExerciseSessionService
         int movementCount)
     {
         return new InvalidOperationException(
-            $"No distinct exercise lineup exists for the active workout profile " +
+            $"No complete exercise lineup exists for the active workout profile " +
             $"across {groups.Count} groups and {movementCount} eligible session " +
             $"movements " +
             $"with at least {WorkoutCoveragePolicy.MinimumCoveragePercent}% coverage.");
@@ -5124,43 +5137,38 @@ public sealed class ExerciseSessionService
         }
 
         var placements = new List<SelectedSequencePlacement>();
-        var movementIds = new HashSet<int>();
         foreach ((int rootId, List<WorkoutGroup> selectedGroups) in
                  selectedGroupsByRootId)
         {
             Exercise root = _exercisesById[rootId];
-            WorkoutGroup[]? coveredGroups = GetSequencePlacementOptions(
-                    root,
-                    selectionGroups)
-                .SingleOrDefault(option => option.Select(group => group.Id)
-                    .ToHashSet(StringComparer.Ordinal)
-                    .SetEquals(selectedGroups.Select(group => group.Id)));
-            if (coveredGroups is null &&
-                selectedGroups.Count == 1 &&
-                (PendingRestMatchesSelectionGroup(
-                     state,
-                     selectedGroups[0].Id) ||
-                 state.Outcomes.ContainsKey(selectedGroups[0].Id)) &&
-                GetSequenceExercises(root).All(member =>
-                    IsCompatibleWithModifiers(
-                        member,
-                        state.ActiveWorkoutModifiers) &&
-                    IsAssignedToGroup(member, selectedGroups[0])))
+            var remainingGroupIds = selectedGroups.Select(group => group.Id)
+                .ToHashSet(StringComparer.Ordinal);
+            // A cross-primary sequence claims its complete primary placement.
+            // The same root in another eligible slot is a separate complete
+            // placement, with that slot's own round IDs, feedback and Keep.
+            foreach (WorkoutGroup[] option in GetSequencePlacementOptions(root, selectionGroups))
             {
-                coveredGroups = [selectedGroups[0]];
+                if (!option.All(group => remainingGroupIds.Contains(group.Id)))
+                    continue;
+                placements.Add(new SelectedSequencePlacement(
+                    root, option.OrderBy(group => group.Order).First(), option));
+                remainingGroupIds.ExceptWith(option.Select(group => group.Id));
             }
-            if (coveredGroups is null ||
-                !movementIds.Add(WorkoutModifierPolicy.GetSessionMovementId(root)))
+            foreach (WorkoutGroup group in selectedGroups.Where(group =>
+                         remainingGroupIds.Contains(group.Id)))
             {
-                throw new InvalidOperationException(
-                    "The selected atomic sequence placements do not match " +
-                    "their primary-muscle workout slots.");
+                if (!(PendingRestMatchesSelectionGroup(state, group.Id) ||
+                      state.Outcomes.ContainsKey(group.Id)) ||
+                    !GetSequenceExercises(root).All(member =>
+                        IsCompatibleWithModifiers(member, state.ActiveWorkoutModifiers) &&
+                        IsAssignedToGroup(member, group)))
+                {
+                    throw new InvalidOperationException(
+                        "The selected atomic sequence placements do not match " +
+                        "their primary-muscle workout slots.");
+                }
+                placements.Add(new SelectedSequencePlacement(root, group, [group]));
             }
-
-            placements.Add(new SelectedSequencePlacement(
-                root,
-                coveredGroups.OrderBy(group => group.Order).First(),
-                coveredGroups));
         }
 
         return placements

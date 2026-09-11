@@ -709,7 +709,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     modifierPolicy,
-    /FindDistinctLineupDeficiencies[\s\S]*GetMaximumDistinctLineupSize/,
+    /FindCompleteLineupDeficiencies[\s\S]*GetMaximumCompleteLineupSize/,
   );
   assert.match(
     workoutModule,
@@ -728,13 +728,13 @@ test("web and mobile persist one combined duration and modifier selection contex
   assert.doesNotMatch(workoutModule, /1\s*<<\s*MODIFIER_RULES\.length/);
   assert.match(
     workoutModule,
-    /findWorkoutProfileLineupDeficiencies[\s\S]*getMaximumDistinctLineupSize/,
+    /findCompleteWorkoutProfileLineupDeficiencies[\s\S]*getMaximumCompleteLineupSize/,
   );
   for (const heavyCatalogInvariant of [
     "findWorkoutModifierPairCoverageDeficiencies",
     "findMuscularDemandCoverageDeficiencies",
     "findWorkoutModifierMaterialityDeficiencies",
-    "findWorkoutProfileLineupDeficiencies",
+    "findCompleteWorkoutProfileLineupDeficiencies",
   ]) {
     assert.match(webBuild, new RegExp(heavyCatalogInvariant));
     assert.doesNotMatch(webApp, new RegExp(heavyCatalogInvariant));
@@ -750,15 +750,16 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.doesNotMatch(webBuild, /muscularDemandDeficiencies\.length === 0/);
   assert.doesNotMatch(webBuild, /materialityDeficiencies\.length === 0/);
+  assert.doesNotMatch(webBuild, /distinctLineupDeficiencies\.length === 0/);
   assert.match(webBuild, /exactlyEqual\(integrityDeficitReport\.materiality, materialityDeficiencies\)/);
   assert.doesNotMatch(webApp, /findMirrorCategoryDeficiencies/);
   assert.match(webApp, /findWallRequiredCatalogDeficiencies/);
   assert.match(webApp, /isModifierMetadataComplete/);
-  assert.match(webBuild, /"distinct workout lineups", distinctLineupDeficiencies.length === 0/);
+  assert.match(webBuild, /"complete workout lineups", completeLineupDeficiencies.length === 0/);
   assert.match(webApp, /isSessionMovementMetadataValid/);
   for (const heavyCatalogInvariant of [
     "FindPairwiseCoverageDeficiencies",
-    "FindDistinctLineupDeficiencies",
+    "FindCompleteLineupDeficiencies",
   ]) {
     assert.match(catalogInvariantTests, new RegExp(heavyCatalogInvariant));
     assert.doesNotMatch(exerciseDatabase, new RegExp(heavyCatalogInvariant));

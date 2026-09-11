@@ -163,3 +163,11 @@ shoulder elevation, elbow extension/curl and forearm rotation. No breathing,
 lat or rotator-cuff claim was inferred. The continuous planted movement is
 Hard Floor, Insect, Silence and Shy compatible. All 544 prior catalog objects
 remain unchanged. See the completion record and hash-bound review ledger.
+
+
+- Steven Washington, `8wAwGmIIRKs`, shoulder slaps and arm reaches: inspected
+  the full contact sheet; the demonstrated routine is performed lying on a
+  mat. Reject for non-feet ground contact.
+- Jake Mace, `IS5fkxJdx_Q`, arm flexibility: inspected the full contact sheet;
+  seated floor work and a hands-supported reverse plank. Reject for non-feet
+  ground contact. Neither source supplies a standing alternative.

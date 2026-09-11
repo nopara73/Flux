@@ -6,6 +6,97 @@ namespace Flux.Tests;
 
 public sealed class ExerciseSessionServiceTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RepeatedMovementRoundsPreserveSeparateProgressKeepsAndHistory(bool light)
+    {
+        Exercise[] exercises = [FullyCoveredExercise(1, CanonicalMuscleGroup.ScapularGirdle)];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 3, light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(3, rounds.Length);
+        Assert.Equal(3, rounds.Select(round => round.Id).Distinct().Count());
+        Assert.All(rounds, round => Assert.Equal(1, service.GetSelectedExercise(state, round).Id));
+        Assert.Equal(3, state.ActiveWorkoutSession!.InitialSelections.Count);
+        service.BeginRest(state, rounds[0], DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+        Assert.True(service.KeepPendingRest(state));
+        service.RecordOutcome(state, rounds[0], keep: true);
+        service.ClearPendingRest(state);
+        service.PauseMovement(state, rounds[1], 27_000, pausedByUser: true);
+        state = JsonSerializer.Deserialize<WorkoutState>(JsonSerializer.Serialize(state))!;
+        service = new ExerciseSessionService(exercises, new Random(2));
+        service.Initialize(state);
+        Assert.Equal(rounds[1].Id, service.GetNextGroup(state)!.Id);
+        Assert.Single(state.ActiveWorkoutSession!.Blocks);
+        Assert.Equal(27_000, service.GetPendingMovementMillisecondsRemaining(state,
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()));
+        service.ReconfigureActiveWorkout(state, state.ActiveWorkoutModifiers | WorkoutModifiers.Silence,
+            rounds[1].Id);
+        Assert.Equal(rounds[1].Id, service.GetNextGroup(state)!.Id);
+        Assert.Single(state.Outcomes);
+        Assert.Contains(state.ActiveWorkoutSession!.Decisions, decision =>
+            decision.SelectionGroupId == rounds[0].SelectionKey && decision.Outcome == ExerciseOutcome.Tick);
+        foreach (WorkoutGroup round in rounds.Skip(1))
+        {
+            service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+            service.RecordOutcome(state, round, keep: round.Id == rounds[2].Id);
+            service.ClearPendingRest(state);
+        }
+        Assert.True(state.WorkoutCompleted);
+        WorkoutSessionLog log = state.WorkoutHistory.Single();
+        Assert.Equal(3, log.Blocks.Count);
+        Assert.Equal(3, log.Decisions.Count);
+        Assert.Equal(3, log.Blocks.Select(block => block.WorkoutGroupId).Distinct().Count());
+        Assert.Equal(3, log.Decisions.Select(decision => decision.SelectionGroupId).Distinct().Count());
+        service.AcknowledgeCompletion(state);
+        Assert.Contains(1, state.KeptExerciseRootIdsBySelectionGroupId[rounds[0].SelectionKey]);
+        Assert.False(state.KeptExerciseRootIdsBySelectionGroupId.ContainsKey(rounds[1].SelectionKey));
+        Assert.All(log.Blocks, block => Assert.Equal(1, block.RootExerciseId));
+    }
+
+    [Theory]
+    [InlineData(false, 30)]
+    [InlineData(true, 29)]
+    public void RepeatedAtomicSequencesKeepEveryBlockAndCrossPrimaryPlacement(bool crossPrimary, int placementCount)
+    {
+        Exercise first = CloneWithLinkedSequenceMember(
+            FullyCoveredExercise(1, CanonicalMuscleGroup.ForearmFlexorsAndPronators), 2);
+        Exercise second = CloneWithLinkedSequenceMember(FullyCoveredExercise(2,
+            crossPrimary ? CanonicalMuscleGroup.ForearmExtensorsAndSupinators :
+                CanonicalMuscleGroup.ForearmFlexorsAndPronators), 1);
+        var service = new ExerciseSessionService([first, second], new Random(1));
+        var state = new WorkoutState();
+        service.StartWorkout(state, 60, WorkoutModifiers.None);
+        WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+        Assert.Equal(60, rounds.Length);
+        Assert.Equal(placementCount, state.ActiveWorkoutSession!.InitialSelections.Count);
+        Assert.Equal(60, rounds.Select(round => round.Id).Distinct().Count());
+        foreach (WorkoutGroup[] pair in rounds.Chunk(2))
+        {
+            Assert.Equal(pair[0].SelectionKey, pair[1].SelectionKey);
+            Assert.Equal(new[] { 1, 2 }, pair.Select(round => service.GetSelectedExercise(state, round).Id));
+            foreach (WorkoutGroup round in pair)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+        }
+        Assert.True(state.WorkoutCompleted);
+        Assert.Equal(60, state.WorkoutHistory.Single().Blocks.Count);
+        Assert.Equal(placementCount, state.WorkoutHistory.Single().Decisions.Count);
+    }
+
+    [Fact]
+    public void RepeatedMovementsCannotTruncateAnAtomicSequenceToFitTheDuration()
+    {
+        var service = new ExerciseSessionService(DirectionPairCatalog().Take(2).ToArray(), new Random(1));
+        Assert.Throws<InvalidOperationException>(() => service.StartWorkout(new WorkoutState(), 3, WorkoutModifiers.None));
+    }
+
     [Fact]
     public void RecoveryLightUsesOnlyDemandPathsSelectableForCurrentModifiers()
     {

@@ -91,8 +91,8 @@ public sealed class CatalogInvariantTests
         Assert.Empty(hardFloorCategoryDeficiencies);
         // Demand-category counts and percentage materiality remain in the
         // diagnostic ledger. They do not define whether a workout is playable.
-        WorkoutProfileLineupDeficiency[] lineupDeficiencies =
-            WorkoutModifierPolicy.FindDistinctLineupDeficiencies(exercises).ToArray();
+        WorkoutProfileCompletionDeficiency[] lineupDeficiencies =
+            WorkoutModifierPolicy.FindCompleteLineupDeficiencies(exercises).ToArray();
         Assert.Empty(lineupDeficiencies);
         IReadOnlyDictionary<int, Exercise> exercisesById = exercises
             .ToDictionary(exercise => exercise.Id);

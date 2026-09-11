@@ -9,6 +9,8 @@ import {
   createDefaultState,
   getSelectionKey,
   getSessionMovementId,
+  getMaximumDistinctLineupSize,
+  getMaximumCompleteLineupSize,
   isCompatibleWithWorkoutModifiers,
   isSelectable,
 } from "../workout.js";
@@ -328,4 +330,14 @@ test("planted teacup admission preserves existing catalog feedback", () => {
   assert.equal(session.state.catalogRevision, CURRENT_CATALOG_REVISION);
   assert.equal(isCompatibleWithWorkoutModifiers(
     catalog.find((item) => item.id === 1027), WORKOUT_MODIFIERS.Insect), false);
+});
+
+test("repeated spinal wave fills two forearm slots without inventing rotator coverage", () => {
+  const wave = catalog.filter((item) => item.id === 1032);
+  const keys = ["r30.forearm-flexors-pronators", "r30.forearm-extensors-supinators", "r30.rotator-cuff"];
+  const groups = keys.map((key) => RESOLUTIONS.get(30).groups.find((group) => group.id === key));
+  const profile = WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor;
+  assert.equal(getMaximumDistinctLineupSize(wave, groups, profile, 3), 1);
+  assert.equal(getMaximumCompleteLineupSize(wave, groups, profile, 3), 2);
+  assert.equal(isSelectable(wave[0], groups[2]), false);
 });

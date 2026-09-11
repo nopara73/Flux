@@ -22,6 +22,30 @@ internal sealed record AtomicSequenceLineup(
 
 internal static class AtomicSequenceLineupSolver
 {
+    public static AtomicSequenceLineup? SolveAllowingRepeatedMovements(
+        int groupCount,
+        int workoutMinutes,
+        IReadOnlyList<AtomicSequenceCandidate> sourceCandidates)
+    {
+        // Separate complete placements may repeat a movement. Only the solver's
+        // occupancy keys change: exercise identities, blocks and utilities stay
+        // intact, and aliases still compete for the same placement.
+        var occupancyKeys = new Dictionary<(int MovementId, ulong CoverageMask), int>();
+        AtomicSequenceCandidate[] repeatableCandidates = sourceCandidates
+            .Select(candidate =>
+            {
+                var key = (candidate.MovementId, candidate.CoverageMask);
+                if (!occupancyKeys.TryGetValue(key, out int occupancyKey))
+                {
+                    occupancyKey = occupancyKeys.Count;
+                    occupancyKeys[key] = occupancyKey;
+                }
+                return candidate with { MovementId = occupancyKey };
+            })
+            .ToArray();
+        return Solve(groupCount, workoutMinutes, repeatableCandidates);
+    }
+
     public static AtomicSequenceLineup? Solve(
         int groupCount,
         int workoutMinutes,

@@ -48,6 +48,12 @@ public sealed record WorkoutProfileLineupDeficiency(
     int MaximumDistinctExerciseCount,
     int RequiredDistinctExerciseCount);
 
+public sealed record WorkoutProfileCompletionDeficiency(
+    int Minutes,
+    WorkoutModifiers Profile,
+    int MaximumCoveredGroupCount,
+    int RequiredGroupCount);
+
 public sealed record WorkoutModifierMaterialityDeficiency(
     WorkoutModifiers Modifier,
     WorkoutModifiers ContextProfile,
@@ -63,7 +69,7 @@ public static class WorkoutModifierPolicy
 {
     public const int BroadCoverageResolutionMinutes = 3;
     // Availability means a real choice exists. Complete-lineup validation
-    // separately enforces breadth, distinct movements and the block budget.
+    // separately enforces breadth and the complete atomic block budget.
     public const int MinimumExercisesPerBroadPairStatePerGroup = 1;
     public const int MinimumExercisesPerFinePairStatePerGroup = 1;
     // Historical demand and materiality targets are diagnostic inventories,
@@ -732,6 +738,23 @@ public static class WorkoutModifierPolicy
             .ToArray();
     }
 
+    public static IReadOnlyList<WorkoutProfileCompletionDeficiency>
+        FindCompleteLineupDeficiencies(IReadOnlyCollection<Exercise> exercises)
+    {
+        ArgumentNullException.ThrowIfNull(exercises);
+        return ExerciseSessionService.SupportedWorkoutMinutes.SelectMany(minutes =>
+            ValidationProfiles.Select(profile =>
+            {
+                WorkoutGroup[] groups = MassGroupingTaxonomy
+                    .GetResolution(Math.Min(minutes, 30)).Groups
+                    .Where(group => IsSelectionGroupAvailable(group, profile)).ToArray();
+                return new WorkoutProfileCompletionDeficiency(minutes, profile,
+                    GetMaximumCompleteLineupSize(exercises, groups, profile, minutes),
+                    groups.Length);
+            })).Where(result => result.MaximumCoveredGroupCount < result.RequiredGroupCount)
+            .ToArray();
+    }
+
     public static int GetRequiredDistinctLineupSize(
         IReadOnlyList<WorkoutGroup> groups,
         WorkoutModifiers profile)
@@ -744,7 +767,24 @@ public static class WorkoutModifierPolicy
         IReadOnlyCollection<Exercise> exercises,
         IReadOnlyList<WorkoutGroup> groups,
         WorkoutModifiers profile,
-        int? workoutMinutes = null)
+        int? workoutMinutes = null) =>
+        GetMaximumLineupSize(exercises, groups, profile, workoutMinutes,
+            allowRepeatedMovements: false);
+
+    public static int GetMaximumCompleteLineupSize(
+        IReadOnlyCollection<Exercise> exercises,
+        IReadOnlyList<WorkoutGroup> groups,
+        WorkoutModifiers profile,
+        int? workoutMinutes = null) =>
+        GetMaximumLineupSize(exercises, groups, profile, workoutMinutes,
+            allowRepeatedMovements: true);
+
+    private static int GetMaximumLineupSize(
+        IReadOnlyCollection<Exercise> exercises,
+        IReadOnlyList<WorkoutGroup> groups,
+        WorkoutModifiers profile,
+        int? workoutMinutes,
+        bool allowRepeatedMovements)
     {
         ArgumentNullException.ThrowIfNull(exercises);
         ArgumentNullException.ThrowIfNull(groups);
@@ -760,7 +800,8 @@ public static class WorkoutModifierPolicy
             exercises,
             exercisesById,
             groups,
-            profile);
+            profile,
+            allowRepeatedMovements);
         if (oneBlockLineupSize == groups.Count)
         {
             return groups.Count;
@@ -817,10 +858,10 @@ public static class WorkoutModifierPolicy
                 int.MaxValue - groupIndex));
         }
 
-        AtomicSequenceLineup lineup = AtomicSequenceLineupSolver.Solve(
-            groups.Count,
-            availableBlocks,
-            candidates) ?? throw new InvalidOperationException(
+        AtomicSequenceLineup lineup = (allowRepeatedMovements
+            ? AtomicSequenceLineupSolver.SolveAllowingRepeatedMovements(
+                groups.Count, availableBlocks, candidates)
+            : AtomicSequenceLineupSolver.Solve(groups.Count, availableBlocks, candidates)) ?? throw new InvalidOperationException(
                 "Atomic lineup validation could not place empty muscle slots.");
         return lineup.ExerciseIdByGroupIndex.Values.Count(exerciseId =>
             exerciseId > 0);
@@ -830,7 +871,8 @@ public static class WorkoutModifierPolicy
         IReadOnlyCollection<Exercise> exercises,
         IReadOnlyDictionary<int, Exercise> exercisesById,
         IReadOnlyList<WorkoutGroup> groups,
-        WorkoutModifiers profile)
+        WorkoutModifiers profile,
+        bool allowRepeatedMovements)
     {
         var candidateMovementIdsByGroupId = groups.ToDictionary(
             group => group.Id,
@@ -864,6 +906,8 @@ public static class WorkoutModifierPolicy
             .Select(group => candidateMovementIdsByGroupId[group.Id].ToArray())
             .OrderBy(candidateIds => candidateIds.Length)
             .ToArray();
+        if (allowRepeatedMovements)
+            return candidateMovementIdsByGroup.Count(candidateIds => candidateIds.Length > 0);
         var assignedGroupByMovementId = new Dictionary<int, int>();
         int matchedGroupCount = 0;
         for (int groupIndex = 0;
