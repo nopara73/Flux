@@ -457,3 +457,21 @@ actual availability/complete-lineup gates. Browser evidence in
 `evidence/2026-09-12/repeated-lineup` uses an isolated subset of unchanged real
 catalog records and verifies the same final 1032 media in separate forearm
 rounds. No public deployment or phone installation is claimed.
+
+## Source-screening checkpoint — 12 September, 01:05 +08:00
+
+The follow-on pass screened 32 distinct public source videos for the actual
+Hard Floor/Insect shoulder-rotation and shoulder-adduction/extension gaps, and
+the combined scapular/chest/breathing bucket. Candidate contact sheets, source
+instruction and closer timed sheets were checked where relevant. No source
+met every required movement, anatomy, compatibility and media condition, so
+this pass adds no exercise or training claim. Source-specific rejection
+reasons are in `candidate-research-2026-09-11.md`.
+
+The product checkpoint is `830fe623` and its validation above remains current;
+only these audit notes changed afterward. Breathing-category metadata remains
+untouched while the coordinator's owner-definition question is pending. The
+catalog is still 545 records with 17 pairwise availability gaps, five
+overlapping Hard Floor gaps and 20 incomplete duration/profile combinations.
+The implementation remains incomplete and unpublished. No phone install was
+attempted.

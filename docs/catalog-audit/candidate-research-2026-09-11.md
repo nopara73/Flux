@@ -171,3 +171,43 @@ remain unchanged. See the completion record and hash-bound review ledger.
 - Jake Mace, `IS5fkxJdx_Q`, arm flexibility: inspected the full contact sheet;
   seated floor work and a hands-supported reverse plank. Reject for non-feet
   ground contact. Neither source supplies a standing alternative.
+
+### Further shoulder and torso source screening after the repeat correction
+
+These are source-screening findings, not packaged-media approvals. No catalog
+record or training claim was changed by this pass.
+
+- Surrey Osteopathic Care `gmmwkozglbA`: the small embedded vertical view crops the lower legs and feet; the visible action is primarily in the arms.
+- TAI Center `1heK_8XwdYY`: the upper-body spiral uses a wide stance, foot pivots and transverse loading. It does not supply the missing Hard Floor combination.
+- Beyond Systems / Egwin Ertl `Y7KrrJFaoUk`: early instruction is largely arm-only; later whole-body spirals use long split stances and foot pivots. No Hard Floor/Insect candidate was established.
+- Ballina Rehab Clinic `tSstHfqtPHs`: despite the dynamic-lat title, the demonstration is an animated anatomical figure with stationary legs. It fails the human-media requirement and does not establish Insect.
+- Dr Sara and Dr Anne `QnyTXkYN7Ro`: the swimming-dragon demonstrations crop both instructors below the knees.
+- Dashi Chu Kocica `9IOX50Y7dso`: the early full-body swimming-dragon sequence includes long overhead holds; later views crop the lower body.
+- Vivien Chao `W4pp0KhkfOI`: the swimming-dragon subject is consistently soft and blurred in the inspected source sheet; exact movement is not clear enough for promotion.
+- Scott C. Nicholson `KSa4kv4b6b8`: the shoulder-opener instruction is framed above the lower body. It cannot supply a full-body runtime demonstration.
+- Nick Loffree `wCPJuCSgEM0`: the 6-21-minute source contact sheet was inspected. The substantial early dragon patterns use wide/split stances; later narrow-stance patterns have long arm-only or held phases. No excerpt was approved.
+- Qigong Meditation `dZ9jP9hubnw`: the squat-and-hug section uses a wide stance and alternating body taps, while a long robe obscures the knees. It was not relabeled as a quiet chest-strength exercise or admitted.
+- Tim Kellam `I2Fs-nkJo_k`: the rowing source sheet shows mostly upright arm circles with small knee motion. It does not establish the required substantial continuous whole-body action.
+- Nature Health / Margie Hare `g5zc6RgusDE`: the rowing pattern includes a substantial hinge, but close inspection of 42-70 seconds found cropped reaching hands or feet through the clearest cycles. No complete full-body runtime cycle was selected.
+- North Austin T'ai Chi `I3Vcbu_nWKQ`: most teacup instruction uses a small object and close framing. The later prop-free spinal motion does not establish the missing shoulder-rotation or lat claim.
+- The Ready State `uW69bWxRxuQ`: the source explicitly teaches shoulder rotation and scapular motion. The inspected whole-body lateral/rotation patterns use foot pivots; the later forward/back and cross-body arm swings keep the lower body mostly upright. No qualifying Hard Floor/Insect admission was established.
+- Qigong Meditation `Bi9mgeowIo0`: the backlit subject and loose dark robe obscure lower-body detail. The inspected source does not provide sufficiently clear final media.
+- Pathway Training `OSS54HJEPJM`: the squat-to-Cuban-press demonstration uses dumbbells. Starting Line Fitness `1w4gyKNxX1A` uses a cable during a held squat. Aaron Lipsey `GX_qelOds_w` uses a dowel and seated/support context. None is an equipment-free admission.
+- Georgina D'Abreo `G5JrA_4ojHQ`: clear bodyweight Cuban presses, but the legs and torso remain upright throughout. It does not resolve Insect.
+- Onnit Academy `0v6eIcpECzs`: the standing spinal-roll-to-chest-opener demonstration puts the fingers on the floor at the bottom of the roll. Reject for non-feet ground contact; no altered or truncated loop was made.
+- Catherine Carrigan `qGxtpsyjN0c`: lifting the sky has overhead holds, small lower-body movement and cropped overhead hands in later repetitions. No qualifying runtime cycle was selected.
+- Zack Henderson `9szjS-uoX68`: the three teacup variations use a book or ball; later progressions include floor support. WeckMethod `0IWE9fi9tJ8` likewise uses a handheld object and repeatedly crops the lower body. Neither source supplies an equipment-free final demonstration.
+- Mountain Tactical Institute `upOY7gkKMfY`: teacup instruction is framed above the feet. DoMore Training `sh0k6VVdeEo` shows several participants balancing weight plates, with moving/cropped framing. Both were rejected as runtime media.
+- Steve Cotter `7-ru4D7eL3c`: the full-body serving-tea flow uses a wide stance and substantial lateral/rotational weight transfer. It does not close Hard Floor, and would share the existing teacup family.
+- Sweet Skills `oJt1QHRAl8s`: the demonstrator balances an object in the palm throughout the teacup challenge. No object-free cycle was available in the inspected source.
+- Seva Fitness Academy `jO1u2KOMfcM`: instruction explicitly targets scapular protraction, elevation, retraction and depression with a spinal wave, but the entire exercise is framed above the knees. The missing lower-body view prevents runtime approval.
+- The Setup / Tiffany `UYbkzvv45vQ`: the chest-opener demonstration uses hand-to-wall contact and crops the lower body. It does not supply the missing unsupported full-body pattern.
+- Brain Education TV `Mb6qX4AESbk`: a full source contact sheet and detailed 214-279-second spinal-flow sheet were inspected. The instructor explicitly widens the stance before the overhead-reach/fold repetitions, and the complete movement approaches or touches the floor. No Hard Floor-compatible or edited partial loop was admitted.
+- Qigong with Kseny `_4Y8uNzLhNU`: the full source sheet and 400-453-second harvesting-wheat detail sheet were inspected. Chest opening and scapular squeezing are explicit, but the complete pattern includes extended upright arm-only, overhead and forward-reach phases. It does not establish Insect's continuous whole-body motion at a useful pace.
+- Qigong with Kseny `fGIaV6xJ3Do`: the full source sheet shows mostly upright upper-body phases; later large whole-body patterns use wider/lateral steps or deep forward folds. No source excerpt was approved against the remaining combined requirements.
+
+This pass documents 32 distinct source videos. The catalog remains unchanged
+at 545 approved entries. The 17 pairwise availability gaps, five overlapping
+Hard Floor gaps and 20 incomplete duration/profile combinations remain release
+blockers. These findings reject the inspected sources; they do not establish
+that no qualifying exercise or public demonstration exists elsewhere.
