@@ -23988,5 +23988,50 @@
     "maxSpaceMeters": 2,
     "equipment": "None",
     "silent": true
+  },
+  {
+    "id": 1027,
+    "name": "Teacup Arm Circles",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1027.mp4",
+    "primaryCanonicalGroup": "RotatorCuff",
+    "secondaryCanonicalGroups": [
+      "ShoulderAbductors",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
+    ],
+    "practice": "Qigong arm mobility",
+    "motionProfile": "BilateralTeacupArmCircles",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1027,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Incompatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
   }
 ]

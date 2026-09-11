@@ -31401,6 +31401,66 @@
       "assets": {
         "exercise_videos/exercise_1026.mp4": "044a1acc517fc81271ae4f6cafa2f62b9c8cfde303436462921143a7924adadf"
       }
+    },
+    {
+      "checks": {
+        "Metadata": {
+          "reason": "Planted bilateral teacup mobility, demand 0, RotatorCuff primary; ShoulderAbductors, ElbowFlexors, ElbowExtensors, ForearmFlexorsAndPronators and ForearmExtensorsAndSupinators secondary for the deliberate shoulder elevation/rotation, elbow flexion/extension and forearm rotation throughout the block. No lower-body or torso training claims. Arm-dominant, so Insect incompatible. No impact, foot pivot or traction-loaded lateral shift, so Hard Floor compatible. Quiet ordinary arm mobility, Shy compatible, mirror and clothing agnostic.",
+          "status": "PASS"
+        },
+        "FullLoop": {
+          "reason": "Every one of the 180 packaged frames inspected across two 90-frame sheets: both hands spiral from waist level overhead and return together, completing the natural bilateral action.",
+          "status": "PASS"
+        },
+        "Crop": {
+          "reason": "Full person, both shoes and the complete hand path remain visible in every packaged frame and the actual workout viewport.",
+          "status": "PASS"
+        },
+        "LoopSeam": {
+          "reason": "Hands return to waist level at the natural cycle boundary. The unaltered 261-270-second source excerpt has no reversed or synthetic action.",
+          "status": "PASS"
+        },
+        "PlaybackSpeed": {
+          "reason": "Native nine-second excerpt encoded as 180 frames at 20 fps. Actual 45-second work phase sampled across multiple normal-speed wraps with playbackRate 1 and no video errors.",
+          "status": "PASS"
+        },
+        "Mirroring": {
+          "reason": "Native simultaneous bilateral action, unmirrored. No fabricated alternation, direction change or omitted timed side.",
+          "status": "PASS"
+        },
+        "Travel": {
+          "reason": "Both feet stay planted in an ordinary small standing stance, within two metres square. No advancing or retreating.",
+          "status": "PASS"
+        },
+        "HoldFrame": {
+          "reason": "Continuous repetition demonstration; no separate held frame.",
+          "status": "NOT_APPLICABLE"
+        },
+        "Equipment": {
+          "reason": "Actual person in ordinary shoes, feet-only ground contact, no equipment. No impact or audible movement requirement.",
+          "status": "PASS"
+        },
+        "Workout": {
+          "reason": "Inspected all 18 phase images: five-second preparation, complete real-time 45-second work phase, 15-second rest and transition to the next exercise. Timer was not accelerated. Playback and console logs contain no errors or warnings. Android/web release validation remains separate.",
+          "status": "PASS"
+        }
+      },
+      "reviewedAt": "2026-09-11T19:45:03.3813042+08:00",
+      "evidence": [
+        "https://www.youtube.com/watch?v=HYv5FLO4beY",
+        "tools/ReviewedSourceMedia/teacups-kseny-261-9.mp4",
+        "docs/catalog-audit/evidence/2026-09-11/1027/frames-01.png",
+        "docs/catalog-audit/evidence/2026-09-11/1027/frames-02.png",
+        "docs/catalog-audit/evidence/2026-09-11/1027/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/1027/phase-sheet.jpg"
+      ],
+      "observedAction": "Both hands spiral from waist level out to the sides and overhead, then return to the waist, with both feet planted and the torso upright.",
+      "id": 1027,
+      "method": "Explicit instructor source, every final packaged frame and unaccelerated actual-workout review, with normal-speed playback and complete timer transitions.",
+      "metadataSha256": "943620b43a0e1fc0852122951eec859c62efd1e6ecedb633362b9f02b1e2570c",
+      "assets": {
+        "exercise_videos/exercise_1027.mp4": "3b8f6f1c9800bc79bea6c01bf48af2a2cb4a62e60e568550bc5078ad36fd343d"
+      }
     }
   ]
 }

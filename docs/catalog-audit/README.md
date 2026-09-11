@@ -7,7 +7,12 @@ the action, name, muscular demand, anatomy, structure, and presentation.
 
 ## Current audit status — 2026-09-11
 
-### Stable handoff checkpoint
+Current integration status is recorded in
+[`completion-2026-09-11.md`](completion-2026-09-11.md). The original planner is
+restored, and the catalog now has 540 retained, hash-reviewed exercises.
+The earlier checkpoints below are historical; they do not establish release.
+
+### Historical stable handoff checkpoint
 
 Runtime SHA-256: d243d9dae5aec52da24934a61fd9bc6cb0be122521b6e7a1be8d50a57faba10a.
 1026 Alternating Teacup Arm Circles is fully reviewed: all 160 packaged frames,

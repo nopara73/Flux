@@ -139,4 +139,10 @@
         Practice = 'Qigong arm mobility'
         MotionProfile = 'AlternatingTeacupArmCircles'
     }
+    1027 = @{
+        Name = 'Teacup Arm Circles'
+        Region = 'SHOULDERS'
+        Practice = 'Qigong arm mobility'
+        MotionProfile = 'BilateralTeacupArmCircles'
+    }
 }

@@ -546,4 +546,5 @@
     1024 = @{ Primary = 'Chest'; Secondary = @('ElbowExtensors', 'ShoulderAbductors') }
     1025 = @{ Primary = 'ShoulderAbductors'; Secondary = @() }
     1026 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ElbowFlexors', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
+    1027 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ElbowFlexors', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
 }

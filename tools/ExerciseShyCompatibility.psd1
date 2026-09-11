@@ -4,6 +4,7 @@
     # shared space without asking the user to perform, mime, vocalize, or make
     # a conspicuous therapeutic gesture.
     Compatible = @(
+        1027,
         1026,
         1025,
         1024,

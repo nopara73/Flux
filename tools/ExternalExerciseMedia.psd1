@@ -6114,4 +6114,22 @@
         PingPong = $false
         MirrorForAlternation = $false
     }
+    1027 = @{
+        LocalSourceFile = 'teacups-kseny-261-9.mp4'
+        LocalSourceSha256 = 'a06b72a0bf9a7579dd22187e5bf73e830b2440100fb08aba7f63e7f123744d23'
+        File = 'qigong-teacups-kseny.mp4'
+        Url = 'https://www.youtube.com/watch?v=HYv5FLO4beY'
+        SourcePage = 'https://www.youtube.com/watch?v=HYv5FLO4beY'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 9
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
 }
