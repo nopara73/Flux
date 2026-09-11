@@ -377,6 +377,15 @@
                                 android:textColor="@color/brand_graphite"
                                 android:textSize="11sp" />
                         </FrameLayout>
+                        <ImageButton
+                            android:id="@+id/oura_recovery_button"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Recovery data: connect Oura"
+                            android:src="@drawable/ic_recovery_link"
+                            android:padding="12dp" />
                     </LinearLayout>
 
                     <LinearLayout

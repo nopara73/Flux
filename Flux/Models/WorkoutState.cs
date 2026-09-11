@@ -2,6 +2,11 @@ namespace Flux.Models;
 
 public sealed class WorkoutState
 {
+    // Live permission-checked context. Never backed up with workout preferences
+    // or persisted as the next session's physical setup.
+    [System.Text.Json.Serialization.JsonIgnore]
+    public OuraRecoverySnapshot? OuraRecovery { get; set; }
+
     public int Version { get; set; } = 29;
 
     public int CatalogRevision { get; set; }

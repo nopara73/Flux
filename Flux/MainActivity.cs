@@ -20,7 +20,7 @@ namespace Flux;
         Android.Content.PM.ConfigChanges.Locale |
         Android.Content.PM.ConfigChanges.LayoutDirection |
         Android.Content.PM.ConfigChanges.FontScale)]
-public class MainActivity : Activity
+public partial class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
     private const int DirectionSecondPhaseOffsetMilliseconds = 20_000;
@@ -213,6 +213,7 @@ public class MainActivity : Activity
 
         _stateStore = new SharedPreferencesWorkoutStateStore(this);
         _state = _stateStore.Load();
+        InitializeOuraRecovery();
         _selectedWorkoutMinutes = _state.LastWorkoutMinutes;
         _selectedWorkoutModifiers = _state.LastWorkoutModifiers;
         ShowDurationSelection();
@@ -388,6 +389,7 @@ public class MainActivity : Activity
         string stateJson = JsonSerializer.Serialize(
             _state,
             WorkoutJsonContext.Default.WorkoutState);
+        OuraRecoverySnapshot? recoveryContext = _state.OuraRecovery;
         IReadOnlyList<Exercise> exercises = _exerciseDatabase.Exercises;
         _workoutPreparationTask = Task.Run(() =>
         {
@@ -397,6 +399,7 @@ public class MainActivity : Activity
                     WorkoutJsonContext.Default.WorkoutState)
                 ?? throw new InvalidOperationException(
                     "Unable to clone the workout state for preparation.");
+            preparedState.OuraRecovery = recoveryContext;
             var preparationService = new ExerciseSessionService(exercises);
             if (isReconfiguration)
             {
@@ -492,6 +495,7 @@ public class MainActivity : Activity
     {
         base.OnResume();
         _activityResumed = true;
+        if (_state is not null) _ = RefreshOuraRecoveryAsync();
         ApplySystemBarAppearance();
         if (_appScreen == AppScreen.Duration && _applicationStartupCompleted)
         {
@@ -561,6 +565,7 @@ public class MainActivity : Activity
     protected override void OnDestroy()
     {
         _activityDestroyed = true;
+        _ouraReadCancellation?.Cancel();
         _workoutPreparationCancellation?.Cancel();
         _workoutPreparationCancellation?.Dispose();
         _workoutPreparationCancellation = null;
@@ -1877,6 +1882,7 @@ public class MainActivity : Activity
 
     private void ShowDurationSelection()
     {
+        _manualLightModeRequested = false;
         _editingActiveWorkoutSetup = false;
         _workoutSetupCurrentGroupId = null;
         CancelCountdown(resetToStart: false);
@@ -1947,6 +1953,8 @@ public class MainActivity : Activity
 
     private void ShowActiveWorkoutSetup()
     {
+        _manualLightModeRequested = _state.ActiveWorkoutModifiers.HasFlag(WorkoutModifiers.Light) &&
+            _state.ActiveWorkoutSession?.AutomaticLightRequiredAtStart != true;
         if (_editingActiveWorkoutSetup ||
             _appScreen != AppScreen.Workout ||
             _currentWorkoutGroup is null ||
@@ -2055,7 +2063,7 @@ public class MainActivity : Activity
     private WorkoutModifiers GetDefaultDurationModifiers()
     {
         long nowUnixMilliseconds = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        return _sessionService is not null
+        WorkoutModifiers modifiers = _sessionService is not null
             ? _sessionService.GetDefaultWorkoutModifiers(
                 _state,
                 nowUnixMilliseconds)
@@ -2065,6 +2073,8 @@ public class MainActivity : Activity
                 nowUnixMilliseconds,
                 TimeZoneInfo.Local,
                 _state.LegacyCompletedTrainingDayUnixMilliseconds);
+        modifiers &= ~WorkoutModifiers.Light;
+        return IsAutomaticLightModeLocked() ? modifiers | WorkoutModifiers.Light : modifiers;
     }
 
     private int GetWorkoutsUntilLightMode()
@@ -2095,7 +2105,9 @@ public class MainActivity : Activity
                 nowUnixMilliseconds,
                 TimeZoneInfo.Local,
                 _state.LegacyCompletedTrainingDayUnixMilliseconds);
-        return lightDayDue;
+        return _sessionService is not null ? lightDayDue :
+            OuraRecoveryPolicy.RequiresLight(lightDayDue,
+                OuraRecoveryPolicy.Evaluate(_state, nowUnixMilliseconds));
     }
 
     private void UpdateLightModifierPresentation(bool enabled)
@@ -2112,8 +2124,8 @@ public class MainActivity : Activity
         }
         else if (_automaticLightModePresented && !_editingActiveWorkoutSetup)
         {
-            _selectedWorkoutModifiers &= ~WorkoutModifiers.Light;
-            enabled = false;
+            enabled = _manualLightModeRequested;
+            if (!enabled) _selectedWorkoutModifiers &= ~WorkoutModifiers.Light;
         }
         _automaticLightModePresented = automaticLightMode;
         bool effectivelyEnabled = enabled || recoveryLightMode ||
@@ -2124,7 +2136,9 @@ public class MainActivity : Activity
         _lightModifierButton.Enabled = true;
         int workoutsRemaining = GetWorkoutsUntilLightMode();
         _lightModifierCountdownBadge.Text = workoutsRemaining.ToString();
-        _lightModifierCountdownBadge.Visibility = effectivelyEnabled
+        bool ouraDecides = OuraRecoveryPolicy.Evaluate(_state,
+            DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()).Verdict != OuraRecoveryVerdict.Unknown;
+        _lightModifierCountdownBadge.Visibility = effectivelyEnabled || ouraDecides
             ? ViewStates.Gone
             : ViewStates.Visible;
 
@@ -2136,6 +2150,8 @@ public class MainActivity : Activity
                 ? $"{description}: effectively light while muscles recover"
             : enabled
                 ? $"{description}: light mode on"
+                : ouraDecides
+                    ? $"{description}: Oura recovery permits regular training; muscle recovery still applies"
                 : $"{description}: approximately {workoutsRemaining} " +
                     $"workout{(workoutsRemaining == 1 ? string.Empty : "s")} " +
                     "at the selected duration until automatic light mode";
@@ -2244,6 +2260,8 @@ public class MainActivity : Activity
         int disabledStateResourceId,
         bool userInitiated = false)
     {
+        if (modifier == WorkoutModifiers.Light && userInitiated && !_lightModifierLocked)
+            _manualLightModeRequested = enabled;
         if (modifier == WorkoutModifiers.Light && IsAutomaticLightModeLocked())
         {
             enabled = true;
@@ -2694,6 +2712,7 @@ public class MainActivity : Activity
             _workoutPreparationTask = null;
             _preparedWorkout = null;
             _state = prepared.State;
+            _state.OuraRecovery = GetAvailableOuraSnapshot();
             if (prepared.IsReconfiguration)
             {
                 _stateStore.Save(_state);
@@ -2702,6 +2721,7 @@ public class MainActivity : Activity
             }
 
             _sessionService.ActivatePreparedWorkout(_state);
+            LogOuraDecision();
             _stateStore.Save(_state);
             ShowNextExercise();
         }

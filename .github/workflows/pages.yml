@@ -13,6 +13,9 @@ on:
       - "Flux/Resources/raw/**"
       - "Flux/Flux.csproj"
       - "Flux/MainActivity.cs"
+      - "Flux/MainActivity.Recovery.cs"
+      - "Flux/RecoveryPrivacyActivity.cs"
+      - "Flux/AndroidManifest.xml"
       - "Flux/Data/**"
       - "Flux/Models/**"
       - "Flux/Services/**"
@@ -62,6 +65,9 @@ jobs:
             /Flux.Tests/CatalogInvariantTests.cs
             /Flux/Flux.csproj
             /Flux/MainActivity.cs
+            /Flux/MainActivity.Recovery.cs
+            /Flux/RecoveryPrivacyActivity.cs
+            /Flux/AndroidManifest.xml
             /Flux/WorkoutBlockTimelineView.cs
             /Flux/Data/**
             /Flux/Models/**

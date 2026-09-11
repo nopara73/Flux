@@ -24,6 +24,9 @@
   -->
   <ItemGroup>
     <Compile Include="..\Flux\Data\IExerciseDatabase.cs" Link="Production\Data\IExerciseDatabase.cs" />
+    <Compile Include="..\Flux\Models\OuraRecoverySnapshot.cs" Link="Production\Models\OuraRecoverySnapshot.cs" />
+    <Compile Include="..\Flux\Services\OuraRecoveryPolicy.cs" Link="Production\Services\OuraRecoveryPolicy.cs" />
+    <Compile Include="..\Flux\Services\OuraNightBuilder.cs" Link="Production\Services\OuraNightBuilder.cs" />
     <Compile Include="..\Flux\Data\ExerciseDatabaseMigrationSql.cs" Link="Production\Data\ExerciseDatabaseMigrationSql.cs" />
     <Compile Include="..\Flux\Data\ExerciseDatabaseVersionPolicy.cs" Link="Production\Data\ExerciseDatabaseVersionPolicy.cs" />
     <Compile Include="..\Flux\Data\IWorkoutStateStore.cs" Link="Production\Data\IWorkoutStateStore.cs" />
@@ -72,6 +75,7 @@
     <None Include="..\Flux\Assets\exercises.json"
           Link="Assets\exercises.json"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures\oura-recovery-cases.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\Flux\Assets\exercise_hold_frames\*.png"
           Link="Assets\exercise_hold_frames\%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />

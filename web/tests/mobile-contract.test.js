@@ -4,6 +4,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
+test("Oura is an explicit Android-only capability with a read-only private bridge", async () => {
+  const root = new URL("../../", import.meta.url);
+  const manifest = await readFile(new URL("Flux/AndroidManifest.xml", root), "utf8");
+  assert.equal((manifest.match(/android.permission.health.READ_/g) ?? []).length, 3);
+  assert.doesNotMatch(manifest, /android.permission.health.WRITE_|READ_HEALTH_DATA_IN_BACKGROUND/);
+  const lock = await readFile(new URL("web/scripts/check-mobile-parity.mjs", root), "utf8");
+  for (const file of ["Flux/MainActivity.Recovery.cs", "Flux/AndroidManifest.xml", "Flux/RecoveryPrivacyActivity.cs"])
+    assert.ok(lock.includes(file));
+  const store = await readFile(new URL("Flux/Data/OuraRecoveryStore.cs", root), "utf8");
+  assert.match(store, /NoBackupFilesDir/);
+  const page = await readFile(new URL("web/index.html", root), "utf8");
+  assert.doesNotMatch(page, /oura-recovery|oura-import|Connect Oura/);
+});
+
 import {
   APPROVED_EXERCISE_CORRECTIONS,
   BROAD_COVERAGE_RESOLUTION_MINUTES,

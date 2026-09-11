@@ -10,6 +10,11 @@ const manifestPath = path.join(webRoot, "mobile-parity.json");
 const sourceTargets = [
   "Flux/Flux.csproj",
   "Flux/MainActivity.cs",
+  // Oura is intentionally Android-only (owner decision, docs/OURA_RECOVERY.md).
+  // Track its bridge and permission surface even though web has no health UI.
+  "Flux/MainActivity.Recovery.cs",
+  "Flux/RecoveryPrivacyActivity.cs",
+  "Flux/AndroidManifest.xml",
   "Flux/WorkoutBlockTimelineView.cs",
   "Flux/Data",
   "Flux/Models",

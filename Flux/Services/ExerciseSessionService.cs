@@ -100,12 +100,9 @@ public sealed class ExerciseSessionService
         long? nowUnixMilliseconds = null)
     {
         ArgumentNullException.ThrowIfNull(state);
-        return WorkoutLightDayPolicy.GetDefaultWorkoutModifiers(
-            state.LastWorkoutModifiers,
-            state.WorkoutHistory,
-            nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds(),
-            _localTimeZone,
-            state.LegacyCompletedTrainingDayUnixMilliseconds);
+        WorkoutModifiers setup = WorkoutModifierPolicy.GetPersistentSetupModifiers(state.LastWorkoutModifiers);
+        return IsLightDayDue(state, nowUnixMilliseconds ?? GetCurrentUnixTimeMilliseconds())
+            ? setup | WorkoutModifiers.Light : setup;
     }
 
     public int GetWorkoutsUntilLightDay(
@@ -3424,6 +3421,8 @@ public sealed class ExerciseSessionService
                 WorkoutModifiers.Light),
             Status = WorkoutSessionStatus.InProgress,
             StartedBeforeLogging = startedBeforeLogging,
+            AutomaticLightRequiredAtStart = startedBeforeLogging ? null :
+                IsLightDayDue(state, startedAtUnixMilliseconds),
             KeptExerciseIdsAtStart = keptExerciseIdsAtStart
                 .Where(exerciseId => exerciseId > 0)
                 .Distinct()
@@ -4985,11 +4984,15 @@ public sealed class ExerciseSessionService
         WorkoutState state,
         long nowUnixMilliseconds)
     {
-        return WorkoutLightDayPolicy.IsLightDayDue(
+        if (state.ActiveWorkoutSession is { Status: WorkoutSessionStatus.InProgress,
+                AutomaticLightRequiredAtStart: bool required }) return required;
+        bool cadenceDue = WorkoutLightDayPolicy.IsLightDayDue(
             state.WorkoutHistory,
             nowUnixMilliseconds,
             _localTimeZone,
             state.LegacyCompletedTrainingDayUnixMilliseconds);
+        return OuraRecoveryPolicy.RequiresLight(cadenceDue,
+            OuraRecoveryPolicy.Evaluate(state, nowUnixMilliseconds));
     }
 
     private void MigrateLegacyCompletedTrainingDays(

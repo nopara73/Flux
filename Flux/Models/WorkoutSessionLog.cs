@@ -26,6 +26,11 @@ public sealed class WorkoutSessionLog
 
     public bool IsLightDay { get; set; }
 
+    // Freeze the automatic gate for this workout, not the evidence or the next
+    // workout. Null preserves the behavior of logs made before this field existed.
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public bool? AutomaticLightRequiredAtStart { get; set; }
+
     public WorkoutSessionStatus Status { get; set; } =
         WorkoutSessionStatus.InProgress;
 
