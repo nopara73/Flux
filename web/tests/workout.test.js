@@ -5158,13 +5158,13 @@ test("rejected replacements use global matching instead of greedy group order", 
     1,
     groups[0].canonicalGroups[0],
     groups[0].canonicalGroups.slice(1),
-    10,
+    0,
   );
   const currentMiddle = exercise(
     2,
     groups[1].canonicalGroups[0],
     groups[1].canonicalGroups.slice(1),
-    10,
+    0,
   );
   const currentLast = exercise(
     3,
@@ -5209,6 +5209,10 @@ test("rejected replacements use global matching instead of greedy group order", 
   session.recordOutcome(activeGroups[1], false);
   session.recordOutcome(activeGroups[2], true);
   session.acknowledgeCompletion();
+  assert.equal(session.state.activeWorkoutMinutes, 0);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], undefined);
+  assert.equal(session.state.selectedExerciseIds[groups[1].id], undefined);
+  session.prepareWorkout(3, WORKOUT_MODIFIERS.None);
 
   assert.equal(
     session.state.selectedExerciseIds[groups[0].id],
@@ -9636,6 +9640,90 @@ function completedWorkoutSession(
     status: "Completed",
   };
 }
+
+for (const minutes of [30, 90]) {
+  test(`Done with one choice per slot preserves feedback and starts again (${minutes}m)`, () => {
+    const groups = RESOLUTIONS.get(30).groups;
+    const exercises = groups.map((group, index) =>
+      exercise(index + 1, group.canonicalGroups[0], [], 7));
+    const state = createDefaultState();
+    state.keptExerciseRootIdsBySelectionGroupId = Object.fromEntries(
+      groups.map((group, index) => [group.id, [exercises[index].id]]),
+    );
+    const session = new WorkoutSession(exercises, state, () => 0);
+    session.startWorkout(minutes, WORKOUT_MODIFIERS.None);
+    while (session.getNextGroup()) {
+      const group = session.getNextGroup();
+      session.beginRest(group, Date.now() + REST_DURATION_MS);
+      if (session.isIntermediateSequenceBlock(group)) session.advanceSequence(group);
+      else session.recordOutcome(group, false);
+      session.clearPendingRest();
+    }
+    const history = structuredClone(session.state.workoutHistory);
+    const feedback = structuredClone(session.state.exerciseScoreAdjustmentsByPhase);
+    const keeps = structuredClone(session.state.keptExerciseRootIdsBySelectionGroupId);
+    const hardWork = structuredClone(session.state.lastHardWorkUnixMillisecondsByPrimaryMuscle);
+    const meaningfulWork = structuredClone(session.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle);
+    // Closing must not run the matcher, not even when a future plan is possible.
+    session.chooseBestDistinctLineup = () => { throw new Error("Unexpected future selection"); };
+    session.acknowledgeCompletion();
+    const restored = new WorkoutSession(exercises,
+      parseStoredState(JSON.stringify(session.state)), () => 0);
+    restored.initialize();
+    assert.equal(restored.state.activeWorkoutMinutes, 0);
+    assert.deepEqual(restored.state.outcomes, {});
+    assert.deepEqual(restored.state.selectedExerciseIds, {});
+    assert.deepEqual(restored.state.workoutHistory, history);
+    assert.deepEqual(restored.state.exerciseScoreAdjustmentsByPhase, feedback);
+    assert.deepEqual(restored.state.keptExerciseRootIdsBySelectionGroupId, keeps);
+    assert.deepEqual(restored.state.lastHardWorkUnixMillisecondsByPrimaryMuscle, hardWork);
+    assert.deepEqual(restored.state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle, meaningfulWork);
+    assert.ok(exercises.every((exercise) => exercise.score === 7));
+    restored.prepareWorkout(minutes, WORKOUT_MODIFIERS.None);
+    assert.equal(restored.getActiveGroups().length, minutes);
+    assert.equal(new Set(restored.getActiveGroups().map(getSelectionKey)).size, groups.length);
+  });
+}
+
+test("leaving rest with no replacement settles once without choosing a future lineup", () => {
+  const exercises = RESOLUTIONS.get(30).groups.map((group, index) =>
+    exercise(index + 1, group.canonicalGroups[0], [], 0));
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+  const first = session.getNextGroup();
+  const rejectedId = session.getSelectedExercise(first).id;
+  session.beginRest(first, Date.now() + REST_DURATION_MS);
+  session.chooseBestDistinctLineup = () => { throw new Error("Unexpected future selection"); };
+  session.finishInterruptedWorkout();
+  session.finishInterruptedWorkout();
+  session.initialize();
+  assert.equal(session.state.workoutHistory.length, 1);
+  const [history] = session.state.workoutHistory;
+  assert.equal(history.status, "Interrupted");
+  assert.equal(history.blocks.length, 1);
+  assert.equal(history.decisions.length, 1);
+  assert.equal(session.state.exerciseScoreAdjustmentsByPhase.Warmup[rejectedId], -1);
+  assert.equal(session.state.activeWorkoutMinutes, 0);
+});
+
+test("a downvote cannot force a lower-score alternative just because a workout ended", () => {
+  const groups = RESOLUTIONS.get(30).groups;
+  const exercises = groups.map((group, index) =>
+    exercise(index + 1, group.canonicalGroups[0], [], 10));
+  exercises.push(exercise(1001, groups[0].canonicalGroups[0], [], 7));
+  const session = new WorkoutSession(exercises, createDefaultState(), () => 0);
+  session.startWorkout(30, WORKOUT_MODIFIERS.None);
+  const rejectedId = session.state.selectedExerciseIds[groups[0].id];
+  for (const group of session.getActiveGroups()) {
+    session.recordOutcome(group, group.id !== groups[0].id);
+  }
+  session.acknowledgeCompletion();
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], undefined);
+  session.prepareWorkout(30, WORKOUT_MODIFIERS.None);
+  assert.equal(session.state.selectedExerciseIds[groups[0].id], rejectedId);
+  assert.equal(session.state.exerciseScoreAdjustmentsByPhase.Warmup[rejectedId], -1);
+  assert.equal(exercises[0].score, 10);
+});
 
 function exercise(
   id,

@@ -231,6 +231,14 @@ shuffle, skip, and repeat do not.
 
 ### Modifiers are not allowed to break the workout
 
+Closing a completed or interrupted workout settles its outcomes and returns to
+setup without selecting a future lineup. Rejected cached slot selections are
+removed, but recorded phase downvotes, saved Keeps and the completed history
+remain intact. A downvote is never a next-session compatibility ban: even a
+slot with only one eligible movement must remain usable. The next preparation
+performs normal global assignment using its chosen duration, modifiers, current
+recovery and phase scores; no stale closing-time lineup overrides those choices.
+
 Flux currently provides eight composable controls in three visually separate
 groups: five workout conditions, one intensity choice, and two equipment
 choices. In UI order:
@@ -297,53 +305,28 @@ five distinct sole-contact wall movements. Sides, directions, sequence blocks,
 repeated sets, aliases, and names cannot multiply either count. The current
 audited inventory contains 25 base-wall movements and five sole-wall movements.
 
-For every existing non-Wall modifier pair and real UI state, the catalog uses a
-hierarchical availability contract. Each of the three broad 3-minute body
-regions must retain at least five selectable session movements. Finer 5- through
-30-minute anatomical buckets must retain at least one. Two binary modifiers
-have four states; a pair involving Mirror has six because Mirror has off,
-compact, and tall states. In a mirror-equipped broad state, only `MirrorOnly`
-and `BenefitsGreatly` count toward the five-movement relevance floor, after
-actual equipment compatibility is applied. Fine buckets measure real
-availability, so selectable `Agnostic` movements count there. Separately, each
-of the five global mirror
-classification cells—`MirrorOnly` upper/full body, `BenefitsGreatly`
-upper/full body, and `Agnostic`—must contain at least five reviewed exercises.
-Relationship labels are never promoted to hide a genuine gap. Every supported
-duration and profile must also admit a capacity-exact atomic lineup without
-reusing a session movement.
+For every existing non-Wall modifier pair and real UI state, each applicable
+broad and fine anatomical bucket must retain at least one approved selectable
+movement. Every supported duration must admit a complete atomic lineup.
+Distinct movements are preferred; a complete movement may repeat in separately
+tracked slots when no distinct lineup fits. Sides, directions and atomic
+sequences must remain complete, and the selected duration is preserved.
 
-Muscular-demand coverage is a fixed two-category audit over those same 28
-deduplicated single/pair profiles; demand is not another modifier axis. Each of
-the three broad 3-minute body regions must have at least one genuine demand-0
-and one genuine demand-2 session movement. Demand 0 counts only when every
-distinct sequence member is demand 0 and a member's primary canonical muscle
-belongs to that region. Demand 2 uses the same primary ownership rule for its
-hard member. `SessionMovementId` deduplicates aliases, and sides, directions,
-blocks, sets, and names never multiply either floor. Demand 1 has no catalog
-quota.
+The owner accepted the remaining exact Insect-related coverage gaps on
+12 September 2026. Those slots are omitted only in their declared conditions,
+and remaining rounds fill the selected duration. The conditions are listed in
+[`AGENTS.md`](AGENTS.md) and the
+[current deficit ledger](docs/catalog-audit/modifier_coverage_deficits_current.json).
+They do not require new exercises and do not block release. All other
+availability and complete-lineup checks remain enforced.
 
-Hard Floor also has an explicit category-preservation check. With Insect
-off/on, Silence off/on, and Mirror off, each broad region must retain at least
-five combined hard-and-slippery-compatible and five incompatible session
-movements; each finer bucket must retain at least one of each. This prevents the
-relaxed soft-floor state from passing merely because one floor category is
-effectively absent. The check uses the same hierarchical pairwise state model;
-it does not enumerate three- or four-modifier combinations.
-
-A separate materiality test prevents placebo modifiers. Hard Floor, Insect,
-Silence, and Shy must remove at least five exercises or 5% of the previous
-candidate pool, whichever is larger. Mirror must actually prefer at least that many
-compatible exercises for compact and tall equipment independently. Each
-materiality-audited modifier must affect at least 10% of the canonical buckets,
-both alone and with its paired modifier enabled. The current 83
-`BenefitsGreatly` assignments are
-an audited result, not a target or ceiling. Ordinary form checking never
-qualifies, and relationship labels cannot be promoted to satisfy coverage or
-materiality checks. Upper-body clothing is deliberately excluded from this
-one-direction restrictive-materiality test because each state can exclude the
-opposite requirement; it remains fully reviewed and participates in the normal
-pairwise catalog audit. Its exact catalog partition is recorded in
+Hard Floor requires compatible availability in applicable buckets; it does not
+require an incompatible counterpart. Demand-0/demand-2 inventories, mirror
+relationship populations and percentage materiality are diagnostic results,
+not admission quotas or release gates. Ratings, anatomy and relationship
+criteria remain truthful and audited. Broad rounds retain meaningful regional
+training through the existing coverage rule or a reviewed dynamic compound.
+Upper-body clothing's exact catalog partition is recorded in
 [`docs/UPPER_BODY_CLOTHING_AUDIT.md`](docs/UPPER_BODY_CLOTHING_AUDIT.md).
 Shy's ordinary-observer review boundary and exhaustive catalog partition are
 recorded in [`docs/SHY_MODE_AUDIT.md`](docs/SHY_MODE_AUDIT.md).

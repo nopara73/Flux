@@ -376,7 +376,7 @@ test("web and mobile persist hard-first block-aware workout allocation", () => {
   );
   assert.match(
     sessionService,
-    /KeepSequenceInSlot\(state, selectionGroup\.Id, root\)[\s\S]*rejectedSelectionKeys\.Add\(selectionGroup\.Id\)[\s\S]*SyncLegacyKeptExerciseIds\(state\)/,
+    /KeepSequenceInSlot\(state, selectionGroup\.Id, root\)[\s\S]*rejectedSelections\.Add\(\(selectionGroup\.Id, root\.Id\)\)[\s\S]*SyncLegacyKeptExerciseIds\(state\)/,
   );
 });
 
@@ -2162,15 +2162,25 @@ test("web and mobile preserve deployed keeps by catalog membership", () => {
   );
 });
 
-test("web and mobile finalize rejected replacements when Done is acknowledged", () => {
+test("web and mobile close workouts without preselecting a future lineup", () => {
   assert.match(
     sessionService,
-    /AcknowledgeCompletion\([\s\S]*state\.CompletionAcknowledged\s*=\s*true;[\s\S]*PrepareNextSession\(state\);/,
+    /AcknowledgeCompletion\([\s\S]*state\.CompletionAcknowledged\s*=\s*true;[\s\S]*FinalizeCurrentWorkout\(state\);/,
   );
   assert.match(
     workoutModule,
-    /acknowledgeCompletion\(\)[\s\S]*this\.state\.completionAcknowledged\s*=\s*true;[\s\S]*this\.prepareNextSession\(\);/,
+    /acknowledgeCompletion\(\)[\s\S]*this\.state\.completionAcknowledged\s*=\s*true;[\s\S]*this\.finalizeCurrentWorkout\(\);/,
   );
+  const nativeClose = sessionService.split("private void FinalizeCurrentWorkout(")[1]
+    .split("private Exercise? TryGetSelectedExercise(")[0];
+  const webClose = workoutModule.split("  finalizeCurrentWorkout() {")[1]
+    .split("  repairActiveLineup(")[0];
+  assert.doesNotMatch(nativeClose, /(?:ChooseBestDistinctLineup|PrepareWorkout|DownvoteSequence)\(/);
+  assert.doesNotMatch(webClose, /(?:chooseBestDistinctLineup|prepareWorkout|downvoteSequence)\(/);
+  assert.match(nativeClose, /RemoveSavedSequenceCopiesForSlot/);
+  assert.match(webClose, /removeSavedSequenceCopiesForSlot/);
+  assert.doesNotMatch(sessionService, /excludedExerciseIdsByGroup/);
+  assert.doesNotMatch(workoutModule, /excludedExerciseIdsByGroup/);
 });
 
 test("web movement and rest timing match the mobile workout contract", () => {

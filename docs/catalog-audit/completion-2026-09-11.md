@@ -510,3 +510,12 @@ no GIFs. A full-catalog browser preview starts the formerly blocked30-minute
 Insect + Hard Floor + Silence workout and reaches exercise playback. Version is
 3.18 (132). Final validation and deployment will include the coordinated Done
 crash hotfix; no deployment is claimed by this preparation checkpoint.
+
+Final integrated validation includes hotfix294d2d75:842/842 Android tests,
+394/394 web tests, production build646 files/545 exercises, and Debug build
+with zero warnings/errors. Closing a workout no longer generates a future
+lineup; the obsolete rejection-exclusion fallback was removed. The repeated
+movement solver and exact coverage exceptions remain shared across platforms.
+The final browser check covers desktop playback and the390x844 mobile Rest
+layout with the complete real catalog. README now reflects the accepted
+exceptions and diagnostic-only inventory rules.

@@ -159,6 +159,7 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
             WorkoutMinutes = session.WorkoutMinutes,
             Modifiers = session.Modifiers,
             IsLightDay = session.IsLightDay,
+            AutomaticLightRequiredAtStart = session.AutomaticLightRequiredAtStart,
             Status = session.Status,
             StartedBeforeLogging = session.StartedBeforeLogging,
             KeptExerciseIdsAtStart = [.. session.KeptExerciseIdsAtStart],

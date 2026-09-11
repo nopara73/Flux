@@ -97,6 +97,86 @@ public sealed class ExerciseSessionServiceTests
         Assert.Throws<InvalidOperationException>(() => service.StartWorkout(new WorkoutState(), 3, WorkoutModifiers.None));
     }
 
+    [Theory]
+    [InlineData(30)]
+    [InlineData(90)]
+    public void DoneWithOnlyOneChoicePerSlotPreservesFeedbackAndCanStartAgain(int minutes)
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups.Select((group, index) =>
+            QualifiedForGroup(index + 1, group, 7)).ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            KeptExerciseRootIdsBySelectionGroupId = groups.Select((group, index) =>
+                (group.Id, ExerciseId: exercises[index].Id)).ToDictionary(
+                    entry => entry.Id, entry => new HashSet<int> { entry.ExerciseId }),
+        };
+        service.StartWorkout(state, minutes, WorkoutModifiers.None);
+        while (service.GetNextGroup(state) is { } group)
+        {
+            service.BeginRest(state, group, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+            if (service.IsIntermediateSequenceBlock(state, group))
+                service.AdvanceSequence(state, group);
+            else
+                service.RecordOutcome(state, group, keep: false);
+            service.ClearPendingRest(state);
+        }
+        string history = JsonSerializer.Serialize(state.WorkoutHistory);
+        string feedback = JsonSerializer.Serialize(state.ExerciseScoreAdjustmentsByPhase);
+        string keeps = JsonSerializer.Serialize(state.KeptExerciseRootIdsBySelectionGroupId);
+        string hardWork = JsonSerializer.Serialize(state.LastHardWorkUnixMillisecondsByPrimaryMuscle);
+        string meaningfulWork = JsonSerializer.Serialize(state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle);
+
+        service.AcknowledgeCompletion(state);
+        WorkoutState restored = JsonSerializer.Deserialize<WorkoutState>(
+            JsonSerializer.Serialize(state))!;
+        service.Initialize(restored);
+
+        Assert.Equal(0, restored.ActiveWorkoutMinutes);
+        Assert.Empty(restored.Outcomes);
+        Assert.Empty(restored.SelectedExerciseIds);
+        Assert.Equal(history, JsonSerializer.Serialize(restored.WorkoutHistory));
+        Assert.Equal(feedback, JsonSerializer.Serialize(restored.ExerciseScoreAdjustmentsByPhase));
+        Assert.Equal(keeps, JsonSerializer.Serialize(restored.KeptExerciseRootIdsBySelectionGroupId));
+        Assert.Equal(hardWork, JsonSerializer.Serialize(restored.LastHardWorkUnixMillisecondsByPrimaryMuscle));
+        Assert.Equal(meaningfulWork, JsonSerializer.Serialize(restored.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle));
+        Assert.All(exercises, exercise => Assert.Equal(7, exercise.Score));
+
+        service.PrepareWorkout(restored, minutes, WorkoutModifiers.None);
+        Assert.Equal(minutes, service.GetActiveGroups(restored).Count);
+        Assert.Equal(groups.Length, service.GetActiveGroups(restored)
+            .Select(group => group.SelectionKey).Distinct().Count());
+    }
+
+    [Fact]
+    public void LeavingRestWithoutAnyReplacementSettlesOnlyOnce()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise[] exercises = groups.Select((group, index) =>
+            QualifiedForGroup(index + 1, group)).ToArray();
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState { CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision };
+        service.StartWorkout(state, 30, WorkoutModifiers.None);
+        WorkoutGroup first = service.GetNextGroup(state)!;
+        int rejectedId = service.GetSelectedExercise(state, first).Id;
+        service.BeginRest(state, first, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+
+        service.FinishInterruptedWorkout(state);
+        service.FinishInterruptedWorkout(state);
+        service.Initialize(state);
+
+        WorkoutSessionLog history = Assert.Single(state.WorkoutHistory);
+        Assert.Equal(WorkoutSessionStatus.Interrupted, history.Status);
+        Assert.Single(history.Blocks);
+        Assert.Single(history.Decisions);
+        Assert.Equal(-1, state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][rejectedId]);
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        service.PrepareWorkout(state, 30, WorkoutModifiers.None);
+        Assert.Equal(30, service.GetActiveGroups(state).Count);
+    }
+
     [Fact]
     public void RecoveryLightUsesOnlyDemandPathsSelectableForCurrentModifiers()
     {
@@ -2451,7 +2531,7 @@ public sealed class ExerciseSessionServiceTests
             .Select((group, index) => QualifiedForGroup(index + 1, group))
             .ToArray();
         Exercise[] replacements = selectionGroups
-            .Select((group, index) => QualifiedForGroup(1001 + index, group, -1))
+            .Select((group, index) => QualifiedForGroup(1001 + index, group))
             .ToArray();
         var service = new ExerciseSessionService(
             [.. baseline, .. replacements],
@@ -2748,7 +2828,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void RejectedSetReplacesTheSharedExerciseOnceAfterLongWorkout()
+    public void RejectedSetClearsTheSharedCachedSelectionOnceAfterLongWorkout()
     {
         WorkoutGroup[] selectionGroups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -2792,11 +2872,11 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(0, state.ActiveWorkoutMinutes);
-        Assert.Equal(replacement.Id, state.SelectedExerciseIds[target.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(target.Id));
     }
 
     [Fact]
-    public void DoneAtomicallyReplacesEveryRejectedExerciseBeforeRelaunch()
+    public void DoneAtomicallyClearsRejectedCachedSelectionsBeforeRelaunch()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy
             .GetResolution(30)
@@ -2919,7 +2999,7 @@ public sealed class ExerciseSessionServiceTests
                     pendingRound.Order)][original.Id]);
         Assert.NotEqual(
             original.Id,
-            state.SelectedExerciseIds[pendingRound.SelectionKey]);
+            state.SelectedExerciseIds.GetValueOrDefault(pendingRound.SelectionKey));
         Assert.Equal(0, state.ActiveWorkoutMinutes);
     }
 
@@ -3322,6 +3402,8 @@ public sealed class ExerciseSessionServiceTests
         service.RecordOutcome(state, lower, keep: false);
         service.FinishInterruptedWorkout(state);
 
+        Assert.False(state.SelectedExerciseIds.ContainsKey(lower.Id));
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
         Assert.Equal(broadReplacement.Id, state.SelectedExerciseIds[lower.Id]);
     }
 
@@ -3472,8 +3554,10 @@ public sealed class ExerciseSessionServiceTests
             -1,
             state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 performedBelowThreshold.Id]);
-        Assert.Equal(qualifyingReplacement.Id, state.SelectedExerciseIds[lower.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(lower.Id));
         Assert.Equal(0, state.ActiveWorkoutMinutes);
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
+        Assert.Equal(qualifyingReplacement.Id, state.SelectedExerciseIds[lower.Id]);
     }
 
     [Fact]
@@ -3563,7 +3647,7 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void RejectedExerciseIsReplacedWithinGroupAndKeptSlotsRemainStable()
+    public void RejectionDoesNotForceALowerScoreAndKeptSlotsRemainStable()
     {
         Exercise[] exercises = ThreeGroupCatalog();
         var service = new ExerciseSessionService(exercises, new Random(1));
@@ -3590,17 +3674,21 @@ public sealed class ExerciseSessionServiceTests
             -1,
             state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 rejected.Id]);
-        Assert.Equal(7, state.SelectedExerciseIds[lower.Id]);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(lower.Id));
         Assert.All(
             groups.Where(group => group.Id != lower.Id),
             group => Assert.Equal(initial[group.Id], state.SelectedExerciseIds[group.Id]));
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        Assert.Empty(state.Outcomes);
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
+        // One downvote changes 10 to 9 in this phase; it must not force the
+        // lower-score 7 or 5 alternatives merely because the workout ended.
+        Assert.Equal(rejected.Id, state.SelectedExerciseIds[lower.Id]);
         Assert.Contains(
             exercises.Single(exercise => exercise.Id == state.SelectedExerciseIds[lower.Id])
                 .PrimaryCanonicalGroup,
             lower.CanonicalGroups);
         Assert.Equal(3, groups.Select(group => state.SelectedExerciseIds[group.Id]).Distinct().Count());
-        Assert.Equal(0, state.ActiveWorkoutMinutes);
-        Assert.Empty(state.Outcomes);
     }
 
     [Fact]
@@ -5208,8 +5296,8 @@ public sealed class ExerciseSessionServiceTests
     public void PreparingRejectedReplacementsUsesGlobalMatchingInsteadOfGreedyOrder()
     {
         WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
-        Exercise currentFirst = QualifiedForGroup(1, groups[0], 10);
-        Exercise currentMiddle = QualifiedForGroup(2, groups[1], 10);
+        Exercise currentFirst = QualifiedForGroup(1, groups[0], 0);
+        Exercise currentMiddle = QualifiedForGroup(2, groups[1], 0);
         Exercise currentLast = QualifiedForGroup(3, groups[2], 10);
         Exercise sharedReplacement = FullyCoveredExercise(
             4,
@@ -5241,6 +5329,10 @@ public sealed class ExerciseSessionServiceTests
         service.RecordOutcome(state, groups[1], keep: false);
         service.RecordOutcome(state, groups[2], keep: true);
         service.AcknowledgeCompletion(state);
+        Assert.Equal(0, state.ActiveWorkoutMinutes);
+        Assert.False(state.SelectedExerciseIds.ContainsKey(groups[0].Id));
+        Assert.False(state.SelectedExerciseIds.ContainsKey(groups[1].Id));
+        service.PrepareWorkout(state, 3, WorkoutModifiers.None);
 
         Assert.Equal(firstOnlyReplacement.Id, state.SelectedExerciseIds[groups[0].Id]);
         Assert.Equal(sharedReplacement.Id, state.SelectedExerciseIds[groups[1].Id]);
@@ -5285,9 +5377,9 @@ public sealed class ExerciseSessionServiceTests
             -1,
             restored.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.Warmup][
                 pendingPenalty.Id]);
-        Assert.NotEqual(initial[0], restored.SelectedExerciseIds[groups[0].Id]);
+        Assert.False(restored.SelectedExerciseIds.ContainsKey(groups[0].Id));
         Assert.Equal(initial[1], restored.SelectedExerciseIds[groups[1].Id]);
-        Assert.NotEqual(initial[2], restored.SelectedExerciseIds[groups[2].Id]);
+        Assert.False(restored.SelectedExerciseIds.ContainsKey(groups[2].Id));
         Assert.Equal(0, restored.ActiveWorkoutMinutes);
         Assert.Empty(restored.Outcomes);
 
