@@ -3,7 +3,37 @@
   "catalogRecordCount": 545,
   "catalogSha256": "aa22b43af06c145760dbd79f40e1223947b8788c0d9f8d538f58ff92c8965ad9",
   "policy": {
-    "treatment": "Availability and complete atomic lineups must have zero deficits. Repeated complete movements are allowed. Distinct-lineup, demand-category and percentage materiality arrays are diagnostics, not release gates.",
+    "treatment": "Availability and complete atomic lineups must have zero deficits outside the exact owner-accepted coverage exceptions. Affected slots are omitted and the selected workout duration is preserved. Repeated complete movements are allowed. Distinct-lineup, demand-category and percentage materiality arrays are diagnostics, not release gates.",
+    "acceptedCoverageExceptions": [
+      {
+        "groupId": "r15.scapular-chest-breathing",
+        "requiredModifiers": 1
+      },
+      {
+        "groupId": "r15.shoulder",
+        "requiredModifiers": 17
+      },
+      {
+        "groupId": "r20.shoulder-adduction-extension",
+        "requiredModifiers": 17
+      },
+      {
+        "groupId": "r30.rotator-cuff",
+        "requiredModifiers": 17
+      },
+      {
+        "groupId": "r30.shoulder-adductors-extensors",
+        "requiredModifiers": 17
+      },
+      {
+        "groupId": "r30.breathing-muscles",
+        "requiredModifiers": 3
+      },
+      {
+        "groupId": "r30.breathing-muscles",
+        "requiredModifiers": 513
+      }
+    ],
     "diagnosticOnly": [
       "muscularDemand",
       "materiality",
@@ -15,10 +45,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 17,
-    "pairwiseAffectedGroupCount": 6,
-    "hardFloorCategoryDeficiencyCount": 5,
-    "hardFloorCategoryAffectedGroupCount": 5,
+    "pairwiseDeficiencyCount": 0,
+    "pairwiseAffectedGroupCount": 0,
+    "hardFloorCategoryDeficiencyCount": 0,
+    "hardFloorCategoryAffectedGroupCount": 0,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -26,267 +56,11 @@
     "demandTwoDeficiencyCount": 8,
     "demandTwoAffectedGroupCount": 2,
     "materialityDeficiencyCount": 1,
-    "distinctLineupDeficiencyCount": 20,
-    "completeLineupDeficiencyCount": 20
+    "distinctLineupDeficiencyCount": 8,
+    "completeLineupDeficiencyCount": 0
   },
-  "pairwise": [
-    {
-      "minutes": 15,
-      "groupId": "r15.shoulder",
-      "groupName": "Shoulder",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 128,
-      "firstModifierEnabled": false,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 128,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 16,
-      "firstModifierEnabled": false,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 2,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 2,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.shoulder-adduction-extension",
-      "groupName": "Shoulder adduction and extension",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.rotator-cuff",
-      "groupName": "Rotator cuff",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 2,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.shoulder-adductors-extensors",
-      "groupName": "Shoulder adductors and extensors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    }
-  ],
-  "hardFloorCategory": [
-    {
-      "minutes": 15,
-      "groupId": "r15.shoulder",
-      "groupName": "Shoulder",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.scapular-chest-breathing",
-      "groupName": "Scapular girdle, chest and breathing",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.shoulder-adduction-extension",
-      "groupName": "Shoulder adduction and extension",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.rotator-cuff",
-      "groupName": "Rotator cuff",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.shoulder-adductors-extensors",
-      "groupName": "Shoulder adductors and extensors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    }
-  ],
+  "pairwise": [],
+  "hardFloorCategory": [],
   "muscularDemand": [
     {
       "minutes": 3,
@@ -376,246 +150,53 @@
   ],
   "distinctLineup": [
     {
-      "minutes": 15,
-      "profile": 1,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 129,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 13,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 3,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 513,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 5,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 13,
-      "maximumDistinctExerciseCount": 14,
-      "requiredDistinctExerciseCount": 15
-    },
-    {
-      "minutes": 20,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
       "minutes": 30,
       "profile": 17,
       "maximumDistinctExerciseCount": 25,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 3,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 26
     },
     {
       "minutes": 30,
       "profile": 513,
       "maximumDistinctExerciseCount": 26,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 27
     },
     {
       "minutes": 45,
       "profile": 17,
       "maximumDistinctExerciseCount": 25,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 3,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 26
     },
     {
       "minutes": 45,
       "profile": 513,
       "maximumDistinctExerciseCount": 26,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 27
     },
     {
       "minutes": 60,
       "profile": 17,
       "maximumDistinctExerciseCount": 25,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 3,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 26
     },
     {
       "minutes": 60,
       "profile": 513,
       "maximumDistinctExerciseCount": 26,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 27
     },
     {
       "minutes": 90,
       "profile": 17,
       "maximumDistinctExerciseCount": 25,
-      "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 3,
-      "maximumDistinctExerciseCount": 27,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 26
     },
     {
       "minutes": 90,
       "profile": 513,
       "maximumDistinctExerciseCount": 26,
-      "requiredDistinctExerciseCount": 28
+      "requiredDistinctExerciseCount": 27
     }
   ],
-  "completeLineup": [
-    {
-      "minutes": 15,
-      "profile": 1,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 129,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 17,
-      "maximumCoveredGroupCount": 13,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 3,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 513,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 5,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 15,
-      "profile": 13,
-      "maximumCoveredGroupCount": 14,
-      "requiredGroupCount": 15
-    },
-    {
-      "minutes": 20,
-      "profile": 17,
-      "maximumCoveredGroupCount": 19,
-      "requiredGroupCount": 20
-    },
-    {
-      "minutes": 30,
-      "profile": 17,
-      "maximumCoveredGroupCount": 26,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 3,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 513,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 17,
-      "maximumCoveredGroupCount": 26,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 3,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 45,
-      "profile": 513,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 17,
-      "maximumCoveredGroupCount": 26,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 3,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 60,
-      "profile": 513,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 17,
-      "maximumCoveredGroupCount": 26,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 3,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    },
-    {
-      "minutes": 90,
-      "profile": 513,
-      "maximumCoveredGroupCount": 27,
-      "requiredGroupCount": 28
-    }
-  ]
+  "completeLineup": []
 }

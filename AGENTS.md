@@ -25,6 +25,8 @@
 
 # Exercise selection guidelines
 
+- Owner-accepted coverage exceptions (12 September 2026): omit `r15.scapular-chest-breathing` while Insect is on; omit `r15.shoulder`, `r20.shoulder-adduction-extension`, `r30.rotator-cuff` and `r30.shoulder-adductors-extensors` while both Insect and Hard Floor are on; omit `r30.breathing-muscles` while Insect and either Silence or Shy are on. These exact remaining gaps do not require new exercises and do not block release. Use the same exceptions on Android and web, redistribute complete rounds to preserve the selected duration, and retain completed work across modifier changes. All other availability and complete-lineup checks still apply. Do not resume sourcing exercises to fill these accepted exceptions unless the owner explicitly requests it.
+
 - Select real, established, worthwhile exercises first; never invent movements, filler, or artificial variations.
 - Accept an exercise only when an ordinary person can immediately copy it for 45 seconds from its plain name and final silent demonstration. Any uncertainty means rejection.
 - Require feet-only ground contact, ordinary-shoe compatibility, and a 2 m × 2 m maximum area. Exercises require zero equipment unless they genuinely require either an ordinary stable wall and are explicitly classified `WallRequired`, or a physical mirror and are explicitly classified `MirrorOnly`; those exercises must remain unavailable while their equipment is off. Quiet execution is required whenever the default-on Silence modifier is enabled; established naturally noisy movements may be admitted only when their sound is the ordinary result of execution and they remain excluded by Silence.

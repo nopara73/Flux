@@ -475,3 +475,38 @@ catalog is still 545 records with 17 pairwise availability gaps, five
 overlapping Hard Floor gaps and 20 incomplete duration/profile combinations.
 The implementation remains incomplete and unpublished. No phone install was
 attempted.
+
+## Owner-authorized exception release — 12 September 2026
+
+The owner explicitly accepted the remaining catalog gaps and asked to stop
+filling them and deploy. This supersedes the source-screening checkpoint above;
+no additional exercise sourcing or breathing-category decision is required.
+
+Android and web now omit only these exact unavailable slots:
+
+| Selection group | Required condition |
+| --- | --- |
+| r15.scapular-chest-breathing | Insect |
+| r15.shoulder | Insect + Hard Floor |
+| r20.shoulder-adduction-extension | Insect + Hard Floor |
+| r30.rotator-cuff | Insect + Hard Floor |
+| r30.shoulder-adductors-extensors | Insect + Hard Floor |
+| r30.breathing-muscles | Insect + Silence, or Insect + Shy |
+
+The existing allocator redistributes complete movements to preserve the full
+selected workout duration. Original pelvic-floor and wall-free hand exceptions
+remain intact. Catalog anatomy, intensity, identities and reviewed media remain
+unchanged (545 records, revision79). The ledger records the accepted conditions
+and reports zero unaccepted pairwise, Hard Floor, or complete-lineup deficits.
+Demand, materiality and distinct-lineup shortages remain diagnostic only.
+
+Regression coverage completes formerly blocked 15/20/30/60-minute workouts in
+regular and Light mode, checks exception boundaries, and verifies exact native/
+web exception parity. Exhaustive profile tests require every selected duration
+to remain complete and permit repeats only when a complete distinct lineup is
+impossible. Android:839/839 pass. Web:390/390 pass before the additional exhaustive
+repeat-preference assertions. Production build succeeds:646 files,545 exercises,
+no GIFs. A full-catalog browser preview starts the formerly blocked30-minute
+Insect + Hard Floor + Silence workout and reaches exercise playback. Version is
+3.18 (132). Final validation and deployment will include the coordinated Done
+crash hotfix; no deployment is claimed by this preparation checkpoint.

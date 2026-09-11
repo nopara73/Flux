@@ -6,6 +6,11 @@ import {
   SUPPORTED_MINUTES,
   WorkoutSession,
   createDefaultState,
+  RESOLUTIONS,
+  getSelectionKey,
+  getSessionMovementId,
+  getMaximumDistinctLineupSize,
+  isSelectionGroupAvailable,
   isSelectableForWorkoutProfile,
 } from "../workout.js";
 
@@ -24,6 +29,16 @@ export function registerProductionCatalogProfileShard(shardIndex, shardCount) {
       for (const minutes of SUPPORTED_MINUTES) {
         const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
         session.startWorkout(minutes, profile);
+        const rounds = session.getActiveGroups();
+        assert.equal(rounds.length, minutes);
+        const selections = [...new Map(rounds.map((round) =>
+          [getSelectionKey(round), session.getSelectedExercise(round)])).values()];
+        if (new Set(selections.map(getSessionMovementId)).size < selections.length) {
+          const availableGroups = RESOLUTIONS.get(Math.min(minutes, 30)).groups
+            .filter((group) => isSelectionGroupAvailable(group, profile));
+          assert.ok(getMaximumDistinctLineupSize(catalog, availableGroups, profile, minutes) < availableGroups.length,
+            `Repeated a movement despite a complete distinct lineup: ${minutes} minutes, ${profile}`);
+        }
         assert.ok(session.getActiveGroups().every((group) => {
           const selected = session.getSelectedExercise(group);
           return isSelectableForWorkoutProfile(

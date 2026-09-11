@@ -29,6 +29,7 @@ test("Oura is an explicit Android-only capability with a read-only private bridg
 });
 
 import {
+  ACCEPTED_COVERAGE_EXCEPTIONS,
   APPROVED_EXERCISE_CORRECTIONS,
   BROAD_COVERAGE_RESOLUTION_MINUTES,
   CURRENT_CATALOG_REVISION,
@@ -201,6 +202,17 @@ const [
   source("web", "light-cadence.js"),
 ]);
 const catalog = JSON.parse(catalogJson);
+
+test("accepted coverage exceptions have the exact same native and web conditions", () => {
+  const nativeRules = [...modifierPolicy.matchAll(/new\("(r\d+\.[^"]+)", (WorkoutModifiers\.[^\r\n]+)\),/g)]
+    .map(([, groupId, expression]) => ({
+      groupId,
+      requiredModifiers: expression.split("|").reduce((mask, term) =>
+        mask | WORKOUT_MODIFIERS[term.trim().replace("WorkoutModifiers.", "")], 0),
+    }));
+  assert.deepEqual(nativeRules, ACCEPTED_COVERAGE_EXCEPTIONS);
+  assert.equal(nativeRules.length, 7);
+});
 
 test("web duration choices match the mobile workout contract", () => {
   assert.deepEqual(

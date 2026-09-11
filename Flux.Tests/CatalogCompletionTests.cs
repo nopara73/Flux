@@ -7,6 +7,58 @@ namespace Flux.Tests;
 
 public sealed class CatalogCompletionTests
 {
+    [Theory]
+    [InlineData(15, WorkoutModifiers.Insect)]
+    [InlineData(15, WorkoutModifiers.Insect | WorkoutModifiers.HardFloor)]
+    [InlineData(20, WorkoutModifiers.Insect | WorkoutModifiers.HardFloor)]
+    [InlineData(30, WorkoutModifiers.Insect | WorkoutModifiers.HardFloor)]
+    [InlineData(30, WorkoutModifiers.Insect | WorkoutModifiers.Silence)]
+    [InlineData(30, WorkoutModifiers.Insect | WorkoutModifiers.Shy)]
+    [InlineData(60, WorkoutModifiers.Insect | WorkoutModifiers.HardFloor | WorkoutModifiers.Silence | WorkoutModifiers.Shy)]
+    public void AcceptedGapsPreserveFullDurationAndCompleteWorkouts(int minutes, WorkoutModifiers profile)
+    {
+        foreach (bool light in new[] { false, true })
+        {
+            var service = new ExerciseSessionService(LoadCatalog(), new Random(4));
+            var state = new WorkoutState();
+            WorkoutModifiers modifiers = profile | (light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+            service.StartWorkout(state, minutes, modifiers);
+            WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+            Assert.Equal(minutes, rounds.Length);
+            Assert.All(rounds, round =>
+            {
+                Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(round, modifiers));
+                Exercise selected = service.GetSelectedExercise(state, round);
+                Assert.True(WorkoutModifierPolicy.IsCompatible(selected, modifiers));
+                Assert.True(WorkoutCoveragePolicy.IsSelectable(selected, round));
+            });
+            foreach (WorkoutGroup round in rounds)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+            Assert.True(state.WorkoutCompleted);
+        }
+    }
+
+    [Fact]
+    public void AcceptedGapsApplyOnlyToTheirDeclaredModifierCombinations()
+    {
+        foreach (AcceptedWorkoutCoverageException exception in WorkoutModifierPolicy.AcceptedCoverageExceptions)
+        {
+            int minutes = int.Parse(exception.GroupId.Split('.')[0][1..]);
+            WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, exception.GroupId);
+            Assert.False(WorkoutModifierPolicy.IsSelectionGroupAvailable(group, exception.RequiredModifiers));
+            Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(group,
+                exception.RequiredModifiers & ~WorkoutModifiers.Insect));
+            Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(group, WorkoutModifiers.None));
+            if (exception.RequiredModifiers != WorkoutModifiers.Insect)
+                Assert.True(WorkoutModifierPolicy.IsSelectionGroupAvailable(group, WorkoutModifiers.Insect));
+        }
+    }
+
     private static Exercise[] LoadCatalog() => JsonSerializer.Deserialize<Exercise[]>(
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Assets", "exercises.json")),
         new JsonSerializerOptions

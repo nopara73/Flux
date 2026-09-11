@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
+  ACCEPTED_COVERAGE_EXCEPTIONS,
   CURRENT_CATALOG_REVISION,
   RESOLUTIONS,
   WORKOUT_MODIFIERS,
@@ -13,10 +14,52 @@ import {
   getMaximumCompleteLineupSize,
   isCompatibleWithWorkoutModifiers,
   isSelectable,
+  isSelectionGroupAvailable,
 } from "../workout.js";
 
 const catalog = JSON.parse(await readFile(
   new URL("../../Flux/Assets/exercises.json", import.meta.url), "utf8"));
+
+for (const [minutes, profile] of [
+  [15, WORKOUT_MODIFIERS.Insect],
+  [15, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  [20, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  [30, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  [30, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence],
+  [30, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Shy],
+  [60, WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Shy],
+]) test(`accepted gaps preserve and complete all ${minutes} minutes, profile=${profile}`, () => {
+  for (const light of [false, true]) {
+    const modifiers = profile | (light ? WORKOUT_MODIFIERS.Light : 0);
+    const session = new WorkoutSession(catalog, createDefaultState(), () => 0.4);
+    session.startWorkout(minutes, modifiers);
+    const rounds = session.getActiveGroups();
+    assert.equal(rounds.length, minutes);
+    for (const round of rounds) {
+      assert.equal(isSelectionGroupAvailable(round, modifiers), true);
+      const selected = session.getSelectedExercise(round);
+      assert.equal(isCompatibleWithWorkoutModifiers(selected, modifiers), true);
+      assert.equal(isSelectable(selected, round), true);
+      session.beginRest(round, Date.now() + 15_000);
+      if (session.isIntermediateSequenceBlock(round)) session.advanceSequence(round);
+      else session.recordOutcome(round, true);
+      session.clearPendingRest();
+    }
+    assert.equal(session.state.workoutCompleted, true);
+  }
+});
+
+test("accepted gaps apply only to their declared modifier combinations", () => {
+  for (const { groupId, requiredModifiers } of ACCEPTED_COVERAGE_EXCEPTIONS) {
+    const minutes = Number(groupId.split(".")[0].slice(1));
+    const group = RESOLUTIONS.get(minutes).groups.find((item) => item.id === groupId);
+    assert.equal(isSelectionGroupAvailable(group, requiredModifiers), false);
+    assert.equal(isSelectionGroupAvailable(group, requiredModifiers & ~WORKOUT_MODIFIERS.Insect), true);
+    assert.equal(isSelectionGroupAvailable(group, WORKOUT_MODIFIERS.None), true);
+    if (requiredModifiers !== WORKOUT_MODIFIERS.Insect)
+      assert.equal(isSelectionGroupAvailable(group, WORKOUT_MODIFIERS.Insect), true);
+  }
+});
 
 for (const [minutes, insect, expectedId, selectionKey] of [
   [10, true, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot"],

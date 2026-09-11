@@ -242,7 +242,24 @@ const WALL_FREE_INSECT_FINE_COVERAGE_EXCEPTION_SET = new Set(
   WALL_FREE_INSECT_FINE_COVERAGE_EXCEPTIONS,
 );
 
-function isWallFreeInsectFineCoverageException(group, profile) {
+// Exact catalog gaps accepted by the owner on 12 September 2026. The normal
+// round allocator preserves the selected duration using the remaining slots.
+export const ACCEPTED_COVERAGE_EXCEPTIONS = Object.freeze([
+  ["r15.scapular-chest-breathing", WORKOUT_MODIFIERS.Insect],
+  ["r15.shoulder", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  ["r20.shoulder-adduction-extension", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  ["r30.rotator-cuff", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  ["r30.shoulder-adductors-extensors", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor],
+  ["r30.breathing-muscles", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence],
+  ["r30.breathing-muscles", WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Shy],
+].map(([groupId, requiredModifiers]) => Object.freeze({ groupId, requiredModifiers })));
+
+function isCoverageException(group, profile) {
+  if (ACCEPTED_COVERAGE_EXCEPTIONS.some((exception) =>
+    exception.groupId === getSelectionKey(group) &&
+    (profile & exception.requiredModifiers) === exception.requiredModifiers)) {
+    return true;
+  }
   if ((profile & WORKOUT_MODIFIERS.Insect) === 0 ||
       group.canonicalGroups.length === 0) {
     return false;
@@ -256,7 +273,7 @@ function isWallFreeInsectFineCoverageException(group, profile) {
 }
 
 export function isSelectionGroupAvailable(group, profile) {
-  return !isWallFreeInsectFineCoverageException(group, profile);
+  return !isCoverageException(group, profile);
 }
 
 
@@ -2229,7 +2246,7 @@ export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
               secondModifierEnabled: secondState !== WORKOUT_MODIFIERS.None,
               mirrorEquipment,
               requiredExerciseCount:
-                isWallFreeInsectFineCoverageException(group, profile)
+                isCoverageException(group, profile)
                   ? 0
                   : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
               matchingExerciseCount: new Set(exercises
@@ -2296,7 +2313,7 @@ export function findHardFloorCategoryCoverageDeficiencies(exercises) {
             partnerModifierEnabled,
             matchingExerciseCount,
             requiredExerciseCount:
-              isWallFreeInsectFineCoverageException(group, profile)
+              isCoverageException(group, profile)
                 ? 0
                 : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
           };

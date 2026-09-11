@@ -139,12 +139,18 @@ public sealed class CatalogInvariantTests
                             profileState,
                             rounds.First()))
                         .ToArray();
-                    Assert.Equal(
-                        baseSelections.Length,
-                        baseSelections
-                            .Select(WorkoutModifierPolicy.GetSessionMovementId)
-                            .Distinct()
-                            .Count());
+                    int distinctMovementCount = baseSelections
+                        .Select(WorkoutModifierPolicy.GetSessionMovementId).Distinct().Count();
+                    if (distinctMovementCount < baseSelections.Length)
+                    {
+                        WorkoutGroup[] availableGroups = MassGroupingTaxonomy
+                            .GetResolution(Math.Min(minutes, 30)).Groups
+                            .Where(group => WorkoutModifierPolicy.IsSelectionGroupAvailable(group, profile))
+                            .ToArray();
+                        Assert.True(WorkoutModifierPolicy.GetMaximumDistinctLineupSize(
+                            exercises, availableGroups, profile, minutes) < availableGroups.Length,
+                            $"Repeated a movement despite a complete distinct lineup: {minutes} minutes, {profile}.");
+                    }
                     Assert.All(profileService.GetActiveGroups(profileState), group =>
                         Assert.True(WorkoutModifierPolicy.IsCompatible(
                             profileService.GetSelectedExercise(profileState, group),

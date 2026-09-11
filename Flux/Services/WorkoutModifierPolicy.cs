@@ -54,6 +54,10 @@ public sealed record WorkoutProfileCompletionDeficiency(
     int MaximumCoveredGroupCount,
     int RequiredGroupCount);
 
+public sealed record AcceptedWorkoutCoverageException(
+    string GroupId,
+    WorkoutModifiers RequiredModifiers);
+
 public sealed record WorkoutModifierMaterialityDeficiency(
     WorkoutModifiers Modifier,
     WorkoutModifiers ContextProfile,
@@ -83,6 +87,21 @@ public static class WorkoutModifierPolicy
     public const int MinimumAffectedBucketPercent = 10;
 
     private const int MaterialityResolutionMinutes = 30;
+
+    // Owner-accepted catalog gaps, 12 September 2026. These exact slots are
+    // omitted in their affected setup; remaining rounds retain the full duration.
+    // This does not change any exercise's anatomy or compatibility.
+    public static IReadOnlyList<AcceptedWorkoutCoverageException> AcceptedCoverageExceptions { get; } =
+        Array.AsReadOnly<AcceptedWorkoutCoverageException>(
+        [
+            new("r15.scapular-chest-breathing", WorkoutModifiers.Insect),
+            new("r15.shoulder", WorkoutModifiers.Insect | WorkoutModifiers.HardFloor),
+            new("r20.shoulder-adduction-extension", WorkoutModifiers.Insect | WorkoutModifiers.HardFloor),
+            new("r30.rotator-cuff", WorkoutModifiers.Insect | WorkoutModifiers.HardFloor),
+            new("r30.shoulder-adductors-extensors", WorkoutModifiers.Insect | WorkoutModifiers.HardFloor),
+            new("r30.breathing-muscles", WorkoutModifiers.Insect | WorkoutModifiers.Silence),
+            new("r30.breathing-muscles", WorkoutModifiers.Insect | WorkoutModifiers.Shy),
+        ]);
 
     // Insect mode needs visible continuous whole-body movement. Pelvic-floor
     // isolation cannot honestly meet that contract under Flux's feet-only
@@ -427,7 +446,7 @@ public static class WorkoutModifierPolicy
                                         WorkoutModifiers.None,
                                     MirrorEquipment = GetMirrorEquipment(profile),
                                     RequiredCount =
-                                        IsWallFreeInsectFineCoverageException(
+                                        IsCoverageException(
                                             group,
                                             profile)
                                             ? 0
@@ -518,7 +537,7 @@ public static class WorkoutModifierPolicy
                                 partnerState.Modifier,
                                 partnerState.Enabled,
                                 matchingExerciseCount,
-                                IsWallFreeInsectFineCoverageException(
+                                IsCoverageException(
                                     group,
                                     profile)
                                     ? 0
@@ -531,10 +550,17 @@ public static class WorkoutModifierPolicy
             .ToArray();
     }
 
-    private static bool IsWallFreeInsectFineCoverageException(
+    private static bool IsCoverageException(
         WorkoutGroup group,
         WorkoutModifiers profile)
     {
+        if (AcceptedCoverageExceptions.Any(exception =>
+            exception.GroupId == group.SelectionKey &&
+            (profile & exception.RequiredModifiers) == exception.RequiredModifiers))
+        {
+            return true;
+        }
+
         if (!profile.HasFlag(WorkoutModifiers.Insect) ||
             group.CanonicalGroups.Count == 0)
         {
@@ -553,7 +579,7 @@ public static class WorkoutModifierPolicy
         WorkoutModifiers profile)
     {
         ArgumentNullException.ThrowIfNull(group);
-        return !IsWallFreeInsectFineCoverageException(group, profile);
+        return !IsCoverageException(group, profile);
     }
 
     public static IReadOnlyList<WorkoutModifierMaterialityDeficiency>
