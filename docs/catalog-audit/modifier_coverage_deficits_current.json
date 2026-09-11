@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 74,
+  "catalogRevision": 75,
   "catalogRecordCount": 540,
-  "catalogSha256": "3ace83abe921a0cc377fe1ffb3e11700f433a9746644ed7a5182c0225b6ec4e6",
+  "catalogSha256": "50087bd17a12ca8293dc8d16ae93d314a812273f60d62a7c89fed2869b9aa533",
   "policy": {
     "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
     "diagnosticOnly": [
@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 37,
+    "pairwiseDeficiencyCount": 28,
     "pairwiseAffectedGroupCount": 17,
-    "hardFloorCategoryDeficiencyCount": 17,
-    "hardFloorCategoryAffectedGroupCount": 17,
+    "hardFloorCategoryDeficiencyCount": 16,
+    "hardFloorCategoryAffectedGroupCount": 16,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -296,66 +296,6 @@
       "minutes": 30,
       "groupId": "r30.breathing-muscles",
       "groupName": "Breathing muscles",
-      "firstModifier": 128,
-      "firstModifierEnabled": false,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 128,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 16,
-      "firstModifierEnabled": false,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 2,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
       "firstModifier": 1,
       "firstModifierEnabled": true,
       "secondModifier": 2,
@@ -371,56 +311,8 @@
       "firstModifier": 1,
       "firstModifierEnabled": true,
       "secondModifier": 512,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
       "secondModifierEnabled": true,
       "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": false,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Compact",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 4,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "Tall",
       "requiredExerciseCount": 1,
       "matchingExerciseCount": 0
     },
@@ -588,16 +480,6 @@
       "minutes": 30,
       "groupId": "r30.forearm-extensors-supinators",
       "groupName": "Forearm extensors and supinators",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.breathing-muscles",
-      "groupName": "Breathing muscles",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -832,7 +714,7 @@
     {
       "minutes": 30,
       "profile": 1,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -844,13 +726,13 @@
     {
       "minutes": 30,
       "profile": 129,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 30,
       "profile": 17,
-      "maximumDistinctExerciseCount": 20,
+      "maximumDistinctExerciseCount": 21,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -892,31 +774,31 @@
     {
       "minutes": 30,
       "profile": 5,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 30,
       "profile": 13,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 1,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 129,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 17,
-      "maximumDistinctExerciseCount": 20,
+      "maximumDistinctExerciseCount": 21,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -934,31 +816,31 @@
     {
       "minutes": 45,
       "profile": 5,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 13,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 1,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 129,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 17,
-      "maximumDistinctExerciseCount": 20,
+      "maximumDistinctExerciseCount": 21,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -976,31 +858,31 @@
     {
       "minutes": 60,
       "profile": 5,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 13,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 1,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 129,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 17,
-      "maximumDistinctExerciseCount": 20,
+      "maximumDistinctExerciseCount": 21,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -1018,13 +900,13 @@
     {
       "minutes": 90,
       "profile": 5,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 13,
-      "maximumDistinctExerciseCount": 26,
+      "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
     }
   ]

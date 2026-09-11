@@ -18018,26 +18018,29 @@
     },
     {
       "id": 480,
-      "metadataSha256": "ab407c341582345185d5574aa73826f28ccdba7a72b90e7170d1232c901fafb9",
+      "metadataSha256": "12e512794bf133bbd13978b317c82bd26c7f991fae800a12f692c26d6169c0c4",
       "assets": {
         "exercise_videos/exercise_0480.mp4": "4c198a6415358862e4bddb7511524dfba96553f90abc08b673ffca7e29e5ac6b"
       },
-      "reviewedAt": "2026-09-09T19:33:10.666011+08:00",
-      "method": "Explicit native-source, packaged-frame, metadata and actual-workout inspection. Complete real-time media loops; controlled application clock for remaining timer transitions. No inferred approvals.",
+      "reviewedAt": "2026-09-11T21:41:57.0715329+08:00",
+      "method": "Reinspection of all 74 packaged frames and the complete normal-speed five-second preparation, 45-second work and 15-second rest in each actual workout context. No timer acceleration. The local review fixture starts at the target round; it is not a complete real 30-minute workout.",
       "observedAction": "Inhale in three parts with forward, lateral and overhead arm sweeps, then fold forward with the forceful Ha exhale and return upright.",
       "evidence": [
         "docs/catalog-audit/evidence/2026-09-06/0480/0000-0073.jpg",
         "docs/catalog-audit/evidence/2026-09-06/0480/playback.json",
-        "docs/catalog-audit/evidence/2026-09-06/0480/phase-sheet.jpg"
+        "docs/catalog-audit/evidence/2026-09-06/0480/phase-sheet.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/all-74-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/console.json"
       ],
       "checks": {
         "Metadata": {
           "status": "PASS",
-          "reason": "The exact Breath of Joy action supports existing breathing-muscle primary, shoulder-abductor and hamstring secondary mobility claims, demand 0 and continuous timing. The planted legs do not continuously move for Insect, and the non-impact flow is hard-floor compatible. The audible exhale remains excluded by Silence; Shy incompatible and mirror agnostic are unchanged. Entries 480 and 517 retain one shared session movement, with no additional quota credit."
+          "reason": "The complete 3.7-second cycle continuously links three large arm sweeps to a substantial forward fold and return, with no held phase. It is Insect compatible when assessed as a complete action; planted feet alone were an insufficient prior exclusion. BreathingMuscles primary, ShoulderAbductors and PosteriorThighAndKneeFlexors secondary, demand 0, Hard Floor compatibility, Shy incompatibility and mirror agnosticism are unchanged. Its prescribed audible Ha exhale remains excluded by Silence. Both entries retain SessionMovementId 480 and one block, with no duplicate coverage."
         },
         "FullLoop": {
           "status": "PASS",
-          "reason": "Preserved the completed full-frame review of 517 by reusing its exact 74-frame, 3.7-second packaged MP4. SHA-256 identity was verified before binding this entry. Native source was inspected and the complete real-time loop and seam were checked again in this entry's workout context."
+          "reason": "All 74 frames of the unchanged 3.7-second packaged cycle were reinspected; each name-specific workout repeated the complete arm-sweep, fold and return at natural speed."
         },
         "Crop": {
           "status": "PASS",
@@ -18045,11 +18048,11 @@
         },
         "LoopSeam": {
           "status": "PASS",
-          "reason": "Preserved the completed full-frame review of 517 by reusing its exact 74-frame, 3.7-second packaged MP4. SHA-256 identity was verified before binding this entry. Native source was inspected and the complete real-time loop and seam were checked again in this entry's workout context."
+          "reason": "The fold returns toward the same upright entry phase; all frames and repeated natural-speed seams were reinspected in both workout contexts."
         },
         "PlaybackSpeed": {
           "status": "PASS",
-          "reason": "The 3.700000-second native excerpt retains natural timing at 20 fps. Actual workout playback stayed at rate 1 through a complete loop and seam on each block; application clock skips did not accelerate the media."
+          "reason": "The unchanged 3.7-second source excerpt runs at 20 fps and playback rate 1. Each actual 45-second work block elapsed without clock manipulation."
         },
         "Mirroring": {
           "status": "PASS",
@@ -18069,7 +18072,7 @@
         },
         "Workout": {
           "status": "PASS",
-          "reason": "Viewed all eighteen actual-workout phase images across both existing family blocks: preview, preparation, complete normal-speed cycles and seams, work endings, rests and next movement. The displayed name, full crop and timer phases agree. The application clock skipped redundant waiting between explicitly inspected phase boundaries; each complete moving demonstration played in real time at normal speed. No full real-time 45-second wait is claimed. No page or asset errors were recorded. Final Android and release validation remain pending."
+          "reason": "The target round started with the ordinary five-second preparation, ran its full 45-second work interval, paused the video through the 15-second rest, and advanced to the next exercise. Names, complete crops and visible timer phases agreed for both entries. Captures record work, rest and the next movement; preparation was also observed directly. No video, asset, warning or console error was recorded. Prior rounds were fixture setup; no complete 30-minute workout is claimed. Android and release validation remain separate."
         }
       }
     },
@@ -20167,26 +20170,29 @@
     },
     {
       "id": 517,
-      "metadataSha256": "dd920f71919061bb4af96877fb95932dc03faa8900b2bfde662797f332a9b29a",
+      "metadataSha256": "43b589369647b7a93cd24c416fa9505b02f8b4616ea6bac7f3b0fd67a0b2f835",
       "assets": {
         "exercise_videos/exercise_0517.mp4": "4c198a6415358862e4bddb7511524dfba96553f90abc08b673ffca7e29e5ac6b"
       },
-      "reviewedAt": "2026-09-07T08:19:36.730685+08:00",
-      "method": "Explicit native-source, packaged-frame, metadata and actual-workout inspection. Complete real-time media loops; controlled application clock for remaining timer transitions. No inferred approvals.",
+      "reviewedAt": "2026-09-11T21:41:57.1870833+08:00",
+      "method": "Reinspection of all 74 packaged frames and the complete normal-speed five-second preparation, 45-second work and 15-second rest in each actual workout context. No timer acceleration. The local review fixture starts at the target round; it is not a complete real 30-minute workout.",
       "observedAction": "Three-part forward, lateral and overhead arm sweeps accompany inhalation, followed by a forward fold and Ha exhale.",
       "evidence": [
         "docs/catalog-audit/evidence/2026-09-06/0517/0000-0073.jpg",
         "docs/catalog-audit/evidence/2026-09-06/0517/playback.json",
-        "docs/catalog-audit/evidence/2026-09-06/0517/phase-sheet.jpg"
+        "docs/catalog-audit/evidence/2026-09-06/0517/phase-sheet.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/all-74-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/breath-of-joy/console.json"
       ],
       "checks": {
         "Metadata": {
           "status": "PASS",
-          "reason": "Standing Breath of Joy with Ha Exhale: BreathingMuscles primary; secondary ShoulderAbductors, PosteriorThighAndKneeFlexors; demand 0; Continuous; Insect Incompatible; hard floor Compatible; mirror Agnostic. Independently checked against the demonstrated action; ordinary bracing, balance and incidental stabilization are omitted."
+          "reason": "The complete 3.7-second cycle continuously links three large arm sweeps to a substantial forward fold and return, with no held phase. It is Insect compatible when assessed as a complete action; planted feet alone were an insufficient prior exclusion. BreathingMuscles primary, ShoulderAbductors and PosteriorThighAndKneeFlexors secondary, demand 0, Hard Floor compatibility, Shy incompatibility and mirror agnosticism are unchanged. Its prescribed audible Ha exhale remains excluded by Silence. Both entries retain SessionMovementId 480 and one block, with no duplicate coverage."
         },
         "FullLoop": {
           "status": "PASS",
-          "reason": "One complete three-part breath-and-fold cycle returns to the same phase before repeating."
+          "reason": "All 74 frames of the unchanged 3.7-second packaged cycle were reinspected; each name-specific workout repeated the complete arm-sweep, fold and return at natural speed."
         },
         "Crop": {
           "status": "PASS",
@@ -20194,11 +20200,11 @@
         },
         "LoopSeam": {
           "status": "PASS",
-          "reason": "One complete three-part breath-and-fold cycle returns to the same phase before repeating."
+          "reason": "The fold returns toward the same upright entry phase; all frames and repeated natural-speed seams were reinspected in both workout contexts."
         },
         "PlaybackSpeed": {
           "status": "PASS",
-          "reason": "The 3.700000-second native excerpt retains natural timing at 20 fps. Actual workout playback stayed at rate 1 through a complete loop and seam on each block; application clock skips did not accelerate the media."
+          "reason": "The unchanged 3.7-second source excerpt runs at 20 fps and playback rate 1. Each actual 45-second work block elapsed without clock manipulation."
         },
         "Mirroring": {
           "status": "PASS",
@@ -20218,7 +20224,7 @@
         },
         "Workout": {
           "status": "PASS",
-          "reason": "Viewed preparation where applicable, each work block, its side state, the rest boundaries and transition to the next movement or completion; final displayed name, crop and timer phases agree. The application clock skipped redundant waiting between explicitly inspected phase boundaries; each complete moving demonstration played in real time at normal speed. No full real-time 45-second wait is claimed. No page or asset errors were recorded. Final Android and release validation remain pending."
+          "reason": "The target round started with the ordinary five-second preparation, ran its full 45-second work interval, paused the video through the 15-second rest, and advanced to the next exercise. Names, complete crops and visible timer phases agreed for both entries. Captures record work, rest and the next movement; preparation was also observed directly. No video, asset, warning or console error was recorded. Prior rounds were fixture setup; no complete 30-minute workout is claimed. Android and release validation remain separate."
         }
       }
     },

@@ -117,3 +117,40 @@ lock covers 132 source files, SHA-256 prefix `e67c331107b9`.
 
 This checkpoint is not a release. Candidate research continues for the
 remaining fine-muscle and duration-specific gaps.
+
+## Breath of Joy compatibility correction
+
+The existing 480/517 family now qualifies for Insect. Its complete 3.7-second
+action links three large arm sweeps to a substantial forward fold and return,
+without a held phase. The prior review excluded it solely because its feet
+remained planted. That rationale did not assess the complete moving action.
+This is a classification correction, not a new exercise or breathing claim.
+
+The [Dana-Farber protocol](https://myzakim.dana-farber.org/videos/breath-of-joy-3-mins)
+also describes the three inhalations followed by the audible exhale and fold.
+The original reviewed primary and secondary anatomy, demand 0, Hard Floor
+compatibility, Shy exclusion and audible-exhale Silence exclusion are unchanged.
+Both aliases retain SessionMovementId 480 and cannot supply duplicate coverage.
+
+All 74 packaged frames were reinspected. Each name-specific workout then ran
+through the ordinary preparation, full 45-second work, 15-second rest and next
+movement without timer acceleration. Video rates were 1 and no warning, console
+or media error was recorded. The local fixture advances prior rounds to reach
+the review target; this does not claim a completed real 30-minute workout.
+Evidence is in
+[`evidence/2026-09-11/breath-of-joy`](evidence/2026-09-11/breath-of-joy).
+
+Only the two Insect fields changed in the runtime catalog. Catalog revision 75
+and database version 91 deliver the corrected metadata while retaining saved
+exercise identities, scores, valid Keeps and recovery. Focused completion and
+migration tests pass 12/12 on Android and 12/12 on web. This removes nine
+overlapping pairwise zero-choice failures and one overlapping Hard Floor
+failure: 28 pairwise failures, 16 Hard Floor failures and 49 incomplete lineups
+remain. These remaining gaps still block release.
+
+The full checkpoint passes 803 of 804 Android tests and 353 of 362 web tests.
+All remaining failures are the recorded catalog-availability and production
+profile-lineup checks. The Debug Android 3.12/126 build succeeds with zero
+warnings and errors; the web production build still rejects the same three
+coverage gate categories. All 540 metadata/media review hashes pass. The
+reviewed parity lock covers 132 files, SHA-256 prefix `05a9dd7907d6`.

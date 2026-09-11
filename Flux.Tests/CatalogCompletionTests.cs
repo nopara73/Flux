@@ -16,6 +16,51 @@ public sealed class CatalogCompletionTests
         })!;
 
     [Theory]
+    [InlineData(480)]
+    [InlineData(517)]
+    public void BreathOfJoyInsectCorrectionPreservesIdentityAndFeedback(int exerciseId)
+    {
+        Exercise[] catalog = LoadCatalog();
+        Exercise exercise = catalog.Single(item => item.Id == exerciseId);
+        WorkoutGroup breathing = MassGroupingTaxonomy.GetGroup(30, "r30.breathing-muscles");
+        Assert.True(WorkoutModifierPolicy.IsCompatible(exercise,
+            WorkoutModifiers.Insect | WorkoutModifiers.HardFloor));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(exercise,
+            WorkoutModifiers.Insect | WorkoutModifiers.Silence));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(exercise,
+            WorkoutModifiers.Insect | WorkoutModifiers.Shy));
+        Assert.True(WorkoutCoveragePolicy.IsSelectable(exercise, breathing));
+        Assert.Equal(CanonicalMuscleGroup.BreathingMuscles, exercise.PrimaryCanonicalGroup);
+        Assert.Equal(480, WorkoutModifierPolicy.GetSessionMovementId(exercise));
+        Assert.Single(exercise.SequenceBlocks);
+        Assert.Equal(0, exercise.MuscularDemand);
+
+        Dictionary<int, StoredExerciseSnapshot> stored = catalog.ToDictionary(
+            item => item.Id, item => new StoredExerciseSnapshot(item.Name, item.Video, item.Id % 41 - 20));
+        Assert.Equal(stored.Keys.ToHashSet(),
+            CatalogMigrationRules.ValidatePreservedCatalog(catalog, stored));
+        var state = new WorkoutState
+        {
+            CatalogRevision = 74,
+            SelectedExerciseIds = new() { [breathing.SelectionKey] = exerciseId },
+            KeptExerciseRootIdsBySelectionGroupId = new()
+                { [breathing.SelectionKey] = [exerciseId] },
+            LastKeptExerciseIds = [exerciseId],
+            LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = new()
+                { [nameof(CanonicalMuscleGroup.BreathingMuscles)] = 123456 },
+        };
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(
+            state, catalog.ToDictionary(item => item.Id)));
+        Assert.Equal(exerciseId, state.SelectedExerciseIds[breathing.SelectionKey]);
+        Assert.Equal(new HashSet<int> { exerciseId },
+            state.KeptExerciseRootIdsBySelectionGroupId[breathing.SelectionKey]);
+        Assert.Equal(new HashSet<int> { exerciseId }, state.LastKeptExerciseIds);
+        Assert.Equal(123456,
+            state.LastMeaningfulWorkUnixMillisecondsByPrimaryMuscle[nameof(CanonicalMuscleGroup.BreathingMuscles)]);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
+    }
+
+    [Theory]
     [InlineData(false, false, false)]
     [InlineData(false, true, false)]
     [InlineData(true, false, false)]

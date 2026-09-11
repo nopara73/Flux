@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
   CURRENT_CATALOG_REVISION,
+  RESOLUTIONS,
   WORKOUT_MODIFIERS,
   WorkoutSession,
   createDefaultState,
@@ -14,6 +15,41 @@ import {
 
 const catalog = JSON.parse(await readFile(
   new URL("../../Flux/Assets/exercises.json", import.meta.url), "utf8"));
+
+for (const exerciseId of [480, 517]) {
+  test(`Breath of Joy ${exerciseId} Insect correction preserves identity and feedback`, () => {
+    const exercise = catalog.find((item) => item.id === exerciseId);
+    const breathing = RESOLUTIONS.get(30).groups.find((group) => group.id === "r30.breathing-muscles");
+    assert.equal(isCompatibleWithWorkoutModifiers(exercise,
+      WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.HardFloor), true);
+    assert.equal(isCompatibleWithWorkoutModifiers(exercise,
+      WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Silence), false);
+    assert.equal(isCompatibleWithWorkoutModifiers(exercise,
+      WORKOUT_MODIFIERS.Insect | WORKOUT_MODIFIERS.Shy), false);
+    assert.equal(isSelectable(exercise, breathing), true);
+    assert.equal(exercise.primaryCanonicalGroup, "BreathingMuscles");
+    assert.equal(getSessionMovementId(exercise), 480);
+    assert.equal(exercise.sequenceBlocks.length, 1);
+    assert.equal(exercise.muscularDemand, 0);
+
+    const state = createDefaultState();
+    state.catalogRevision = 74;
+    state.scores = Object.fromEntries(catalog.map((item) => [item.id, item.id % 41 - 20]));
+    state.catalogIdentities = Object.fromEntries(catalog
+      .map((item) => [item.id, `${item.name}\u001f${item.video}`]));
+    state.selectedExerciseIds = { [getSelectionKey(breathing)]: exerciseId };
+    state.keptExerciseRootIdsBySelectionGroupId = { [getSelectionKey(breathing)]: [exerciseId] };
+    state.lastKeptExerciseIds = [exerciseId];
+    state.lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle = { BreathingMuscles: 123456 };
+    const saved = structuredClone(state);
+    const session = new WorkoutSession(catalog, state, () => 0);
+    session.initialize();
+    for (const key of ["scores", "keptExerciseRootIdsBySelectionGroupId", "lastKeptExerciseIds",
+      "lastMeaningfulWorkUnixMillisecondsByPrimaryMuscle"])
+      assert.deepEqual(session.state[key], saved[key], key);
+    assert.equal(session.state.catalogRevision, CURRENT_CATALOG_REVISION);
+  });
+}
 
 for (const insect of [false, true]) {
   for (const light of [false, true]) {

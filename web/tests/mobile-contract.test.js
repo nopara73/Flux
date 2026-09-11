@@ -1145,7 +1145,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     exerciseDatabase,
     /DatabaseVersion\s*=\s*ExerciseDatabaseVersionPolicy\.CurrentVersion/,
   );
-  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*90/);
+  assert.match(exerciseDatabaseVersionPolicy, /CurrentVersion\s*=\s*91/);
   assert.match(
     exerciseDatabase,
     /ExerciseDatabaseVersionPolicy\.IsSupportedNonDestructiveUpgrade\([\s\S]*oldVersion,[\s\S]*newVersion/,
