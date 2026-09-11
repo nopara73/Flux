@@ -292,12 +292,17 @@ test("web and mobile persist the same complete workout audit trail", () => {
 test("locked Light explains taps without changing the workout on either platform", () => {
   assert.match(strings, /<string name="light_workout_locked_feedback">rest, you must<\/string>/);
   assert.match(webApp, /lightLocked: "rest, you must"/);
-  assert.match(instantControls, /showFeedback\("rest, you must"\)/);
+  assert.match(instantControls, /showFeedback\("rest, you must",/);
   const androidClick = mainActivity.slice(
     mainActivity.indexOf("_lightModifierButton.Click +="),
     mainActivity.indexOf("_wallModifierButton.Click +="),
   );
-  assert.match(androidClick, /UpdateLightModifierPresentation[\s\S]*if \(_lightModifierLocked\)[\s\S]*ShowModifierFeedback\(Resource.String.light_workout_locked_feedback\);\s*return;\s*}\s*SetSelectedWorkoutModifier/);
+  assert.match(androidClick, /UpdateLightModifierPresentation[\s\S]*if \(_lightModifierLocked\)[\s\S]*ShowModifierFeedback\(Resource.String.light_workout_locked_feedback, GetRestFeedbackReason\(\)\);\s*return;\s*}\s*SetSelectedWorkoutModifier/);
+  for (const source of [webApp, instantControls]) {
+    assert.match(source, /"Training cycle complete" : "Muscles recovering"/);
+    assert.match(source, /setAttribute\("data-detail", detail\)/);
+  }
+  assert.match(mainActivity, /RelativeSizeSpan\(0\.65f\)/);
   assert.match(mainActivity, /_lightModifierButton.Checked = effectivelyEnabled/);
   assert.match(mainActivity, /TooltipText = GetString\(_lightModifierLocked\s*\? Resource.String.light_workout_locked_feedback/);
 });

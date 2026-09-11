@@ -829,7 +829,7 @@ public partial class MainActivity : Activity
             if (_lightModifierLocked)
             {
                 AnimateModifierTile(_lightModifierContainer);
-                ShowModifierFeedback(Resource.String.light_workout_locked_feedback);
+                ShowModifierFeedback(Resource.String.light_workout_locked_feedback, GetRestFeedbackReason());
                 return;
             }
             SetSelectedWorkoutModifier(
@@ -2462,12 +2462,22 @@ public partial class MainActivity : Activity
         _ => throw new ArgumentOutOfRangeException(nameof(modifier), modifier, null),
     };
 
-    private void ShowModifierFeedback(int messageResourceId)
+    private void ShowModifierFeedback(int messageResourceId, string? detail = null)
     {
         int generation = ++_modifierFeedbackGeneration;
         TextView feedback = _durationModifierFeedback;
         feedback.Animate()?.Cancel();
-        feedback.Text = GetString(messageResourceId);
+        string message = GetString(messageResourceId);
+        feedback.SetMaxLines(detail is null ? 1 : 4);
+        feedback.SetMaxWidth(Math.Max(1, _durationInsetContent.Width - DpInt(32)));
+        if (detail is null) feedback.Text = message;
+        else
+        {
+            var text = new Android.Text.SpannableString(message + "\n" + detail);
+            text.SetSpan(new Android.Text.Style.RelativeSizeSpan(0.65f),
+                message.Length + 1, text.Length(), Android.Text.SpanTypes.ExclusiveExclusive);
+            feedback.SetText(text, TextView.BufferType.Spannable);
+        }
         feedback.Visibility = ViewStates.Visible;
         feedback.Alpha = 0f;
         feedback.ScaleX = 0.82f;
@@ -2501,7 +2511,7 @@ public partial class MainActivity : Activity
                             }))
                             .Start();
                     }),
-                    ModifierFeedbackHoldMilliseconds)))
+                    detail is null ? ModifierFeedbackHoldMilliseconds : 2_400L)))
             .Start();
     }
 
@@ -2723,7 +2733,7 @@ public partial class MainActivity : Activity
             }
 
             _sessionService.ActivatePreparedWorkout(_state);
-            LogOuraDecision();
+            LogOuraDecision(workoutStarted: true);
             _stateStore.Save(_state);
             ShowNextExercise();
         }

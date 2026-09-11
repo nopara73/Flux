@@ -338,6 +338,8 @@ for (const reason of ["cadence", "recovery", "both"]) {
         assert.equal(selections.length, notificationsBefore);
         assert.equal(controls.startQueued, false);
         assert.equal(element("modifier-feedback").textContent, "rest, you must");
+        assert.equal(element("modifier-feedback").getAttribute("data-detail"),
+          reason === "recovery" ? "Muscles recovering" : "Training cycle complete");
         assert.equal(element("modifier-feedback").hidden, false);
         assert.equal(element("modifier-feedback").classList.contains("show"), true);
         assert.equal(timers.size, 1, "repeat taps restart, not stack, the animation");
@@ -358,6 +360,7 @@ test("manual Light still toggles with ordinary ON/OFF feedback after recovery en
   assert.equal(element("light-workout-modifier").getAttribute("aria-disabled"), "false");
   element("light-workout-modifier").fire("click");
   assert.equal(element("modifier-feedback").textContent, "light mode ON");
+  assert.equal(element("modifier-feedback").getAttribute("data-detail"), "");
   assert.equal(controls.selectedModifiers & light, light);
   element("light-workout-modifier").fire("click");
   assert.equal(element("modifier-feedback").textContent, "light mode OFF");
@@ -381,7 +384,7 @@ for (const [automatic, recovery] of [[true, false], [false, true], [true, true],
       isRecoveryLightModeActive: () => recovery,
       isAutomaticLightModeLocked: () => automatic,
       renderWorkoutModifiers() {},
-      showWorkoutModifierFeedback: (message) => messages.push(message),
+      showWorkoutModifierFeedback: (message, detail = "") => messages.push([message, detail]),
       workoutModifierFeedbackLabel: (_, enabled) => `light mode ${enabled ? "ON" : "OFF"}`,
       queueWorkoutPreparation: () => preparations += 1,
     });
@@ -391,11 +394,11 @@ for (const [automatic, recovery] of [[true, false], [false, true], [true, true],
     if (automatic || recovery) {
       assert.equal(context.selectedModifiers, before);
       assert.equal(preparations, 0);
-      assert.deepEqual(messages, ["rest, you must"]);
+      assert.deepEqual(messages, [["rest, you must", automatic ? "Training cycle complete" : "Muscles recovering"]]);
     } else {
       assert.equal(context.selectedModifiers & light, light);
       assert.equal(preparations, 1);
-      assert.deepEqual(messages, ["light mode ON"]);
+      assert.deepEqual(messages, [["light mode ON", ""]]);
     }
   });
 }

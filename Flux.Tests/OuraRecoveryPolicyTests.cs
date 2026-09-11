@@ -53,6 +53,19 @@ public sealed class OuraRecoveryPolicyTests
             test["workAfterSleep"]?.GetValue<bool>() == true ? SleepEnd + 60_000 : 0);
         Assert.Equal(test["verdict"]!.GetValue<string>(), result.Verdict.ToString());
         Assert.Equal(test["reason"]!.GetValue<string>(), result.Reason);
+        if (result.BaselineNights >= 14)
+        {
+            OuraRecoveryWarning flags = result.WarningSignals;
+            int explainedWarnings = (flags.HasFlag(OuraRecoveryWarning.Hrv) ? 1 : 0) +
+                (flags.HasFlag(OuraRecoveryWarning.HeartRate) ? 1 : 0) +
+                ((flags & (OuraRecoveryWarning.LatestSleep | OuraRecoveryWarning.AverageSleep)) != 0 ? 1 : 0);
+            Assert.Equal(result.Warnings, explainedWarnings);
+        }
+        if (result.Reason == "very-short-sleep")
+        {
+            Assert.Equal(OuraRecoveryWarning.LatestSleep, result.WarningSignals);
+            Assert.True(result.LatestSleepMinutes < 300);
+        }
         Assert.Equal(result.Verdict != OuraRecoveryVerdict.Regular,
             OuraRecoveryPolicy.RequiresLight(true, result));
         Assert.Equal(result.Verdict == OuraRecoveryVerdict.Light,

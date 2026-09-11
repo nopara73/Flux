@@ -82,7 +82,18 @@ is not removed merely because an automatic requirement expires.
 
 When Oura produces a decisive result, hide the cadence estimate: it cannot
 predict when future Oura readings will require Light. Unknown data uses the
-usual counter. Locked Light still responds with exactly `rest, you must`.
+usual counter. Locked Light keeps the headline `rest, you must`, with a smaller,
+brief reason underneath. Oura shows only the warnings that actually contributed
+to the decision: RHR/HRV compare the personal baseline on the left to the recent
+three-night value on the right (bpm and ms respectively; HRV is converted back
+from log units). Sleep shows actual duration against its applicable boundary.
+Do not infer a warning from the averages in the UI: use the policy's recorded
+warning flags. Do not display rounded equal values as an inequality. No warnings
+or unknown historical evidence means a plain recovery explanation, not invented
+measurements. An active workout uses its private start-decision audit, never a
+newer reading as an explanation for the frozen lock. No health measurements are
+added to workout history. Cadence and muscle-derived locks use short non-Oura
+reasons on both platforms. The explanation never changes any selection or state.
 
 Raw Health Connect records are not retained. Nightly summaries and at most 120
 decision audit entries live in `NoBackupFilesDir/oura-recovery.json`; they are

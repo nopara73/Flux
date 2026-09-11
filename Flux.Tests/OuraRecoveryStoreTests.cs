@@ -59,6 +59,22 @@ public sealed class OuraRecoveryStoreTests : IDisposable
         Assert.False(File.Exists(CachePath + ".tmp"));
     }
 
+    [Fact]
+    public void WorkoutStartEvidenceSurvivesRefreshAndRestartInPrivateStorageOnly()
+    {
+        var first = new OuraDecisionAudit(100, false, true,
+            new(OuraRecoveryVerdict.Light, "multiple-warnings",
+                RecentHeartRate: 62, BaselineHeartRate: 57,
+                WarningSignals: OuraRecoveryWarning.HeartRate | OuraRecoveryWarning.Hrv),
+            WorkoutSessionId: 1234);
+        var cache = new OuraRecoveryCache { Decisions = [first] };
+        cache.Decisions.Add(new(200, false, false, new(OuraRecoveryVerdict.Regular, "within-baseline")));
+        Store.Save(cache);
+        OuraDecisionAudit restored = Assert.Single(Store.Load().Decisions, d => d.WorkoutSessionId == 1234);
+        Assert.Equal(first, restored);
+        Assert.Equal(0, Store.Load().Decisions[^1].WorkoutSessionId);
+    }
+
     [Theory]
     [InlineData("{invalid")]
     [InlineData("null")]

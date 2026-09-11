@@ -28,6 +28,17 @@ public sealed class OuraRecoveryNight
 [JsonConverter(typeof(JsonStringEnumConverter<OuraRecoveryVerdict>))]
 public enum OuraRecoveryVerdict { Unknown, Light, Regular }
 
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter<OuraRecoveryWarning>))]
+public enum OuraRecoveryWarning
+{
+    None = 0,
+    HeartRate = 1,
+    Hrv = 2,
+    LatestSleep = 4,
+    AverageSleep = 8,
+}
+
 public sealed record OuraRecoveryAssessment(
     OuraRecoveryVerdict Verdict,
     string Reason,
@@ -39,4 +50,6 @@ public sealed record OuraRecoveryAssessment(
     double? BaselineHeartRate = null,
     double? RecentLogHrv = null,
     double? BaselineLogHrv = null,
-    double? RecentSleepMinutes = null);
+    double? RecentSleepMinutes = null,
+    double? LatestSleepMinutes = null,
+    OuraRecoveryWarning WarningSignals = OuraRecoveryWarning.None);

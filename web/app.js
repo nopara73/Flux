@@ -531,7 +531,8 @@ function toggleWorkoutModifier(flag) {
   if (flag === WORKOUT_MODIFIERS.Light &&
       (isRecoveryLightModeActive() || isAutomaticLightModeLocked())) {
     renderWorkoutModifiers();
-    showWorkoutModifierFeedback(MODIFIER_FEEDBACK_LABELS.lightLocked);
+    showWorkoutModifierFeedback(MODIFIER_FEEDBACK_LABELS.lightLocked,
+      isAutomaticLightModeLocked() ? "Training cycle complete" : "Muscles recovering");
     return;
   }
   selectedModifiers ^= flag;
@@ -629,18 +630,20 @@ function mirrorEquipmentFeedbackLabel(equipment) {
   return MODIFIER_FEEDBACK_LABELS.mirrorDisabled;
 }
 
-function showWorkoutModifierFeedback(message) {
+function showWorkoutModifierFeedback(message, detail = "") {
   clearTimeout(modifierFeedbackTimer);
   elements.modifierFeedback.classList.remove("show");
   elements.modifierFeedback.hidden = false;
   elements.modifierFeedback.textContent = message;
+  elements.modifierFeedback.setAttribute("data-detail", detail);
+  elements.modifierFeedback.setAttribute("aria-label", detail ? `${message}: ${detail}` : message);
   void elements.modifierFeedback.offsetWidth;
   elements.modifierFeedback.classList.add("show");
   modifierFeedbackTimer = setTimeout(() => {
     elements.modifierFeedback.classList.remove("show");
     elements.modifierFeedback.hidden = true;
     modifierFeedbackTimer = null;
-  }, MODIFIER_FEEDBACK_DURATION_MS);
+  }, detail ? 3240 : MODIFIER_FEEDBACK_DURATION_MS);
 }
 
 function renderWorkoutModifiers() {

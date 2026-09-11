@@ -561,6 +561,23 @@ button.modifier-tile:not(:disabled):active {
   animation: modifier-feedback-blink 2040ms ease-out both;
 }
 
+.modifier-feedback[data-detail]:not([data-detail=""]) {
+  width: max-content;
+}
+
+.modifier-feedback[data-detail]:not([data-detail=""])::after {
+  content: attr(data-detail);
+  display: block;
+  margin-top: 5px;
+  font-size: 0.65em;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.modifier-feedback[data-detail]:not([data-detail=""]).show {
+  animation-duration: 3240ms;
+}
+
 @keyframes modifier-feedback-blink {
   0% {
     opacity: 0;

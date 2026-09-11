@@ -12,7 +12,8 @@ internal sealed class OuraRecoveryCache
 }
 
 internal sealed record OuraDecisionAudit(long EvaluatedAtUnixMilliseconds,
-    bool CadenceDue, bool LightRequired, OuraRecoveryAssessment Assessment);
+    bool CadenceDue, bool LightRequired, OuraRecoveryAssessment Assessment,
+    long WorkoutSessionId = 0);
 
 [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     UseStringEnumConverter = true)]

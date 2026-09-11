@@ -38,7 +38,9 @@ public static class OuraRecoveryPolicy
         // Missing sleep never means zero sleep. This exception requires a real,
         // completed, fully staged principal sleep and its preceding 24-hour total.
         if (latest.SleepMinutes < 300)
-            return new(OuraRecoveryVerdict.Light, "very-short-sleep", end);
+            return new(OuraRecoveryVerdict.Light, "very-short-sleep", end,
+                LatestSleepMinutes: latest.SleepMinutes,
+                WarningSignals: OuraRecoveryWarning.LatestSleep);
         if (!Usable(latest)) return Unknown("insufficient-coverage", end);
 
         OuraRecoveryNight[] recent = nights
@@ -61,9 +63,17 @@ public static class OuraRecoveryPolicy
         double baselineHrv = baseline.Average(n => Math.Log(n.Hrv));
         double hrSd = StandardDeviation(baseline.Select(n => n.HeartRate));
         double hrvSd = StandardDeviation(baseline.Select(n => Math.Log(n.Hrv)));
-        int warnings = (baselineHrv - logHrv > hrvSd + 1e-9 ? 1 : 0) +
-            (hr - baselineHr >= 5 - 1e-9 && hr - baselineHr > hrSd + 1e-9 ? 1 : 0) +
-            (latest.SleepMinutes < 360 || sleep < 420 ? 1 : 0);
+        bool lowHrv = baselineHrv - logHrv > hrvSd + 1e-9;
+        bool highHr = hr - baselineHr >= 5 - 1e-9 && hr - baselineHr > hrSd + 1e-9;
+        bool shortLatestSleep = latest.SleepMinutes < 360;
+        bool shortAverageSleep = sleep < 420;
+        int warnings = (lowHrv ? 1 : 0) + (highHr ? 1 : 0) +
+            (shortLatestSleep || shortAverageSleep ? 1 : 0);
+        OuraRecoveryWarning signals =
+            (highHr ? OuraRecoveryWarning.HeartRate : OuraRecoveryWarning.None) |
+            (lowHrv ? OuraRecoveryWarning.Hrv : OuraRecoveryWarning.None) |
+            (shortLatestSleep ? OuraRecoveryWarning.LatestSleep : OuraRecoveryWarning.None) |
+            (shortAverageSleep ? OuraRecoveryWarning.AverageSleep : OuraRecoveryWarning.None);
         // Strong adverse evidence takes precedence over an unusually high HRV;
         // the high-HRV safeguard must not erase short sleep plus elevated HR.
         OuraRecoveryVerdict verdict = warnings >= 2 ? OuraRecoveryVerdict.Light :
@@ -81,7 +91,7 @@ public static class OuraRecoveryPolicy
             reason = "work-since-sleep";
         }
         return new(verdict, reason, end, recent.Length, baseline.Length, warnings,
-            hr, baselineHr, logHrv, baselineHrv, sleep);
+            hr, baselineHr, logHrv, baselineHrv, sleep, latest.SleepMinutes, signals);
     }
 
     public static OuraRecoveryAssessment Evaluate(WorkoutState state, long now) =>

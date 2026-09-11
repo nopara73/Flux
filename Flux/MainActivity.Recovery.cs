@@ -121,7 +121,29 @@ public partial class MainActivity
         }
     }
 
-    private void LogOuraDecision()
+    private string GetRestFeedbackReason()
+    {
+        if (IsAutomaticLightModeLocked())
+        {
+            if (_state.ActiveWorkoutSession is { AutomaticLightRequiredAtStart: true } active)
+            {
+                // A frozen workout must describe its original decision, not a
+                // later refresh. Health evidence stays in the private cache.
+                OuraDecisionAudit? start = HasOuraPermission ? _ouraCache.Decisions.FirstOrDefault(
+                    decision => decision.WorkoutSessionId > 0 && decision.WorkoutSessionId == active.SessionId) : null;
+                return start?.Assessment.Verdict == OuraRecoveryVerdict.Light
+                    ? RestFeedback.Oura(start.Assessment)
+                    : start?.CadenceDue == true ? RestFeedback.Cadence : RestFeedback.FrozenWorkout;
+            }
+            OuraRecoveryAssessment result = OuraRecoveryPolicy.Evaluate(_state,
+                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+            return result.Verdict == OuraRecoveryVerdict.Light
+                ? RestFeedback.Oura(result) : RestFeedback.Cadence;
+        }
+        return RestFeedback.MuscleRecovery;
+    }
+
+    private void LogOuraDecision(bool workoutStarted = false)
     {
         if (!HasOuraPermission) return;
         long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -129,7 +151,8 @@ public partial class MainActivity
             TimeZoneInfo.Local, _state.LegacyCompletedTrainingDayUnixMilliseconds);
         var result = OuraRecoveryPolicy.Evaluate(_state, now);
         _ouraCache.Decisions.Add(new(now, cadence,
-            OuraRecoveryPolicy.RequiresLight(cadence, result), result));
+            OuraRecoveryPolicy.RequiresLight(cadence, result), result,
+            workoutStarted ? _state.ActiveWorkoutSession?.SessionId ?? 0 : 0));
         SaveOuraCache();
     }
 

@@ -27,6 +27,7 @@
     <Compile Include="..\Flux\Data\OuraRecoveryStore.cs" Link="Production\Data\OuraRecoveryStore.cs" />
     <Compile Include="..\Flux\Models\OuraRecoverySnapshot.cs" Link="Production\Models\OuraRecoverySnapshot.cs" />
     <Compile Include="..\Flux\Services\OuraRecoveryPolicy.cs" Link="Production\Services\OuraRecoveryPolicy.cs" />
+    <Compile Include="..\Flux\Services\RestFeedback.cs" Link="Production\Services\RestFeedback.cs" />
     <Compile Include="..\Flux\Services\OuraNightBuilder.cs" Link="Production\Services\OuraNightBuilder.cs" />
     <Compile Include="..\Flux\Data\ExerciseDatabaseMigrationSql.cs" Link="Production\Data\ExerciseDatabaseMigrationSql.cs" />
     <Compile Include="..\Flux\Data\ExerciseDatabaseVersionPolicy.cs" Link="Production\Data\ExerciseDatabaseVersionPolicy.cs" />

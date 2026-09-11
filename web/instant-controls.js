@@ -310,7 +310,8 @@
 
   function toggleModifier(name) {
     if (name === "light" && (recoveryLightMode || automaticLightMode)) {
-      showFeedback("rest, you must");
+      showFeedback("rest, you must",
+        automaticLightMode ? "Training cycle complete" : "Muscles recovering");
       return;
     }
     const flag = modifierFlags[name];
@@ -502,18 +503,20 @@
       : "equipment ON: compact mirror";
   }
 
-  function showFeedback(message) {
+  function showFeedback(message, detail = "") {
     clearTimeout(feedbackTimer);
     elements.feedback.classList.remove("show");
     elements.feedback.hidden = false;
     elements.feedback.textContent = message;
+    elements.feedback.setAttribute("data-detail", detail);
+    elements.feedback.setAttribute("aria-label", detail ? `${message}: ${detail}` : message);
     void elements.feedback.offsetWidth;
     elements.feedback.classList.add("show");
     feedbackTimer = setTimeout(() => {
       elements.feedback.classList.remove("show");
       elements.feedback.hidden = true;
       feedbackTimer = null;
-    }, feedbackDurationMs);
+    }, detail ? 3240 : feedbackDurationMs);
   }
 
   function notifySelection(userInitiated) {
